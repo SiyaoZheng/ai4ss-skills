@@ -265,7 +265,9 @@ AI 会在需要时读取这些内容。
 
 ## 许可
 
-MIT License. 欢迎修改和再分发。
+GPL-3.0 License. 欢迎修改和再分发，但衍生作品须以相同许可发布。
+
+例外：`codex.skill/` 基于 [@davila7](https://github.com/davila7) 的 MIT 许可作品，保留其原始 MIT 许可（见 `codex.skill/LICENSE`）。
 
 ---
 
