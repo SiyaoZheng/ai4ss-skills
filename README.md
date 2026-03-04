@@ -61,6 +61,25 @@ R 代码性能诊断与优化指南。
 - 「这段代码跑得太慢了」
 - 「如何在 HPC 上并行运行」
 
+### 4. codex
+
+将任务委托给 OpenAI Codex CLI（GPT-5.3-codex），获取第二意见或利用 Codex 的沙箱执行能力。
+
+> 基于 [@davila7](https://github.com/davila7) 的 [原始 codex skill](https://github.com/davila7/claude-code-templates/tree/main/cli-tool/components/skills/development/codex) 改进。
+
+| 功能 | 说明 |
+|------|------|
+| 代码审查 | 只读沙箱分析，获取 GPT-5.3 的第二意见 |
+| 自动编辑 | workspace-write 沙箱，自动应用修改 |
+| 会话恢复 | `codex resume` 继续上次的分析 |
+
+**触发方式**：
+- `codex review this file`
+- `/codex analyze test coverage`
+- `codex resume`
+
+**前置要求**：需安装 [Codex CLI](https://github.com/openai/codex) 并配置凭据。
+
 ---
 
 ## 安装指南
@@ -84,9 +103,10 @@ mkdir -p ~/.claude/skills
 git clone https://github.com/SiyaoZheng/ai4ss-skills.git
 
 # 复制到 Claude Code skills 目录
-cp -r ai4ss-skills/latex-tables ~/.claude/skills/
-cp -r ai4ss-skills/analysis-explainer ~/.claude/skills/
-cp -r ai4ss-skills/r-performance ~/.claude/skills/
+cp -r ai4ss-skills/latex-tables.skill ~/.claude/skills/latex-tables
+cp -r ai4ss-skills/analysis-explainer.skill ~/.claude/skills/analysis-explainer
+cp -r ai4ss-skills/r-performance.skill ~/.claude/skills/r-performance
+cp -r ai4ss-skills/codex.skill ~/.claude/skills/codex
 ```
 
 **3. 目录结构**
@@ -100,12 +120,14 @@ cp -r ai4ss-skills/r-performance ~/.claude/skills/
     │   └── SKILL.md
     ├── analysis-explainer/
     │   └── SKILL.md
-    └── r-performance/
-        ├── SKILL.md
-        └── references/
-            ├── profiling.md
-            ├── r-internals.md
-            └── ...
+    ├── r-performance/
+    │   ├── SKILL.md
+    │   └── references/
+    │       ├── profiling.md
+    │       ├── r-internals.md
+    │       └── ...
+    └── codex/
+        └── SKILL.md
 ```
 
 **4. 验证安装**
