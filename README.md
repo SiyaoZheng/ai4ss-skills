@@ -14,7 +14,7 @@ Install once. Works automatically. Survives context resets.
 [![Cursor](https://img.shields.io/badge/Cursor-compatible-000000?logo=cursor)](https://cursor.com)
 [![Stars](https://img.shields.io/github/stars/SiyaoZheng/ai4ss-skills?style=social)](https://github.com/SiyaoZheng/ai4ss-skills/stargazers)
 
-**[📦 Skills](#-skills) · [⚡ Install](#-installation) · [📊 Benchmarks](#-benchmarks) · [🗺️ Roadmap](#️-roadmap) · [🤝 Contributing](#-contributing) · [📄 Cite](#-cite)**
+**[📦 Skills](#-skills) · [⚡ Install](#-installation) · [📊 Benchmarks](#-benchmarks) · [🗺️ Roadmap](#-roadmap) · [🤝 Contributing](#-contributing) · [📄 Cite](#-cite)**
 
 </div>
 
@@ -253,7 +253,7 @@ Skills are just Markdown + YAML. If you work with CFPS, ANES, ESS, or any other 
 3. Add eval evidence (even informal benchmarks help)
 4. Open a PR
 
-See [SKILL.md format](#️-skill-format) for the full spec.
+See [SKILL.md format](#-skill-format) for the full spec.
 
 ---
 
