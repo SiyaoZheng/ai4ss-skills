@@ -1,2 +1,5 @@
 PLAN.md
 *.DS_Store
+--output
+.claude/
+cleaning-contract-skill-extracted/
