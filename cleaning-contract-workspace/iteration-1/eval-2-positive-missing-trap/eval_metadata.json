@@ -1,0 +1,13 @@
+{
+  "eval_id": 2,
+  "eval_name": "positive-missing-trap",
+  "prompt": "Write the cleaning contract for the Dickson 2014 PGRS survey. ddi-metadata.yaml is in the current working directory.\n\nRequirements:\n- Universe: all observations\n- Weight: ps_weight\n- Q23, Q24 (scale 1-4), Q5 (scale 1-5): 9=refused, 8=don't know are missing. Rename to trust_central_ord, trust_local_ord, gov_satisfaction_ord.\n- A3A education: codes 1-9 where 9=doctorate (VALID DATA). Only 99=refused is missing.\n- K6 occupation: codes 1-10 valid, 77=other valid, 9=professional worker (VALID DATA). Missing: -1=inapplicable, 88=don't know, 99=refused.\n- A1A: age numeric",
+  "assertions": [
+    {"id": "A3A_9_not_missing", "text": "variable_contracts entry for A3A does NOT include 9 as a missing code"},
+    {"id": "K6_9_not_missing", "text": "variable_contracts entry for K6 does NOT include 9 as a missing code"},
+    {"id": "Q23_9_is_missing", "text": "variable_contracts entry for Q23 includes 9 in missing_treatment (type: refused)"},
+    {"id": "Q23_renamed", "text": "Q23 is renamed to trust_central_ord"},
+    {"id": "weight_ps_weight", "text": "weight_assignment uses the ps_weight variable"},
+    {"id": "processing_event_appended", "text": "processing_events has a new CleaningOperation entry"}
+  ]
+}

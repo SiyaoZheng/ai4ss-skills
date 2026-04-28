@@ -1,0 +1,194 @@
+schema_version: "1.0"
+ddi_version: "3.3"
+
+study:
+  name: "Public Goods and Regime Support Survey 2014"
+  id: null
+  agency: "Dickson et al."
+  universe: null
+  analysis_unit: Person
+  data_source: "Data/2014 Dickson survey/2014 public goods and regime support survey_Stata_11.dta"
+  wave: "2014"
+
+shared_category_schemes: {}
+shared_missing_schemas: {}
+
+variables:
+  - id: var001
+    name: A3A
+    label: "Highest education level"
+    is_temporal: false
+    is_geographic: false
+    is_weight: false
+    concept: Education
+    unit_type: Person
+    representation:
+      type: code
+      storage_type: integer
+      codes:
+        1: "No schooling"
+        2: "Some primary"
+        3: "Completed primary"
+        4: "Some middle school"
+        5: "Completed middle school"
+        6: "Some high school"
+        7: "Completed high school"
+        8: "Some college/university"
+        9: "Doctorate"
+      classification_level: ordinal
+    missing:
+      schema_ref: null
+      codes:
+        77: {label: "Refused", type: refused}
+        88: {label: "Don't know", type: dont_know}
+      ranges: []
+      blank_is_missing: true
+    source_variables: []
+    derivation_rule: null
+    _parse_flags: []
+
+  - id: var002
+    name: Q23
+    label: "Trust in the central government"
+    is_temporal: false
+    is_geographic: false
+    is_weight: false
+    concept: TrustCentralGov
+    unit_type: Person
+    representation:
+      type: scale
+      storage_type: integer
+      min: 1
+      max: 4
+      anchors:
+        1: "Not at all"
+        4: "A great deal"
+    missing:
+      schema_ref: null
+      codes: {}
+      ranges: []
+      blank_is_missing: true
+    source_variables: []
+    derivation_rule: null
+    _parse_flags: [missing_codes_inferred]
+
+  - id: var003
+    name: Q24
+    label: "Trust in local government"
+    is_temporal: false
+    is_geographic: false
+    is_weight: false
+    concept: TrustLocalGov
+    unit_type: Person
+    representation:
+      type: scale
+      storage_type: integer
+      min: 1
+      max: 4
+      anchors:
+        1: "Not at all"
+        4: "A great deal"
+    missing:
+      schema_ref: null
+      codes: {}
+      ranges: []
+      blank_is_missing: true
+    source_variables: []
+    derivation_rule: null
+    _parse_flags: [missing_codes_inferred]
+
+  - id: var004
+    name: K6
+    label: "Occupation category"
+    is_temporal: false
+    is_geographic: false
+    is_weight: false
+    concept: Occupation
+    unit_type: Person
+    representation:
+      type: code
+      storage_type: integer
+      codes:
+        1: "Farmer"
+        2: "Unskilled worker"
+        3: "Skilled worker"
+        4: "Clerk/office worker"
+        5: "Manager/supervisor"
+        6: "Professional"
+        7: "Business owner"
+        8: "Retired"
+        9: "Professional worker"
+      classification_level: nominal
+    missing:
+      schema_ref: null
+      codes:
+        77: {label: "Refused", type: refused}
+        88: {label: "Don't know", type: dont_know}
+      ranges: []
+      blank_is_missing: true
+    source_variables: []
+    derivation_rule: null
+    _parse_flags: []
+
+  - id: var005
+    name: Q5
+    label: "Satisfaction with government performance"
+    is_temporal: false
+    is_geographic: false
+    is_weight: false
+    concept: GovSatisfaction
+    unit_type: Person
+    representation:
+      type: scale
+      storage_type: integer
+      min: 1
+      max: 5
+      anchors:
+        1: "Very dissatisfied"
+        5: "Very satisfied"
+    missing:
+      schema_ref: null
+      codes: {}
+      ranges: []
+      blank_is_missing: true
+    source_variables: []
+    derivation_rule: null
+    _parse_flags: [missing_codes_inferred]
+
+  - id: var006
+    name: wt
+    label: "Survey weight"
+    is_temporal: false
+    is_geographic: false
+    is_weight: true
+    concept: SurveyWeight
+    unit_type: Person
+    representation:
+      type: numeric
+      storage_type: float
+    missing:
+      schema_ref: null
+      codes: {}
+      ranges: []
+      blank_is_missing: true
+    source_variables: []
+    derivation_rule: null
+    _parse_flags: []
+
+data_structure:
+  type: wide
+  id_vars: []
+  wave_var: null
+  strata_var: null
+  cluster_var: null
+  weight_var: wt
+
+processing_events:
+  - event_id: evt001
+    type: CleaningOperation
+    timestamp: "2026-04-28T10:00:00Z"
+    skill_version: "1.0"
+    description: "Initial metadata extraction from Dickson 2014 Stata file"
+    inputs: ["2014 public goods and regime support survey_Stata_11.dta"]
+    outputs: ["ddi-metadata.yaml"]
+    operator: null

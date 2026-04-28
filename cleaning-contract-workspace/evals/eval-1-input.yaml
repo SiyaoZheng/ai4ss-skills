@@ -1,0 +1,262 @@
+schema_version: "1.0"
+ddi_version: "3.3"
+
+study:
+  name: "CGSS 2021"
+  id: null
+  agency: "中国人民大学"
+  universe: null
+  analysis_unit: Person
+  data_source: "Data/CGSS 2015-2021/CGSS2021_add weight 20211112.dta"
+  wave: "2021"
+
+shared_category_schemes:
+  agree5:
+    1: "非常同意"
+    2: "比较同意"
+    3: "说不上同意不同意"
+    4: "比较不同意"
+    5: "非常不同意"
+
+shared_missing_schemas: {}
+
+variables:
+  - id: var001
+    name: id
+    label: "受访者编号"
+    is_temporal: false
+    is_geographic: false
+    is_weight: false
+    concept: null
+    unit_type: Person
+    representation:
+      type: numeric
+      storage_type: integer
+    missing:
+      schema_ref: null
+      codes: {}
+      ranges: []
+      blank_is_missing: true
+    source_variables: []
+    derivation_rule: null
+    _parse_flags: []
+
+  - id: var002
+    name: a2
+    label: "性别"
+    is_temporal: false
+    is_geographic: false
+    is_weight: false
+    concept: Gender
+    unit_type: Person
+    representation:
+      type: code
+      storage_type: integer
+      codes:
+        1: "男"
+        2: "女"
+      classification_level: nominal
+    missing:
+      schema_ref: null
+      codes: {}
+      ranges: []
+      blank_is_missing: true
+    source_variables: []
+    derivation_rule: null
+    _parse_flags: []
+
+  - id: var003
+    name: a3a
+    label: "年龄"
+    is_temporal: false
+    is_geographic: false
+    is_weight: false
+    concept: Age
+    unit_type: Person
+    representation:
+      type: numeric
+      storage_type: integer
+      min: 18
+      max: 97
+    missing:
+      schema_ref: null
+      codes:
+        98: {label: "不知道", type: dont_know}
+        99: {label: "拒绝回答", type: refused}
+      ranges: []
+      blank_is_missing: true
+    source_variables: []
+    derivation_rule: null
+    _parse_flags: []
+
+  - id: var004
+    name: a7
+    label: "受教育程度"
+    is_temporal: false
+    is_geographic: false
+    is_weight: false
+    concept: Education
+    unit_type: Person
+    representation:
+      type: code
+      storage_type: integer
+      codes:
+        1: "没有受过任何教育"
+        2: "小学"
+        3: "初中"
+        4: "高中"
+        5: "大学专科"
+        6: "大学本科"
+        7: "研究生及以上"
+      classification_level: ordinal
+    missing:
+      schema_ref: null
+      codes:
+        97: {label: "拒绝回答", type: refused}
+        98: {label: "不知道", type: dont_know}
+        99: {label: "缺失", type: missing_data}
+      ranges: []
+      blank_is_missing: true
+    source_variables: []
+    derivation_rule: null
+    _parse_flags: []
+
+  - id: var005
+    name: a8a
+    label: "户籍类型"
+    is_temporal: false
+    is_geographic: false
+    is_weight: false
+    concept: Hukou
+    unit_type: Person
+    representation:
+      type: code
+      storage_type: integer
+      codes:
+        1: "农业户口"
+        2: "非农业户口"
+        3: "蓝印户口"
+        4: "居民户口"
+      classification_level: nominal
+    missing:
+      schema_ref: null
+      codes:
+        97: {label: "拒绝回答", type: refused}
+        99: {label: "缺失", type: missing_data}
+      ranges: []
+      blank_is_missing: true
+    source_variables: []
+    derivation_rule: null
+    _parse_flags: []
+
+  - id: var006
+    name: c3a
+    label: "对中央政府的信任程度"
+    is_temporal: false
+    is_geographic: false
+    is_weight: false
+    concept: TrustCentralGovernment
+    unit_type: Person
+    representation:
+      type: scale
+      storage_type: integer
+      min: 1
+      max: 5
+      anchors:
+        1: "完全不信任"
+        5: "完全信任"
+    missing:
+      schema_ref: null
+      codes: {}
+      ranges: []
+      blank_is_missing: true
+    source_variables: []
+    derivation_rule: null
+    _parse_flags: [missing_codes_inferred]
+
+  - id: var007
+    name: c3b
+    label: "对地方政府的信任程度"
+    is_temporal: false
+    is_geographic: false
+    is_weight: false
+    concept: TrustLocalGovernment
+    unit_type: Person
+    representation:
+      type: scale
+      storage_type: integer
+      min: 1
+      max: 5
+      anchors:
+        1: "完全不信任"
+        5: "完全信任"
+    missing:
+      schema_ref: null
+      codes: {}
+      ranges: []
+      blank_is_missing: true
+    source_variables: []
+    derivation_rule: null
+    _parse_flags: [missing_codes_inferred]
+
+  - id: var008
+    name: e1
+    label: "过去一年家庭总收入"
+    is_temporal: false
+    is_geographic: false
+    is_weight: false
+    concept: HouseholdIncome
+    unit_type: Household
+    representation:
+      type: numeric
+      storage_type: float
+      min: 0
+      max: 9999997
+    missing:
+      schema_ref: null
+      codes:
+        9999998: {label: "拒绝回答", type: refused}
+        9999999: {label: "不知道", type: dont_know}
+      ranges: []
+      blank_is_missing: true
+    source_variables: []
+    derivation_rule: null
+    _parse_flags: []
+
+  - id: var009
+    name: surveyweight
+    label: "调查权重"
+    is_temporal: false
+    is_geographic: false
+    is_weight: true
+    concept: SurveyWeight
+    unit_type: Person
+    representation:
+      type: numeric
+      storage_type: float
+    missing:
+      schema_ref: null
+      codes: {}
+      ranges: []
+      blank_is_missing: true
+    source_variables: []
+    derivation_rule: null
+    _parse_flags: []
+
+data_structure:
+  type: wide
+  id_vars: [id]
+  wave_var: null
+  strata_var: null
+  cluster_var: null
+  weight_var: surveyweight
+
+processing_events:
+  - event_id: evt001
+    type: CleaningOperation
+    timestamp: "2026-04-28T10:00:00Z"
+    skill_version: "1.0"
+    description: "Initial metadata extraction from CGSS 2021 Stata file"
+    inputs: ["CGSS2021_add weight 20211112.dta"]
+    outputs: ["ddi-metadata.yaml"]
+    operator: null

@@ -1,0 +1,13 @@
+{
+  "eval_id": 1,
+  "eval_name": "cgss-standard",
+  "prompt": "Write the cleaning contract for my CGSS 2021 dataset. The ddi-metadata.yaml is in the current working directory.\n\nMy requirements:\n- Universe: all observations (no filter needed)\n- Weight variable: check for is_weight: true in the YAML (it should be weight_adjust)\n- Attitude variables c3a and c3b are 5-point scales. Standard CGSS missing codes: 97=inapplicable, 98=don't know, 99=refused. Both reversed (higher = more trust) and renamed trust_central_ord and trust_local_ord.\n- Demographic variables: a2 (sex), a3a (age, numeric), a7 (education, ordinal), a8a (hukou type)\n- Recode a8a (hukou): 1→0 (agricultural), 2/3/4→1 (urban), rename to hukou_urban\n- Analysis vars: sex, age, edu (from a7), hukou_urban, trust_central_ord, trust_local_ord, and the weight variable",
+  "assertions": [
+    {"id": "shared_recodes_97_98_99", "text": "shared_recodes block defines a pattern with per_code covering 97, 98, and 99"},
+    {"id": "c3a_reverse", "text": "variable_contracts entry for c3a has reverse: true"},
+    {"id": "c3b_reverse", "text": "variable_contracts entry for c3b has reverse: true"},
+    {"id": "hukou_recode_map", "text": "variable_contracts entry for a8a (hukou) has recode_map with 1→0 and 2→1"},
+    {"id": "weight_assigned", "text": "weight_assignment.weight_var_id is non-null"},
+    {"id": "processing_event_appended", "text": "processing_events has a new CleaningOperation entry"}
+  ]
+}

@@ -1,0 +1,112 @@
+{
+  "skill_name": "cleaning-contract",
+  "evals": [
+    {
+      "id": 1,
+      "name": "cgss-standard",
+      "prompt": "Write the cleaning contract for my CGSS 2021 dataset. The ddi-metadata.yaml is in the current working directory.\n\nMy requirements:\n- Universe: all observations (no filter needed)\n- Weight variable: check for is_weight: true in the YAML (it should be weight_adjust)\n- Attitude variables c3a (trust in central government) and c3b (trust in local government) are 5-point scales. Standard CGSS missing codes apply: 97=inapplicable, 98=don't know, 99=refused. Both should be reversed (higher = more trust) and renamed trust_central_ord and trust_local_ord.\n- Demographic variables: a2 (sex), a3a (age, numeric), a7 (education, ordinal), a8a (hukou type)\n- Recode a8a (hukou): 1(agricultural)→0, 2(non-agricultural)→1, 3(blue-stamp)→1, 4(resident)→1, rename to hukou_urban\n- Analysis vars: sex, age, edu (from a7), hukou_urban, trust_central_ord, trust_local_ord, and the weight variable",
+      "expected_output": "ddi-metadata.yaml with cleaning_contract block appended: shared_recodes for 97/98/99, variable_contracts for c3a+c3b (reverse+rename), hukou recode_map, weight_assignment set, processing_events entry added",
+      "files": ["ddi-metadata.yaml"],
+      "assertions": [
+        {
+          "id": "shared_recodes_97_98_99",
+          "text": "shared_recodes block defines a pattern with per_code covering 97, 98, and 99",
+          "check": "grep for per_code with keys 97, 98, 99 in cleaning_contract.shared_recodes"
+        },
+        {
+          "id": "c3a_reverse",
+          "text": "variable_contracts entry for c3a (or var_id matching c3a) has reverse: true",
+          "check": "check cleaning_contract.variable_contracts for c3a with reverse: true"
+        },
+        {
+          "id": "c3b_reverse",
+          "text": "variable_contracts entry for c3b has reverse: true",
+          "check": "check cleaning_contract.variable_contracts for c3b with reverse: true"
+        },
+        {
+          "id": "hukou_recode_map",
+          "text": "variable_contracts entry for a8a (hukou) has recode_map with 1→0 and 2→1",
+          "check": "check cleaning_contract.variable_contracts for a8a with recode_map"
+        },
+        {
+          "id": "weight_assigned",
+          "text": "weight_assignment.weight_var_id is non-null",
+          "check": "check cleaning_contract.weight_assignment.weight_var_id != null"
+        },
+        {
+          "id": "processing_event_appended",
+          "text": "processing_events has a new entry with type: CleaningOperation",
+          "check": "check that a CleaningOperation event was appended (event_id evt002 or similar)"
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "name": "positive-missing-trap",
+      "prompt": "Write the cleaning contract for the Dickson 2014 Public Goods and Regime Support Survey. The ddi-metadata.yaml is in the current working directory.\n\nMy requirements:\n- Universe: all observations (no filter)\n- Weight: ps_weight variable\n- Attitude variables (trust/satisfaction scales): Q23 (trust central gov, scale 1-4), Q24 (trust local gov, scale 1-4), Q5 (gov satisfaction, scale 1-5). For all three: 9=refused and 8=don't know are missing. Rename to trust_central_ord, trust_local_ord, gov_satisfaction_ord.\n- Demographic variables:\n  - A3A: education level (1=primary below through 9=doctorate — NOTE: 9 is a valid category, doctorate). Missing: 99=refused only.\n  - K6: occupation (1-10 are valid categories, 77=other is valid — NOTE: 9=professional worker is valid data). Missing: -1=inapplicable, 88=don't know, 99=refused.\n  - A1A: age (numeric, no missing codes needed)\n- Analysis vars: id, age, A3A as edu, K6 as occupation, trust_central_ord, trust_local_ord, gov_satisfaction_ord, ps_weight",
+      "expected_output": "ddi-metadata.yaml with cleaning_contract: A3A has NO missing code for 9, K6 has NO missing code for 9, Q23 has 9 in missing_treatment.codes (type: refused), Q24 and Q5 same. Weight ps_weight assigned.",
+      "files": ["ddi-metadata.yaml"],
+      "assertions": [
+        {
+          "id": "A3A_9_not_missing",
+          "text": "variable_contracts entry for A3A does NOT include 9 as a missing code",
+          "check": "In variable_contracts for A3A: verify 9 is not in missing_treatment.codes or per_code"
+        },
+        {
+          "id": "K6_9_not_missing",
+          "text": "variable_contracts entry for K6 does NOT include 9 as a missing code",
+          "check": "In variable_contracts for K6: verify 9 is not in missing_treatment.codes or per_code"
+        },
+        {
+          "id": "Q23_9_is_missing",
+          "text": "variable_contracts entry for Q23 includes 9 as a missing code (type: refused)",
+          "check": "In variable_contracts for Q23: verify 9 appears in missing_treatment (codes or per_code)"
+        },
+        {
+          "id": "Q23_renamed",
+          "text": "Q23 is renamed to trust_central_ord",
+          "check": "variable_contracts for Q23 has rename_to: trust_central_ord"
+        },
+        {
+          "id": "weight_ps_weight",
+          "text": "weight_assignment uses the ps_weight variable",
+          "check": "weight_assignment.weight_var_id corresponds to the ps_weight variable"
+        },
+        {
+          "id": "processing_event_appended",
+          "text": "processing_events has a new CleaningOperation entry",
+          "check": "new event_id appended to processing_events"
+        }
+      ]
+    },
+    {
+      "id": 3,
+      "name": "abs-inapplicables-derived-vars",
+      "prompt": "Write the cleaning contract for ABS Wave 5 China dataset. The ddi-metadata.yaml is in the current working directory.\n\nMy requirements:\n- Universe: the dataset is already China-only, so condition: null (include all)\n- Weight variable: w (it should already be marked is_weight: true)\n- IMPORTANT: Variables where -1 appears throughout the dataset are STRUCTURALLY INAPPLICABLE for China because the institution doesn't exist (e.g., trust in president, trust in electoral commission). These are NOT skip-logic missing — China doesn't have these institutions. Mark them inapplicable and note why.\n- Key attitude variables I need cleaned: any political trust scale variables (check the YAML for q14-series or similar government trust items). Standard ABS missing codes: 97=inapplicable, 98=don't know, 99=refused.\n- Demographics: age (numeric), sex, education, income if available\n- I also need a derived variable: trad_media = rowMeans of tv_freq, newspaper_freq, radio_freq (if those variables exist; if not, skip)\n- Analysis vars: age, sex, edu, weight + political trust variables",
+      "expected_output": "ddi-metadata.yaml with cleaning_contract: universe.condition=null, some variables noted as structurally inapplicable with note, weight_assignment.weight_var_id set to var matching w, derived_variable for trad_media if source vars present, processing_event appended",
+      "files": ["ddi-metadata.yaml"],
+      "assertions": [
+        {
+          "id": "universe_null",
+          "text": "universe.condition is null (no row filter needed for China-only dataset)",
+          "check": "cleaning_contract.universe.condition == null"
+        },
+        {
+          "id": "structural_inapplicable_noted",
+          "text": "At least one variable_contracts entry has note mentioning structural/institution or inapplicable for China",
+          "check": "Check variable_contracts for note field mentioning structural inapplicability"
+        },
+        {
+          "id": "weight_assigned",
+          "text": "weight_assignment.weight_var_id is non-null",
+          "check": "cleaning_contract.weight_assignment.weight_var_id != null"
+        },
+        {
+          "id": "processing_event_appended",
+          "text": "processing_events has a new CleaningOperation entry",
+          "check": "new event appended"
+        }
+      ]
+    }
+  ]
+}

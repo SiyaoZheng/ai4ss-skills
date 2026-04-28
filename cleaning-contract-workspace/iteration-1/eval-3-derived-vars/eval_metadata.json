@@ -1,0 +1,11 @@
+{
+  "eval_id": 3,
+  "eval_name": "abs-inapplicables-derived-vars",
+  "prompt": "Write the cleaning contract for ABS Wave 5 China. ddi-metadata.yaml is in the current working directory.\n\nRequirements:\n- Universe: null (dataset already China-only)\n- Weight: w variable\n- Variables with -1 throughout are STRUCTURALLY INAPPLICABLE for China (institution doesn't exist). Note why.\n- Clean political trust scale variables using ABS standard codes (97/98/99)\n- Demographics: age, sex, education\n- Derived variable: trad_media = rowMeans(tv_freq, newspaper_freq, radio_freq) if source vars exist",
+  "assertions": [
+    {"id": "universe_null", "text": "universe.condition is null"},
+    {"id": "structural_inapplicable_noted", "text": "At least one variable_contracts entry notes structural inapplicability for China"},
+    {"id": "weight_assigned", "text": "weight_assignment.weight_var_id is non-null"},
+    {"id": "processing_event_appended", "text": "processing_events has a new CleaningOperation entry"}
+  ]
+}

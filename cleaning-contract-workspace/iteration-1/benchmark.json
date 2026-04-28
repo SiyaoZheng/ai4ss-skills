@@ -1,0 +1,365 @@
+{
+  "metadata": {
+    "skill_name": "cleaning-contract",
+    "skill_path": "<path/to/skill>",
+    "executor_model": "<model-name>",
+    "analyzer_model": "<model-name>",
+    "timestamp": "2026-04-28T10:54:45Z",
+    "evals_run": [
+      1,
+      2,
+      3
+    ],
+    "runs_per_configuration": 3
+  },
+  "runs": [
+    {
+      "eval_id": 1,
+      "configuration": "with_skill",
+      "run_number": 1,
+      "result": {
+        "pass_rate": 1.0,
+        "passed": 6,
+        "failed": 0,
+        "total": 6,
+        "time_seconds": 659.7,
+        "tokens": 105803,
+        "tool_calls": 0,
+        "errors": 0
+      },
+      "expectations": [
+        {
+          "id": "shared_recodes_97_98_99",
+          "text": "shared_recodes has per_code covering 97/98/99",
+          "passed": true,
+          "evidence": "Found in shared_recode 'cgss_trust_5pt': per_code keys = [97, 98, 99]"
+        },
+        {
+          "id": "c3a_reverse",
+          "text": "c3a has reverse: true",
+          "passed": true,
+          "evidence": "var_id=c3a, reverse=True, rename=trust_central_ord"
+        },
+        {
+          "id": "c3b_reverse",
+          "text": "c3b has reverse: true",
+          "passed": true,
+          "evidence": "var_id=c3b, reverse=True, rename=trust_local_ord"
+        },
+        {
+          "id": "hukou_recode_map",
+          "text": "hukou variable_contracts has recode_map with 1\u21920",
+          "passed": true,
+          "evidence": "recode_map={1: 0, 2: 1, 3: 1, 4: 1}"
+        },
+        {
+          "id": "weight_assigned",
+          "text": "weight_assignment.weight_var_id is non-null",
+          "passed": true,
+          "evidence": "weight_var_id=var695"
+        },
+        {
+          "id": "processing_event_appended",
+          "text": "processing_events has a new entry",
+          "passed": true,
+          "evidence": "Total events: 2, last: evt002"
+        }
+      ],
+      "notes": []
+    },
+    {
+      "eval_id": 2,
+      "configuration": "with_skill",
+      "run_number": 1,
+      "result": {
+        "pass_rate": 1.0,
+        "passed": 6,
+        "failed": 0,
+        "total": 6,
+        "time_seconds": 539.1,
+        "tokens": 101352,
+        "tool_calls": 0,
+        "errors": 0
+      },
+      "expectations": [
+        {
+          "id": "A3A_9_not_missing",
+          "text": "A3A: code 9 (doctorate) is NOT marked missing",
+          "passed": true,
+          "evidence": "original missing.codes has 9: False, contract missing_treatment has 9: False; A3A codes: [1, 2, 3, 4, 5, 6, 7, 8, 9]"
+        },
+        {
+          "id": "K6_9_not_missing",
+          "text": "K6: code 9 (professional worker) is NOT marked missing",
+          "passed": true,
+          "evidence": "original missing.codes has 9: False, contract missing_treatment has 9: False"
+        },
+        {
+          "id": "Q23_9_is_missing",
+          "text": "Q23: code 9 is marked as missing (refused) somewhere in the metadata",
+          "passed": true,
+          "evidence": "9 in original missing.codes: True, 9 in contract missing_treatment: False; var name=H5K, codes=[-1, 8, 9]"
+        },
+        {
+          "id": "Q23_renamed",
+          "text": "Q23 renamed to trust_central_ord",
+          "passed": true,
+          "evidence": "rename_to=trust_central_ord"
+        },
+        {
+          "id": "weight_ps_weight",
+          "text": "weight_assignment uses ps_weight variable",
+          "passed": true,
+          "evidence": "weight_var_id=var558, matched var=ps_weight"
+        },
+        {
+          "id": "processing_event_appended",
+          "text": "processing_events has a new entry",
+          "passed": true,
+          "evidence": "Total events: 2"
+        }
+      ],
+      "notes": []
+    },
+    {
+      "eval_id": 3,
+      "configuration": "with_skill",
+      "run_number": 1,
+      "result": {
+        "pass_rate": 1.0,
+        "passed": 4,
+        "failed": 0,
+        "total": 4,
+        "time_seconds": 248.9,
+        "tokens": 67969,
+        "tool_calls": 0,
+        "errors": 0
+      },
+      "expectations": [
+        {
+          "id": "universe_null",
+          "text": "universe.condition is null (China-only dataset)",
+          "passed": true,
+          "evidence": "condition=None"
+        },
+        {
+          "id": "structural_inapplicable_noted",
+          "text": "structural inapplicability documented (note, schema, or schema_ref)",
+          "passed": true,
+          "evidence": "note_in_contracts=False, abs_inapplicable_schema_exists=True, vars_with_schema_ref=True"
+        },
+        {
+          "id": "weight_assigned",
+          "text": "weight_assignment.weight_var_id is non-null",
+          "passed": true,
+          "evidence": "weight_var_id=var305"
+        },
+        {
+          "id": "processing_event_appended",
+          "text": "processing_events has a new entry",
+          "passed": true,
+          "evidence": "Total events: 2"
+        }
+      ],
+      "notes": []
+    },
+    {
+      "eval_id": 1,
+      "configuration": "without_skill",
+      "run_number": 1,
+      "result": {
+        "pass_rate": 0.16666666666666666,
+        "passed": 1,
+        "failed": 5,
+        "total": 6,
+        "time_seconds": 531.9,
+        "tokens": 73499,
+        "tool_calls": 0,
+        "errors": 0
+      },
+      "expectations": [
+        {
+          "id": "shared_recodes_97_98_99",
+          "text": "shared_recodes has per_code covering 97/98/99",
+          "passed": false,
+          "evidence": "shared_recodes: ['cgss_standard_missing_5pt', 'trust_reverse_5pt', 'hukou_urban_recode']"
+        },
+        {
+          "id": "c3a_reverse",
+          "text": "c3a has reverse: true",
+          "passed": false,
+          "evidence": "No variable contract found for c3a"
+        },
+        {
+          "id": "c3b_reverse",
+          "text": "c3b has reverse: true",
+          "passed": false,
+          "evidence": "No variable contract found for c3b"
+        },
+        {
+          "id": "hukou_recode_map",
+          "text": "hukou variable_contracts has recode_map with 1\u21920",
+          "passed": false,
+          "evidence": "No hukou variable contract found"
+        },
+        {
+          "id": "weight_assigned",
+          "text": "weight_assignment.weight_var_id is non-null",
+          "passed": false,
+          "evidence": "weight_var_id=None"
+        },
+        {
+          "id": "processing_event_appended",
+          "text": "processing_events has a new entry",
+          "passed": true,
+          "evidence": "Total events: 2, last: evt002"
+        }
+      ],
+      "notes": []
+    },
+    {
+      "eval_id": 2,
+      "configuration": "without_skill",
+      "run_number": 1,
+      "result": {
+        "pass_rate": 0.6666666666666666,
+        "passed": 4,
+        "failed": 2,
+        "total": 6,
+        "time_seconds": 408.9,
+        "tokens": 71817,
+        "tool_calls": 0,
+        "errors": 0
+      },
+      "expectations": [
+        {
+          "id": "A3A_9_not_missing",
+          "text": "A3A: code 9 (doctorate) is NOT marked missing",
+          "passed": true,
+          "evidence": "original missing.codes has 9: False, contract missing_treatment has 9: False; A3A codes: [1, 2, 3, 4, 5, 6, 7, 8, 9]"
+        },
+        {
+          "id": "K6_9_not_missing",
+          "text": "K6: code 9 (professional worker) is NOT marked missing",
+          "passed": true,
+          "evidence": "original missing.codes has 9: False, contract missing_treatment has 9: False"
+        },
+        {
+          "id": "Q23_9_is_missing",
+          "text": "Q23: code 9 is marked as missing (refused) somewhere in the metadata",
+          "passed": true,
+          "evidence": "9 in original missing.codes: True, 9 in contract missing_treatment: False; var name=H5K, codes=[-1, 8, 9]"
+        },
+        {
+          "id": "Q23_renamed",
+          "text": "Q23 renamed to trust_central_ord",
+          "passed": false,
+          "evidence": "No variable contract found for Q23"
+        },
+        {
+          "id": "weight_ps_weight",
+          "text": "weight_assignment uses ps_weight variable",
+          "passed": false,
+          "evidence": "weight_var_id=None, matched var=None"
+        },
+        {
+          "id": "processing_event_appended",
+          "text": "processing_events has a new entry",
+          "passed": true,
+          "evidence": "Total events: 2"
+        }
+      ],
+      "notes": []
+    },
+    {
+      "eval_id": 3,
+      "configuration": "without_skill",
+      "run_number": 1,
+      "result": {
+        "pass_rate": 0.75,
+        "passed": 3,
+        "failed": 1,
+        "total": 4,
+        "time_seconds": 218.6,
+        "tokens": 62874,
+        "tool_calls": 0,
+        "errors": 0
+      },
+      "expectations": [
+        {
+          "id": "universe_null",
+          "text": "universe.condition is null (China-only dataset)",
+          "passed": true,
+          "evidence": "condition=None"
+        },
+        {
+          "id": "structural_inapplicable_noted",
+          "text": "structural inapplicability documented (note, schema, or schema_ref)",
+          "passed": true,
+          "evidence": "note_in_contracts=True, abs_inapplicable_schema_exists=True, vars_with_schema_ref=True; var_id=None, note='All observations coded -1. China does not have a directly elected president or p'"
+        },
+        {
+          "id": "weight_assigned",
+          "text": "weight_assignment.weight_var_id is non-null",
+          "passed": false,
+          "evidence": "weight_var_id=None"
+        },
+        {
+          "id": "processing_event_appended",
+          "text": "processing_events has a new entry",
+          "passed": true,
+          "evidence": "Total events: 2"
+        }
+      ],
+      "notes": []
+    }
+  ],
+  "run_summary": {
+    "with_skill": {
+      "pass_rate": {
+        "mean": 1.0,
+        "stddev": 0.0,
+        "min": 1.0,
+        "max": 1.0
+      },
+      "time_seconds": {
+        "mean": 482.5667,
+        "stddev": 211.1544,
+        "min": 248.9,
+        "max": 659.7
+      },
+      "tokens": {
+        "mean": 91708.0,
+        "stddev": 20678.6833,
+        "min": 67969,
+        "max": 105803
+      }
+    },
+    "without_skill": {
+      "pass_rate": {
+        "mean": 0.5278,
+        "stddev": 0.3155,
+        "min": 0.1667,
+        "max": 0.75
+      },
+      "time_seconds": {
+        "mean": 386.4667,
+        "stddev": 157.8501,
+        "min": 218.6,
+        "max": 531.9
+      },
+      "tokens": {
+        "mean": 69396.6667,
+        "stddev": 5711.0565,
+        "min": 62874,
+        "max": 73499
+      }
+    },
+    "delta": {
+      "pass_rate": "+0.47",
+      "time_seconds": "+96.1",
+      "tokens": "+22311"
+    }
+  },
+  "notes": []
+}

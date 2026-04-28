@@ -1,0 +1,34 @@
+{
+  "expectations": [
+    {
+      "id": "universe_null",
+      "text": "universe.condition is null (China-only dataset)",
+      "passed": true,
+      "evidence": "condition=None"
+    },
+    {
+      "id": "structural_inapplicable_noted",
+      "text": "structural inapplicability documented (note, schema, or schema_ref)",
+      "passed": true,
+      "evidence": "note_in_contracts=True, abs_inapplicable_schema_exists=True, vars_with_schema_ref=True; var_id=None, note='All observations coded -1. China does not have a directly elected president or p'"
+    },
+    {
+      "id": "weight_assigned",
+      "text": "weight_assignment.weight_var_id is non-null",
+      "passed": false,
+      "evidence": "weight_var_id=None"
+    },
+    {
+      "id": "processing_event_appended",
+      "text": "processing_events has a new entry",
+      "passed": true,
+      "evidence": "Total events: 2"
+    }
+  ],
+  "summary": {
+    "passed": 3,
+    "failed": 1,
+    "total": 4,
+    "pass_rate": 0.75
+  }
+}

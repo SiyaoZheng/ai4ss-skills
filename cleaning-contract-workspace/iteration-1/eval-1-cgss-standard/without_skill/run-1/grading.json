@@ -1,0 +1,46 @@
+{
+  "expectations": [
+    {
+      "id": "shared_recodes_97_98_99",
+      "text": "shared_recodes has per_code covering 97/98/99",
+      "passed": false,
+      "evidence": "shared_recodes: ['cgss_standard_missing_5pt', 'trust_reverse_5pt', 'hukou_urban_recode']"
+    },
+    {
+      "id": "c3a_reverse",
+      "text": "c3a has reverse: true",
+      "passed": false,
+      "evidence": "No variable contract found for c3a"
+    },
+    {
+      "id": "c3b_reverse",
+      "text": "c3b has reverse: true",
+      "passed": false,
+      "evidence": "No variable contract found for c3b"
+    },
+    {
+      "id": "hukou_recode_map",
+      "text": "hukou variable_contracts has recode_map with 1\u21920",
+      "passed": false,
+      "evidence": "No hukou variable contract found"
+    },
+    {
+      "id": "weight_assigned",
+      "text": "weight_assignment.weight_var_id is non-null",
+      "passed": false,
+      "evidence": "weight_var_id=None"
+    },
+    {
+      "id": "processing_event_appended",
+      "text": "processing_events has a new entry",
+      "passed": true,
+      "evidence": "Total events: 2, last: evt002"
+    }
+  ],
+  "summary": {
+    "passed": 1,
+    "failed": 5,
+    "total": 6,
+    "pass_rate": 0.16666666666666666
+  }
+}

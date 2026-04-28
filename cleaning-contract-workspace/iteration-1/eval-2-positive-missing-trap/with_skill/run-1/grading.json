@@ -1,0 +1,46 @@
+{
+  "expectations": [
+    {
+      "id": "A3A_9_not_missing",
+      "text": "A3A: code 9 (doctorate) is NOT marked missing",
+      "passed": true,
+      "evidence": "original missing.codes has 9: False, contract missing_treatment has 9: False; A3A codes: [1, 2, 3, 4, 5, 6, 7, 8, 9]"
+    },
+    {
+      "id": "K6_9_not_missing",
+      "text": "K6: code 9 (professional worker) is NOT marked missing",
+      "passed": true,
+      "evidence": "original missing.codes has 9: False, contract missing_treatment has 9: False"
+    },
+    {
+      "id": "Q23_9_is_missing",
+      "text": "Q23: code 9 is marked as missing (refused) somewhere in the metadata",
+      "passed": true,
+      "evidence": "9 in original missing.codes: True, 9 in contract missing_treatment: False; var name=H5K, codes=[-1, 8, 9]"
+    },
+    {
+      "id": "Q23_renamed",
+      "text": "Q23 renamed to trust_central_ord",
+      "passed": true,
+      "evidence": "rename_to=trust_central_ord"
+    },
+    {
+      "id": "weight_ps_weight",
+      "text": "weight_assignment uses ps_weight variable",
+      "passed": true,
+      "evidence": "weight_var_id=var558, matched var=ps_weight"
+    },
+    {
+      "id": "processing_event_appended",
+      "text": "processing_events has a new entry",
+      "passed": true,
+      "evidence": "Total events: 2"
+    }
+  ],
+  "summary": {
+    "passed": 6,
+    "failed": 0,
+    "total": 6,
+    "pass_rate": 1.0
+  }
+}
