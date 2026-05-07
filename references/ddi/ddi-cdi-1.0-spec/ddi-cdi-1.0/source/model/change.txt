@@ -1,0 +1,410 @@
+Changes 2025-01-23
+Updated repo location in documentation to github
+
+Changes 2025-01-17
+ReferenceVariable and DescriptorVariable 
+- Made extensions of InstanceVariable
+ForeignKeyComponent
+- Changed cardinalty of references from 0..1 to 0..*
+PhysicalRecordSegment
+- Removed alloesDuplicate attribute (it belongs in the Collection class, which is PhysicalDataSet)
+Default values added to the following Boolean attributes:
+- DDICDIModels-DDICDILibrary-Classes-Agents-AgentListing-allowsDuplicates = False
+- DDICDIModels-DDICDILibrary-Classes-Conceptual-ConceptSystem-allowsDuplicates = False
+- DDICDIModels-DDICDILibrary-Classes-Conceptual-VariableCollection-allowsDuplicates = False
+- DDICDIModels-DDICDILibrary-Classes-DataDescription-Components-DimensionComponent-categoricalAdditivity = False
+- DDICDIModels-DDICDILibrary-Classes-FormatDescription-DataStore-allowsDuplicates = False
+- DDICDIModels-DDICDILibrary-Classes-FormatDescription-PhysicalDataSet-allowsDuplicates = False
+- DDICDIModels-DDICDILibrary-Classes-FormatDescription-PhysicalSegmentLayout-allowsDuplicates = True
+- DDICDIModels-DDICDILibrary-Classes-FormatDescription-PhysicalSegmentLayout-isDelimited = True
+- DDICDIModels-DDICDILibrary-Classes-FormatDescription-PhysicalSegmentLayout-isFixedWidth = False
+- DDICDIModels-DDICDILibrary-Classes-FormatDescription-PhysicalSegmentLayout-treatConsecutiveDelimitersAsOne = False
+- DDICDIModels-DDICDILibrary-Classes-Representations-ClassificationIndex-allowsDuplicates = True
+- DDICDIModels-DDICDILibrary-Classes-Representations-ClassificationItem-isGenerated = False
+- DDICDIModels-DDICDILibrary-Classes-Representations-ClassificationItem-isValid = True
+- DDICDIModels-DDICDILibrary-Classes-Representations-ClassificationSeries-allowsDuplicates = False
+- DDICDIModels-DDICDILibrary-Classes-Representations-CodeList-allowsDuplicates = False
+- DDICDIModels-DDICDILibrary-Classes-Representations-StatisticalClassification-allowsDuplicates = False
+- DDICDIModels-DDICDILibrary-Classes-Representations-StatisticalClassification-isCurrent = True
+- DDICDIModels-DDICDILibrary-Classes-Representations-StatisticalClassification-isFloating = False
+- DDICDIModels-DDICDILibrary-DataTypes-StructuredDataTypes-Address-isPreferred = False
+- DDICDIModels-DDICDILibrary-DataTypes-StructuredDataTypes-ElectronicMessageSystem-isPreferred = False
+- DDICDIModels-DDICDILibrary-DataTypes-StructuredDataTypes-Email-isPreferred = False
+- DDICDIModels-DDICDILibrary-DataTypes-StructuredDataTypes-IndividualName-isFormal = False
+- DDICDIModels-DDICDILibrary-DataTypes-StructuredDataTypes-IndividualName-isPreferred = False
+- DDICDIModels-DDICDILibrary-DataTypes-StructuredDataTypes-InternationalIdentifier-isURI = False
+- DDICDIModels-DDICDILibrary-DataTypes-StructuredDataTypes-OrganizationName-isFormal = True
+- DDICDIModels-DDICDILibrary-DataTypes-StructuredDataTypes-Statistic-isWeighted = False
+- DDICDIModels-DDICDILibrary-DataTypes-StructuredDataTypes-Telephone-isPreferred = False
+- DDICDIModels-DDICDILibrary-DataTypes-StructuredDataTypes-WebLink-isPreferred = False
+
+
+Changes 2024-03-11
+- Added identifier attibute to LogicalRecord
+- Added name and displayLabel attributes to ControlLogic
+
+Changes 2024-02-22
+PhysicalDataSetStructure - DataStructure
+- Added correspondsTo association
+PhysicalDataSet - DataSet
+- Added correspondsTo association
+PhysicalSegmentLayout - InstanceVariable
+- Added has association
+
+LanguageString
+- Updated definition of class
+- Updated definition of language attribute
+- Updated definition of translationSourceLanguage attribute
+Concept
+- Removed incorrect reference to the signification pattern from the definition
+Concept (self-referential) uses association 
+- Added description
+ConceptualVariable measures UnitType association
+- Added description
+LanguageString
+- Added language attribute 
+ProcessingAgent - ProductionEnvironment
+- Changed cardinality of operatesOn from 1..* to 0..*
+ProductionEnvironment
+- Added name, displayLabel and description
+
+Changes 2023-11-12
+PhysicalDataset - InstanceVariable
+- Added "has" association
+Variable Cascade 
+- Added "uses" association to Concept (self-referential)
+- Removed "narrows" associations (it's not captured by new "uses" association at the Concept level)
+- Removed "isBasedOn" associations (it's not captured by "uses" association at the Concept level)
+- Removed "uses" associations
+- Removed "measures" between RepresentedVariable and Universe and between InstanceVariable and Population (now inherited from ConceptualVariable and UnitType)
+Sequence (realized Collections Pattern)
+- Added SequencePosition class
+- Added "refines" dependency from SequencePosition to Position in Collections
+- Added "refines" dependency from Sequence to List in Collections
+- Added "has" association from Sequence to SequencePosition
+- Added "indexes" association from SequencePosition to Activity
+Activity
+- Added "definition" and "displayLabel" attributes
+ConceptualValue
+- Added "identifier" attribute
+Key pattern
+- Converted abstract pattern classes to concrete classes
+- Added "identifier" attribute to pattern classes (KeyDefinition and Key)
+- Changed refines to generalize
+- Removed redundant "identifier" attributes from sub-classes
+- Moved pattern classes to DDICDILibrary
+- Replaced "has" association by "uses" dependency" ("has" is now inherited)
+- Replaced "isRepresentedBy" by "uses" dependency" ("isRepresentedBy" is now inherited)
+- Replaced "isBasedOn" by "uses" dependency ("isBasedOn" is now inherited)
+- Removed associations to DataPoint, DataSet, Universe and Unit from Key sub-classes (they are now inherited)
+DataSet has Key
+- Changed cardinality to 0..* from 1..*
+DataSet has DataPoint
+- Changed cardinality to 0..* from 1..*
+DataStructure has DataStructureComponent
+- Changed cardinality to 0..1 from 1..*
+AttributeComponent qualifies DataStructureComponent
+- Changed cardinality to 0..* from 1..*
+LanguageString datatype
+- Merged LanguageString and ComplexLanguageString into new LanguageString
+- Updated definition
+InstanceVariable - ValueMapping
+- Added "has" association
+ConceptualValue
+- Removed "identifier" attribute (inherited from Concept)
+Universe
+- Removed "descriptiveText" attribute
+
+
+
+Changes 2023-05-23
+Activity
+- added "name" attribute of type ObjectName and cardinality [0..*]
+Parameter
+- added "name" attribute of type ObjectName and cardinality [0..*]
+Step to Parameter
+- removed "uses" association
+- added "receives" association with cardinality [0..*] on both ends and definition "The Step uses Parameter as an input."
+- added "produces" association with cardinality [0..*] on both ends and definition "The Step creates Parameter as an output."
+Diagrams
+- added "Process-Core", "Process-Step" and "Value and Conceptual Domains" diagrams
+
+Changes 2023-04-12
+ComponentPosition
+- added attribute identifier
+DimensionGroup
+- added attribute identifier
+DDICDIModels
+- Definition text
+	changed URL https://ddialliance.org/Specification/DDI-CDI/
+	change rst credits list
+
+Changes Feb 22/2023
+Datum
+-	Updated definition, example and explanatory text
+Datum-InstanceValue association
+-	Changed cardinality on InstanceValue end to 1..*
+Datum-InstanceVariable association
+-	Changed cardinality on InstanceVariable end to 1..*
+
+Changes Feb 16/2023
+DDICDIModels
+-	Added credits blurb at the end of the Element Notes
+CDIContent
+-	Removed
+Identifier
+-	Made isDDIIdentifierPersistent and isDDIIdentifierUniversallyUnique optional (cardinality O..1)
+
+Changes Dec 10/2022
+DDICDIModels
+-	Added text to the Element Notes from the high-level documentation
+InternationalRegistrationDataIdentifier
+-	Changed flag “is ID” to true for dataIdentifier, registrationAuthorityIdentifier and versionIdentifier attributes
+Identifier
+-	Changed flag “is ID” to true for ddiIdentifier attribute
+All classes with identifier attribute
+-	Changed flag “is ID” to true for identifier attribute
+
+Changes Oct 6/2022
+CategoryStatistic
+-	Delete “for” association to Datum 
+-	Add “for” association to “Category”
+-	Add “appliesTo” association to InstanceVariable
+-	Delete categoryValue
+-	Delete filterValue
+LogicalRecord
+-	Changed documentation
+-	Add has association to InstanceVariable
+-	Add organizes association to DataSet
+UnitDataRecord delete
+RecordRelation
+-	Add maps association to LogicalRecord
+InstanceVariable
+-	Add refines to Member
+LogicalRecordRelationship
+-	Changed documentation
+DimensionalDataStructure
+-	Changed name to DimensionGroup
+CubeDataStructure
+-	Changed name to DimensionalDataStructure
+DimensionalDataStructure
+-	Changed name to 
+-	Add uses to DimensionComponent
+-	Changed extension from DimensionGroup to DataStructure (like all other DataStructure)
+-	Add uses association to DimensionGroup
+DimensionGroup
+-	Add refines to Collection (DimensionComponent, as an extension of DataStructureComponent, already refines Member)
+-	Add has association to DimensionComponent
+DataStructure sub-classes
+-	Changed definitions (added components)
+DataSet sub-classes
+-	Changed definitions (added structures)
+
+Changes Aug 15/2022
+Diagrams
+-	Added new Catalog Details, Data Description Hierarchy, Datum, Descriptor, Dimensional Structure, Identifier and Reference, Key, Long Key, Long Structure, Process – Detailed, Process – High Level, Values, Wide Structure
+CDIContent
+-	Changed cardinality of SupportingInformation to [0..*] (from [1..*]
+ComplexLanguageString
+-	Removed the attribute "language”
+WideDataSet, LongDataSet, DimensionalDataSet, KeyValueDataSet 
+-	Replaced redundant “isStructuredBy” association to respective data structures (inherited from DataSet)) by “use” dependency
+WideDataSet, LongDataSet, DimensionalDataSet, KeyValueDataSet 
+-	Replaced redundant “has” association to DataPoint (inherited from DataSet) by “use” dependency
+KeyMember to InstanceValue
+-	Changed trace to generalize
+KeyDefinitionMember to ConceptualValue
+-	Changed trace to generalize
+Harmonized “true” and “false” in attribute definitions having true of false in quotes or apostrophes (in any combination) -> Changed all to either True or False, respectively (except in texts quoted from external documentations, e.g. W3C standards)
+-	Classes-Agents-AgentListing-allowsDuplicates 
+-	Classes-Conceptual-ConceptSystem-allowsDuplicates 
+-	Classes-Conceptual-VariableCollection-allowsDuplicates 
+-	Classes-DataDescription-Components-DimensionComponent-categoricalAdditivity 
+-	Classes-FormatDescription-DataStore-allowsDuplicates 
+-	Classes-FormatDescription-PhysicalDataSet-allowsDuplicates 
+-	Classes-FormatDescription-PhysicalRecordSegment-allowsDuplicates 
+-	Classes-FormatDescription-PhysicalSegmentLayout-allowsDuplicates 
+-	Classes-FormatDescription-PhysicalSegmentLayout-skipInitialSpace 
+-	Classes-FormatDescription-ValueMapping-isRequired 
+-	Classes-Representations-ClassificationIndex-allowsDuplicates 
+-	Classes-Representations-ClassificationSeries-allowsDuplicates 
+-	Classes-Representations-CodeList-allowsDuplicates 
+-	Classes-Representations-StatisticalClassification-allowsDuplicates 
+-	DataTypes-StructuredDataTypes-Address-isPreferred 
+-	DataTypes-StructuredDataTypes-ElectronicMessageSystem-isPreferred 
+-	DataTypes-StructuredDataTypes-IndividualName-isPreferred 
+-	DataTypes-StructuredDataTypes-InternationalIdentifier-isURI 
+-	DataTypes-StructuredDataTypes-WebLink-isPreferred 
+-	CollectionsPattern-Collection-allowsDuplicates
+-	DataTypes-StructuredDataTypes-Email-isPreferred
+-	DataTypes-StructuredDataTypes-LanguageSpecificString-isTranslatable
+-	DataTypes-StructuredDataTypes-LanguageSpecificString-isTranslated
+-	DataTypes-StructuredDataTypes-OrganizationName-isFormal
+
+Changes June 30/2022
+ProductionEnvironment
+-	Fixed accidental renaming of ProductionEnvironment in the Process package
+LocalIdFormat
+-	Deleted from the StructuredDataTypes package
+ModelIdentification
+-	Added trailing slash to the default value of the uri attribute
+
+Changes 19/05
+ProcessingAgent
+-	Made it extension of Agent
+-	Removed identifier (now inherited from Agent)
+CatalogDetails
+-	Added “trace” (“traces to”) dependencies to DC Terms:
+	o	accessRights
+	o	alternative
+	o	contributor
+	o	creator
+	o	date
+	o	identifier
+	o	source
+	o	language
+	o	provenance
+	o	publisher
+	o	relation
+	o	abstract
+	o	title
+	o	type
+	o	format
+Datum–InstanceValue 
+-	Changed cardinality on the InstanceValue end from 1..1 to 0..1
+Datum–Notation 
+-	Changed cardinality on the InstanceValue end from 1..1 to 0..1
+Reference
+-	Changed semantic attribute from required to optional
+DataSet
+-	Removed abstract classifier
+-	Added identifier and catalogDetails attributes
+WideDataSet, LongDataSet, KeyValueDataSet, DimensionalDataSet 
+-	Changed “refine” dependency DataSet to “generalize” (isA) relationship
+-	Removed identifier and catalogDetails attributes (now inherited)
+PROV
+-	Created new package PROV under Context 
+-	Added Activity, Agent, and Entity classes
+-	Added “trace” (“traces to”) from Agents.Agent to PROV.Agent
+-	Added “trace” (“traces to”) from Process.Activity to PROV.Activity
+
+Changes May 4/2022
+Renamed duplicates attribute to allowsDuplicates in the following
+-	Collection
+-	AgentListing
+-	ConceptSystem	
+-	VariableCollection
+-	DataStore	
+-	PhysicalDataSet	
+-	PhysicalRecordSegment	
+-	PhysicalSegmentLayout	
+-	ClassificationIndex
+-	ClassificationSeries
+-	CodeList	
+-	StatisticalClassification
+
+Changes March 14/2022
+Changed InitialValue in the following:
+-	Universe
+	o	isInclusive -> InitialValue = True
+-	PhysicalSegmentLayout 
+	o	delimiter -> InitialValue = “,”
+	o	escapeCharacter -> InitialValue = True
+	o	hasHeader -> InitialValue = True
+	o	headerIsCaseSensitive -> InitialValue = False
+	o	headerRowCount -> InitialValue = 1
+	o	lineTerminator -> InitialValue = "[CRLF, LF]"
+	o	quoteCharacter -> InitialValue = “.”
+	o	skipBlankRows -> InitialValue = False
+	o	skipDataColumns -> InitialValue = 0
+	o	skipInitialSpace -> InitialValue = True
+	o	skipRows -> InitialValue = 0
+	o	tableDirection -> InitialValue = “Auto”
+	o	trim -> InitialValue = true
+-	SegmentByText
+	o	startLine -> InitialValue = 1
+	o	Other attributes -> Not clear what to default to
+-	ValueMapping
+	o	defaultDecimalSeparator -> InitialValue = “.”
+	o	defaultDigitGroupSeparator -> InitialValue = null
+	o	defaultValue ->InitialValue = “”
+	o	isRequiered -> InitialValue = False
+	o	nullSequence -> InitialValue = “”
+-	Identifier
+	o	isDdiIdentifierPersistent -> InitialValue = False
+	o	IsDdiIdentifierUniversallyUnique -> InitialValue = False
+	o	uri -> has no documentation
+-	LanguageSpecificString
+	o	isTranslatable -> InitialValue = True
+	o	isTranslated -> InitialValue = False
+-	ComplexLanguageString
+	o	isTranslatable -> InitialValue = True
+	o	isTranslated -> InitialValue = False
+
+Changes March 09/2022
+AgentAssociation
+-	Moved to Deleted
+
+Changes Feb 24/2022
+Identifier
+-	Made attribute ddiIdentifier optional
+-	Renamed attribute isPersistent to isDdiIdentifierPersistent
+-	Renamed attribute isUniversallyUnique to isDdiIdentifierUniversallyUnique
+Structure
+-	Edited definition of attribute topology to include “mesh” as a synonym of “network”
+Organization
+-	Removed ddiId
+Individual
+-	Removed ddiId
+Agent
+-	Removed agentId
+CatalogDetails
+-	Change date datatype to CombinedDate (from AnnotationDate)
+CombinedDate
+-	Added semantics attribute of type ControlledVocabularyEntry[0..1]
+AnnotationDate
+-	Moved to Deleted
+AgentID
+-	Moved to Deleted
+
+Changes Feb 16/2022
+Reference
+-	Removed required attribute
+-	Changed cardinality of ddiReference to 0..1
+Added Identifier attribute
+-	Agent
+-	ConceptualDomain
+-	ComponentPosition
+-	PhysicalSegmentLayout
+-	PhysicalSegmentLocation
+-	EnumerationDomain
+-	ValueDomain
+Removed Identifier attribute
+-	Agent subclasses: Individual, Machine, Organization
+-	ConceptualDomain subclasses: SentinelConceptualDomain, SubstantiveConceptualDomain
+-	PhysicalSegmentLayout subclasses: UnitSegmentLayout
+-	PhysicalSegmentLocation subclasses: SegmentByText
+-	EnumerationDomain subclasses: CodeList, StatisticalClassification
+-	ValueDomain subclasses: ReferenceValueDomain, SentinelValueDomain, SubstantiveValueDomain
+
+Changes Feb 04/2022
+TimeCharacteristic
+-	Moved to Deleted
+StructureTopology
+-	Moved to Deleted
+Structure
+-	Changed topology datatype to ControlledVocabularyEntry from StructureTopology
+-	Changed definition of topology to include examples of controlled vocabulary entries
+Changed topology datatype to ControlledVocabularyEntry from StructureTopology in realizations of Structure:
+-	AgentStructure
+-	ClassificationItemStructure
+-	ClassificationSeriesStructure
+-	CodeListStructure
+-	PhysicalRecordSegmentStructure
+-	PhysicalDataSetStructure
+-	LogicalRecordRelationStructure
+-	CategoryRelationStructure
+-	ConceptStructure
+-	VariableStructure
+TemporalOperator
+-	Added definition for the Enumeration and for each item

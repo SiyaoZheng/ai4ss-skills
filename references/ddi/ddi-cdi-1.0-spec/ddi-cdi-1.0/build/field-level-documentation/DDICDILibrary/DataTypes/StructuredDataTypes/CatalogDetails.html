@@ -1,0 +1,1255 @@
+
+
+<!DOCTYPE html>
+
+<html lang="en" data-content_root="../../../">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>CatalogDetails &#8212; UML Model: DDI Cross Domain Integration (DDI-CDI 1.0)</title>
+    <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=03e43079" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/classic.css?v=4d097c01" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/graphviz.css?v=4ae1632d" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/sphinx-design.min.css?v=95c83b7e" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/custom.css?v=e6a9d92b" />
+    
+    <script src="../../../_static/jquery.js?v=5d32c60e"></script>
+    <script src="../../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+    <script src="../../../_static/documentation_options.js?v=8a448e45"></script>
+    <script src="../../../_static/doctools.js?v=9bcbadda"></script>
+    <script src="../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../../_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="../../../_static/copybutton.js?v=f281be69"></script>
+    <script src="../../../_static/design-tabs.js?v=f930bc37"></script>
+    <script src="../../../_static/custom.js?v=5de7d6e5"></script>
+    <script src="../../../_static/definition.js?v=897f6d42"></script>
+    
+    <script src="../../../_static/sidebar.js"></script>
+    
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" />
+    <link rel="next" title="CombinedDate" href="CombinedDate.html" />
+    <link rel="prev" title="BibliographicName" href="BibliographicName.html" /> 
+    <meta http-equiv="Content-Security-Policy" content="script-src 'self' 'unsafe-inline' https://cdn.datatables.net/ https://code.jquery.com/; style-src 'self' 'unsafe-inline' https://cdn.datatables.net/ https://code.jquery.com/; img-src 'self' https://cdn.datatables.net/;">
+    <!-- loaded before custom.js required. Done now with sphinxcontrib-jquery. See example Agent.html.
+    <script
+              src="https://code.jquery.com/jquery-3.7.1.min.js"
+              integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo="
+              crossorigin="anonymous"></script>
+    -->
+    <script
+              src="https://code.jquery.com/ui/1.13.2/jquery-ui.min.js"
+              integrity="sha256-lSjKY0/srUM9BE3dPm+c4fBo1dky2v27Gdjm2uoZaL0="
+              crossorigin="anonymous"></script>
+	<!--
+		Combined css and js downloads created with https://datatables.net/download/.
+		DataTables, Buttons (HTML5 export, JSZip, Print view), Search panes, Select, Minify, Concatenate
+	-->
+	<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/dt/jszip-2.5.0/dt-1.10.24/b-1.7.0/b-html5-1.7.0/b-print-1.7.0/sp-1.2.2/sl-1.3.3/datatables.min.css"/>
+	<script type="text/javascript" src="https://cdn.datatables.net/v/dt/jszip-2.5.0/dt-1.10.24/b-1.7.0/b-html5-1.7.0/b-print-1.7.0/sp-1.2.2/sl-1.3.3/datatables.min.js"></script>
+	<!-- For jquery tooltip. See: https://jqueryui.com/tooltip/ -->
+	<link rel="stylesheet" href="https://code.jquery.com/ui/1.13.2/themes/base/jquery-ui.css">
+	<script src="https://code.jquery.com/ui/1.13.2/jquery-ui.min.js"></script>
+    <!--
+    already loaded by sphinx
+	<script src="https://code.jquery.com/jquery-3.5.1.js" type="text/javascript" language="javascript"></script>
+	-->
+
+  </head><body>
+    <div class="related" role="navigation" aria-label="Related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="CombinedDate.html" title="CombinedDate"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="BibliographicName.html" title="BibliographicName"
+             accesskey="P">previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../../../index.html">UML Model: DDI Cross Domain Integration (DDI-CDI 1.0)</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="../../index.html" >DDICDILibrary</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="../index.html" >DataTypes</a> &#187;</li>
+          <li class="nav-item nav-item-3"><a href="index.html" accesskey="U">StructuredDataTypes</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">CatalogDetails</a></li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <section id="catalogdetails">
+<span id="ddicdimodels-ddicdilibrary-datatypes-structureddatatypes-catalogdetails"></span><h1>CatalogDetails<a class="headerlink" href="#catalogdetails" title="Link to this heading">¶</a></h1>
+<p><strong>Fully qualified datatype name</strong>: DDICDIModels::DDICDILibrary::DataTypes::StructuredDataTypes::<span class="target" id="index-0"></span>CatalogDetails</p>
+<section id="definition">
+<h2>Definition<a class="headerlink" href="#definition" title="Link to this heading">¶</a></h2>
+<p>A set of information useful for attribution, data discovery, and access.</p>
+</section>
+<section id="examples">
+<h2>Examples<a class="headerlink" href="#examples" title="Link to this heading">¶</a></h2>
+<p>Creator, contributor, title, copyright, license information.</p>
+<div class="docutils container" id="diagram">
+<details class="sd-sphinx-override sd-dropdown sd-card sd-mb-3" open="open">
+<summary class="sd-summary-title sd-card-header">
+<span class="sd-summary-text">Diagram</span><span class="sd-summary-state-marker sd-summary-chevron-right"><svg version="1.1" width="1.5em" height="1.5em" class="sd-octicon sd-octicon-chevron-right" viewBox="0 0 24 24" aria-hidden="true"><path d="M8.72 18.78a.75.75 0 0 1 0-1.06L14.44 12 8.72 6.28a.751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018l6.25 6.25a.75.75 0 0 1 0 1.06l-6.25 6.25a.75.75 0 0 1-1.06 0Z"></path></svg></span></summary><div class="sd-summary-content sd-card-body docutils">
+<p class="plantuml">
+<object data="../../../_images/plantuml-f46fe23a8028b3563d97a1410701eb3332fd1585.svg" type="image/svg+xml" style="width:1162px;height:4491px;background:#FFFFFF;"></object></p>
+</div>
+</details></div>
+<div class="docutils container" id="attributes">
+<details class="sd-sphinx-override sd-dropdown sd-card sd-mb-3">
+<summary class="sd-summary-title sd-card-header">
+<span class="sd-summary-text">Attributes</span><span class="sd-summary-state-marker sd-summary-chevron-right"><svg version="1.1" width="1.5em" height="1.5em" class="sd-octicon sd-octicon-chevron-right" viewBox="0 0 24 24" aria-hidden="true"><path d="M8.72 18.78a.75.75 0 0 1 0-1.06L14.44 12 8.72 6.28a.751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018l6.25 6.25a.75.75 0 0 1 0 1.06l-6.25 6.25a.75.75 0 0 1-1.06 0Z"></path></svg></span></summary><div class="sd-summary-content sd-card-body docutils">
+<table class="datatable-attributes docutils align-default">
+<colgroup>
+<col style="width: 9.1%" />
+<col style="width: 9.1%" />
+<col style="width: 54.5%" />
+<col style="width: 9.1%" />
+<col style="width: 9.1%" />
+<col style="width: 9.1%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p class="sd-card-text">Name</p></th>
+<th class="head"><p class="sd-card-text">Inherited from</p></th>
+<th class="head"><p class="sd-card-text">Description</p></th>
+<th class="head"><p class="sd-card-text">Data Type</p></th>
+<th class="head"><p class="sd-card-text">Multiplicity</p></th>
+<th class="head"><p class="sd-card-text">Default value</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p class="sd-card-text">access</p></td>
+<td><p class="sd-card-text">- <em>own datatype</em> -</p></td>
+<td><p class="sd-card-text">Information important for understanding access conditions.</p></td>
+<td><p class="sd-card-text"><a class="reference internal" href="AccessInformation.html#ddicdimodels-ddicdilibrary-datatypes-structureddatatypes-accessinformation"><span class="std std-ref">AccessInformation</span></a></p></td>
+<td><p class="sd-card-text">0..*</p></td>
+<td></td>
+</tr>
+<tr class="row-odd"><td><p class="sd-card-text">alternativeTitle</p></td>
+<td><p class="sd-card-text">- <em>own datatype</em> -</p></td>
+<td><p class="sd-card-text">An alternative title by which a data collection is commonly referred, or an abbreviation for the title.</p></td>
+<td><p class="sd-card-text"><a class="reference internal" href="InternationalString.html#ddicdimodels-ddicdilibrary-datatypes-structureddatatypes-internationalstring"><span class="std std-ref">InternationalString</span></a></p></td>
+<td><p class="sd-card-text">0..*</p></td>
+<td></td>
+</tr>
+<tr class="row-even"><td><p class="sd-card-text">contributor</p></td>
+<td><p class="sd-card-text">- <em>own datatype</em> -</p></td>
+<td><p class="sd-card-text">The name of a contributing author or creator, who worked in support of the primary creator given above.</p></td>
+<td><p class="sd-card-text"><a class="reference internal" href="AgentInRole.html#ddicdimodels-ddicdilibrary-datatypes-structureddatatypes-agentinrole"><span class="std std-ref">AgentInRole</span></a></p></td>
+<td><p class="sd-card-text">0..*</p></td>
+<td></td>
+</tr>
+<tr class="row-odd"><td><p class="sd-card-text">creator</p></td>
+<td><p class="sd-card-text">- <em>own datatype</em> -</p></td>
+<td><p class="sd-card-text">Person, corporate body, or agency responsible for the substantive and intellectual content of the described object.</p></td>
+<td><p class="sd-card-text"><a class="reference internal" href="AgentInRole.html#ddicdimodels-ddicdilibrary-datatypes-structureddatatypes-agentinrole"><span class="std std-ref">AgentInRole</span></a></p></td>
+<td><p class="sd-card-text">0..*</p></td>
+<td></td>
+</tr>
+<tr class="row-even"><td><p class="sd-card-text">date</p></td>
+<td><p class="sd-card-text">- <em>own datatype</em> -</p></td>
+<td><p class="sd-card-text">A date associated with the annotated object (not the coverage period). Use typeOfDate to specify the type of date such as Version, Publication, Submitted, Copyrighted, Accepted, etc.</p></td>
+<td><p class="sd-card-text"><a class="reference internal" href="CombinedDate.html#ddicdimodels-ddicdilibrary-datatypes-structureddatatypes-combineddate"><span class="std std-ref">CombinedDate</span></a></p></td>
+<td><p class="sd-card-text">0..*</p></td>
+<td></td>
+</tr>
+<tr class="row-odd"><td><p class="sd-card-text">identifier</p></td>
+<td><p class="sd-card-text">- <em>own datatype</em> -</p></td>
+<td><p class="sd-card-text">An identifier or locator. Contains identifier and Managing agency (ISBN, ISSN, DOI, local archive). Indicates if it is a URI.</p></td>
+<td><p class="sd-card-text"><a class="reference internal" href="InternationalIdentifier.html#ddicdimodels-ddicdilibrary-datatypes-structureddatatypes-internationalidentifier"><span class="std std-ref">InternationalIdentifier</span></a></p></td>
+<td><p class="sd-card-text">0..1</p></td>
+<td></td>
+</tr>
+<tr class="row-even"><td><p class="sd-card-text">informationSource</p></td>
+<td><p class="sd-card-text">- <em>own datatype</em> -</p></td>
+<td><p class="sd-card-text">The name or identifier of source information for the annotated object.</p></td>
+<td><p class="sd-card-text"><a class="reference internal" href="InternationalString.html#ddicdimodels-ddicdilibrary-datatypes-structureddatatypes-internationalstring"><span class="std std-ref">InternationalString</span></a></p></td>
+<td><p class="sd-card-text">0..*</p></td>
+<td></td>
+</tr>
+<tr class="row-odd"><td><p class="sd-card-text">languageOfObject</p></td>
+<td><p class="sd-card-text">- <em>own datatype</em> -</p></td>
+<td><p class="sd-card-text">Language of the intellectual content of the described object. Multiple languages are supported by the structure itself as defined in the transformation to specific bindings. Use language codes supported by xs:language which include the 2 and 3 character and extended structures defined by RFC4646 or its successors. Supports multiple language codes.</p></td>
+<td><p class="sd-card-text"><a class="reference internal" href="../XMLSchemaDataTypes/XsdLanguage.html#ddicdimodels-ddicdilibrary-datatypes-xmlschemadatatypes-xsdlanguage"><span class="std std-ref">XsdLanguage</span></a></p></td>
+<td><p class="sd-card-text">0..*</p></td>
+<td></td>
+</tr>
+<tr class="row-even"><td><p class="sd-card-text">provenance</p></td>
+<td><p class="sd-card-text">- <em>own datatype</em> -</p></td>
+<td><p class="sd-card-text">Information about the origins of the object.</p></td>
+<td><p class="sd-card-text"><a class="reference internal" href="ProvenanceInformation.html#ddicdimodels-ddicdilibrary-datatypes-structureddatatypes-provenanceinformation"><span class="std std-ref">ProvenanceInformation</span></a></p></td>
+<td><p class="sd-card-text">0..1</p></td>
+<td></td>
+</tr>
+<tr class="row-odd"><td><p class="sd-card-text">publisher</p></td>
+<td><p class="sd-card-text">- <em>own datatype</em> -</p></td>
+<td><p class="sd-card-text">Person or organization responsible for making the resource available in its present form.</p></td>
+<td><p class="sd-card-text"><a class="reference internal" href="AgentInRole.html#ddicdimodels-ddicdilibrary-datatypes-structureddatatypes-agentinrole"><span class="std std-ref">AgentInRole</span></a></p></td>
+<td><p class="sd-card-text">0..*</p></td>
+<td></td>
+</tr>
+<tr class="row-even"><td><p class="sd-card-text">relatedResource</p></td>
+<td><p class="sd-card-text">- <em>own datatype</em> -</p></td>
+<td><p class="sd-card-text">Provide the identifier, managing agency, and type of resource related to this object. Use to specify related resources similar to Dublin Core isPartOf and hasPart to indicate collection/series membership for objects where there is an identifiable record. If not an identified object use the relationship to ExternalMaterial using a type that indicates a series description.</p></td>
+<td><p class="sd-card-text"><a class="reference internal" href="Reference.html#ddicdimodels-ddicdilibrary-datatypes-structureddatatypes-reference"><span class="std std-ref">Reference</span></a></p></td>
+<td><p class="sd-card-text">0..*</p></td>
+<td></td>
+</tr>
+<tr class="row-odd"><td><p class="sd-card-text">subTitle</p></td>
+<td><p class="sd-card-text">- <em>own datatype</em> -</p></td>
+<td><p class="sd-card-text">Secondary or explanatory title.</p></td>
+<td><p class="sd-card-text"><a class="reference internal" href="InternationalString.html#ddicdimodels-ddicdilibrary-datatypes-structureddatatypes-internationalstring"><span class="std std-ref">InternationalString</span></a></p></td>
+<td><p class="sd-card-text">0..*</p></td>
+<td></td>
+</tr>
+<tr class="row-even"><td><p class="sd-card-text">summary</p></td>
+<td><p class="sd-card-text">- <em>own datatype</em> -</p></td>
+<td><p class="sd-card-text">A summary description (abstract) of the annotated object.</p></td>
+<td><p class="sd-card-text"><a class="reference internal" href="InternationalString.html#ddicdimodels-ddicdilibrary-datatypes-structureddatatypes-internationalstring"><span class="std std-ref">InternationalString</span></a></p></td>
+<td><p class="sd-card-text">0..1</p></td>
+<td></td>
+</tr>
+<tr class="row-odd"><td><p class="sd-card-text">title</p></td>
+<td><p class="sd-card-text">- <em>own datatype</em> -</p></td>
+<td><p class="sd-card-text">Full authoritative title. List any additional titles for this item as alternativeTitle.</p></td>
+<td><p class="sd-card-text"><a class="reference internal" href="InternationalString.html#ddicdimodels-ddicdilibrary-datatypes-structureddatatypes-internationalstring"><span class="std std-ref">InternationalString</span></a></p></td>
+<td><p class="sd-card-text">0..1</p></td>
+<td></td>
+</tr>
+<tr class="row-even"><td><p class="sd-card-text">typeOfResource</p></td>
+<td><p class="sd-card-text">- <em>own datatype</em> -</p></td>
+<td><p class="sd-card-text">Provide the type of the resource. This supports the use of a controlled vocabulary. It should be appropriate to the level of the annotation.</p></td>
+<td><p class="sd-card-text"><a class="reference internal" href="ControlledVocabularyEntry.html#ddicdimodels-ddicdilibrary-datatypes-structureddatatypes-controlledvocabularyentry"><span class="std std-ref">ControlledVocabularyEntry</span></a></p></td>
+<td><p class="sd-card-text">0..*</p></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+</div>
+</details></div>
+<div class="docutils container" id="usage">
+<details class="sd-sphinx-override sd-dropdown sd-card sd-mb-3">
+<summary class="sd-summary-title sd-card-header">
+<span class="sd-summary-text">Usage</span><span class="sd-summary-state-marker sd-summary-chevron-right"><svg version="1.1" width="1.5em" height="1.5em" class="sd-octicon sd-octicon-chevron-right" viewBox="0 0 24 24" aria-hidden="true"><path d="M8.72 18.78a.75.75 0 0 1 0-1.06L14.44 12 8.72 6.28a.751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018l6.25 6.25a.75.75 0 0 1 0 1.06l-6.25 6.25a.75.75 0 0 1-1.06 0Z"></path></svg></span></summary><div class="sd-summary-content sd-card-body docutils">
+<table class="datatable-usage docutils align-default">
+<colgroup>
+<col style="width: 25.0%" />
+<col style="width: 25.0%" />
+<col style="width: 25.0%" />
+<col style="width: 25.0%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p class="sd-card-text">Type</p></th>
+<th class="head"><p class="sd-card-text">Package</p></th>
+<th class="head"><p class="sd-card-text">Classifier</p></th>
+<th class="head"><p class="sd-card-text">Attribute</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p class="sd-card-text">Class</p></td>
+<td><p class="sd-card-text">Agents</p></td>
+<td><p class="sd-card-text"><a class="reference internal" href="../../Classes/Agents/Agent.html#ddicdimodels-ddicdilibrary-classes-agents-agent"><span class="std std-ref">Agent</span></a></p></td>
+<td><p class="sd-card-text">catalogDetails</p></td>
+</tr>
+<tr class="row-odd"><td><p class="sd-card-text">Class</p></td>
+<td><p class="sd-card-text">Conceptual</p></td>
+<td><p class="sd-card-text"><a class="reference internal" href="../../Classes/Conceptual/Concept.html#ddicdimodels-ddicdilibrary-classes-conceptual-concept"><span class="std std-ref">Concept</span></a></p></td>
+<td><p class="sd-card-text">catalogDetails</p></td>
+</tr>
+<tr class="row-even"><td><p class="sd-card-text">Class</p></td>
+<td><p class="sd-card-text">Conceptual</p></td>
+<td><p class="sd-card-text"><a class="reference internal" href="../../Classes/Conceptual/ConceptSystem.html#ddicdimodels-ddicdilibrary-classes-conceptual-conceptsystem"><span class="std std-ref">ConceptSystem</span></a></p></td>
+<td><p class="sd-card-text">catalogDetails</p></td>
+</tr>
+<tr class="row-odd"><td><p class="sd-card-text">Class</p></td>
+<td><p class="sd-card-text">Conceptual</p></td>
+<td><p class="sd-card-text"><a class="reference internal" href="../../Classes/Conceptual/ConceptSystemCorrespondence.html#ddicdimodels-ddicdilibrary-classes-conceptual-conceptsystemcorrespondence"><span class="std std-ref">ConceptSystemCorrespondence</span></a></p></td>
+<td><p class="sd-card-text">catalogDetails</p></td>
+</tr>
+<tr class="row-even"><td><p class="sd-card-text">Class</p></td>
+<td><p class="sd-card-text">Conceptual</p></td>
+<td><p class="sd-card-text"><a class="reference internal" href="../../Classes/Conceptual/ConceptualDomain.html#ddicdimodels-ddicdilibrary-classes-conceptual-conceptualdomain"><span class="std std-ref">ConceptualDomain</span></a></p></td>
+<td><p class="sd-card-text">catalogDetails</p></td>
+</tr>
+<tr class="row-odd"><td><p class="sd-card-text">Class</p></td>
+<td><p class="sd-card-text">Conceptual</p></td>
+<td><p class="sd-card-text"><a class="reference internal" href="../../Classes/Conceptual/Unit.html#ddicdimodels-ddicdilibrary-classes-conceptual-unit"><span class="std std-ref">Unit</span></a></p></td>
+<td><p class="sd-card-text">catalogDetails</p></td>
+</tr>
+<tr class="row-even"><td><p class="sd-card-text">Class</p></td>
+<td><p class="sd-card-text">DataDescription</p></td>
+<td><p class="sd-card-text"><a class="reference internal" href="../../Classes/DataDescription/DataPoint.html#ddicdimodels-ddicdilibrary-classes-datadescription-datapoint"><span class="std std-ref">DataPoint</span></a></p></td>
+<td><p class="sd-card-text">catalogDetails</p></td>
+</tr>
+<tr class="row-odd"><td><p class="sd-card-text">Class</p></td>
+<td><p class="sd-card-text">DataDescription</p></td>
+<td><p class="sd-card-text"><a class="reference internal" href="../../Classes/DataDescription/DataSet.html#ddicdimodels-ddicdilibrary-classes-datadescription-dataset"><span class="std std-ref">DataSet</span></a></p></td>
+<td><p class="sd-card-text">catalogDetails</p></td>
+</tr>
+<tr class="row-even"><td><p class="sd-card-text">Class</p></td>
+<td><p class="sd-card-text">DataDescription</p></td>
+<td><p class="sd-card-text"><a class="reference internal" href="../../Classes/DataDescription/Datum.html#ddicdimodels-ddicdilibrary-classes-datadescription-datum"><span class="std std-ref">Datum</span></a></p></td>
+<td><p class="sd-card-text">catalogDetails</p></td>
+</tr>
+<tr class="row-odd"><td><p class="sd-card-text">Class</p></td>
+<td><p class="sd-card-text">FormatDescription</p></td>
+<td><p class="sd-card-text"><a class="reference internal" href="../../Classes/FormatDescription/DataStore.html#ddicdimodels-ddicdilibrary-classes-formatdescription-datastore"><span class="std std-ref">DataStore</span></a></p></td>
+<td><p class="sd-card-text">catalogDetails</p></td>
+</tr>
+<tr class="row-even"><td><p class="sd-card-text">Class</p></td>
+<td><p class="sd-card-text">FormatDescription</p></td>
+<td><p class="sd-card-text"><a class="reference internal" href="../../Classes/FormatDescription/PhysicalDataSet.html#ddicdimodels-ddicdilibrary-classes-formatdescription-physicaldataset"><span class="std std-ref">PhysicalDataSet</span></a></p></td>
+<td><p class="sd-card-text">catalogDetails</p></td>
+</tr>
+<tr class="row-odd"><td><p class="sd-card-text">Class</p></td>
+<td><p class="sd-card-text">FormatDescription</p></td>
+<td><p class="sd-card-text"><a class="reference internal" href="../../Classes/FormatDescription/PhysicalRecordSegment.html#ddicdimodels-ddicdilibrary-classes-formatdescription-physicalrecordsegment"><span class="std std-ref">PhysicalRecordSegment</span></a></p></td>
+<td><p class="sd-card-text">catalogDetails</p></td>
+</tr>
+<tr class="row-even"><td><p class="sd-card-text">Class</p></td>
+<td><p class="sd-card-text">FormatDescription</p></td>
+<td><p class="sd-card-text"><a class="reference internal" href="../../Classes/FormatDescription/PhysicalSegmentLayout.html#ddicdimodels-ddicdilibrary-classes-formatdescription-physicalsegmentlayout"><span class="std std-ref">PhysicalSegmentLayout</span></a></p></td>
+<td><p class="sd-card-text">catalogDetails</p></td>
+</tr>
+<tr class="row-odd"><td><p class="sd-card-text">Class</p></td>
+<td><p class="sd-card-text">FormatDescription</p></td>
+<td><p class="sd-card-text"><a class="reference internal" href="../../Classes/FormatDescription/PhysicalSegmentLocation.html#ddicdimodels-ddicdilibrary-classes-formatdescription-physicalsegmentlocation"><span class="std std-ref">PhysicalSegmentLocation</span></a></p></td>
+<td><p class="sd-card-text">catalogDetails</p></td>
+</tr>
+<tr class="row-even"><td><p class="sd-card-text">Class</p></td>
+<td><p class="sd-card-text">FormatDescription</p></td>
+<td><p class="sd-card-text"><a class="reference internal" href="../../Classes/FormatDescription/RecordRelation.html#ddicdimodels-ddicdilibrary-classes-formatdescription-recordrelation"><span class="std std-ref">RecordRelation</span></a></p></td>
+<td><p class="sd-card-text">catalogDetails</p></td>
+</tr>
+<tr class="row-odd"><td><p class="sd-card-text">Class</p></td>
+<td><p class="sd-card-text">Representations</p></td>
+<td><p class="sd-card-text"><a class="reference internal" href="../../Classes/Representations/AuthorizationSource.html#ddicdimodels-ddicdilibrary-classes-representations-authorizationsource"><span class="std std-ref">AuthorizationSource</span></a></p></td>
+<td><p class="sd-card-text">catalogDetails</p></td>
+</tr>
+<tr class="row-even"><td><p class="sd-card-text">Class</p></td>
+<td><p class="sd-card-text">Representations</p></td>
+<td><p class="sd-card-text"><a class="reference internal" href="../../Classes/Representations/ClassificationFamily.html#ddicdimodels-ddicdilibrary-classes-representations-classificationfamily"><span class="std std-ref">ClassificationFamily</span></a></p></td>
+<td><p class="sd-card-text">catalogDetails</p></td>
+</tr>
+<tr class="row-odd"><td><p class="sd-card-text">Class</p></td>
+<td><p class="sd-card-text">Representations</p></td>
+<td><p class="sd-card-text"><a class="reference internal" href="../../Classes/Representations/ClassificationIndex.html#ddicdimodels-ddicdilibrary-classes-representations-classificationindex"><span class="std std-ref">ClassificationIndex</span></a></p></td>
+<td><p class="sd-card-text">catalogDetails</p></td>
+</tr>
+<tr class="row-even"><td><p class="sd-card-text">Class</p></td>
+<td><p class="sd-card-text">Representations</p></td>
+<td><p class="sd-card-text"><a class="reference internal" href="../../Classes/Representations/ClassificationIndexEntry.html#ddicdimodels-ddicdilibrary-classes-representations-classificationindexentry"><span class="std std-ref">ClassificationIndexEntry</span></a></p></td>
+<td><p class="sd-card-text">catalogDetails</p></td>
+</tr>
+<tr class="row-odd"><td><p class="sd-card-text">Class</p></td>
+<td><p class="sd-card-text">Representations</p></td>
+<td><p class="sd-card-text"><a class="reference internal" href="../../Classes/Representations/ClassificationSeries.html#ddicdimodels-ddicdilibrary-classes-representations-classificationseries"><span class="std std-ref">ClassificationSeries</span></a></p></td>
+<td><p class="sd-card-text">catalogDetails</p></td>
+</tr>
+<tr class="row-even"><td><p class="sd-card-text">Class</p></td>
+<td><p class="sd-card-text">Representations</p></td>
+<td><p class="sd-card-text"><a class="reference internal" href="../../Classes/Representations/CorrespondenceTable.html#ddicdimodels-ddicdilibrary-classes-representations-correspondencetable"><span class="std std-ref">CorrespondenceTable</span></a></p></td>
+<td><p class="sd-card-text">catalogDetails</p></td>
+</tr>
+<tr class="row-odd"><td><p class="sd-card-text">Class</p></td>
+<td><p class="sd-card-text">Representations</p></td>
+<td><p class="sd-card-text"><a class="reference internal" href="../../Classes/Representations/LevelStructure.html#ddicdimodels-ddicdilibrary-classes-representations-levelstructure"><span class="std std-ref">LevelStructure</span></a></p></td>
+<td><p class="sd-card-text">catalogDetails</p></td>
+</tr>
+<tr class="row-even"><td><p class="sd-card-text">Class</p></td>
+<td><p class="sd-card-text">Representations</p></td>
+<td><p class="sd-card-text"><a class="reference internal" href="../../Classes/Representations/StatisticalClassification.html#ddicdimodels-ddicdilibrary-classes-representations-statisticalclassification"><span class="std std-ref">StatisticalClassification</span></a></p></td>
+<td><p class="sd-card-text">catalogDetails</p></td>
+</tr>
+<tr class="row-odd"><td><p class="sd-card-text">Class</p></td>
+<td><p class="sd-card-text">Representations</p></td>
+<td><p class="sd-card-text"><a class="reference internal" href="../../Classes/Representations/ValueDomain.html#ddicdimodels-ddicdilibrary-classes-representations-valuedomain"><span class="std std-ref">ValueDomain</span></a></p></td>
+<td><p class="sd-card-text">catalogDetails</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+</details></div>
+<div class="docutils container" id="encodings">
+<details class="sd-sphinx-override sd-dropdown sd-card sd-mb-3">
+<summary class="sd-summary-title sd-card-header">
+<span class="sd-summary-text">Syntax representations / encodings</span><span class="sd-summary-state-marker sd-summary-chevron-right"><svg version="1.1" width="1.5em" height="1.5em" class="sd-octicon sd-octicon-chevron-right" viewBox="0 0 24 24" aria-hidden="true"><path d="M8.72 18.78a.75.75 0 0 1 0-1.06L14.44 12 8.72 6.28a.751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018l6.25 6.25a.75.75 0 0 1 0 1.06l-6.25 6.25a.75.75 0 0 1-1.06 0Z"></path></svg></span></summary><div class="sd-summary-content sd-card-body docutils">
+<p class="sd-card-text">All syntax representations except the Canonical XMI are provided as reference points
+for specific implementations, or for use as defaults if sufficient in the form presented.</p>
+<div class="sd-tab-set docutils">
+<input checked="checked" id="sd-tab-item-0" name="sd-tab-set-0" type="radio">
+<label class="sd-tab-label" for="sd-tab-item-0">
+Canonical XMI</label><div class="sd-tab-content encoding docutils">
+<p class="sd-card-text">Fragment for the data type <strong>CatalogDetails</strong> (<a class="reference external" href="/encoding/xmi/ddi-cdi_canonical-unique-names.xmi">entire XMI model</a>)</p>
+<div class="highlight-xml notranslate"><div class="highlight"><pre><span></span><span class="linenos">  1</span><span class="nt">&lt;packagedElement</span><span class="w"> </span><span class="na">xmlns:StandardProfile=</span><span class="s">&quot;http://www.eclipse.org/uml2/5.0.0/UML/Profile/Standard&quot;</span>
+<span class="linenos">  2</span><span class="w">                 </span><span class="na">xmlns:uml=</span><span class="s">&quot;http://www.eclipse.org/uml2/5.0.0/UML&quot;</span>
+<span class="linenos">  3</span><span class="w">                 </span><span class="na">xmlns:xmi=</span><span class="s">&quot;http://www.omg.org/spec/XMI/20131001&quot;</span>
+<span class="hll"><span class="linenos">  4</span><span class="w">                 </span><span class="na">xmi:id=</span><span class="s">&quot;DDICDIModels-DDICDILibrary-DataTypes-StructuredDataTypes-CatalogDetails&quot;</span>
+</span><span class="linenos">  5</span><span class="w">                 </span><span class="na">xmi:uuid=</span><span class="s">&quot;http://ddialliance.org/Specification/DDI-CDI/1.0/XMI/#CatalogDetails&quot;</span>
+<span class="linenos">  6</span><span class="w">                 </span><span class="na">xmi:type=</span><span class="s">&quot;uml:DataType&quot;</span><span class="nt">&gt;</span>
+<span class="linenos">  7</span><span class="w">   </span><span class="nt">&lt;ownedComment</span><span class="w"> </span><span class="na">xmi:id=</span><span class="s">&quot;DDICDIModels-DDICDILibrary-DataTypes-StructuredDataTypes-CatalogDetails-ownedComment&quot;</span>
+<span class="linenos">  8</span><span class="w">                 </span><span class="na">xmi:uuid=</span><span class="s">&quot;http://ddialliance.org/Specification/DDI-CDI/1.0/XMI/#CatalogDetails-ownedComment&quot;</span>
+<span class="linenos">  9</span><span class="w">                 </span><span class="na">xmi:type=</span><span class="s">&quot;uml:Comment&quot;</span><span class="nt">&gt;</span>
+<span class="linenos"> 10</span><span class="w">      </span><span class="nt">&lt;annotatedElement</span><span class="w"> </span><span class="na">xmi:idref=</span><span class="s">&quot;DDICDIModels-DDICDILibrary-DataTypes-StructuredDataTypes-CatalogDetails&quot;</span><span class="nt">/&gt;</span>
+<span class="linenos"> 11</span><span class="w">      </span><span class="nt">&lt;body&gt;</span>Definition
+<span class="linenos"> 12</span>============
+<span class="linenos"> 13</span>A<span class="w"> </span>set<span class="w"> </span>of<span class="w"> </span>information<span class="w"> </span>useful<span class="w"> </span>for<span class="w"> </span>attribution,<span class="w"> </span>data<span class="w"> </span>discovery,<span class="w"> </span>and<span class="w"> </span>access.
+<span class="linenos"> 14</span>
+<span class="linenos"> 15</span>Examples
+<span class="linenos"> 16</span>==========
+<span class="linenos"> 17</span>Creator,<span class="w"> </span>contributor,<span class="w"> </span>title,<span class="w"> </span>copyright,<span class="w"> </span>license<span class="w"> </span>information.<span class="nt">&lt;/body&gt;</span>
+<span class="linenos"> 18</span><span class="w">   </span><span class="nt">&lt;/ownedComment&gt;</span>
+<span class="linenos"> 19</span><span class="w">   </span><span class="nt">&lt;name&gt;</span>CatalogDetails<span class="nt">&lt;/name&gt;</span>
+<span class="linenos"> 20</span><span class="w">   </span><span class="nt">&lt;ownedAttribute</span><span class="w"> </span><span class="na">xmi:id=</span><span class="s">&quot;DDICDIModels-DDICDILibrary-DataTypes-StructuredDataTypes-CatalogDetails-access&quot;</span>
+<span class="linenos"> 21</span><span class="w">                   </span><span class="na">xmi:uuid=</span><span class="s">&quot;http://ddialliance.org/Specification/DDI-CDI/1.0/XMI/#CatalogDetails-access&quot;</span>
+<span class="linenos"> 22</span><span class="w">                   </span><span class="na">xmi:type=</span><span class="s">&quot;uml:Property&quot;</span><span class="nt">&gt;</span>
+<span class="linenos"> 23</span><span class="w">      </span><span class="nt">&lt;ownedComment</span><span class="w"> </span><span class="na">xmi:id=</span><span class="s">&quot;DDICDIModels-DDICDILibrary-DataTypes-StructuredDataTypes-CatalogDetails-access-ownedComment&quot;</span>
+<span class="linenos"> 24</span><span class="w">                    </span><span class="na">xmi:uuid=</span><span class="s">&quot;http://ddialliance.org/Specification/DDI-CDI/1.0/XMI/#CatalogDetails-access-ownedComment&quot;</span>
+<span class="linenos"> 25</span><span class="w">                    </span><span class="na">xmi:type=</span><span class="s">&quot;uml:Comment&quot;</span><span class="nt">&gt;</span>
+<span class="linenos"> 26</span><span class="w">         </span><span class="nt">&lt;annotatedElement</span><span class="w"> </span><span class="na">xmi:idref=</span><span class="s">&quot;DDICDIModels-DDICDILibrary-DataTypes-StructuredDataTypes-CatalogDetails-access&quot;</span><span class="nt">/&gt;</span>
+<span class="linenos"> 27</span><span class="w">         </span><span class="nt">&lt;body&gt;</span>Information<span class="w"> </span>important<span class="w"> </span>for<span class="w"> </span>understanding<span class="w"> </span>access<span class="w"> </span>conditions.<span class="nt">&lt;/body&gt;</span>
+<span class="linenos"> 28</span><span class="w">      </span><span class="nt">&lt;/ownedComment&gt;</span>
+<span class="linenos"> 29</span><span class="w">      </span><span class="nt">&lt;lowerValue</span><span class="w"> </span><span class="na">xmi:id=</span><span class="s">&quot;DDICDIModels-DDICDILibrary-DataTypes-StructuredDataTypes-CatalogDetails-access-lowerValue&quot;</span>
+<span class="linenos"> 30</span><span class="w">                  </span><span class="na">xmi:uuid=</span><span class="s">&quot;http://ddialliance.org/Specification/DDI-CDI/1.0/XMI/#CatalogDetails-access-lowerValue&quot;</span>
+<span class="linenos"> 31</span><span class="w">                  </span><span class="na">xmi:type=</span><span class="s">&quot;uml:LiteralInteger&quot;</span><span class="nt">/&gt;</span>
+<span class="linenos"> 32</span><span class="w">      </span><span class="nt">&lt;upperValue</span><span class="w"> </span><span class="na">xmi:id=</span><span class="s">&quot;DDICDIModels-DDICDILibrary-DataTypes-StructuredDataTypes-CatalogDetails-access-upperValue&quot;</span>
+<span class="linenos"> 33</span><span class="w">                  </span><span class="na">xmi:uuid=</span><span class="s">&quot;http://ddialliance.org/Specification/DDI-CDI/1.0/XMI/#CatalogDetails-access-upperValue&quot;</span>
+<span class="linenos"> 34</span><span class="w">                  </span><span class="na">xmi:type=</span><span class="s">&quot;uml:LiteralUnlimitedNatural&quot;</span><span class="nt">&gt;</span>
+<span class="linenos"> 35</span><span class="w">         </span><span class="nt">&lt;value&gt;</span>*<span class="nt">&lt;/value&gt;</span>
+<span class="linenos"> 36</span><span class="w">      </span><span class="nt">&lt;/upperValue&gt;</span>
+<span class="linenos"> 37</span><span class="w">      </span><span class="nt">&lt;name&gt;</span>access<span class="nt">&lt;/name&gt;</span>
+<span class="linenos"> 38</span><span class="w">      </span><span class="nt">&lt;isOrdered&gt;</span>true<span class="nt">&lt;/isOrdered&gt;</span>
+<span class="linenos"> 39</span><span class="w">      </span><span class="nt">&lt;type</span><span class="w"> </span><span class="na">xmi:idref=</span><span class="s">&quot;DDICDIModels-DDICDILibrary-DataTypes-StructuredDataTypes-AccessInformation&quot;</span><span class="nt">/&gt;</span>
+<span class="linenos"> 40</span><span class="w">   </span><span class="nt">&lt;/ownedAttribute&gt;</span>
+<span class="linenos"> 41</span><span class="w">   </span><span class="nt">&lt;ownedAttribute</span><span class="w"> </span><span class="na">xmi:id=</span><span class="s">&quot;DDICDIModels-DDICDILibrary-DataTypes-StructuredDataTypes-CatalogDetails-alternativeTitle&quot;</span>
+<span class="linenos"> 42</span><span class="w">                   </span><span class="na">xmi:uuid=</span><span class="s">&quot;http://ddialliance.org/Specification/DDI-CDI/1.0/XMI/#CatalogDetails-alternativeTitle&quot;</span>
+<span class="linenos"> 43</span><span class="w">                   </span><span class="na">xmi:type=</span><span class="s">&quot;uml:Property&quot;</span><span class="nt">&gt;</span>
+<span class="linenos"> 44</span><span class="w">      </span><span class="nt">&lt;ownedComment</span><span class="w"> </span><span class="na">xmi:id=</span><span class="s">&quot;DDICDIModels-DDICDILibrary-DataTypes-StructuredDataTypes-CatalogDetails-alternativeTitle-ownedComment&quot;</span>
+<span class="linenos"> 45</span><span class="w">                    </span><span class="na">xmi:uuid=</span><span class="s">&quot;http://ddialliance.org/Specification/DDI-CDI/1.0/XMI/#CatalogDetails-alternativeTitle-ownedComment&quot;</span>
+<span class="linenos"> 46</span><span class="w">                    </span><span class="na">xmi:type=</span><span class="s">&quot;uml:Comment&quot;</span><span class="nt">&gt;</span>
+<span class="linenos"> 47</span><span class="w">         </span><span class="nt">&lt;annotatedElement</span><span class="w"> </span><span class="na">xmi:idref=</span><span class="s">&quot;DDICDIModels-DDICDILibrary-DataTypes-StructuredDataTypes-CatalogDetails-alternativeTitle&quot;</span><span class="nt">/&gt;</span>
+<span class="linenos"> 48</span><span class="w">         </span><span class="nt">&lt;body&gt;</span>An<span class="w"> </span>alternative<span class="w"> </span>title<span class="w"> </span>by<span class="w"> </span>which<span class="w"> </span>a<span class="w"> </span>data<span class="w"> </span>collection<span class="w"> </span>is<span class="w"> </span>commonly<span class="w"> </span>referred,<span class="w"> </span>or<span class="w"> </span>an<span class="w"> </span>abbreviation<span class="w"> </span>for<span class="w"> </span>the<span class="w"> </span>title.<span class="nt">&lt;/body&gt;</span>
+<span class="linenos"> 49</span><span class="w">      </span><span class="nt">&lt;/ownedComment&gt;</span>
+<span class="linenos"> 50</span><span class="w">      </span><span class="nt">&lt;lowerValue</span><span class="w"> </span><span class="na">xmi:id=</span><span class="s">&quot;DDICDIModels-DDICDILibrary-DataTypes-StructuredDataTypes-CatalogDetails-alternativeTitle-lowerValue&quot;</span>
+<span class="linenos"> 51</span><span class="w">                  </span><span class="na">xmi:uuid=</span><span class="s">&quot;http://ddialliance.org/Specification/DDI-CDI/1.0/XMI/#CatalogDetails-alternativeTitle-lowerValue&quot;</span>
+<span class="linenos"> 52</span><span class="w">                  </span><span class="na">xmi:type=</span><span class="s">&quot;uml:LiteralInteger&quot;</span><span class="nt">/&gt;</span>
+<span class="linenos"> 53</span><span class="w">      </span><span class="nt">&lt;upperValue</span><span class="w"> </span><span class="na">xmi:id=</span><span class="s">&quot;DDICDIModels-DDICDILibrary-DataTypes-StructuredDataTypes-CatalogDetails-alternativeTitle-upperValue&quot;</span>
+<span class="linenos"> 54</span><span class="w">                  </span><span class="na">xmi:uuid=</span><span class="s">&quot;http://ddialliance.org/Specification/DDI-CDI/1.0/XMI/#CatalogDetails-alternativeTitle-upperValue&quot;</span>
+<span class="linenos"> 55</span><span class="w">                  </span><span class="na">xmi:type=</span><span class="s">&quot;uml:LiteralUnlimitedNatural&quot;</span><span class="nt">&gt;</span>
+<span class="linenos"> 56</span><span class="w">         </span><span class="nt">&lt;value&gt;</span>*<span class="nt">&lt;/value&gt;</span>
+<span class="linenos"> 57</span><span class="w">      </span><span class="nt">&lt;/upperValue&gt;</span>
+<span class="linenos"> 58</span><span class="w">      </span><span class="nt">&lt;name&gt;</span>alternativeTitle<span class="nt">&lt;/name&gt;</span>
+<span class="linenos"> 59</span><span class="w">      </span><span class="nt">&lt;isOrdered&gt;</span>true<span class="nt">&lt;/isOrdered&gt;</span>
+<span class="linenos"> 60</span><span class="w">      </span><span class="nt">&lt;type</span><span class="w"> </span><span class="na">xmi:idref=</span><span class="s">&quot;DDICDIModels-DDICDILibrary-DataTypes-StructuredDataTypes-InternationalString&quot;</span><span class="nt">/&gt;</span>
+<span class="linenos"> 61</span><span class="w">   </span><span class="nt">&lt;/ownedAttribute&gt;</span>
+<span class="linenos"> 62</span><span class="w">   </span><span class="nt">&lt;ownedAttribute</span><span class="w"> </span><span class="na">xmi:id=</span><span class="s">&quot;DDICDIModels-DDICDILibrary-DataTypes-StructuredDataTypes-CatalogDetails-contributor&quot;</span>
+<span class="linenos"> 63</span><span class="w">                   </span><span class="na">xmi:uuid=</span><span class="s">&quot;http://ddialliance.org/Specification/DDI-CDI/1.0/XMI/#CatalogDetails-contributor&quot;</span>
+<span class="linenos"> 64</span><span class="w">                   </span><span class="na">xmi:type=</span><span class="s">&quot;uml:Property&quot;</span><span class="nt">&gt;</span>
+<span class="linenos"> 65</span><span class="w">      </span><span class="nt">&lt;ownedComment</span><span class="w"> </span><span class="na">xmi:id=</span><span class="s">&quot;DDICDIModels-DDICDILibrary-DataTypes-StructuredDataTypes-CatalogDetails-contributor-ownedComment&quot;</span>
+<span class="linenos"> 66</span><span class="w">                    </span><span class="na">xmi:uuid=</span><span class="s">&quot;http://ddialliance.org/Specification/DDI-CDI/1.0/XMI/#CatalogDetails-contributor-ownedComment&quot;</span>
+<span class="linenos"> 67</span><span class="w">                    </span><span class="na">xmi:type=</span><span class="s">&quot;uml:Comment&quot;</span><span class="nt">&gt;</span>
+<span class="linenos"> 68</span><span class="w">         </span><span class="nt">&lt;annotatedElement</span><span class="w"> </span><span class="na">xmi:idref=</span><span class="s">&quot;DDICDIModels-DDICDILibrary-DataTypes-StructuredDataTypes-CatalogDetails-contributor&quot;</span><span class="nt">/&gt;</span>
+<span class="linenos"> 69</span><span class="w">         </span><span class="nt">&lt;body&gt;</span>The<span class="w"> </span>name<span class="w"> </span>of<span class="w"> </span>a<span class="w"> </span>contributing<span class="w"> </span>author<span class="w"> </span>or<span class="w"> </span>creator,<span class="w"> </span>who<span class="w"> </span>worked<span class="w"> </span>in<span class="w"> </span>support<span class="w"> </span>of<span class="w"> </span>the<span class="w"> </span>primary<span class="w"> </span>creator<span class="w"> </span>given<span class="w"> </span>above.<span class="nt">&lt;/body&gt;</span>
+<span class="linenos"> 70</span><span class="w">      </span><span class="nt">&lt;/ownedComment&gt;</span>
+<span class="linenos"> 71</span><span class="w">      </span><span class="nt">&lt;lowerValue</span><span class="w"> </span><span class="na">xmi:id=</span><span class="s">&quot;DDICDIModels-DDICDILibrary-DataTypes-StructuredDataTypes-CatalogDetails-contributor-lowerValue&quot;</span>
+<span class="linenos"> 72</span><span class="w">                  </span><span class="na">xmi:uuid=</span><span class="s">&quot;http://ddialliance.org/Specification/DDI-CDI/1.0/XMI/#CatalogDetails-contributor-lowerValue&quot;</span>
+<span class="linenos"> 73</span><span class="w">                  </span><span class="na">xmi:type=</span><span class="s">&quot;uml:LiteralInteger&quot;</span><span class="nt">/&gt;</span>
+<span class="linenos"> 74</span><span class="w">      </span><span class="nt">&lt;upperValue</span><span class="w"> </span><span class="na">xmi:id=</span><span class="s">&quot;DDICDIModels-DDICDILibrary-DataTypes-StructuredDataTypes-CatalogDetails-contributor-upperValue&quot;</span>
+<span class="linenos"> 75</span><span class="w">                  </span><span class="na">xmi:uuid=</span><span class="s">&quot;http://ddialliance.org/Specification/DDI-CDI/1.0/XMI/#CatalogDetails-contributor-upperValue&quot;</span>
+<span class="linenos"> 76</span><span class="w">                  </span><span class="na">xmi:type=</span><span class="s">&quot;uml:LiteralUnlimitedNatural&quot;</span><span class="nt">&gt;</span>
+<span class="linenos"> 77</span><span class="w">         </span><span class="nt">&lt;value&gt;</span>*<span class="nt">&lt;/value&gt;</span>
+<span class="linenos"> 78</span><span class="w">      </span><span class="nt">&lt;/upperValue&gt;</span>
+<span class="linenos"> 79</span><span class="w">      </span><span class="nt">&lt;name&gt;</span>contributor<span class="nt">&lt;/name&gt;</span>
+<span class="linenos"> 80</span><span class="w">      </span><span class="nt">&lt;isOrdered&gt;</span>true<span class="nt">&lt;/isOrdered&gt;</span>
+<span class="linenos"> 81</span><span class="w">      </span><span class="nt">&lt;type</span><span class="w"> </span><span class="na">xmi:idref=</span><span class="s">&quot;DDICDIModels-DDICDILibrary-DataTypes-StructuredDataTypes-AgentInRole&quot;</span><span class="nt">/&gt;</span>
+<span class="linenos"> 82</span><span class="w">   </span><span class="nt">&lt;/ownedAttribute&gt;</span>
+<span class="linenos"> 83</span><span class="w">   </span><span class="nt">&lt;ownedAttribute</span><span class="w"> </span><span class="na">xmi:id=</span><span class="s">&quot;DDICDIModels-DDICDILibrary-DataTypes-StructuredDataTypes-CatalogDetails-creator&quot;</span>
+<span class="linenos"> 84</span><span class="w">                   </span><span class="na">xmi:uuid=</span><span class="s">&quot;http://ddialliance.org/Specification/DDI-CDI/1.0/XMI/#CatalogDetails-creator&quot;</span>
+<span class="linenos"> 85</span><span class="w">                   </span><span class="na">xmi:type=</span><span class="s">&quot;uml:Property&quot;</span><span class="nt">&gt;</span>
+<span class="linenos"> 86</span><span class="w">      </span><span class="nt">&lt;ownedComment</span><span class="w"> </span><span class="na">xmi:id=</span><span class="s">&quot;DDICDIModels-DDICDILibrary-DataTypes-StructuredDataTypes-CatalogDetails-creator-ownedComment&quot;</span>
+<span class="linenos"> 87</span><span class="w">                    </span><span class="na">xmi:uuid=</span><span class="s">&quot;http://ddialliance.org/Specification/DDI-CDI/1.0/XMI/#CatalogDetails-creator-ownedComment&quot;</span>
+<span class="linenos"> 88</span><span class="w">                    </span><span class="na">xmi:type=</span><span class="s">&quot;uml:Comment&quot;</span><span class="nt">&gt;</span>
+<span class="linenos"> 89</span><span class="w">         </span><span class="nt">&lt;annotatedElement</span><span class="w"> </span><span class="na">xmi:idref=</span><span class="s">&quot;DDICDIModels-DDICDILibrary-DataTypes-StructuredDataTypes-CatalogDetails-creator&quot;</span><span class="nt">/&gt;</span>
+<span class="linenos"> 90</span><span class="w">         </span><span class="nt">&lt;body&gt;</span>Person,<span class="w"> </span>corporate<span class="w"> </span>body,<span class="w"> </span>or<span class="w"> </span>agency<span class="w"> </span>responsible<span class="w"> </span>for<span class="w"> </span>the<span class="w"> </span>substantive<span class="w"> </span>and<span class="w"> </span>intellectual<span class="w"> </span>content<span class="w"> </span>of<span class="w"> </span>the<span class="w"> </span>described<span class="w"> </span>object.<span class="nt">&lt;/body&gt;</span>
+<span class="linenos"> 91</span><span class="w">      </span><span class="nt">&lt;/ownedComment&gt;</span>
+<span class="linenos"> 92</span><span class="w">      </span><span class="nt">&lt;lowerValue</span><span class="w"> </span><span class="na">xmi:id=</span><span class="s">&quot;DDICDIModels-DDICDILibrary-DataTypes-StructuredDataTypes-CatalogDetails-creator-lowerValue&quot;</span>
+<span class="linenos"> 93</span><span class="w">                  </span><span class="na">xmi:uuid=</span><span class="s">&quot;http://ddialliance.org/Specification/DDI-CDI/1.0/XMI/#CatalogDetails-creator-lowerValue&quot;</span>
+<span class="linenos"> 94</span><span class="w">                  </span><span class="na">xmi:type=</span><span class="s">&quot;uml:LiteralInteger&quot;</span><span class="nt">/&gt;</span>
+<span class="linenos"> 95</span><span class="w">      </span><span class="nt">&lt;upperValue</span><span class="w"> </span><span class="na">xmi:id=</span><span class="s">&quot;DDICDIModels-DDICDILibrary-DataTypes-StructuredDataTypes-CatalogDetails-creator-upperValue&quot;</span>
+<span class="linenos"> 96</span><span class="w">                  </span><span class="na">xmi:uuid=</span><span class="s">&quot;http://ddialliance.org/Specification/DDI-CDI/1.0/XMI/#CatalogDetails-creator-upperValue&quot;</span>
+<span class="linenos"> 97</span><span class="w">                  </span><span class="na">xmi:type=</span><span class="s">&quot;uml:LiteralUnlimitedNatural&quot;</span><span class="nt">&gt;</span>
+<span class="linenos"> 98</span><span class="w">         </span><span class="nt">&lt;value&gt;</span>*<span class="nt">&lt;/value&gt;</span>
+<span class="linenos"> 99</span><span class="w">      </span><span class="nt">&lt;/upperValue&gt;</span>
+<span class="linenos">100</span><span class="w">      </span><span class="nt">&lt;name&gt;</span>creator<span class="nt">&lt;/name&gt;</span>
+<span class="linenos">101</span><span class="w">      </span><span class="nt">&lt;isOrdered&gt;</span>true<span class="nt">&lt;/isOrdered&gt;</span>
+<span class="linenos">102</span><span class="w">      </span><span class="nt">&lt;type</span><span class="w"> </span><span class="na">xmi:idref=</span><span class="s">&quot;DDICDIModels-DDICDILibrary-DataTypes-StructuredDataTypes-AgentInRole&quot;</span><span class="nt">/&gt;</span>
+<span class="linenos">103</span><span class="w">   </span><span class="nt">&lt;/ownedAttribute&gt;</span>
+<span class="linenos">104</span><span class="w">   </span><span class="nt">&lt;ownedAttribute</span><span class="w"> </span><span class="na">xmi:id=</span><span class="s">&quot;DDICDIModels-DDICDILibrary-DataTypes-StructuredDataTypes-CatalogDetails-date&quot;</span>
+<span class="linenos">105</span><span class="w">                   </span><span class="na">xmi:uuid=</span><span class="s">&quot;http://ddialliance.org/Specification/DDI-CDI/1.0/XMI/#CatalogDetails-date&quot;</span>
+<span class="linenos">106</span><span class="w">                   </span><span class="na">xmi:type=</span><span class="s">&quot;uml:Property&quot;</span><span class="nt">&gt;</span>
+<span class="linenos">107</span><span class="w">      </span><span class="nt">&lt;ownedComment</span><span class="w"> </span><span class="na">xmi:id=</span><span class="s">&quot;DDICDIModels-DDICDILibrary-DataTypes-StructuredDataTypes-CatalogDetails-date-ownedComment&quot;</span>
+<span class="linenos">108</span><span class="w">                    </span><span class="na">xmi:uuid=</span><span class="s">&quot;http://ddialliance.org/Specification/DDI-CDI/1.0/XMI/#CatalogDetails-date-ownedComment&quot;</span>
+<span class="linenos">109</span><span class="w">                    </span><span class="na">xmi:type=</span><span class="s">&quot;uml:Comment&quot;</span><span class="nt">&gt;</span>
+<span class="linenos">110</span><span class="w">         </span><span class="nt">&lt;annotatedElement</span><span class="w"> </span><span class="na">xmi:idref=</span><span class="s">&quot;DDICDIModels-DDICDILibrary-DataTypes-StructuredDataTypes-CatalogDetails-date&quot;</span><span class="nt">/&gt;</span>
+<span class="linenos">111</span><span class="w">         </span><span class="nt">&lt;body&gt;</span>A<span class="w"> </span>date<span class="w"> </span>associated<span class="w"> </span>with<span class="w"> </span>the<span class="w"> </span>annotated<span class="w"> </span>object<span class="w"> </span>(not<span class="w"> </span>the<span class="w"> </span>coverage<span class="w"> </span>period).<span class="w"> </span>Use<span class="w"> </span>typeOfDate<span class="w"> </span>to<span class="w"> </span>specify<span class="w"> </span>the<span class="w"> </span>type<span class="w"> </span>of<span class="w"> </span>date<span class="w"> </span>such<span class="w"> </span>as<span class="w"> </span>Version,<span class="w"> </span>Publication,<span class="w"> </span>Submitted,<span class="w"> </span>Copyrighted,<span class="w"> </span>Accepted,<span class="w"> </span>etc.<span class="nt">&lt;/body&gt;</span>
+<span class="linenos">112</span><span class="w">      </span><span class="nt">&lt;/ownedComment&gt;</span>
+<span class="linenos">113</span><span class="w">      </span><span class="nt">&lt;lowerValue</span><span class="w"> </span><span class="na">xmi:id=</span><span class="s">&quot;DDICDIModels-DDICDILibrary-DataTypes-StructuredDataTypes-CatalogDetails-date-lowerValue&quot;</span>
+<span class="linenos">114</span><span class="w">                  </span><span class="na">xmi:uuid=</span><span class="s">&quot;http://ddialliance.org/Specification/DDI-CDI/1.0/XMI/#CatalogDetails-date-lowerValue&quot;</span>
+<span class="linenos">115</span><span class="w">                  </span><span class="na">xmi:type=</span><span class="s">&quot;uml:LiteralInteger&quot;</span><span class="nt">/&gt;</span>
+<span class="linenos">116</span><span class="w">      </span><span class="nt">&lt;upperValue</span><span class="w"> </span><span class="na">xmi:id=</span><span class="s">&quot;DDICDIModels-DDICDILibrary-DataTypes-StructuredDataTypes-CatalogDetails-date-upperValue&quot;</span>
+<span class="linenos">117</span><span class="w">                  </span><span class="na">xmi:uuid=</span><span class="s">&quot;http://ddialliance.org/Specification/DDI-CDI/1.0/XMI/#CatalogDetails-date-upperValue&quot;</span>
+<span class="linenos">118</span><span class="w">                  </span><span class="na">xmi:type=</span><span class="s">&quot;uml:LiteralUnlimitedNatural&quot;</span><span class="nt">&gt;</span>
+<span class="linenos">119</span><span class="w">         </span><span class="nt">&lt;value&gt;</span>*<span class="nt">&lt;/value&gt;</span>
+<span class="linenos">120</span><span class="w">      </span><span class="nt">&lt;/upperValue&gt;</span>
+<span class="linenos">121</span><span class="w">      </span><span class="nt">&lt;name&gt;</span>date<span class="nt">&lt;/name&gt;</span>
+<span class="linenos">122</span><span class="w">      </span><span class="nt">&lt;isOrdered&gt;</span>true<span class="nt">&lt;/isOrdered&gt;</span>
+<span class="linenos">123</span><span class="w">      </span><span class="nt">&lt;type</span><span class="w"> </span><span class="na">xmi:idref=</span><span class="s">&quot;DDICDIModels-DDICDILibrary-DataTypes-StructuredDataTypes-CombinedDate&quot;</span><span class="nt">/&gt;</span>
+<span class="linenos">124</span><span class="w">   </span><span class="nt">&lt;/ownedAttribute&gt;</span>
+<span class="linenos">125</span><span class="w">   </span><span class="nt">&lt;ownedAttribute</span><span class="w"> </span><span class="na">xmi:id=</span><span class="s">&quot;DDICDIModels-DDICDILibrary-DataTypes-StructuredDataTypes-CatalogDetails-identifier&quot;</span>
+<span class="linenos">126</span><span class="w">                   </span><span class="na">xmi:uuid=</span><span class="s">&quot;http://ddialliance.org/Specification/DDI-CDI/1.0/XMI/#CatalogDetails-identifier&quot;</span>
+<span class="linenos">127</span><span class="w">                   </span><span class="na">xmi:type=</span><span class="s">&quot;uml:Property&quot;</span><span class="nt">&gt;</span>
+<span class="linenos">128</span><span class="w">      </span><span class="nt">&lt;ownedComment</span><span class="w"> </span><span class="na">xmi:id=</span><span class="s">&quot;DDICDIModels-DDICDILibrary-DataTypes-StructuredDataTypes-CatalogDetails-identifier-ownedComment&quot;</span>
+<span class="linenos">129</span><span class="w">                    </span><span class="na">xmi:uuid=</span><span class="s">&quot;http://ddialliance.org/Specification/DDI-CDI/1.0/XMI/#CatalogDetails-identifier-ownedComment&quot;</span>
+<span class="linenos">130</span><span class="w">                    </span><span class="na">xmi:type=</span><span class="s">&quot;uml:Comment&quot;</span><span class="nt">&gt;</span>
+<span class="linenos">131</span><span class="w">         </span><span class="nt">&lt;annotatedElement</span><span class="w"> </span><span class="na">xmi:idref=</span><span class="s">&quot;DDICDIModels-DDICDILibrary-DataTypes-StructuredDataTypes-CatalogDetails-identifier&quot;</span><span class="nt">/&gt;</span>
+<span class="linenos">132</span><span class="w">         </span><span class="nt">&lt;body&gt;</span>An<span class="w"> </span>identifier<span class="w"> </span>or<span class="w"> </span>locator.<span class="w"> </span>Contains<span class="w"> </span>identifier<span class="w"> </span>and<span class="w"> </span>Managing<span class="w"> </span>agency<span class="w"> </span>(ISBN,<span class="w"> </span>ISSN,<span class="w"> </span>DOI,<span class="w"> </span>local<span class="w"> </span>archive).<span class="w"> </span>Indicates<span class="w"> </span>if<span class="w"> </span>it<span class="w"> </span>is<span class="w"> </span>a<span class="w"> </span>URI.<span class="nt">&lt;/body&gt;</span>
+<span class="linenos">133</span><span class="w">      </span><span class="nt">&lt;/ownedComment&gt;</span>
+<span class="linenos">134</span><span class="w">      </span><span class="nt">&lt;lowerValue</span><span class="w"> </span><span class="na">xmi:id=</span><span class="s">&quot;DDICDIModels-DDICDILibrary-DataTypes-StructuredDataTypes-CatalogDetails-identifier-lowerValue&quot;</span>
+<span class="linenos">135</span><span class="w">                  </span><span class="na">xmi:uuid=</span><span class="s">&quot;http://ddialliance.org/Specification/DDI-CDI/1.0/XMI/#CatalogDetails-identifier-lowerValue&quot;</span>
+<span class="linenos">136</span><span class="w">                  </span><span class="na">xmi:type=</span><span class="s">&quot;uml:LiteralInteger&quot;</span><span class="nt">/&gt;</span>
+<span class="linenos">137</span><span class="w">      </span><span class="nt">&lt;upperValue</span><span class="w"> </span><span class="na">xmi:id=</span><span class="s">&quot;DDICDIModels-DDICDILibrary-DataTypes-StructuredDataTypes-CatalogDetails-identifier-upperValue&quot;</span>
+<span class="linenos">138</span><span class="w">                  </span><span class="na">xmi:uuid=</span><span class="s">&quot;http://ddialliance.org/Specification/DDI-CDI/1.0/XMI/#CatalogDetails-identifier-upperValue&quot;</span>
+<span class="linenos">139</span><span class="w">                  </span><span class="na">xmi:type=</span><span class="s">&quot;uml:LiteralUnlimitedNatural&quot;</span><span class="nt">&gt;</span>
+<span class="linenos">140</span><span class="w">         </span><span class="nt">&lt;value&gt;</span>1<span class="nt">&lt;/value&gt;</span>
+<span class="linenos">141</span><span class="w">      </span><span class="nt">&lt;/upperValue&gt;</span>
+<span class="linenos">142</span><span class="w">      </span><span class="nt">&lt;name&gt;</span>identifier<span class="nt">&lt;/name&gt;</span>
+<span class="linenos">143</span><span class="w">      </span><span class="nt">&lt;isID&gt;</span>true<span class="nt">&lt;/isID&gt;</span>
+<span class="linenos">144</span><span class="w">      </span><span class="nt">&lt;type</span><span class="w"> </span><span class="na">xmi:idref=</span><span class="s">&quot;DDICDIModels-DDICDILibrary-DataTypes-StructuredDataTypes-InternationalIdentifier&quot;</span><span class="nt">/&gt;</span>
+<span class="linenos">145</span><span class="w">   </span><span class="nt">&lt;/ownedAttribute&gt;</span>
+<span class="linenos">146</span><span class="w">   </span><span class="nt">&lt;ownedAttribute</span><span class="w"> </span><span class="na">xmi:id=</span><span class="s">&quot;DDICDIModels-DDICDILibrary-DataTypes-StructuredDataTypes-CatalogDetails-informationSource&quot;</span>
+<span class="linenos">147</span><span class="w">                   </span><span class="na">xmi:uuid=</span><span class="s">&quot;http://ddialliance.org/Specification/DDI-CDI/1.0/XMI/#CatalogDetails-informationSource&quot;</span>
+<span class="linenos">148</span><span class="w">                   </span><span class="na">xmi:type=</span><span class="s">&quot;uml:Property&quot;</span><span class="nt">&gt;</span>
+<span class="linenos">149</span><span class="w">      </span><span class="nt">&lt;ownedComment</span><span class="w"> </span><span class="na">xmi:id=</span><span class="s">&quot;DDICDIModels-DDICDILibrary-DataTypes-StructuredDataTypes-CatalogDetails-informationSource-ownedComment&quot;</span>
+<span class="linenos">150</span><span class="w">                    </span><span class="na">xmi:uuid=</span><span class="s">&quot;http://ddialliance.org/Specification/DDI-CDI/1.0/XMI/#CatalogDetails-informationSource-ownedComment&quot;</span>
+<span class="linenos">151</span><span class="w">                    </span><span class="na">xmi:type=</span><span class="s">&quot;uml:Comment&quot;</span><span class="nt">&gt;</span>
+<span class="linenos">152</span><span class="w">         </span><span class="nt">&lt;annotatedElement</span><span class="w"> </span><span class="na">xmi:idref=</span><span class="s">&quot;DDICDIModels-DDICDILibrary-DataTypes-StructuredDataTypes-CatalogDetails-informationSource&quot;</span><span class="nt">/&gt;</span>
+<span class="linenos">153</span><span class="w">         </span><span class="nt">&lt;body&gt;</span>The<span class="w"> </span>name<span class="w"> </span>or<span class="w"> </span>identifier<span class="w"> </span>of<span class="w"> </span>source<span class="w"> </span>information<span class="w"> </span>for<span class="w"> </span>the<span class="w"> </span>annotated<span class="w"> </span>object.<span class="nt">&lt;/body&gt;</span>
+<span class="linenos">154</span><span class="w">      </span><span class="nt">&lt;/ownedComment&gt;</span>
+<span class="linenos">155</span><span class="w">      </span><span class="nt">&lt;lowerValue</span><span class="w"> </span><span class="na">xmi:id=</span><span class="s">&quot;DDICDIModels-DDICDILibrary-DataTypes-StructuredDataTypes-CatalogDetails-informationSource-lowerValue&quot;</span>
+<span class="linenos">156</span><span class="w">                  </span><span class="na">xmi:uuid=</span><span class="s">&quot;http://ddialliance.org/Specification/DDI-CDI/1.0/XMI/#CatalogDetails-informationSource-lowerValue&quot;</span>
+<span class="linenos">157</span><span class="w">                  </span><span class="na">xmi:type=</span><span class="s">&quot;uml:LiteralInteger&quot;</span><span class="nt">/&gt;</span>
+<span class="linenos">158</span><span class="w">      </span><span class="nt">&lt;upperValue</span><span class="w"> </span><span class="na">xmi:id=</span><span class="s">&quot;DDICDIModels-DDICDILibrary-DataTypes-StructuredDataTypes-CatalogDetails-informationSource-upperValue&quot;</span>
+<span class="linenos">159</span><span class="w">                  </span><span class="na">xmi:uuid=</span><span class="s">&quot;http://ddialliance.org/Specification/DDI-CDI/1.0/XMI/#CatalogDetails-informationSource-upperValue&quot;</span>
+<span class="linenos">160</span><span class="w">                  </span><span class="na">xmi:type=</span><span class="s">&quot;uml:LiteralUnlimitedNatural&quot;</span><span class="nt">&gt;</span>
+<span class="linenos">161</span><span class="w">         </span><span class="nt">&lt;value&gt;</span>*<span class="nt">&lt;/value&gt;</span>
+<span class="linenos">162</span><span class="w">      </span><span class="nt">&lt;/upperValue&gt;</span>
+<span class="linenos">163</span><span class="w">      </span><span class="nt">&lt;name&gt;</span>informationSource<span class="nt">&lt;/name&gt;</span>
+<span class="linenos">164</span><span class="w">      </span><span class="nt">&lt;isOrdered&gt;</span>true<span class="nt">&lt;/isOrdered&gt;</span>
+<span class="linenos">165</span><span class="w">      </span><span class="nt">&lt;type</span><span class="w"> </span><span class="na">xmi:idref=</span><span class="s">&quot;DDICDIModels-DDICDILibrary-DataTypes-StructuredDataTypes-InternationalString&quot;</span><span class="nt">/&gt;</span>
+<span class="linenos">166</span><span class="w">   </span><span class="nt">&lt;/ownedAttribute&gt;</span>
+<span class="linenos">167</span><span class="w">   </span><span class="nt">&lt;ownedAttribute</span><span class="w"> </span><span class="na">xmi:id=</span><span class="s">&quot;DDICDIModels-DDICDILibrary-DataTypes-StructuredDataTypes-CatalogDetails-languageOfObject&quot;</span>
+<span class="linenos">168</span><span class="w">                   </span><span class="na">xmi:uuid=</span><span class="s">&quot;http://ddialliance.org/Specification/DDI-CDI/1.0/XMI/#CatalogDetails-languageOfObject&quot;</span>
+<span class="linenos">169</span><span class="w">                   </span><span class="na">xmi:type=</span><span class="s">&quot;uml:Property&quot;</span><span class="nt">&gt;</span>
+<span class="linenos">170</span><span class="w">      </span><span class="nt">&lt;ownedComment</span><span class="w"> </span><span class="na">xmi:id=</span><span class="s">&quot;DDICDIModels-DDICDILibrary-DataTypes-StructuredDataTypes-CatalogDetails-languageOfObject-ownedComment&quot;</span>
+<span class="linenos">171</span><span class="w">                    </span><span class="na">xmi:uuid=</span><span class="s">&quot;http://ddialliance.org/Specification/DDI-CDI/1.0/XMI/#CatalogDetails-languageOfObject-ownedComment&quot;</span>
+<span class="linenos">172</span><span class="w">                    </span><span class="na">xmi:type=</span><span class="s">&quot;uml:Comment&quot;</span><span class="nt">&gt;</span>
+<span class="linenos">173</span><span class="w">         </span><span class="nt">&lt;annotatedElement</span><span class="w"> </span><span class="na">xmi:idref=</span><span class="s">&quot;DDICDIModels-DDICDILibrary-DataTypes-StructuredDataTypes-CatalogDetails-languageOfObject&quot;</span><span class="nt">/&gt;</span>
+<span class="linenos">174</span><span class="w">         </span><span class="nt">&lt;body&gt;</span>Language<span class="w"> </span>of<span class="w"> </span>the<span class="w"> </span>intellectual<span class="w"> </span>content<span class="w"> </span>of<span class="w"> </span>the<span class="w"> </span>described<span class="w"> </span>object.<span class="w"> </span>Multiple<span class="w"> </span>languages<span class="w"> </span>are<span class="w"> </span>supported<span class="w"> </span>by<span class="w"> </span>the<span class="w"> </span>structure<span class="w"> </span>itself<span class="w"> </span>as<span class="w"> </span>defined<span class="w"> </span>in<span class="w"> </span>the<span class="w"> </span>transformation<span class="w"> </span>to<span class="w"> </span>specific<span class="w"> </span>bindings.<span class="w"> </span>Use<span class="w"> </span>language<span class="w"> </span>codes<span class="w"> </span>supported<span class="w"> </span>by<span class="w"> </span>xs:language<span class="w"> </span>which<span class="w"> </span>include<span class="w"> </span>the<span class="w"> </span>2<span class="w"> </span>and<span class="w"> </span>3<span class="w"> </span>character<span class="w"> </span>and<span class="w"> </span>extended<span class="w"> </span>structures<span class="w"> </span>defined<span class="w"> </span>by<span class="w"> </span>RFC4646<span class="w"> </span>or<span class="w"> </span>its<span class="w"> </span>successors.<span class="w"> </span>Supports<span class="w"> </span>multiple<span class="w"> </span>language<span class="w"> </span>codes.<span class="nt">&lt;/body&gt;</span>
+<span class="linenos">175</span><span class="w">      </span><span class="nt">&lt;/ownedComment&gt;</span>
+<span class="linenos">176</span><span class="w">      </span><span class="nt">&lt;lowerValue</span><span class="w"> </span><span class="na">xmi:id=</span><span class="s">&quot;DDICDIModels-DDICDILibrary-DataTypes-StructuredDataTypes-CatalogDetails-languageOfObject-lowerValue&quot;</span>
+<span class="linenos">177</span><span class="w">                  </span><span class="na">xmi:uuid=</span><span class="s">&quot;http://ddialliance.org/Specification/DDI-CDI/1.0/XMI/#CatalogDetails-languageOfObject-lowerValue&quot;</span>
+<span class="linenos">178</span><span class="w">                  </span><span class="na">xmi:type=</span><span class="s">&quot;uml:LiteralInteger&quot;</span><span class="nt">/&gt;</span>
+<span class="linenos">179</span><span class="w">      </span><span class="nt">&lt;upperValue</span><span class="w"> </span><span class="na">xmi:id=</span><span class="s">&quot;DDICDIModels-DDICDILibrary-DataTypes-StructuredDataTypes-CatalogDetails-languageOfObject-upperValue&quot;</span>
+<span class="linenos">180</span><span class="w">                  </span><span class="na">xmi:uuid=</span><span class="s">&quot;http://ddialliance.org/Specification/DDI-CDI/1.0/XMI/#CatalogDetails-languageOfObject-upperValue&quot;</span>
+<span class="linenos">181</span><span class="w">                  </span><span class="na">xmi:type=</span><span class="s">&quot;uml:LiteralUnlimitedNatural&quot;</span><span class="nt">&gt;</span>
+<span class="linenos">182</span><span class="w">         </span><span class="nt">&lt;value&gt;</span>*<span class="nt">&lt;/value&gt;</span>
+<span class="linenos">183</span><span class="w">      </span><span class="nt">&lt;/upperValue&gt;</span>
+<span class="linenos">184</span><span class="w">      </span><span class="nt">&lt;name&gt;</span>languageOfObject<span class="nt">&lt;/name&gt;</span>
+<span class="linenos">185</span><span class="w">      </span><span class="nt">&lt;isOrdered&gt;</span>true<span class="nt">&lt;/isOrdered&gt;</span>
+<span class="linenos">186</span><span class="w">      </span><span class="nt">&lt;type</span><span class="w"> </span><span class="na">xmi:idref=</span><span class="s">&quot;DDICDIModels-DDICDILibrary-DataTypes-XMLSchemaDataTypes-XsdLanguage&quot;</span><span class="nt">/&gt;</span>
+<span class="linenos">187</span><span class="w">   </span><span class="nt">&lt;/ownedAttribute&gt;</span>
+<span class="linenos">188</span><span class="w">   </span><span class="nt">&lt;ownedAttribute</span><span class="w"> </span><span class="na">xmi:id=</span><span class="s">&quot;DDICDIModels-DDICDILibrary-DataTypes-StructuredDataTypes-CatalogDetails-provenance&quot;</span>
+<span class="linenos">189</span><span class="w">                   </span><span class="na">xmi:uuid=</span><span class="s">&quot;http://ddialliance.org/Specification/DDI-CDI/1.0/XMI/#CatalogDetails-provenance&quot;</span>
+<span class="linenos">190</span><span class="w">                   </span><span class="na">xmi:type=</span><span class="s">&quot;uml:Property&quot;</span><span class="nt">&gt;</span>
+<span class="linenos">191</span><span class="w">      </span><span class="nt">&lt;ownedComment</span><span class="w"> </span><span class="na">xmi:id=</span><span class="s">&quot;DDICDIModels-DDICDILibrary-DataTypes-StructuredDataTypes-CatalogDetails-provenance-ownedComment&quot;</span>
+<span class="linenos">192</span><span class="w">                    </span><span class="na">xmi:uuid=</span><span class="s">&quot;http://ddialliance.org/Specification/DDI-CDI/1.0/XMI/#CatalogDetails-provenance-ownedComment&quot;</span>
+<span class="linenos">193</span><span class="w">                    </span><span class="na">xmi:type=</span><span class="s">&quot;uml:Comment&quot;</span><span class="nt">&gt;</span>
+<span class="linenos">194</span><span class="w">         </span><span class="nt">&lt;annotatedElement</span><span class="w"> </span><span class="na">xmi:idref=</span><span class="s">&quot;DDICDIModels-DDICDILibrary-DataTypes-StructuredDataTypes-CatalogDetails-provenance&quot;</span><span class="nt">/&gt;</span>
+<span class="linenos">195</span><span class="w">         </span><span class="nt">&lt;body&gt;</span>Information<span class="w"> </span>about<span class="w"> </span>the<span class="w"> </span>origins<span class="w"> </span>of<span class="w"> </span>the<span class="w"> </span>object.<span class="nt">&lt;/body&gt;</span>
+<span class="linenos">196</span><span class="w">      </span><span class="nt">&lt;/ownedComment&gt;</span>
+<span class="linenos">197</span><span class="w">      </span><span class="nt">&lt;lowerValue</span><span class="w"> </span><span class="na">xmi:id=</span><span class="s">&quot;DDICDIModels-DDICDILibrary-DataTypes-StructuredDataTypes-CatalogDetails-provenance-lowerValue&quot;</span>
+<span class="linenos">198</span><span class="w">                  </span><span class="na">xmi:uuid=</span><span class="s">&quot;http://ddialliance.org/Specification/DDI-CDI/1.0/XMI/#CatalogDetails-provenance-lowerValue&quot;</span>
+<span class="linenos">199</span><span class="w">                  </span><span class="na">xmi:type=</span><span class="s">&quot;uml:LiteralInteger&quot;</span><span class="nt">/&gt;</span>
+<span class="linenos">200</span><span class="w">      </span><span class="nt">&lt;upperValue</span><span class="w"> </span><span class="na">xmi:id=</span><span class="s">&quot;DDICDIModels-DDICDILibrary-DataTypes-StructuredDataTypes-CatalogDetails-provenance-upperValue&quot;</span>
+<span class="linenos">201</span><span class="w">                  </span><span class="na">xmi:uuid=</span><span class="s">&quot;http://ddialliance.org/Specification/DDI-CDI/1.0/XMI/#CatalogDetails-provenance-upperValue&quot;</span>
+<span class="linenos">202</span><span class="w">                  </span><span class="na">xmi:type=</span><span class="s">&quot;uml:LiteralUnlimitedNatural&quot;</span><span class="nt">&gt;</span>
+<span class="linenos">203</span><span class="w">         </span><span class="nt">&lt;value&gt;</span>1<span class="nt">&lt;/value&gt;</span>
+<span class="linenos">204</span><span class="w">      </span><span class="nt">&lt;/upperValue&gt;</span>
+<span class="linenos">205</span><span class="w">      </span><span class="nt">&lt;name&gt;</span>provenance<span class="nt">&lt;/name&gt;</span>
+<span class="linenos">206</span><span class="w">      </span><span class="nt">&lt;type</span><span class="w"> </span><span class="na">xmi:idref=</span><span class="s">&quot;DDICDIModels-DDICDILibrary-DataTypes-StructuredDataTypes-ProvenanceInformation&quot;</span><span class="nt">/&gt;</span>
+<span class="linenos">207</span><span class="w">   </span><span class="nt">&lt;/ownedAttribute&gt;</span>
+<span class="linenos">208</span><span class="w">   </span><span class="nt">&lt;ownedAttribute</span><span class="w"> </span><span class="na">xmi:id=</span><span class="s">&quot;DDICDIModels-DDICDILibrary-DataTypes-StructuredDataTypes-CatalogDetails-publisher&quot;</span>
+<span class="linenos">209</span><span class="w">                   </span><span class="na">xmi:uuid=</span><span class="s">&quot;http://ddialliance.org/Specification/DDI-CDI/1.0/XMI/#CatalogDetails-publisher&quot;</span>
+<span class="linenos">210</span><span class="w">                   </span><span class="na">xmi:type=</span><span class="s">&quot;uml:Property&quot;</span><span class="nt">&gt;</span>
+<span class="linenos">211</span><span class="w">      </span><span class="nt">&lt;ownedComment</span><span class="w"> </span><span class="na">xmi:id=</span><span class="s">&quot;DDICDIModels-DDICDILibrary-DataTypes-StructuredDataTypes-CatalogDetails-publisher-ownedComment&quot;</span>
+<span class="linenos">212</span><span class="w">                    </span><span class="na">xmi:uuid=</span><span class="s">&quot;http://ddialliance.org/Specification/DDI-CDI/1.0/XMI/#CatalogDetails-publisher-ownedComment&quot;</span>
+<span class="linenos">213</span><span class="w">                    </span><span class="na">xmi:type=</span><span class="s">&quot;uml:Comment&quot;</span><span class="nt">&gt;</span>
+<span class="linenos">214</span><span class="w">         </span><span class="nt">&lt;annotatedElement</span><span class="w"> </span><span class="na">xmi:idref=</span><span class="s">&quot;DDICDIModels-DDICDILibrary-DataTypes-StructuredDataTypes-CatalogDetails-publisher&quot;</span><span class="nt">/&gt;</span>
+<span class="linenos">215</span><span class="w">         </span><span class="nt">&lt;body&gt;</span>Person<span class="w"> </span>or<span class="w"> </span>organization<span class="w"> </span>responsible<span class="w"> </span>for<span class="w"> </span>making<span class="w"> </span>the<span class="w"> </span>resource<span class="w"> </span>available<span class="w"> </span>in<span class="w"> </span>its<span class="w"> </span>present<span class="w"> </span>form.<span class="nt">&lt;/body&gt;</span>
+<span class="linenos">216</span><span class="w">      </span><span class="nt">&lt;/ownedComment&gt;</span>
+<span class="linenos">217</span><span class="w">      </span><span class="nt">&lt;lowerValue</span><span class="w"> </span><span class="na">xmi:id=</span><span class="s">&quot;DDICDIModels-DDICDILibrary-DataTypes-StructuredDataTypes-CatalogDetails-publisher-lowerValue&quot;</span>
+<span class="linenos">218</span><span class="w">                  </span><span class="na">xmi:uuid=</span><span class="s">&quot;http://ddialliance.org/Specification/DDI-CDI/1.0/XMI/#CatalogDetails-publisher-lowerValue&quot;</span>
+<span class="linenos">219</span><span class="w">                  </span><span class="na">xmi:type=</span><span class="s">&quot;uml:LiteralInteger&quot;</span><span class="nt">/&gt;</span>
+<span class="linenos">220</span><span class="w">      </span><span class="nt">&lt;upperValue</span><span class="w"> </span><span class="na">xmi:id=</span><span class="s">&quot;DDICDIModels-DDICDILibrary-DataTypes-StructuredDataTypes-CatalogDetails-publisher-upperValue&quot;</span>
+<span class="linenos">221</span><span class="w">                  </span><span class="na">xmi:uuid=</span><span class="s">&quot;http://ddialliance.org/Specification/DDI-CDI/1.0/XMI/#CatalogDetails-publisher-upperValue&quot;</span>
+<span class="linenos">222</span><span class="w">                  </span><span class="na">xmi:type=</span><span class="s">&quot;uml:LiteralUnlimitedNatural&quot;</span><span class="nt">&gt;</span>
+<span class="linenos">223</span><span class="w">         </span><span class="nt">&lt;value&gt;</span>*<span class="nt">&lt;/value&gt;</span>
+<span class="linenos">224</span><span class="w">      </span><span class="nt">&lt;/upperValue&gt;</span>
+<span class="linenos">225</span><span class="w">      </span><span class="nt">&lt;name&gt;</span>publisher<span class="nt">&lt;/name&gt;</span>
+<span class="linenos">226</span><span class="w">      </span><span class="nt">&lt;isOrdered&gt;</span>true<span class="nt">&lt;/isOrdered&gt;</span>
+<span class="linenos">227</span><span class="w">      </span><span class="nt">&lt;type</span><span class="w"> </span><span class="na">xmi:idref=</span><span class="s">&quot;DDICDIModels-DDICDILibrary-DataTypes-StructuredDataTypes-AgentInRole&quot;</span><span class="nt">/&gt;</span>
+<span class="linenos">228</span><span class="w">   </span><span class="nt">&lt;/ownedAttribute&gt;</span>
+<span class="linenos">229</span><span class="w">   </span><span class="nt">&lt;ownedAttribute</span><span class="w"> </span><span class="na">xmi:id=</span><span class="s">&quot;DDICDIModels-DDICDILibrary-DataTypes-StructuredDataTypes-CatalogDetails-relatedResource&quot;</span>
+<span class="linenos">230</span><span class="w">                   </span><span class="na">xmi:uuid=</span><span class="s">&quot;http://ddialliance.org/Specification/DDI-CDI/1.0/XMI/#CatalogDetails-relatedResource&quot;</span>
+<span class="linenos">231</span><span class="w">                   </span><span class="na">xmi:type=</span><span class="s">&quot;uml:Property&quot;</span><span class="nt">&gt;</span>
+<span class="linenos">232</span><span class="w">      </span><span class="nt">&lt;ownedComment</span><span class="w"> </span><span class="na">xmi:id=</span><span class="s">&quot;DDICDIModels-DDICDILibrary-DataTypes-StructuredDataTypes-CatalogDetails-relatedResource-ownedComment&quot;</span>
+<span class="linenos">233</span><span class="w">                    </span><span class="na">xmi:uuid=</span><span class="s">&quot;http://ddialliance.org/Specification/DDI-CDI/1.0/XMI/#CatalogDetails-relatedResource-ownedComment&quot;</span>
+<span class="linenos">234</span><span class="w">                    </span><span class="na">xmi:type=</span><span class="s">&quot;uml:Comment&quot;</span><span class="nt">&gt;</span>
+<span class="linenos">235</span><span class="w">         </span><span class="nt">&lt;annotatedElement</span><span class="w"> </span><span class="na">xmi:idref=</span><span class="s">&quot;DDICDIModels-DDICDILibrary-DataTypes-StructuredDataTypes-CatalogDetails-relatedResource&quot;</span><span class="nt">/&gt;</span>
+<span class="linenos">236</span><span class="w">         </span><span class="nt">&lt;body&gt;</span>Provide<span class="w"> </span>the<span class="w"> </span>identifier,<span class="w"> </span>managing<span class="w"> </span>agency,<span class="w"> </span>and<span class="w"> </span>type<span class="w"> </span>of<span class="w"> </span>resource<span class="w"> </span>related<span class="w"> </span>to<span class="w"> </span>this<span class="w"> </span>object.<span class="w"> </span>Use<span class="w"> </span>to<span class="w"> </span>specify<span class="w"> </span>related<span class="w"> </span>resources<span class="w"> </span>similar<span class="w"> </span>to<span class="w"> </span>Dublin<span class="w"> </span>Core<span class="w"> </span>isPartOf<span class="w"> </span>and<span class="w"> </span>hasPart<span class="w"> </span>to<span class="w"> </span>indicate<span class="w"> </span>collection/series<span class="w"> </span>membership<span class="w"> </span>for<span class="w"> </span>objects<span class="w"> </span>where<span class="w"> </span>there<span class="w"> </span>is<span class="w"> </span>an<span class="w"> </span>identifiable<span class="w"> </span>record.<span class="w"> </span>If<span class="w"> </span>not<span class="w"> </span>an<span class="w"> </span>identified<span class="w"> </span>object<span class="w"> </span>use<span class="w"> </span>the<span class="w"> </span>relationship<span class="w"> </span>to<span class="w"> </span>ExternalMaterial<span class="w"> </span>using<span class="w"> </span>a<span class="w"> </span>type<span class="w"> </span>that<span class="w"> </span>indicates<span class="w"> </span>a<span class="w"> </span>series<span class="w"> </span>description.<span class="nt">&lt;/body&gt;</span>
+<span class="linenos">237</span><span class="w">      </span><span class="nt">&lt;/ownedComment&gt;</span>
+<span class="linenos">238</span><span class="w">      </span><span class="nt">&lt;lowerValue</span><span class="w"> </span><span class="na">xmi:id=</span><span class="s">&quot;DDICDIModels-DDICDILibrary-DataTypes-StructuredDataTypes-CatalogDetails-relatedResource-lowerValue&quot;</span>
+<span class="linenos">239</span><span class="w">                  </span><span class="na">xmi:uuid=</span><span class="s">&quot;http://ddialliance.org/Specification/DDI-CDI/1.0/XMI/#CatalogDetails-relatedResource-lowerValue&quot;</span>
+<span class="linenos">240</span><span class="w">                  </span><span class="na">xmi:type=</span><span class="s">&quot;uml:LiteralInteger&quot;</span><span class="nt">/&gt;</span>
+<span class="linenos">241</span><span class="w">      </span><span class="nt">&lt;upperValue</span><span class="w"> </span><span class="na">xmi:id=</span><span class="s">&quot;DDICDIModels-DDICDILibrary-DataTypes-StructuredDataTypes-CatalogDetails-relatedResource-upperValue&quot;</span>
+<span class="linenos">242</span><span class="w">                  </span><span class="na">xmi:uuid=</span><span class="s">&quot;http://ddialliance.org/Specification/DDI-CDI/1.0/XMI/#CatalogDetails-relatedResource-upperValue&quot;</span>
+<span class="linenos">243</span><span class="w">                  </span><span class="na">xmi:type=</span><span class="s">&quot;uml:LiteralUnlimitedNatural&quot;</span><span class="nt">&gt;</span>
+<span class="linenos">244</span><span class="w">         </span><span class="nt">&lt;value&gt;</span>*<span class="nt">&lt;/value&gt;</span>
+<span class="linenos">245</span><span class="w">      </span><span class="nt">&lt;/upperValue&gt;</span>
+<span class="linenos">246</span><span class="w">      </span><span class="nt">&lt;name&gt;</span>relatedResource<span class="nt">&lt;/name&gt;</span>
+<span class="linenos">247</span><span class="w">      </span><span class="nt">&lt;isOrdered&gt;</span>true<span class="nt">&lt;/isOrdered&gt;</span>
+<span class="linenos">248</span><span class="w">      </span><span class="nt">&lt;type</span><span class="w"> </span><span class="na">xmi:idref=</span><span class="s">&quot;DDICDIModels-DDICDILibrary-DataTypes-StructuredDataTypes-Reference&quot;</span><span class="nt">/&gt;</span>
+<span class="linenos">249</span><span class="w">   </span><span class="nt">&lt;/ownedAttribute&gt;</span>
+<span class="linenos">250</span><span class="w">   </span><span class="nt">&lt;ownedAttribute</span><span class="w"> </span><span class="na">xmi:id=</span><span class="s">&quot;DDICDIModels-DDICDILibrary-DataTypes-StructuredDataTypes-CatalogDetails-subTitle&quot;</span>
+<span class="linenos">251</span><span class="w">                   </span><span class="na">xmi:uuid=</span><span class="s">&quot;http://ddialliance.org/Specification/DDI-CDI/1.0/XMI/#CatalogDetails-subTitle&quot;</span>
+<span class="linenos">252</span><span class="w">                   </span><span class="na">xmi:type=</span><span class="s">&quot;uml:Property&quot;</span><span class="nt">&gt;</span>
+<span class="linenos">253</span><span class="w">      </span><span class="nt">&lt;ownedComment</span><span class="w"> </span><span class="na">xmi:id=</span><span class="s">&quot;DDICDIModels-DDICDILibrary-DataTypes-StructuredDataTypes-CatalogDetails-subTitle-ownedComment&quot;</span>
+<span class="linenos">254</span><span class="w">                    </span><span class="na">xmi:uuid=</span><span class="s">&quot;http://ddialliance.org/Specification/DDI-CDI/1.0/XMI/#CatalogDetails-subTitle-ownedComment&quot;</span>
+<span class="linenos">255</span><span class="w">                    </span><span class="na">xmi:type=</span><span class="s">&quot;uml:Comment&quot;</span><span class="nt">&gt;</span>
+<span class="linenos">256</span><span class="w">         </span><span class="nt">&lt;annotatedElement</span><span class="w"> </span><span class="na">xmi:idref=</span><span class="s">&quot;DDICDIModels-DDICDILibrary-DataTypes-StructuredDataTypes-CatalogDetails-subTitle&quot;</span><span class="nt">/&gt;</span>
+<span class="linenos">257</span><span class="w">         </span><span class="nt">&lt;body&gt;</span>Secondary<span class="w"> </span>or<span class="w"> </span>explanatory<span class="w"> </span>title.<span class="nt">&lt;/body&gt;</span>
+<span class="linenos">258</span><span class="w">      </span><span class="nt">&lt;/ownedComment&gt;</span>
+<span class="linenos">259</span><span class="w">      </span><span class="nt">&lt;lowerValue</span><span class="w"> </span><span class="na">xmi:id=</span><span class="s">&quot;DDICDIModels-DDICDILibrary-DataTypes-StructuredDataTypes-CatalogDetails-subTitle-lowerValue&quot;</span>
+<span class="linenos">260</span><span class="w">                  </span><span class="na">xmi:uuid=</span><span class="s">&quot;http://ddialliance.org/Specification/DDI-CDI/1.0/XMI/#CatalogDetails-subTitle-lowerValue&quot;</span>
+<span class="linenos">261</span><span class="w">                  </span><span class="na">xmi:type=</span><span class="s">&quot;uml:LiteralInteger&quot;</span><span class="nt">/&gt;</span>
+<span class="linenos">262</span><span class="w">      </span><span class="nt">&lt;upperValue</span><span class="w"> </span><span class="na">xmi:id=</span><span class="s">&quot;DDICDIModels-DDICDILibrary-DataTypes-StructuredDataTypes-CatalogDetails-subTitle-upperValue&quot;</span>
+<span class="linenos">263</span><span class="w">                  </span><span class="na">xmi:uuid=</span><span class="s">&quot;http://ddialliance.org/Specification/DDI-CDI/1.0/XMI/#CatalogDetails-subTitle-upperValue&quot;</span>
+<span class="linenos">264</span><span class="w">                  </span><span class="na">xmi:type=</span><span class="s">&quot;uml:LiteralUnlimitedNatural&quot;</span><span class="nt">&gt;</span>
+<span class="linenos">265</span><span class="w">         </span><span class="nt">&lt;value&gt;</span>*<span class="nt">&lt;/value&gt;</span>
+<span class="linenos">266</span><span class="w">      </span><span class="nt">&lt;/upperValue&gt;</span>
+<span class="linenos">267</span><span class="w">      </span><span class="nt">&lt;name&gt;</span>subTitle<span class="nt">&lt;/name&gt;</span>
+<span class="linenos">268</span><span class="w">      </span><span class="nt">&lt;isOrdered&gt;</span>true<span class="nt">&lt;/isOrdered&gt;</span>
+<span class="linenos">269</span><span class="w">      </span><span class="nt">&lt;type</span><span class="w"> </span><span class="na">xmi:idref=</span><span class="s">&quot;DDICDIModels-DDICDILibrary-DataTypes-StructuredDataTypes-InternationalString&quot;</span><span class="nt">/&gt;</span>
+<span class="linenos">270</span><span class="w">   </span><span class="nt">&lt;/ownedAttribute&gt;</span>
+<span class="linenos">271</span><span class="w">   </span><span class="nt">&lt;ownedAttribute</span><span class="w"> </span><span class="na">xmi:id=</span><span class="s">&quot;DDICDIModels-DDICDILibrary-DataTypes-StructuredDataTypes-CatalogDetails-summary&quot;</span>
+<span class="linenos">272</span><span class="w">                   </span><span class="na">xmi:uuid=</span><span class="s">&quot;http://ddialliance.org/Specification/DDI-CDI/1.0/XMI/#CatalogDetails-summary&quot;</span>
+<span class="linenos">273</span><span class="w">                   </span><span class="na">xmi:type=</span><span class="s">&quot;uml:Property&quot;</span><span class="nt">&gt;</span>
+<span class="linenos">274</span><span class="w">      </span><span class="nt">&lt;ownedComment</span><span class="w"> </span><span class="na">xmi:id=</span><span class="s">&quot;DDICDIModels-DDICDILibrary-DataTypes-StructuredDataTypes-CatalogDetails-summary-ownedComment&quot;</span>
+<span class="linenos">275</span><span class="w">                    </span><span class="na">xmi:uuid=</span><span class="s">&quot;http://ddialliance.org/Specification/DDI-CDI/1.0/XMI/#CatalogDetails-summary-ownedComment&quot;</span>
+<span class="linenos">276</span><span class="w">                    </span><span class="na">xmi:type=</span><span class="s">&quot;uml:Comment&quot;</span><span class="nt">&gt;</span>
+<span class="linenos">277</span><span class="w">         </span><span class="nt">&lt;annotatedElement</span><span class="w"> </span><span class="na">xmi:idref=</span><span class="s">&quot;DDICDIModels-DDICDILibrary-DataTypes-StructuredDataTypes-CatalogDetails-summary&quot;</span><span class="nt">/&gt;</span>
+<span class="linenos">278</span><span class="w">         </span><span class="nt">&lt;body&gt;</span>A<span class="w"> </span>summary<span class="w"> </span>description<span class="w"> </span>(abstract)<span class="w"> </span>of<span class="w"> </span>the<span class="w"> </span>annotated<span class="w"> </span>object.<span class="nt">&lt;/body&gt;</span>
+<span class="linenos">279</span><span class="w">      </span><span class="nt">&lt;/ownedComment&gt;</span>
+<span class="linenos">280</span><span class="w">      </span><span class="nt">&lt;lowerValue</span><span class="w"> </span><span class="na">xmi:id=</span><span class="s">&quot;DDICDIModels-DDICDILibrary-DataTypes-StructuredDataTypes-CatalogDetails-summary-lowerValue&quot;</span>
+<span class="linenos">281</span><span class="w">                  </span><span class="na">xmi:uuid=</span><span class="s">&quot;http://ddialliance.org/Specification/DDI-CDI/1.0/XMI/#CatalogDetails-summary-lowerValue&quot;</span>
+<span class="linenos">282</span><span class="w">                  </span><span class="na">xmi:type=</span><span class="s">&quot;uml:LiteralInteger&quot;</span><span class="nt">/&gt;</span>
+<span class="linenos">283</span><span class="w">      </span><span class="nt">&lt;upperValue</span><span class="w"> </span><span class="na">xmi:id=</span><span class="s">&quot;DDICDIModels-DDICDILibrary-DataTypes-StructuredDataTypes-CatalogDetails-summary-upperValue&quot;</span>
+<span class="linenos">284</span><span class="w">                  </span><span class="na">xmi:uuid=</span><span class="s">&quot;http://ddialliance.org/Specification/DDI-CDI/1.0/XMI/#CatalogDetails-summary-upperValue&quot;</span>
+<span class="linenos">285</span><span class="w">                  </span><span class="na">xmi:type=</span><span class="s">&quot;uml:LiteralUnlimitedNatural&quot;</span><span class="nt">&gt;</span>
+<span class="linenos">286</span><span class="w">         </span><span class="nt">&lt;value&gt;</span>1<span class="nt">&lt;/value&gt;</span>
+<span class="linenos">287</span><span class="w">      </span><span class="nt">&lt;/upperValue&gt;</span>
+<span class="linenos">288</span><span class="w">      </span><span class="nt">&lt;name&gt;</span>summary<span class="nt">&lt;/name&gt;</span>
+<span class="linenos">289</span><span class="w">      </span><span class="nt">&lt;type</span><span class="w"> </span><span class="na">xmi:idref=</span><span class="s">&quot;DDICDIModels-DDICDILibrary-DataTypes-StructuredDataTypes-InternationalString&quot;</span><span class="nt">/&gt;</span>
+<span class="linenos">290</span><span class="w">   </span><span class="nt">&lt;/ownedAttribute&gt;</span>
+<span class="linenos">291</span><span class="w">   </span><span class="nt">&lt;ownedAttribute</span><span class="w"> </span><span class="na">xmi:id=</span><span class="s">&quot;DDICDIModels-DDICDILibrary-DataTypes-StructuredDataTypes-CatalogDetails-title&quot;</span>
+<span class="linenos">292</span><span class="w">                   </span><span class="na">xmi:uuid=</span><span class="s">&quot;http://ddialliance.org/Specification/DDI-CDI/1.0/XMI/#CatalogDetails-title&quot;</span>
+<span class="linenos">293</span><span class="w">                   </span><span class="na">xmi:type=</span><span class="s">&quot;uml:Property&quot;</span><span class="nt">&gt;</span>
+<span class="linenos">294</span><span class="w">      </span><span class="nt">&lt;ownedComment</span><span class="w"> </span><span class="na">xmi:id=</span><span class="s">&quot;DDICDIModels-DDICDILibrary-DataTypes-StructuredDataTypes-CatalogDetails-title-ownedComment&quot;</span>
+<span class="linenos">295</span><span class="w">                    </span><span class="na">xmi:uuid=</span><span class="s">&quot;http://ddialliance.org/Specification/DDI-CDI/1.0/XMI/#CatalogDetails-title-ownedComment&quot;</span>
+<span class="linenos">296</span><span class="w">                    </span><span class="na">xmi:type=</span><span class="s">&quot;uml:Comment&quot;</span><span class="nt">&gt;</span>
+<span class="linenos">297</span><span class="w">         </span><span class="nt">&lt;annotatedElement</span><span class="w"> </span><span class="na">xmi:idref=</span><span class="s">&quot;DDICDIModels-DDICDILibrary-DataTypes-StructuredDataTypes-CatalogDetails-title&quot;</span><span class="nt">/&gt;</span>
+<span class="linenos">298</span><span class="w">         </span><span class="nt">&lt;body&gt;</span>Full<span class="w"> </span>authoritative<span class="w"> </span>title.<span class="w"> </span>List<span class="w"> </span>any<span class="w"> </span>additional<span class="w"> </span>titles<span class="w"> </span>for<span class="w"> </span>this<span class="w"> </span>item<span class="w"> </span>as<span class="w"> </span>alternativeTitle.<span class="nt">&lt;/body&gt;</span>
+<span class="linenos">299</span><span class="w">      </span><span class="nt">&lt;/ownedComment&gt;</span>
+<span class="linenos">300</span><span class="w">      </span><span class="nt">&lt;lowerValue</span><span class="w"> </span><span class="na">xmi:id=</span><span class="s">&quot;DDICDIModels-DDICDILibrary-DataTypes-StructuredDataTypes-CatalogDetails-title-lowerValue&quot;</span>
+<span class="linenos">301</span><span class="w">                  </span><span class="na">xmi:uuid=</span><span class="s">&quot;http://ddialliance.org/Specification/DDI-CDI/1.0/XMI/#CatalogDetails-title-lowerValue&quot;</span>
+<span class="linenos">302</span><span class="w">                  </span><span class="na">xmi:type=</span><span class="s">&quot;uml:LiteralInteger&quot;</span><span class="nt">/&gt;</span>
+<span class="linenos">303</span><span class="w">      </span><span class="nt">&lt;upperValue</span><span class="w"> </span><span class="na">xmi:id=</span><span class="s">&quot;DDICDIModels-DDICDILibrary-DataTypes-StructuredDataTypes-CatalogDetails-title-upperValue&quot;</span>
+<span class="linenos">304</span><span class="w">                  </span><span class="na">xmi:uuid=</span><span class="s">&quot;http://ddialliance.org/Specification/DDI-CDI/1.0/XMI/#CatalogDetails-title-upperValue&quot;</span>
+<span class="linenos">305</span><span class="w">                  </span><span class="na">xmi:type=</span><span class="s">&quot;uml:LiteralUnlimitedNatural&quot;</span><span class="nt">&gt;</span>
+<span class="linenos">306</span><span class="w">         </span><span class="nt">&lt;value&gt;</span>1<span class="nt">&lt;/value&gt;</span>
+<span class="linenos">307</span><span class="w">      </span><span class="nt">&lt;/upperValue&gt;</span>
+<span class="linenos">308</span><span class="w">      </span><span class="nt">&lt;name&gt;</span>title<span class="nt">&lt;/name&gt;</span>
+<span class="linenos">309</span><span class="w">      </span><span class="nt">&lt;type</span><span class="w"> </span><span class="na">xmi:idref=</span><span class="s">&quot;DDICDIModels-DDICDILibrary-DataTypes-StructuredDataTypes-InternationalString&quot;</span><span class="nt">/&gt;</span>
+<span class="linenos">310</span><span class="w">   </span><span class="nt">&lt;/ownedAttribute&gt;</span>
+<span class="linenos">311</span><span class="w">   </span><span class="nt">&lt;ownedAttribute</span><span class="w"> </span><span class="na">xmi:id=</span><span class="s">&quot;DDICDIModels-DDICDILibrary-DataTypes-StructuredDataTypes-CatalogDetails-typeOfResource&quot;</span>
+<span class="linenos">312</span><span class="w">                   </span><span class="na">xmi:uuid=</span><span class="s">&quot;http://ddialliance.org/Specification/DDI-CDI/1.0/XMI/#CatalogDetails-typeOfResource&quot;</span>
+<span class="linenos">313</span><span class="w">                   </span><span class="na">xmi:type=</span><span class="s">&quot;uml:Property&quot;</span><span class="nt">&gt;</span>
+<span class="linenos">314</span><span class="w">      </span><span class="nt">&lt;ownedComment</span><span class="w"> </span><span class="na">xmi:id=</span><span class="s">&quot;DDICDIModels-DDICDILibrary-DataTypes-StructuredDataTypes-CatalogDetails-typeOfResource-ownedComment&quot;</span>
+<span class="linenos">315</span><span class="w">                    </span><span class="na">xmi:uuid=</span><span class="s">&quot;http://ddialliance.org/Specification/DDI-CDI/1.0/XMI/#CatalogDetails-typeOfResource-ownedComment&quot;</span>
+<span class="linenos">316</span><span class="w">                    </span><span class="na">xmi:type=</span><span class="s">&quot;uml:Comment&quot;</span><span class="nt">&gt;</span>
+<span class="linenos">317</span><span class="w">         </span><span class="nt">&lt;annotatedElement</span><span class="w"> </span><span class="na">xmi:idref=</span><span class="s">&quot;DDICDIModels-DDICDILibrary-DataTypes-StructuredDataTypes-CatalogDetails-typeOfResource&quot;</span><span class="nt">/&gt;</span>
+<span class="linenos">318</span><span class="w">         </span><span class="nt">&lt;body&gt;</span>Provide<span class="w"> </span>the<span class="w"> </span>type<span class="w"> </span>of<span class="w"> </span>the<span class="w"> </span>resource.<span class="w"> </span>This<span class="w"> </span>supports<span class="w"> </span>the<span class="w"> </span>use<span class="w"> </span>of<span class="w"> </span>a<span class="w"> </span>controlled<span class="w"> </span>vocabulary.<span class="w"> </span>It<span class="w"> </span>should<span class="w"> </span>be<span class="w"> </span>appropriate<span class="w"> </span>to<span class="w"> </span>the<span class="w"> </span>level<span class="w"> </span>of<span class="w"> </span>the<span class="w"> </span>annotation.<span class="nt">&lt;/body&gt;</span>
+<span class="linenos">319</span><span class="w">      </span><span class="nt">&lt;/ownedComment&gt;</span>
+<span class="linenos">320</span><span class="w">      </span><span class="nt">&lt;lowerValue</span><span class="w"> </span><span class="na">xmi:id=</span><span class="s">&quot;DDICDIModels-DDICDILibrary-DataTypes-StructuredDataTypes-CatalogDetails-typeOfResource-lowerValue&quot;</span>
+<span class="linenos">321</span><span class="w">                  </span><span class="na">xmi:uuid=</span><span class="s">&quot;http://ddialliance.org/Specification/DDI-CDI/1.0/XMI/#CatalogDetails-typeOfResource-lowerValue&quot;</span>
+<span class="linenos">322</span><span class="w">                  </span><span class="na">xmi:type=</span><span class="s">&quot;uml:LiteralInteger&quot;</span><span class="nt">/&gt;</span>
+<span class="linenos">323</span><span class="w">      </span><span class="nt">&lt;upperValue</span><span class="w"> </span><span class="na">xmi:id=</span><span class="s">&quot;DDICDIModels-DDICDILibrary-DataTypes-StructuredDataTypes-CatalogDetails-typeOfResource-upperValue&quot;</span>
+<span class="linenos">324</span><span class="w">                  </span><span class="na">xmi:uuid=</span><span class="s">&quot;http://ddialliance.org/Specification/DDI-CDI/1.0/XMI/#CatalogDetails-typeOfResource-upperValue&quot;</span>
+<span class="linenos">325</span><span class="w">                  </span><span class="na">xmi:type=</span><span class="s">&quot;uml:LiteralUnlimitedNatural&quot;</span><span class="nt">&gt;</span>
+<span class="linenos">326</span><span class="w">         </span><span class="nt">&lt;value&gt;</span>*<span class="nt">&lt;/value&gt;</span>
+<span class="linenos">327</span><span class="w">      </span><span class="nt">&lt;/upperValue&gt;</span>
+<span class="linenos">328</span><span class="w">      </span><span class="nt">&lt;name&gt;</span>typeOfResource<span class="nt">&lt;/name&gt;</span>
+<span class="linenos">329</span><span class="w">      </span><span class="nt">&lt;isOrdered&gt;</span>true<span class="nt">&lt;/isOrdered&gt;</span>
+<span class="linenos">330</span><span class="w">      </span><span class="nt">&lt;type</span><span class="w"> </span><span class="na">xmi:idref=</span><span class="s">&quot;DDICDIModels-DDICDILibrary-DataTypes-StructuredDataTypes-ControlledVocabularyEntry&quot;</span><span class="nt">/&gt;</span>
+<span class="linenos">331</span><span class="w">   </span><span class="nt">&lt;/ownedAttribute&gt;</span>
+<span class="linenos">332</span><span class="nt">&lt;/packagedElement&gt;</span>
+</pre></div>
+</div>
+</div>
+<input id="sd-tab-item-1" name="sd-tab-set-0" type="radio">
+<label class="sd-tab-label" for="sd-tab-item-1">
+XML Schema</label><div class="sd-tab-content encoding docutils">
+<p class="sd-card-text">Fragment for the data type <strong>CatalogDetails</strong> (<a class="reference external" href="/encoding/xml-schema/ddi-cdi.xsd">entire XML Schema</a>)</p>
+<div class="highlight-xml notranslate"><div class="highlight"><pre><span></span><span class="hll"><span class="linenos">  1</span><span class="nt">&lt;xs:element</span><span class="w"> </span><span class="na">name=</span><span class="s">&quot;CatalogDetails&quot;</span>
+</span><span class="linenos">  2</span><span class="w">            </span><span class="na">type=</span><span class="s">&quot;CatalogDetailsXsdType&quot;</span>
+<span class="linenos">  3</span><span class="w">            </span><span class="na">xml:id=</span><span class="s">&quot;CatalogDetails&quot;</span><span class="nt">&gt;</span>
+<span class="linenos">  4</span><span class="w">  </span><span class="cm">&lt;!-- based on the UML data type DDICDIModels::DDICDILibrary::DataTypes::StructuredDataTypes::CatalogDetails --&gt;</span>
+<span class="linenos">  5</span><span class="w">  </span><span class="nt">&lt;xs:annotation&gt;</span>
+<span class="linenos">  6</span><span class="w">    </span><span class="nt">&lt;xs:documentation&gt;</span>Definition
+<span class="linenos">  7</span><span class="w">          </span>============
+<span class="linenos">  8</span><span class="w">          </span>A<span class="w"> </span>set<span class="w"> </span>of<span class="w"> </span>information<span class="w"> </span>useful<span class="w"> </span>for<span class="w"> </span>attribution,<span class="w"> </span>data<span class="w"> </span>discovery,<span class="w"> </span>and<span class="w"> </span>access.
+<span class="linenos">  9</span><span class="w">          </span>
+<span class="linenos"> 10</span><span class="w">          </span>Examples
+<span class="linenos"> 11</span><span class="w">          </span>==========
+<span class="linenos"> 12</span><span class="w">          </span>Creator,<span class="w"> </span>contributor,<span class="w"> </span>title,<span class="w"> </span>copyright,<span class="w"> </span>license<span class="w"> </span>information.<span class="nt">&lt;/xs:documentation&gt;</span>
+<span class="linenos"> 13</span><span class="w">  </span><span class="nt">&lt;/xs:annotation&gt;</span>
+<span class="linenos"> 14</span><span class="nt">&lt;/xs:element&gt;</span>
+<span class="linenos"> 15</span><span class="nt">&lt;xs:complexType</span><span class="w"> </span><span class="na">name=</span><span class="s">&quot;CatalogDetailsXsdType&quot;</span>
+<span class="linenos"> 16</span><span class="w">                </span><span class="na">xml:id=</span><span class="s">&quot;CatalogDetailsXsdType&quot;</span><span class="nt">&gt;</span>
+<span class="linenos"> 17</span><span class="w">  </span><span class="nt">&lt;xs:annotation&gt;</span>
+<span class="linenos"> 18</span><span class="w">    </span><span class="nt">&lt;xs:documentation&gt;</span>Definition
+<span class="linenos"> 19</span><span class="w">          </span>============
+<span class="linenos"> 20</span><span class="w">          </span>A<span class="w"> </span>set<span class="w"> </span>of<span class="w"> </span>information<span class="w"> </span>useful<span class="w"> </span>for<span class="w"> </span>attribution,<span class="w"> </span>data<span class="w"> </span>discovery,<span class="w"> </span>and<span class="w"> </span>access.
+<span class="linenos"> 21</span><span class="w">          </span>
+<span class="linenos"> 22</span><span class="w">          </span>Examples
+<span class="linenos"> 23</span><span class="w">          </span>==========
+<span class="linenos"> 24</span><span class="w">          </span>Creator,<span class="w"> </span>contributor,<span class="w"> </span>title,<span class="w"> </span>copyright,<span class="w"> </span>license<span class="w"> </span>information.<span class="nt">&lt;/xs:documentation&gt;</span>
+<span class="linenos"> 25</span><span class="w">  </span><span class="nt">&lt;/xs:annotation&gt;</span>
+<span class="linenos"> 26</span><span class="w">  </span><span class="nt">&lt;xs:sequence&gt;</span>
+<span class="linenos"> 27</span><span class="w">    </span><span class="nt">&lt;xs:element</span><span class="w"> </span><span class="na">name=</span><span class="s">&quot;access&quot;</span>
+<span class="linenos"> 28</span><span class="w">                </span><span class="na">type=</span><span class="s">&quot;AccessInformationXsdType&quot;</span>
+<span class="linenos"> 29</span><span class="w">                </span><span class="na">minOccurs=</span><span class="s">&quot;0&quot;</span>
+<span class="linenos"> 30</span><span class="w">                </span><span class="na">maxOccurs=</span><span class="s">&quot;unbounded&quot;</span>
+<span class="linenos"> 31</span><span class="w">                </span><span class="na">xml:id=</span><span class="s">&quot;CatalogDetails-access&quot;</span><span class="nt">&gt;</span>
+<span class="linenos"> 32</span><span class="w">      </span><span class="nt">&lt;xs:annotation&gt;</span>
+<span class="linenos"> 33</span><span class="w">        </span><span class="nt">&lt;xs:documentation&gt;</span>Information<span class="w"> </span>important<span class="w"> </span>for<span class="w"> </span>understanding<span class="w"> </span>access<span class="w"> </span>conditions.<span class="nt">&lt;/xs:documentation&gt;</span>
+<span class="linenos"> 34</span><span class="w">      </span><span class="nt">&lt;/xs:annotation&gt;</span>
+<span class="linenos"> 35</span><span class="w">    </span><span class="nt">&lt;/xs:element&gt;</span>
+<span class="linenos"> 36</span><span class="w">    </span><span class="nt">&lt;xs:element</span><span class="w"> </span><span class="na">name=</span><span class="s">&quot;alternativeTitle&quot;</span>
+<span class="linenos"> 37</span><span class="w">                </span><span class="na">type=</span><span class="s">&quot;InternationalStringXsdType&quot;</span>
+<span class="linenos"> 38</span><span class="w">                </span><span class="na">minOccurs=</span><span class="s">&quot;0&quot;</span>
+<span class="linenos"> 39</span><span class="w">                </span><span class="na">maxOccurs=</span><span class="s">&quot;unbounded&quot;</span>
+<span class="linenos"> 40</span><span class="w">                </span><span class="na">xml:id=</span><span class="s">&quot;CatalogDetails-alternativeTitle&quot;</span><span class="nt">&gt;</span>
+<span class="linenos"> 41</span><span class="w">      </span><span class="nt">&lt;xs:annotation&gt;</span>
+<span class="linenos"> 42</span><span class="w">        </span><span class="nt">&lt;xs:documentation&gt;</span>An<span class="w"> </span>alternative<span class="w"> </span>title<span class="w"> </span>by<span class="w"> </span>which<span class="w"> </span>a<span class="w"> </span>data<span class="w"> </span>collection<span class="w"> </span>is<span class="w"> </span>commonly<span class="w"> </span>referred,<span class="w"> </span>or<span class="w"> </span>an<span class="w"> </span>abbreviation<span class="w"> </span>for<span class="w"> </span>the<span class="w"> </span>title.<span class="nt">&lt;/xs:documentation&gt;</span>
+<span class="linenos"> 43</span><span class="w">      </span><span class="nt">&lt;/xs:annotation&gt;</span>
+<span class="linenos"> 44</span><span class="w">    </span><span class="nt">&lt;/xs:element&gt;</span>
+<span class="linenos"> 45</span><span class="w">    </span><span class="nt">&lt;xs:element</span><span class="w"> </span><span class="na">name=</span><span class="s">&quot;contributor&quot;</span>
+<span class="linenos"> 46</span><span class="w">                </span><span class="na">type=</span><span class="s">&quot;AgentInRoleXsdType&quot;</span>
+<span class="linenos"> 47</span><span class="w">                </span><span class="na">minOccurs=</span><span class="s">&quot;0&quot;</span>
+<span class="linenos"> 48</span><span class="w">                </span><span class="na">maxOccurs=</span><span class="s">&quot;unbounded&quot;</span>
+<span class="linenos"> 49</span><span class="w">                </span><span class="na">xml:id=</span><span class="s">&quot;CatalogDetails-contributor&quot;</span><span class="nt">&gt;</span>
+<span class="linenos"> 50</span><span class="w">      </span><span class="nt">&lt;xs:annotation&gt;</span>
+<span class="linenos"> 51</span><span class="w">        </span><span class="nt">&lt;xs:documentation&gt;</span>The<span class="w"> </span>name<span class="w"> </span>of<span class="w"> </span>a<span class="w"> </span>contributing<span class="w"> </span>author<span class="w"> </span>or<span class="w"> </span>creator,<span class="w"> </span>who<span class="w"> </span>worked<span class="w"> </span>in<span class="w"> </span>support<span class="w"> </span>of<span class="w"> </span>the<span class="w"> </span>primary<span class="w"> </span>creator<span class="w"> </span>given<span class="w"> </span>above.<span class="nt">&lt;/xs:documentation&gt;</span>
+<span class="linenos"> 52</span><span class="w">      </span><span class="nt">&lt;/xs:annotation&gt;</span>
+<span class="linenos"> 53</span><span class="w">    </span><span class="nt">&lt;/xs:element&gt;</span>
+<span class="linenos"> 54</span><span class="w">    </span><span class="nt">&lt;xs:element</span><span class="w"> </span><span class="na">name=</span><span class="s">&quot;creator&quot;</span>
+<span class="linenos"> 55</span><span class="w">                </span><span class="na">type=</span><span class="s">&quot;AgentInRoleXsdType&quot;</span>
+<span class="linenos"> 56</span><span class="w">                </span><span class="na">minOccurs=</span><span class="s">&quot;0&quot;</span>
+<span class="linenos"> 57</span><span class="w">                </span><span class="na">maxOccurs=</span><span class="s">&quot;unbounded&quot;</span>
+<span class="linenos"> 58</span><span class="w">                </span><span class="na">xml:id=</span><span class="s">&quot;CatalogDetails-creator&quot;</span><span class="nt">&gt;</span>
+<span class="linenos"> 59</span><span class="w">      </span><span class="nt">&lt;xs:annotation&gt;</span>
+<span class="linenos"> 60</span><span class="w">        </span><span class="nt">&lt;xs:documentation&gt;</span>Person,<span class="w"> </span>corporate<span class="w"> </span>body,<span class="w"> </span>or<span class="w"> </span>agency<span class="w"> </span>responsible<span class="w"> </span>for<span class="w"> </span>the<span class="w"> </span>substantive<span class="w"> </span>and<span class="w"> </span>intellectual<span class="w"> </span>content<span class="w"> </span>of<span class="w"> </span>the<span class="w"> </span>described<span class="w"> </span>object.<span class="nt">&lt;/xs:documentation&gt;</span>
+<span class="linenos"> 61</span><span class="w">      </span><span class="nt">&lt;/xs:annotation&gt;</span>
+<span class="linenos"> 62</span><span class="w">    </span><span class="nt">&lt;/xs:element&gt;</span>
+<span class="linenos"> 63</span><span class="w">    </span><span class="nt">&lt;xs:element</span><span class="w"> </span><span class="na">name=</span><span class="s">&quot;date&quot;</span>
+<span class="linenos"> 64</span><span class="w">                </span><span class="na">type=</span><span class="s">&quot;CombinedDateXsdType&quot;</span>
+<span class="linenos"> 65</span><span class="w">                </span><span class="na">minOccurs=</span><span class="s">&quot;0&quot;</span>
+<span class="linenos"> 66</span><span class="w">                </span><span class="na">maxOccurs=</span><span class="s">&quot;unbounded&quot;</span>
+<span class="linenos"> 67</span><span class="w">                </span><span class="na">xml:id=</span><span class="s">&quot;CatalogDetails-date&quot;</span><span class="nt">&gt;</span>
+<span class="linenos"> 68</span><span class="w">      </span><span class="nt">&lt;xs:annotation&gt;</span>
+<span class="linenos"> 69</span><span class="w">        </span><span class="nt">&lt;xs:documentation&gt;</span>A<span class="w"> </span>date<span class="w"> </span>associated<span class="w"> </span>with<span class="w"> </span>the<span class="w"> </span>annotated<span class="w"> </span>object<span class="w"> </span>(not<span class="w"> </span>the<span class="w"> </span>coverage<span class="w"> </span>period).<span class="w"> </span>Use<span class="w"> </span>typeOfDate<span class="w"> </span>to<span class="w"> </span>specify<span class="w"> </span>the<span class="w"> </span>type<span class="w"> </span>of<span class="w"> </span>date<span class="w"> </span>such<span class="w"> </span>as<span class="w"> </span>Version,<span class="w"> </span>Publication,<span class="w"> </span>Submitted,<span class="w"> </span>Copyrighted,<span class="w"> </span>Accepted,<span class="w"> </span>etc.<span class="nt">&lt;/xs:documentation&gt;</span>
+<span class="linenos"> 70</span><span class="w">      </span><span class="nt">&lt;/xs:annotation&gt;</span>
+<span class="linenos"> 71</span><span class="w">    </span><span class="nt">&lt;/xs:element&gt;</span>
+<span class="linenos"> 72</span><span class="w">    </span><span class="nt">&lt;xs:element</span><span class="w"> </span><span class="na">name=</span><span class="s">&quot;identifier&quot;</span>
+<span class="linenos"> 73</span><span class="w">                </span><span class="na">type=</span><span class="s">&quot;InternationalIdentifierXsdType&quot;</span>
+<span class="linenos"> 74</span><span class="w">                </span><span class="na">minOccurs=</span><span class="s">&quot;0&quot;</span>
+<span class="linenos"> 75</span><span class="w">                </span><span class="na">maxOccurs=</span><span class="s">&quot;1&quot;</span>
+<span class="linenos"> 76</span><span class="w">                </span><span class="na">xml:id=</span><span class="s">&quot;CatalogDetails-identifier&quot;</span><span class="nt">&gt;</span>
+<span class="linenos"> 77</span><span class="w">      </span><span class="nt">&lt;xs:annotation&gt;</span>
+<span class="linenos"> 78</span><span class="w">        </span><span class="nt">&lt;xs:documentation&gt;</span>An<span class="w"> </span>identifier<span class="w"> </span>or<span class="w"> </span>locator.<span class="w"> </span>Contains<span class="w"> </span>identifier<span class="w"> </span>and<span class="w"> </span>Managing<span class="w"> </span>agency<span class="w"> </span>(ISBN,<span class="w"> </span>ISSN,<span class="w"> </span>DOI,<span class="w"> </span>local<span class="w"> </span>archive).<span class="w"> </span>Indicates<span class="w"> </span>if<span class="w"> </span>it<span class="w"> </span>is<span class="w"> </span>a<span class="w"> </span>URI.<span class="nt">&lt;/xs:documentation&gt;</span>
+<span class="linenos"> 79</span><span class="w">      </span><span class="nt">&lt;/xs:annotation&gt;</span>
+<span class="linenos"> 80</span><span class="w">    </span><span class="nt">&lt;/xs:element&gt;</span>
+<span class="linenos"> 81</span><span class="w">    </span><span class="nt">&lt;xs:element</span><span class="w"> </span><span class="na">name=</span><span class="s">&quot;informationSource&quot;</span>
+<span class="linenos"> 82</span><span class="w">                </span><span class="na">type=</span><span class="s">&quot;InternationalStringXsdType&quot;</span>
+<span class="linenos"> 83</span><span class="w">                </span><span class="na">minOccurs=</span><span class="s">&quot;0&quot;</span>
+<span class="linenos"> 84</span><span class="w">                </span><span class="na">maxOccurs=</span><span class="s">&quot;unbounded&quot;</span>
+<span class="linenos"> 85</span><span class="w">                </span><span class="na">xml:id=</span><span class="s">&quot;CatalogDetails-informationSource&quot;</span><span class="nt">&gt;</span>
+<span class="linenos"> 86</span><span class="w">      </span><span class="nt">&lt;xs:annotation&gt;</span>
+<span class="linenos"> 87</span><span class="w">        </span><span class="nt">&lt;xs:documentation&gt;</span>The<span class="w"> </span>name<span class="w"> </span>or<span class="w"> </span>identifier<span class="w"> </span>of<span class="w"> </span>source<span class="w"> </span>information<span class="w"> </span>for<span class="w"> </span>the<span class="w"> </span>annotated<span class="w"> </span>object.<span class="nt">&lt;/xs:documentation&gt;</span>
+<span class="linenos"> 88</span><span class="w">      </span><span class="nt">&lt;/xs:annotation&gt;</span>
+<span class="linenos"> 89</span><span class="w">    </span><span class="nt">&lt;/xs:element&gt;</span>
+<span class="linenos"> 90</span><span class="w">    </span><span class="nt">&lt;xs:element</span><span class="w"> </span><span class="na">name=</span><span class="s">&quot;languageOfObject&quot;</span>
+<span class="linenos"> 91</span><span class="w">                </span><span class="na">type=</span><span class="s">&quot;xs:language&quot;</span>
+<span class="linenos"> 92</span><span class="w">                </span><span class="na">minOccurs=</span><span class="s">&quot;0&quot;</span>
+<span class="linenos"> 93</span><span class="w">                </span><span class="na">maxOccurs=</span><span class="s">&quot;unbounded&quot;</span>
+<span class="linenos"> 94</span><span class="w">                </span><span class="na">xml:id=</span><span class="s">&quot;CatalogDetails-languageOfObject&quot;</span><span class="nt">&gt;</span>
+<span class="linenos"> 95</span><span class="w">      </span><span class="nt">&lt;xs:annotation&gt;</span>
+<span class="linenos"> 96</span><span class="w">        </span><span class="nt">&lt;xs:documentation&gt;</span>Language<span class="w"> </span>of<span class="w"> </span>the<span class="w"> </span>intellectual<span class="w"> </span>content<span class="w"> </span>of<span class="w"> </span>the<span class="w"> </span>described<span class="w"> </span>object.<span class="w"> </span>Multiple<span class="w"> </span>languages<span class="w"> </span>are<span class="w"> </span>supported<span class="w"> </span>by<span class="w"> </span>the<span class="w"> </span>structure<span class="w"> </span>itself<span class="w"> </span>as<span class="w"> </span>defined<span class="w"> </span>in<span class="w"> </span>the<span class="w"> </span>transformation<span class="w"> </span>to<span class="w"> </span>specific<span class="w"> </span>bindings.<span class="w"> </span>Use<span class="w"> </span>language<span class="w"> </span>codes<span class="w"> </span>supported<span class="w"> </span>by<span class="w"> </span>xs:language<span class="w"> </span>which<span class="w"> </span>include<span class="w"> </span>the<span class="w"> </span>2<span class="w"> </span>and<span class="w"> </span>3<span class="w"> </span>character<span class="w"> </span>and<span class="w"> </span>extended<span class="w"> </span>structures<span class="w"> </span>defined<span class="w"> </span>by<span class="w"> </span>RFC4646<span class="w"> </span>or<span class="w"> </span>its<span class="w"> </span>successors.<span class="w"> </span>Supports<span class="w"> </span>multiple<span class="w"> </span>language<span class="w"> </span>codes.<span class="nt">&lt;/xs:documentation&gt;</span>
+<span class="linenos"> 97</span><span class="w">      </span><span class="nt">&lt;/xs:annotation&gt;</span>
+<span class="linenos"> 98</span><span class="w">    </span><span class="nt">&lt;/xs:element&gt;</span>
+<span class="linenos"> 99</span><span class="w">    </span><span class="nt">&lt;xs:element</span><span class="w"> </span><span class="na">name=</span><span class="s">&quot;provenance&quot;</span>
+<span class="linenos">100</span><span class="w">                </span><span class="na">type=</span><span class="s">&quot;ProvenanceInformationXsdType&quot;</span>
+<span class="linenos">101</span><span class="w">                </span><span class="na">minOccurs=</span><span class="s">&quot;0&quot;</span>
+<span class="linenos">102</span><span class="w">                </span><span class="na">maxOccurs=</span><span class="s">&quot;1&quot;</span>
+<span class="linenos">103</span><span class="w">                </span><span class="na">xml:id=</span><span class="s">&quot;CatalogDetails-provenance&quot;</span><span class="nt">&gt;</span>
+<span class="linenos">104</span><span class="w">      </span><span class="nt">&lt;xs:annotation&gt;</span>
+<span class="linenos">105</span><span class="w">        </span><span class="nt">&lt;xs:documentation&gt;</span>Information<span class="w"> </span>about<span class="w"> </span>the<span class="w"> </span>origins<span class="w"> </span>of<span class="w"> </span>the<span class="w"> </span>object.<span class="nt">&lt;/xs:documentation&gt;</span>
+<span class="linenos">106</span><span class="w">      </span><span class="nt">&lt;/xs:annotation&gt;</span>
+<span class="linenos">107</span><span class="w">    </span><span class="nt">&lt;/xs:element&gt;</span>
+<span class="linenos">108</span><span class="w">    </span><span class="nt">&lt;xs:element</span><span class="w"> </span><span class="na">name=</span><span class="s">&quot;publisher&quot;</span>
+<span class="linenos">109</span><span class="w">                </span><span class="na">type=</span><span class="s">&quot;AgentInRoleXsdType&quot;</span>
+<span class="linenos">110</span><span class="w">                </span><span class="na">minOccurs=</span><span class="s">&quot;0&quot;</span>
+<span class="linenos">111</span><span class="w">                </span><span class="na">maxOccurs=</span><span class="s">&quot;unbounded&quot;</span>
+<span class="linenos">112</span><span class="w">                </span><span class="na">xml:id=</span><span class="s">&quot;CatalogDetails-publisher&quot;</span><span class="nt">&gt;</span>
+<span class="linenos">113</span><span class="w">      </span><span class="nt">&lt;xs:annotation&gt;</span>
+<span class="linenos">114</span><span class="w">        </span><span class="nt">&lt;xs:documentation&gt;</span>Person<span class="w"> </span>or<span class="w"> </span>organization<span class="w"> </span>responsible<span class="w"> </span>for<span class="w"> </span>making<span class="w"> </span>the<span class="w"> </span>resource<span class="w"> </span>available<span class="w"> </span>in<span class="w"> </span>its<span class="w"> </span>present<span class="w"> </span>form.<span class="nt">&lt;/xs:documentation&gt;</span>
+<span class="linenos">115</span><span class="w">      </span><span class="nt">&lt;/xs:annotation&gt;</span>
+<span class="linenos">116</span><span class="w">    </span><span class="nt">&lt;/xs:element&gt;</span>
+<span class="linenos">117</span><span class="w">    </span><span class="nt">&lt;xs:element</span><span class="w"> </span><span class="na">name=</span><span class="s">&quot;relatedResource&quot;</span>
+<span class="linenos">118</span><span class="w">                </span><span class="na">type=</span><span class="s">&quot;ReferenceXsdType&quot;</span>
+<span class="linenos">119</span><span class="w">                </span><span class="na">minOccurs=</span><span class="s">&quot;0&quot;</span>
+<span class="linenos">120</span><span class="w">                </span><span class="na">maxOccurs=</span><span class="s">&quot;unbounded&quot;</span>
+<span class="linenos">121</span><span class="w">                </span><span class="na">xml:id=</span><span class="s">&quot;CatalogDetails-relatedResource&quot;</span><span class="nt">&gt;</span>
+<span class="linenos">122</span><span class="w">      </span><span class="nt">&lt;xs:annotation&gt;</span>
+<span class="linenos">123</span><span class="w">        </span><span class="nt">&lt;xs:documentation&gt;</span>Provide<span class="w"> </span>the<span class="w"> </span>identifier,<span class="w"> </span>managing<span class="w"> </span>agency,<span class="w"> </span>and<span class="w"> </span>type<span class="w"> </span>of<span class="w"> </span>resource<span class="w"> </span>related<span class="w"> </span>to<span class="w"> </span>this<span class="w"> </span>object.<span class="w"> </span>Use<span class="w"> </span>to<span class="w"> </span>specify<span class="w"> </span>related<span class="w"> </span>resources<span class="w"> </span>similar<span class="w"> </span>to<span class="w"> </span>Dublin<span class="w"> </span>Core<span class="w"> </span>isPartOf<span class="w"> </span>and<span class="w"> </span>hasPart<span class="w"> </span>to<span class="w"> </span>indicate<span class="w"> </span>collection/series<span class="w"> </span>membership<span class="w"> </span>for<span class="w"> </span>objects<span class="w"> </span>where<span class="w"> </span>there<span class="w"> </span>is<span class="w"> </span>an<span class="w"> </span>identifiable<span class="w"> </span>record.<span class="w"> </span>If<span class="w"> </span>not<span class="w"> </span>an<span class="w"> </span>identified<span class="w"> </span>object<span class="w"> </span>use<span class="w"> </span>the<span class="w"> </span>relationship<span class="w"> </span>to<span class="w"> </span>ExternalMaterial<span class="w"> </span>using<span class="w"> </span>a<span class="w"> </span>type<span class="w"> </span>that<span class="w"> </span>indicates<span class="w"> </span>a<span class="w"> </span>series<span class="w"> </span>description.<span class="nt">&lt;/xs:documentation&gt;</span>
+<span class="linenos">124</span><span class="w">      </span><span class="nt">&lt;/xs:annotation&gt;</span>
+<span class="linenos">125</span><span class="w">    </span><span class="nt">&lt;/xs:element&gt;</span>
+<span class="linenos">126</span><span class="w">    </span><span class="nt">&lt;xs:element</span><span class="w"> </span><span class="na">name=</span><span class="s">&quot;subTitle&quot;</span>
+<span class="linenos">127</span><span class="w">                </span><span class="na">type=</span><span class="s">&quot;InternationalStringXsdType&quot;</span>
+<span class="linenos">128</span><span class="w">                </span><span class="na">minOccurs=</span><span class="s">&quot;0&quot;</span>
+<span class="linenos">129</span><span class="w">                </span><span class="na">maxOccurs=</span><span class="s">&quot;unbounded&quot;</span>
+<span class="linenos">130</span><span class="w">                </span><span class="na">xml:id=</span><span class="s">&quot;CatalogDetails-subTitle&quot;</span><span class="nt">&gt;</span>
+<span class="linenos">131</span><span class="w">      </span><span class="nt">&lt;xs:annotation&gt;</span>
+<span class="linenos">132</span><span class="w">        </span><span class="nt">&lt;xs:documentation&gt;</span>Secondary<span class="w"> </span>or<span class="w"> </span>explanatory<span class="w"> </span>title.<span class="nt">&lt;/xs:documentation&gt;</span>
+<span class="linenos">133</span><span class="w">      </span><span class="nt">&lt;/xs:annotation&gt;</span>
+<span class="linenos">134</span><span class="w">    </span><span class="nt">&lt;/xs:element&gt;</span>
+<span class="linenos">135</span><span class="w">    </span><span class="nt">&lt;xs:element</span><span class="w"> </span><span class="na">name=</span><span class="s">&quot;summary&quot;</span>
+<span class="linenos">136</span><span class="w">                </span><span class="na">type=</span><span class="s">&quot;InternationalStringXsdType&quot;</span>
+<span class="linenos">137</span><span class="w">                </span><span class="na">minOccurs=</span><span class="s">&quot;0&quot;</span>
+<span class="linenos">138</span><span class="w">                </span><span class="na">maxOccurs=</span><span class="s">&quot;1&quot;</span>
+<span class="linenos">139</span><span class="w">                </span><span class="na">xml:id=</span><span class="s">&quot;CatalogDetails-summary&quot;</span><span class="nt">&gt;</span>
+<span class="linenos">140</span><span class="w">      </span><span class="nt">&lt;xs:annotation&gt;</span>
+<span class="linenos">141</span><span class="w">        </span><span class="nt">&lt;xs:documentation&gt;</span>A<span class="w"> </span>summary<span class="w"> </span>description<span class="w"> </span>(abstract)<span class="w"> </span>of<span class="w"> </span>the<span class="w"> </span>annotated<span class="w"> </span>object.<span class="nt">&lt;/xs:documentation&gt;</span>
+<span class="linenos">142</span><span class="w">      </span><span class="nt">&lt;/xs:annotation&gt;</span>
+<span class="linenos">143</span><span class="w">    </span><span class="nt">&lt;/xs:element&gt;</span>
+<span class="linenos">144</span><span class="w">    </span><span class="nt">&lt;xs:element</span><span class="w"> </span><span class="na">name=</span><span class="s">&quot;title&quot;</span>
+<span class="linenos">145</span><span class="w">                </span><span class="na">type=</span><span class="s">&quot;InternationalStringXsdType&quot;</span>
+<span class="linenos">146</span><span class="w">                </span><span class="na">minOccurs=</span><span class="s">&quot;0&quot;</span>
+<span class="linenos">147</span><span class="w">                </span><span class="na">maxOccurs=</span><span class="s">&quot;1&quot;</span>
+<span class="linenos">148</span><span class="w">                </span><span class="na">xml:id=</span><span class="s">&quot;CatalogDetails-title&quot;</span><span class="nt">&gt;</span>
+<span class="linenos">149</span><span class="w">      </span><span class="nt">&lt;xs:annotation&gt;</span>
+<span class="linenos">150</span><span class="w">        </span><span class="nt">&lt;xs:documentation&gt;</span>Full<span class="w"> </span>authoritative<span class="w"> </span>title.<span class="w"> </span>List<span class="w"> </span>any<span class="w"> </span>additional<span class="w"> </span>titles<span class="w"> </span>for<span class="w"> </span>this<span class="w"> </span>item<span class="w"> </span>as<span class="w"> </span>alternativeTitle.<span class="nt">&lt;/xs:documentation&gt;</span>
+<span class="linenos">151</span><span class="w">      </span><span class="nt">&lt;/xs:annotation&gt;</span>
+<span class="linenos">152</span><span class="w">    </span><span class="nt">&lt;/xs:element&gt;</span>
+<span class="linenos">153</span><span class="w">    </span><span class="nt">&lt;xs:element</span><span class="w"> </span><span class="na">name=</span><span class="s">&quot;typeOfResource&quot;</span>
+<span class="linenos">154</span><span class="w">                </span><span class="na">type=</span><span class="s">&quot;ControlledVocabularyEntryXsdType&quot;</span>
+<span class="linenos">155</span><span class="w">                </span><span class="na">minOccurs=</span><span class="s">&quot;0&quot;</span>
+<span class="linenos">156</span><span class="w">                </span><span class="na">maxOccurs=</span><span class="s">&quot;unbounded&quot;</span>
+<span class="linenos">157</span><span class="w">                </span><span class="na">xml:id=</span><span class="s">&quot;CatalogDetails-typeOfResource&quot;</span><span class="nt">&gt;</span>
+<span class="linenos">158</span><span class="w">      </span><span class="nt">&lt;xs:annotation&gt;</span>
+<span class="linenos">159</span><span class="w">        </span><span class="nt">&lt;xs:documentation&gt;</span>Provide<span class="w"> </span>the<span class="w"> </span>type<span class="w"> </span>of<span class="w"> </span>the<span class="w"> </span>resource.<span class="w"> </span>This<span class="w"> </span>supports<span class="w"> </span>the<span class="w"> </span>use<span class="w"> </span>of<span class="w"> </span>a<span class="w"> </span>controlled<span class="w"> </span>vocabulary.<span class="w"> </span>It<span class="w"> </span>should<span class="w"> </span>be<span class="w"> </span>appropriate<span class="w"> </span>to<span class="w"> </span>the<span class="w"> </span>level<span class="w"> </span>of<span class="w"> </span>the<span class="w"> </span>annotation.<span class="nt">&lt;/xs:documentation&gt;</span>
+<span class="linenos">160</span><span class="w">      </span><span class="nt">&lt;/xs:annotation&gt;</span>
+<span class="linenos">161</span><span class="w">    </span><span class="nt">&lt;/xs:element&gt;</span>
+<span class="linenos">162</span><span class="w">  </span><span class="nt">&lt;/xs:sequence&gt;</span>
+<span class="linenos">163</span><span class="nt">&lt;/xs:complexType&gt;</span>
+</pre></div>
+</div>
+</div>
+<input id="sd-tab-item-2" name="sd-tab-set-0" type="radio">
+<label class="sd-tab-label" for="sd-tab-item-2">
+Ontology (Turtle)</label><div class="sd-tab-content encoding docutils">
+<p class="sd-card-text">Fragment for the data type <strong>CatalogDetails</strong> (<a class="reference external" href="/encoding/ontology/ddi-cdi.onto.ttl">main ontology</a>, <a class="reference external" href="/encoding/ontology/ddi-cdi.onto.ttl.zip">entire ontology as zip</a>)</p>
+<div class="highlight-turtle notranslate"><div class="highlight"><pre><span></span><span class="linenos">  1</span><span class="c"># datatype CatalogDetails</span>
+<span class="linenos">  2</span><span class="c"># based on the UML data type DDICDIModels::DDICDILibrary::DataTypes::StructuredDataTypes::CatalogDetails</span>
+<span class="hll"><span class="linenos">  3</span><span class="nn">cdi</span><span class="p">:</span><span class="nt">CatalogDetails</span>
+</span><span class="linenos">  4</span>  <span class="kt">a</span> <span class="nn">rdfs</span><span class="p">:</span><span class="nt">Class</span><span class="p">,</span> <span class="nn">owl</span><span class="p">:</span><span class="nt">Class</span><span class="p">,</span> <span class="nn">ucmis</span><span class="p">:</span><span class="nt">StructuredDataType</span><span class="p">;</span>
+<span class="linenos">  5</span>  <span class="nn">rdfs</span><span class="p">:</span><span class="nt">label</span> <span class="s">&quot;CatalogDetails&quot;</span><span class="p">;</span>
+<span class="linenos">  6</span>  <span class="nn">rdfs</span><span class="p">:</span><span class="nt">comment</span> <span class="s">&quot;Definition\n============\nA set of information useful for attribution, data discovery, and access.\n\nExamples\n==========\nCreator, contributor, title, copyright, license information.&quot;</span><span class="o">@</span><span class="ge">en</span><span class="p">;</span>
+<span class="linenos">  7</span>  
+<span class="linenos">  8</span>  <span class="nn">owl</span><span class="p">:</span><span class="nt">hasKey</span> <span class="p">(</span><span class="nn">cdi</span><span class="p">:</span><span class="nt">CatalogDetails-access</span> <span class="nn">cdi</span><span class="p">:</span><span class="nt">CatalogDetails-alternativeTitle</span> <span class="nn">cdi</span><span class="p">:</span><span class="nt">CatalogDetails-contributor</span> <span class="nn">cdi</span><span class="p">:</span><span class="nt">CatalogDetails-creator</span> <span class="nn">cdi</span><span class="p">:</span><span class="nt">CatalogDetails-date</span> <span class="nn">cdi</span><span class="p">:</span><span class="nt">CatalogDetails-identifier</span> <span class="nn">cdi</span><span class="p">:</span><span class="nt">CatalogDetails-informationSource</span> <span class="nn">cdi</span><span class="p">:</span><span class="nt">CatalogDetails-languageOfObject</span> <span class="nn">cdi</span><span class="p">:</span><span class="nt">CatalogDetails-provenance</span> <span class="nn">cdi</span><span class="p">:</span><span class="nt">CatalogDetails-publisher</span> <span class="nn">cdi</span><span class="p">:</span><span class="nt">CatalogDetails-relatedResource</span> <span class="nn">cdi</span><span class="p">:</span><span class="nt">CatalogDetails-subTitle</span> <span class="nn">cdi</span><span class="p">:</span><span class="nt">CatalogDetails-summary</span> <span class="nn">cdi</span><span class="p">:</span><span class="nt">CatalogDetails-title</span> <span class="nn">cdi</span><span class="p">:</span><span class="nt">CatalogDetails-typeOfResource</span><span class="p">);</span>
+<span class="linenos">  9</span><span class="p">.</span>
+<span class="linenos"> 10</span>
+<span class="linenos"> 11</span><span class="nn">cdi</span><span class="p">:</span><span class="nt">CatalogDetails-access</span>
+<span class="linenos"> 12</span>  <span class="kt">a</span> <span class="nn">rdf</span><span class="p">:</span><span class="nt">Property</span><span class="p">,</span> <span class="nn">owl</span><span class="p">:</span><span class="nt">ObjectProperty</span><span class="p">,</span> <span class="nn">ucmis</span><span class="p">:</span><span class="nt">Attribute</span><span class="p">;</span>
+<span class="linenos"> 13</span>  <span class="nn">rdfs</span><span class="p">:</span><span class="nt">label</span> <span class="s">&quot;access&quot;</span><span class="p">;</span>
+<span class="linenos"> 14</span>  <span class="nn">rdfs</span><span class="p">:</span><span class="nt">comment</span> <span class="s">&quot;Information important for understanding access conditions.&quot;</span><span class="o">@</span><span class="ge">en</span><span class="p">;</span>
+<span class="linenos"> 15</span>  <span class="nn">rdfs</span><span class="p">:</span><span class="nt">domain</span> <span class="nn">cdi</span><span class="p">:</span><span class="nt">CatalogDetails</span><span class="p">;</span>
+<span class="linenos"> 16</span>  <span class="nn">rdfs</span><span class="p">:</span><span class="nt">range</span> <span class="nn">cdi</span><span class="p">:</span><span class="nt">AccessInformation</span><span class="p">;</span>
+<span class="linenos"> 17</span><span class="p">.</span>
+<span class="linenos"> 18</span>
+<span class="linenos"> 19</span><span class="nn">cdi</span><span class="p">:</span><span class="nt">CatalogDetails-alternativeTitle</span>
+<span class="linenos"> 20</span>  <span class="kt">a</span> <span class="nn">rdf</span><span class="p">:</span><span class="nt">Property</span><span class="p">,</span> <span class="nn">owl</span><span class="p">:</span><span class="nt">ObjectProperty</span><span class="p">,</span> <span class="nn">ucmis</span><span class="p">:</span><span class="nt">Attribute</span><span class="p">;</span>
+<span class="linenos"> 21</span>  <span class="nn">rdfs</span><span class="p">:</span><span class="nt">label</span> <span class="s">&quot;alternativeTitle&quot;</span><span class="p">;</span>
+<span class="linenos"> 22</span>  <span class="nn">rdfs</span><span class="p">:</span><span class="nt">comment</span> <span class="s">&quot;An alternative title by which a data collection is commonly referred, or an abbreviation for the title.&quot;</span><span class="o">@</span><span class="ge">en</span><span class="p">;</span>
+<span class="linenos"> 23</span>  <span class="nn">rdfs</span><span class="p">:</span><span class="nt">domain</span> <span class="nn">cdi</span><span class="p">:</span><span class="nt">CatalogDetails</span><span class="p">;</span>
+<span class="linenos"> 24</span>  <span class="nn">rdfs</span><span class="p">:</span><span class="nt">range</span> <span class="nn">cdi</span><span class="p">:</span><span class="nt">InternationalString</span><span class="p">;</span>
+<span class="linenos"> 25</span><span class="p">.</span>
+<span class="linenos"> 26</span>
+<span class="linenos"> 27</span><span class="nn">cdi</span><span class="p">:</span><span class="nt">CatalogDetails-contributor</span>
+<span class="linenos"> 28</span>  <span class="kt">a</span> <span class="nn">rdf</span><span class="p">:</span><span class="nt">Property</span><span class="p">,</span> <span class="nn">owl</span><span class="p">:</span><span class="nt">ObjectProperty</span><span class="p">,</span> <span class="nn">ucmis</span><span class="p">:</span><span class="nt">Attribute</span><span class="p">;</span>
+<span class="linenos"> 29</span>  <span class="nn">rdfs</span><span class="p">:</span><span class="nt">label</span> <span class="s">&quot;contributor&quot;</span><span class="p">;</span>
+<span class="linenos"> 30</span>  <span class="nn">rdfs</span><span class="p">:</span><span class="nt">comment</span> <span class="s">&quot;The name of a contributing author or creator, who worked in support of the primary creator given above.&quot;</span><span class="o">@</span><span class="ge">en</span><span class="p">;</span>
+<span class="linenos"> 31</span>  <span class="nn">rdfs</span><span class="p">:</span><span class="nt">domain</span> <span class="nn">cdi</span><span class="p">:</span><span class="nt">CatalogDetails</span><span class="p">;</span>
+<span class="linenos"> 32</span>  <span class="nn">rdfs</span><span class="p">:</span><span class="nt">range</span> <span class="nn">cdi</span><span class="p">:</span><span class="nt">AgentInRole</span><span class="p">;</span>
+<span class="linenos"> 33</span><span class="p">.</span>
+<span class="linenos"> 34</span>
+<span class="linenos"> 35</span><span class="nn">cdi</span><span class="p">:</span><span class="nt">CatalogDetails-creator</span>
+<span class="linenos"> 36</span>  <span class="kt">a</span> <span class="nn">rdf</span><span class="p">:</span><span class="nt">Property</span><span class="p">,</span> <span class="nn">owl</span><span class="p">:</span><span class="nt">ObjectProperty</span><span class="p">,</span> <span class="nn">ucmis</span><span class="p">:</span><span class="nt">Attribute</span><span class="p">;</span>
+<span class="linenos"> 37</span>  <span class="nn">rdfs</span><span class="p">:</span><span class="nt">label</span> <span class="s">&quot;creator&quot;</span><span class="p">;</span>
+<span class="linenos"> 38</span>  <span class="nn">rdfs</span><span class="p">:</span><span class="nt">comment</span> <span class="s">&quot;Person, corporate body, or agency responsible for the substantive and intellectual content of the described object.&quot;</span><span class="o">@</span><span class="ge">en</span><span class="p">;</span>
+<span class="linenos"> 39</span>  <span class="nn">rdfs</span><span class="p">:</span><span class="nt">domain</span> <span class="nn">cdi</span><span class="p">:</span><span class="nt">CatalogDetails</span><span class="p">;</span>
+<span class="linenos"> 40</span>  <span class="nn">rdfs</span><span class="p">:</span><span class="nt">range</span> <span class="nn">cdi</span><span class="p">:</span><span class="nt">AgentInRole</span><span class="p">;</span>
+<span class="linenos"> 41</span><span class="p">.</span>
+<span class="linenos"> 42</span>
+<span class="linenos"> 43</span><span class="nn">cdi</span><span class="p">:</span><span class="nt">CatalogDetails-date</span>
+<span class="linenos"> 44</span>  <span class="kt">a</span> <span class="nn">rdf</span><span class="p">:</span><span class="nt">Property</span><span class="p">,</span> <span class="nn">owl</span><span class="p">:</span><span class="nt">ObjectProperty</span><span class="p">,</span> <span class="nn">ucmis</span><span class="p">:</span><span class="nt">Attribute</span><span class="p">;</span>
+<span class="linenos"> 45</span>  <span class="nn">rdfs</span><span class="p">:</span><span class="nt">label</span> <span class="s">&quot;date&quot;</span><span class="p">;</span>
+<span class="linenos"> 46</span>  <span class="nn">rdfs</span><span class="p">:</span><span class="nt">comment</span> <span class="s">&quot;A date associated with the annotated object (not the coverage period). Use typeOfDate to specify the type of date such as Version, Publication, Submitted, Copyrighted, Accepted, etc.&quot;</span><span class="o">@</span><span class="ge">en</span><span class="p">;</span>
+<span class="linenos"> 47</span>  <span class="nn">rdfs</span><span class="p">:</span><span class="nt">domain</span> <span class="nn">cdi</span><span class="p">:</span><span class="nt">CatalogDetails</span><span class="p">;</span>
+<span class="linenos"> 48</span>  <span class="nn">rdfs</span><span class="p">:</span><span class="nt">range</span> <span class="nn">cdi</span><span class="p">:</span><span class="nt">CombinedDate</span><span class="p">;</span>
+<span class="linenos"> 49</span><span class="p">.</span>
+<span class="linenos"> 50</span>
+<span class="linenos"> 51</span><span class="nn">cdi</span><span class="p">:</span><span class="nt">CatalogDetails-identifier</span>
+<span class="linenos"> 52</span>  <span class="kt">a</span> <span class="nn">rdf</span><span class="p">:</span><span class="nt">Property</span><span class="p">,</span> <span class="nn">owl</span><span class="p">:</span><span class="nt">ObjectProperty</span><span class="p">,</span> <span class="nn">ucmis</span><span class="p">:</span><span class="nt">Attribute</span><span class="p">;</span>
+<span class="linenos"> 53</span>  <span class="nn">rdfs</span><span class="p">:</span><span class="nt">label</span> <span class="s">&quot;identifier&quot;</span><span class="p">;</span>
+<span class="linenos"> 54</span>  <span class="nn">rdfs</span><span class="p">:</span><span class="nt">comment</span> <span class="s">&quot;An identifier or locator. Contains identifier and Managing agency (ISBN, ISSN, DOI, local archive). Indicates if it is a URI.&quot;</span><span class="o">@</span><span class="ge">en</span><span class="p">;</span>
+<span class="linenos"> 55</span>  <span class="nn">rdfs</span><span class="p">:</span><span class="nt">domain</span> <span class="nn">cdi</span><span class="p">:</span><span class="nt">CatalogDetails</span><span class="p">;</span>
+<span class="linenos"> 56</span>  <span class="nn">rdfs</span><span class="p">:</span><span class="nt">range</span> <span class="nn">cdi</span><span class="p">:</span><span class="nt">InternationalIdentifier</span><span class="p">;</span>
+<span class="linenos"> 57</span><span class="p">.</span>
+<span class="linenos"> 58</span>
+<span class="linenos"> 59</span><span class="nn">cdi</span><span class="p">:</span><span class="nt">CatalogDetails-informationSource</span>
+<span class="linenos"> 60</span>  <span class="kt">a</span> <span class="nn">rdf</span><span class="p">:</span><span class="nt">Property</span><span class="p">,</span> <span class="nn">owl</span><span class="p">:</span><span class="nt">ObjectProperty</span><span class="p">,</span> <span class="nn">ucmis</span><span class="p">:</span><span class="nt">Attribute</span><span class="p">;</span>
+<span class="linenos"> 61</span>  <span class="nn">rdfs</span><span class="p">:</span><span class="nt">label</span> <span class="s">&quot;informationSource&quot;</span><span class="p">;</span>
+<span class="linenos"> 62</span>  <span class="nn">rdfs</span><span class="p">:</span><span class="nt">comment</span> <span class="s">&quot;The name or identifier of source information for the annotated object.&quot;</span><span class="o">@</span><span class="ge">en</span><span class="p">;</span>
+<span class="linenos"> 63</span>  <span class="nn">rdfs</span><span class="p">:</span><span class="nt">domain</span> <span class="nn">cdi</span><span class="p">:</span><span class="nt">CatalogDetails</span><span class="p">;</span>
+<span class="linenos"> 64</span>  <span class="nn">rdfs</span><span class="p">:</span><span class="nt">range</span> <span class="nn">cdi</span><span class="p">:</span><span class="nt">InternationalString</span><span class="p">;</span>
+<span class="linenos"> 65</span><span class="p">.</span>
+<span class="linenos"> 66</span>
+<span class="linenos"> 67</span><span class="nn">cdi</span><span class="p">:</span><span class="nt">CatalogDetails-languageOfObject</span>
+<span class="linenos"> 68</span>  <span class="kt">a</span> <span class="nn">rdf</span><span class="p">:</span><span class="nt">Property</span><span class="p">,</span> <span class="nn">owl</span><span class="p">:</span><span class="nt">DatatypeProperty</span><span class="p">,</span> <span class="nn">ucmis</span><span class="p">:</span><span class="nt">Attribute</span><span class="p">;</span>
+<span class="linenos"> 69</span>  <span class="nn">rdfs</span><span class="p">:</span><span class="nt">label</span> <span class="s">&quot;languageOfObject&quot;</span><span class="p">;</span>
+<span class="linenos"> 70</span>  <span class="nn">rdfs</span><span class="p">:</span><span class="nt">comment</span> <span class="s">&quot;Language of the intellectual content of the described object. Multiple languages are supported by the structure itself as defined in the transformation to specific bindings. Use language codes supported by xs:language which include the 2 and 3 character and extended structures defined by RFC4646 or its successors. Supports multiple language codes.&quot;</span><span class="o">@</span><span class="ge">en</span><span class="p">;</span>
+<span class="linenos"> 71</span>  <span class="nn">rdfs</span><span class="p">:</span><span class="nt">domain</span> <span class="nn">cdi</span><span class="p">:</span><span class="nt">CatalogDetails</span><span class="p">;</span>
+<span class="linenos"> 72</span>  <span class="nn">rdfs</span><span class="p">:</span><span class="nt">range</span> <span class="nn">xsd</span><span class="p">:</span><span class="nt">language</span><span class="p">;</span>
+<span class="linenos"> 73</span><span class="p">.</span>
+<span class="linenos"> 74</span>
+<span class="linenos"> 75</span><span class="nn">cdi</span><span class="p">:</span><span class="nt">CatalogDetails-provenance</span>
+<span class="linenos"> 76</span>  <span class="kt">a</span> <span class="nn">rdf</span><span class="p">:</span><span class="nt">Property</span><span class="p">,</span> <span class="nn">owl</span><span class="p">:</span><span class="nt">ObjectProperty</span><span class="p">,</span> <span class="nn">ucmis</span><span class="p">:</span><span class="nt">Attribute</span><span class="p">;</span>
+<span class="linenos"> 77</span>  <span class="nn">rdfs</span><span class="p">:</span><span class="nt">label</span> <span class="s">&quot;provenance&quot;</span><span class="p">;</span>
+<span class="linenos"> 78</span>  <span class="nn">rdfs</span><span class="p">:</span><span class="nt">comment</span> <span class="s">&quot;Information about the origins of the object.&quot;</span><span class="o">@</span><span class="ge">en</span><span class="p">;</span>
+<span class="linenos"> 79</span>  <span class="nn">rdfs</span><span class="p">:</span><span class="nt">domain</span> <span class="nn">cdi</span><span class="p">:</span><span class="nt">CatalogDetails</span><span class="p">;</span>
+<span class="linenos"> 80</span>  <span class="nn">rdfs</span><span class="p">:</span><span class="nt">range</span> <span class="nn">cdi</span><span class="p">:</span><span class="nt">ProvenanceInformation</span><span class="p">;</span>
+<span class="linenos"> 81</span><span class="p">.</span>
+<span class="linenos"> 82</span>
+<span class="linenos"> 83</span><span class="nn">cdi</span><span class="p">:</span><span class="nt">CatalogDetails-publisher</span>
+<span class="linenos"> 84</span>  <span class="kt">a</span> <span class="nn">rdf</span><span class="p">:</span><span class="nt">Property</span><span class="p">,</span> <span class="nn">owl</span><span class="p">:</span><span class="nt">ObjectProperty</span><span class="p">,</span> <span class="nn">ucmis</span><span class="p">:</span><span class="nt">Attribute</span><span class="p">;</span>
+<span class="linenos"> 85</span>  <span class="nn">rdfs</span><span class="p">:</span><span class="nt">label</span> <span class="s">&quot;publisher&quot;</span><span class="p">;</span>
+<span class="linenos"> 86</span>  <span class="nn">rdfs</span><span class="p">:</span><span class="nt">comment</span> <span class="s">&quot;Person or organization responsible for making the resource available in its present form.&quot;</span><span class="o">@</span><span class="ge">en</span><span class="p">;</span>
+<span class="linenos"> 87</span>  <span class="nn">rdfs</span><span class="p">:</span><span class="nt">domain</span> <span class="nn">cdi</span><span class="p">:</span><span class="nt">CatalogDetails</span><span class="p">;</span>
+<span class="linenos"> 88</span>  <span class="nn">rdfs</span><span class="p">:</span><span class="nt">range</span> <span class="nn">cdi</span><span class="p">:</span><span class="nt">AgentInRole</span><span class="p">;</span>
+<span class="linenos"> 89</span><span class="p">.</span>
+<span class="linenos"> 90</span>
+<span class="linenos"> 91</span><span class="nn">cdi</span><span class="p">:</span><span class="nt">CatalogDetails-relatedResource</span>
+<span class="linenos"> 92</span>  <span class="kt">a</span> <span class="nn">rdf</span><span class="p">:</span><span class="nt">Property</span><span class="p">,</span> <span class="nn">owl</span><span class="p">:</span><span class="nt">ObjectProperty</span><span class="p">,</span> <span class="nn">ucmis</span><span class="p">:</span><span class="nt">Attribute</span><span class="p">;</span>
+<span class="linenos"> 93</span>  <span class="nn">rdfs</span><span class="p">:</span><span class="nt">label</span> <span class="s">&quot;relatedResource&quot;</span><span class="p">;</span>
+<span class="linenos"> 94</span>  <span class="nn">rdfs</span><span class="p">:</span><span class="nt">comment</span> <span class="s">&quot;Provide the identifier, managing agency, and type of resource related to this object. Use to specify related resources similar to Dublin Core isPartOf and hasPart to indicate collection/series membership for objects where there is an identifiable record. If not an identified object use the relationship to ExternalMaterial using a type that indicates a series description.&quot;</span><span class="o">@</span><span class="ge">en</span><span class="p">;</span>
+<span class="linenos"> 95</span>  <span class="nn">rdfs</span><span class="p">:</span><span class="nt">domain</span> <span class="nn">cdi</span><span class="p">:</span><span class="nt">CatalogDetails</span><span class="p">;</span>
+<span class="linenos"> 96</span>  <span class="nn">rdfs</span><span class="p">:</span><span class="nt">range</span> <span class="nn">cdi</span><span class="p">:</span><span class="nt">Reference</span><span class="p">;</span>
+<span class="linenos"> 97</span><span class="p">.</span>
+<span class="linenos"> 98</span>
+<span class="linenos"> 99</span><span class="nn">cdi</span><span class="p">:</span><span class="nt">CatalogDetails-subTitle</span>
+<span class="linenos">100</span>  <span class="kt">a</span> <span class="nn">rdf</span><span class="p">:</span><span class="nt">Property</span><span class="p">,</span> <span class="nn">owl</span><span class="p">:</span><span class="nt">ObjectProperty</span><span class="p">,</span> <span class="nn">ucmis</span><span class="p">:</span><span class="nt">Attribute</span><span class="p">;</span>
+<span class="linenos">101</span>  <span class="nn">rdfs</span><span class="p">:</span><span class="nt">label</span> <span class="s">&quot;subTitle&quot;</span><span class="p">;</span>
+<span class="linenos">102</span>  <span class="nn">rdfs</span><span class="p">:</span><span class="nt">comment</span> <span class="s">&quot;Secondary or explanatory title.&quot;</span><span class="o">@</span><span class="ge">en</span><span class="p">;</span>
+<span class="linenos">103</span>  <span class="nn">rdfs</span><span class="p">:</span><span class="nt">domain</span> <span class="nn">cdi</span><span class="p">:</span><span class="nt">CatalogDetails</span><span class="p">;</span>
+<span class="linenos">104</span>  <span class="nn">rdfs</span><span class="p">:</span><span class="nt">range</span> <span class="nn">cdi</span><span class="p">:</span><span class="nt">InternationalString</span><span class="p">;</span>
+<span class="linenos">105</span><span class="p">.</span>
+<span class="linenos">106</span>
+<span class="linenos">107</span><span class="nn">cdi</span><span class="p">:</span><span class="nt">CatalogDetails-summary</span>
+<span class="linenos">108</span>  <span class="kt">a</span> <span class="nn">rdf</span><span class="p">:</span><span class="nt">Property</span><span class="p">,</span> <span class="nn">owl</span><span class="p">:</span><span class="nt">ObjectProperty</span><span class="p">,</span> <span class="nn">ucmis</span><span class="p">:</span><span class="nt">Attribute</span><span class="p">;</span>
+<span class="linenos">109</span>  <span class="nn">rdfs</span><span class="p">:</span><span class="nt">label</span> <span class="s">&quot;summary&quot;</span><span class="p">;</span>
+<span class="linenos">110</span>  <span class="nn">rdfs</span><span class="p">:</span><span class="nt">comment</span> <span class="s">&quot;A summary description (abstract) of the annotated object.&quot;</span><span class="o">@</span><span class="ge">en</span><span class="p">;</span>
+<span class="linenos">111</span>  <span class="nn">rdfs</span><span class="p">:</span><span class="nt">domain</span> <span class="nn">cdi</span><span class="p">:</span><span class="nt">CatalogDetails</span><span class="p">;</span>
+<span class="linenos">112</span>  <span class="nn">rdfs</span><span class="p">:</span><span class="nt">range</span> <span class="nn">cdi</span><span class="p">:</span><span class="nt">InternationalString</span><span class="p">;</span>
+<span class="linenos">113</span><span class="p">.</span>
+<span class="linenos">114</span>
+<span class="linenos">115</span><span class="nn">cdi</span><span class="p">:</span><span class="nt">CatalogDetails-title</span>
+<span class="linenos">116</span>  <span class="kt">a</span> <span class="nn">rdf</span><span class="p">:</span><span class="nt">Property</span><span class="p">,</span> <span class="nn">owl</span><span class="p">:</span><span class="nt">ObjectProperty</span><span class="p">,</span> <span class="nn">ucmis</span><span class="p">:</span><span class="nt">Attribute</span><span class="p">;</span>
+<span class="linenos">117</span>  <span class="nn">rdfs</span><span class="p">:</span><span class="nt">label</span> <span class="s">&quot;title&quot;</span><span class="p">;</span>
+<span class="linenos">118</span>  <span class="nn">rdfs</span><span class="p">:</span><span class="nt">comment</span> <span class="s">&quot;Full authoritative title. List any additional titles for this item as alternativeTitle.&quot;</span><span class="o">@</span><span class="ge">en</span><span class="p">;</span>
+<span class="linenos">119</span>  <span class="nn">rdfs</span><span class="p">:</span><span class="nt">domain</span> <span class="nn">cdi</span><span class="p">:</span><span class="nt">CatalogDetails</span><span class="p">;</span>
+<span class="linenos">120</span>  <span class="nn">rdfs</span><span class="p">:</span><span class="nt">range</span> <span class="nn">cdi</span><span class="p">:</span><span class="nt">InternationalString</span><span class="p">;</span>
+<span class="linenos">121</span><span class="p">.</span>
+<span class="linenos">122</span>
+<span class="linenos">123</span><span class="nn">cdi</span><span class="p">:</span><span class="nt">CatalogDetails-typeOfResource</span>
+<span class="linenos">124</span>  <span class="kt">a</span> <span class="nn">rdf</span><span class="p">:</span><span class="nt">Property</span><span class="p">,</span> <span class="nn">owl</span><span class="p">:</span><span class="nt">ObjectProperty</span><span class="p">,</span> <span class="nn">ucmis</span><span class="p">:</span><span class="nt">Attribute</span><span class="p">;</span>
+<span class="linenos">125</span>  <span class="nn">rdfs</span><span class="p">:</span><span class="nt">label</span> <span class="s">&quot;typeOfResource&quot;</span><span class="p">;</span>
+<span class="linenos">126</span>  <span class="nn">rdfs</span><span class="p">:</span><span class="nt">comment</span> <span class="s">&quot;Provide the type of the resource. This supports the use of a controlled vocabulary. It should be appropriate to the level of the annotation.&quot;</span><span class="o">@</span><span class="ge">en</span><span class="p">;</span>
+<span class="linenos">127</span>  <span class="nn">rdfs</span><span class="p">:</span><span class="nt">domain</span> <span class="nn">cdi</span><span class="p">:</span><span class="nt">CatalogDetails</span><span class="p">;</span>
+<span class="linenos">128</span>  <span class="nn">rdfs</span><span class="p">:</span><span class="nt">range</span> <span class="nn">cdi</span><span class="p">:</span><span class="nt">ControlledVocabularyEntry</span><span class="p">;</span>
+<span class="linenos">129</span><span class="p">.</span>
+</pre></div>
+</div>
+</div>
+<input id="sd-tab-item-3" name="sd-tab-set-0" type="radio">
+<label class="sd-tab-label" for="sd-tab-item-3">
+JSON-LD</label><div class="sd-tab-content encoding docutils">
+<p class="sd-card-text">Fragment for the data type <strong>CatalogDetails</strong> (<a class="reference external" href="/encoding/json-ld/ddi-cdi.jsonld">main JSON-LD</a> <a class="reference external" href="/encoding/json-ld/ddi-cdi.jsonld.zip">entire JSON-LD as zip</a>)</p>
+<div class="highlight-jsonld notranslate"><div class="highlight"><pre><span></span><span class="linenos"> 1</span><span class="p">{</span>
+<span class="linenos"> 2</span><span class="w">  </span><span class="nd">&quot;@context&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<span class="linenos"> 3</span><span class="w">    </span><span class="p">{</span>
+<span class="linenos"> 4</span><span class="w">      </span><span class="nt">&quot;cdi&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;http://ddialliance.org/Specification/DDI-CDI/1.0/RDF/&quot;</span><span class="p">,</span>
+<span class="hll"><span class="linenos"> 5</span><span class="w">      </span><span class="nt">&quot;xsd&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;http://www.w3.org/2001/XMLSchema#&quot;</span><span class="p">,</span>
+</span><span class="linenos"> 6</span>
+<span class="linenos"> 7</span><span class="w">      </span><span class="nt">&quot;access&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="linenos"> 8</span><span class="w">        </span><span class="nd">&quot;@id&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;cdi:CatalogDetails-access&quot;</span><span class="p">,</span>
+<span class="linenos"> 9</span><span class="w">        </span><span class="nd">&quot;@type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;@id&quot;</span><span class="p">,</span>
+<span class="linenos">10</span><span class="w">        </span><span class="nd">&quot;@context&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;AccessInformation.jsonld&quot;</span>
+<span class="linenos">11</span><span class="w">      </span><span class="p">},</span>
+<span class="linenos">12</span><span class="w">      </span><span class="nt">&quot;alternativeTitle&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="linenos">13</span><span class="w">        </span><span class="nd">&quot;@id&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;cdi:CatalogDetails-alternativeTitle&quot;</span><span class="p">,</span>
+<span class="linenos">14</span><span class="w">        </span><span class="nd">&quot;@type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;@id&quot;</span><span class="p">,</span>
+<span class="linenos">15</span><span class="w">        </span><span class="nd">&quot;@context&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;InternationalString.jsonld&quot;</span>
+<span class="linenos">16</span><span class="w">      </span><span class="p">},</span>
+<span class="linenos">17</span><span class="w">      </span><span class="nt">&quot;contributor&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="linenos">18</span><span class="w">        </span><span class="nd">&quot;@id&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;cdi:CatalogDetails-contributor&quot;</span><span class="p">,</span>
+<span class="linenos">19</span><span class="w">        </span><span class="nd">&quot;@type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;@id&quot;</span><span class="p">,</span>
+<span class="linenos">20</span><span class="w">        </span><span class="nd">&quot;@context&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;AgentInRole.jsonld&quot;</span>
+<span class="linenos">21</span><span class="w">      </span><span class="p">},</span>
+<span class="linenos">22</span><span class="w">      </span><span class="nt">&quot;creator&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="linenos">23</span><span class="w">        </span><span class="nd">&quot;@id&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;cdi:CatalogDetails-creator&quot;</span><span class="p">,</span>
+<span class="linenos">24</span><span class="w">        </span><span class="nd">&quot;@type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;@id&quot;</span><span class="p">,</span>
+<span class="linenos">25</span><span class="w">        </span><span class="nd">&quot;@context&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;AgentInRole.jsonld&quot;</span>
+<span class="linenos">26</span><span class="w">      </span><span class="p">},</span>
+<span class="linenos">27</span><span class="w">      </span><span class="nt">&quot;date&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="linenos">28</span><span class="w">        </span><span class="nd">&quot;@id&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;cdi:CatalogDetails-date&quot;</span><span class="p">,</span>
+<span class="linenos">29</span><span class="w">        </span><span class="nd">&quot;@type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;@id&quot;</span><span class="p">,</span>
+<span class="linenos">30</span><span class="w">        </span><span class="nd">&quot;@context&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;CombinedDate.jsonld&quot;</span>
+<span class="linenos">31</span><span class="w">      </span><span class="p">},</span>
+<span class="linenos">32</span><span class="w">      </span><span class="nt">&quot;identifier&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="linenos">33</span><span class="w">        </span><span class="nd">&quot;@id&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;cdi:CatalogDetails-identifier&quot;</span><span class="p">,</span>
+<span class="linenos">34</span><span class="w">        </span><span class="nd">&quot;@type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;@id&quot;</span><span class="p">,</span>
+<span class="linenos">35</span><span class="w">        </span><span class="nd">&quot;@context&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;InternationalIdentifier.jsonld&quot;</span>
+<span class="linenos">36</span><span class="w">      </span><span class="p">},</span>
+<span class="linenos">37</span><span class="w">      </span><span class="nt">&quot;informationSource&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="linenos">38</span><span class="w">        </span><span class="nd">&quot;@id&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;cdi:CatalogDetails-informationSource&quot;</span><span class="p">,</span>
+<span class="linenos">39</span><span class="w">        </span><span class="nd">&quot;@type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;@id&quot;</span><span class="p">,</span>
+<span class="linenos">40</span><span class="w">        </span><span class="nd">&quot;@context&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;InternationalString.jsonld&quot;</span>
+<span class="linenos">41</span><span class="w">      </span><span class="p">},</span>
+<span class="linenos">42</span><span class="w">      </span><span class="nt">&quot;languageOfObject&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="linenos">43</span><span class="w">        </span><span class="nd">&quot;@id&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;cdi:CatalogDetails-languageOfObject&quot;</span><span class="p">,</span>
+<span class="linenos">44</span><span class="w">        </span><span class="nd">&quot;@type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;xsd:language&quot;</span>
+<span class="linenos">45</span><span class="w">      </span><span class="p">},</span>
+<span class="linenos">46</span><span class="w">      </span><span class="nt">&quot;provenance&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="linenos">47</span><span class="w">        </span><span class="nd">&quot;@id&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;cdi:CatalogDetails-provenance&quot;</span><span class="p">,</span>
+<span class="linenos">48</span><span class="w">        </span><span class="nd">&quot;@type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;@id&quot;</span><span class="p">,</span>
+<span class="linenos">49</span><span class="w">        </span><span class="nd">&quot;@context&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;ProvenanceInformation.jsonld&quot;</span>
+<span class="linenos">50</span><span class="w">      </span><span class="p">},</span>
+<span class="linenos">51</span><span class="w">      </span><span class="nt">&quot;publisher&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="linenos">52</span><span class="w">        </span><span class="nd">&quot;@id&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;cdi:CatalogDetails-publisher&quot;</span><span class="p">,</span>
+<span class="linenos">53</span><span class="w">        </span><span class="nd">&quot;@type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;@id&quot;</span><span class="p">,</span>
+<span class="linenos">54</span><span class="w">        </span><span class="nd">&quot;@context&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;AgentInRole.jsonld&quot;</span>
+<span class="linenos">55</span><span class="w">      </span><span class="p">},</span>
+<span class="linenos">56</span><span class="w">      </span><span class="nt">&quot;relatedResource&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="linenos">57</span><span class="w">        </span><span class="nd">&quot;@id&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;cdi:CatalogDetails-relatedResource&quot;</span><span class="p">,</span>
+<span class="linenos">58</span><span class="w">        </span><span class="nd">&quot;@type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;@id&quot;</span><span class="p">,</span>
+<span class="linenos">59</span><span class="w">        </span><span class="nd">&quot;@context&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Reference.jsonld&quot;</span>
+<span class="linenos">60</span><span class="w">      </span><span class="p">},</span>
+<span class="linenos">61</span><span class="w">      </span><span class="nt">&quot;subTitle&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="linenos">62</span><span class="w">        </span><span class="nd">&quot;@id&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;cdi:CatalogDetails-subTitle&quot;</span><span class="p">,</span>
+<span class="linenos">63</span><span class="w">        </span><span class="nd">&quot;@type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;@id&quot;</span><span class="p">,</span>
+<span class="linenos">64</span><span class="w">        </span><span class="nd">&quot;@context&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;InternationalString.jsonld&quot;</span>
+<span class="linenos">65</span><span class="w">      </span><span class="p">},</span>
+<span class="linenos">66</span><span class="w">      </span><span class="nt">&quot;summary&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="linenos">67</span><span class="w">        </span><span class="nd">&quot;@id&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;cdi:CatalogDetails-summary&quot;</span><span class="p">,</span>
+<span class="linenos">68</span><span class="w">        </span><span class="nd">&quot;@type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;@id&quot;</span><span class="p">,</span>
+<span class="linenos">69</span><span class="w">        </span><span class="nd">&quot;@context&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;InternationalString.jsonld&quot;</span>
+<span class="linenos">70</span><span class="w">      </span><span class="p">},</span>
+<span class="linenos">71</span><span class="w">      </span><span class="nt">&quot;title&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="linenos">72</span><span class="w">        </span><span class="nd">&quot;@id&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;cdi:CatalogDetails-title&quot;</span><span class="p">,</span>
+<span class="linenos">73</span><span class="w">        </span><span class="nd">&quot;@type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;@id&quot;</span><span class="p">,</span>
+<span class="linenos">74</span><span class="w">        </span><span class="nd">&quot;@context&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;InternationalString.jsonld&quot;</span>
+<span class="linenos">75</span><span class="w">      </span><span class="p">},</span>
+<span class="linenos">76</span><span class="w">      </span><span class="nt">&quot;typeOfResource&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="linenos">77</span><span class="w">        </span><span class="nd">&quot;@id&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;cdi:CatalogDetails-typeOfResource&quot;</span><span class="p">,</span>
+<span class="linenos">78</span><span class="w">        </span><span class="nd">&quot;@type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;@id&quot;</span><span class="p">,</span>
+<span class="linenos">79</span><span class="w">        </span><span class="nd">&quot;@context&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;ControlledVocabularyEntry.jsonld&quot;</span>
+<span class="linenos">80</span><span class="w">      </span><span class="p">},</span>
+<span class="linenos">81</span><span class="w">      </span>
+<span class="linenos">82</span><span class="w">      </span><span class="nt">&quot; comment &quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;tag:json-should-support-trailing-commas&quot;</span><span class="w"> </span>
+<span class="linenos">83</span><span class="w">    </span><span class="p">}</span>
+<span class="linenos">84</span><span class="w">  </span><span class="p">],</span>
+<span class="linenos">85</span><span class="w">  </span><span class="nt">&quot;generatedBy&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;This code was generated by the Eclipse Acceleo project UCMIS M2T on 2025-01-25 16:58:33.&quot;</span><span class="p">,</span>
+<span class="linenos">86</span><span class="w">  </span><span class="nt">&quot;basedOn&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;based on the UML data type DDICDIModels::DDICDILibrary::DataTypes::StructuredDataTypes::CatalogDetails&quot;</span>
+<span class="linenos">87</span><span class="p">}</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+</details></div>
+</section>
+</section>
+
+
+            <div class="clearer"></div>
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="Main">
+        <div class="sphinxsidebarwrapper">
+            <p class="logo"><a href="../../../index.html">
+              <img class="logo" src="../../../_static/cdi.svg" alt="Logo of "/>
+            </a></p>
+<search id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../../../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</search>
+<script>document.getElementById('searchbox').style.display = "block"</script>
+<h3><a href="../../../index.html">Table of Contents</a></h3>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../../Context/index.html">Context</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../../index.html">DDICDILibrary</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../../Classes/index.html">Classes</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="../index.html">DataTypes</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="../Enumerations/index.html">Enumerations</a></li>
+<li class="toctree-l3 current"><a class="reference internal" href="index.html">StructuredDataTypes</a><ul class="current">
+<li class="toctree-l4"><a class="reference internal" href="AccessInformation.html">AccessInformation</a></li>
+<li class="toctree-l4"><a class="reference internal" href="AccessLocation.html">AccessLocation</a></li>
+<li class="toctree-l4"><a class="reference internal" href="Address.html">Address</a></li>
+<li class="toctree-l4"><a class="reference internal" href="AgentInRole.html">AgentInRole</a></li>
+<li class="toctree-l4"><a class="reference internal" href="BibliographicName.html">BibliographicName</a></li>
+<li class="toctree-l4 current"><a class="current reference internal" href="#">CatalogDetails</a><ul>
+<li class="toctree-l5"><a class="reference internal" href="#definition">Definition</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#examples">Examples</a></li>
+</ul>
+</li>
+<li class="toctree-l4"><a class="reference internal" href="CombinedDate.html">CombinedDate</a></li>
+<li class="toctree-l4"><a class="reference internal" href="Command.html">Command</a></li>
+<li class="toctree-l4"><a class="reference internal" href="CommandCode.html">CommandCode</a></li>
+<li class="toctree-l4"><a class="reference internal" href="CommandFile.html">CommandFile</a></li>
+<li class="toctree-l4"><a class="reference internal" href="ContactInformation.html">ContactInformation</a></li>
+<li class="toctree-l4"><a class="reference internal" href="ControlledVocabularyEntry.html">ControlledVocabularyEntry</a></li>
+<li class="toctree-l4"><a class="reference internal" href="CorrespondenceDefinition.html">CorrespondenceDefinition</a></li>
+<li class="toctree-l4"><a class="reference internal" href="DateRange.html">DateRange</a></li>
+<li class="toctree-l4"><a class="reference internal" href="ElectronicMessageSystem.html">ElectronicMessageSystem</a></li>
+<li class="toctree-l4"><a class="reference internal" href="Email.html">Email</a></li>
+<li class="toctree-l4"><a class="reference internal" href="EmbargoInformation.html">EmbargoInformation</a></li>
+<li class="toctree-l4"><a class="reference internal" href="FundingInformation.html">FundingInformation</a></li>
+<li class="toctree-l4"><a class="reference internal" href="GeoRole.html">GeoRole</a></li>
+<li class="toctree-l4"><a class="reference internal" href="Identifier.html">Identifier</a></li>
+<li class="toctree-l4"><a class="reference internal" href="IndividualName.html">IndividualName</a></li>
+<li class="toctree-l4"><a class="reference internal" href="InternationalIdentifier.html">InternationalIdentifier</a></li>
+<li class="toctree-l4"><a class="reference internal" href="InternationalRegistrationDataIdentifier.html">InternationalRegistrationDataIdentifier</a></li>
+<li class="toctree-l4"><a class="reference internal" href="InternationalString.html">InternationalString</a></li>
+<li class="toctree-l4"><a class="reference internal" href="LabelForDisplay.html">LabelForDisplay</a></li>
+<li class="toctree-l4"><a class="reference internal" href="LanguageString.html">LanguageString</a></li>
+<li class="toctree-l4"><a class="reference internal" href="LicenseInformation.html">LicenseInformation</a></li>
+<li class="toctree-l4"><a class="reference internal" href="NonDdiIdentifier.html">NonDdiIdentifier</a></li>
+<li class="toctree-l4"><a class="reference internal" href="NonIsoDate.html">NonIsoDate</a></li>
+<li class="toctree-l4"><a class="reference internal" href="ObjectAttributeSelector.html">ObjectAttributeSelector</a></li>
+<li class="toctree-l4"><a class="reference internal" href="ObjectName.html">ObjectName</a></li>
+<li class="toctree-l4"><a class="reference internal" href="OrganizationName.html">OrganizationName</a></li>
+<li class="toctree-l4"><a class="reference internal" href="PairedControlledVocabularyEntry.html">PairedControlledVocabularyEntry</a></li>
+<li class="toctree-l4"><a class="reference internal" href="PrivateImage.html">PrivateImage</a></li>
+<li class="toctree-l4"><a class="reference internal" href="ProvenanceInformation.html">ProvenanceInformation</a></li>
+<li class="toctree-l4"><a class="reference internal" href="RationaleDefinition.html">RationaleDefinition</a></li>
+<li class="toctree-l4"><a class="reference internal" href="Reference.html">Reference</a></li>
+<li class="toctree-l4"><a class="reference internal" href="Selector.html">Selector</a></li>
+<li class="toctree-l4"><a class="reference internal" href="SpatialCoordinate.html">SpatialCoordinate</a></li>
+<li class="toctree-l4"><a class="reference internal" href="SpatialPoint.html">SpatialPoint</a></li>
+<li class="toctree-l4"><a class="reference internal" href="SpecializationRole.html">SpecializationRole</a></li>
+<li class="toctree-l4"><a class="reference internal" href="Statistic.html">Statistic</a></li>
+<li class="toctree-l4"><a class="reference internal" href="StructureSpecification.html">StructureSpecification</a></li>
+<li class="toctree-l4"><a class="reference internal" href="Telephone.html">Telephone</a></li>
+<li class="toctree-l4"><a class="reference internal" href="TextPositionSelector.html">TextPositionSelector</a></li>
+<li class="toctree-l4"><a class="reference internal" href="TimeRole.html">TimeRole</a></li>
+<li class="toctree-l4"><a class="reference internal" href="TypedString.html">TypedString</a></li>
+<li class="toctree-l4"><a class="reference internal" href="WebLink.html">WebLink</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../XMLSchemaDataTypes/index.html">XMLSchemaDataTypes</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../ModelIdentification.html">ModelIdentification</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../../DesignPatterns/index.html">DesignPatterns</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../Appendices/index.html">Appendices</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../about/index.html">About</a></li>
+</ul>
+
+        </div>
+<div id="sidebarbutton" title="Collapse sidebar">
+<span>«</span>
+</div>
+
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="Related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="CombinedDate.html" title="CombinedDate"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="BibliographicName.html" title="BibliographicName"
+             >previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../../../index.html">UML Model: DDI Cross Domain Integration (DDI-CDI 1.0)</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="../../index.html" >DDICDILibrary</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="../index.html" >DataTypes</a> &#187;</li>
+          <li class="nav-item nav-item-3"><a href="index.html" >StructuredDataTypes</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">CatalogDetails</a></li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+    &#169; Copyright 2024, DDI Alliance.
+    </div>
+  </body>
+</html>

@@ -1,0 +1,187 @@
+
+
+<!DOCTYPE html>
+
+<html lang="en" data-content_root="../../">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>accessRights &#8212; UML Model: DDI Cross Domain Integration (DDI-CDI 1.0)</title>
+    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=03e43079" />
+    <link rel="stylesheet" type="text/css" href="../../_static/classic.css?v=4d097c01" />
+    <link rel="stylesheet" type="text/css" href="../../_static/graphviz.css?v=4ae1632d" />
+    <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sphinx-design.min.css?v=95c83b7e" />
+    <link rel="stylesheet" type="text/css" href="../../_static/custom.css?v=e6a9d92b" />
+    
+    <script src="../../_static/jquery.js?v=5d32c60e"></script>
+    <script src="../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+    <script src="../../_static/documentation_options.js?v=8a448e45"></script>
+    <script src="../../_static/doctools.js?v=9bcbadda"></script>
+    <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="../../_static/copybutton.js?v=f281be69"></script>
+    <script src="../../_static/design-tabs.js?v=f930bc37"></script>
+    <script src="../../_static/custom.js?v=5de7d6e5"></script>
+    <script src="../../_static/definition.js?v=897f6d42"></script>
+    
+    <script src="../../_static/sidebar.js"></script>
+    
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="alternative" href="alternative.html" />
+    <link rel="prev" title="abstract" href="abstract.html" /> 
+    <meta http-equiv="Content-Security-Policy" content="script-src 'self' 'unsafe-inline' https://cdn.datatables.net/ https://code.jquery.com/; style-src 'self' 'unsafe-inline' https://cdn.datatables.net/ https://code.jquery.com/; img-src 'self' https://cdn.datatables.net/;">
+    <!-- loaded before custom.js required. Done now with sphinxcontrib-jquery. See example Agent.html.
+    <script
+              src="https://code.jquery.com/jquery-3.7.1.min.js"
+              integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo="
+              crossorigin="anonymous"></script>
+    -->
+    <script
+              src="https://code.jquery.com/ui/1.13.2/jquery-ui.min.js"
+              integrity="sha256-lSjKY0/srUM9BE3dPm+c4fBo1dky2v27Gdjm2uoZaL0="
+              crossorigin="anonymous"></script>
+	<!--
+		Combined css and js downloads created with https://datatables.net/download/.
+		DataTables, Buttons (HTML5 export, JSZip, Print view), Search panes, Select, Minify, Concatenate
+	-->
+	<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/dt/jszip-2.5.0/dt-1.10.24/b-1.7.0/b-html5-1.7.0/b-print-1.7.0/sp-1.2.2/sl-1.3.3/datatables.min.css"/>
+	<script type="text/javascript" src="https://cdn.datatables.net/v/dt/jszip-2.5.0/dt-1.10.24/b-1.7.0/b-html5-1.7.0/b-print-1.7.0/sp-1.2.2/sl-1.3.3/datatables.min.js"></script>
+	<!-- For jquery tooltip. See: https://jqueryui.com/tooltip/ -->
+	<link rel="stylesheet" href="https://code.jquery.com/ui/1.13.2/themes/base/jquery-ui.css">
+	<script src="https://code.jquery.com/ui/1.13.2/jquery-ui.min.js"></script>
+    <!--
+    already loaded by sphinx
+	<script src="https://code.jquery.com/jquery-3.5.1.js" type="text/javascript" language="javascript"></script>
+	-->
+
+  </head><body>
+    <div class="related" role="navigation" aria-label="Related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="alternative.html" title="alternative"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="abstract.html" title="abstract"
+             accesskey="P">previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../../index.html">UML Model: DDI Cross Domain Integration (DDI-CDI 1.0)</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="../index.html" >Context</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="index.html" accesskey="U">DCTerms</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">accessRights</a></li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <section id="accessrights">
+<span id="ddicdimodels-context-dcterms-accessrights"></span><h1>accessRights<a class="headerlink" href="#accessrights" title="Link to this heading">¶</a></h1>
+<p><strong>Fully qualified datatype name</strong>: DDICDIModels::Context::DCTerms::accessRights</p>
+<section id="definition">
+<h2>Definition<a class="headerlink" href="#definition" title="Link to this heading">¶</a></h2>
+<p>Information about who access the resource or an indication of its security status. Access Rights may include information regarding access or restrictions based on privacy, security, or other policies. (See DCMI Metadata Terms - <a class="reference external" href="https://www.dublincore.org/specifications/dublin-core/dcmi-terms/#http://purl.org/dc/terms/accessRights">https://www.dublincore.org/specifications/dublin-core/dcmi-terms/#http://purl.org/dc/terms/accessRights</a>.)</p>
+<div class="docutils container" id="diagram">
+<details class="sd-sphinx-override sd-dropdown sd-card sd-mb-3" open="open">
+<summary class="sd-summary-title sd-card-header">
+<span class="sd-summary-text">Diagram</span><span class="sd-summary-state-marker sd-summary-chevron-right"><svg version="1.1" width="1.5em" height="1.5em" class="sd-octicon sd-octicon-chevron-right" viewBox="0 0 24 24" aria-hidden="true"><path d="M8.72 18.78a.75.75 0 0 1 0-1.06L14.44 12 8.72 6.28a.751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018l6.25 6.25a.75.75 0 0 1 0 1.06l-6.25 6.25a.75.75 0 0 1-1.06 0Z"></path></svg></span></summary><div class="sd-summary-content sd-card-body docutils">
+<p class="plantuml">
+<object data="../../_images/plantuml-ff366440c7ca1078db96795061ad46ce595f5965.svg" type="image/svg+xml" style="width:678px;height:481px;background:#FFFFFF;"></object></p>
+</div>
+</details></div>
+</section>
+</section>
+
+
+            <div class="clearer"></div>
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="Main">
+        <div class="sphinxsidebarwrapper">
+            <p class="logo"><a href="../../index.html">
+              <img class="logo" src="../../_static/cdi.svg" alt="Logo of "/>
+            </a></p>
+<search id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</search>
+<script>document.getElementById('searchbox').style.display = "block"</script>
+<h3><a href="../../index.html">Table of Contents</a></h3>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="../index.html">Context</a><ul class="current">
+<li class="toctree-l2 current"><a class="reference internal" href="index.html">DCTerms</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="abstract.html">abstract</a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="#">accessRights</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#definition">Definition</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="alternative.html">alternative</a></li>
+<li class="toctree-l3"><a class="reference internal" href="contributor.html">contributor</a></li>
+<li class="toctree-l3"><a class="reference internal" href="creator.html">creator</a></li>
+<li class="toctree-l3"><a class="reference internal" href="date.html">date</a></li>
+<li class="toctree-l3"><a class="reference internal" href="format.html">format</a></li>
+<li class="toctree-l3"><a class="reference internal" href="identifier.html">identifier</a></li>
+<li class="toctree-l3"><a class="reference internal" href="language.html">language</a></li>
+<li class="toctree-l3"><a class="reference internal" href="provenance.html">provenance</a></li>
+<li class="toctree-l3"><a class="reference internal" href="publisher.html">publisher</a></li>
+<li class="toctree-l3"><a class="reference internal" href="relation.html">relation</a></li>
+<li class="toctree-l3"><a class="reference internal" href="source.html">source</a></li>
+<li class="toctree-l3"><a class="reference internal" href="title.html">title</a></li>
+<li class="toctree-l3"><a class="reference internal" href="type.html">type</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../PROV/index.html">PROV</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../RDF/index.html">RDF</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../XMLSchema/index.html">XMLSchema</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../DDICDILibrary/index.html">DDICDILibrary</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../DesignPatterns/index.html">DesignPatterns</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../Appendices/index.html">Appendices</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../about/index.html">About</a></li>
+</ul>
+
+        </div>
+<div id="sidebarbutton" title="Collapse sidebar">
+<span>«</span>
+</div>
+
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="Related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="alternative.html" title="alternative"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="abstract.html" title="abstract"
+             >previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../../index.html">UML Model: DDI Cross Domain Integration (DDI-CDI 1.0)</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="../index.html" >Context</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="index.html" >DCTerms</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">accessRights</a></li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+    &#169; Copyright 2024, DDI Alliance.
+    </div>
+  </body>
+</html>

@@ -1,0 +1,375 @@
+/* overwrite of css in classic.css or additional css */
+
+div.body {
+	font-size: 80%;
+	min-height: 73vh;
+}
+
+/* 2025-01 */
+div.sphinxsidebarwrapper {
+	width: 270px;
+}
+
+div.sphinxsidebar {
+	font-size: 70%;
+}
+
+div.body h1,
+div.body h2,
+div.body h3,
+div.body h4,
+div.body h5,
+div.body h6 {
+	margin: 0px 0px 0px 0px;
+/*    margin: 30px 0px 10px 0px; */
+	border-radius: 0.25rem;
+}
+
+div.body h1 {
+	margin-top: 0; padding-top: 0; font-size: 180%;
+/*	margin-top: 0; padding-top: 0; font-size: 240%; */
+}
+div.body h2 {
+	font-size: 130%; background-color: #EEEEEE;
+}
+
+/* make top bar sticky */
+div.related {
+	position: fixed;
+	top: 0;
+	width: 100%;
+}
+
+/* put body below top bar */
+div.documentwrapper {
+	margin-top: 1.9em;
+}
+
+/* put logo below top bar */
+p.logo {
+	margin-top: 1.9em;
+}
+
+img.logo {
+	background-color: white;
+}
+
+/*
+div.admonition {
+	background-color: #EEEEEE;
+}
+
+div.admonition * {
+	background-color: white;
+}
+
+div.admonition ul li::marker, div.summary-content ul li::marker {
+	content: "ᐊ─";
+}
+
+p.admonition-title::after {
+	content: "";
+}
+
+p.admonition-title, summary.summary-title {
+	background-color: #EEEEEE;
+	font-size: 130%;
+	font-weight: normal;
+	font-family: 'Trebuchet MS', sans-serif;
+	color: #20435c;
+}
+*/
+
+details.sd-dropdown {
+	margin-bottom: 1ex !important;
+}
+
+summary.sd-summary-title, summary.sd-card-header {
+	background-color: #EEEEEE;
+	font-size: 130%;
+	font-weight: normal !important;
+	font-family: 'Trebuchet MS', sans-serif;
+	color: #20435c;
+	padding-top: 3px !important;
+	padding-bottom: 3px !important;
+	padding-left: 0.6em !important;
+}
+
+svg.sd-octicon {
+	margin-top: -0.8em !important;
+}
+
+/*
+summary.summary-title {
+	background-color: #EEEEEE;
+	font-size: 130%;
+	font-weight: normal;
+	font-family: 'Trebuchet MS', sans-serif;
+	color: #20435c;
+}
+*/
+
+details.mb-3 {
+	margin-bottom: 0.25em !important;
+}
+
+summary.summary-title {
+	padding: 0.25em !important;
+}
+
+div.summary-down, div.summary-up {
+	top: 0.25em !important;
+}
+
+div.card-body {
+	padding: 0.3em;
+}
+
+/*
+div.admonition p.admonition-title + p {
+    display: block;
+}
+
+button.toggle-button {
+	background-color: gray;
+}
+*/
+
+div#diagram {
+    /* display: flex;  disable for classic, pydata? */
+	justify-content: center;
+	max-width: 100%;
+}
+
+a.reference {
+	color: blue;
+}
+
+div#sidebarbutton {
+	background-color: steelblue;
+	min-height: 80vh;
+}
+
+div#sidebarbutton span {
+	width: 10px; /* 2025-01 */
+	/* font-size: 1.8em; */
+}
+
+div.figure {
+ 	width: 100%;
+} 
+p.plantuml object {
+	/* center */
+	display: block;
+    margin: 0 auto;
+/*	pointer-events: none; */
+}
+
+p.upper-caption {
+	text-align: center !important;
+}
+
+/* additional styles for datatables */
+table.dataTable tbody > tr.selected {
+	background-color: lightgoldenrodyellow !important;
+}
+
+div.dataTables_paginate {
+	float: unset !important;
+	text-align: center !important;
+	padding-top: 0 !important;
+}
+
+div.dtsp-title {
+	margin-top: 11px !important;
+}
+
+div.dtsp-panesContainer button.dtsp-clearAll {
+	background-color:lightgray !important;
+	padding: 2px !important;
+}
+
+div.dtsp-panesContainer {
+	padding: 0px !important;
+}
+
+div.dt-buttons {
+	float: none !important;
+	text-align: center;
+}
+
+div.dataTables_scrollBody {
+	height: 7em !important;
+}
+
+/*
+div#all-classes-list div.dataTables_scrollBody {
+	height: 7em !important;
+}
+*/
+
+div.dataTables_length {
+	margin-top: 0.08em;
+	margin-right: 2em;
+}
+
+div.dataTables_info {
+	clear: unset !important;
+}
+
+table.datatable-attributes, table.datatable-associations {
+    margin-bottom: 0.2em !important;
+    padding-top: 0.2em !important;
+}
+
+div.dtsp-emptyMessage {
+	display:none;
+}
+
+button.link {
+	display: inline-block;
+	position: relative;
+	background-color: transparent;
+	cursor: pointer;
+ 	border: 0;
+ 	padding: 0;
+ 	color: green;
+ 	text-decoration: underline;
+ 	font: inherit;
+}
+ 
+div.dtsp-topRow {
+	border-top-color: lightgray;
+	border-top-style: solid;
+	border-top-width: thin;
+	margin-top: 1px;
+}
+
+p.plantuml {
+	overflow: auto;
+}
+
+div.highlight {
+	background-color: #f9f9f9;
+	font-size: 130%;
+}
+
+div.linenodiv {
+	font-size: 130%;
+	padding-top: 0.1em;
+}
+
+span.focus {
+	background-color:#FFD700;
+	font-weight: bold;
+}
+
+/*
+div.highlight pre {
+ 	white-space: pre-wrap; 
+}
+*/
+
+p.plantuml a.diagram-link {
+	color: blue !important;
+	font-style: italic;
+	font-size: 80%;
+}
+
+table.classes-list > thead > tr > th > p {
+	text-align: center;
+}
+
+table.classes-list td.dt-body-right {
+	padding-right: 4em;
+}
+
+input.dtsp-search::placeholder {
+	font-size: 70% !important;
+	font-weight: bold;
+}
+
+div.dtsp-panesContainer div.dtsp-searchPanes div.dtsp-searchPane tr > td {
+	padding: 0.1em 0.2em !important;
+}
+div.dtsp-subRow1 {
+	margin-top: -0.5em;
+	margin-bottom: -1em;
+}
+
+div#all-packages-list {
+	width: 60%;
+	margin-left: auto;
+	margin-right: auto;
+}
+
+div.legend-searchpanes, div.legend-allassociations {
+	font-style: italic;
+	margin-top: 0.4em;
+	font-size: 90%;
+}
+
+/*
+div.abstract-inreference.line-block {
+	font-style: italic;
+	margin-bottom: -1em;
+	margin-top: -1em;
+}
+*/
+
+div.sphinxsidebar li {
+	list-style:disclosure-closed
+}
+
+div.sphinxsidebar li.current {
+	list-style:disclosure-open
+}
+
+div.sphinxsidebar li.dot:before {
+	content: '\2043'; /* Hyphen Bullet: ⁃ */
+	margin-left: -1em;
+	margin-right: 0.6em;
+}
+
+li.current {
+	color: #ff4000;
+}
+
+li.current > a {
+	color: white;
+}
+
+div.abstract {
+	font-style: italic;
+	display: inline;
+}
+
+div.regular {
+	font-style: unset;
+	display: inline;
+}
+
+/* workaround because list symbols are not shown. not clear why. */
+
+ul.simple>li.dot {
+	list-style: disc !important;
+}
+
+ol.arabic>li.dot {
+	list-style: decimal !important;
+}
+
+.ui-tooltip {
+	font-size: 80% !important;
+}
+
+/* SVG does not work for svg referenced in object. Must be in a stylesheet of the SVG */
+/*rect:hover {*/
+g[id]:hover {
+	filter: drop-shadow(0px 0px 30px black) brightness(1.1);
+	stroke-width: 0.25%;
+}
+
+th.head>p {
+	text-align: left;
+}

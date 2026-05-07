@@ -1,0 +1,179 @@
+{
+  "@context": [
+    {
+      "cdi": "http://ddialliance.org/Specification/DDI-CDI/1.0/RDF/",
+      "xsd": "http://www.w3.org/2001/XMLSchema#",
+
+      "allowsDuplicates": {
+        "@id": "cdi:PhysicalSegmentLayout-allowsDuplicates",
+        "@type": "xsd:boolean"
+      },
+      "arrayBase": {
+        "@id": "cdi:PhysicalSegmentLayout-arrayBase",
+        "@type": "xsd:integer"
+      },
+      "catalogDetails": {
+        "@id": "cdi:PhysicalSegmentLayout-catalogDetails",
+        "@type": "@id",
+        "@context": "CatalogDetails.jsonld"
+      },
+      "commentPrefix": {
+        "@id": "cdi:PhysicalSegmentLayout-commentPrefix",
+        "@type": "xsd:string"
+      },
+      "delimiter": {
+        "@id": "cdi:PhysicalSegmentLayout-delimiter",
+        "@type": "xsd:string"
+      },
+      "encoding": {
+        "@id": "cdi:PhysicalSegmentLayout-encoding",
+        "@type": "@id",
+        "@context": "ControlledVocabularyEntry.jsonld"
+      },
+      "escapeCharacter": {
+        "@id": "cdi:PhysicalSegmentLayout-escapeCharacter",
+        "@type": "xsd:string"
+      },
+      "hasHeader": {
+        "@id": "cdi:PhysicalSegmentLayout-hasHeader",
+        "@type": "xsd:boolean"
+      },
+      "headerIsCaseSensitive": {
+        "@id": "cdi:PhysicalSegmentLayout-headerIsCaseSensitive",
+        "@type": "xsd:boolean"
+      },
+      "headerRowCount": {
+        "@id": "cdi:PhysicalSegmentLayout-headerRowCount",
+        "@type": "xsd:integer"
+      },
+      "identifier": {
+        "@id": "cdi:PhysicalSegmentLayout-identifier",
+        "@type": "@id",
+        "@context": "Identifier.jsonld"
+      },
+      "isDelimited": {
+        "@id": "cdi:PhysicalSegmentLayout-isDelimited",
+        "@type": "xsd:boolean"
+      },
+      "isFixedWidth": {
+        "@id": "cdi:PhysicalSegmentLayout-isFixedWidth",
+        "@type": "xsd:boolean"
+      },
+      "lineTerminator": {
+        "@id": "cdi:PhysicalSegmentLayout-lineTerminator",
+        "@type": "xsd:string"
+      },
+      "name": {
+        "@id": "cdi:PhysicalSegmentLayout-name",
+        "@type": "@id",
+        "@context": "ObjectName.jsonld"
+      },
+      "nullSequence": {
+        "@id": "cdi:PhysicalSegmentLayout-nullSequence",
+        "@type": "xsd:string"
+      },
+      "overview": {
+        "@id": "cdi:PhysicalSegmentLayout-overview",
+        "@type": "@id",
+        "@context": "InternationalString.jsonld"
+      },
+      "purpose": {
+        "@id": "cdi:PhysicalSegmentLayout-purpose",
+        "@type": "@id",
+        "@context": "InternationalString.jsonld"
+      },
+      "quoteCharacter": {
+        "@id": "cdi:PhysicalSegmentLayout-quoteCharacter",
+        "@type": "xsd:string"
+      },
+      "skipBlankRows": {
+        "@id": "cdi:PhysicalSegmentLayout-skipBlankRows",
+        "@type": "xsd:boolean"
+      },
+      "skipDataColumns": {
+        "@id": "cdi:PhysicalSegmentLayout-skipDataColumns",
+        "@type": "xsd:integer"
+      },
+      "skipInitialSpace": {
+        "@id": "cdi:PhysicalSegmentLayout-skipInitialSpace",
+        "@type": "xsd:boolean"
+      },
+      "skipRows": {
+        "@id": "cdi:PhysicalSegmentLayout-skipRows",
+        "@type": "xsd:integer"
+      },
+      "tableDirection": {
+        "@id": "cdi:PhysicalSegmentLayout-tableDirection",
+        "@type": "@vocab",
+        "@context": {
+          "Auto": "cdi:Auto"
+      ,    "Ltr": "cdi:Ltr"
+      ,    "Rtl": "cdi:Rtl"
+        }
+      },
+      "textDirection": {
+        "@id": "cdi:PhysicalSegmentLayout-textDirection",
+        "@type": "@vocab",
+        "@context": {
+          "Auto": "cdi:Auto"
+      ,    "Inherit": "cdi:Inherit"
+      ,    "Ltr": "cdi:Ltr"
+      ,    "Rtl": "cdi:Rtl"
+        }
+      },
+      "treatConsecutiveDelimitersAsOne": {
+        "@id": "cdi:PhysicalSegmentLayout-treatConsecutiveDelimitersAsOne",
+        "@type": "xsd:boolean"
+      },
+      "trim": {
+        "@id": "cdi:PhysicalSegmentLayout-trim",
+        "@type": "@vocab",
+        "@context": {
+          "Both": "cdi:Both"
+      ,    "End": "cdi:End"
+      ,    "Neither": "cdi:Neither"
+      ,    "Start": "cdi:Start"
+        }
+      },
+      
+      "isDefinedBy_Concept": {
+        "@id": "cdi:PhysicalSegmentLayout_isDefinedBy_Concept",
+        "@type": "@id",
+        "@context": "Concept.jsonld"
+      },
+      "formats": {
+        "@id": "cdi:PhysicalSegmentLayout_formats_LogicalRecord",
+        "@type": "@id",
+        "@context": "LogicalRecord.jsonld"
+      },
+      "has_ValueMapping": {
+        "@id": "cdi:PhysicalSegmentLayout_has_ValueMapping",
+        "@type": "@id",
+        "@context": "ValueMapping.jsonld"
+      },
+      "has_ValueMappingPosition": {
+        "@id": "cdi:PhysicalSegmentLayout_has_ValueMappingPosition",
+        "@type": "@id",
+        "@context": "ValueMappingPosition.jsonld"
+      },
+      "has_PhysicalSegmentLayout_OF_InstanceVariable": {
+        "@reverse": "cdi:InstanceVariable_has_PhysicalSegmentLayout",
+        "@type": "@id",
+        "@context": "InstanceVariable.jsonld"
+      },
+      "structures_OF_PhysicalLayoutRelationStructure": {
+        "@reverse": "cdi:PhysicalLayoutRelationStructure_structures_PhysicalSegmentLayout",
+        "@type": "@id",
+        "@context": "PhysicalLayoutRelationStructure.jsonld"
+      },
+      "has_PhysicalSegmentLayout_OF_PhysicalRecordSegment": {
+        "@reverse": "cdi:PhysicalRecordSegment_has_PhysicalSegmentLayout",
+        "@type": "@id",
+        "@context": "PhysicalRecordSegment.jsonld"
+      },
+      " comment ": "tag:json-should-support-trailing-commas"
+    }
+  ],
+  "generatedBy": "This code was generated by the Eclipse Acceleo project UCMIS M2T on 2025-01-25 15:34:47.",
+  "basedOn": "based on the UML data type DDICDIModels::DDICDILibrary::Classes::FormatDescription::PhysicalSegmentLayout"
+}

@@ -1,0 +1,700 @@
+
+
+<!DOCTYPE html>
+
+<html lang="en" data-content_root="../../../">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>UnitSegmentLayout &#8212; UML Model: DDI Cross Domain Integration (DDI-CDI 1.0)</title>
+    <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=03e43079" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/classic.css?v=4d097c01" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/graphviz.css?v=4ae1632d" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/sphinx-design.min.css?v=95c83b7e" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/custom.css?v=e6a9d92b" />
+    
+    <script src="../../../_static/jquery.js?v=5d32c60e"></script>
+    <script src="../../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+    <script src="../../../_static/documentation_options.js?v=8a448e45"></script>
+    <script src="../../../_static/doctools.js?v=9bcbadda"></script>
+    <script src="../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../../_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="../../../_static/copybutton.js?v=f281be69"></script>
+    <script src="../../../_static/design-tabs.js?v=f930bc37"></script>
+    <script src="../../../_static/custom.js?v=5de7d6e5"></script>
+    <script src="../../../_static/definition.js?v=897f6d42"></script>
+    
+    <script src="../../../_static/sidebar.js"></script>
+    
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" />
+    <link rel="next" title="ValueMapping" href="ValueMapping.html" />
+    <link rel="prev" title="SegmentByText" href="SegmentByText.html" /> 
+    <meta http-equiv="Content-Security-Policy" content="script-src 'self' 'unsafe-inline' https://cdn.datatables.net/ https://code.jquery.com/; style-src 'self' 'unsafe-inline' https://cdn.datatables.net/ https://code.jquery.com/; img-src 'self' https://cdn.datatables.net/;">
+    <!-- loaded before custom.js required. Done now with sphinxcontrib-jquery. See example Agent.html.
+    <script
+              src="https://code.jquery.com/jquery-3.7.1.min.js"
+              integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo="
+              crossorigin="anonymous"></script>
+    -->
+    <script
+              src="https://code.jquery.com/ui/1.13.2/jquery-ui.min.js"
+              integrity="sha256-lSjKY0/srUM9BE3dPm+c4fBo1dky2v27Gdjm2uoZaL0="
+              crossorigin="anonymous"></script>
+	<!--
+		Combined css and js downloads created with https://datatables.net/download/.
+		DataTables, Buttons (HTML5 export, JSZip, Print view), Search panes, Select, Minify, Concatenate
+	-->
+	<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/dt/jszip-2.5.0/dt-1.10.24/b-1.7.0/b-html5-1.7.0/b-print-1.7.0/sp-1.2.2/sl-1.3.3/datatables.min.css"/>
+	<script type="text/javascript" src="https://cdn.datatables.net/v/dt/jszip-2.5.0/dt-1.10.24/b-1.7.0/b-html5-1.7.0/b-print-1.7.0/sp-1.2.2/sl-1.3.3/datatables.min.js"></script>
+	<!-- For jquery tooltip. See: https://jqueryui.com/tooltip/ -->
+	<link rel="stylesheet" href="https://code.jquery.com/ui/1.13.2/themes/base/jquery-ui.css">
+	<script src="https://code.jquery.com/ui/1.13.2/jquery-ui.min.js"></script>
+    <!--
+    already loaded by sphinx
+	<script src="https://code.jquery.com/jquery-3.5.1.js" type="text/javascript" language="javascript"></script>
+	-->
+
+  </head><body>
+    <div class="related" role="navigation" aria-label="Related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="ValueMapping.html" title="ValueMapping"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="SegmentByText.html" title="SegmentByText"
+             accesskey="P">previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../../../index.html">UML Model: DDI Cross Domain Integration (DDI-CDI 1.0)</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="../../index.html" >DDICDILibrary</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="../index.html" >Classes</a> &#187;</li>
+          <li class="nav-item nav-item-3"><a href="index.html" accesskey="U">FormatDescription</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">UnitSegmentLayout</a></li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <section id="unitsegmentlayout">
+<span id="ddicdimodels-ddicdilibrary-classes-formatdescription-unitsegmentlayout"></span><h1>UnitSegmentLayout<a class="headerlink" href="#unitsegmentlayout" title="Link to this heading">¶</a></h1>
+<p><strong>Fully qualified class name</strong>: DDICDIModels::DDICDILibrary::Classes::FormatDescription::<span class="target" id="index-0"></span>UnitSegmentLayout</p>
+<section id="definition">
+<h2>Definition<a class="headerlink" href="#definition" title="Link to this heading">¶</a></h2>
+<p>Description of unit-record (“wide”) data sets, where each row in the data set provides the same group of values for variables all relating to a single unit.</p>
+</section>
+<section id="examples">
+<h2>Examples<a class="headerlink" href="#examples" title="Link to this heading">¶</a></h2>
+<p>A simple spreadsheet. Commonly the first row of the table will contain variable names or descriptions.</p>
+<p>The following CSV file has a rectangular layout and would import into a simple table in a spreadsheet:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">PersonId</span><span class="p">,</span><span class="n">AgeYr</span><span class="p">,</span><span class="n">HeightCm</span>
+<span class="mi">1</span><span class="p">,</span><span class="mi">22</span><span class="p">,</span><span class="mi">183</span><span class="p">,</span>
+<span class="mi">2</span><span class="p">,</span><span class="mi">45</span><span class="p">,</span><span class="mi">175</span><span class="p">,</span>
+</pre></div>
+</div>
+</section>
+<section id="explanatory-notes">
+<h2>Explanatory notes<a class="headerlink" href="#explanatory-notes" title="Link to this heading">¶</a></h2>
+<p>This is the classic rectangular data table used by most statistical packages, with rows/cases/observations and columns/variables/measurements. Each cell (DataPoint) in the table is the intersection of a <a class="reference internal" href="../Conceptual/Unit.html#ddicdimodels-ddicdilibrary-classes-conceptual-unit"><span class="std std-ref">Unit</span></a> (row) and an <a class="reference internal" href="../Conceptual/InstanceVariable.html#ddicdimodels-ddicdilibrary-classes-conceptual-instancevariable"><span class="std std-ref">InstanceVariable</span></a>. Each logical column will contain data relating to the values for a single variable.</p>
+<div class="docutils container" id="diagram">
+<details class="sd-sphinx-override sd-dropdown sd-card sd-mb-3" open="open">
+<summary class="sd-summary-title sd-card-header">
+<span class="sd-summary-text">Diagram</span><span class="sd-summary-state-marker sd-summary-chevron-right"><svg version="1.1" width="1.5em" height="1.5em" class="sd-octicon sd-octicon-chevron-right" viewBox="0 0 24 24" aria-hidden="true"><path d="M8.72 18.78a.75.75 0 0 1 0-1.06L14.44 12 8.72 6.28a.751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018l6.25 6.25a.75.75 0 0 1 0 1.06l-6.25 6.25a.75.75 0 0 1-1.06 0Z"></path></svg></span></summary><div class="sd-summary-content sd-card-body docutils">
+<p class="plantuml">
+<object data="../../../_images/plantuml-5224397db6f5078d7229b2e8a87285e1a475fe79.svg" type="image/svg+xml" style="width:1435px;height:795px;background:#FFFFFF;"></object></p>
+</div>
+</details></div>
+<div class="docutils container" id="inheritance">
+<details class="sd-sphinx-override sd-dropdown sd-card sd-mb-3">
+<summary class="sd-summary-title sd-card-header">
+<span class="sd-summary-text">Inheritance</span><span class="sd-summary-state-marker sd-summary-chevron-right"><svg version="1.1" width="1.5em" height="1.5em" class="sd-octicon sd-octicon-chevron-right" viewBox="0 0 24 24" aria-hidden="true"><path d="M8.72 18.78a.75.75 0 0 1 0-1.06L14.44 12 8.72 6.28a.751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018l6.25 6.25a.75.75 0 0 1 0 1.06l-6.25 6.25a.75.75 0 0 1-1.06 0Z"></path></svg></span></summary><div class="sd-summary-content sd-card-body docutils">
+<div class="regular line-block">
+<div class="line"><a class="reference internal" href="PhysicalSegmentLayout.html#ddicdimodels-ddicdilibrary-classes-formatdescription-physicalsegmentlayout"><span class="std std-ref">FormatDescription::PhysicalSegmentLayout</span></a></div>
+</div>
+<div class="regular line-block">
+<div class="line">  ᐊ── <span class="focus">FormatDescription::UnitSegmentLayout</span></div>
+</div>
+</div>
+</details></div>
+<div class="docutils container" id="attributes">
+<details class="sd-sphinx-override sd-dropdown sd-card sd-mb-3">
+<summary class="sd-summary-title sd-card-header">
+<span class="sd-summary-text">Attributes</span><span class="sd-summary-state-marker sd-summary-chevron-right"><svg version="1.1" width="1.5em" height="1.5em" class="sd-octicon sd-octicon-chevron-right" viewBox="0 0 24 24" aria-hidden="true"><path d="M8.72 18.78a.75.75 0 0 1 0-1.06L14.44 12 8.72 6.28a.751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018l6.25 6.25a.75.75 0 0 1 0 1.06l-6.25 6.25a.75.75 0 0 1-1.06 0Z"></path></svg></span></summary><div class="sd-summary-content sd-card-body docutils">
+<table class="datatable-attributes docutils align-default">
+<colgroup>
+<col style="width: 9.1%" />
+<col style="width: 9.1%" />
+<col style="width: 54.5%" />
+<col style="width: 9.1%" />
+<col style="width: 9.1%" />
+<col style="width: 9.1%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p class="sd-card-text">Name</p></th>
+<th class="head"><p class="sd-card-text">Inherited from</p></th>
+<th class="head"><p class="sd-card-text">Description</p></th>
+<th class="head"><p class="sd-card-text">Data Type</p></th>
+<th class="head"><p class="sd-card-text">Multiplicity</p></th>
+<th class="head"><p class="sd-card-text">Default value</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p class="sd-card-text">allowsDuplicates</p></td>
+<td><p class="sd-card-text"><a class="reference internal" href="PhysicalSegmentLayout.html#ddicdimodels-ddicdilibrary-classes-formatdescription-physicalsegmentlayout"><span class="std std-ref">FormatDescription::PhysicalSegmentLayout</span></a></p></td>
+<td><p class="sd-card-text">If value is False, the members are unique within the collection - if True, there may be duplicates. (Note that a mathematical “bag” permits duplicates and is unordered - a “set” does not have duplicates and may be ordered.)</p></td>
+<td><p class="sd-card-text">Boolean</p></td>
+<td><p class="sd-card-text">1..1</p></td>
+<td><p class="sd-card-text">true</p></td>
+</tr>
+<tr class="row-odd"><td><p class="sd-card-text">arrayBase</p></td>
+<td><p class="sd-card-text"><a class="reference internal" href="PhysicalSegmentLayout.html#ddicdimodels-ddicdilibrary-classes-formatdescription-physicalsegmentlayout"><span class="std std-ref">FormatDescription::PhysicalSegmentLayout</span></a></p></td>
+<td><p class="sd-card-text">The starting value for the numbering of cells, rows, columns, etc. when they constitute an ordered sequence (an array). Note that in DDI, this is typically either 0 or 1. In related W3C work (Model for Tabular Data and Metadata on the Web), they appear to standardize on 1 (see <a class="reference external" href="https://www.w3.org/TR/tabular-data-model/">https://www.w3.org/TR/tabular-data-model/</a> 4.3 [Columns] and 4.4 [Rows]: “number - the position of the column amongst the columns for the associated table, starting from 1.”)</p></td>
+<td><p class="sd-card-text">Integer</p></td>
+<td><p class="sd-card-text">0..1</p></td>
+<td></td>
+</tr>
+<tr class="row-even"><td><p class="sd-card-text">catalogDetails</p></td>
+<td><p class="sd-card-text"><a class="reference internal" href="PhysicalSegmentLayout.html#ddicdimodels-ddicdilibrary-classes-formatdescription-physicalsegmentlayout"><span class="std std-ref">FormatDescription::PhysicalSegmentLayout</span></a></p></td>
+<td><p class="sd-card-text">Bundles the information useful for a data catalog entry.</p>
+<p class="sd-card-text">Examples would be creator, contributor, title, copyright, embargo, and license information</p>
+<p class="sd-card-text">A set of information useful for attribution, data discovery, and access.
+This is information that is tied to the identity of the object. If this information changes the version of the associated object changes.</p>
+</td>
+<td><p class="sd-card-text"><a class="reference internal" href="../../DataTypes/StructuredDataTypes/CatalogDetails.html#ddicdimodels-ddicdilibrary-datatypes-structureddatatypes-catalogdetails"><span class="std std-ref">CatalogDetails</span></a></p></td>
+<td><p class="sd-card-text">0..1</p></td>
+<td></td>
+</tr>
+<tr class="row-odd"><td><p class="sd-card-text">commentPrefix</p></td>
+<td><p class="sd-card-text"><a class="reference internal" href="PhysicalSegmentLayout.html#ddicdimodels-ddicdilibrary-classes-formatdescription-physicalsegmentlayout"><span class="std std-ref">FormatDescription::PhysicalSegmentLayout</span></a></p></td>
+<td><p class="sd-card-text">A string used to indicate that an input line is a comment, a string which precedes a comment in the data file. From <a class="reference external" href="https://www.w3.org/TR/tabular-metadata/">https://www.w3.org/TR/tabular-metadata/</a> 5.9 Dialect  commentPrefix: ‘An atomic property that sets the comment prefix flag to the single provided value, which MUST be a string. The default is “#”.’</p></td>
+<td><p class="sd-card-text">String</p></td>
+<td><p class="sd-card-text">0..1</p></td>
+<td></td>
+</tr>
+<tr class="row-even"><td><p class="sd-card-text">delimiter</p></td>
+<td><p class="sd-card-text"><a class="reference internal" href="PhysicalSegmentLayout.html#ddicdimodels-ddicdilibrary-classes-formatdescription-physicalsegmentlayout"><span class="std std-ref">FormatDescription::PhysicalSegmentLayout</span></a></p></td>
+<td><p class="sd-card-text">The Delimiting character in the data. Must be used if isDelimited is True. “The separator between cells, set by the delimiter property of a dialect description. The default is ,. See the W3C Recommendation “Metadata Vocabulary for Tabular Data” (<a class="reference external" href="https://www.w3.org/TR/tabular-data-model/#encoding">https://www.w3.org/TR/tabular-data-model/#encoding</a>). From the “CSV Dialect” specification (<a class="reference external" href="https://specs.frictionlessdata.io/csv-dialect/#specification">https://specs.frictionlessdata.io/csv-dialect/#specification</a>): “delimiter: specifies a one-character string to use as the field separator. Default = ,.”</p></td>
+<td><p class="sd-card-text">String</p></td>
+<td><p class="sd-card-text">0..1</p></td>
+<td><p class="sd-card-text">,</p></td>
+</tr>
+<tr class="row-odd"><td><p class="sd-card-text">encoding</p></td>
+<td><p class="sd-card-text"><a class="reference internal" href="PhysicalSegmentLayout.html#ddicdimodels-ddicdilibrary-classes-formatdescription-physicalsegmentlayout"><span class="std std-ref">FormatDescription::PhysicalSegmentLayout</span></a></p></td>
+<td><p class="sd-card-text">The character encoding of the represented data. From the W3C Recommendation “Metadata Vocabulary for Tabular Data” (<a class="reference external" href="https://www.w3.org/TR/tabular-metadata/">https://www.w3.org/TR/tabular-metadata/</a>) 5.9 Dialect: “encoding - An atomic property that sets the encoding flag to the single provided string value, which MUST be a defined in [encoding]. The default is ‘utf-8’.” From the same W3C recommendation 7.2 Encoding: “CSV files should be encoded using UTF-8, and should be in Unicode Normal Form C as defined in [UAX15]. If a CSV file is not encoded using UTF-8, the encoding should be specified through the charset parameter in the Content-Type header.”</p></td>
+<td><p class="sd-card-text"><a class="reference internal" href="../../DataTypes/StructuredDataTypes/ControlledVocabularyEntry.html#ddicdimodels-ddicdilibrary-datatypes-structureddatatypes-controlledvocabularyentry"><span class="std std-ref">ControlledVocabularyEntry</span></a></p></td>
+<td><p class="sd-card-text">0..1</p></td>
+<td></td>
+</tr>
+<tr class="row-even"><td><p class="sd-card-text">escapeCharacter</p></td>
+<td><p class="sd-card-text"><a class="reference internal" href="PhysicalSegmentLayout.html#ddicdimodels-ddicdilibrary-classes-formatdescription-physicalsegmentlayout"><span class="std std-ref">FormatDescription::PhysicalSegmentLayout</span></a></p></td>
+<td><p class="sd-card-text">“The string that is used to escape the quote character within escaped cells, or null” see <a class="reference external" href="https://www.w3.org/TR/tabular-data-model/#encoding">https://www.w3.org/TR/tabular-data-model/#encoding</a>. From <a class="reference external" href="https://www.w3.org/TR/tabular-metadata/">https://www.w3.org/TR/tabular-metadata/</a> 5.9 Dialect “doubleQuote: A boolean atomic property that, if true, sets the escape character flag to “. If false, to . The default is true.” From <a class="reference external" href="http://specs.frictionlessdata.io/csv-dialect/">http://specs.frictionlessdata.io/csv-dialect/</a> “doubleQuote: controls the handling of quotes inside fields. If true, two consecutive quotes should be interpreted as one. Default = true”.</p></td>
+<td><p class="sd-card-text">String</p></td>
+<td><p class="sd-card-text">0..1</p></td>
+<td><p class="sd-card-text">True</p></td>
+</tr>
+<tr class="row-odd"><td><p class="sd-card-text">hasHeader</p></td>
+<td><p class="sd-card-text"><a class="reference internal" href="PhysicalSegmentLayout.html#ddicdimodels-ddicdilibrary-classes-formatdescription-physicalsegmentlayout"><span class="std std-ref">FormatDescription::PhysicalSegmentLayout</span></a></p></td>
+<td><p class="sd-card-text">True if the file contains a header containing column names. From <a class="reference external" href="https://www.w3.org/TR/tabular-metadata/">https://www.w3.org/TR/tabular-metadata/</a> 5.9 Dialect “header: A boolean atomic property that, if true, sets the header row count flag to 1, and if false to 0, unless headerRowCount is provided, in which case the value provided for the header property is ignored. The default is true.” From <a class="reference external" href="http://specs.frictionlessdata.io/csv-dialect/">http://specs.frictionlessdata.io/csv-dialect/</a> “header: indicates whether the file includes a header row. If true the first row in the file is a header row, not data. Default = true”.</p></td>
+<td><p class="sd-card-text">Boolean</p></td>
+<td><p class="sd-card-text">0..1</p></td>
+<td><p class="sd-card-text">true</p></td>
+</tr>
+<tr class="row-even"><td><p class="sd-card-text">headerIsCaseSensitive</p></td>
+<td><p class="sd-card-text"><a class="reference internal" href="PhysicalSegmentLayout.html#ddicdimodels-ddicdilibrary-classes-formatdescription-physicalsegmentlayout"><span class="std std-ref">FormatDescription::PhysicalSegmentLayout</span></a></p></td>
+<td><p class="sd-card-text">If True, the case of the labels in the header is significant. From the “CSV Dialect” specification (<a class="reference external" href="http://specs.frictionlessdata.io/csv-dialect/">http://specs.frictionlessdata.io/csv-dialect/</a>): “caseSensitiveHeader: indicates that case in the header is meaningful. For example, columns CAT and Cat should not be equated. Default = false.”</p></td>
+<td><p class="sd-card-text">Boolean</p></td>
+<td><p class="sd-card-text">0..1</p></td>
+<td><p class="sd-card-text">false</p></td>
+</tr>
+<tr class="row-odd"><td><p class="sd-card-text">headerRowCount</p></td>
+<td><p class="sd-card-text"><a class="reference internal" href="PhysicalSegmentLayout.html#ddicdimodels-ddicdilibrary-classes-formatdescription-physicalsegmentlayout"><span class="std std-ref">FormatDescription::PhysicalSegmentLayout</span></a></p></td>
+<td><p class="sd-card-text">The number of lines in the header From <a class="reference external" href="https://www.w3.org/TR/tabular-metadata/">https://www.w3.org/TR/tabular-metadata/</a> 5.9 Dialect “headerRowCount: A numeric atomic property that sets the header row count flag to the single provided value, which MUST be a non-negative integer. The default is 1.”</p></td>
+<td><p class="sd-card-text">Integer</p></td>
+<td><p class="sd-card-text">0..1</p></td>
+<td><p class="sd-card-text">1</p></td>
+</tr>
+<tr class="row-even"><td><p class="sd-card-text">identifier</p></td>
+<td><p class="sd-card-text"><a class="reference internal" href="PhysicalSegmentLayout.html#ddicdimodels-ddicdilibrary-classes-formatdescription-physicalsegmentlayout"><span class="std std-ref">FormatDescription::PhysicalSegmentLayout</span></a></p></td>
+<td><p class="sd-card-text">Identifier for objects requiring short- or long-lasting referencing and management.</p></td>
+<td><p class="sd-card-text"><a class="reference internal" href="../../DataTypes/StructuredDataTypes/Identifier.html#ddicdimodels-ddicdilibrary-datatypes-structureddatatypes-identifier"><span class="std std-ref">Identifier</span></a></p></td>
+<td><p class="sd-card-text">0..1</p></td>
+<td></td>
+</tr>
+<tr class="row-odd"><td><p class="sd-card-text">isDelimited</p></td>
+<td><p class="sd-card-text"><a class="reference internal" href="PhysicalSegmentLayout.html#ddicdimodels-ddicdilibrary-classes-formatdescription-physicalsegmentlayout"><span class="std std-ref">FormatDescription::PhysicalSegmentLayout</span></a></p></td>
+<td><p class="sd-card-text">Indicates whether the data are in a delimited format. If “true,” the format is delimited, and the isFixedWidth property must be set to “false.” If not set to “true,” the property isFixedWitdh must be set to “true.”</p></td>
+<td><p class="sd-card-text">Boolean</p></td>
+<td><p class="sd-card-text">1..1</p></td>
+<td><p class="sd-card-text">true</p></td>
+</tr>
+<tr class="row-even"><td><p class="sd-card-text">isFixedWidth</p></td>
+<td><p class="sd-card-text"><a class="reference internal" href="PhysicalSegmentLayout.html#ddicdimodels-ddicdilibrary-classes-formatdescription-physicalsegmentlayout"><span class="std std-ref">FormatDescription::PhysicalSegmentLayout</span></a></p></td>
+<td><p class="sd-card-text">Set to true if the file is fixed-width. If true, isDelimited must be set to false.</p></td>
+<td><p class="sd-card-text">Boolean</p></td>
+<td><p class="sd-card-text">1..1</p></td>
+<td><p class="sd-card-text">false</p></td>
+</tr>
+<tr class="row-odd"><td><p class="sd-card-text">lineTerminator</p></td>
+<td><p class="sd-card-text"><a class="reference internal" href="PhysicalSegmentLayout.html#ddicdimodels-ddicdilibrary-classes-formatdescription-physicalsegmentlayout"><span class="std std-ref">FormatDescription::PhysicalSegmentLayout</span></a></p></td>
+<td><p class="sd-card-text">The strings that can be used at the end of a row, set by the lineTerminators property of a dialect description. The default is [CRLF, LF]. See the W3C Recommendation “Metadata Vocabulary for Tabular Data” (<a class="reference external" href="https://www.w3.org/TR/tabular-data-model/#encoding">https://www.w3.org/TR/tabular-data-model/#encoding</a>) 5.9 Dialect “lineTerminators: An atomic property that sets the line terminators flag to either an array containing the single provided string value, or the provided array. The default is [‘rn’, ‘n’].” Also, from the “CSV Dialect” specification (<a class="reference external" href="http://specs.frictionlessdata.io/csv-dialect/">http://specs.frictionlessdata.io/csv-dialect/</a>): “lineTerminator: specifies the character sequence which should terminate rows. Default = rn.”</p></td>
+<td><p class="sd-card-text">String</p></td>
+<td><p class="sd-card-text">0..*</p></td>
+<td><p class="sd-card-text">[CRLF, LF]</p></td>
+</tr>
+<tr class="row-even"><td><p class="sd-card-text">name</p></td>
+<td><p class="sd-card-text"><a class="reference internal" href="PhysicalSegmentLayout.html#ddicdimodels-ddicdilibrary-classes-formatdescription-physicalsegmentlayout"><span class="std std-ref">FormatDescription::PhysicalSegmentLayout</span></a></p></td>
+<td><p class="sd-card-text">A linguistic signifier. Human understandable name (word, phrase, or mnemonic) that reflects the ISO/IEC 11179-5 naming principles. If more than one name is provided provide a context to differentiate usage.</p></td>
+<td><p class="sd-card-text"><a class="reference internal" href="../../DataTypes/StructuredDataTypes/ObjectName.html#ddicdimodels-ddicdilibrary-datatypes-structureddatatypes-objectname"><span class="std std-ref">ObjectName</span></a></p></td>
+<td><p class="sd-card-text">0..*</p></td>
+<td></td>
+</tr>
+<tr class="row-odd"><td><p class="sd-card-text">nullSequence</p></td>
+<td><p class="sd-card-text"><a class="reference internal" href="PhysicalSegmentLayout.html#ddicdimodels-ddicdilibrary-classes-formatdescription-physicalsegmentlayout"><span class="std std-ref">FormatDescription::PhysicalSegmentLayout</span></a></p></td>
+<td><p class="sd-card-text">A string indicating a null value. From the W3C Recommendation “Metadata Vocabulary for Tabular Data” (<a class="reference external" href="https://www.w3.org/TR/tabular-metadata/">https://www.w3.org/TR/tabular-metadata/</a>) 4.3: “null: the string or strings which cause the value of cells having string value matching any of these values to be null.” From the same source, Inherited 5.7: “null: An atomic property giving the string or strings used for null values within the data. If the string value of the cell is equal to any one of these values, the cell value is null. See Parsing Cells in [tabular-data-model] for more details. If not specified, the default for the null property is the empty string ‘’. The value of this property becomes the null annotation for the described column.”</p></td>
+<td><p class="sd-card-text">String</p></td>
+<td><p class="sd-card-text">0..1</p></td>
+<td></td>
+</tr>
+<tr class="row-even"><td><p class="sd-card-text">overview</p></td>
+<td><p class="sd-card-text"><a class="reference internal" href="PhysicalSegmentLayout.html#ddicdimodels-ddicdilibrary-classes-formatdescription-physicalsegmentlayout"><span class="std std-ref">FormatDescription::PhysicalSegmentLayout</span></a></p></td>
+<td><p class="sd-card-text">Short natural language account of the information obtained from the combination of properties and relationships associated with an object.</p></td>
+<td><p class="sd-card-text"><a class="reference internal" href="../../DataTypes/StructuredDataTypes/InternationalString.html#ddicdimodels-ddicdilibrary-datatypes-structureddatatypes-internationalstring"><span class="std std-ref">InternationalString</span></a></p></td>
+<td><p class="sd-card-text">0..1</p></td>
+<td></td>
+</tr>
+<tr class="row-odd"><td><p class="sd-card-text">purpose</p></td>
+<td><p class="sd-card-text"><a class="reference internal" href="PhysicalSegmentLayout.html#ddicdimodels-ddicdilibrary-classes-formatdescription-physicalsegmentlayout"><span class="std std-ref">FormatDescription::PhysicalSegmentLayout</span></a></p></td>
+<td><p class="sd-card-text">Intent or reason for the object/the description of the object.</p></td>
+<td><p class="sd-card-text"><a class="reference internal" href="../../DataTypes/StructuredDataTypes/InternationalString.html#ddicdimodels-ddicdilibrary-datatypes-structureddatatypes-internationalstring"><span class="std std-ref">InternationalString</span></a></p></td>
+<td><p class="sd-card-text">0..1</p></td>
+<td></td>
+</tr>
+<tr class="row-even"><td><p class="sd-card-text">quoteCharacter</p></td>
+<td><p class="sd-card-text"><a class="reference internal" href="PhysicalSegmentLayout.html#ddicdimodels-ddicdilibrary-classes-formatdescription-physicalsegmentlayout"><span class="std std-ref">FormatDescription::PhysicalSegmentLayout</span></a></p></td>
+<td><p class="sd-card-text">“The string that is used around escaped cells, or null, set by the quoteChar property of a dialect description. The default is “.”. See W3C Recommendation “Model for Tabular Data and Metadata on the Web”, <a class="reference external" href="https://www.w3.org/TR/tabular-data-model/#parsing">https://www.w3.org/TR/tabular-data-model/#parsing</a>. From the W3C Recommendation “Metadata Vocabulary for Tabular Data” (<a class="reference external" href="https://www.w3.org/TR/tabular-metadata/">https://www.w3.org/TR/tabular-metadata/</a>) 5.9 Dialect: “quoteChar: An atomic property that sets the quote character flag to the single provided value, which MUST be a string or null. If the value is null, the escape character flag is also set to null. The default is ‘”’.” From the CSV Dialect specification (<a class="reference external" href="http://specs.frictionlessdata.io/csv-dialect/">http://specs.frictionlessdata.io/csv-dialect/</a>): “quoteChar: specifies a one-character string to use as the quoting character. Default = “.”</p></td>
+<td><p class="sd-card-text">String</p></td>
+<td><p class="sd-card-text">0..1</p></td>
+<td><p class="sd-card-text">“</p></td>
+</tr>
+<tr class="row-odd"><td><p class="sd-card-text">skipBlankRows</p></td>
+<td><p class="sd-card-text"><a class="reference internal" href="PhysicalSegmentLayout.html#ddicdimodels-ddicdilibrary-classes-formatdescription-physicalsegmentlayout"><span class="std std-ref">FormatDescription::PhysicalSegmentLayout</span></a></p></td>
+<td><p class="sd-card-text">If the value is True, blank rows are ignored. From the W3C Recommendation “Metadata Vocabulary for Tabular Data” (<a class="reference external" href="https://www.w3.org/TR/tabular-metadata/">https://www.w3.org/TR/tabular-metadata/</a>) 5.9 Dialect: “skipBlankRows: A boolean atomic property that sets the skip blank rows flag to the single provided boolean value. The default is false.”</p></td>
+<td><p class="sd-card-text">Boolean</p></td>
+<td><p class="sd-card-text">0..1</p></td>
+<td><p class="sd-card-text">false</p></td>
+</tr>
+<tr class="row-even"><td><p class="sd-card-text">skipDataColumns</p></td>
+<td><p class="sd-card-text"><a class="reference internal" href="PhysicalSegmentLayout.html#ddicdimodels-ddicdilibrary-classes-formatdescription-physicalsegmentlayout"><span class="std std-ref">FormatDescription::PhysicalSegmentLayout</span></a></p></td>
+<td><p class="sd-card-text">The number of columns to skip at the beginning of the row. From the W3C Recommendation “Metadata Vocabulary for Tabular Data” (<a class="reference external" href="https://www.w3.org/TR/tabular-metadata/">https://www.w3.org/TR/tabular-metadata/</a>) 5.9 Dialect: “skipColumns: A numeric atomic property that sets the skip columns flag to the single provided numeric value, which MUST be a non-negative integer. The default is 0.” A value other than 0 will mean that the source numbers of columns will be different from their numbers.</p></td>
+<td><p class="sd-card-text">Integer</p></td>
+<td><p class="sd-card-text">0..1</p></td>
+<td><p class="sd-card-text">0</p></td>
+</tr>
+<tr class="row-odd"><td><p class="sd-card-text">skipInitialSpace</p></td>
+<td><p class="sd-card-text"><a class="reference internal" href="PhysicalSegmentLayout.html#ddicdimodels-ddicdilibrary-classes-formatdescription-physicalsegmentlayout"><span class="std std-ref">FormatDescription::PhysicalSegmentLayout</span></a></p></td>
+<td><p class="sd-card-text">If the value is True, skip whitespace at the beginning of a line or following a delimiter. From the W3C Recommendation “Metadata Vocabulary for Tabular Data” (<a class="reference external" href="https://www.w3.org/TR/tabular-metadata/">https://www.w3.org/TR/tabular-metadata/</a>) 5.9 Dialect: “skipInitialSpace: A boolean atomic property that, if true, sets the trim flag to ‘start’ and if false, to false. If the trim property is provided, the skipInitialSpace property is ignored. The default is false.” From the CSV Dialect specification (<a class="reference external" href="http://specs.frictionlessdata.io/csv-dialect/">http://specs.frictionlessdata.io/csv-dialect/</a>): “skipInitialSpace: specifies how to interpret whitespace which immediately follows a delimiter; if false, it means that whitespace immediately after a delimiter should be treated as part of the following field. Default = true.”</p></td>
+<td><p class="sd-card-text">Boolean</p></td>
+<td><p class="sd-card-text">0..1</p></td>
+<td><p class="sd-card-text">true</p></td>
+</tr>
+<tr class="row-even"><td><p class="sd-card-text">skipRows</p></td>
+<td><p class="sd-card-text"><a class="reference internal" href="PhysicalSegmentLayout.html#ddicdimodels-ddicdilibrary-classes-formatdescription-physicalsegmentlayout"><span class="std std-ref">FormatDescription::PhysicalSegmentLayout</span></a></p></td>
+<td><p class="sd-card-text">Number of input rows to skip preceding the header or data. From the W3C Recommendation “Metadata Vocabulary for Tabular Data” (<a class="reference external" href="https://www.w3.org/TR/tabular-metadata/">https://www.w3.org/TR/tabular-metadata/</a>) 5.9 Dialect: “skipRows: A numeric atomic property that sets the skip rows flag to the single provided numeric value, which MUST be a non-negative integer. The default is 0.” A value greater than 0 will mean that the source numbers of rows will be different from their numbers.</p></td>
+<td><p class="sd-card-text">Integer</p></td>
+<td><p class="sd-card-text">0..1</p></td>
+<td><p class="sd-card-text">0</p></td>
+</tr>
+<tr class="row-odd"><td><p class="sd-card-text">tableDirection</p></td>
+<td><p class="sd-card-text"><a class="reference internal" href="PhysicalSegmentLayout.html#ddicdimodels-ddicdilibrary-classes-formatdescription-physicalsegmentlayout"><span class="std std-ref">FormatDescription::PhysicalSegmentLayout</span></a></p></td>
+<td><p class="sd-card-text">Indicates the direction in which columns are arranged in each row. From the W3C Recommendation “Metadata Vocabulary for Tabular Data” (<a class="reference external" href="https://www.w3.org/TR/tabular-metadata/">https://www.w3.org/TR/tabular-metadata/</a>)  5.3.2: “tableDirection: An atomic property that MUST have a single string value that is one of ‘rtl’, ‘ltr’, or ‘auto’. Indicates whether the tables in the group should be displayed with the first column on the right, on the left, or based on the first character in the table that has a specific direction. The value of this property becomes the value of the table direction annotation for all the tables in the table group. See Bidirectional Tables in [tabular-data-model] for details. The default value for this property is ‘auto’.”</p></td>
+<td><p class="sd-card-text"><a class="reference internal" href="../../DataTypes/Enumerations/TableDirectionValues.html#ddicdimodels-ddicdilibrary-datatypes-enumerations-tabledirectionvalues"><span class="std std-ref">TableDirectionValues</span></a></p></td>
+<td><p class="sd-card-text">0..1</p></td>
+<td><p class="sd-card-text">“Auto”</p></td>
+</tr>
+<tr class="row-even"><td><p class="sd-card-text">textDirection</p></td>
+<td><p class="sd-card-text"><a class="reference internal" href="PhysicalSegmentLayout.html#ddicdimodels-ddicdilibrary-classes-formatdescription-physicalsegmentlayout"><span class="std std-ref">FormatDescription::PhysicalSegmentLayout</span></a></p></td>
+<td><p class="sd-card-text">Indicates the reading order of text within cells. From the W3C Recommendation “Metadata Vocabulary for Tabular Data” (<a class="reference external" href="https://www.w3.org/TR/tabular-metadata/">https://www.w3.org/TR/tabular-metadata/</a>) Inherited 5.7: “textDirection: An atomic property that MUST have a single string value that is one of ‘ltr’, ‘rtl’, ‘auto’ or ‘inherit’ (the default). Indicates whether the text within cells should be displayed as left-to-right text (ltr), as right-to-left text (rtl), according to the content of the cell (auto) or in the direction inherited from the table direction annotation of the table. The value of this property determines the text direction annotation for the column, and the text direction annotation for the cells within that column: if the value is inherit then the value of the text direction annotation is the value of the table direction annotation on the table, otherwise it is the value of this property. See Bidirectional Tables in [tabular-data-model] for details.”</p></td>
+<td><p class="sd-card-text"><a class="reference internal" href="../../DataTypes/Enumerations/TextDirectionValues.html#ddicdimodels-ddicdilibrary-datatypes-enumerations-textdirectionvalues"><span class="std std-ref">TextDirectionValues</span></a></p></td>
+<td><p class="sd-card-text">0..1</p></td>
+<td></td>
+</tr>
+<tr class="row-odd"><td><p class="sd-card-text">treatConsecutiveDelimitersAsOne</p></td>
+<td><p class="sd-card-text"><a class="reference internal" href="PhysicalSegmentLayout.html#ddicdimodels-ddicdilibrary-classes-formatdescription-physicalsegmentlayout"><span class="std std-ref">FormatDescription::PhysicalSegmentLayout</span></a></p></td>
+<td><p class="sd-card-text">If the value is True, consecutive (adjacent) delimiters are treated as a single delimiter; if the value is False consecutive (adjacent) delimiters indicate a missing value.</p></td>
+<td><p class="sd-card-text">Boolean</p></td>
+<td><p class="sd-card-text">0..1</p></td>
+<td><p class="sd-card-text">false</p></td>
+</tr>
+<tr class="row-even"><td><p class="sd-card-text">trim</p></td>
+<td><p class="sd-card-text"><a class="reference internal" href="PhysicalSegmentLayout.html#ddicdimodels-ddicdilibrary-classes-formatdescription-physicalsegmentlayout"><span class="std std-ref">FormatDescription::PhysicalSegmentLayout</span></a></p></td>
+<td><p class="sd-card-text">Specifies which spaces to remove from a data value (start, end, both, neither) From the W3C Recommendation “Metadata Vocabulary for Tabular Data” (<a class="reference external" href="https://www.w3.org/TR/tabular-metadata/">https://www.w3.org/TR/tabular-metadata/</a>) 5.9 Dialect: “trim: An atomic property that, if the boolean true, sets the trim flag to true and if the boolean false to false. If the value provided is a string, sets the trim flag to the provided value, which MUST be one of ‘true’, ‘false’, ‘start’, or ‘end’. The default is true.”</p></td>
+<td><p class="sd-card-text"><a class="reference internal" href="../../DataTypes/Enumerations/TrimValues.html#ddicdimodels-ddicdilibrary-datatypes-enumerations-trimvalues"><span class="std std-ref">TrimValues</span></a></p></td>
+<td><p class="sd-card-text">0..1</p></td>
+<td><p class="sd-card-text">True</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+</details></div>
+<div class="docutils container" id="associations">
+<details class="sd-sphinx-override sd-dropdown sd-card sd-mb-3">
+<summary class="sd-summary-title sd-card-header">
+<span class="sd-summary-text">Associations</span><span class="sd-summary-state-marker sd-summary-chevron-right"><svg version="1.1" width="1.5em" height="1.5em" class="sd-octicon sd-octicon-chevron-right" viewBox="0 0 24 24" aria-hidden="true"><path d="M8.72 18.78a.75.75 0 0 1 0-1.06L14.44 12 8.72 6.28a.751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018l6.25 6.25a.75.75 0 0 1 0 1.06l-6.25 6.25a.75.75 0 0 1-1.06 0Z"></path></svg></span></summary><div class="sd-summary-content sd-card-body docutils">
+<table class="datatable-associations docutils align-default">
+<colgroup>
+<col style="width: 5.3%" />
+<col style="width: 10.5%" />
+<col style="width: 31.6%" />
+<col style="width: 5.3%" />
+<col style="width: 10.5%" />
+<col style="width: 10.5%" />
+<col style="width: 5.3%" />
+<col style="width: 5.3%" />
+<col style="width: 15.8%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p class="sd-card-text">Direction</p></th>
+<th class="head"><p class="sd-card-text">Association</p></th>
+<th class="head"><p class="sd-card-text">Description</p></th>
+<th class="head"><p class="sd-card-text">Multiplicity of UnitSegmentLayout</p></th>
+<th class="head"><p class="sd-card-text">Package of Other Class</p></th>
+<th class="head"><p class="sd-card-text">Other Class</p></th>
+<th class="head"><p class="sd-card-text">Multiplicity of other class</p></th>
+<th class="head"><p class="sd-card-text">Aggregation Kind</p></th>
+<th class="head"><p class="sd-card-text">Inherited from</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p class="sd-card-text">to</p></td>
+<td><p class="sd-card-text">InstanceVariable has PhysicalSegmentLayout</p></td>
+<td></td>
+<td><p class="sd-card-text">0..*</p></td>
+<td><p class="sd-card-text"><a class="reference internal" href="../Conceptual/index.html#ddicdimodels-ddicdilibrary-classes-conceptual"><span class="std std-ref">Conceptual</span></a></p></td>
+<td><p class="sd-card-text"><a class="reference internal" href="../Conceptual/InstanceVariable.html#ddicdimodels-ddicdilibrary-classes-conceptual-instancevariable"><span class="std std-ref">InstanceVariable</span></a></p></td>
+<td><p class="sd-card-text">0..*</p></td>
+<td><p class="sd-card-text">shared</p></td>
+<td><p class="sd-card-text"><a class="reference internal" href="PhysicalSegmentLayout.html#ddicdimodels-ddicdilibrary-classes-formatdescription-physicalsegmentlayout"><span class="std std-ref">FormatDescription::PhysicalSegmentLayout</span></a></p></td>
+</tr>
+<tr class="row-odd"><td><p class="sd-card-text">from</p></td>
+<td><p class="sd-card-text">PhysicalSegmentLayout isDefinedBy Concept</p></td>
+<td><p class="sd-card-text">The conceptual basis for the collection of members.</p></td>
+<td><p class="sd-card-text">0..*</p></td>
+<td><p class="sd-card-text"><a class="reference internal" href="../Conceptual/index.html#ddicdimodels-ddicdilibrary-classes-conceptual"><span class="std std-ref">Conceptual</span></a></p></td>
+<td><p class="sd-card-text"><a class="reference internal" href="../Conceptual/Concept.html#ddicdimodels-ddicdilibrary-classes-conceptual-concept"><span class="std std-ref">Concept</span></a></p></td>
+<td><p class="sd-card-text">0..*</p></td>
+<td><p class="sd-card-text">none</p></td>
+<td><p class="sd-card-text"><a class="reference internal" href="PhysicalSegmentLayout.html#ddicdimodels-ddicdilibrary-classes-formatdescription-physicalsegmentlayout"><span class="std std-ref">FormatDescription::PhysicalSegmentLayout</span></a></p></td>
+</tr>
+<tr class="row-even"><td><p class="sd-card-text">to</p></td>
+<td><p class="sd-card-text">PhysicalLayoutRelationStructure structures PhysicalSegmentLayout</p></td>
+<td></td>
+<td><p class="sd-card-text">0..1</p></td>
+<td><p class="sd-card-text">- <em>own package</em> -</p></td>
+<td><p class="sd-card-text"><a class="reference internal" href="PhysicalLayoutRelationStructure.html#ddicdimodels-ddicdilibrary-classes-formatdescription-physicallayoutrelationstructure"><span class="std std-ref">PhysicalLayoutRelationStructure</span></a></p></td>
+<td><p class="sd-card-text">0..*</p></td>
+<td><p class="sd-card-text">none</p></td>
+<td><p class="sd-card-text"><a class="reference internal" href="PhysicalSegmentLayout.html#ddicdimodels-ddicdilibrary-classes-formatdescription-physicalsegmentlayout"><span class="std std-ref">FormatDescription::PhysicalSegmentLayout</span></a></p></td>
+</tr>
+<tr class="row-odd"><td><p class="sd-card-text">to</p></td>
+<td><p class="sd-card-text">PhysicalRecordSegment has PhysicalSegmentLayout</p></td>
+<td></td>
+<td><p class="sd-card-text">0..1</p></td>
+<td><p class="sd-card-text">- <em>own package</em> -</p></td>
+<td><p class="sd-card-text"><a class="reference internal" href="PhysicalRecordSegment.html#ddicdimodels-ddicdilibrary-classes-formatdescription-physicalrecordsegment"><span class="std std-ref">PhysicalRecordSegment</span></a></p></td>
+<td><p class="sd-card-text">0..*</p></td>
+<td><p class="sd-card-text">none</p></td>
+<td><p class="sd-card-text"><a class="reference internal" href="PhysicalSegmentLayout.html#ddicdimodels-ddicdilibrary-classes-formatdescription-physicalsegmentlayout"><span class="std std-ref">FormatDescription::PhysicalSegmentLayout</span></a></p></td>
+</tr>
+<tr class="row-even"><td><p class="sd-card-text">from</p></td>
+<td><p class="sd-card-text">PhysicalSegmentLayout formats LogicalRecord</p></td>
+<td><p class="sd-card-text">Logical record physically represented by the physical layout.</p></td>
+<td><p class="sd-card-text">0..*</p></td>
+<td><p class="sd-card-text">- <em>own package</em> -</p></td>
+<td><p class="sd-card-text"><a class="reference internal" href="LogicalRecord.html#ddicdimodels-ddicdilibrary-classes-formatdescription-logicalrecord"><span class="std std-ref">LogicalRecord</span></a></p></td>
+<td><p class="sd-card-text">0..1</p></td>
+<td><p class="sd-card-text">none</p></td>
+<td><p class="sd-card-text"><a class="reference internal" href="PhysicalSegmentLayout.html#ddicdimodels-ddicdilibrary-classes-formatdescription-physicalsegmentlayout"><span class="std std-ref">FormatDescription::PhysicalSegmentLayout</span></a></p></td>
+</tr>
+<tr class="row-odd"><td><p class="sd-card-text">from</p></td>
+<td><p class="sd-card-text">PhysicalSegmentLayout has ValueMapping</p></td>
+<td></td>
+<td><p class="sd-card-text">0..*</p></td>
+<td><p class="sd-card-text">- <em>own package</em> -</p></td>
+<td><p class="sd-card-text"><a class="reference internal" href="ValueMapping.html#ddicdimodels-ddicdilibrary-classes-formatdescription-valuemapping"><span class="std std-ref">ValueMapping</span></a></p></td>
+<td><p class="sd-card-text">0..*</p></td>
+<td><p class="sd-card-text">shared</p></td>
+<td><p class="sd-card-text"><a class="reference internal" href="PhysicalSegmentLayout.html#ddicdimodels-ddicdilibrary-classes-formatdescription-physicalsegmentlayout"><span class="std std-ref">FormatDescription::PhysicalSegmentLayout</span></a></p></td>
+</tr>
+<tr class="row-even"><td><p class="sd-card-text">from</p></td>
+<td><p class="sd-card-text">PhysicalSegmentLayout has ValueMappingPosition</p></td>
+<td></td>
+<td><p class="sd-card-text">1..1</p></td>
+<td><p class="sd-card-text">- <em>own package</em> -</p></td>
+<td><p class="sd-card-text"><a class="reference internal" href="ValueMappingPosition.html#ddicdimodels-ddicdilibrary-classes-formatdescription-valuemappingposition"><span class="std std-ref">ValueMappingPosition</span></a></p></td>
+<td><p class="sd-card-text">0..*</p></td>
+<td><p class="sd-card-text">composite</p></td>
+<td><p class="sd-card-text"><a class="reference internal" href="PhysicalSegmentLayout.html#ddicdimodels-ddicdilibrary-classes-formatdescription-physicalsegmentlayout"><span class="std std-ref">FormatDescription::PhysicalSegmentLayout</span></a></p></td>
+</tr>
+</tbody>
+</table>
+</div>
+</details></div>
+<div class="docutils container" id="encodings">
+<details class="sd-sphinx-override sd-dropdown sd-card sd-mb-3">
+<summary class="sd-summary-title sd-card-header">
+<span class="sd-summary-text">Syntax representations / encodings</span><span class="sd-summary-state-marker sd-summary-chevron-right"><svg version="1.1" width="1.5em" height="1.5em" class="sd-octicon sd-octicon-chevron-right" viewBox="0 0 24 24" aria-hidden="true"><path d="M8.72 18.78a.75.75 0 0 1 0-1.06L14.44 12 8.72 6.28a.751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018l6.25 6.25a.75.75 0 0 1 0 1.06l-6.25 6.25a.75.75 0 0 1-1.06 0Z"></path></svg></span></summary><div class="sd-summary-content sd-card-body docutils">
+<p class="sd-card-text">All syntax representations except the Canonical XMI are provided as reference points
+for specific implementations, or for use as defaults if sufficient in the form presented.</p>
+<div class="sd-tab-set docutils">
+<input checked="checked" id="sd-tab-item-0" name="sd-tab-set-0" type="radio">
+<label class="sd-tab-label" for="sd-tab-item-0">
+Canonical XMI</label><div class="sd-tab-content encoding docutils">
+<p class="sd-card-text">Fragment for the class <strong>UnitSegmentLayout</strong> (<a class="reference external" href="/encoding/xmi/ddi-cdi_canonical-unique-names.xmi">entire model as XMI</a>)</p>
+<div class="highlight-xml notranslate"><div class="highlight"><pre><span></span><span class="linenos"> 1</span><span class="nt">&lt;packagedElement</span><span class="w"> </span><span class="na">xmlns:StandardProfile=</span><span class="s">&quot;http://www.eclipse.org/uml2/5.0.0/UML/Profile/Standard&quot;</span>
+<span class="linenos"> 2</span><span class="w">                 </span><span class="na">xmlns:uml=</span><span class="s">&quot;http://www.eclipse.org/uml2/5.0.0/UML&quot;</span>
+<span class="linenos"> 3</span><span class="w">                 </span><span class="na">xmlns:xmi=</span><span class="s">&quot;http://www.omg.org/spec/XMI/20131001&quot;</span>
+<span class="hll"><span class="linenos"> 4</span><span class="w">                 </span><span class="na">xmi:id=</span><span class="s">&quot;DDICDIModels-DDICDILibrary-Classes-FormatDescription-UnitSegmentLayout&quot;</span>
+</span><span class="linenos"> 5</span><span class="w">                 </span><span class="na">xmi:uuid=</span><span class="s">&quot;http://ddialliance.org/Specification/DDI-CDI/1.0/XMI/#UnitSegmentLayout&quot;</span>
+<span class="linenos"> 6</span><span class="w">                 </span><span class="na">xmi:type=</span><span class="s">&quot;uml:Class&quot;</span><span class="nt">&gt;</span>
+<span class="linenos"> 7</span><span class="w">   </span><span class="nt">&lt;ownedComment</span><span class="w"> </span><span class="na">xmi:id=</span><span class="s">&quot;DDICDIModels-DDICDILibrary-Classes-FormatDescription-UnitSegmentLayout-ownedComment&quot;</span>
+<span class="linenos"> 8</span><span class="w">                 </span><span class="na">xmi:uuid=</span><span class="s">&quot;http://ddialliance.org/Specification/DDI-CDI/1.0/XMI/#UnitSegmentLayout-ownedComment&quot;</span>
+<span class="linenos"> 9</span><span class="w">                 </span><span class="na">xmi:type=</span><span class="s">&quot;uml:Comment&quot;</span><span class="nt">&gt;</span>
+<span class="linenos">10</span><span class="w">      </span><span class="nt">&lt;annotatedElement</span><span class="w"> </span><span class="na">xmi:idref=</span><span class="s">&quot;DDICDIModels-DDICDILibrary-Classes-FormatDescription-UnitSegmentLayout&quot;</span><span class="nt">/&gt;</span>
+<span class="linenos">11</span><span class="w">      </span><span class="nt">&lt;body&gt;</span>Definition
+<span class="linenos">12</span>==========
+<span class="linenos">13</span>Description<span class="w"> </span>of<span class="w"> </span>unit-record<span class="w"> </span>(&quot;wide&quot;)<span class="w"> </span>data<span class="w"> </span>sets,<span class="w"> </span>where<span class="w"> </span>each<span class="w"> </span>row<span class="w"> </span>in<span class="w"> </span>the<span class="w"> </span>data<span class="w"> </span>set<span class="w"> </span>provides<span class="w"> </span>the<span class="w"> </span>same<span class="w"> </span>group<span class="w"> </span>of<span class="w"> </span>values<span class="w"> </span>for<span class="w"> </span>variables<span class="w"> </span>all<span class="w"> </span>relating<span class="w"> </span>to<span class="w"> </span>a<span class="w"> </span>single<span class="w"> </span>unit.
+<span class="linenos">14</span>
+<span class="linenos">15</span>Examples
+<span class="linenos">16</span>========
+<span class="linenos">17</span>A<span class="w"> </span>simple<span class="w"> </span>spreadsheet.<span class="w"> </span>Commonly<span class="w"> </span>the<span class="w"> </span>first<span class="w"> </span>row<span class="w"> </span>of<span class="w"> </span>the<span class="w"> </span>table<span class="w"> </span>will<span class="w"> </span>contain<span class="w"> </span>variable<span class="w"> </span>names<span class="w"> </span>or<span class="w"> </span>descriptions.
+<span class="linenos">18</span>
+<span class="linenos">19</span>The<span class="w"> </span>following<span class="w"> </span>CSV<span class="w"> </span>file<span class="w"> </span>has<span class="w"> </span>a<span class="w"> </span>rectangular<span class="w"> </span>layout<span class="w"> </span>and<span class="w"> </span>would<span class="w"> </span>import<span class="w"> </span>into<span class="w"> </span>a<span class="w"> </span>simple<span class="w"> </span>table<span class="w"> </span>in<span class="w"> </span>a<span class="w"> </span>spreadsheet::
+<span class="linenos">20</span>
+<span class="linenos">21</span><span class="w">   </span>PersonId,AgeYr,HeightCm
+<span class="linenos">22</span><span class="w">   </span>1,22,183,
+<span class="linenos">23</span><span class="w">   </span>2,45,175,
+<span class="linenos">24</span>
+<span class="linenos">25</span>Explanatory<span class="w"> </span>notes
+<span class="linenos">26</span>=================
+<span class="linenos">27</span>This<span class="w"> </span>is<span class="w"> </span>the<span class="w"> </span>classic<span class="w"> </span>rectangular<span class="w"> </span>data<span class="w"> </span>table<span class="w"> </span>used<span class="w"> </span>by<span class="w"> </span>most<span class="w"> </span>statistical<span class="w"> </span>packages,<span class="w"> </span>with<span class="w"> </span>rows/cases/observations<span class="w"> </span>and<span class="w"> </span>columns/variables/measurements.<span class="w"> </span>Each<span class="w"> </span>cell<span class="w"> </span>(DataPoint)<span class="w"> </span>in<span class="w"> </span>the<span class="w"> </span>table<span class="w"> </span>is<span class="w"> </span>the<span class="w"> </span>intersection<span class="w"> </span>of<span class="w"> </span>a<span class="w"> </span>Unit<span class="w"> </span>(row)<span class="w"> </span>and<span class="w"> </span>an<span class="w"> </span>InstanceVariable.<span class="w"> </span>Each<span class="w"> </span>logical<span class="w"> </span>column<span class="w"> </span>will<span class="w"> </span>contain<span class="w"> </span>data<span class="w"> </span>relating<span class="w"> </span>to<span class="w"> </span>the<span class="w"> </span>values<span class="w"> </span>for<span class="w"> </span>a<span class="w"> </span>single<span class="w"> </span>variable.<span class="nt">&lt;/body&gt;</span>
+<span class="linenos">28</span><span class="w">   </span><span class="nt">&lt;/ownedComment&gt;</span>
+<span class="linenos">29</span><span class="w">   </span><span class="nt">&lt;name&gt;</span>UnitSegmentLayout<span class="nt">&lt;/name&gt;</span>
+<span class="linenos">30</span><span class="w">   </span><span class="nt">&lt;generalization</span><span class="w"> </span><span class="na">xmi:id=</span><span class="s">&quot;DDICDIModels-DDICDILibrary-Classes-FormatDescription-UnitSegmentLayout-generalization&quot;</span>
+<span class="linenos">31</span><span class="w">                   </span><span class="na">xmi:uuid=</span><span class="s">&quot;http://ddialliance.org/Specification/DDI-CDI/1.0/XMI/#UnitSegmentLayout-generalization&quot;</span>
+<span class="linenos">32</span><span class="w">                   </span><span class="na">xmi:type=</span><span class="s">&quot;uml:Generalization&quot;</span><span class="nt">&gt;</span>
+<span class="linenos">33</span><span class="w">      </span><span class="nt">&lt;general</span><span class="w"> </span><span class="na">xmi:idref=</span><span class="s">&quot;DDICDIModels-DDICDILibrary-Classes-FormatDescription-PhysicalSegmentLayout&quot;</span><span class="nt">/&gt;</span>
+<span class="linenos">34</span><span class="w">   </span><span class="nt">&lt;/generalization&gt;</span>
+<span class="linenos">35</span><span class="nt">&lt;/packagedElement&gt;</span>
+</pre></div>
+</div>
+</div>
+<input id="sd-tab-item-1" name="sd-tab-set-0" type="radio">
+<label class="sd-tab-label" for="sd-tab-item-1">
+XML Schema</label><div class="sd-tab-content encoding docutils">
+<p class="sd-card-text">Fragment for the class <strong>UnitSegmentLayout</strong> (<a class="reference external" href="/encoding/xml-schema/ddi-cdi.xsd">entire XML Schema</a>)</p>
+<div class="highlight-xml notranslate"><div class="highlight"><pre><span></span><span class="hll"><span class="linenos"> 1</span><span class="nt">&lt;xs:element</span><span class="w"> </span><span class="na">name=</span><span class="s">&quot;UnitSegmentLayout&quot;</span>
+</span><span class="linenos"> 2</span><span class="w">            </span><span class="na">type=</span><span class="s">&quot;UnitSegmentLayoutXsdType&quot;</span>
+<span class="linenos"> 3</span><span class="w">            </span><span class="na">xml:id=</span><span class="s">&quot;UnitSegmentLayout&quot;</span><span class="nt">&gt;</span>
+<span class="linenos"> 4</span><span class="w">  </span><span class="cm">&lt;!-- based on the UML class DDICDIModels::DDICDILibrary::Classes::FormatDescription::UnitSegmentLayout --&gt;</span>
+<span class="linenos"> 5</span><span class="w">  </span><span class="nt">&lt;xs:annotation&gt;</span>
+<span class="linenos"> 6</span><span class="w">    </span><span class="nt">&lt;xs:documentation&gt;</span>Definition
+<span class="linenos"> 7</span><span class="w">          </span>==========
+<span class="linenos"> 8</span><span class="w">          </span>Description<span class="w"> </span>of<span class="w"> </span>unit-record<span class="w"> </span>(&quot;wide&quot;)<span class="w"> </span>data<span class="w"> </span>sets,<span class="w"> </span>where<span class="w"> </span>each<span class="w"> </span>row<span class="w"> </span>in<span class="w"> </span>the<span class="w"> </span>data<span class="w"> </span>set<span class="w"> </span>provides<span class="w"> </span>the<span class="w"> </span>same<span class="w"> </span>group<span class="w"> </span>of<span class="w"> </span>values<span class="w"> </span>for<span class="w"> </span>variables<span class="w"> </span>all<span class="w"> </span>relating<span class="w"> </span>to<span class="w"> </span>a<span class="w"> </span>single<span class="w"> </span>unit.
+<span class="linenos"> 9</span><span class="w">          </span>
+<span class="linenos">10</span><span class="w">          </span>Examples
+<span class="linenos">11</span><span class="w">          </span>========
+<span class="linenos">12</span><span class="w">          </span>A<span class="w"> </span>simple<span class="w"> </span>spreadsheet.<span class="w"> </span>Commonly<span class="w"> </span>the<span class="w"> </span>first<span class="w"> </span>row<span class="w"> </span>of<span class="w"> </span>the<span class="w"> </span>table<span class="w"> </span>will<span class="w"> </span>contain<span class="w"> </span>variable<span class="w"> </span>names<span class="w"> </span>or<span class="w"> </span>descriptions.
+<span class="linenos">13</span><span class="w">          </span>
+<span class="linenos">14</span><span class="w">          </span>The<span class="w"> </span>following<span class="w"> </span>CSV<span class="w"> </span>file<span class="w"> </span>has<span class="w"> </span>a<span class="w"> </span>rectangular<span class="w"> </span>layout<span class="w"> </span>and<span class="w"> </span>would<span class="w"> </span>import<span class="w"> </span>into<span class="w"> </span>a<span class="w"> </span>simple<span class="w"> </span>table<span class="w"> </span>in<span class="w"> </span>a<span class="w"> </span>spreadsheet::
+<span class="linenos">15</span><span class="w">          </span>
+<span class="linenos">16</span><span class="w">             </span>PersonId,AgeYr,HeightCm
+<span class="linenos">17</span><span class="w">             </span>1,22,183,
+<span class="linenos">18</span><span class="w">             </span>2,45,175,
+<span class="linenos">19</span><span class="w">          </span>
+<span class="linenos">20</span><span class="w">          </span>Explanatory<span class="w"> </span>notes
+<span class="linenos">21</span><span class="w">          </span>=================
+<span class="linenos">22</span><span class="w">          </span>This<span class="w"> </span>is<span class="w"> </span>the<span class="w"> </span>classic<span class="w"> </span>rectangular<span class="w"> </span>data<span class="w"> </span>table<span class="w"> </span>used<span class="w"> </span>by<span class="w"> </span>most<span class="w"> </span>statistical<span class="w"> </span>packages,<span class="w"> </span>with<span class="w"> </span>rows/cases/observations<span class="w"> </span>and<span class="w"> </span>columns/variables/measurements.<span class="w"> </span>Each<span class="w"> </span>cell<span class="w"> </span>(DataPoint)<span class="w"> </span>in<span class="w"> </span>the<span class="w"> </span>table<span class="w"> </span>is<span class="w"> </span>the<span class="w"> </span>intersection<span class="w"> </span>of<span class="w"> </span>a<span class="w"> </span>Unit<span class="w"> </span>(row)<span class="w"> </span>and<span class="w"> </span>an<span class="w"> </span>InstanceVariable.<span class="w"> </span>Each<span class="w"> </span>logical<span class="w"> </span>column<span class="w"> </span>will<span class="w"> </span>contain<span class="w"> </span>data<span class="w"> </span>relating<span class="w"> </span>to<span class="w"> </span>the<span class="w"> </span>values<span class="w"> </span>for<span class="w"> </span>a<span class="w"> </span>single<span class="w"> </span>variable.<span class="nt">&lt;/xs:documentation&gt;</span>
+<span class="linenos">23</span><span class="w">  </span><span class="nt">&lt;/xs:annotation&gt;</span>
+<span class="linenos">24</span><span class="nt">&lt;/xs:element&gt;</span>
+<span class="linenos">25</span><span class="nt">&lt;xs:complexType</span><span class="w"> </span><span class="na">name=</span><span class="s">&quot;UnitSegmentLayoutXsdType&quot;</span>
+<span class="linenos">26</span><span class="w">                </span><span class="na">xml:id=</span><span class="s">&quot;UnitSegmentLayoutXsdType&quot;</span><span class="nt">&gt;</span>
+<span class="linenos">27</span><span class="w">  </span><span class="nt">&lt;xs:annotation&gt;</span>
+<span class="linenos">28</span><span class="w">    </span><span class="nt">&lt;xs:documentation&gt;</span>Definition
+<span class="linenos">29</span><span class="w">          </span>==========
+<span class="linenos">30</span><span class="w">          </span>Description<span class="w"> </span>of<span class="w"> </span>unit-record<span class="w"> </span>(&quot;wide&quot;)<span class="w"> </span>data<span class="w"> </span>sets,<span class="w"> </span>where<span class="w"> </span>each<span class="w"> </span>row<span class="w"> </span>in<span class="w"> </span>the<span class="w"> </span>data<span class="w"> </span>set<span class="w"> </span>provides<span class="w"> </span>the<span class="w"> </span>same<span class="w"> </span>group<span class="w"> </span>of<span class="w"> </span>values<span class="w"> </span>for<span class="w"> </span>variables<span class="w"> </span>all<span class="w"> </span>relating<span class="w"> </span>to<span class="w"> </span>a<span class="w"> </span>single<span class="w"> </span>unit.
+<span class="linenos">31</span><span class="w">          </span>
+<span class="linenos">32</span><span class="w">          </span>Examples
+<span class="linenos">33</span><span class="w">          </span>========
+<span class="linenos">34</span><span class="w">          </span>A<span class="w"> </span>simple<span class="w"> </span>spreadsheet.<span class="w"> </span>Commonly<span class="w"> </span>the<span class="w"> </span>first<span class="w"> </span>row<span class="w"> </span>of<span class="w"> </span>the<span class="w"> </span>table<span class="w"> </span>will<span class="w"> </span>contain<span class="w"> </span>variable<span class="w"> </span>names<span class="w"> </span>or<span class="w"> </span>descriptions.
+<span class="linenos">35</span><span class="w">          </span>
+<span class="linenos">36</span><span class="w">          </span>The<span class="w"> </span>following<span class="w"> </span>CSV<span class="w"> </span>file<span class="w"> </span>has<span class="w"> </span>a<span class="w"> </span>rectangular<span class="w"> </span>layout<span class="w"> </span>and<span class="w"> </span>would<span class="w"> </span>import<span class="w"> </span>into<span class="w"> </span>a<span class="w"> </span>simple<span class="w"> </span>table<span class="w"> </span>in<span class="w"> </span>a<span class="w"> </span>spreadsheet::
+<span class="linenos">37</span><span class="w">          </span>
+<span class="linenos">38</span><span class="w">             </span>PersonId,AgeYr,HeightCm
+<span class="linenos">39</span><span class="w">             </span>1,22,183,
+<span class="linenos">40</span><span class="w">             </span>2,45,175,
+<span class="linenos">41</span><span class="w">          </span>
+<span class="linenos">42</span><span class="w">          </span>Explanatory<span class="w"> </span>notes
+<span class="linenos">43</span><span class="w">          </span>=================
+<span class="linenos">44</span><span class="w">          </span>This<span class="w"> </span>is<span class="w"> </span>the<span class="w"> </span>classic<span class="w"> </span>rectangular<span class="w"> </span>data<span class="w"> </span>table<span class="w"> </span>used<span class="w"> </span>by<span class="w"> </span>most<span class="w"> </span>statistical<span class="w"> </span>packages,<span class="w"> </span>with<span class="w"> </span>rows/cases/observations<span class="w"> </span>and<span class="w"> </span>columns/variables/measurements.<span class="w"> </span>Each<span class="w"> </span>cell<span class="w"> </span>(DataPoint)<span class="w"> </span>in<span class="w"> </span>the<span class="w"> </span>table<span class="w"> </span>is<span class="w"> </span>the<span class="w"> </span>intersection<span class="w"> </span>of<span class="w"> </span>a<span class="w"> </span>Unit<span class="w"> </span>(row)<span class="w"> </span>and<span class="w"> </span>an<span class="w"> </span>InstanceVariable.<span class="w"> </span>Each<span class="w"> </span>logical<span class="w"> </span>column<span class="w"> </span>will<span class="w"> </span>contain<span class="w"> </span>data<span class="w"> </span>relating<span class="w"> </span>to<span class="w"> </span>the<span class="w"> </span>values<span class="w"> </span>for<span class="w"> </span>a<span class="w"> </span>single<span class="w"> </span>variable.<span class="nt">&lt;/xs:documentation&gt;</span>
+<span class="linenos">45</span><span class="w">  </span><span class="nt">&lt;/xs:annotation&gt;</span>
+<span class="linenos">46</span><span class="w">  </span><span class="nt">&lt;xs:complexContent&gt;</span>
+<span class="linenos">47</span><span class="w">    </span><span class="nt">&lt;xs:extension</span><span class="w"> </span><span class="na">base=</span><span class="s">&quot;PhysicalSegmentLayoutXsdType&quot;</span><span class="nt">&gt;</span>
+<span class="linenos">48</span><span class="w">      </span>
+<span class="linenos">49</span><span class="w">    </span><span class="nt">&lt;/xs:extension&gt;</span>
+<span class="linenos">50</span><span class="w">  </span><span class="nt">&lt;/xs:complexContent&gt;</span>
+<span class="linenos">51</span><span class="nt">&lt;/xs:complexType&gt;</span>
+</pre></div>
+</div>
+</div>
+<input id="sd-tab-item-2" name="sd-tab-set-0" type="radio">
+<label class="sd-tab-label" for="sd-tab-item-2">
+Ontology (Turtle)</label><div class="sd-tab-content encoding docutils">
+<p class="sd-card-text">Fragment for the class <strong>UnitSegmentLayout</strong> (<a class="reference external" href="/encoding/ontology/ddi-cdi.onto.ttl">main ontology</a>)</p>
+<div class="highlight-turtle notranslate"><div class="highlight"><pre><span></span><span class="linenos">1</span><span class="c"># class UnitSegmentLayout</span>
+<span class="linenos">2</span><span class="c"># based on the UML class DDICDIModels::DDICDILibrary::Classes::FormatDescription::UnitSegmentLayout</span>
+<span class="hll"><span class="linenos">3</span><span class="nn">cdi</span><span class="p">:</span><span class="nt">UnitSegmentLayout</span>
+</span><span class="linenos">4</span>  <span class="kt">a</span> <span class="nn">rdfs</span><span class="p">:</span><span class="nt">Class</span><span class="p">,</span> <span class="nn">owl</span><span class="p">:</span><span class="nt">Class</span><span class="p">,</span> <span class="nn">ucmis</span><span class="p">:</span><span class="nt">Class</span><span class="p">;</span>
+<span class="linenos">5</span>  <span class="nn">rdfs</span><span class="p">:</span><span class="nt">label</span> <span class="s">&quot;UnitSegmentLayout&quot;</span><span class="p">;</span>
+<span class="linenos">6</span>  <span class="nn">rdfs</span><span class="p">:</span><span class="nt">comment</span> <span class="s">&quot;Definition\n==========\nDescription of unit-record (\&quot;wide\&quot;) data sets, where each row in the data set provides the same group of values for variables all relating to a single unit.\n\nExamples\n========\nA simple spreadsheet. Commonly the first row of the table will contain variable names or descriptions.\n\nThe following CSV file has a rectangular layout and would import into a simple table in a spreadsheet::\n\n   PersonId,AgeYr,HeightCm\n   1,22,183,\n   2,45,175,\n\nExplanatory notes\n=================\nThis is the classic rectangular data table used by most statistical packages, with rows/cases/observations and columns/variables/measurements. Each cell (DataPoint) in the table is the intersection of a Unit (row) and an InstanceVariable. Each logical column will contain data relating to the values for a single variable.&quot;</span><span class="o">@</span><span class="ge">en</span><span class="p">;</span>
+<span class="linenos">7</span>  <span class="nn">rdfs</span><span class="p">:</span><span class="nt">subClassOf</span> <span class="nn">cdi</span><span class="p">:</span><span class="nt">PhysicalSegmentLayout</span><span class="p">;</span>
+<span class="linenos">8</span><span class="p">.</span>
+</pre></div>
+</div>
+</div>
+<input id="sd-tab-item-3" name="sd-tab-set-0" type="radio">
+<label class="sd-tab-label" for="sd-tab-item-3">
+JSON-LD</label><div class="sd-tab-content encoding docutils">
+<p class="sd-card-text">Fragment for the class <strong>UnitSegmentLayout</strong> (<a class="reference external" href="/encoding/json-ld/ddi-cdi.jsonld">main JSON-LD</a>)</p>
+<div class="highlight-JSON-LD notranslate"><div class="highlight"><pre><span></span><span class="linenos"> 1</span><span class="p">{</span>
+<span class="linenos"> 2</span><span class="w">  </span><span class="nd">&quot;@context&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<span class="linenos"> 3</span><span class="w">    </span><span class="s2">&quot;PhysicalSegmentLayout.jsonld&quot;</span><span class="p">,</span>
+<span class="linenos"> 4</span><span class="w">    </span><span class="p">{</span>
+<span class="hll"><span class="linenos"> 5</span><span class="w">      </span><span class="nt">&quot;cdi&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;http://ddialliance.org/Specification/DDI-CDI/1.0/RDF/&quot;</span><span class="p">,</span>
+</span><span class="linenos"> 6</span><span class="w">      </span><span class="nt">&quot;xsd&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;http://www.w3.org/2001/XMLSchema#&quot;</span><span class="p">,</span>
+<span class="linenos"> 7</span>
+<span class="linenos"> 8</span><span class="w">      </span>
+<span class="linenos"> 9</span><span class="w">      </span><span class="nt">&quot; comment &quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;tag:json-should-support-trailing-commas&quot;</span>
+<span class="linenos">10</span><span class="w">    </span><span class="p">}</span>
+<span class="linenos">11</span><span class="w">  </span><span class="p">],</span>
+<span class="linenos">12</span><span class="w">  </span><span class="nt">&quot;generatedBy&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;This code was generated by the Eclipse Acceleo project UCMIS M2T on 2025-01-25 16:58:32.&quot;</span><span class="p">,</span>
+<span class="linenos">13</span><span class="w">  </span><span class="nt">&quot;basedOn&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;based on the UML data type DDICDIModels::DDICDILibrary::Classes::FormatDescription::UnitSegmentLayout&quot;</span>
+<span class="linenos">14</span><span class="p">}</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+</details></div>
+</section>
+</section>
+
+
+            <div class="clearer"></div>
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="Main">
+        <div class="sphinxsidebarwrapper">
+            <p class="logo"><a href="../../../index.html">
+              <img class="logo" src="../../../_static/cdi.svg" alt="Logo of "/>
+            </a></p>
+<search id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../../../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</search>
+<script>document.getElementById('searchbox').style.display = "block"</script>
+<h3><a href="../../../index.html">Table of Contents</a></h3>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../../Context/index.html">Context</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../../index.html">DDICDILibrary</a><ul class="current">
+<li class="toctree-l2 current"><a class="reference internal" href="../index.html">Classes</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="../Agents/index.html">Agents</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../Conceptual/index.html">Conceptual</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../DataDescription/index.html">DataDescription</a></li>
+<li class="toctree-l3 current"><a class="reference internal" href="index.html">FormatDescription</a><ul class="current">
+<li class="toctree-l4"><a class="reference internal" href="DataPointPosition.html">DataPointPosition</a></li>
+<li class="toctree-l4"><a class="reference internal" href="DataPointRelationship.html">DataPointRelationship</a></li>
+<li class="toctree-l4"><a class="reference internal" href="DataStore.html">DataStore</a></li>
+<li class="toctree-l4"><a class="reference internal" href="InstanceVariableMap.html">InstanceVariableMap</a></li>
+<li class="toctree-l4"><a class="reference internal" href="LogicalRecord.html">LogicalRecord</a></li>
+<li class="toctree-l4"><a class="reference internal" href="LogicalRecordPosition.html">LogicalRecordPosition</a></li>
+<li class="toctree-l4"><a class="reference internal" href="LogicalRecordRelationship.html">LogicalRecordRelationship</a></li>
+<li class="toctree-l4"><a class="reference internal" href="LogicalRecordRelationStructure.html">LogicalRecordRelationStructure</a></li>
+<li class="toctree-l4"><a class="reference internal" href="PhysicalDataSet.html">PhysicalDataSet</a></li>
+<li class="toctree-l4"><a class="reference internal" href="PhysicalDataSetStructure.html">PhysicalDataSetStructure</a></li>
+<li class="toctree-l4"><a class="reference internal" href="PhysicalLayoutRelationStructure.html">PhysicalLayoutRelationStructure</a></li>
+<li class="toctree-l4"><a class="reference internal" href="PhysicalRecordSegment.html">PhysicalRecordSegment</a></li>
+<li class="toctree-l4"><a class="reference internal" href="PhysicalRecordSegmentPosition.html">PhysicalRecordSegmentPosition</a></li>
+<li class="toctree-l4"><a class="reference internal" href="PhysicalRecordSegmentRelationship.html">PhysicalRecordSegmentRelationship</a></li>
+<li class="toctree-l4"><a class="reference internal" href="PhysicalRecordSegmentStructure.html">PhysicalRecordSegmentStructure</a></li>
+<li class="toctree-l4"><a class="reference internal" href="PhysicalSegmentLayout.html">PhysicalSegmentLayout</a></li>
+<li class="toctree-l4"><a class="reference internal" href="PhysicalSegmentLocation.html">PhysicalSegmentLocation</a></li>
+<li class="toctree-l4"><a class="reference internal" href="RecordRelation.html">RecordRelation</a></li>
+<li class="toctree-l4"><a class="reference internal" href="SegmentByText.html">SegmentByText</a></li>
+<li class="toctree-l4 current"><a class="current reference internal" href="#">UnitSegmentLayout</a><ul>
+<li class="toctree-l5"><a class="reference internal" href="#definition">Definition</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#examples">Examples</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#explanatory-notes">Explanatory notes</a></li>
+</ul>
+</li>
+<li class="toctree-l4"><a class="reference internal" href="ValueMapping.html">ValueMapping</a></li>
+<li class="toctree-l4"><a class="reference internal" href="ValueMappingPosition.html">ValueMappingPosition</a></li>
+<li class="toctree-l4"><a class="reference internal" href="ValueMappingRelationship.html">ValueMappingRelationship</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../Process/index.html">Process</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../Representations/index.html">Representations</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../DataTypes/index.html">DataTypes</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../../DesignPatterns/index.html">DesignPatterns</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../Appendices/index.html">Appendices</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../about/index.html">About</a></li>
+</ul>
+
+        </div>
+<div id="sidebarbutton" title="Collapse sidebar">
+<span>«</span>
+</div>
+
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="Related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="ValueMapping.html" title="ValueMapping"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="SegmentByText.html" title="SegmentByText"
+             >previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../../../index.html">UML Model: DDI Cross Domain Integration (DDI-CDI 1.0)</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="../../index.html" >DDICDILibrary</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="../index.html" >Classes</a> &#187;</li>
+          <li class="nav-item nav-item-3"><a href="index.html" >FormatDescription</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">UnitSegmentLayout</a></li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+    &#169; Copyright 2024, DDI Alliance.
+    </div>
+  </body>
+</html>

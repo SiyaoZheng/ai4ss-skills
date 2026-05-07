@@ -1,0 +1,1001 @@
+
+
+<!DOCTYPE html>
+
+<html lang="en" data-content_root="../../../">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>VariableCollection &#8212; UML Model: DDI Cross Domain Integration (DDI-CDI 1.0)</title>
+    <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=03e43079" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/classic.css?v=4d097c01" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/graphviz.css?v=4ae1632d" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/sphinx-design.min.css?v=95c83b7e" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/custom.css?v=e6a9d92b" />
+    
+    <script src="../../../_static/jquery.js?v=5d32c60e"></script>
+    <script src="../../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+    <script src="../../../_static/documentation_options.js?v=8a448e45"></script>
+    <script src="../../../_static/doctools.js?v=9bcbadda"></script>
+    <script src="../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../../_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="../../../_static/copybutton.js?v=f281be69"></script>
+    <script src="../../../_static/design-tabs.js?v=f930bc37"></script>
+    <script src="../../../_static/custom.js?v=5de7d6e5"></script>
+    <script src="../../../_static/definition.js?v=897f6d42"></script>
+    
+    <script src="../../../_static/sidebar.js"></script>
+    
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" />
+    <link rel="next" title="VariablePosition" href="VariablePosition.html" />
+    <link rel="prev" title="Universe" href="Universe.html" /> 
+    <meta http-equiv="Content-Security-Policy" content="script-src 'self' 'unsafe-inline' https://cdn.datatables.net/ https://code.jquery.com/; style-src 'self' 'unsafe-inline' https://cdn.datatables.net/ https://code.jquery.com/; img-src 'self' https://cdn.datatables.net/;">
+    <!-- loaded before custom.js required. Done now with sphinxcontrib-jquery. See example Agent.html.
+    <script
+              src="https://code.jquery.com/jquery-3.7.1.min.js"
+              integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo="
+              crossorigin="anonymous"></script>
+    -->
+    <script
+              src="https://code.jquery.com/ui/1.13.2/jquery-ui.min.js"
+              integrity="sha256-lSjKY0/srUM9BE3dPm+c4fBo1dky2v27Gdjm2uoZaL0="
+              crossorigin="anonymous"></script>
+	<!--
+		Combined css and js downloads created with https://datatables.net/download/.
+		DataTables, Buttons (HTML5 export, JSZip, Print view), Search panes, Select, Minify, Concatenate
+	-->
+	<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/dt/jszip-2.5.0/dt-1.10.24/b-1.7.0/b-html5-1.7.0/b-print-1.7.0/sp-1.2.2/sl-1.3.3/datatables.min.css"/>
+	<script type="text/javascript" src="https://cdn.datatables.net/v/dt/jszip-2.5.0/dt-1.10.24/b-1.7.0/b-html5-1.7.0/b-print-1.7.0/sp-1.2.2/sl-1.3.3/datatables.min.js"></script>
+	<!-- For jquery tooltip. See: https://jqueryui.com/tooltip/ -->
+	<link rel="stylesheet" href="https://code.jquery.com/ui/1.13.2/themes/base/jquery-ui.css">
+	<script src="https://code.jquery.com/ui/1.13.2/jquery-ui.min.js"></script>
+    <!--
+    already loaded by sphinx
+	<script src="https://code.jquery.com/jquery-3.5.1.js" type="text/javascript" language="javascript"></script>
+	-->
+
+  </head><body>
+    <div class="related" role="navigation" aria-label="Related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="VariablePosition.html" title="VariablePosition"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="Universe.html" title="Universe"
+             accesskey="P">previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../../../index.html">UML Model: DDI Cross Domain Integration (DDI-CDI 1.0)</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="../../index.html" >DDICDILibrary</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="../index.html" >Classes</a> &#187;</li>
+          <li class="nav-item nav-item-3"><a href="index.html" accesskey="U">Conceptual</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">VariableCollection</a></li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <section id="variablecollection">
+<span id="ddicdimodels-ddicdilibrary-classes-conceptual-variablecollection"></span><h1>VariableCollection<a class="headerlink" href="#variablecollection" title="Link to this heading">¶</a></h1>
+<p><strong>Fully qualified class name</strong>: DDICDIModels::DDICDILibrary::Classes::Conceptual::<span class="target" id="index-0"></span>VariableCollection</p>
+<section id="definition">
+<h2>Definition<a class="headerlink" href="#definition" title="Link to this heading">¶</a></h2>
+<p>Group of any type of variable within the variable cascade (conceptual, represented, instance).</p>
+</section>
+<section id="examples">
+<h2>Examples<a class="headerlink" href="#examples" title="Link to this heading">¶</a></h2>
+<ol class="arabic simple">
+<li><p>Variables within a specific section of a study</p></li>
+<li><p>Variables related to a specific subject or keyword</p></li>
+<li><p>Variables at a specified level of development or review</p></li>
+</ol>
+</section>
+<section id="explanatory-notes">
+<h2>Explanatory notes<a class="headerlink" href="#explanatory-notes" title="Link to this heading">¶</a></h2>
+<p>A simple ordered or unordered list of variables can be described via a set of variable position parameters. An optional variable structure can describe a more complex structure for the collection. We might, for example, use the variable structure to group variables by content within a single collection of data or a wave of on-going data collection. For the purposes of management, conceptualization or anything other than organizing a logical record or physical layout.</p>
+<div class="docutils container" id="diagram">
+<details class="sd-sphinx-override sd-dropdown sd-card sd-mb-3" open="open">
+<summary class="sd-summary-title sd-card-header">
+<span class="sd-summary-text">Diagram</span><span class="sd-summary-state-marker sd-summary-chevron-right"><svg version="1.1" width="1.5em" height="1.5em" class="sd-octicon sd-octicon-chevron-right" viewBox="0 0 24 24" aria-hidden="true"><path d="M8.72 18.78a.75.75 0 0 1 0-1.06L14.44 12 8.72 6.28a.751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018l6.25 6.25a.75.75 0 0 1 0 1.06l-6.25 6.25a.75.75 0 0 1-1.06 0Z"></path></svg></span></summary><div class="sd-summary-content sd-card-body docutils">
+<p class="plantuml">
+<object data="../../../_images/plantuml-b5859d1dae030b32336a36904c7969223e4337e1.svg" type="image/svg+xml" style="width:837px;height:652px;background:#FFFFFF;"></object></p>
+</div>
+</details></div>
+<div class="docutils container" id="attributes">
+<details class="sd-sphinx-override sd-dropdown sd-card sd-mb-3">
+<summary class="sd-summary-title sd-card-header">
+<span class="sd-summary-text">Attributes</span><span class="sd-summary-state-marker sd-summary-chevron-right"><svg version="1.1" width="1.5em" height="1.5em" class="sd-octicon sd-octicon-chevron-right" viewBox="0 0 24 24" aria-hidden="true"><path d="M8.72 18.78a.75.75 0 0 1 0-1.06L14.44 12 8.72 6.28a.751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018l6.25 6.25a.75.75 0 0 1 0 1.06l-6.25 6.25a.75.75 0 0 1-1.06 0Z"></path></svg></span></summary><div class="sd-summary-content sd-card-body docutils">
+<table class="datatable-attributes docutils align-default">
+<colgroup>
+<col style="width: 9.1%" />
+<col style="width: 9.1%" />
+<col style="width: 54.5%" />
+<col style="width: 9.1%" />
+<col style="width: 9.1%" />
+<col style="width: 9.1%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p class="sd-card-text">Name</p></th>
+<th class="head"><p class="sd-card-text">Inherited from</p></th>
+<th class="head"><p class="sd-card-text">Description</p></th>
+<th class="head"><p class="sd-card-text">Data Type</p></th>
+<th class="head"><p class="sd-card-text">Multiplicity</p></th>
+<th class="head"><p class="sd-card-text">Default value</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p class="sd-card-text">allowsDuplicates</p></td>
+<td><p class="sd-card-text">- <em>own class</em> -</p></td>
+<td><p class="sd-card-text">If value is False, the members are unique within the collection - if True, there may be duplicates. (Note that a mathematical “bag” permits duplicates and is unordered - a “set” does not have duplicates and may be ordered.)</p></td>
+<td><p class="sd-card-text">Boolean</p></td>
+<td><p class="sd-card-text">1..1</p></td>
+<td><p class="sd-card-text">false</p></td>
+</tr>
+<tr class="row-odd"><td><p class="sd-card-text">displayLabel</p></td>
+<td><p class="sd-card-text">- <em>own class</em> -</p></td>
+<td><p class="sd-card-text">A human-readable display label for the object. Supports the use of multiple languages. Repeat for labels with different content, for example, labels with differing length limitations.</p></td>
+<td><p class="sd-card-text"><a class="reference internal" href="../../DataTypes/StructuredDataTypes/LabelForDisplay.html#ddicdimodels-ddicdilibrary-datatypes-structureddatatypes-labelfordisplay"><span class="std std-ref">LabelForDisplay</span></a></p></td>
+<td><p class="sd-card-text">0..*</p></td>
+<td></td>
+</tr>
+<tr class="row-even"><td><p class="sd-card-text">groupingSemantic</p></td>
+<td><p class="sd-card-text">- <em>own class</em> -</p></td>
+<td><p class="sd-card-text">A semantic term defining the factor used for defining this group.</p></td>
+<td><p class="sd-card-text"><a class="reference internal" href="../../DataTypes/StructuredDataTypes/ControlledVocabularyEntry.html#ddicdimodels-ddicdilibrary-datatypes-structureddatatypes-controlledvocabularyentry"><span class="std std-ref">ControlledVocabularyEntry</span></a></p></td>
+<td><p class="sd-card-text">0..1</p></td>
+<td></td>
+</tr>
+<tr class="row-odd"><td><p class="sd-card-text">identifier</p></td>
+<td><p class="sd-card-text">- <em>own class</em> -</p></td>
+<td><p class="sd-card-text">Identifier for objects requiring short- or long-lasting referencing and management.</p></td>
+<td><p class="sd-card-text"><a class="reference internal" href="../../DataTypes/StructuredDataTypes/Identifier.html#ddicdimodels-ddicdilibrary-datatypes-structureddatatypes-identifier"><span class="std std-ref">Identifier</span></a></p></td>
+<td><p class="sd-card-text">0..1</p></td>
+<td></td>
+</tr>
+<tr class="row-even"><td><p class="sd-card-text">name</p></td>
+<td><p class="sd-card-text">- <em>own class</em> -</p></td>
+<td><p class="sd-card-text">Human understandable name (liguistic signifier, word, phrase, or mnemonic). May follow ISO/IEC 11179-5 naming principles, and have context provided to specify usage.</p></td>
+<td><p class="sd-card-text"><a class="reference internal" href="../../DataTypes/StructuredDataTypes/ObjectName.html#ddicdimodels-ddicdilibrary-datatypes-structureddatatypes-objectname"><span class="std std-ref">ObjectName</span></a></p></td>
+<td><p class="sd-card-text">0..*</p></td>
+<td></td>
+</tr>
+<tr class="row-odd"><td><p class="sd-card-text">purpose</p></td>
+<td><p class="sd-card-text">- <em>own class</em> -</p></td>
+<td><p class="sd-card-text">Intent or reason for the object/the description of the object.</p></td>
+<td><p class="sd-card-text"><a class="reference internal" href="../../DataTypes/StructuredDataTypes/InternationalString.html#ddicdimodels-ddicdilibrary-datatypes-structureddatatypes-internationalstring"><span class="std std-ref">InternationalString</span></a></p></td>
+<td><p class="sd-card-text">0..1</p></td>
+<td></td>
+</tr>
+<tr class="row-even"><td><p class="sd-card-text">usage</p></td>
+<td><p class="sd-card-text">- <em>own class</em> -</p></td>
+<td><p class="sd-card-text">Explanation of the ways in which the object is employed.</p></td>
+<td><p class="sd-card-text"><a class="reference internal" href="../../DataTypes/StructuredDataTypes/InternationalString.html#ddicdimodels-ddicdilibrary-datatypes-structureddatatypes-internationalstring"><span class="std std-ref">InternationalString</span></a></p></td>
+<td><p class="sd-card-text">0..1</p></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+</div>
+</details></div>
+<div class="docutils container" id="associations">
+<details class="sd-sphinx-override sd-dropdown sd-card sd-mb-3">
+<summary class="sd-summary-title sd-card-header">
+<span class="sd-summary-text">Associations</span><span class="sd-summary-state-marker sd-summary-chevron-right"><svg version="1.1" width="1.5em" height="1.5em" class="sd-octicon sd-octicon-chevron-right" viewBox="0 0 24 24" aria-hidden="true"><path d="M8.72 18.78a.75.75 0 0 1 0-1.06L14.44 12 8.72 6.28a.751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018l6.25 6.25a.75.75 0 0 1 0 1.06l-6.25 6.25a.75.75 0 0 1-1.06 0Z"></path></svg></span></summary><div class="sd-summary-content sd-card-body docutils">
+<table class="datatable-associations docutils align-default">
+<colgroup>
+<col style="width: 5.3%" />
+<col style="width: 10.5%" />
+<col style="width: 31.6%" />
+<col style="width: 5.3%" />
+<col style="width: 10.5%" />
+<col style="width: 10.5%" />
+<col style="width: 5.3%" />
+<col style="width: 5.3%" />
+<col style="width: 15.8%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p class="sd-card-text">Direction</p></th>
+<th class="head"><p class="sd-card-text">Association</p></th>
+<th class="head"><p class="sd-card-text">Description</p></th>
+<th class="head"><p class="sd-card-text">Multiplicity of VariableCollection</p></th>
+<th class="head"><p class="sd-card-text">Package of Other Class</p></th>
+<th class="head"><p class="sd-card-text">Other Class</p></th>
+<th class="head"><p class="sd-card-text">Multiplicity of other class</p></th>
+<th class="head"><p class="sd-card-text">Aggregation Kind</p></th>
+<th class="head"><p class="sd-card-text">Inherited from</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p class="sd-card-text">from</p></td>
+<td><p class="sd-card-text">VariableCollection has ConceptualVariable</p></td>
+<td><p class="sd-card-text">Variable collection has zero to many conceptual variables.</p></td>
+<td><p class="sd-card-text">0..*</p></td>
+<td><p class="sd-card-text">- <em>own package</em> -</p></td>
+<td><p class="sd-card-text"><a class="reference internal" href="ConceptualVariable.html#ddicdimodels-ddicdilibrary-classes-conceptual-conceptualvariable"><span class="std std-ref">ConceptualVariable</span></a></p></td>
+<td><p class="sd-card-text">0..*</p></td>
+<td><p class="sd-card-text">shared</p></td>
+<td><p class="sd-card-text">- <em>own class</em> -</p></td>
+</tr>
+<tr class="row-odd"><td><p class="sd-card-text">from</p></td>
+<td><p class="sd-card-text">VariableCollection has VariablePosition</p></td>
+<td><p class="sd-card-text">Variable collection has zero to many variable positions.</p></td>
+<td><p class="sd-card-text">1..1</p></td>
+<td><p class="sd-card-text">- <em>own package</em> -</p></td>
+<td><p class="sd-card-text"><a class="reference internal" href="VariablePosition.html#ddicdimodels-ddicdilibrary-classes-conceptual-variableposition"><span class="std std-ref">VariablePosition</span></a></p></td>
+<td><p class="sd-card-text">0..*</p></td>
+<td><p class="sd-card-text">composite</p></td>
+<td><p class="sd-card-text">- <em>own class</em> -</p></td>
+</tr>
+<tr class="row-even"><td><p class="sd-card-text">from</p></td>
+<td><p class="sd-card-text">VariableCollection isDefinedBy Concept</p></td>
+<td><p class="sd-card-text">The conceptual basis for the collection of members.</p></td>
+<td><p class="sd-card-text">0..*</p></td>
+<td><p class="sd-card-text">- <em>own package</em> -</p></td>
+<td><p class="sd-card-text"><a class="reference internal" href="Concept.html#ddicdimodels-ddicdilibrary-classes-conceptual-concept"><span class="std std-ref">Concept</span></a></p></td>
+<td><p class="sd-card-text">0..*</p></td>
+<td><p class="sd-card-text">none</p></td>
+<td><p class="sd-card-text">- <em>own class</em> -</p></td>
+</tr>
+<tr class="row-odd"><td><p class="sd-card-text">to</p></td>
+<td><p class="sd-card-text">VariableStructure structures VariableCollection</p></td>
+<td><p class="sd-card-text">Variable structure structures zero to one variable collection.</p></td>
+<td><p class="sd-card-text">0..1</p></td>
+<td><p class="sd-card-text">- <em>own package</em> -</p></td>
+<td><p class="sd-card-text"><a class="reference internal" href="VariableStructure.html#ddicdimodels-ddicdilibrary-classes-conceptual-variablestructure"><span class="std std-ref">VariableStructure</span></a></p></td>
+<td><p class="sd-card-text">0..*</p></td>
+<td><p class="sd-card-text">none</p></td>
+<td><p class="sd-card-text">- <em>own class</em> -</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+</details></div>
+<div class="docutils container" id="encodings">
+<details class="sd-sphinx-override sd-dropdown sd-card sd-mb-3">
+<summary class="sd-summary-title sd-card-header">
+<span class="sd-summary-text">Syntax representations / encodings</span><span class="sd-summary-state-marker sd-summary-chevron-right"><svg version="1.1" width="1.5em" height="1.5em" class="sd-octicon sd-octicon-chevron-right" viewBox="0 0 24 24" aria-hidden="true"><path d="M8.72 18.78a.75.75 0 0 1 0-1.06L14.44 12 8.72 6.28a.751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018l6.25 6.25a.75.75 0 0 1 0 1.06l-6.25 6.25a.75.75 0 0 1-1.06 0Z"></path></svg></span></summary><div class="sd-summary-content sd-card-body docutils">
+<p class="sd-card-text">All syntax representations except the Canonical XMI are provided as reference points
+for specific implementations, or for use as defaults if sufficient in the form presented.</p>
+<div class="sd-tab-set docutils">
+<input checked="checked" id="sd-tab-item-0" name="sd-tab-set-0" type="radio">
+<label class="sd-tab-label" for="sd-tab-item-0">
+Canonical XMI</label><div class="sd-tab-content encoding docutils">
+<p class="sd-card-text">Fragment for the class <strong>VariableCollection</strong> (<a class="reference external" href="/encoding/xmi/ddi-cdi_canonical-unique-names.xmi">entire model as XMI</a>)</p>
+<div class="highlight-xml notranslate"><div class="highlight"><pre><span></span><span class="linenos">  1</span><span class="nt">&lt;packagedElement</span><span class="w"> </span><span class="na">xmlns:StandardProfile=</span><span class="s">&quot;http://www.eclipse.org/uml2/5.0.0/UML/Profile/Standard&quot;</span>
+<span class="linenos">  2</span><span class="w">                 </span><span class="na">xmlns:uml=</span><span class="s">&quot;http://www.eclipse.org/uml2/5.0.0/UML&quot;</span>
+<span class="linenos">  3</span><span class="w">                 </span><span class="na">xmlns:xmi=</span><span class="s">&quot;http://www.omg.org/spec/XMI/20131001&quot;</span>
+<span class="hll"><span class="linenos">  4</span><span class="w">                 </span><span class="na">xmi:id=</span><span class="s">&quot;DDICDIModels-DDICDILibrary-Classes-Conceptual-VariableCollection&quot;</span>
+</span><span class="linenos">  5</span><span class="w">                 </span><span class="na">xmi:uuid=</span><span class="s">&quot;http://ddialliance.org/Specification/DDI-CDI/1.0/XMI/#VariableCollection&quot;</span>
+<span class="linenos">  6</span><span class="w">                 </span><span class="na">xmi:type=</span><span class="s">&quot;uml:Class&quot;</span><span class="nt">&gt;</span>
+<span class="linenos">  7</span><span class="w">   </span><span class="nt">&lt;ownedComment</span><span class="w"> </span><span class="na">xmi:id=</span><span class="s">&quot;DDICDIModels-DDICDILibrary-Classes-Conceptual-VariableCollection-ownedComment&quot;</span>
+<span class="linenos">  8</span><span class="w">                 </span><span class="na">xmi:uuid=</span><span class="s">&quot;http://ddialliance.org/Specification/DDI-CDI/1.0/XMI/#VariableCollection-ownedComment&quot;</span>
+<span class="linenos">  9</span><span class="w">                 </span><span class="na">xmi:type=</span><span class="s">&quot;uml:Comment&quot;</span><span class="nt">&gt;</span>
+<span class="linenos"> 10</span><span class="w">      </span><span class="nt">&lt;annotatedElement</span><span class="w"> </span><span class="na">xmi:idref=</span><span class="s">&quot;DDICDIModels-DDICDILibrary-Classes-Conceptual-VariableCollection&quot;</span><span class="nt">/&gt;</span>
+<span class="linenos"> 11</span><span class="w">      </span><span class="nt">&lt;body&gt;</span>Definition
+<span class="linenos"> 12</span>==========
+<span class="linenos"> 13</span>Group<span class="w"> </span>of<span class="w"> </span>any<span class="w"> </span>type<span class="w"> </span>of<span class="w"> </span>variable<span class="w"> </span>within<span class="w"> </span>the<span class="w"> </span>variable<span class="w"> </span>cascade<span class="w"> </span>(conceptual,<span class="w"> </span>represented,<span class="w"> </span>instance).
+<span class="linenos"> 14</span>
+<span class="linenos"> 15</span>Examples
+<span class="linenos"> 16</span>========
+<span class="linenos"> 17</span>1.<span class="w"> </span>Variables<span class="w"> </span>within<span class="w"> </span>a<span class="w"> </span>specific<span class="w"> </span>section<span class="w"> </span>of<span class="w"> </span>a<span class="w"> </span>study
+<span class="linenos"> 18</span>2.<span class="w"> </span>Variables<span class="w"> </span>related<span class="w"> </span>to<span class="w"> </span>a<span class="w"> </span>specific<span class="w"> </span>subject<span class="w"> </span>or<span class="w"> </span>keyword
+<span class="linenos"> 19</span>3.<span class="w"> </span>Variables<span class="w"> </span>at<span class="w"> </span>a<span class="w"> </span>specified<span class="w"> </span>level<span class="w"> </span>of<span class="w"> </span>development<span class="w"> </span>or<span class="w"> </span>review
+<span class="linenos"> 20</span>
+<span class="linenos"> 21</span>Explanatory<span class="w"> </span>notes
+<span class="linenos"> 22</span>=================<span class="w"> </span>
+<span class="linenos"> 23</span>A<span class="w"> </span>simple<span class="w"> </span>ordered<span class="w"> </span>or<span class="w"> </span>unordered<span class="w"> </span>list<span class="w"> </span>of<span class="w"> </span>variables<span class="w"> </span>can<span class="w"> </span>be<span class="w"> </span>described<span class="w"> </span>via<span class="w"> </span>a<span class="w"> </span>set<span class="w"> </span>of<span class="w"> </span>variable<span class="w"> </span>position<span class="w"> </span>parameters.<span class="w"> </span>An<span class="w"> </span>optional<span class="w"> </span>variable<span class="w"> </span>structure<span class="w"> </span>can<span class="w"> </span>describe<span class="w"> </span>a<span class="w"> </span>more<span class="w"> </span>complex<span class="w"> </span>structure<span class="w"> </span>for<span class="w"> </span>the<span class="w"> </span>collection.<span class="w"> </span>We<span class="w"> </span>might,<span class="w"> </span>for<span class="w"> </span>example,<span class="w"> </span>use<span class="w"> </span>the<span class="w"> </span>variable<span class="w"> </span>structure<span class="w"> </span>to<span class="w"> </span>group<span class="w"> </span>variables<span class="w"> </span>by<span class="w"> </span>content<span class="w"> </span>within<span class="w"> </span>a<span class="w"> </span>single<span class="w"> </span>collection<span class="w"> </span>of<span class="w"> </span>data<span class="w"> </span>or<span class="w"> </span>a<span class="w"> </span>wave<span class="w"> </span>of<span class="w"> </span>on-going<span class="w"> </span>data<span class="w"> </span>collection.<span class="w"> </span>For<span class="w"> </span>the<span class="w"> </span>purposes<span class="w"> </span>of<span class="w"> </span>management,<span class="w"> </span>conceptualization<span class="w"> </span>or<span class="w"> </span>anything<span class="w"> </span>other<span class="w"> </span>than<span class="w"> </span>organizing<span class="w"> </span>a<span class="w"> </span>logical<span class="w"> </span>record<span class="w"> </span>or<span class="w"> </span>physical<span class="w"> </span>layout.<span class="nt">&lt;/body&gt;</span>
+<span class="linenos"> 24</span><span class="w">   </span><span class="nt">&lt;/ownedComment&gt;</span>
+<span class="linenos"> 25</span><span class="w">   </span><span class="nt">&lt;name&gt;</span>VariableCollection<span class="nt">&lt;/name&gt;</span>
+<span class="linenos"> 26</span><span class="w">   </span><span class="nt">&lt;ownedAttribute</span><span class="w"> </span><span class="na">xmi:id=</span><span class="s">&quot;DDICDIModels-DDICDILibrary-Classes-Conceptual-VariableCollection-allowsDuplicates&quot;</span>
+<span class="linenos"> 27</span><span class="w">                   </span><span class="na">xmi:uuid=</span><span class="s">&quot;http://ddialliance.org/Specification/DDI-CDI/1.0/XMI/#VariableCollection-allowsDuplicates&quot;</span>
+<span class="linenos"> 28</span><span class="w">                   </span><span class="na">xmi:type=</span><span class="s">&quot;uml:Property&quot;</span><span class="nt">&gt;</span>
+<span class="linenos"> 29</span><span class="w">      </span><span class="nt">&lt;ownedComment</span><span class="w"> </span><span class="na">xmi:id=</span><span class="s">&quot;DDICDIModels-DDICDILibrary-Classes-Conceptual-VariableCollection-allowsDuplicates-ownedComment&quot;</span>
+<span class="linenos"> 30</span><span class="w">                    </span><span class="na">xmi:uuid=</span><span class="s">&quot;http://ddialliance.org/Specification/DDI-CDI/1.0/XMI/#VariableCollection-allowsDuplicates-ownedComment&quot;</span>
+<span class="linenos"> 31</span><span class="w">                    </span><span class="na">xmi:type=</span><span class="s">&quot;uml:Comment&quot;</span><span class="nt">&gt;</span>
+<span class="linenos"> 32</span><span class="w">         </span><span class="nt">&lt;annotatedElement</span><span class="w"> </span><span class="na">xmi:idref=</span><span class="s">&quot;DDICDIModels-DDICDILibrary-Classes-Conceptual-VariableCollection-allowsDuplicates&quot;</span><span class="nt">/&gt;</span>
+<span class="linenos"> 33</span><span class="w">         </span><span class="nt">&lt;body&gt;</span>If<span class="w"> </span>value<span class="w"> </span>is<span class="w"> </span>False,<span class="w"> </span>the<span class="w"> </span>members<span class="w"> </span>are<span class="w"> </span>unique<span class="w"> </span>within<span class="w"> </span>the<span class="w"> </span>collection<span class="w"> </span>-<span class="w"> </span>if<span class="w"> </span>True,<span class="w"> </span>there<span class="w"> </span>may<span class="w"> </span>be<span class="w"> </span>duplicates.<span class="w"> </span>(Note<span class="w"> </span>that<span class="w"> </span>a<span class="w"> </span>mathematical<span class="w"> </span>“bag”<span class="w"> </span>permits<span class="w"> </span>duplicates<span class="w"> </span>and<span class="w"> </span>is<span class="w"> </span>unordered<span class="w"> </span>-<span class="w"> </span>a<span class="w"> </span>“set”<span class="w"> </span>does<span class="w"> </span>not<span class="w"> </span>have<span class="w"> </span>duplicates<span class="w"> </span>and<span class="w"> </span>may<span class="w"> </span>be<span class="w"> </span>ordered.)<span class="nt">&lt;/body&gt;</span>
+<span class="linenos"> 34</span><span class="w">      </span><span class="nt">&lt;/ownedComment&gt;</span>
+<span class="linenos"> 35</span><span class="w">      </span><span class="nt">&lt;lowerValue</span><span class="w"> </span><span class="na">xmi:id=</span><span class="s">&quot;DDICDIModels-DDICDILibrary-Classes-Conceptual-VariableCollection-allowsDuplicates-lowerValue&quot;</span>
+<span class="linenos"> 36</span><span class="w">                  </span><span class="na">xmi:uuid=</span><span class="s">&quot;http://ddialliance.org/Specification/DDI-CDI/1.0/XMI/#VariableCollection-allowsDuplicates-lowerValue&quot;</span>
+<span class="linenos"> 37</span><span class="w">                  </span><span class="na">xmi:type=</span><span class="s">&quot;uml:LiteralInteger&quot;</span><span class="nt">&gt;</span>
+<span class="linenos"> 38</span><span class="w">         </span><span class="nt">&lt;value&gt;</span>1<span class="nt">&lt;/value&gt;</span>
+<span class="linenos"> 39</span><span class="w">      </span><span class="nt">&lt;/lowerValue&gt;</span>
+<span class="linenos"> 40</span><span class="w">      </span><span class="nt">&lt;upperValue</span><span class="w"> </span><span class="na">xmi:id=</span><span class="s">&quot;DDICDIModels-DDICDILibrary-Classes-Conceptual-VariableCollection-allowsDuplicates-upperValue&quot;</span>
+<span class="linenos"> 41</span><span class="w">                  </span><span class="na">xmi:uuid=</span><span class="s">&quot;http://ddialliance.org/Specification/DDI-CDI/1.0/XMI/#VariableCollection-allowsDuplicates-upperValue&quot;</span>
+<span class="linenos"> 42</span><span class="w">                  </span><span class="na">xmi:type=</span><span class="s">&quot;uml:LiteralUnlimitedNatural&quot;</span><span class="nt">&gt;</span>
+<span class="linenos"> 43</span><span class="w">         </span><span class="nt">&lt;value&gt;</span>1<span class="nt">&lt;/value&gt;</span>
+<span class="linenos"> 44</span><span class="w">      </span><span class="nt">&lt;/upperValue&gt;</span>
+<span class="linenos"> 45</span><span class="w">      </span><span class="nt">&lt;name&gt;</span>allowsDuplicates<span class="nt">&lt;/name&gt;</span>
+<span class="linenos"> 46</span><span class="w">      </span><span class="nt">&lt;defaultValue</span><span class="w"> </span><span class="na">xmi:id=</span><span class="s">&quot;DDICDIModels-DDICDILibrary-Classes-Conceptual-VariableCollection-allowsDuplicates-defaultValue&quot;</span>
+<span class="linenos"> 47</span><span class="w">                    </span><span class="na">xmi:uuid=</span><span class="s">&quot;http://ddialliance.org/Specification/DDI-CDI/1.0/XMI/#VariableCollection-allowsDuplicates-defaultValue&quot;</span>
+<span class="linenos"> 48</span><span class="w">                    </span><span class="na">xmi:type=</span><span class="s">&quot;uml:LiteralBoolean&quot;</span><span class="nt">&gt;</span>
+<span class="linenos"> 49</span><span class="w">         </span><span class="nt">&lt;value&gt;</span>False<span class="nt">&lt;/value&gt;</span>
+<span class="linenos"> 50</span><span class="w">      </span><span class="nt">&lt;/defaultValue&gt;</span>
+<span class="linenos"> 51</span><span class="w">      </span><span class="nt">&lt;type</span><span class="w"> </span><span class="na">href=</span><span class="s">&quot;http://www.eclipse.org/uml2/5.0.0/UML/PrimitiveTypes.xmi#Boolean&quot;</span>
+<span class="linenos"> 52</span><span class="w">            </span><span class="na">xmi:type=</span><span class="s">&quot;uml:PrimitiveType&quot;</span><span class="nt">/&gt;</span>
+<span class="linenos"> 53</span><span class="w">   </span><span class="nt">&lt;/ownedAttribute&gt;</span>
+<span class="linenos"> 54</span><span class="w">   </span><span class="nt">&lt;ownedAttribute</span><span class="w"> </span><span class="na">xmi:id=</span><span class="s">&quot;DDICDIModels-DDICDILibrary-Classes-Conceptual-VariableCollection-displayLabel&quot;</span>
+<span class="linenos"> 55</span><span class="w">                   </span><span class="na">xmi:uuid=</span><span class="s">&quot;http://ddialliance.org/Specification/DDI-CDI/1.0/XMI/#VariableCollection-displayLabel&quot;</span>
+<span class="linenos"> 56</span><span class="w">                   </span><span class="na">xmi:type=</span><span class="s">&quot;uml:Property&quot;</span><span class="nt">&gt;</span>
+<span class="linenos"> 57</span><span class="w">      </span><span class="nt">&lt;ownedComment</span><span class="w"> </span><span class="na">xmi:id=</span><span class="s">&quot;DDICDIModels-DDICDILibrary-Classes-Conceptual-VariableCollection-displayLabel-ownedComment&quot;</span>
+<span class="linenos"> 58</span><span class="w">                    </span><span class="na">xmi:uuid=</span><span class="s">&quot;http://ddialliance.org/Specification/DDI-CDI/1.0/XMI/#VariableCollection-displayLabel-ownedComment&quot;</span>
+<span class="linenos"> 59</span><span class="w">                    </span><span class="na">xmi:type=</span><span class="s">&quot;uml:Comment&quot;</span><span class="nt">&gt;</span>
+<span class="linenos"> 60</span><span class="w">         </span><span class="nt">&lt;annotatedElement</span><span class="w"> </span><span class="na">xmi:idref=</span><span class="s">&quot;DDICDIModels-DDICDILibrary-Classes-Conceptual-VariableCollection-displayLabel&quot;</span><span class="nt">/&gt;</span>
+<span class="linenos"> 61</span><span class="w">         </span><span class="nt">&lt;body&gt;</span>A<span class="w"> </span>human-readable<span class="w"> </span>display<span class="w"> </span>label<span class="w"> </span>for<span class="w"> </span>the<span class="w"> </span>object.<span class="w"> </span>Supports<span class="w"> </span>the<span class="w"> </span>use<span class="w"> </span>of<span class="w"> </span>multiple<span class="w"> </span>languages.<span class="w"> </span>Repeat<span class="w"> </span>for<span class="w"> </span>labels<span class="w"> </span>with<span class="w"> </span>different<span class="w"> </span>content,<span class="w"> </span>for<span class="w"> </span>example,<span class="w"> </span>labels<span class="w"> </span>with<span class="w"> </span>differing<span class="w"> </span>length<span class="w"> </span>limitations.<span class="nt">&lt;/body&gt;</span>
+<span class="linenos"> 62</span><span class="w">      </span><span class="nt">&lt;/ownedComment&gt;</span>
+<span class="linenos"> 63</span><span class="w">      </span><span class="nt">&lt;lowerValue</span><span class="w"> </span><span class="na">xmi:id=</span><span class="s">&quot;DDICDIModels-DDICDILibrary-Classes-Conceptual-VariableCollection-displayLabel-lowerValue&quot;</span>
+<span class="linenos"> 64</span><span class="w">                  </span><span class="na">xmi:uuid=</span><span class="s">&quot;http://ddialliance.org/Specification/DDI-CDI/1.0/XMI/#VariableCollection-displayLabel-lowerValue&quot;</span>
+<span class="linenos"> 65</span><span class="w">                  </span><span class="na">xmi:type=</span><span class="s">&quot;uml:LiteralInteger&quot;</span><span class="nt">/&gt;</span>
+<span class="linenos"> 66</span><span class="w">      </span><span class="nt">&lt;upperValue</span><span class="w"> </span><span class="na">xmi:id=</span><span class="s">&quot;DDICDIModels-DDICDILibrary-Classes-Conceptual-VariableCollection-displayLabel-upperValue&quot;</span>
+<span class="linenos"> 67</span><span class="w">                  </span><span class="na">xmi:uuid=</span><span class="s">&quot;http://ddialliance.org/Specification/DDI-CDI/1.0/XMI/#VariableCollection-displayLabel-upperValue&quot;</span>
+<span class="linenos"> 68</span><span class="w">                  </span><span class="na">xmi:type=</span><span class="s">&quot;uml:LiteralUnlimitedNatural&quot;</span><span class="nt">&gt;</span>
+<span class="linenos"> 69</span><span class="w">         </span><span class="nt">&lt;value&gt;</span>*<span class="nt">&lt;/value&gt;</span>
+<span class="linenos"> 70</span><span class="w">      </span><span class="nt">&lt;/upperValue&gt;</span>
+<span class="linenos"> 71</span><span class="w">      </span><span class="nt">&lt;name&gt;</span>displayLabel<span class="nt">&lt;/name&gt;</span>
+<span class="linenos"> 72</span><span class="w">      </span><span class="nt">&lt;isOrdered&gt;</span>true<span class="nt">&lt;/isOrdered&gt;</span>
+<span class="linenos"> 73</span><span class="w">      </span><span class="nt">&lt;type</span><span class="w"> </span><span class="na">xmi:idref=</span><span class="s">&quot;DDICDIModels-DDICDILibrary-DataTypes-StructuredDataTypes-LabelForDisplay&quot;</span><span class="nt">/&gt;</span>
+<span class="linenos"> 74</span><span class="w">   </span><span class="nt">&lt;/ownedAttribute&gt;</span>
+<span class="linenos"> 75</span><span class="w">   </span><span class="nt">&lt;ownedAttribute</span><span class="w"> </span><span class="na">xmi:id=</span><span class="s">&quot;DDICDIModels-DDICDILibrary-Classes-Conceptual-VariableCollection-groupingSemantic&quot;</span>
+<span class="linenos"> 76</span><span class="w">                   </span><span class="na">xmi:uuid=</span><span class="s">&quot;http://ddialliance.org/Specification/DDI-CDI/1.0/XMI/#VariableCollection-groupingSemantic&quot;</span>
+<span class="linenos"> 77</span><span class="w">                   </span><span class="na">xmi:type=</span><span class="s">&quot;uml:Property&quot;</span><span class="nt">&gt;</span>
+<span class="linenos"> 78</span><span class="w">      </span><span class="nt">&lt;ownedComment</span><span class="w"> </span><span class="na">xmi:id=</span><span class="s">&quot;DDICDIModels-DDICDILibrary-Classes-Conceptual-VariableCollection-groupingSemantic-ownedComment&quot;</span>
+<span class="linenos"> 79</span><span class="w">                    </span><span class="na">xmi:uuid=</span><span class="s">&quot;http://ddialliance.org/Specification/DDI-CDI/1.0/XMI/#VariableCollection-groupingSemantic-ownedComment&quot;</span>
+<span class="linenos"> 80</span><span class="w">                    </span><span class="na">xmi:type=</span><span class="s">&quot;uml:Comment&quot;</span><span class="nt">&gt;</span>
+<span class="linenos"> 81</span><span class="w">         </span><span class="nt">&lt;annotatedElement</span><span class="w"> </span><span class="na">xmi:idref=</span><span class="s">&quot;DDICDIModels-DDICDILibrary-Classes-Conceptual-VariableCollection-groupingSemantic&quot;</span><span class="nt">/&gt;</span>
+<span class="linenos"> 82</span><span class="w">         </span><span class="nt">&lt;body&gt;</span>A<span class="w"> </span>semantic<span class="w"> </span>term<span class="w"> </span>defining<span class="w"> </span>the<span class="w"> </span>factor<span class="w"> </span>used<span class="w"> </span>for<span class="w"> </span>defining<span class="w"> </span>this<span class="w"> </span>group.<span class="nt">&lt;/body&gt;</span>
+<span class="linenos"> 83</span><span class="w">      </span><span class="nt">&lt;/ownedComment&gt;</span>
+<span class="linenos"> 84</span><span class="w">      </span><span class="nt">&lt;lowerValue</span><span class="w"> </span><span class="na">xmi:id=</span><span class="s">&quot;DDICDIModels-DDICDILibrary-Classes-Conceptual-VariableCollection-groupingSemantic-lowerValue&quot;</span>
+<span class="linenos"> 85</span><span class="w">                  </span><span class="na">xmi:uuid=</span><span class="s">&quot;http://ddialliance.org/Specification/DDI-CDI/1.0/XMI/#VariableCollection-groupingSemantic-lowerValue&quot;</span>
+<span class="linenos"> 86</span><span class="w">                  </span><span class="na">xmi:type=</span><span class="s">&quot;uml:LiteralInteger&quot;</span><span class="nt">/&gt;</span>
+<span class="linenos"> 87</span><span class="w">      </span><span class="nt">&lt;upperValue</span><span class="w"> </span><span class="na">xmi:id=</span><span class="s">&quot;DDICDIModels-DDICDILibrary-Classes-Conceptual-VariableCollection-groupingSemantic-upperValue&quot;</span>
+<span class="linenos"> 88</span><span class="w">                  </span><span class="na">xmi:uuid=</span><span class="s">&quot;http://ddialliance.org/Specification/DDI-CDI/1.0/XMI/#VariableCollection-groupingSemantic-upperValue&quot;</span>
+<span class="linenos"> 89</span><span class="w">                  </span><span class="na">xmi:type=</span><span class="s">&quot;uml:LiteralUnlimitedNatural&quot;</span><span class="nt">&gt;</span>
+<span class="linenos"> 90</span><span class="w">         </span><span class="nt">&lt;value&gt;</span>1<span class="nt">&lt;/value&gt;</span>
+<span class="linenos"> 91</span><span class="w">      </span><span class="nt">&lt;/upperValue&gt;</span>
+<span class="linenos"> 92</span><span class="w">      </span><span class="nt">&lt;name&gt;</span>groupingSemantic<span class="nt">&lt;/name&gt;</span>
+<span class="linenos"> 93</span><span class="w">      </span><span class="nt">&lt;type</span><span class="w"> </span><span class="na">xmi:idref=</span><span class="s">&quot;DDICDIModels-DDICDILibrary-DataTypes-StructuredDataTypes-ControlledVocabularyEntry&quot;</span><span class="nt">/&gt;</span>
+<span class="linenos"> 94</span><span class="w">   </span><span class="nt">&lt;/ownedAttribute&gt;</span>
+<span class="linenos"> 95</span><span class="w">   </span><span class="nt">&lt;ownedAttribute</span><span class="w"> </span><span class="na">xmi:id=</span><span class="s">&quot;DDICDIModels-DDICDILibrary-Classes-Conceptual-VariableCollection-identifier&quot;</span>
+<span class="linenos"> 96</span><span class="w">                   </span><span class="na">xmi:uuid=</span><span class="s">&quot;http://ddialliance.org/Specification/DDI-CDI/1.0/XMI/#VariableCollection-identifier&quot;</span>
+<span class="linenos"> 97</span><span class="w">                   </span><span class="na">xmi:type=</span><span class="s">&quot;uml:Property&quot;</span><span class="nt">&gt;</span>
+<span class="linenos"> 98</span><span class="w">      </span><span class="nt">&lt;ownedComment</span><span class="w"> </span><span class="na">xmi:id=</span><span class="s">&quot;DDICDIModels-DDICDILibrary-Classes-Conceptual-VariableCollection-identifier-ownedComment&quot;</span>
+<span class="linenos"> 99</span><span class="w">                    </span><span class="na">xmi:uuid=</span><span class="s">&quot;http://ddialliance.org/Specification/DDI-CDI/1.0/XMI/#VariableCollection-identifier-ownedComment&quot;</span>
+<span class="linenos">100</span><span class="w">                    </span><span class="na">xmi:type=</span><span class="s">&quot;uml:Comment&quot;</span><span class="nt">&gt;</span>
+<span class="linenos">101</span><span class="w">         </span><span class="nt">&lt;annotatedElement</span><span class="w"> </span><span class="na">xmi:idref=</span><span class="s">&quot;DDICDIModels-DDICDILibrary-Classes-Conceptual-VariableCollection-identifier&quot;</span><span class="nt">/&gt;</span>
+<span class="linenos">102</span><span class="w">         </span><span class="nt">&lt;body&gt;</span>Identifier<span class="w"> </span>for<span class="w"> </span>objects<span class="w"> </span>requiring<span class="w"> </span>short-<span class="w"> </span>or<span class="w"> </span>long-lasting<span class="w"> </span>referencing<span class="w"> </span>and<span class="w"> </span>management.<span class="nt">&lt;/body&gt;</span>
+<span class="linenos">103</span><span class="w">      </span><span class="nt">&lt;/ownedComment&gt;</span>
+<span class="linenos">104</span><span class="w">      </span><span class="nt">&lt;lowerValue</span><span class="w"> </span><span class="na">xmi:id=</span><span class="s">&quot;DDICDIModels-DDICDILibrary-Classes-Conceptual-VariableCollection-identifier-lowerValue&quot;</span>
+<span class="linenos">105</span><span class="w">                  </span><span class="na">xmi:uuid=</span><span class="s">&quot;http://ddialliance.org/Specification/DDI-CDI/1.0/XMI/#VariableCollection-identifier-lowerValue&quot;</span>
+<span class="linenos">106</span><span class="w">                  </span><span class="na">xmi:type=</span><span class="s">&quot;uml:LiteralInteger&quot;</span><span class="nt">/&gt;</span>
+<span class="linenos">107</span><span class="w">      </span><span class="nt">&lt;upperValue</span><span class="w"> </span><span class="na">xmi:id=</span><span class="s">&quot;DDICDIModels-DDICDILibrary-Classes-Conceptual-VariableCollection-identifier-upperValue&quot;</span>
+<span class="linenos">108</span><span class="w">                  </span><span class="na">xmi:uuid=</span><span class="s">&quot;http://ddialliance.org/Specification/DDI-CDI/1.0/XMI/#VariableCollection-identifier-upperValue&quot;</span>
+<span class="linenos">109</span><span class="w">                  </span><span class="na">xmi:type=</span><span class="s">&quot;uml:LiteralUnlimitedNatural&quot;</span><span class="nt">&gt;</span>
+<span class="linenos">110</span><span class="w">         </span><span class="nt">&lt;value&gt;</span>1<span class="nt">&lt;/value&gt;</span>
+<span class="linenos">111</span><span class="w">      </span><span class="nt">&lt;/upperValue&gt;</span>
+<span class="linenos">112</span><span class="w">      </span><span class="nt">&lt;name&gt;</span>identifier<span class="nt">&lt;/name&gt;</span>
+<span class="linenos">113</span><span class="w">      </span><span class="nt">&lt;isID&gt;</span>true<span class="nt">&lt;/isID&gt;</span>
+<span class="linenos">114</span><span class="w">      </span><span class="nt">&lt;type</span><span class="w"> </span><span class="na">xmi:idref=</span><span class="s">&quot;DDICDIModels-DDICDILibrary-DataTypes-StructuredDataTypes-Identifier&quot;</span><span class="nt">/&gt;</span>
+<span class="linenos">115</span><span class="w">   </span><span class="nt">&lt;/ownedAttribute&gt;</span>
+<span class="linenos">116</span><span class="w">   </span><span class="nt">&lt;ownedAttribute</span><span class="w"> </span><span class="na">xmi:id=</span><span class="s">&quot;DDICDIModels-DDICDILibrary-Classes-Conceptual-VariableCollection-name&quot;</span>
+<span class="linenos">117</span><span class="w">                   </span><span class="na">xmi:uuid=</span><span class="s">&quot;http://ddialliance.org/Specification/DDI-CDI/1.0/XMI/#VariableCollection-name&quot;</span>
+<span class="linenos">118</span><span class="w">                   </span><span class="na">xmi:type=</span><span class="s">&quot;uml:Property&quot;</span><span class="nt">&gt;</span>
+<span class="linenos">119</span><span class="w">      </span><span class="nt">&lt;ownedComment</span><span class="w"> </span><span class="na">xmi:id=</span><span class="s">&quot;DDICDIModels-DDICDILibrary-Classes-Conceptual-VariableCollection-name-ownedComment&quot;</span>
+<span class="linenos">120</span><span class="w">                    </span><span class="na">xmi:uuid=</span><span class="s">&quot;http://ddialliance.org/Specification/DDI-CDI/1.0/XMI/#VariableCollection-name-ownedComment&quot;</span>
+<span class="linenos">121</span><span class="w">                    </span><span class="na">xmi:type=</span><span class="s">&quot;uml:Comment&quot;</span><span class="nt">&gt;</span>
+<span class="linenos">122</span><span class="w">         </span><span class="nt">&lt;annotatedElement</span><span class="w"> </span><span class="na">xmi:idref=</span><span class="s">&quot;DDICDIModels-DDICDILibrary-Classes-Conceptual-VariableCollection-name&quot;</span><span class="nt">/&gt;</span>
+<span class="linenos">123</span><span class="w">         </span><span class="nt">&lt;body&gt;</span>Human<span class="w"> </span>understandable<span class="w"> </span>name<span class="w"> </span>(liguistic<span class="w"> </span>signifier,<span class="w"> </span>word,<span class="w"> </span>phrase,<span class="w"> </span>or<span class="w"> </span>mnemonic).<span class="w"> </span>May<span class="w"> </span>follow<span class="w"> </span>ISO/IEC<span class="w"> </span>11179-5<span class="w"> </span>naming<span class="w"> </span>principles,<span class="w"> </span>and<span class="w"> </span>have<span class="w"> </span>context<span class="w"> </span>provided<span class="w"> </span>to<span class="w"> </span>specify<span class="w"> </span>usage.<span class="nt">&lt;/body&gt;</span>
+<span class="linenos">124</span><span class="w">      </span><span class="nt">&lt;/ownedComment&gt;</span>
+<span class="linenos">125</span><span class="w">      </span><span class="nt">&lt;lowerValue</span><span class="w"> </span><span class="na">xmi:id=</span><span class="s">&quot;DDICDIModels-DDICDILibrary-Classes-Conceptual-VariableCollection-name-lowerValue&quot;</span>
+<span class="linenos">126</span><span class="w">                  </span><span class="na">xmi:uuid=</span><span class="s">&quot;http://ddialliance.org/Specification/DDI-CDI/1.0/XMI/#VariableCollection-name-lowerValue&quot;</span>
+<span class="linenos">127</span><span class="w">                  </span><span class="na">xmi:type=</span><span class="s">&quot;uml:LiteralInteger&quot;</span><span class="nt">/&gt;</span>
+<span class="linenos">128</span><span class="w">      </span><span class="nt">&lt;upperValue</span><span class="w"> </span><span class="na">xmi:id=</span><span class="s">&quot;DDICDIModels-DDICDILibrary-Classes-Conceptual-VariableCollection-name-upperValue&quot;</span>
+<span class="linenos">129</span><span class="w">                  </span><span class="na">xmi:uuid=</span><span class="s">&quot;http://ddialliance.org/Specification/DDI-CDI/1.0/XMI/#VariableCollection-name-upperValue&quot;</span>
+<span class="linenos">130</span><span class="w">                  </span><span class="na">xmi:type=</span><span class="s">&quot;uml:LiteralUnlimitedNatural&quot;</span><span class="nt">&gt;</span>
+<span class="linenos">131</span><span class="w">         </span><span class="nt">&lt;value&gt;</span>*<span class="nt">&lt;/value&gt;</span>
+<span class="linenos">132</span><span class="w">      </span><span class="nt">&lt;/upperValue&gt;</span>
+<span class="linenos">133</span><span class="w">      </span><span class="nt">&lt;name&gt;</span>name<span class="nt">&lt;/name&gt;</span>
+<span class="linenos">134</span><span class="w">      </span><span class="nt">&lt;isOrdered&gt;</span>true<span class="nt">&lt;/isOrdered&gt;</span>
+<span class="linenos">135</span><span class="w">      </span><span class="nt">&lt;type</span><span class="w"> </span><span class="na">xmi:idref=</span><span class="s">&quot;DDICDIModels-DDICDILibrary-DataTypes-StructuredDataTypes-ObjectName&quot;</span><span class="nt">/&gt;</span>
+<span class="linenos">136</span><span class="w">   </span><span class="nt">&lt;/ownedAttribute&gt;</span>
+<span class="linenos">137</span><span class="w">   </span><span class="nt">&lt;ownedAttribute</span><span class="w"> </span><span class="na">xmi:id=</span><span class="s">&quot;DDICDIModels-DDICDILibrary-Classes-Conceptual-VariableCollection-ownedAttribute_1&quot;</span>
+<span class="linenos">138</span><span class="w">                   </span><span class="na">xmi:uuid=</span><span class="s">&quot;http://ddialliance.org/Specification/DDI-CDI/1.0/XMI/#VariableCollection-ownedAttribute_1&quot;</span>
+<span class="linenos">139</span><span class="w">                   </span><span class="na">xmi:type=</span><span class="s">&quot;uml:Property&quot;</span><span class="nt">&gt;</span>
+<span class="linenos">140</span><span class="w">      </span><span class="nt">&lt;lowerValue</span><span class="w"> </span><span class="na">xmi:id=</span><span class="s">&quot;DDICDIModels-DDICDILibrary-Classes-Conceptual-VariableCollection-ownedAttribute_1-lowerValue&quot;</span>
+<span class="linenos">141</span><span class="w">                  </span><span class="na">xmi:uuid=</span><span class="s">&quot;http://ddialliance.org/Specification/DDI-CDI/1.0/XMI/#VariableCollection-ownedAttribute_1-lowerValue&quot;</span>
+<span class="linenos">142</span><span class="w">                  </span><span class="na">xmi:type=</span><span class="s">&quot;uml:LiteralInteger&quot;</span><span class="nt">/&gt;</span>
+<span class="linenos">143</span><span class="w">      </span><span class="nt">&lt;upperValue</span><span class="w"> </span><span class="na">xmi:id=</span><span class="s">&quot;DDICDIModels-DDICDILibrary-Classes-Conceptual-VariableCollection-ownedAttribute_1-upperValue&quot;</span>
+<span class="linenos">144</span><span class="w">                  </span><span class="na">xmi:uuid=</span><span class="s">&quot;http://ddialliance.org/Specification/DDI-CDI/1.0/XMI/#VariableCollection-ownedAttribute_1-upperValue&quot;</span>
+<span class="linenos">145</span><span class="w">                  </span><span class="na">xmi:type=</span><span class="s">&quot;uml:LiteralUnlimitedNatural&quot;</span><span class="nt">&gt;</span>
+<span class="linenos">146</span><span class="w">         </span><span class="nt">&lt;value&gt;</span>*<span class="nt">&lt;/value&gt;</span>
+<span class="linenos">147</span><span class="w">      </span><span class="nt">&lt;/upperValue&gt;</span>
+<span class="linenos">148</span><span class="w">      </span><span class="nt">&lt;association</span><span class="w"> </span><span class="na">xmi:idref=</span><span class="s">&quot;DDICDIModels-DDICDILibrary-Classes-Conceptual-VariableCollection_isDefinedBy_Concept&quot;</span><span class="nt">/&gt;</span>
+<span class="linenos">149</span><span class="w">      </span><span class="nt">&lt;type</span><span class="w"> </span><span class="na">xmi:idref=</span><span class="s">&quot;DDICDIModels-DDICDILibrary-Classes-Conceptual-Concept&quot;</span><span class="nt">/&gt;</span>
+<span class="linenos">150</span><span class="w">   </span><span class="nt">&lt;/ownedAttribute&gt;</span>
+<span class="linenos">151</span><span class="w">   </span><span class="nt">&lt;ownedAttribute</span><span class="w"> </span><span class="na">xmi:id=</span><span class="s">&quot;DDICDIModels-DDICDILibrary-Classes-Conceptual-VariableCollection-ownedAttribute_2&quot;</span>
+<span class="linenos">152</span><span class="w">                   </span><span class="na">xmi:uuid=</span><span class="s">&quot;http://ddialliance.org/Specification/DDI-CDI/1.0/XMI/#VariableCollection-ownedAttribute_2&quot;</span>
+<span class="linenos">153</span><span class="w">                   </span><span class="na">xmi:type=</span><span class="s">&quot;uml:Property&quot;</span><span class="nt">&gt;</span>
+<span class="linenos">154</span><span class="w">      </span><span class="nt">&lt;lowerValue</span><span class="w"> </span><span class="na">xmi:id=</span><span class="s">&quot;DDICDIModels-DDICDILibrary-Classes-Conceptual-VariableCollection-ownedAttribute_2-lowerValue&quot;</span>
+<span class="linenos">155</span><span class="w">                  </span><span class="na">xmi:uuid=</span><span class="s">&quot;http://ddialliance.org/Specification/DDI-CDI/1.0/XMI/#VariableCollection-ownedAttribute_2-lowerValue&quot;</span>
+<span class="linenos">156</span><span class="w">                  </span><span class="na">xmi:type=</span><span class="s">&quot;uml:LiteralInteger&quot;</span><span class="nt">/&gt;</span>
+<span class="linenos">157</span><span class="w">      </span><span class="nt">&lt;upperValue</span><span class="w"> </span><span class="na">xmi:id=</span><span class="s">&quot;DDICDIModels-DDICDILibrary-Classes-Conceptual-VariableCollection-ownedAttribute_2-upperValue&quot;</span>
+<span class="linenos">158</span><span class="w">                  </span><span class="na">xmi:uuid=</span><span class="s">&quot;http://ddialliance.org/Specification/DDI-CDI/1.0/XMI/#VariableCollection-ownedAttribute_2-upperValue&quot;</span>
+<span class="linenos">159</span><span class="w">                  </span><span class="na">xmi:type=</span><span class="s">&quot;uml:LiteralUnlimitedNatural&quot;</span><span class="nt">&gt;</span>
+<span class="linenos">160</span><span class="w">         </span><span class="nt">&lt;value&gt;</span>*<span class="nt">&lt;/value&gt;</span>
+<span class="linenos">161</span><span class="w">      </span><span class="nt">&lt;/upperValue&gt;</span>
+<span class="linenos">162</span><span class="w">      </span><span class="nt">&lt;aggregation&gt;</span>shared<span class="nt">&lt;/aggregation&gt;</span>
+<span class="linenos">163</span><span class="w">      </span><span class="nt">&lt;association</span><span class="w"> </span><span class="na">xmi:idref=</span><span class="s">&quot;DDICDIModels-DDICDILibrary-Classes-Conceptual-VariableCollection_has_ConceptualVariable&quot;</span><span class="nt">/&gt;</span>
+<span class="linenos">164</span><span class="w">      </span><span class="nt">&lt;type</span><span class="w"> </span><span class="na">xmi:idref=</span><span class="s">&quot;DDICDIModels-DDICDILibrary-Classes-Conceptual-ConceptualVariable&quot;</span><span class="nt">/&gt;</span>
+<span class="linenos">165</span><span class="w">   </span><span class="nt">&lt;/ownedAttribute&gt;</span>
+<span class="linenos">166</span><span class="w">   </span><span class="nt">&lt;ownedAttribute</span><span class="w"> </span><span class="na">xmi:id=</span><span class="s">&quot;DDICDIModels-DDICDILibrary-Classes-Conceptual-VariableCollection-ownedAttribute_3&quot;</span>
+<span class="linenos">167</span><span class="w">                   </span><span class="na">xmi:uuid=</span><span class="s">&quot;http://ddialliance.org/Specification/DDI-CDI/1.0/XMI/#VariableCollection-ownedAttribute_3&quot;</span>
+<span class="linenos">168</span><span class="w">                   </span><span class="na">xmi:type=</span><span class="s">&quot;uml:Property&quot;</span><span class="nt">&gt;</span>
+<span class="linenos">169</span><span class="w">      </span><span class="nt">&lt;lowerValue</span><span class="w"> </span><span class="na">xmi:id=</span><span class="s">&quot;DDICDIModels-DDICDILibrary-Classes-Conceptual-VariableCollection-ownedAttribute_3-lowerValue&quot;</span>
+<span class="linenos">170</span><span class="w">                  </span><span class="na">xmi:uuid=</span><span class="s">&quot;http://ddialliance.org/Specification/DDI-CDI/1.0/XMI/#VariableCollection-ownedAttribute_3-lowerValue&quot;</span>
+<span class="linenos">171</span><span class="w">                  </span><span class="na">xmi:type=</span><span class="s">&quot;uml:LiteralInteger&quot;</span><span class="nt">/&gt;</span>
+<span class="linenos">172</span><span class="w">      </span><span class="nt">&lt;upperValue</span><span class="w"> </span><span class="na">xmi:id=</span><span class="s">&quot;DDICDIModels-DDICDILibrary-Classes-Conceptual-VariableCollection-ownedAttribute_3-upperValue&quot;</span>
+<span class="linenos">173</span><span class="w">                  </span><span class="na">xmi:uuid=</span><span class="s">&quot;http://ddialliance.org/Specification/DDI-CDI/1.0/XMI/#VariableCollection-ownedAttribute_3-upperValue&quot;</span>
+<span class="linenos">174</span><span class="w">                  </span><span class="na">xmi:type=</span><span class="s">&quot;uml:LiteralUnlimitedNatural&quot;</span><span class="nt">&gt;</span>
+<span class="linenos">175</span><span class="w">         </span><span class="nt">&lt;value&gt;</span>*<span class="nt">&lt;/value&gt;</span>
+<span class="linenos">176</span><span class="w">      </span><span class="nt">&lt;/upperValue&gt;</span>
+<span class="linenos">177</span><span class="w">      </span><span class="nt">&lt;aggregation&gt;</span>composite<span class="nt">&lt;/aggregation&gt;</span>
+<span class="linenos">178</span><span class="w">      </span><span class="nt">&lt;association</span><span class="w"> </span><span class="na">xmi:idref=</span><span class="s">&quot;DDICDIModels-DDICDILibrary-Classes-Conceptual-VariableCollection_has_VariablePosition&quot;</span><span class="nt">/&gt;</span>
+<span class="linenos">179</span><span class="w">      </span><span class="nt">&lt;type</span><span class="w"> </span><span class="na">xmi:idref=</span><span class="s">&quot;DDICDIModels-DDICDILibrary-Classes-Conceptual-VariablePosition&quot;</span><span class="nt">/&gt;</span>
+<span class="linenos">180</span><span class="w">   </span><span class="nt">&lt;/ownedAttribute&gt;</span>
+<span class="linenos">181</span><span class="w">   </span><span class="nt">&lt;ownedAttribute</span><span class="w"> </span><span class="na">xmi:id=</span><span class="s">&quot;DDICDIModels-DDICDILibrary-Classes-Conceptual-VariableCollection-purpose&quot;</span>
+<span class="linenos">182</span><span class="w">                   </span><span class="na">xmi:uuid=</span><span class="s">&quot;http://ddialliance.org/Specification/DDI-CDI/1.0/XMI/#VariableCollection-purpose&quot;</span>
+<span class="linenos">183</span><span class="w">                   </span><span class="na">xmi:type=</span><span class="s">&quot;uml:Property&quot;</span><span class="nt">&gt;</span>
+<span class="linenos">184</span><span class="w">      </span><span class="nt">&lt;ownedComment</span><span class="w"> </span><span class="na">xmi:id=</span><span class="s">&quot;DDICDIModels-DDICDILibrary-Classes-Conceptual-VariableCollection-purpose-ownedComment&quot;</span>
+<span class="linenos">185</span><span class="w">                    </span><span class="na">xmi:uuid=</span><span class="s">&quot;http://ddialliance.org/Specification/DDI-CDI/1.0/XMI/#VariableCollection-purpose-ownedComment&quot;</span>
+<span class="linenos">186</span><span class="w">                    </span><span class="na">xmi:type=</span><span class="s">&quot;uml:Comment&quot;</span><span class="nt">&gt;</span>
+<span class="linenos">187</span><span class="w">         </span><span class="nt">&lt;annotatedElement</span><span class="w"> </span><span class="na">xmi:idref=</span><span class="s">&quot;DDICDIModels-DDICDILibrary-Classes-Conceptual-VariableCollection-purpose&quot;</span><span class="nt">/&gt;</span>
+<span class="linenos">188</span><span class="w">         </span><span class="nt">&lt;body&gt;</span>Intent<span class="w"> </span>or<span class="w"> </span>reason<span class="w"> </span>for<span class="w"> </span>the<span class="w"> </span>object/the<span class="w"> </span>description<span class="w"> </span>of<span class="w"> </span>the<span class="w"> </span>object.<span class="nt">&lt;/body&gt;</span>
+<span class="linenos">189</span><span class="w">      </span><span class="nt">&lt;/ownedComment&gt;</span>
+<span class="linenos">190</span><span class="w">      </span><span class="nt">&lt;lowerValue</span><span class="w"> </span><span class="na">xmi:id=</span><span class="s">&quot;DDICDIModels-DDICDILibrary-Classes-Conceptual-VariableCollection-purpose-lowerValue&quot;</span>
+<span class="linenos">191</span><span class="w">                  </span><span class="na">xmi:uuid=</span><span class="s">&quot;http://ddialliance.org/Specification/DDI-CDI/1.0/XMI/#VariableCollection-purpose-lowerValue&quot;</span>
+<span class="linenos">192</span><span class="w">                  </span><span class="na">xmi:type=</span><span class="s">&quot;uml:LiteralInteger&quot;</span><span class="nt">/&gt;</span>
+<span class="linenos">193</span><span class="w">      </span><span class="nt">&lt;upperValue</span><span class="w"> </span><span class="na">xmi:id=</span><span class="s">&quot;DDICDIModels-DDICDILibrary-Classes-Conceptual-VariableCollection-purpose-upperValue&quot;</span>
+<span class="linenos">194</span><span class="w">                  </span><span class="na">xmi:uuid=</span><span class="s">&quot;http://ddialliance.org/Specification/DDI-CDI/1.0/XMI/#VariableCollection-purpose-upperValue&quot;</span>
+<span class="linenos">195</span><span class="w">                  </span><span class="na">xmi:type=</span><span class="s">&quot;uml:LiteralUnlimitedNatural&quot;</span><span class="nt">&gt;</span>
+<span class="linenos">196</span><span class="w">         </span><span class="nt">&lt;value&gt;</span>1<span class="nt">&lt;/value&gt;</span>
+<span class="linenos">197</span><span class="w">      </span><span class="nt">&lt;/upperValue&gt;</span>
+<span class="linenos">198</span><span class="w">      </span><span class="nt">&lt;name&gt;</span>purpose<span class="nt">&lt;/name&gt;</span>
+<span class="linenos">199</span><span class="w">      </span><span class="nt">&lt;type</span><span class="w"> </span><span class="na">xmi:idref=</span><span class="s">&quot;DDICDIModels-DDICDILibrary-DataTypes-StructuredDataTypes-InternationalString&quot;</span><span class="nt">/&gt;</span>
+<span class="linenos">200</span><span class="w">   </span><span class="nt">&lt;/ownedAttribute&gt;</span>
+<span class="linenos">201</span><span class="w">   </span><span class="nt">&lt;ownedAttribute</span><span class="w"> </span><span class="na">xmi:id=</span><span class="s">&quot;DDICDIModels-DDICDILibrary-Classes-Conceptual-VariableCollection-usage&quot;</span>
+<span class="linenos">202</span><span class="w">                   </span><span class="na">xmi:uuid=</span><span class="s">&quot;http://ddialliance.org/Specification/DDI-CDI/1.0/XMI/#VariableCollection-usage&quot;</span>
+<span class="linenos">203</span><span class="w">                   </span><span class="na">xmi:type=</span><span class="s">&quot;uml:Property&quot;</span><span class="nt">&gt;</span>
+<span class="linenos">204</span><span class="w">      </span><span class="nt">&lt;ownedComment</span><span class="w"> </span><span class="na">xmi:id=</span><span class="s">&quot;DDICDIModels-DDICDILibrary-Classes-Conceptual-VariableCollection-usage-ownedComment&quot;</span>
+<span class="linenos">205</span><span class="w">                    </span><span class="na">xmi:uuid=</span><span class="s">&quot;http://ddialliance.org/Specification/DDI-CDI/1.0/XMI/#VariableCollection-usage-ownedComment&quot;</span>
+<span class="linenos">206</span><span class="w">                    </span><span class="na">xmi:type=</span><span class="s">&quot;uml:Comment&quot;</span><span class="nt">&gt;</span>
+<span class="linenos">207</span><span class="w">         </span><span class="nt">&lt;annotatedElement</span><span class="w"> </span><span class="na">xmi:idref=</span><span class="s">&quot;DDICDIModels-DDICDILibrary-Classes-Conceptual-VariableCollection-usage&quot;</span><span class="nt">/&gt;</span>
+<span class="linenos">208</span><span class="w">         </span><span class="nt">&lt;body&gt;</span>Explanation<span class="w"> </span>of<span class="w"> </span>the<span class="w"> </span>ways<span class="w"> </span>in<span class="w"> </span>which<span class="w"> </span>the<span class="w"> </span>object<span class="w"> </span>is<span class="w"> </span>employed.<span class="nt">&lt;/body&gt;</span>
+<span class="linenos">209</span><span class="w">      </span><span class="nt">&lt;/ownedComment&gt;</span>
+<span class="linenos">210</span><span class="w">      </span><span class="nt">&lt;lowerValue</span><span class="w"> </span><span class="na">xmi:id=</span><span class="s">&quot;DDICDIModels-DDICDILibrary-Classes-Conceptual-VariableCollection-usage-lowerValue&quot;</span>
+<span class="linenos">211</span><span class="w">                  </span><span class="na">xmi:uuid=</span><span class="s">&quot;http://ddialliance.org/Specification/DDI-CDI/1.0/XMI/#VariableCollection-usage-lowerValue&quot;</span>
+<span class="linenos">212</span><span class="w">                  </span><span class="na">xmi:type=</span><span class="s">&quot;uml:LiteralInteger&quot;</span><span class="nt">/&gt;</span>
+<span class="linenos">213</span><span class="w">      </span><span class="nt">&lt;upperValue</span><span class="w"> </span><span class="na">xmi:id=</span><span class="s">&quot;DDICDIModels-DDICDILibrary-Classes-Conceptual-VariableCollection-usage-upperValue&quot;</span>
+<span class="linenos">214</span><span class="w">                  </span><span class="na">xmi:uuid=</span><span class="s">&quot;http://ddialliance.org/Specification/DDI-CDI/1.0/XMI/#VariableCollection-usage-upperValue&quot;</span>
+<span class="linenos">215</span><span class="w">                  </span><span class="na">xmi:type=</span><span class="s">&quot;uml:LiteralUnlimitedNatural&quot;</span><span class="nt">&gt;</span>
+<span class="linenos">216</span><span class="w">         </span><span class="nt">&lt;value&gt;</span>1<span class="nt">&lt;/value&gt;</span>
+<span class="linenos">217</span><span class="w">      </span><span class="nt">&lt;/upperValue&gt;</span>
+<span class="linenos">218</span><span class="w">      </span><span class="nt">&lt;name&gt;</span>usage<span class="nt">&lt;/name&gt;</span>
+<span class="linenos">219</span><span class="w">      </span><span class="nt">&lt;type</span><span class="w"> </span><span class="na">xmi:idref=</span><span class="s">&quot;DDICDIModels-DDICDILibrary-DataTypes-StructuredDataTypes-InternationalString&quot;</span><span class="nt">/&gt;</span>
+<span class="linenos">220</span><span class="w">   </span><span class="nt">&lt;/ownedAttribute&gt;</span>
+<span class="linenos">221</span><span class="nt">&lt;/packagedElement&gt;</span>
+</pre></div>
+</div>
+</div>
+<input id="sd-tab-item-1" name="sd-tab-set-0" type="radio">
+<label class="sd-tab-label" for="sd-tab-item-1">
+XML Schema</label><div class="sd-tab-content encoding docutils">
+<p class="sd-card-text">Fragment for the class <strong>VariableCollection</strong> (<a class="reference external" href="/encoding/xml-schema/ddi-cdi.xsd">entire XML Schema</a>)</p>
+<div class="highlight-xml notranslate"><div class="highlight"><pre><span></span><span class="hll"><span class="linenos">  1</span><span class="nt">&lt;xs:element</span><span class="w"> </span><span class="na">name=</span><span class="s">&quot;VariableCollection&quot;</span>
+</span><span class="linenos">  2</span><span class="w">            </span><span class="na">type=</span><span class="s">&quot;VariableCollectionXsdType&quot;</span>
+<span class="linenos">  3</span><span class="w">            </span><span class="na">xml:id=</span><span class="s">&quot;VariableCollection&quot;</span><span class="nt">&gt;</span>
+<span class="linenos">  4</span><span class="w">  </span><span class="cm">&lt;!-- based on the UML class DDICDIModels::DDICDILibrary::Classes::Conceptual::VariableCollection --&gt;</span>
+<span class="linenos">  5</span><span class="w">  </span><span class="nt">&lt;xs:annotation&gt;</span>
+<span class="linenos">  6</span><span class="w">    </span><span class="nt">&lt;xs:documentation&gt;</span>Definition
+<span class="linenos">  7</span><span class="w">          </span>==========
+<span class="linenos">  8</span><span class="w">          </span>Group<span class="w"> </span>of<span class="w"> </span>any<span class="w"> </span>type<span class="w"> </span>of<span class="w"> </span>variable<span class="w"> </span>within<span class="w"> </span>the<span class="w"> </span>variable<span class="w"> </span>cascade<span class="w"> </span>(conceptual,<span class="w"> </span>represented,<span class="w"> </span>instance).
+<span class="linenos">  9</span><span class="w">          </span>
+<span class="linenos"> 10</span><span class="w">          </span>Examples
+<span class="linenos"> 11</span><span class="w">          </span>========
+<span class="linenos"> 12</span><span class="w">          </span>1.<span class="w"> </span>Variables<span class="w"> </span>within<span class="w"> </span>a<span class="w"> </span>specific<span class="w"> </span>section<span class="w"> </span>of<span class="w"> </span>a<span class="w"> </span>study
+<span class="linenos"> 13</span><span class="w">          </span>2.<span class="w"> </span>Variables<span class="w"> </span>related<span class="w"> </span>to<span class="w"> </span>a<span class="w"> </span>specific<span class="w"> </span>subject<span class="w"> </span>or<span class="w"> </span>keyword
+<span class="linenos"> 14</span><span class="w">          </span>3.<span class="w"> </span>Variables<span class="w"> </span>at<span class="w"> </span>a<span class="w"> </span>specified<span class="w"> </span>level<span class="w"> </span>of<span class="w"> </span>development<span class="w"> </span>or<span class="w"> </span>review
+<span class="linenos"> 15</span><span class="w">          </span>
+<span class="linenos"> 16</span><span class="w">          </span>Explanatory<span class="w"> </span>notes
+<span class="linenos"> 17</span><span class="w">          </span>=================<span class="w"> </span>
+<span class="linenos"> 18</span><span class="w">          </span>A<span class="w"> </span>simple<span class="w"> </span>ordered<span class="w"> </span>or<span class="w"> </span>unordered<span class="w"> </span>list<span class="w"> </span>of<span class="w"> </span>variables<span class="w"> </span>can<span class="w"> </span>be<span class="w"> </span>described<span class="w"> </span>via<span class="w"> </span>a<span class="w"> </span>set<span class="w"> </span>of<span class="w"> </span>variable<span class="w"> </span>position<span class="w"> </span>parameters.<span class="w"> </span>An<span class="w"> </span>optional<span class="w"> </span>variable<span class="w"> </span>structure<span class="w"> </span>can<span class="w"> </span>describe<span class="w"> </span>a<span class="w"> </span>more<span class="w"> </span>complex<span class="w"> </span>structure<span class="w"> </span>for<span class="w"> </span>the<span class="w"> </span>collection.<span class="w"> </span>We<span class="w"> </span>might,<span class="w"> </span>for<span class="w"> </span>example,<span class="w"> </span>use<span class="w"> </span>the<span class="w"> </span>variable<span class="w"> </span>structure<span class="w"> </span>to<span class="w"> </span>group<span class="w"> </span>variables<span class="w"> </span>by<span class="w"> </span>content<span class="w"> </span>within<span class="w"> </span>a<span class="w"> </span>single<span class="w"> </span>collection<span class="w"> </span>of<span class="w"> </span>data<span class="w"> </span>or<span class="w"> </span>a<span class="w"> </span>wave<span class="w"> </span>of<span class="w"> </span>on-going<span class="w"> </span>data<span class="w"> </span>collection.<span class="w"> </span>For<span class="w"> </span>the<span class="w"> </span>purposes<span class="w"> </span>of<span class="w"> </span>management,<span class="w"> </span>conceptualization<span class="w"> </span>or<span class="w"> </span>anything<span class="w"> </span>other<span class="w"> </span>than<span class="w"> </span>organizing<span class="w"> </span>a<span class="w"> </span>logical<span class="w"> </span>record<span class="w"> </span>or<span class="w"> </span>physical<span class="w"> </span>layout.<span class="nt">&lt;/xs:documentation&gt;</span>
+<span class="linenos"> 19</span><span class="w">  </span><span class="nt">&lt;/xs:annotation&gt;</span>
+<span class="linenos"> 20</span><span class="nt">&lt;/xs:element&gt;</span>
+<span class="linenos"> 21</span><span class="nt">&lt;xs:complexType</span><span class="w"> </span><span class="na">name=</span><span class="s">&quot;VariableCollectionXsdType&quot;</span>
+<span class="linenos"> 22</span><span class="w">                </span><span class="na">xml:id=</span><span class="s">&quot;VariableCollectionXsdType&quot;</span><span class="nt">&gt;</span>
+<span class="linenos"> 23</span><span class="w">  </span><span class="nt">&lt;xs:annotation&gt;</span>
+<span class="linenos"> 24</span><span class="w">    </span><span class="nt">&lt;xs:documentation&gt;</span>Definition
+<span class="linenos"> 25</span><span class="w">          </span>==========
+<span class="linenos"> 26</span><span class="w">          </span>Group<span class="w"> </span>of<span class="w"> </span>any<span class="w"> </span>type<span class="w"> </span>of<span class="w"> </span>variable<span class="w"> </span>within<span class="w"> </span>the<span class="w"> </span>variable<span class="w"> </span>cascade<span class="w"> </span>(conceptual,<span class="w"> </span>represented,<span class="w"> </span>instance).
+<span class="linenos"> 27</span><span class="w">          </span>
+<span class="linenos"> 28</span><span class="w">          </span>Examples
+<span class="linenos"> 29</span><span class="w">          </span>========
+<span class="linenos"> 30</span><span class="w">          </span>1.<span class="w"> </span>Variables<span class="w"> </span>within<span class="w"> </span>a<span class="w"> </span>specific<span class="w"> </span>section<span class="w"> </span>of<span class="w"> </span>a<span class="w"> </span>study
+<span class="linenos"> 31</span><span class="w">          </span>2.<span class="w"> </span>Variables<span class="w"> </span>related<span class="w"> </span>to<span class="w"> </span>a<span class="w"> </span>specific<span class="w"> </span>subject<span class="w"> </span>or<span class="w"> </span>keyword
+<span class="linenos"> 32</span><span class="w">          </span>3.<span class="w"> </span>Variables<span class="w"> </span>at<span class="w"> </span>a<span class="w"> </span>specified<span class="w"> </span>level<span class="w"> </span>of<span class="w"> </span>development<span class="w"> </span>or<span class="w"> </span>review
+<span class="linenos"> 33</span><span class="w">          </span>
+<span class="linenos"> 34</span><span class="w">          </span>Explanatory<span class="w"> </span>notes
+<span class="linenos"> 35</span><span class="w">          </span>=================<span class="w"> </span>
+<span class="linenos"> 36</span><span class="w">          </span>A<span class="w"> </span>simple<span class="w"> </span>ordered<span class="w"> </span>or<span class="w"> </span>unordered<span class="w"> </span>list<span class="w"> </span>of<span class="w"> </span>variables<span class="w"> </span>can<span class="w"> </span>be<span class="w"> </span>described<span class="w"> </span>via<span class="w"> </span>a<span class="w"> </span>set<span class="w"> </span>of<span class="w"> </span>variable<span class="w"> </span>position<span class="w"> </span>parameters.<span class="w"> </span>An<span class="w"> </span>optional<span class="w"> </span>variable<span class="w"> </span>structure<span class="w"> </span>can<span class="w"> </span>describe<span class="w"> </span>a<span class="w"> </span>more<span class="w"> </span>complex<span class="w"> </span>structure<span class="w"> </span>for<span class="w"> </span>the<span class="w"> </span>collection.<span class="w"> </span>We<span class="w"> </span>might,<span class="w"> </span>for<span class="w"> </span>example,<span class="w"> </span>use<span class="w"> </span>the<span class="w"> </span>variable<span class="w"> </span>structure<span class="w"> </span>to<span class="w"> </span>group<span class="w"> </span>variables<span class="w"> </span>by<span class="w"> </span>content<span class="w"> </span>within<span class="w"> </span>a<span class="w"> </span>single<span class="w"> </span>collection<span class="w"> </span>of<span class="w"> </span>data<span class="w"> </span>or<span class="w"> </span>a<span class="w"> </span>wave<span class="w"> </span>of<span class="w"> </span>on-going<span class="w"> </span>data<span class="w"> </span>collection.<span class="w"> </span>For<span class="w"> </span>the<span class="w"> </span>purposes<span class="w"> </span>of<span class="w"> </span>management,<span class="w"> </span>conceptualization<span class="w"> </span>or<span class="w"> </span>anything<span class="w"> </span>other<span class="w"> </span>than<span class="w"> </span>organizing<span class="w"> </span>a<span class="w"> </span>logical<span class="w"> </span>record<span class="w"> </span>or<span class="w"> </span>physical<span class="w"> </span>layout.<span class="nt">&lt;/xs:documentation&gt;</span>
+<span class="linenos"> 37</span><span class="w">  </span><span class="nt">&lt;/xs:annotation&gt;</span>
+<span class="linenos"> 38</span><span class="w">  </span><span class="nt">&lt;xs:sequence&gt;</span>
+<span class="linenos"> 39</span><span class="w">    </span><span class="nt">&lt;xs:element</span><span class="w"> </span><span class="na">name=</span><span class="s">&quot;allowsDuplicates&quot;</span>
+<span class="linenos"> 40</span><span class="w">                </span><span class="na">type=</span><span class="s">&quot;xs:boolean&quot;</span>
+<span class="linenos"> 41</span><span class="w">                </span><span class="na">minOccurs=</span><span class="s">&quot;1&quot;</span>
+<span class="linenos"> 42</span><span class="w">                </span><span class="na">maxOccurs=</span><span class="s">&quot;1&quot;</span>
+<span class="linenos"> 43</span><span class="w">                </span><span class="na">xml:id=</span><span class="s">&quot;VariableCollection-allowsDuplicates&quot;</span><span class="nt">&gt;</span>
+<span class="linenos"> 44</span><span class="w">      </span><span class="nt">&lt;xs:annotation&gt;</span>
+<span class="linenos"> 45</span><span class="w">        </span><span class="nt">&lt;xs:documentation&gt;</span>If<span class="w"> </span>value<span class="w"> </span>is<span class="w"> </span>False,<span class="w"> </span>the<span class="w"> </span>members<span class="w"> </span>are<span class="w"> </span>unique<span class="w"> </span>within<span class="w"> </span>the<span class="w"> </span>collection<span class="w"> </span>-<span class="w"> </span>if<span class="w"> </span>True,<span class="w"> </span>there<span class="w"> </span>may<span class="w"> </span>be<span class="w"> </span>duplicates.<span class="w"> </span>(Note<span class="w"> </span>that<span class="w"> </span>a<span class="w"> </span>mathematical<span class="w"> </span>“bag”<span class="w"> </span>permits<span class="w"> </span>duplicates<span class="w"> </span>and<span class="w"> </span>is<span class="w"> </span>unordered<span class="w"> </span>-<span class="w"> </span>a<span class="w"> </span>“set”<span class="w"> </span>does<span class="w"> </span>not<span class="w"> </span>have<span class="w"> </span>duplicates<span class="w"> </span>and<span class="w"> </span>may<span class="w"> </span>be<span class="w"> </span>ordered.)<span class="nt">&lt;/xs:documentation&gt;</span>
+<span class="linenos"> 46</span><span class="w">      </span><span class="nt">&lt;/xs:annotation&gt;</span>
+<span class="linenos"> 47</span><span class="w">    </span><span class="nt">&lt;/xs:element&gt;</span>
+<span class="linenos"> 48</span><span class="w">    </span><span class="nt">&lt;xs:element</span><span class="w"> </span><span class="na">name=</span><span class="s">&quot;displayLabel&quot;</span>
+<span class="linenos"> 49</span><span class="w">                </span><span class="na">type=</span><span class="s">&quot;LabelForDisplayXsdType&quot;</span>
+<span class="linenos"> 50</span><span class="w">                </span><span class="na">minOccurs=</span><span class="s">&quot;0&quot;</span>
+<span class="linenos"> 51</span><span class="w">                </span><span class="na">maxOccurs=</span><span class="s">&quot;unbounded&quot;</span>
+<span class="linenos"> 52</span><span class="w">                </span><span class="na">xml:id=</span><span class="s">&quot;VariableCollection-displayLabel&quot;</span><span class="nt">&gt;</span>
+<span class="linenos"> 53</span><span class="w">      </span><span class="nt">&lt;xs:annotation&gt;</span>
+<span class="linenos"> 54</span><span class="w">        </span><span class="nt">&lt;xs:documentation&gt;</span>A<span class="w"> </span>human-readable<span class="w"> </span>display<span class="w"> </span>label<span class="w"> </span>for<span class="w"> </span>the<span class="w"> </span>object.<span class="w"> </span>Supports<span class="w"> </span>the<span class="w"> </span>use<span class="w"> </span>of<span class="w"> </span>multiple<span class="w"> </span>languages.<span class="w"> </span>Repeat<span class="w"> </span>for<span class="w"> </span>labels<span class="w"> </span>with<span class="w"> </span>different<span class="w"> </span>content,<span class="w"> </span>for<span class="w"> </span>example,<span class="w"> </span>labels<span class="w"> </span>with<span class="w"> </span>differing<span class="w"> </span>length<span class="w"> </span>limitations.<span class="nt">&lt;/xs:documentation&gt;</span>
+<span class="linenos"> 55</span><span class="w">      </span><span class="nt">&lt;/xs:annotation&gt;</span>
+<span class="linenos"> 56</span><span class="w">    </span><span class="nt">&lt;/xs:element&gt;</span>
+<span class="linenos"> 57</span><span class="w">    </span><span class="nt">&lt;xs:element</span><span class="w"> </span><span class="na">name=</span><span class="s">&quot;groupingSemantic&quot;</span>
+<span class="linenos"> 58</span><span class="w">                </span><span class="na">type=</span><span class="s">&quot;ControlledVocabularyEntryXsdType&quot;</span>
+<span class="linenos"> 59</span><span class="w">                </span><span class="na">minOccurs=</span><span class="s">&quot;0&quot;</span>
+<span class="linenos"> 60</span><span class="w">                </span><span class="na">maxOccurs=</span><span class="s">&quot;1&quot;</span>
+<span class="linenos"> 61</span><span class="w">                </span><span class="na">xml:id=</span><span class="s">&quot;VariableCollection-groupingSemantic&quot;</span><span class="nt">&gt;</span>
+<span class="linenos"> 62</span><span class="w">      </span><span class="nt">&lt;xs:annotation&gt;</span>
+<span class="linenos"> 63</span><span class="w">        </span><span class="nt">&lt;xs:documentation&gt;</span>A<span class="w"> </span>semantic<span class="w"> </span>term<span class="w"> </span>defining<span class="w"> </span>the<span class="w"> </span>factor<span class="w"> </span>used<span class="w"> </span>for<span class="w"> </span>defining<span class="w"> </span>this<span class="w"> </span>group.<span class="nt">&lt;/xs:documentation&gt;</span>
+<span class="linenos"> 64</span><span class="w">      </span><span class="nt">&lt;/xs:annotation&gt;</span>
+<span class="linenos"> 65</span><span class="w">    </span><span class="nt">&lt;/xs:element&gt;</span>
+<span class="linenos"> 66</span><span class="w">    </span><span class="nt">&lt;xs:element</span><span class="w"> </span><span class="na">name=</span><span class="s">&quot;identifier&quot;</span>
+<span class="linenos"> 67</span><span class="w">                </span><span class="na">type=</span><span class="s">&quot;IdentifierXsdType&quot;</span>
+<span class="linenos"> 68</span><span class="w">                </span><span class="na">minOccurs=</span><span class="s">&quot;0&quot;</span>
+<span class="linenos"> 69</span><span class="w">                </span><span class="na">maxOccurs=</span><span class="s">&quot;1&quot;</span>
+<span class="linenos"> 70</span><span class="w">                </span><span class="na">xml:id=</span><span class="s">&quot;VariableCollection-identifier&quot;</span><span class="nt">&gt;</span>
+<span class="linenos"> 71</span><span class="w">      </span><span class="nt">&lt;xs:annotation&gt;</span>
+<span class="linenos"> 72</span><span class="w">        </span><span class="nt">&lt;xs:documentation&gt;</span>Identifier<span class="w"> </span>for<span class="w"> </span>objects<span class="w"> </span>requiring<span class="w"> </span>short-<span class="w"> </span>or<span class="w"> </span>long-lasting<span class="w"> </span>referencing<span class="w"> </span>and<span class="w"> </span>management.<span class="nt">&lt;/xs:documentation&gt;</span>
+<span class="linenos"> 73</span><span class="w">      </span><span class="nt">&lt;/xs:annotation&gt;</span>
+<span class="linenos"> 74</span><span class="w">    </span><span class="nt">&lt;/xs:element&gt;</span>
+<span class="linenos"> 75</span><span class="w">    </span><span class="nt">&lt;xs:element</span><span class="w"> </span><span class="na">name=</span><span class="s">&quot;name&quot;</span>
+<span class="linenos"> 76</span><span class="w">                </span><span class="na">type=</span><span class="s">&quot;ObjectNameXsdType&quot;</span>
+<span class="linenos"> 77</span><span class="w">                </span><span class="na">minOccurs=</span><span class="s">&quot;0&quot;</span>
+<span class="linenos"> 78</span><span class="w">                </span><span class="na">maxOccurs=</span><span class="s">&quot;unbounded&quot;</span>
+<span class="linenos"> 79</span><span class="w">                </span><span class="na">xml:id=</span><span class="s">&quot;VariableCollection-name&quot;</span><span class="nt">&gt;</span>
+<span class="linenos"> 80</span><span class="w">      </span><span class="nt">&lt;xs:annotation&gt;</span>
+<span class="linenos"> 81</span><span class="w">        </span><span class="nt">&lt;xs:documentation&gt;</span>Human<span class="w"> </span>understandable<span class="w"> </span>name<span class="w"> </span>(liguistic<span class="w"> </span>signifier,<span class="w"> </span>word,<span class="w"> </span>phrase,<span class="w"> </span>or<span class="w"> </span>mnemonic).<span class="w"> </span>May<span class="w"> </span>follow<span class="w"> </span>ISO/IEC<span class="w"> </span>11179-5<span class="w"> </span>naming<span class="w"> </span>principles,<span class="w"> </span>and<span class="w"> </span>have<span class="w"> </span>context<span class="w"> </span>provided<span class="w"> </span>to<span class="w"> </span>specify<span class="w"> </span>usage.<span class="nt">&lt;/xs:documentation&gt;</span>
+<span class="linenos"> 82</span><span class="w">      </span><span class="nt">&lt;/xs:annotation&gt;</span>
+<span class="linenos"> 83</span><span class="w">    </span><span class="nt">&lt;/xs:element&gt;</span>
+<span class="linenos"> 84</span><span class="w">    </span><span class="nt">&lt;xs:element</span><span class="w"> </span><span class="na">name=</span><span class="s">&quot;purpose&quot;</span>
+<span class="linenos"> 85</span><span class="w">                </span><span class="na">type=</span><span class="s">&quot;InternationalStringXsdType&quot;</span>
+<span class="linenos"> 86</span><span class="w">                </span><span class="na">minOccurs=</span><span class="s">&quot;0&quot;</span>
+<span class="linenos"> 87</span><span class="w">                </span><span class="na">maxOccurs=</span><span class="s">&quot;1&quot;</span>
+<span class="linenos"> 88</span><span class="w">                </span><span class="na">xml:id=</span><span class="s">&quot;VariableCollection-purpose&quot;</span><span class="nt">&gt;</span>
+<span class="linenos"> 89</span><span class="w">      </span><span class="nt">&lt;xs:annotation&gt;</span>
+<span class="linenos"> 90</span><span class="w">        </span><span class="nt">&lt;xs:documentation&gt;</span>Intent<span class="w"> </span>or<span class="w"> </span>reason<span class="w"> </span>for<span class="w"> </span>the<span class="w"> </span>object/the<span class="w"> </span>description<span class="w"> </span>of<span class="w"> </span>the<span class="w"> </span>object.<span class="nt">&lt;/xs:documentation&gt;</span>
+<span class="linenos"> 91</span><span class="w">      </span><span class="nt">&lt;/xs:annotation&gt;</span>
+<span class="linenos"> 92</span><span class="w">    </span><span class="nt">&lt;/xs:element&gt;</span>
+<span class="linenos"> 93</span><span class="w">    </span><span class="nt">&lt;xs:element</span><span class="w"> </span><span class="na">name=</span><span class="s">&quot;usage&quot;</span>
+<span class="linenos"> 94</span><span class="w">                </span><span class="na">type=</span><span class="s">&quot;InternationalStringXsdType&quot;</span>
+<span class="linenos"> 95</span><span class="w">                </span><span class="na">minOccurs=</span><span class="s">&quot;0&quot;</span>
+<span class="linenos"> 96</span><span class="w">                </span><span class="na">maxOccurs=</span><span class="s">&quot;1&quot;</span>
+<span class="linenos"> 97</span><span class="w">                </span><span class="na">xml:id=</span><span class="s">&quot;VariableCollection-usage&quot;</span><span class="nt">&gt;</span>
+<span class="linenos"> 98</span><span class="w">      </span><span class="nt">&lt;xs:annotation&gt;</span>
+<span class="linenos"> 99</span><span class="w">        </span><span class="nt">&lt;xs:documentation&gt;</span>Explanation<span class="w"> </span>of<span class="w"> </span>the<span class="w"> </span>ways<span class="w"> </span>in<span class="w"> </span>which<span class="w"> </span>the<span class="w"> </span>object<span class="w"> </span>is<span class="w"> </span>employed.<span class="nt">&lt;/xs:documentation&gt;</span>
+<span class="linenos">100</span><span class="w">      </span><span class="nt">&lt;/xs:annotation&gt;</span>
+<span class="linenos">101</span><span class="w">    </span><span class="nt">&lt;/xs:element&gt;</span>
+<span class="linenos">102</span><span class="w">    </span><span class="nt">&lt;xs:element</span><span class="w"> </span><span class="na">name=</span><span class="s">&quot;VariableCollection_isDefinedBy_Concept&quot;</span>
+<span class="linenos">103</span><span class="w">                </span><span class="na">minOccurs=</span><span class="s">&quot;0&quot;</span>
+<span class="linenos">104</span><span class="w">                </span><span class="na">maxOccurs=</span><span class="s">&quot;unbounded&quot;</span>
+<span class="linenos">105</span><span class="w">                </span><span class="na">xml:id=</span><span class="s">&quot;VariableCollection_isDefinedBy_Concept&quot;</span><span class="nt">&gt;</span>
+<span class="linenos">106</span><span class="w">      </span><span class="nt">&lt;xs:annotation&gt;</span>
+<span class="linenos">107</span><span class="w">        </span><span class="nt">&lt;xs:documentation&gt;</span>The<span class="w"> </span>conceptual<span class="w"> </span>basis<span class="w"> </span>for<span class="w"> </span>the<span class="w"> </span>collection<span class="w"> </span>of<span class="w"> </span>members.<span class="nt">&lt;/xs:documentation&gt;</span>
+<span class="linenos">108</span><span class="w">      </span><span class="nt">&lt;/xs:annotation&gt;</span>
+<span class="linenos">109</span><span class="w">      </span><span class="nt">&lt;xs:complexType&gt;</span>
+<span class="linenos">110</span><span class="w">        </span><span class="nt">&lt;xs:complexContent&gt;</span>
+<span class="linenos">111</span><span class="w">          </span><span class="nt">&lt;xs:restriction</span><span class="w"> </span><span class="na">base=</span><span class="s">&quot;AssociationReferenceXsdType&quot;</span><span class="nt">&gt;</span>
+<span class="linenos">112</span><span class="w">            </span><span class="nt">&lt;xs:sequence&gt;</span>
+<span class="linenos">113</span><span class="w">              </span><span class="nt">&lt;xs:element</span><span class="w"> </span><span class="na">name=</span><span class="s">&quot;ddiReference&quot;</span>
+<span class="linenos">114</span><span class="w">                          </span><span class="na">type=</span><span class="s">&quot;InternationalRegistrationDataIdentifierXsdType&quot;</span>
+<span class="linenos">115</span><span class="w">                          </span><span class="na">minOccurs=</span><span class="s">&quot;0&quot;</span>
+<span class="linenos">116</span><span class="w">                          </span><span class="na">maxOccurs=</span><span class="s">&quot;1&quot;</span>
+<span class="linenos">117</span><span class="w">                          </span><span class="na">xml:id=</span><span class="s">&quot;VariableCollection_isDefinedBy_Concept-ddiReference&quot;</span><span class="nt">/&gt;</span>
+<span class="linenos">118</span><span class="w">              </span><span class="nt">&lt;xs:element</span><span class="w"> </span><span class="na">name=</span><span class="s">&quot;validType&quot;</span>
+<span class="linenos">119</span><span class="w">                          </span><span class="na">minOccurs=</span><span class="s">&quot;0&quot;</span>
+<span class="linenos">120</span><span class="w">                          </span><span class="na">maxOccurs=</span><span class="s">&quot;unbounded&quot;</span>
+<span class="linenos">121</span><span class="w">                          </span><span class="na">xml:id=</span><span class="s">&quot;VariableCollection_isDefinedBy_Concept-validType&quot;</span><span class="nt">&gt;</span>
+<span class="linenos">122</span><span class="w">                </span><span class="nt">&lt;xs:simpleType&gt;</span>
+<span class="linenos">123</span><span class="w">                  </span><span class="nt">&lt;xs:restriction</span><span class="w"> </span><span class="na">base=</span><span class="s">&quot;xs:NMTOKEN&quot;</span><span class="nt">&gt;</span>
+<span class="linenos">124</span><span class="w">                    </span><span class="nt">&lt;xs:enumeration</span><span class="w"> </span><span class="na">value=</span><span class="s">&quot;Category&quot;</span><span class="nt">/&gt;</span>
+<span class="linenos">125</span><span class="w">                    </span><span class="nt">&lt;xs:enumeration</span><span class="w"> </span><span class="na">value=</span><span class="s">&quot;Concept&quot;</span><span class="nt">/&gt;</span>
+<span class="linenos">126</span><span class="w">                    </span><span class="nt">&lt;xs:enumeration</span><span class="w"> </span><span class="na">value=</span><span class="s">&quot;ConceptualValue&quot;</span><span class="nt">/&gt;</span>
+<span class="linenos">127</span><span class="w">                    </span><span class="nt">&lt;xs:enumeration</span><span class="w"> </span><span class="na">value=</span><span class="s">&quot;ConceptualVariable&quot;</span><span class="nt">/&gt;</span>
+<span class="linenos">128</span><span class="w">                    </span><span class="nt">&lt;xs:enumeration</span><span class="w"> </span><span class="na">value=</span><span class="s">&quot;DescriptorVariable&quot;</span><span class="nt">/&gt;</span>
+<span class="linenos">129</span><span class="w">                    </span><span class="nt">&lt;xs:enumeration</span><span class="w"> </span><span class="na">value=</span><span class="s">&quot;DimensionalKeyDefinitionMember&quot;</span><span class="nt">/&gt;</span>
+<span class="linenos">130</span><span class="w">                    </span><span class="nt">&lt;xs:enumeration</span><span class="w"> </span><span class="na">value=</span><span class="s">&quot;InstanceVariable&quot;</span><span class="nt">/&gt;</span>
+<span class="linenos">131</span><span class="w">                    </span><span class="nt">&lt;xs:enumeration</span><span class="w"> </span><span class="na">value=</span><span class="s">&quot;KeyDefinitionMember&quot;</span><span class="nt">/&gt;</span>
+<span class="linenos">132</span><span class="w">                    </span><span class="nt">&lt;xs:enumeration</span><span class="w"> </span><span class="na">value=</span><span class="s">&quot;Population&quot;</span><span class="nt">/&gt;</span>
+<span class="linenos">133</span><span class="w">                    </span><span class="nt">&lt;xs:enumeration</span><span class="w"> </span><span class="na">value=</span><span class="s">&quot;ReferenceVariable&quot;</span><span class="nt">/&gt;</span>
+<span class="linenos">134</span><span class="w">                    </span><span class="nt">&lt;xs:enumeration</span><span class="w"> </span><span class="na">value=</span><span class="s">&quot;RepresentedVariable&quot;</span><span class="nt">/&gt;</span>
+<span class="linenos">135</span><span class="w">                    </span><span class="nt">&lt;xs:enumeration</span><span class="w"> </span><span class="na">value=</span><span class="s">&quot;UnitType&quot;</span><span class="nt">/&gt;</span>
+<span class="linenos">136</span><span class="w">                    </span><span class="nt">&lt;xs:enumeration</span><span class="w"> </span><span class="na">value=</span><span class="s">&quot;Universe&quot;</span><span class="nt">/&gt;</span>
+<span class="linenos">137</span><span class="w">                  </span><span class="nt">&lt;/xs:restriction&gt;</span>
+<span class="linenos">138</span><span class="w">                </span><span class="nt">&lt;/xs:simpleType&gt;</span>
+<span class="linenos">139</span><span class="w">              </span><span class="nt">&lt;/xs:element&gt;</span>
+<span class="linenos">140</span><span class="w">            </span><span class="nt">&lt;/xs:sequence&gt;</span>
+<span class="linenos">141</span><span class="w">          </span><span class="nt">&lt;/xs:restriction&gt;</span>
+<span class="linenos">142</span><span class="w">        </span><span class="nt">&lt;/xs:complexContent&gt;</span>
+<span class="linenos">143</span><span class="w">      </span><span class="nt">&lt;/xs:complexType&gt;</span>
+<span class="linenos">144</span><span class="w">    </span><span class="nt">&lt;/xs:element&gt;</span>
+<span class="linenos">145</span><span class="w">    </span><span class="nt">&lt;xs:element</span><span class="w"> </span><span class="na">name=</span><span class="s">&quot;VariableCollection_has_ConceptualVariable&quot;</span>
+<span class="linenos">146</span><span class="w">                </span><span class="na">minOccurs=</span><span class="s">&quot;0&quot;</span>
+<span class="linenos">147</span><span class="w">                </span><span class="na">maxOccurs=</span><span class="s">&quot;unbounded&quot;</span>
+<span class="linenos">148</span><span class="w">                </span><span class="na">xml:id=</span><span class="s">&quot;VariableCollection_has_ConceptualVariable&quot;</span><span class="nt">&gt;</span>
+<span class="linenos">149</span><span class="w">      </span><span class="nt">&lt;xs:annotation&gt;</span>
+<span class="linenos">150</span><span class="w">        </span><span class="nt">&lt;xs:documentation&gt;</span>Variable<span class="w"> </span>collection<span class="w"> </span>has<span class="w"> </span>zero<span class="w"> </span>to<span class="w"> </span>many<span class="w"> </span>conceptual<span class="w"> </span>variables.<span class="nt">&lt;/xs:documentation&gt;</span>
+<span class="linenos">151</span><span class="w">      </span><span class="nt">&lt;/xs:annotation&gt;</span>
+<span class="linenos">152</span><span class="w">      </span><span class="nt">&lt;xs:complexType&gt;</span>
+<span class="linenos">153</span><span class="w">        </span><span class="nt">&lt;xs:complexContent&gt;</span>
+<span class="linenos">154</span><span class="w">          </span><span class="nt">&lt;xs:restriction</span><span class="w"> </span><span class="na">base=</span><span class="s">&quot;AssociationReferenceXsdType&quot;</span><span class="nt">&gt;</span>
+<span class="linenos">155</span><span class="w">            </span><span class="nt">&lt;xs:sequence&gt;</span>
+<span class="linenos">156</span><span class="w">              </span><span class="nt">&lt;xs:element</span><span class="w"> </span><span class="na">name=</span><span class="s">&quot;ddiReference&quot;</span>
+<span class="linenos">157</span><span class="w">                          </span><span class="na">type=</span><span class="s">&quot;InternationalRegistrationDataIdentifierXsdType&quot;</span>
+<span class="linenos">158</span><span class="w">                          </span><span class="na">minOccurs=</span><span class="s">&quot;0&quot;</span>
+<span class="linenos">159</span><span class="w">                          </span><span class="na">maxOccurs=</span><span class="s">&quot;1&quot;</span>
+<span class="linenos">160</span><span class="w">                          </span><span class="na">xml:id=</span><span class="s">&quot;VariableCollection_has_ConceptualVariable-ddiReference&quot;</span><span class="nt">/&gt;</span>
+<span class="linenos">161</span><span class="w">              </span><span class="nt">&lt;xs:element</span><span class="w"> </span><span class="na">name=</span><span class="s">&quot;validType&quot;</span>
+<span class="linenos">162</span><span class="w">                          </span><span class="na">minOccurs=</span><span class="s">&quot;0&quot;</span>
+<span class="linenos">163</span><span class="w">                          </span><span class="na">maxOccurs=</span><span class="s">&quot;unbounded&quot;</span>
+<span class="linenos">164</span><span class="w">                          </span><span class="na">xml:id=</span><span class="s">&quot;VariableCollection_has_ConceptualVariable-validType&quot;</span><span class="nt">&gt;</span>
+<span class="linenos">165</span><span class="w">                </span><span class="nt">&lt;xs:simpleType&gt;</span>
+<span class="linenos">166</span><span class="w">                  </span><span class="nt">&lt;xs:restriction</span><span class="w"> </span><span class="na">base=</span><span class="s">&quot;xs:NMTOKEN&quot;</span><span class="nt">&gt;</span>
+<span class="linenos">167</span><span class="w">                    </span><span class="nt">&lt;xs:enumeration</span><span class="w"> </span><span class="na">value=</span><span class="s">&quot;ConceptualVariable&quot;</span><span class="nt">/&gt;</span>
+<span class="linenos">168</span><span class="w">                    </span><span class="nt">&lt;xs:enumeration</span><span class="w"> </span><span class="na">value=</span><span class="s">&quot;DescriptorVariable&quot;</span><span class="nt">/&gt;</span>
+<span class="linenos">169</span><span class="w">                    </span><span class="nt">&lt;xs:enumeration</span><span class="w"> </span><span class="na">value=</span><span class="s">&quot;InstanceVariable&quot;</span><span class="nt">/&gt;</span>
+<span class="linenos">170</span><span class="w">                    </span><span class="nt">&lt;xs:enumeration</span><span class="w"> </span><span class="na">value=</span><span class="s">&quot;ReferenceVariable&quot;</span><span class="nt">/&gt;</span>
+<span class="linenos">171</span><span class="w">                    </span><span class="nt">&lt;xs:enumeration</span><span class="w"> </span><span class="na">value=</span><span class="s">&quot;RepresentedVariable&quot;</span><span class="nt">/&gt;</span>
+<span class="linenos">172</span><span class="w">                  </span><span class="nt">&lt;/xs:restriction&gt;</span>
+<span class="linenos">173</span><span class="w">                </span><span class="nt">&lt;/xs:simpleType&gt;</span>
+<span class="linenos">174</span><span class="w">              </span><span class="nt">&lt;/xs:element&gt;</span>
+<span class="linenos">175</span><span class="w">            </span><span class="nt">&lt;/xs:sequence&gt;</span>
+<span class="linenos">176</span><span class="w">          </span><span class="nt">&lt;/xs:restriction&gt;</span>
+<span class="linenos">177</span><span class="w">        </span><span class="nt">&lt;/xs:complexContent&gt;</span>
+<span class="linenos">178</span><span class="w">      </span><span class="nt">&lt;/xs:complexType&gt;</span>
+<span class="linenos">179</span><span class="w">    </span><span class="nt">&lt;/xs:element&gt;</span>
+<span class="linenos">180</span><span class="w">    </span><span class="nt">&lt;xs:element</span><span class="w"> </span><span class="na">name=</span><span class="s">&quot;VariableCollection_has_VariablePosition&quot;</span>
+<span class="linenos">181</span><span class="w">                </span><span class="na">minOccurs=</span><span class="s">&quot;0&quot;</span>
+<span class="linenos">182</span><span class="w">                </span><span class="na">maxOccurs=</span><span class="s">&quot;unbounded&quot;</span>
+<span class="linenos">183</span><span class="w">                </span><span class="na">xml:id=</span><span class="s">&quot;VariableCollection_has_VariablePosition&quot;</span><span class="nt">&gt;</span>
+<span class="linenos">184</span><span class="w">      </span><span class="nt">&lt;xs:annotation&gt;</span>
+<span class="linenos">185</span><span class="w">        </span><span class="nt">&lt;xs:documentation&gt;</span>Variable<span class="w"> </span>collection<span class="w"> </span>has<span class="w"> </span>zero<span class="w"> </span>to<span class="w"> </span>many<span class="w"> </span>variable<span class="w"> </span>positions.<span class="nt">&lt;/xs:documentation&gt;</span>
+<span class="linenos">186</span><span class="w">      </span><span class="nt">&lt;/xs:annotation&gt;</span>
+<span class="linenos">187</span><span class="w">      </span><span class="nt">&lt;xs:complexType&gt;</span>
+<span class="linenos">188</span><span class="w">        </span><span class="nt">&lt;xs:complexContent&gt;</span>
+<span class="linenos">189</span><span class="w">          </span><span class="nt">&lt;xs:restriction</span><span class="w"> </span><span class="na">base=</span><span class="s">&quot;AssociationReferenceXsdType&quot;</span><span class="nt">&gt;</span>
+<span class="linenos">190</span><span class="w">            </span><span class="nt">&lt;xs:sequence&gt;</span>
+<span class="linenos">191</span><span class="w">              </span><span class="nt">&lt;xs:element</span><span class="w"> </span><span class="na">name=</span><span class="s">&quot;ddiReference&quot;</span>
+<span class="linenos">192</span><span class="w">                          </span><span class="na">type=</span><span class="s">&quot;InternationalRegistrationDataIdentifierXsdType&quot;</span>
+<span class="linenos">193</span><span class="w">                          </span><span class="na">minOccurs=</span><span class="s">&quot;0&quot;</span>
+<span class="linenos">194</span><span class="w">                          </span><span class="na">maxOccurs=</span><span class="s">&quot;1&quot;</span>
+<span class="linenos">195</span><span class="w">                          </span><span class="na">xml:id=</span><span class="s">&quot;VariableCollection_has_VariablePosition-ddiReference&quot;</span><span class="nt">/&gt;</span>
+<span class="linenos">196</span><span class="w">              </span><span class="nt">&lt;xs:element</span><span class="w"> </span><span class="na">name=</span><span class="s">&quot;validType&quot;</span>
+<span class="linenos">197</span><span class="w">                          </span><span class="na">minOccurs=</span><span class="s">&quot;1&quot;</span>
+<span class="linenos">198</span><span class="w">                          </span><span class="na">maxOccurs=</span><span class="s">&quot;1&quot;</span>
+<span class="linenos">199</span><span class="w">                          </span><span class="na">xml:id=</span><span class="s">&quot;VariableCollection_has_VariablePosition-validType&quot;</span><span class="nt">&gt;</span>
+<span class="linenos">200</span><span class="w">                </span><span class="nt">&lt;xs:simpleType&gt;</span>
+<span class="linenos">201</span><span class="w">                  </span><span class="nt">&lt;xs:restriction</span><span class="w"> </span><span class="na">base=</span><span class="s">&quot;xs:NMTOKEN&quot;</span><span class="nt">&gt;</span>
+<span class="linenos">202</span><span class="w">                    </span><span class="nt">&lt;xs:enumeration</span><span class="w"> </span><span class="na">value=</span><span class="s">&quot;VariablePosition&quot;</span><span class="nt">/&gt;</span>
+<span class="linenos">203</span><span class="w">                  </span><span class="nt">&lt;/xs:restriction&gt;</span>
+<span class="linenos">204</span><span class="w">                </span><span class="nt">&lt;/xs:simpleType&gt;</span>
+<span class="linenos">205</span><span class="w">              </span><span class="nt">&lt;/xs:element&gt;</span>
+<span class="linenos">206</span><span class="w">            </span><span class="nt">&lt;/xs:sequence&gt;</span>
+<span class="linenos">207</span><span class="w">          </span><span class="nt">&lt;/xs:restriction&gt;</span>
+<span class="linenos">208</span><span class="w">        </span><span class="nt">&lt;/xs:complexContent&gt;</span>
+<span class="linenos">209</span><span class="w">      </span><span class="nt">&lt;/xs:complexType&gt;</span>
+<span class="linenos">210</span><span class="w">    </span><span class="nt">&lt;/xs:element&gt;</span>
+<span class="linenos">211</span><span class="w">  </span><span class="nt">&lt;/xs:sequence&gt;</span>
+<span class="linenos">212</span><span class="nt">&lt;/xs:complexType&gt;</span>
+</pre></div>
+</div>
+</div>
+<input id="sd-tab-item-2" name="sd-tab-set-0" type="radio">
+<label class="sd-tab-label" for="sd-tab-item-2">
+Ontology (Turtle)</label><div class="sd-tab-content encoding docutils">
+<p class="sd-card-text">Fragment for the class <strong>VariableCollection</strong> (<a class="reference external" href="/encoding/ontology/ddi-cdi.onto.ttl">main ontology</a>)</p>
+<div class="highlight-turtle notranslate"><div class="highlight"><pre><span></span><span class="linenos"> 1</span><span class="c"># class VariableCollection</span>
+<span class="linenos"> 2</span><span class="c"># based on the UML class DDICDIModels::DDICDILibrary::Classes::Conceptual::VariableCollection</span>
+<span class="hll"><span class="linenos"> 3</span><span class="nn">cdi</span><span class="p">:</span><span class="nt">VariableCollection</span>
+</span><span class="linenos"> 4</span>  <span class="kt">a</span> <span class="nn">rdfs</span><span class="p">:</span><span class="nt">Class</span><span class="p">,</span> <span class="nn">owl</span><span class="p">:</span><span class="nt">Class</span><span class="p">,</span> <span class="nn">ucmis</span><span class="p">:</span><span class="nt">Class</span><span class="p">;</span>
+<span class="linenos"> 5</span>  <span class="nn">rdfs</span><span class="p">:</span><span class="nt">label</span> <span class="s">&quot;VariableCollection&quot;</span><span class="p">;</span>
+<span class="linenos"> 6</span>  <span class="nn">rdfs</span><span class="p">:</span><span class="nt">comment</span> <span class="s">&quot;Definition\n==========\nGroup of any type of variable within the variable cascade (conceptual, represented, instance).\n\nExamples\n========\n1. Variables within a specific section of a study\n2. Variables related to a specific subject or keyword\n3. Variables at a specified level of development or review\n\nExplanatory notes\n================= \nA simple ordered or unordered list of variables can be described via a set of variable position parameters. An optional variable structure can describe a more complex structure for the collection. We might, for example, use the variable structure to group variables by content within a single collection of data or a wave of on-going data collection. For the purposes of management, conceptualization or anything other than organizing a logical record or physical layout.&quot;</span><span class="o">@</span><span class="ge">en</span><span class="p">;</span>
+<span class="linenos"> 7</span>  
+<span class="linenos"> 8</span><span class="p">.</span>
+<span class="linenos"> 9</span>
+<span class="linenos">10</span><span class="nn">cdi</span><span class="p">:</span><span class="nt">VariableCollection-allowsDuplicates</span>
+<span class="linenos">11</span>  <span class="kt">a</span> <span class="nn">rdf</span><span class="p">:</span><span class="nt">Property</span><span class="p">,</span> <span class="nn">owl</span><span class="p">:</span><span class="nt">DatatypeProperty</span><span class="p">,</span> <span class="nn">ucmis</span><span class="p">:</span><span class="nt">Attribute</span><span class="p">;</span>
+<span class="linenos">12</span>  <span class="nn">rdfs</span><span class="p">:</span><span class="nt">label</span> <span class="s">&quot;allowsDuplicates&quot;</span><span class="p">;</span>
+<span class="linenos">13</span>  <span class="nn">rdfs</span><span class="p">:</span><span class="nt">comment</span> <span class="s">&quot;If value is False, the members are unique within the collection - if True, there may be duplicates. (Note that a mathematical “bag” permits duplicates and is unordered - a “set” does not have duplicates and may be ordered.)&quot;</span><span class="o">@</span><span class="ge">en</span><span class="p">;</span>
+<span class="linenos">14</span>  <span class="nn">rdfs</span><span class="p">:</span><span class="nt">domain</span> <span class="nn">cdi</span><span class="p">:</span><span class="nt">VariableCollection</span><span class="p">;</span>
+<span class="linenos">15</span>  <span class="nn">rdfs</span><span class="p">:</span><span class="nt">range</span> <span class="nn">xsd</span><span class="p">:</span><span class="nt">boolean</span><span class="p">;</span>
+<span class="linenos">16</span><span class="p">.</span>
+<span class="linenos">17</span>
+<span class="linenos">18</span><span class="nn">cdi</span><span class="p">:</span><span class="nt">VariableCollection-displayLabel</span>
+<span class="linenos">19</span>  <span class="kt">a</span> <span class="nn">rdf</span><span class="p">:</span><span class="nt">Property</span><span class="p">,</span> <span class="nn">owl</span><span class="p">:</span><span class="nt">ObjectProperty</span><span class="p">,</span> <span class="nn">ucmis</span><span class="p">:</span><span class="nt">Attribute</span><span class="p">;</span>
+<span class="linenos">20</span>  <span class="nn">rdfs</span><span class="p">:</span><span class="nt">label</span> <span class="s">&quot;displayLabel&quot;</span><span class="p">;</span>
+<span class="linenos">21</span>  <span class="nn">rdfs</span><span class="p">:</span><span class="nt">comment</span> <span class="s">&quot;A human-readable display label for the object. Supports the use of multiple languages. Repeat for labels with different content, for example, labels with differing length limitations.&quot;</span><span class="o">@</span><span class="ge">en</span><span class="p">;</span>
+<span class="linenos">22</span>  <span class="nn">rdfs</span><span class="p">:</span><span class="nt">domain</span> <span class="nn">cdi</span><span class="p">:</span><span class="nt">VariableCollection</span><span class="p">;</span>
+<span class="linenos">23</span>  <span class="nn">rdfs</span><span class="p">:</span><span class="nt">range</span> <span class="nn">cdi</span><span class="p">:</span><span class="nt">LabelForDisplay</span><span class="p">;</span>
+<span class="linenos">24</span><span class="p">.</span>
+<span class="linenos">25</span>
+<span class="linenos">26</span><span class="nn">cdi</span><span class="p">:</span><span class="nt">VariableCollection-groupingSemantic</span>
+<span class="linenos">27</span>  <span class="kt">a</span> <span class="nn">rdf</span><span class="p">:</span><span class="nt">Property</span><span class="p">,</span> <span class="nn">owl</span><span class="p">:</span><span class="nt">ObjectProperty</span><span class="p">,</span> <span class="nn">ucmis</span><span class="p">:</span><span class="nt">Attribute</span><span class="p">;</span>
+<span class="linenos">28</span>  <span class="nn">rdfs</span><span class="p">:</span><span class="nt">label</span> <span class="s">&quot;groupingSemantic&quot;</span><span class="p">;</span>
+<span class="linenos">29</span>  <span class="nn">rdfs</span><span class="p">:</span><span class="nt">comment</span> <span class="s">&quot;A semantic term defining the factor used for defining this group.&quot;</span><span class="o">@</span><span class="ge">en</span><span class="p">;</span>
+<span class="linenos">30</span>  <span class="nn">rdfs</span><span class="p">:</span><span class="nt">domain</span> <span class="nn">cdi</span><span class="p">:</span><span class="nt">VariableCollection</span><span class="p">;</span>
+<span class="linenos">31</span>  <span class="nn">rdfs</span><span class="p">:</span><span class="nt">range</span> <span class="nn">cdi</span><span class="p">:</span><span class="nt">ControlledVocabularyEntry</span><span class="p">;</span>
+<span class="linenos">32</span><span class="p">.</span>
+<span class="linenos">33</span>
+<span class="linenos">34</span><span class="nn">cdi</span><span class="p">:</span><span class="nt">VariableCollection-identifier</span>
+<span class="linenos">35</span>  <span class="kt">a</span> <span class="nn">rdf</span><span class="p">:</span><span class="nt">Property</span><span class="p">,</span> <span class="nn">owl</span><span class="p">:</span><span class="nt">ObjectProperty</span><span class="p">,</span> <span class="nn">ucmis</span><span class="p">:</span><span class="nt">Attribute</span><span class="p">;</span>
+<span class="linenos">36</span>  <span class="nn">rdfs</span><span class="p">:</span><span class="nt">label</span> <span class="s">&quot;identifier&quot;</span><span class="p">;</span>
+<span class="linenos">37</span>  <span class="nn">rdfs</span><span class="p">:</span><span class="nt">comment</span> <span class="s">&quot;Identifier for objects requiring short- or long-lasting referencing and management.&quot;</span><span class="o">@</span><span class="ge">en</span><span class="p">;</span>
+<span class="linenos">38</span>  <span class="nn">rdfs</span><span class="p">:</span><span class="nt">domain</span> <span class="nn">cdi</span><span class="p">:</span><span class="nt">VariableCollection</span><span class="p">;</span>
+<span class="linenos">39</span>  <span class="nn">rdfs</span><span class="p">:</span><span class="nt">range</span> <span class="nn">cdi</span><span class="p">:</span><span class="nt">Identifier</span><span class="p">;</span>
+<span class="linenos">40</span><span class="p">.</span>
+<span class="linenos">41</span>
+<span class="linenos">42</span><span class="nn">cdi</span><span class="p">:</span><span class="nt">VariableCollection-name</span>
+<span class="linenos">43</span>  <span class="kt">a</span> <span class="nn">rdf</span><span class="p">:</span><span class="nt">Property</span><span class="p">,</span> <span class="nn">owl</span><span class="p">:</span><span class="nt">ObjectProperty</span><span class="p">,</span> <span class="nn">ucmis</span><span class="p">:</span><span class="nt">Attribute</span><span class="p">;</span>
+<span class="linenos">44</span>  <span class="nn">rdfs</span><span class="p">:</span><span class="nt">label</span> <span class="s">&quot;name&quot;</span><span class="p">;</span>
+<span class="linenos">45</span>  <span class="nn">rdfs</span><span class="p">:</span><span class="nt">comment</span> <span class="s">&quot;Human understandable name (liguistic signifier, word, phrase, or mnemonic). May follow ISO/IEC 11179-5 naming principles, and have context provided to specify usage.&quot;</span><span class="o">@</span><span class="ge">en</span><span class="p">;</span>
+<span class="linenos">46</span>  <span class="nn">rdfs</span><span class="p">:</span><span class="nt">domain</span> <span class="nn">cdi</span><span class="p">:</span><span class="nt">VariableCollection</span><span class="p">;</span>
+<span class="linenos">47</span>  <span class="nn">rdfs</span><span class="p">:</span><span class="nt">range</span> <span class="nn">cdi</span><span class="p">:</span><span class="nt">ObjectName</span><span class="p">;</span>
+<span class="linenos">48</span><span class="p">.</span>
+<span class="linenos">49</span>
+<span class="linenos">50</span><span class="nn">cdi</span><span class="p">:</span><span class="nt">VariableCollection-purpose</span>
+<span class="linenos">51</span>  <span class="kt">a</span> <span class="nn">rdf</span><span class="p">:</span><span class="nt">Property</span><span class="p">,</span> <span class="nn">owl</span><span class="p">:</span><span class="nt">ObjectProperty</span><span class="p">,</span> <span class="nn">ucmis</span><span class="p">:</span><span class="nt">Attribute</span><span class="p">;</span>
+<span class="linenos">52</span>  <span class="nn">rdfs</span><span class="p">:</span><span class="nt">label</span> <span class="s">&quot;purpose&quot;</span><span class="p">;</span>
+<span class="linenos">53</span>  <span class="nn">rdfs</span><span class="p">:</span><span class="nt">comment</span> <span class="s">&quot;Intent or reason for the object/the description of the object.&quot;</span><span class="o">@</span><span class="ge">en</span><span class="p">;</span>
+<span class="linenos">54</span>  <span class="nn">rdfs</span><span class="p">:</span><span class="nt">domain</span> <span class="nn">cdi</span><span class="p">:</span><span class="nt">VariableCollection</span><span class="p">;</span>
+<span class="linenos">55</span>  <span class="nn">rdfs</span><span class="p">:</span><span class="nt">range</span> <span class="nn">cdi</span><span class="p">:</span><span class="nt">InternationalString</span><span class="p">;</span>
+<span class="linenos">56</span><span class="p">.</span>
+<span class="linenos">57</span>
+<span class="linenos">58</span><span class="nn">cdi</span><span class="p">:</span><span class="nt">VariableCollection-usage</span>
+<span class="linenos">59</span>  <span class="kt">a</span> <span class="nn">rdf</span><span class="p">:</span><span class="nt">Property</span><span class="p">,</span> <span class="nn">owl</span><span class="p">:</span><span class="nt">ObjectProperty</span><span class="p">,</span> <span class="nn">ucmis</span><span class="p">:</span><span class="nt">Attribute</span><span class="p">;</span>
+<span class="linenos">60</span>  <span class="nn">rdfs</span><span class="p">:</span><span class="nt">label</span> <span class="s">&quot;usage&quot;</span><span class="p">;</span>
+<span class="linenos">61</span>  <span class="nn">rdfs</span><span class="p">:</span><span class="nt">comment</span> <span class="s">&quot;Explanation of the ways in which the object is employed.&quot;</span><span class="o">@</span><span class="ge">en</span><span class="p">;</span>
+<span class="linenos">62</span>  <span class="nn">rdfs</span><span class="p">:</span><span class="nt">domain</span> <span class="nn">cdi</span><span class="p">:</span><span class="nt">VariableCollection</span><span class="p">;</span>
+<span class="linenos">63</span>  <span class="nn">rdfs</span><span class="p">:</span><span class="nt">range</span> <span class="nn">cdi</span><span class="p">:</span><span class="nt">InternationalString</span><span class="p">;</span>
+<span class="linenos">64</span><span class="p">.</span>
+<span class="linenos">65</span>
+<span class="linenos">66</span>
+<span class="linenos">67</span><span class="nn">cdi</span><span class="p">:</span><span class="nt">VariableCollection_has_ConceptualVariable</span>
+<span class="linenos">68</span>  <span class="kt">a</span> <span class="nn">rdf</span><span class="p">:</span><span class="nt">Property</span><span class="p">,</span> <span class="nn">owl</span><span class="p">:</span><span class="nt">ObjectProperty</span><span class="p">,</span> <span class="nn">ucmis</span><span class="p">:</span><span class="nt">Association</span><span class="p">;</span>
+<span class="linenos">69</span>  <span class="c"># ASSOCIATION</span>
+<span class="linenos">70</span>  <span class="nn">rdfs</span><span class="p">:</span><span class="nt">label</span> <span class="s">&quot;has_ConceptualVariable&quot;</span><span class="p">;</span>
+<span class="linenos">71</span>  <span class="nn">skos</span><span class="p">:</span><span class="nt">altLabel</span> <span class="s">&quot;VariableCollection_has_ConceptualVariable&quot;</span><span class="p">;</span>
+<span class="linenos">72</span>  <span class="nn">rdfs</span><span class="p">:</span><span class="nt">comment</span> <span class="s">&quot;Variable collection has zero to many conceptual variables.&quot;</span><span class="o">@</span><span class="ge">en</span><span class="p">;</span>
+<span class="linenos">73</span>  <span class="nn">rdfs</span><span class="p">:</span><span class="nt">domain</span> <span class="nn">cdi</span><span class="p">:</span><span class="nt">VariableCollection</span><span class="p">;</span>
+<span class="linenos">74</span>  <span class="nn">rdfs</span><span class="p">:</span><span class="nt">range</span> <span class="nn">cdi</span><span class="p">:</span><span class="nt">ConceptualVariable</span><span class="p">;</span>
+<span class="linenos">75</span><span class="p">.</span>
+<span class="linenos">76</span>
+<span class="linenos">77</span><span class="nn">cdi</span><span class="p">:</span><span class="nt">VariableCollection_has_VariablePosition</span>
+<span class="linenos">78</span>  <span class="kt">a</span> <span class="nn">rdf</span><span class="p">:</span><span class="nt">Property</span><span class="p">,</span> <span class="nn">owl</span><span class="p">:</span><span class="nt">ObjectProperty</span><span class="p">,</span> <span class="nn">ucmis</span><span class="p">:</span><span class="nt">Association</span><span class="p">;</span>
+<span class="linenos">79</span>  <span class="c"># ASSOCIATION</span>
+<span class="linenos">80</span>  <span class="nn">rdfs</span><span class="p">:</span><span class="nt">label</span> <span class="s">&quot;has_VariablePosition&quot;</span><span class="p">;</span>
+<span class="linenos">81</span>  <span class="nn">skos</span><span class="p">:</span><span class="nt">altLabel</span> <span class="s">&quot;VariableCollection_has_VariablePosition&quot;</span><span class="p">;</span>
+<span class="linenos">82</span>  <span class="nn">rdfs</span><span class="p">:</span><span class="nt">comment</span> <span class="s">&quot;Variable collection has zero to many variable positions.&quot;</span><span class="o">@</span><span class="ge">en</span><span class="p">;</span>
+<span class="linenos">83</span>  <span class="nn">rdfs</span><span class="p">:</span><span class="nt">domain</span> <span class="nn">cdi</span><span class="p">:</span><span class="nt">VariableCollection</span><span class="p">;</span>
+<span class="linenos">84</span>  <span class="nn">rdfs</span><span class="p">:</span><span class="nt">range</span> <span class="nn">cdi</span><span class="p">:</span><span class="nt">VariablePosition</span><span class="p">;</span>
+<span class="linenos">85</span><span class="p">.</span>
+<span class="linenos">86</span>
+<span class="linenos">87</span><span class="nn">cdi</span><span class="p">:</span><span class="nt">VariableCollection_isDefinedBy_Concept</span>
+<span class="linenos">88</span>  <span class="kt">a</span> <span class="nn">rdf</span><span class="p">:</span><span class="nt">Property</span><span class="p">,</span> <span class="nn">owl</span><span class="p">:</span><span class="nt">ObjectProperty</span><span class="p">,</span> <span class="nn">ucmis</span><span class="p">:</span><span class="nt">Association</span><span class="p">;</span>
+<span class="linenos">89</span>  <span class="c"># ASSOCIATION</span>
+<span class="linenos">90</span>  <span class="nn">rdfs</span><span class="p">:</span><span class="nt">label</span> <span class="s">&quot;isDefinedBy_Concept&quot;</span><span class="p">;</span>
+<span class="linenos">91</span>  <span class="nn">skos</span><span class="p">:</span><span class="nt">altLabel</span> <span class="s">&quot;VariableCollection_isDefinedBy_Concept&quot;</span><span class="p">;</span>
+<span class="linenos">92</span>  <span class="nn">rdfs</span><span class="p">:</span><span class="nt">comment</span> <span class="s">&quot;The conceptual basis for the collection of members.&quot;</span><span class="o">@</span><span class="ge">en</span><span class="p">;</span>
+<span class="linenos">93</span>  <span class="nn">rdfs</span><span class="p">:</span><span class="nt">domain</span> <span class="nn">cdi</span><span class="p">:</span><span class="nt">VariableCollection</span><span class="p">;</span>
+<span class="linenos">94</span>  <span class="nn">rdfs</span><span class="p">:</span><span class="nt">range</span> <span class="nn">cdi</span><span class="p">:</span><span class="nt">Concept</span><span class="p">;</span>
+<span class="linenos">95</span><span class="p">.</span>
+</pre></div>
+</div>
+</div>
+<input id="sd-tab-item-3" name="sd-tab-set-0" type="radio">
+<label class="sd-tab-label" for="sd-tab-item-3">
+JSON-LD</label><div class="sd-tab-content encoding docutils">
+<p class="sd-card-text">Fragment for the class <strong>VariableCollection</strong> (<a class="reference external" href="/encoding/json-ld/ddi-cdi.jsonld">main JSON-LD</a>)</p>
+<div class="highlight-JSON-LD notranslate"><div class="highlight"><pre><span></span><span class="linenos"> 1</span><span class="p">{</span>
+<span class="linenos"> 2</span><span class="w">  </span><span class="nd">&quot;@context&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<span class="linenos"> 3</span><span class="w">    </span><span class="p">{</span>
+<span class="linenos"> 4</span><span class="w">      </span><span class="nt">&quot;cdi&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;http://ddialliance.org/Specification/DDI-CDI/1.0/RDF/&quot;</span><span class="p">,</span>
+<span class="hll"><span class="linenos"> 5</span><span class="w">      </span><span class="nt">&quot;xsd&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;http://www.w3.org/2001/XMLSchema#&quot;</span><span class="p">,</span>
+</span><span class="linenos"> 6</span>
+<span class="linenos"> 7</span><span class="w">      </span><span class="nt">&quot;allowsDuplicates&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="linenos"> 8</span><span class="w">        </span><span class="nd">&quot;@id&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;cdi:VariableCollection-allowsDuplicates&quot;</span><span class="p">,</span>
+<span class="linenos"> 9</span><span class="w">        </span><span class="nd">&quot;@type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;xsd:boolean&quot;</span>
+<span class="linenos">10</span><span class="w">      </span><span class="p">},</span>
+<span class="linenos">11</span><span class="w">      </span><span class="nt">&quot;displayLabel&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="linenos">12</span><span class="w">        </span><span class="nd">&quot;@id&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;cdi:VariableCollection-displayLabel&quot;</span><span class="p">,</span>
+<span class="linenos">13</span><span class="w">        </span><span class="nd">&quot;@type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;@id&quot;</span><span class="p">,</span>
+<span class="linenos">14</span><span class="w">        </span><span class="nd">&quot;@context&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;LabelForDisplay.jsonld&quot;</span>
+<span class="linenos">15</span><span class="w">      </span><span class="p">},</span>
+<span class="linenos">16</span><span class="w">      </span><span class="nt">&quot;groupingSemantic&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="linenos">17</span><span class="w">        </span><span class="nd">&quot;@id&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;cdi:VariableCollection-groupingSemantic&quot;</span><span class="p">,</span>
+<span class="linenos">18</span><span class="w">        </span><span class="nd">&quot;@type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;@id&quot;</span><span class="p">,</span>
+<span class="linenos">19</span><span class="w">        </span><span class="nd">&quot;@context&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;ControlledVocabularyEntry.jsonld&quot;</span>
+<span class="linenos">20</span><span class="w">      </span><span class="p">},</span>
+<span class="linenos">21</span><span class="w">      </span><span class="nt">&quot;identifier&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="linenos">22</span><span class="w">        </span><span class="nd">&quot;@id&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;cdi:VariableCollection-identifier&quot;</span><span class="p">,</span>
+<span class="linenos">23</span><span class="w">        </span><span class="nd">&quot;@type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;@id&quot;</span><span class="p">,</span>
+<span class="linenos">24</span><span class="w">        </span><span class="nd">&quot;@context&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Identifier.jsonld&quot;</span>
+<span class="linenos">25</span><span class="w">      </span><span class="p">},</span>
+<span class="linenos">26</span><span class="w">      </span><span class="nt">&quot;name&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="linenos">27</span><span class="w">        </span><span class="nd">&quot;@id&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;cdi:VariableCollection-name&quot;</span><span class="p">,</span>
+<span class="linenos">28</span><span class="w">        </span><span class="nd">&quot;@type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;@id&quot;</span><span class="p">,</span>
+<span class="linenos">29</span><span class="w">        </span><span class="nd">&quot;@context&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;ObjectName.jsonld&quot;</span>
+<span class="linenos">30</span><span class="w">      </span><span class="p">},</span>
+<span class="linenos">31</span><span class="w">      </span><span class="nt">&quot;purpose&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="linenos">32</span><span class="w">        </span><span class="nd">&quot;@id&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;cdi:VariableCollection-purpose&quot;</span><span class="p">,</span>
+<span class="linenos">33</span><span class="w">        </span><span class="nd">&quot;@type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;@id&quot;</span><span class="p">,</span>
+<span class="linenos">34</span><span class="w">        </span><span class="nd">&quot;@context&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;InternationalString.jsonld&quot;</span>
+<span class="linenos">35</span><span class="w">      </span><span class="p">},</span>
+<span class="linenos">36</span><span class="w">      </span><span class="nt">&quot;usage&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="linenos">37</span><span class="w">        </span><span class="nd">&quot;@id&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;cdi:VariableCollection-usage&quot;</span><span class="p">,</span>
+<span class="linenos">38</span><span class="w">        </span><span class="nd">&quot;@type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;@id&quot;</span><span class="p">,</span>
+<span class="linenos">39</span><span class="w">        </span><span class="nd">&quot;@context&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;InternationalString.jsonld&quot;</span>
+<span class="linenos">40</span><span class="w">      </span><span class="p">},</span>
+<span class="linenos">41</span><span class="w">      </span>
+<span class="linenos">42</span><span class="w">      </span><span class="nt">&quot;has_ConceptualVariable&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="linenos">43</span><span class="w">        </span><span class="nd">&quot;@id&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;cdi:VariableCollection_has_ConceptualVariable&quot;</span><span class="p">,</span>
+<span class="linenos">44</span><span class="w">        </span><span class="nd">&quot;@type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;@id&quot;</span><span class="p">,</span>
+<span class="linenos">45</span><span class="w">        </span><span class="nd">&quot;@context&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;ConceptualVariable.jsonld&quot;</span>
+<span class="linenos">46</span><span class="w">      </span><span class="p">},</span>
+<span class="linenos">47</span><span class="w">      </span><span class="nt">&quot;has_VariablePosition&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="linenos">48</span><span class="w">        </span><span class="nd">&quot;@id&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;cdi:VariableCollection_has_VariablePosition&quot;</span><span class="p">,</span>
+<span class="linenos">49</span><span class="w">        </span><span class="nd">&quot;@type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;@id&quot;</span><span class="p">,</span>
+<span class="linenos">50</span><span class="w">        </span><span class="nd">&quot;@context&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;VariablePosition.jsonld&quot;</span>
+<span class="linenos">51</span><span class="w">      </span><span class="p">},</span>
+<span class="linenos">52</span><span class="w">      </span><span class="nt">&quot;isDefinedBy_Concept&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="linenos">53</span><span class="w">        </span><span class="nd">&quot;@id&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;cdi:VariableCollection_isDefinedBy_Concept&quot;</span><span class="p">,</span>
+<span class="linenos">54</span><span class="w">        </span><span class="nd">&quot;@type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;@id&quot;</span><span class="p">,</span>
+<span class="linenos">55</span><span class="w">        </span><span class="nd">&quot;@context&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Concept.jsonld&quot;</span>
+<span class="linenos">56</span><span class="w">      </span><span class="p">},</span>
+<span class="linenos">57</span><span class="w">      </span><span class="nt">&quot;structures_OF_VariableStructure&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="linenos">58</span><span class="w">        </span><span class="nd">&quot;@reverse&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;cdi:VariableStructure_structures_VariableCollection&quot;</span><span class="p">,</span>
+<span class="linenos">59</span><span class="w">        </span><span class="nd">&quot;@type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;@id&quot;</span><span class="p">,</span>
+<span class="linenos">60</span><span class="w">        </span><span class="nd">&quot;@context&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;VariableStructure.jsonld&quot;</span>
+<span class="linenos">61</span><span class="w">      </span><span class="p">},</span>
+<span class="linenos">62</span><span class="w">      </span><span class="nt">&quot; comment &quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;tag:json-should-support-trailing-commas&quot;</span>
+<span class="linenos">63</span><span class="w">    </span><span class="p">}</span>
+<span class="linenos">64</span><span class="w">  </span><span class="p">],</span>
+<span class="linenos">65</span><span class="w">  </span><span class="nt">&quot;generatedBy&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;This code was generated by the Eclipse Acceleo project UCMIS M2T on 2025-01-25 16:58:29.&quot;</span><span class="p">,</span>
+<span class="linenos">66</span><span class="w">  </span><span class="nt">&quot;basedOn&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;based on the UML data type DDICDIModels::DDICDILibrary::Classes::Conceptual::VariableCollection&quot;</span>
+<span class="linenos">67</span><span class="p">}</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+</details></div>
+</section>
+</section>
+
+
+            <div class="clearer"></div>
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="Main">
+        <div class="sphinxsidebarwrapper">
+            <p class="logo"><a href="../../../index.html">
+              <img class="logo" src="../../../_static/cdi.svg" alt="Logo of "/>
+            </a></p>
+<search id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../../../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</search>
+<script>document.getElementById('searchbox').style.display = "block"</script>
+<h3><a href="../../../index.html">Table of Contents</a></h3>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../../Context/index.html">Context</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../../index.html">DDICDILibrary</a><ul class="current">
+<li class="toctree-l2 current"><a class="reference internal" href="../index.html">Classes</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="../Agents/index.html">Agents</a></li>
+<li class="toctree-l3 current"><a class="reference internal" href="index.html">Conceptual</a><ul class="current">
+<li class="toctree-l4"><a class="reference internal" href="Category.html">Category</a></li>
+<li class="toctree-l4"><a class="reference internal" href="CategoryPosition.html">CategoryPosition</a></li>
+<li class="toctree-l4"><a class="reference internal" href="CategoryRelationship.html">CategoryRelationship</a></li>
+<li class="toctree-l4"><a class="reference internal" href="CategoryRelationStructure.html">CategoryRelationStructure</a></li>
+<li class="toctree-l4"><a class="reference internal" href="CategorySet.html">CategorySet</a></li>
+<li class="toctree-l4"><a class="reference internal" href="Concept.html">Concept</a></li>
+<li class="toctree-l4"><a class="reference internal" href="ConceptMap.html">ConceptMap</a></li>
+<li class="toctree-l4"><a class="reference internal" href="ConceptRelationship.html">ConceptRelationship</a></li>
+<li class="toctree-l4"><a class="reference internal" href="ConceptStructure.html">ConceptStructure</a></li>
+<li class="toctree-l4"><a class="reference internal" href="ConceptSystem.html">ConceptSystem</a></li>
+<li class="toctree-l4"><a class="reference internal" href="ConceptSystemCorrespondence.html">ConceptSystemCorrespondence</a></li>
+<li class="toctree-l4"><a class="reference internal" href="ConceptualDomain.html">ConceptualDomain</a></li>
+<li class="toctree-l4"><a class="reference internal" href="ConceptualVariable.html">ConceptualVariable</a></li>
+<li class="toctree-l4"><a class="reference internal" href="InstanceVariable.html">InstanceVariable</a></li>
+<li class="toctree-l4"><a class="reference internal" href="Population.html">Population</a></li>
+<li class="toctree-l4"><a class="reference internal" href="RepresentedVariable.html">RepresentedVariable</a></li>
+<li class="toctree-l4"><a class="reference internal" href="SentinelConceptualDomain.html">SentinelConceptualDomain</a></li>
+<li class="toctree-l4"><a class="reference internal" href="SubstantiveConceptualDomain.html">SubstantiveConceptualDomain</a></li>
+<li class="toctree-l4"><a class="reference internal" href="Unit.html">Unit</a></li>
+<li class="toctree-l4"><a class="reference internal" href="UnitType.html">UnitType</a></li>
+<li class="toctree-l4"><a class="reference internal" href="Universe.html">Universe</a></li>
+<li class="toctree-l4 current"><a class="current reference internal" href="#">VariableCollection</a><ul>
+<li class="toctree-l5"><a class="reference internal" href="#definition">Definition</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#examples">Examples</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#explanatory-notes">Explanatory notes</a></li>
+</ul>
+</li>
+<li class="toctree-l4"><a class="reference internal" href="VariablePosition.html">VariablePosition</a></li>
+<li class="toctree-l4"><a class="reference internal" href="VariableRelationship.html">VariableRelationship</a></li>
+<li class="toctree-l4"><a class="reference internal" href="VariableStructure.html">VariableStructure</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../DataDescription/index.html">DataDescription</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../FormatDescription/index.html">FormatDescription</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../Process/index.html">Process</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../Representations/index.html">Representations</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../DataTypes/index.html">DataTypes</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../../DesignPatterns/index.html">DesignPatterns</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../Appendices/index.html">Appendices</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../about/index.html">About</a></li>
+</ul>
+
+        </div>
+<div id="sidebarbutton" title="Collapse sidebar">
+<span>«</span>
+</div>
+
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="Related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="VariablePosition.html" title="VariablePosition"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="Universe.html" title="Universe"
+             >previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../../../index.html">UML Model: DDI Cross Domain Integration (DDI-CDI 1.0)</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="../../index.html" >DDICDILibrary</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="../index.html" >Classes</a> &#187;</li>
+          <li class="nav-item nav-item-3"><a href="index.html" >Conceptual</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">VariableCollection</a></li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+    &#169; Copyright 2024, DDI Alliance.
+    </div>
+  </body>
+</html>

@@ -1,0 +1,208 @@
+// Model: The Performative State
+// Source: Ding, Iza. 2022. The Performative State. Cornell University Press.
+
+attribute ding.state_capacity {
+  domain: ordinal
+  values: ["low", "high"]
+  description: "logistical and political capacity of a bureaucratic unit to deliver on governance goals"
+  source: "Ch.1, pp.25-35"
+}
+
+attribute ding.public_scrutiny {
+  domain: ordinal
+  values: ["low", "high"]
+  description: "degree to which public is attuned to an issue and exerting pressure on the state"
+  source: "Ch.1, pp.25-35"
+}
+
+// The 2x2 typology - composite concept
+concept ding.governance_mode {
+  parents: [ding.state_capacity, ding.public_scrutiny]
+  theta: {
+    "[\"low\",  \"low\"]"  : "inert"
+    "[\"high\", \"low\"]"  : "paternalistic"
+    "[\"low\",  \"high\"]" : "performative"
+    "[\"high\", \"high\"]" : "substantive"
+  }
+  rule: exhaustive_typology
+  description: "typology of state-bureaucratic behavior along two dimensions"
+  source: "Ch.1, pp.35-36"
+  elsst_label: "governance"
+}
+
+concept ding.low_capacity_high_scrutiny {
+  parents: [ding.state_capacity, ding.public_scrutiny]
+  theta: {
+    "[\"low\", \"high\"]": 1
+  }
+  rule: definitional
+  description: "under-resourced yet under intense public pressure"
+  source: "Ch.1, pp.35-36"
+}
+
+concept ding.performative_governance {
+  parents: [ding.state_capacity, ding.public_scrutiny]
+  theta: {
+    "[\"low\", \"high\"]": 1
+  }
+  rule: definitional
+  description: "deployment of visual, verbal, and gestural symbols of good governance"
+  source: "Introduction, p.7"
+  operationalization: "ethnographic coding: does bureaucratic action target problem substance or public perception?"
+  elsst_label: "governance"
+}
+
+concept ding.substantive_governance {
+  parents: [ding.state_capacity, ding.public_scrutiny]
+  theta: {
+    "[\"high\", \"high\"]": 1
+  }
+  rule: definitional
+  description: "governance geared towards delivering effective results"
+  source: "Ch.1, p.36"
+}
+
+concept ding.inert_governance {
+  parents: [ding.state_capacity, ding.public_scrutiny]
+  theta: {
+    "[\"low\", \"low\"]": 1
+  }
+  rule: definitional
+  description: "state neither has capacity nor faces pressure"
+  source: "Ch.1, p.35"
+}
+
+concept ding.paternalistic_governance {
+  parents: [ding.state_capacity, ding.public_scrutiny]
+  theta: {
+    "[\"high\", \"low\"]": 1
+  }
+  rule: definitional
+  description: "high capacity, low scrutiny - paternalistic"
+  source: "Ch.1, p.36"
+}
+
+concept ding.perceived_responsiveness {
+  parents: []
+  theta: {
+    "none": 1
+  }
+  rule: undecomposed
+  description: "citizens' perception that the government is responsive to their concerns"
+  operationalization: "citizen surveys and interviews"
+}
+
+concept ding.performative_breakdown {
+  parents: []
+  theta: {
+    "none": 1
+  }
+  rule: undecomposed
+  description: "when performative governance ceases to occur or fails to work"
+  source: "Ch.5, p.135"
+}
+
+concept ding.audience_cynicism {
+  parents: []
+  theta: {
+    "none": 1
+  }
+  rule: undecomposed
+  description: "citizens learn to see through the performance"
+  source: "Ch.5"
+}
+
+causal ding.lc_hs_to_performative {
+  source: ding.low_capacity_high_scrutiny
+  target: ding.performative_governance
+  direction: positive
+  condition: none
+  mechanism: "beleaguered bureaucracy"
+  textual_support: EXTRACTED
+}
+
+causal ding.performative_to_perception {
+  source: ding.performative_governance
+  target: ding.perceived_responsiveness
+  direction: positive
+  condition: "audience not cynical"
+  mechanism: "impression management"
+  textual_support: EXTRACTED
+}
+
+causal ding.cynicism_to_breakdown {
+  source: ding.audience_cynicism
+  target: ding.performative_breakdown
+  direction: positive
+  condition: none
+  mechanism: "audience learns to see through performance"
+  textual_support: INFERRED
+}
+
+edge broader: ding.governance_mode -> ding.performative_governance {
+  confidence: EXTRACTED
+  source: "typology structure, Ch.1"
+}
+
+edge broader: ding.governance_mode -> ding.substantive_governance {
+  confidence: EXTRACTED
+  source: "typology structure, Ch.1"
+}
+
+edge broader: ding.governance_mode -> ding.inert_governance {
+  confidence: EXTRACTED
+  source: "typology structure, Ch.1"
+}
+
+edge broader: ding.governance_mode -> ding.paternalistic_governance {
+  confidence: EXTRACTED
+  source: "typology structure, Ch.1"
+}
+
+bridge ding.measurement_pg {
+  type: measurement
+  concept: ding.performative_governance
+  method: participant_observation
+  validity: "key observable implications: night inspections, dress behavior in public, emotional management toward citizens"
+  commensurability: strong
+}
+
+bridge ding.causal_bridge_1 {
+  type: causal
+  implication: ding.lc_hs_to_performative
+  estimand: none
+  commensurability: weak
+  note: "no quantitative causal identification; ethnographic plausibility probe"
+}
+
+model ding.performative_state {
+  attributes: [
+    ding.state_capacity
+    ding.public_scrutiny
+  ]
+  concepts: [
+    ding.governance_mode
+    ding.low_capacity_high_scrutiny
+    ding.performative_governance
+    ding.substantive_governance
+    ding.inert_governance
+    ding.paternalistic_governance
+    ding.perceived_responsiveness
+    ding.performative_breakdown
+    ding.audience_cynicism
+  ]
+  causal: [
+    ding.lc_hs_to_performative
+    ding.performative_to_perception
+    ding.cynicism_to_breakdown
+  ]
+  bridges: [
+    ding.measurement_pg
+    ding.causal_bridge_1
+  ]
+}
+
+check theta_completeness on ding.performative_state
+check rule_consistency on ding.performative_state
+derive implications from ding.performative_state
+derive ibe_profile from ding.performative_state

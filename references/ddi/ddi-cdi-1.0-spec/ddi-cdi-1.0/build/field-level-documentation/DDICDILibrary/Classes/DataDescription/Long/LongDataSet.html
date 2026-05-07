@@ -1,0 +1,467 @@
+
+
+<!DOCTYPE html>
+
+<html lang="en" data-content_root="../../../../">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>LongDataSet &#8212; UML Model: DDI Cross Domain Integration (DDI-CDI 1.0)</title>
+    <link rel="stylesheet" type="text/css" href="../../../../_static/pygments.css?v=03e43079" />
+    <link rel="stylesheet" type="text/css" href="../../../../_static/classic.css?v=4d097c01" />
+    <link rel="stylesheet" type="text/css" href="../../../../_static/graphviz.css?v=4ae1632d" />
+    <link rel="stylesheet" type="text/css" href="../../../../_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="../../../../_static/sphinx-design.min.css?v=95c83b7e" />
+    <link rel="stylesheet" type="text/css" href="../../../../_static/custom.css?v=e6a9d92b" />
+    
+    <script src="../../../../_static/jquery.js?v=5d32c60e"></script>
+    <script src="../../../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+    <script src="../../../../_static/documentation_options.js?v=8a448e45"></script>
+    <script src="../../../../_static/doctools.js?v=9bcbadda"></script>
+    <script src="../../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../../../_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="../../../../_static/copybutton.js?v=f281be69"></script>
+    <script src="../../../../_static/design-tabs.js?v=f930bc37"></script>
+    <script src="../../../../_static/custom.js?v=5de7d6e5"></script>
+    <script src="../../../../_static/definition.js?v=897f6d42"></script>
+    
+    <script src="../../../../_static/sidebar.js"></script>
+    
+    <link rel="index" title="Index" href="../../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../../search.html" />
+    <link rel="next" title="LongDataStructure" href="LongDataStructure.html" />
+    <link rel="prev" title="DescriptorVariable" href="DescriptorVariable.html" /> 
+    <meta http-equiv="Content-Security-Policy" content="script-src 'self' 'unsafe-inline' https://cdn.datatables.net/ https://code.jquery.com/; style-src 'self' 'unsafe-inline' https://cdn.datatables.net/ https://code.jquery.com/; img-src 'self' https://cdn.datatables.net/;">
+    <!-- loaded before custom.js required. Done now with sphinxcontrib-jquery. See example Agent.html.
+    <script
+              src="https://code.jquery.com/jquery-3.7.1.min.js"
+              integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo="
+              crossorigin="anonymous"></script>
+    -->
+    <script
+              src="https://code.jquery.com/ui/1.13.2/jquery-ui.min.js"
+              integrity="sha256-lSjKY0/srUM9BE3dPm+c4fBo1dky2v27Gdjm2uoZaL0="
+              crossorigin="anonymous"></script>
+	<!--
+		Combined css and js downloads created with https://datatables.net/download/.
+		DataTables, Buttons (HTML5 export, JSZip, Print view), Search panes, Select, Minify, Concatenate
+	-->
+	<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/dt/jszip-2.5.0/dt-1.10.24/b-1.7.0/b-html5-1.7.0/b-print-1.7.0/sp-1.2.2/sl-1.3.3/datatables.min.css"/>
+	<script type="text/javascript" src="https://cdn.datatables.net/v/dt/jszip-2.5.0/dt-1.10.24/b-1.7.0/b-html5-1.7.0/b-print-1.7.0/sp-1.2.2/sl-1.3.3/datatables.min.js"></script>
+	<!-- For jquery tooltip. See: https://jqueryui.com/tooltip/ -->
+	<link rel="stylesheet" href="https://code.jquery.com/ui/1.13.2/themes/base/jquery-ui.css">
+	<script src="https://code.jquery.com/ui/1.13.2/jquery-ui.min.js"></script>
+    <!--
+    already loaded by sphinx
+	<script src="https://code.jquery.com/jquery-3.5.1.js" type="text/javascript" language="javascript"></script>
+	-->
+
+  </head><body>
+    <div class="related" role="navigation" aria-label="Related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="LongDataStructure.html" title="LongDataStructure"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="DescriptorVariable.html" title="DescriptorVariable"
+             accesskey="P">previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../../../../index.html">UML Model: DDI Cross Domain Integration (DDI-CDI 1.0)</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="../../../index.html" >DDICDILibrary</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="../../index.html" >Classes</a> &#187;</li>
+          <li class="nav-item nav-item-3"><a href="../index.html" >DataDescription</a> &#187;</li>
+          <li class="nav-item nav-item-4"><a href="index.html" accesskey="U">Long</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">LongDataSet</a></li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <section id="longdataset">
+<span id="ddicdimodels-ddicdilibrary-classes-datadescription-long-longdataset"></span><h1>LongDataSet<a class="headerlink" href="#longdataset" title="Link to this heading">¶</a></h1>
+<p><strong>Fully qualified class name</strong>: DDICDIModels::DDICDILibrary::Classes::DataDescription::Long::<span class="target" id="index-0"></span>LongDataSet</p>
+<section id="definition">
+<h2>Definition<a class="headerlink" href="#definition" title="Link to this heading">¶</a></h2>
+<p>Organized collection of long data. It is structured by a long data structure.</p>
+</section>
+<section id="examples">
+<h2>Examples<a class="headerlink" href="#examples" title="Link to this heading">¶</a></h2>
+<p>A unit dataset where each row corresponds to a set of data points capturing different characteristics of a unit, some of which can be transposed into variable descriptor and variable value components.</p>
+<div class="docutils container" id="diagram">
+<details class="sd-sphinx-override sd-dropdown sd-card sd-mb-3" open="open">
+<summary class="sd-summary-title sd-card-header">
+<span class="sd-summary-text">Diagram</span><span class="sd-summary-state-marker sd-summary-chevron-right"><svg version="1.1" width="1.5em" height="1.5em" class="sd-octicon sd-octicon-chevron-right" viewBox="0 0 24 24" aria-hidden="true"><path d="M8.72 18.78a.75.75 0 0 1 0-1.06L14.44 12 8.72 6.28a.751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018l6.25 6.25a.75.75 0 0 1 0 1.06l-6.25 6.25a.75.75 0 0 1-1.06 0Z"></path></svg></span></summary><div class="sd-summary-content sd-card-body docutils">
+<p class="plantuml">
+<object data="../../../../_images/plantuml-7fccafffba59220c6312c45aff780fa32d0346c3.svg" type="image/svg+xml" style="width:970px;height:644px;background:#FFFFFF;"></object></p>
+</div>
+</details></div>
+<div class="docutils container" id="inheritance">
+<details class="sd-sphinx-override sd-dropdown sd-card sd-mb-3">
+<summary class="sd-summary-title sd-card-header">
+<span class="sd-summary-text">Inheritance</span><span class="sd-summary-state-marker sd-summary-chevron-right"><svg version="1.1" width="1.5em" height="1.5em" class="sd-octicon sd-octicon-chevron-right" viewBox="0 0 24 24" aria-hidden="true"><path d="M8.72 18.78a.75.75 0 0 1 0-1.06L14.44 12 8.72 6.28a.751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018l6.25 6.25a.75.75 0 0 1 0 1.06l-6.25 6.25a.75.75 0 0 1-1.06 0Z"></path></svg></span></summary><div class="sd-summary-content sd-card-body docutils">
+<div class="regular line-block">
+<div class="line"><a class="reference internal" href="../DataSet.html#ddicdimodels-ddicdilibrary-classes-datadescription-dataset"><span class="std std-ref">DataDescription::DataSet</span></a></div>
+</div>
+<div class="regular line-block">
+<div class="line">  ᐊ── <span class="focus">Long::LongDataSet</span></div>
+</div>
+</div>
+</details></div>
+<div class="docutils container" id="attributes">
+<details class="sd-sphinx-override sd-dropdown sd-card sd-mb-3">
+<summary class="sd-summary-title sd-card-header">
+<span class="sd-summary-text">Attributes</span><span class="sd-summary-state-marker sd-summary-chevron-right"><svg version="1.1" width="1.5em" height="1.5em" class="sd-octicon sd-octicon-chevron-right" viewBox="0 0 24 24" aria-hidden="true"><path d="M8.72 18.78a.75.75 0 0 1 0-1.06L14.44 12 8.72 6.28a.751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018l6.25 6.25a.75.75 0 0 1 0 1.06l-6.25 6.25a.75.75 0 0 1-1.06 0Z"></path></svg></span></summary><div class="sd-summary-content sd-card-body docutils">
+<table class="datatable-attributes docutils align-default">
+<colgroup>
+<col style="width: 9.1%" />
+<col style="width: 9.1%" />
+<col style="width: 54.5%" />
+<col style="width: 9.1%" />
+<col style="width: 9.1%" />
+<col style="width: 9.1%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p class="sd-card-text">Name</p></th>
+<th class="head"><p class="sd-card-text">Inherited from</p></th>
+<th class="head"><p class="sd-card-text">Description</p></th>
+<th class="head"><p class="sd-card-text">Data Type</p></th>
+<th class="head"><p class="sd-card-text">Multiplicity</p></th>
+<th class="head"><p class="sd-card-text">Default value</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p class="sd-card-text">catalogDetails</p></td>
+<td><p class="sd-card-text"><a class="reference internal" href="../DataSet.html#ddicdimodels-ddicdilibrary-classes-datadescription-dataset"><span class="std std-ref">DataDescription::DataSet</span></a></p></td>
+<td><p class="sd-card-text">Bundles the information useful for a data catalog entry. Examples would be creator, contributor, title, copyright, embargo, and license information. A set of information useful for attribution, data discovery, and access. This is information that is tied to the identity of the object. If this information changes the version of the associated object changes.</p></td>
+<td><p class="sd-card-text"><a class="reference internal" href="../../../DataTypes/StructuredDataTypes/CatalogDetails.html#ddicdimodels-ddicdilibrary-datatypes-structureddatatypes-catalogdetails"><span class="std std-ref">CatalogDetails</span></a></p></td>
+<td><p class="sd-card-text">0..1</p></td>
+<td></td>
+</tr>
+<tr class="row-odd"><td><p class="sd-card-text">identifier</p></td>
+<td><p class="sd-card-text"><a class="reference internal" href="../DataSet.html#ddicdimodels-ddicdilibrary-classes-datadescription-dataset"><span class="std std-ref">DataDescription::DataSet</span></a></p></td>
+<td><p class="sd-card-text">Identifier for objects requiring short- or long-lasting referencing and management.</p></td>
+<td><p class="sd-card-text"><a class="reference internal" href="../../../DataTypes/StructuredDataTypes/Identifier.html#ddicdimodels-ddicdilibrary-datatypes-structureddatatypes-identifier"><span class="std std-ref">Identifier</span></a></p></td>
+<td><p class="sd-card-text">0..1</p></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+</div>
+</details></div>
+<div class="docutils container" id="associations">
+<details class="sd-sphinx-override sd-dropdown sd-card sd-mb-3">
+<summary class="sd-summary-title sd-card-header">
+<span class="sd-summary-text">Associations</span><span class="sd-summary-state-marker sd-summary-chevron-right"><svg version="1.1" width="1.5em" height="1.5em" class="sd-octicon sd-octicon-chevron-right" viewBox="0 0 24 24" aria-hidden="true"><path d="M8.72 18.78a.75.75 0 0 1 0-1.06L14.44 12 8.72 6.28a.751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018l6.25 6.25a.75.75 0 0 1 0 1.06l-6.25 6.25a.75.75 0 0 1-1.06 0Z"></path></svg></span></summary><div class="sd-summary-content sd-card-body docutils">
+<table class="datatable-associations docutils align-default">
+<colgroup>
+<col style="width: 5.3%" />
+<col style="width: 10.5%" />
+<col style="width: 31.6%" />
+<col style="width: 5.3%" />
+<col style="width: 10.5%" />
+<col style="width: 10.5%" />
+<col style="width: 5.3%" />
+<col style="width: 5.3%" />
+<col style="width: 15.8%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p class="sd-card-text">Direction</p></th>
+<th class="head"><p class="sd-card-text">Association</p></th>
+<th class="head"><p class="sd-card-text">Description</p></th>
+<th class="head"><p class="sd-card-text">Multiplicity of LongDataSet</p></th>
+<th class="head"><p class="sd-card-text">Package of Other Class</p></th>
+<th class="head"><p class="sd-card-text">Other Class</p></th>
+<th class="head"><p class="sd-card-text">Multiplicity of other class</p></th>
+<th class="head"><p class="sd-card-text">Aggregation Kind</p></th>
+<th class="head"><p class="sd-card-text">Inherited from</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p class="sd-card-text">from</p></td>
+<td><p class="sd-card-text">DataSet has DataPoint</p></td>
+<td></td>
+<td><p class="sd-card-text">1..1</p></td>
+<td><p class="sd-card-text"><a class="reference internal" href="../index.html#ddicdimodels-ddicdilibrary-classes-datadescription"><span class="std std-ref">DataDescription</span></a></p></td>
+<td><p class="sd-card-text"><a class="reference internal" href="../DataPoint.html#ddicdimodels-ddicdilibrary-classes-datadescription-datapoint"><span class="std std-ref">DataPoint</span></a></p></td>
+<td><p class="sd-card-text">0..*</p></td>
+<td><p class="sd-card-text">composite</p></td>
+<td><p class="sd-card-text"><a class="reference internal" href="../DataSet.html#ddicdimodels-ddicdilibrary-classes-datadescription-dataset"><span class="std std-ref">DataDescription::DataSet</span></a></p></td>
+</tr>
+<tr class="row-odd"><td><p class="sd-card-text">from</p></td>
+<td><p class="sd-card-text">DataSet has Key</p></td>
+<td></td>
+<td><p class="sd-card-text">1..1</p></td>
+<td><p class="sd-card-text"><a class="reference internal" href="../index.html#ddicdimodels-ddicdilibrary-classes-datadescription"><span class="std std-ref">DataDescription</span></a></p></td>
+<td><p class="sd-card-text"><a class="reference internal" href="../Key.html#ddicdimodels-ddicdilibrary-classes-datadescription-key"><span class="std std-ref">Key</span></a></p></td>
+<td><p class="sd-card-text">0..*</p></td>
+<td><p class="sd-card-text">composite</p></td>
+<td><p class="sd-card-text"><a class="reference internal" href="../DataSet.html#ddicdimodels-ddicdilibrary-classes-datadescription-dataset"><span class="std std-ref">DataDescription::DataSet</span></a></p></td>
+</tr>
+<tr class="row-even"><td><p class="sd-card-text">from</p></td>
+<td><p class="sd-card-text">DataSet isStructuredBy DataStructure</p></td>
+<td></td>
+<td><p class="sd-card-text">0..*</p></td>
+<td><p class="sd-card-text"><a class="reference internal" href="../index.html#ddicdimodels-ddicdilibrary-classes-datadescription"><span class="std std-ref">DataDescription</span></a></p></td>
+<td><p class="sd-card-text"><a class="reference internal" href="../DataStructure.html#ddicdimodels-ddicdilibrary-classes-datadescription-datastructure"><span class="std std-ref">DataStructure</span></a></p></td>
+<td><p class="sd-card-text">0..*</p></td>
+<td><p class="sd-card-text">none</p></td>
+<td><p class="sd-card-text"><a class="reference internal" href="../DataSet.html#ddicdimodels-ddicdilibrary-classes-datadescription-dataset"><span class="std std-ref">DataDescription::DataSet</span></a></p></td>
+</tr>
+<tr class="row-odd"><td><p class="sd-card-text">to</p></td>
+<td><p class="sd-card-text">LogicalRecord organizes DataSet</p></td>
+<td></td>
+<td><p class="sd-card-text">0..*</p></td>
+<td><p class="sd-card-text"><a class="reference internal" href="../../FormatDescription/index.html#ddicdimodels-ddicdilibrary-classes-formatdescription"><span class="std std-ref">FormatDescription</span></a></p></td>
+<td><p class="sd-card-text"><a class="reference internal" href="../../FormatDescription/LogicalRecord.html#ddicdimodels-ddicdilibrary-classes-formatdescription-logicalrecord"><span class="std std-ref">LogicalRecord</span></a></p></td>
+<td><p class="sd-card-text">0..*</p></td>
+<td><p class="sd-card-text">none</p></td>
+<td><p class="sd-card-text"><a class="reference internal" href="../DataSet.html#ddicdimodels-ddicdilibrary-classes-datadescription-dataset"><span class="std std-ref">DataDescription::DataSet</span></a></p></td>
+</tr>
+<tr class="row-even"><td><p class="sd-card-text">to</p></td>
+<td><p class="sd-card-text">PhysicalDataSet correspondsTo DataSet</p></td>
+<td></td>
+<td><p class="sd-card-text">0..1</p></td>
+<td><p class="sd-card-text"><a class="reference internal" href="../../FormatDescription/index.html#ddicdimodels-ddicdilibrary-classes-formatdescription"><span class="std std-ref">FormatDescription</span></a></p></td>
+<td><p class="sd-card-text"><a class="reference internal" href="../../FormatDescription/PhysicalDataSet.html#ddicdimodels-ddicdilibrary-classes-formatdescription-physicaldataset"><span class="std std-ref">PhysicalDataSet</span></a></p></td>
+<td><p class="sd-card-text">0..*</p></td>
+<td><p class="sd-card-text">none</p></td>
+<td><p class="sd-card-text"><a class="reference internal" href="../DataSet.html#ddicdimodels-ddicdilibrary-classes-datadescription-dataset"><span class="std std-ref">DataDescription::DataSet</span></a></p></td>
+</tr>
+</tbody>
+</table>
+</div>
+</details></div>
+<div class="docutils container" id="encodings">
+<details class="sd-sphinx-override sd-dropdown sd-card sd-mb-3">
+<summary class="sd-summary-title sd-card-header">
+<span class="sd-summary-text">Syntax representations / encodings</span><span class="sd-summary-state-marker sd-summary-chevron-right"><svg version="1.1" width="1.5em" height="1.5em" class="sd-octicon sd-octicon-chevron-right" viewBox="0 0 24 24" aria-hidden="true"><path d="M8.72 18.78a.75.75 0 0 1 0-1.06L14.44 12 8.72 6.28a.751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018l6.25 6.25a.75.75 0 0 1 0 1.06l-6.25 6.25a.75.75 0 0 1-1.06 0Z"></path></svg></span></summary><div class="sd-summary-content sd-card-body docutils">
+<p class="sd-card-text">All syntax representations except the Canonical XMI are provided as reference points
+for specific implementations, or for use as defaults if sufficient in the form presented.</p>
+<div class="sd-tab-set docutils">
+<input checked="checked" id="sd-tab-item-0" name="sd-tab-set-0" type="radio">
+<label class="sd-tab-label" for="sd-tab-item-0">
+Canonical XMI</label><div class="sd-tab-content encoding docutils">
+<p class="sd-card-text">Fragment for the class <strong>LongDataSet</strong> (<a class="reference external" href="/encoding/xmi/ddi-cdi_canonical-unique-names.xmi">entire model as XMI</a>)</p>
+<div class="highlight-xml notranslate"><div class="highlight"><pre><span></span><span class="linenos"> 1</span><span class="nt">&lt;packagedElement</span><span class="w"> </span><span class="na">xmlns:StandardProfile=</span><span class="s">&quot;http://www.eclipse.org/uml2/5.0.0/UML/Profile/Standard&quot;</span>
+<span class="linenos"> 2</span><span class="w">                 </span><span class="na">xmlns:uml=</span><span class="s">&quot;http://www.eclipse.org/uml2/5.0.0/UML&quot;</span>
+<span class="linenos"> 3</span><span class="w">                 </span><span class="na">xmlns:xmi=</span><span class="s">&quot;http://www.omg.org/spec/XMI/20131001&quot;</span>
+<span class="hll"><span class="linenos"> 4</span><span class="w">                 </span><span class="na">xmi:id=</span><span class="s">&quot;DDICDIModels-DDICDILibrary-Classes-DataDescription-Long-LongDataSet&quot;</span>
+</span><span class="linenos"> 5</span><span class="w">                 </span><span class="na">xmi:uuid=</span><span class="s">&quot;http://ddialliance.org/Specification/DDI-CDI/1.0/XMI/#LongDataSet&quot;</span>
+<span class="linenos"> 6</span><span class="w">                 </span><span class="na">xmi:type=</span><span class="s">&quot;uml:Class&quot;</span><span class="nt">&gt;</span>
+<span class="linenos"> 7</span><span class="w">   </span><span class="nt">&lt;ownedComment</span><span class="w"> </span><span class="na">xmi:id=</span><span class="s">&quot;DDICDIModels-DDICDILibrary-Classes-DataDescription-Long-LongDataSet-ownedComment&quot;</span>
+<span class="linenos"> 8</span><span class="w">                 </span><span class="na">xmi:uuid=</span><span class="s">&quot;http://ddialliance.org/Specification/DDI-CDI/1.0/XMI/#LongDataSet-ownedComment&quot;</span>
+<span class="linenos"> 9</span><span class="w">                 </span><span class="na">xmi:type=</span><span class="s">&quot;uml:Comment&quot;</span><span class="nt">&gt;</span>
+<span class="linenos">10</span><span class="w">      </span><span class="nt">&lt;annotatedElement</span><span class="w"> </span><span class="na">xmi:idref=</span><span class="s">&quot;DDICDIModels-DDICDILibrary-Classes-DataDescription-Long-LongDataSet&quot;</span><span class="nt">/&gt;</span>
+<span class="linenos">11</span><span class="w">      </span><span class="nt">&lt;body&gt;</span>Definition
+<span class="linenos">12</span>============
+<span class="linenos">13</span>Organized<span class="w"> </span>collection<span class="w"> </span>of<span class="w"> </span>long<span class="w"> </span>data.<span class="w"> </span>It<span class="w"> </span>is<span class="w"> </span>structured<span class="w"> </span>by<span class="w"> </span>a<span class="w"> </span>long<span class="w"> </span>data<span class="w"> </span>structure.
+<span class="linenos">14</span>
+<span class="linenos">15</span>Examples
+<span class="linenos">16</span>==========
+<span class="linenos">17</span>A<span class="w"> </span>unit<span class="w"> </span>dataset<span class="w"> </span>where<span class="w"> </span>each<span class="w"> </span>row<span class="w"> </span>corresponds<span class="w"> </span>to<span class="w"> </span>a<span class="w"> </span>set<span class="w"> </span>of<span class="w"> </span>data<span class="w"> </span>points<span class="w"> </span>capturing<span class="w"> </span>different<span class="w"> </span>characteristics<span class="w"> </span>of<span class="w"> </span>a<span class="w"> </span>unit,<span class="w"> </span>some<span class="w"> </span>of<span class="w"> </span>which<span class="w"> </span>can<span class="w"> </span>be<span class="w"> </span>transposed<span class="w"> </span>into<span class="w"> </span>variable<span class="w"> </span>descriptor<span class="w"> </span>and<span class="w"> </span>variable<span class="w"> </span>value<span class="w"> </span>components.<span class="nt">&lt;/body&gt;</span>
+<span class="linenos">18</span><span class="w">   </span><span class="nt">&lt;/ownedComment&gt;</span>
+<span class="linenos">19</span><span class="w">   </span><span class="nt">&lt;name&gt;</span>LongDataSet<span class="nt">&lt;/name&gt;</span>
+<span class="linenos">20</span><span class="w">   </span><span class="nt">&lt;generalization</span><span class="w"> </span><span class="na">xmi:id=</span><span class="s">&quot;DDICDIModels-DDICDILibrary-Classes-DataDescription-Long-LongDataSet-generalization&quot;</span>
+<span class="linenos">21</span><span class="w">                   </span><span class="na">xmi:uuid=</span><span class="s">&quot;http://ddialliance.org/Specification/DDI-CDI/1.0/XMI/#LongDataSet-generalization&quot;</span>
+<span class="linenos">22</span><span class="w">                   </span><span class="na">xmi:type=</span><span class="s">&quot;uml:Generalization&quot;</span><span class="nt">&gt;</span>
+<span class="linenos">23</span><span class="w">      </span><span class="nt">&lt;general</span><span class="w"> </span><span class="na">xmi:idref=</span><span class="s">&quot;DDICDIModels-DDICDILibrary-Classes-DataDescription-DataSet&quot;</span><span class="nt">/&gt;</span>
+<span class="linenos">24</span><span class="w">   </span><span class="nt">&lt;/generalization&gt;</span>
+<span class="linenos">25</span><span class="nt">&lt;/packagedElement&gt;</span>
+</pre></div>
+</div>
+</div>
+<input id="sd-tab-item-1" name="sd-tab-set-0" type="radio">
+<label class="sd-tab-label" for="sd-tab-item-1">
+XML Schema</label><div class="sd-tab-content encoding docutils">
+<p class="sd-card-text">Fragment for the class <strong>LongDataSet</strong> (<a class="reference external" href="/encoding/xml-schema/ddi-cdi.xsd">entire XML Schema</a>)</p>
+<div class="highlight-xml notranslate"><div class="highlight"><pre><span></span><span class="hll"><span class="linenos"> 1</span><span class="nt">&lt;xs:element</span><span class="w"> </span><span class="na">name=</span><span class="s">&quot;LongDataSet&quot;</span>
+</span><span class="linenos"> 2</span><span class="w">            </span><span class="na">type=</span><span class="s">&quot;LongDataSetXsdType&quot;</span>
+<span class="linenos"> 3</span><span class="w">            </span><span class="na">xml:id=</span><span class="s">&quot;LongDataSet&quot;</span><span class="nt">&gt;</span>
+<span class="linenos"> 4</span><span class="w">  </span><span class="cm">&lt;!-- based on the UML class DDICDIModels::DDICDILibrary::Classes::DataDescription::Long::LongDataSet --&gt;</span>
+<span class="linenos"> 5</span><span class="w">  </span><span class="nt">&lt;xs:annotation&gt;</span>
+<span class="linenos"> 6</span><span class="w">    </span><span class="nt">&lt;xs:documentation&gt;</span>Definition
+<span class="linenos"> 7</span><span class="w">          </span>============
+<span class="linenos"> 8</span><span class="w">          </span>Organized<span class="w"> </span>collection<span class="w"> </span>of<span class="w"> </span>long<span class="w"> </span>data.<span class="w"> </span>It<span class="w"> </span>is<span class="w"> </span>structured<span class="w"> </span>by<span class="w"> </span>a<span class="w"> </span>long<span class="w"> </span>data<span class="w"> </span>structure.
+<span class="linenos"> 9</span><span class="w">          </span>
+<span class="linenos">10</span><span class="w">          </span>Examples
+<span class="linenos">11</span><span class="w">          </span>==========
+<span class="linenos">12</span><span class="w">          </span>A<span class="w"> </span>unit<span class="w"> </span>dataset<span class="w"> </span>where<span class="w"> </span>each<span class="w"> </span>row<span class="w"> </span>corresponds<span class="w"> </span>to<span class="w"> </span>a<span class="w"> </span>set<span class="w"> </span>of<span class="w"> </span>data<span class="w"> </span>points<span class="w"> </span>capturing<span class="w"> </span>different<span class="w"> </span>characteristics<span class="w"> </span>of<span class="w"> </span>a<span class="w"> </span>unit,<span class="w"> </span>some<span class="w"> </span>of<span class="w"> </span>which<span class="w"> </span>can<span class="w"> </span>be<span class="w"> </span>transposed<span class="w"> </span>into<span class="w"> </span>variable<span class="w"> </span>descriptor<span class="w"> </span>and<span class="w"> </span>variable<span class="w"> </span>value<span class="w"> </span>components.<span class="nt">&lt;/xs:documentation&gt;</span>
+<span class="linenos">13</span><span class="w">  </span><span class="nt">&lt;/xs:annotation&gt;</span>
+<span class="linenos">14</span><span class="nt">&lt;/xs:element&gt;</span>
+<span class="linenos">15</span><span class="nt">&lt;xs:complexType</span><span class="w"> </span><span class="na">name=</span><span class="s">&quot;LongDataSetXsdType&quot;</span>
+<span class="linenos">16</span><span class="w">                </span><span class="na">xml:id=</span><span class="s">&quot;LongDataSetXsdType&quot;</span><span class="nt">&gt;</span>
+<span class="linenos">17</span><span class="w">  </span><span class="nt">&lt;xs:annotation&gt;</span>
+<span class="linenos">18</span><span class="w">    </span><span class="nt">&lt;xs:documentation&gt;</span>Definition
+<span class="linenos">19</span><span class="w">          </span>============
+<span class="linenos">20</span><span class="w">          </span>Organized<span class="w"> </span>collection<span class="w"> </span>of<span class="w"> </span>long<span class="w"> </span>data.<span class="w"> </span>It<span class="w"> </span>is<span class="w"> </span>structured<span class="w"> </span>by<span class="w"> </span>a<span class="w"> </span>long<span class="w"> </span>data<span class="w"> </span>structure.
+<span class="linenos">21</span><span class="w">          </span>
+<span class="linenos">22</span><span class="w">          </span>Examples
+<span class="linenos">23</span><span class="w">          </span>==========
+<span class="linenos">24</span><span class="w">          </span>A<span class="w"> </span>unit<span class="w"> </span>dataset<span class="w"> </span>where<span class="w"> </span>each<span class="w"> </span>row<span class="w"> </span>corresponds<span class="w"> </span>to<span class="w"> </span>a<span class="w"> </span>set<span class="w"> </span>of<span class="w"> </span>data<span class="w"> </span>points<span class="w"> </span>capturing<span class="w"> </span>different<span class="w"> </span>characteristics<span class="w"> </span>of<span class="w"> </span>a<span class="w"> </span>unit,<span class="w"> </span>some<span class="w"> </span>of<span class="w"> </span>which<span class="w"> </span>can<span class="w"> </span>be<span class="w"> </span>transposed<span class="w"> </span>into<span class="w"> </span>variable<span class="w"> </span>descriptor<span class="w"> </span>and<span class="w"> </span>variable<span class="w"> </span>value<span class="w"> </span>components.<span class="nt">&lt;/xs:documentation&gt;</span>
+<span class="linenos">25</span><span class="w">  </span><span class="nt">&lt;/xs:annotation&gt;</span>
+<span class="linenos">26</span><span class="w">  </span><span class="nt">&lt;xs:complexContent&gt;</span>
+<span class="linenos">27</span><span class="w">    </span><span class="nt">&lt;xs:extension</span><span class="w"> </span><span class="na">base=</span><span class="s">&quot;DataSetXsdType&quot;</span><span class="nt">&gt;</span>
+<span class="linenos">28</span><span class="w">      </span>
+<span class="linenos">29</span><span class="w">    </span><span class="nt">&lt;/xs:extension&gt;</span>
+<span class="linenos">30</span><span class="w">  </span><span class="nt">&lt;/xs:complexContent&gt;</span>
+<span class="linenos">31</span><span class="nt">&lt;/xs:complexType&gt;</span>
+</pre></div>
+</div>
+</div>
+<input id="sd-tab-item-2" name="sd-tab-set-0" type="radio">
+<label class="sd-tab-label" for="sd-tab-item-2">
+Ontology (Turtle)</label><div class="sd-tab-content encoding docutils">
+<p class="sd-card-text">Fragment for the class <strong>LongDataSet</strong> (<a class="reference external" href="/encoding/ontology/ddi-cdi.onto.ttl">main ontology</a>)</p>
+<div class="highlight-turtle notranslate"><div class="highlight"><pre><span></span><span class="linenos">1</span><span class="c"># class LongDataSet</span>
+<span class="linenos">2</span><span class="c"># based on the UML class DDICDIModels::DDICDILibrary::Classes::DataDescription::Long::LongDataSet</span>
+<span class="hll"><span class="linenos">3</span><span class="nn">cdi</span><span class="p">:</span><span class="nt">LongDataSet</span>
+</span><span class="linenos">4</span>  <span class="kt">a</span> <span class="nn">rdfs</span><span class="p">:</span><span class="nt">Class</span><span class="p">,</span> <span class="nn">owl</span><span class="p">:</span><span class="nt">Class</span><span class="p">,</span> <span class="nn">ucmis</span><span class="p">:</span><span class="nt">Class</span><span class="p">;</span>
+<span class="linenos">5</span>  <span class="nn">rdfs</span><span class="p">:</span><span class="nt">label</span> <span class="s">&quot;LongDataSet&quot;</span><span class="p">;</span>
+<span class="linenos">6</span>  <span class="nn">rdfs</span><span class="p">:</span><span class="nt">comment</span> <span class="s">&quot;Definition\n============\nOrganized collection of long data. It is structured by a long data structure.\n\nExamples\n==========\nA unit dataset where each row corresponds to a set of data points capturing different characteristics of a unit, some of which can be transposed into variable descriptor and variable value components.&quot;</span><span class="o">@</span><span class="ge">en</span><span class="p">;</span>
+<span class="linenos">7</span>  <span class="nn">rdfs</span><span class="p">:</span><span class="nt">subClassOf</span> <span class="nn">cdi</span><span class="p">:</span><span class="nt">DataSet</span><span class="p">;</span>
+<span class="linenos">8</span><span class="p">.</span>
+</pre></div>
+</div>
+</div>
+<input id="sd-tab-item-3" name="sd-tab-set-0" type="radio">
+<label class="sd-tab-label" for="sd-tab-item-3">
+JSON-LD</label><div class="sd-tab-content encoding docutils">
+<p class="sd-card-text">Fragment for the class <strong>LongDataSet</strong> (<a class="reference external" href="/encoding/json-ld/ddi-cdi.jsonld">main JSON-LD</a>)</p>
+<div class="highlight-JSON-LD notranslate"><div class="highlight"><pre><span></span><span class="linenos"> 1</span><span class="p">{</span>
+<span class="linenos"> 2</span><span class="w">  </span><span class="nd">&quot;@context&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<span class="linenos"> 3</span><span class="w">    </span><span class="s2">&quot;DataSet.jsonld&quot;</span><span class="p">,</span>
+<span class="linenos"> 4</span><span class="w">    </span><span class="p">{</span>
+<span class="hll"><span class="linenos"> 5</span><span class="w">      </span><span class="nt">&quot;cdi&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;http://ddialliance.org/Specification/DDI-CDI/1.0/RDF/&quot;</span><span class="p">,</span>
+</span><span class="linenos"> 6</span><span class="w">      </span><span class="nt">&quot;xsd&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;http://www.w3.org/2001/XMLSchema#&quot;</span><span class="p">,</span>
+<span class="linenos"> 7</span>
+<span class="linenos"> 8</span><span class="w">      </span>
+<span class="linenos"> 9</span><span class="w">      </span><span class="nt">&quot; comment &quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;tag:json-should-support-trailing-commas&quot;</span>
+<span class="linenos">10</span><span class="w">    </span><span class="p">}</span>
+<span class="linenos">11</span><span class="w">  </span><span class="p">],</span>
+<span class="linenos">12</span><span class="w">  </span><span class="nt">&quot;generatedBy&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;This code was generated by the Eclipse Acceleo project UCMIS M2T on 2025-01-25 16:58:31.&quot;</span><span class="p">,</span>
+<span class="linenos">13</span><span class="w">  </span><span class="nt">&quot;basedOn&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;based on the UML data type DDICDIModels::DDICDILibrary::Classes::DataDescription::Long::LongDataSet&quot;</span>
+<span class="linenos">14</span><span class="p">}</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+</details></div>
+</section>
+</section>
+
+
+            <div class="clearer"></div>
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="Main">
+        <div class="sphinxsidebarwrapper">
+            <p class="logo"><a href="../../../../index.html">
+              <img class="logo" src="../../../../_static/cdi.svg" alt="Logo of "/>
+            </a></p>
+<search id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../../../../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</search>
+<script>document.getElementById('searchbox').style.display = "block"</script>
+<h3><a href="../../../../index.html">Table of Contents</a></h3>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../../../Context/index.html">Context</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../../../index.html">DDICDILibrary</a><ul class="current">
+<li class="toctree-l2 current"><a class="reference internal" href="../../index.html">Classes</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="../../Agents/index.html">Agents</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../Conceptual/index.html">Conceptual</a></li>
+<li class="toctree-l3 current"><a class="reference internal" href="../index.html">DataDescription</a><ul class="current">
+<li class="toctree-l4"><a class="reference internal" href="../Components/index.html">Components</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../Dimensional/index.html">Dimensional</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../KeyValue/index.html">KeyValue</a></li>
+<li class="toctree-l4 current"><a class="reference internal" href="index.html">Long</a><ul class="current">
+<li class="toctree-l5"><a class="reference internal" href="Descriptor.html">Descriptor</a></li>
+<li class="toctree-l5"><a class="reference internal" href="DescriptorValueDomain.html">DescriptorValueDomain</a></li>
+<li class="toctree-l5"><a class="reference internal" href="DescriptorVariable.html">DescriptorVariable</a></li>
+<li class="toctree-l5 current"><a class="current reference internal" href="#">LongDataSet</a><ul>
+<li class="toctree-l6"><a class="reference internal" href="#definition">Definition</a></li>
+<li class="toctree-l6"><a class="reference internal" href="#examples">Examples</a></li>
+</ul>
+</li>
+<li class="toctree-l5"><a class="reference internal" href="LongDataStructure.html">LongDataStructure</a></li>
+<li class="toctree-l5"><a class="reference internal" href="LongKey.html">LongKey</a></li>
+<li class="toctree-l5"><a class="reference internal" href="LongMainKeyMember.html">LongMainKeyMember</a></li>
+<li class="toctree-l5"><a class="reference internal" href="ReferenceValue.html">ReferenceValue</a></li>
+<li class="toctree-l5"><a class="reference internal" href="ReferenceValueDomain.html">ReferenceValueDomain</a></li>
+<li class="toctree-l5"><a class="reference internal" href="ReferenceVariable.html">ReferenceVariable</a></li>
+</ul>
+</li>
+<li class="toctree-l4"><a class="reference internal" href="../Wide/index.html">Wide</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../ConceptualValue.html">ConceptualValue</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../DataPoint.html">DataPoint</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../DataSet.html">DataSet</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../DataStructure.html">DataStructure</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../Datum.html">Datum</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../InstanceValue.html">InstanceValue</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../Key.html">Key</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../KeyDefinition.html">KeyDefinition</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../KeyDefinitionMember.html">KeyDefinitionMember</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../KeyMember.html">KeyMember</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../Notation.html">Notation</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../../FormatDescription/index.html">FormatDescription</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../Process/index.html">Process</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../Representations/index.html">Representations</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../../DataTypes/index.html">DataTypes</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../DesignPatterns/index.html">DesignPatterns</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../Appendices/index.html">Appendices</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../about/index.html">About</a></li>
+</ul>
+
+        </div>
+<div id="sidebarbutton" title="Collapse sidebar">
+<span>«</span>
+</div>
+
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="Related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../../../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="LongDataStructure.html" title="LongDataStructure"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="DescriptorVariable.html" title="DescriptorVariable"
+             >previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../../../../index.html">UML Model: DDI Cross Domain Integration (DDI-CDI 1.0)</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="../../../index.html" >DDICDILibrary</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="../../index.html" >Classes</a> &#187;</li>
+          <li class="nav-item nav-item-3"><a href="../index.html" >DataDescription</a> &#187;</li>
+          <li class="nav-item nav-item-4"><a href="index.html" >Long</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">LongDataSet</a></li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+    &#169; Copyright 2024, DDI Alliance.
+    </div>
+  </body>
+</html>

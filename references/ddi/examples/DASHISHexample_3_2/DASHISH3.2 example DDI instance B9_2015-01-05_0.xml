@@ -1,0 +1,401 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ddi:FragmentInstance xmlns:a="ddi:archive:3_2" xmlns:c="ddi:conceptualcomponent:3_2" xmlns:cm="ddi:comparative:3_2" xmlns:d="ddi:datacollection:3_2" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:dcmitype="http://purl.org/dc/dcmitype/" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:ddi="ddi:instance:3_2" xmlns:ds="ddi:dataset:3_2" xmlns:g="ddi:group:3_2" xmlns:l="ddi:logicalproduct:3_2" xmlns:nc1="ddi:physicaldataproduct_ncube_normal:3_2" xmlns:nc2="ddi:physicaldataproduct_ncube_tabular:3_2" xmlns:nc3="ddi:physicaldataproduct_ncube_inline:3_2" xmlns:p="ddi:physicaldataproduct:3_2" xmlns:pi="ddi:physicalinstance:3_2" xmlns:pp="ddi:physicaldataproduct_proprietary:3_2" xmlns:pr="ddi:ddiprofile:3_2" xmlns:r="ddi:reusable:3_2" xmlns:s="ddi:studyunit:3_2" xmlns:xhtml="http://www.w3.org/1999/xhtml" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="ddi:instance:3_2  http://www.ddialliance.org/Specification/DDI-Lifecycle/3.2/XMLSchema/instance.xsd">
+	<ddi:TopLevelReference isExternal="false" externalReferenceDefaultURI="false" isReference="true" lateBound="false" objectLanguage="eng-GB">
+		<r:URN type="URN" typeOfIdentifier="Canonical">urn:ddi:int.esseric:e8781be1-01ed-11e4-9191-0800200c9a66:1.1</r:URN>
+		<r:Agency>int.esseric</r:Agency>
+		<r:ID type="ID">e8781be1-01ed-11e4-9191-0800200c9a66</r:ID>
+		<r:Version>1.1</r:Version>
+		<r:TypeOfObject>QuestionItem</r:TypeOfObject>
+	</ddi:TopLevelReference>
+	<!--  - - - - - - - - - - - - - - - - - - - -  -->
+	<ddi:Fragment>
+		<d:QuestionScheme scopeOfUniqueness="Agency" isUniversallyUnique="true" versionDate="2222-02-02" externalReferenceDefaultURI="false" isPublished="true" xml:lang="eng-GB" isMaintainable="true">
+			<r:URN type="URN" typeOfIdentifier="Canonical">urn:ddi:int.esseric:e8781be0-01ed-11e4-9191-0800200c9a66:1.1</r:URN>
+			<r:Agency>int.esseric</r:Agency>
+			<r:ID type="ID">e8781be0-01ed-11e4-9191-0800200c9a66</r:ID>
+			<r:Version>1.1</r:Version>
+			<r:UserID typeOfUserID="add content">e0</r:UserID>
+			<r:UserAttributePair>
+				<r:AttributeKey codeListID="add content" codeListName="add content" codeListAgencyName="ESSERIC" codeListVersionID="add content" codeListURN="add content" codeListSchemeURN="add content">Publishing key</r:AttributeKey>
+				<r:AttributeValue codeListID="add content" codeListName="add content" codeListAgencyName="ESSERIC" codeListVersionID="add content" codeListURN="add content" codeListSchemeURN="add content">InternalPublication.ExportToTMT</r:AttributeValue>
+			</r:UserAttributePair>
+			<r:VersionRationale>
+				<r:RationaleDescription>
+					<r:String>Add content</r:String>
+				</r:RationaleDescription>
+				<r:RationaleCode codeListID="e8781bea-01ed-11e4-9191-0800200c9a66" codeListName="add content" codeListAgencyName="ESSERIC" codeListVersionID="1.0" codeListURN="urn:ddi:int.esseric:e8781bea-01ed-11e4-9191-0800200c9a66:1.0" codeListSchemeURN="rn:ddi:int.esseric:e8781beb-01ed-11e4-9191-0800200c9a66:1.0">Typo corrected - no change in meaning</r:RationaleCode>
+			</r:VersionRationale>
+			<d:QuestionSchemeName>
+				<r:String>POL1</r:String>
+			</d:QuestionSchemeName>
+			<r:Label maxLength="250">
+				<r:Content xml:lang="eng-GB" isTranslated="false" isTranslatable="true" isPlainText="true">Politics</r:Content>
+			</r:Label>
+			<r:Description>
+				<r:Content xml:lang="eng-GB" isTranslated="false" isTranslatable="true" isPlainText="true">Politics module question list</r:Content>
+			</r:Description>
+			<d:QuestionItem scopeOfUniqueness="Agency" isUniversallyUnique="true" versionDate="2222-02-02" isVersionable="true">
+				<r:URN type="URN" typeOfIdentifier="Canonical">urn:ddi:int.esseric:e8781be1-01ed-11e4-9191-0800200c9a66:1.1</r:URN>
+				<r:Agency>int.esseric</r:Agency>
+				<r:ID type="ID">e8781be1-01ed-11e4-9191-0800200c9a66</r:ID>
+				<r:Version>1.1</r:Version>
+				<r:UserID typeOfUserID="add content">e1</r:UserID>
+				<r:UserAttributePair>
+					<r:AttributeKey codeListID="add content" codeListName="add content" codeListAgencyName="ESSERIC" codeListVersionID="add content" codeListURN="add content" codeListSchemeURN="add content">Publishing key</r:AttributeKey>
+					<r:AttributeValue codeListID="add content" codeListName="add content" codeListAgencyName="ESSERIC" codeListVersionID="add content" codeListURN="add content" codeListSchemeURN="add content">InternalPublication.ExportToTMT</r:AttributeValue>
+				</r:UserAttributePair>
+				<r:VersionRationale>
+					<r:RationaleDescription>
+						<r:String>Typo in question text</r:String>
+					</r:RationaleDescription>
+					<r:RationaleCode codeListID="e8781bea-01ed-11e4-9191-0800200c9a66" codeListName="add content" codeListAgencyName="ESSERIC" codeListVersionID="1.0" codeListURN="urn:ddi:int.esseric:e8781bea-01ed-11e4-9191-0800200c9a66:1.0" codeListSchemeURN="rn:ddi:int.esseric:e8781beb-01ed-11e4-9191-0800200c9a66:1.0">Typo corrected - no change in meaning</r:RationaleCode>
+				</r:VersionRationale>
+			    <d:QuestionItemName>
+			        <r:String>B9</r:String>
+			    </d:QuestionItemName>
+				<d:QuestionText isStructureRequired="true">
+					<d:LiteralText>
+						<d:Text xml:lang="eng-GB" isTranslated="false" isTranslatable="true" isPlainText="true" xml:space="default">
+    				        <xhtml:div class="IntroductionToQuestion">Some people don't vote nowadays for one reason or another.</xhtml:div>
+					        <xhtml:div class="Question">Did you vote in the last [country] national5 election in [month/year]?</xhtml:div>
+						</d:Text>
+					</d:LiteralText>
+				</d:QuestionText>
+				<d:QuestionIntent>
+					<r:Content xml:lang="eng-GB" isTranslated="false" isTranslatable="true" isPlainText="true">The intention of this question is to measure interest in politics at the civic level</r:Content>
+				</d:QuestionIntent>
+				<d:CodeDomain missingValue="8" classificationLevel="Ordinal">
+					<r:CodeListReference isExternal="false" isReference="true" lateBound="false" objectLanguage="eng-GB">
+					    <!-- reference to both valid and missing codelist - - - - - - - - - - - - - - - - - - - -  -->
+						<r:URN type="URN" typeOfIdentifier="Canonical">urn:ddi:int.esseric:e8781be2-01ed-11e4-9191-0800200c9a66:1.0</r:URN>
+						<r:Agency>int.esseric</r:Agency>
+						<r:ID type="ID">e8781be2-01ed-11e4-9191-0800200c9a66</r:ID>
+						<r:Version>1.0</r:Version>
+						<r:TypeOfObject>CodeList</r:TypeOfObject> 
+					</r:CodeListReference>
+				</d:CodeDomain>
+				<r:ResponseCardinality minimumResponses="1" maximumResponses="1"/>
+			</d:QuestionItem>
+		</d:QuestionScheme>
+	</ddi:Fragment>
+    <!-- valid and missing - - - - - - - - - - - - - - - - - - - -  -->
+    <ddi:Fragment>
+        <l:CodeListScheme>
+            <r:URN type="URN" typeOfIdentifier="Canonical">urn:ddi:int.esseric:e8781be6-01ed-11e4-9191-0800200c9a67:1.1</r:URN>
+            <r:Agency>int.esseric</r:Agency>
+            <r:ID type="ID">e8781be6-01ed-11e4-9191-0800200c9a66</r:ID>
+            <r:Version>1.1</r:Version>
+            <r:UserID typeOfUserID="add content">e6</r:UserID>
+            <r:VersionRationale>
+                <r:RationaleDescription>
+                    <r:String>Add content</r:String>
+                </r:RationaleDescription>
+                <r:RationaleCode codeListID="e8781bea-01ed-11e4-9191-0800200c9a66" codeListName="add content" codeListAgencyName="ESSERIC" codeListVersionID="1.0" codeListURN="urn:ddi:int.esseric:e8781bea-01ed-11e4-9191-0800200c9a66:1.0" codeListSchemeURN="rn:ddi:int.esseric:e8781beb-01ed-11e4-9191-0800200c9a66:1.0">First publc version</r:RationaleCode>
+            </r:VersionRationale>
+            <l:CodeListSchemeName>
+                <r:String>add content</r:String>
+            </l:CodeListSchemeName>
+            <r:Label maxLength="250">
+                <r:Content xml:lang="eng-GB" isTranslated="false" isTranslatable="true" isPlainText="false">add content</r:Content>
+            </r:Label>
+            <r:Description>
+                <r:Content xml:lang="eng-GB" isTranslated="false" isTranslatable="true" isPlainText="false">add content</r:Content>
+            </r:Description>
+            <l:CodeList scopeOfUniqueness="Agency" isUniversallyUnique="true" versionDate="2222-02-02" externalReferenceDefaultURI="false" isPublished="true" xml:lang="eng-GB" isMaintainable="true" isSystemMissingValue="false">
+                <r:URN type="URN" typeOfIdentifier="Canonical">urn:ddi:int.esseric:e8781be2-01ed-11e4-9191-0800200c9a66:1.0</r:URN>
+                <r:Agency>int.esseric</r:Agency>
+                <r:ID type="ID">e8781be2-01ed-11e4-9191-0800200c9a66</r:ID>
+                <r:Version>1.0</r:Version>
+                <r:UserID typeOfUserID="add content">e2</r:UserID>
+                <r:VersionRationale>
+                    <r:RationaleDescription>
+                        <r:String>Add content</r:String>
+                    </r:RationaleDescription>
+                    <r:RationaleCode codeListID="e8781bea-01ed-11e4-9191-0800200c9a66" codeListName="add content" codeListAgencyName="ESSERIC" codeListVersionID="1.0" codeListURN="urn:ddi:int.esseric:e8781bea-01ed-11e4-9191-0800200c9a66:1.0" codeListSchemeURN="rn:ddi:int.esseric:e8781beb-01ed-11e4-9191-0800200c9a66:1.0">First publc version</r:RationaleCode>
+                </r:VersionRationale>
+                <l:CodeListName>
+                    <r:String>add content</r:String>
+                </l:CodeListName>
+                <r:Label maxLength="250">
+                    <r:Content xml:lang="eng-GB" isTranslated="false" isTranslatable="true" isPlainText="true">Ref to valid and missing CodeList</r:Content>
+                </r:Label>
+                <r:Description>
+                    <r:Content xml:lang="eng-GB" isTranslated="false" isTranslatable="true" isPlainText="true">Contain CodeListReference to valid and missing CodeList</r:Content>
+                </r:Description>
+                <r:CodeListReference isExternal="false" isReference="true" lateBound="false" objectLanguage="eng-GB">
+                    <!-- reference to valid codelist - - - - - - - - - - - - - - - - - - - -  -->
+                    <r:URN type="URN" typeOfIdentifier="Canonical">urn:ddi:int.esseric:e8781bf5-01ed-11e4-9191-0800200c9a66:1.0</r:URN>
+                    <r:Agency>int.esseric</r:Agency>
+                    <r:ID type="ID">e8781bf5-01ed-11e4-9191-0800200c9a66</r:ID>
+                    <r:Version>1.0</r:Version>
+                    <r:TypeOfObject>CodeList</r:TypeOfObject> 
+                </r:CodeListReference>
+                <r:CodeListReference isExternal="false" isReference="true" lateBound="false" objectLanguage="eng-GB">
+                    <!-- reference to missing codelist - - - - - - - - - - - - - - - - - - - -  -->
+                    <r:URN type="URN" typeOfIdentifier="Canonical">urn:ddi:int.esseric:e8781bf6-01ed-11e4-9191-0800200c9a66:1.0</r:URN>
+                    <r:Agency>int.esseric</r:Agency>
+                    <r:ID type="ID">e8781bf6-01ed-11e4-9191-0800200c9a66</r:ID>
+                    <r:Version>1.0</r:Version>
+                    <r:TypeOfObject>CodeList</r:TypeOfObject> 
+                </r:CodeListReference>
+            </l:CodeList>
+        </l:CodeListScheme>
+    </ddi:Fragment>
+    <!-- valid - - - - - - - - - - - - - - - - - - - -  -->
+	<ddi:Fragment>
+		<l:CodeListScheme>
+			<r:URN type="URN" typeOfIdentifier="Canonical">urn:ddi:int.esseric:e8781be7-01ed-11e4-9191-0800200c9a67:1.1</r:URN>
+			<r:Agency>int.esseric</r:Agency>
+			<r:ID type="ID">e8781be7-01ed-11e4-9191-0800200c9a66</r:ID>
+			<r:Version>1.1</r:Version>
+			<r:UserID typeOfUserID="add content">e7</r:UserID>
+			<r:VersionRationale>
+				<r:RationaleDescription>
+					<r:String>Add content</r:String>
+				</r:RationaleDescription>
+				<r:RationaleCode codeListID="e8781bea-01ed-11e4-9191-0800200c9a66" codeListName="add content" codeListAgencyName="ESSERIC" codeListVersionID="1.0" codeListURN="urn:ddi:int.esseric:e8781bea-01ed-11e4-9191-0800200c9a66:1.0" codeListSchemeURN="rn:ddi:int.esseric:e8781beb-01ed-11e4-9191-0800200c9a66:1.0">First publc version</r:RationaleCode>
+			</r:VersionRationale>
+			<l:CodeListSchemeName>
+				<r:String>add content</r:String>
+			</l:CodeListSchemeName>
+			<r:Label maxLength="250">
+				<r:Content xml:lang="eng-GB" isTranslated="false" isTranslatable="true" isPlainText="false">add content</r:Content>
+			</r:Label>
+			<r:Description>
+				<r:Content xml:lang="eng-GB" isTranslated="false" isTranslatable="true" isPlainText="false">add content</r:Content>
+			</r:Description>
+			<l:CodeList scopeOfUniqueness="Agency" isUniversallyUnique="true" versionDate="2222-02-02" externalReferenceDefaultURI="false" isPublished="true" xml:lang="eng-GB" isMaintainable="true" isSystemMissingValue="false">
+			    <!-- valid codelist - - - - - - - - - - - - - - - - - - - -  -->
+			    <r:URN type="URN" typeOfIdentifier="Canonical">urn:ddi:int.esseric:e8781bf5-01ed-11e4-9191-0800200c9a66:1.0</r:URN>
+				<r:Agency>int.esseric</r:Agency>
+				<r:ID type="ID">e8781bf5-01ed-11e4-9191-0800200c9a66</r:ID>
+				<r:Version>1.0</r:Version>
+				<r:UserID typeOfUserID="add content">f5</r:UserID>
+				<r:VersionRationale>
+					<r:RationaleDescription>
+						<r:String>Add content</r:String>
+					</r:RationaleDescription>
+					<r:RationaleCode codeListID="e8781bea-01ed-11e4-9191-0800200c9a66" codeListName="add content" codeListAgencyName="ESSERIC" codeListVersionID="1.0" codeListURN="urn:ddi:int.esseric:e8781bea-01ed-11e4-9191-0800200c9a66:1.0" codeListSchemeURN="rn:ddi:int.esseric:e8781beb-01ed-11e4-9191-0800200c9a66:1.0">First publc version</r:RationaleCode>
+				</r:VersionRationale>
+				<l:CodeListName>
+					<r:String>add content</r:String>
+				</l:CodeListName>
+				<r:Label maxLength="250">
+					<r:Content xml:lang="eng-GB" isTranslated="false" isTranslatable="true" isPlainText="true">Yes/Not eligible to vote_3</r:Content>
+				</r:Label>
+				<r:Description>
+					<r:Content xml:lang="eng-GB" isTranslated="false" isTranslatable="true" isPlainText="true">Three categories</r:Content>
+				</r:Description>
+				<l:Code scopeOfUniqueness="Agency" isUniversallyUnique="true" isIdentifiable="true" isDiscrete="true" levelNumber="1" isComprehensive="True" isTotal="false">
+					<r:URN type="URN" typeOfIdentifier="Canonical">urn:ddi:int.esseric:e8781bf9-01ed-11e4-9191-0800200c9a66:1.0</r:URN>
+					<r:Agency>int.esseric</r:Agency>
+					<r:ID type="ID">e8781bf9-01ed-11e4-9191-0800200c9a66</r:ID>
+					<r:Version>1.0</r:Version>
+					<r:UserID typeOfUserID="add content">f9</r:UserID>
+					<r:CategoryReference>
+						<r:URN type="URN" typeOfIdentifier="Canonical">urn:ddi:int.esseric:e8781bf0-01ed-11e4-9191-0800200c9a66:1.0</r:URN>
+						<r:Agency>int.esseric</r:Agency>
+						<r:ID type="ID">e8781bf0-01ed-11e4-9191-0800200c9a66</r:ID>
+						<r:Version>1.0</r:Version>
+						<r:TypeOfObject>Category</r:TypeOfObject>
+					</r:CategoryReference>
+					<r:Value xml:space="default">1</r:Value>
+				</l:Code>
+				<l:Code scopeOfUniqueness="Agency" isUniversallyUnique="true" isIdentifiable="true" isDiscrete="true" levelNumber="1" isComprehensive="True" isTotal="false">
+					<r:URN type="URN" typeOfIdentifier="Canonical">urn:ddi:int.esseric:e8781bfa-01ed-11e4-9191-0800200c9a66:1.0</r:URN>
+					<r:Agency>int.esseric</r:Agency>
+					<r:ID type="ID">e8781bfa-01ed-11e4-9191-0800200c9a66</r:ID>
+					<r:Version>1.0</r:Version>
+					<r:UserID typeOfUserID="add content">fa</r:UserID>
+					<r:CategoryReference>
+						<r:URN type="URN" typeOfIdentifier="Canonical">urn:ddi:int.esseric:e8781bf1-01ed-11e4-9191-0800200c9a66:1.0</r:URN>
+						<r:Agency>int.esseric</r:Agency>
+						<r:ID type="ID">e8781bf1-01ed-11e4-9191-0800200c9a66</r:ID>
+						<r:Version>1.0</r:Version>
+						<r:TypeOfObject>Category</r:TypeOfObject>
+					</r:CategoryReference>
+					<r:Value xml:space="default">2</r:Value>
+				</l:Code>
+				<l:Code scopeOfUniqueness="Agency" isUniversallyUnique="true" isIdentifiable="true" isDiscrete="true" levelNumber="1" isComprehensive="True" isTotal="false">
+					<r:URN type="URN" typeOfIdentifier="Canonical">urn:ddi:int.esseric:e8781bfb-01ed-11e4-9191-0800200c9a66:1.0</r:URN>
+					<r:Agency>int.esseric</r:Agency>
+					<r:ID type="ID">e8781bfb-01ed-11e4-9191-0800200c9a66</r:ID>
+					<r:Version>1.0</r:Version>
+					<r:UserID typeOfUserID="add content">fb</r:UserID>
+					<r:CategoryReference>
+						<r:URN type="URN" typeOfIdentifier="Canonical">urn:ddi:int.esseric:e8781bf2-01ed-11e4-9191-0800200c9a66:1.0</r:URN>
+						<r:Agency>int.esseric</r:Agency>
+						<r:ID type="ID">e8781bf2-01ed-11e4-9191-0800200c9a66</r:ID>
+						<r:Version>1.0</r:Version>
+						<r:TypeOfObject>Category</r:TypeOfObject>
+					</r:CategoryReference>
+					<r:Value xml:space="default">3</r:Value>
+				</l:Code>
+			</l:CodeList>
+		</l:CodeListScheme>
+	</ddi:Fragment>
+	<!-- missing - - - - - - - - - - - - - - - - - - - -  -->
+    <ddi:Fragment>
+        <l:CodeListScheme>
+            <r:URN type="URN" typeOfIdentifier="Canonical">urn:ddi:int.esseric:e8781be8-01ed-11e4-9191-0800200c9a67:1.1</r:URN>
+            <r:Agency>int.esseric</r:Agency>
+            <r:ID type="ID">e8781be8-01ed-11e4-9191-0800200c9a66</r:ID>
+            <r:Version>1.1</r:Version>
+            <r:UserID typeOfUserID="add content">e8</r:UserID>
+            <r:VersionRationale>
+                <r:RationaleDescription>
+                    <r:String>Add content</r:String>
+                </r:RationaleDescription>
+                <r:RationaleCode codeListID="e8781bea-01ed-11e4-9191-0800200c9a66" codeListName="add content" codeListAgencyName="ESSERIC" codeListVersionID="1.0" codeListURN="urn:ddi:int.esseric:e8781bea-01ed-11e4-9191-0800200c9a66:1.0" codeListSchemeURN="rn:ddi:int.esseric:e8781beb-01ed-11e4-9191-0800200c9a66:1.0">First publc version</r:RationaleCode>
+            </r:VersionRationale>
+            <l:CodeListSchemeName>
+                <r:String>add content</r:String>
+            </l:CodeListSchemeName>
+            <r:Label maxLength="250">
+                <r:Content xml:lang="eng-GB" isTranslated="false" isTranslatable="true" isPlainText="false">add content</r:Content>
+            </r:Label>
+            <r:Description>
+                <r:Content xml:lang="eng-GB" isTranslated="false" isTranslatable="true" isPlainText="false">add content</r:Content>
+            </r:Description>
+            <l:CodeList scopeOfUniqueness="Agency" isUniversallyUnique="true" versionDate="2222-02-02" externalReferenceDefaultURI="false" isPublished="true" xml:lang="eng-GB" isMaintainable="true" isSystemMissingValue="false">
+                <r:URN type="URN" typeOfIdentifier="Canonical">urn:ddi:int.esseric:e8781bf6-01ed-11e4-9191-0800200c9a66:1.0</r:URN>
+                <r:Agency>int.esseric</r:Agency>
+                <r:ID type="ID">e8781bf6-01ed-11e4-9191-0800200c9a66</r:ID>
+                <r:Version>1.0</r:Version>
+                <r:UserID typeOfUserID="add content">f6</r:UserID>
+                <r:VersionRationale>
+                    <r:RationaleDescription>
+                        <r:String>Add content</r:String>
+                    </r:RationaleDescription>
+                    <r:RationaleCode codeListID="e8781bea-01ed-11e4-9191-0800200c9a66" codeListName="add content" codeListAgencyName="ESSERIC" codeListVersionID="1.0" codeListURN="urn:ddi:int.esseric:e8781bea-01ed-11e4-9191-0800200c9a66:1.0" codeListSchemeURN="rn:ddi:int.esseric:e8781beb-01ed-11e4-9191-0800200c9a66:1.0">First publc version</r:RationaleCode>
+                </r:VersionRationale>
+                <l:CodeListName>
+                    <r:String>add content</r:String>
+                </l:CodeListName>
+                <r:Label maxLength="250">
+                    <r:Content xml:lang="eng-GB" isTranslated="false" isTranslatable="true" isPlainText="true">DK_4</r:Content>
+                </r:Label>
+                <r:Description>
+                    <r:Content xml:lang="eng-GB" isTranslated="false" isTranslatable="true" isPlainText="true">Contain Dont't know</r:Content>
+                </r:Description>
+                <l:Code scopeOfUniqueness="Agency" isUniversallyUnique="true" isIdentifiable="true" isDiscrete="true" levelNumber="1" isComprehensive="True" isTotal="false">
+                    <r:URN type="URN" typeOfIdentifier="Canonical">urn:ddi:int.esseric:e8781bfc-01ed-11e4-9191-0800200c9a66:1.0</r:URN>
+                    <r:Agency>int.esseric</r:Agency>
+                    <r:ID type="ID">e8781bfc-01ed-11e4-9191-0800200c9a66</r:ID>
+                    <r:Version>1.0</r:Version>
+                    <r:UserID typeOfUserID="add content">fc</r:UserID>
+                    <r:CategoryReference>
+                        <r:URN type="URN" typeOfIdentifier="Canonical">urn:ddi:int.esseric:e8781bf3-01ed-11e4-9191-0800200c9a66:1.0</r:URN>
+                        <r:Agency>int.esseric</r:Agency>
+                        <r:ID type="ID">e8781bf3-01ed-11e4-9191-0800200c9a66</r:ID>
+                        <r:Version>1.0</r:Version>
+                        <r:TypeOfObject>Category</r:TypeOfObject>
+                    </r:CategoryReference>
+                    <r:Value xml:space="default">8</r:Value>
+                </l:Code>
+            </l:CodeList>
+        </l:CodeListScheme>
+    </ddi:Fragment>
+    <!--  - - - - - - - - - - - - - - - - - - - -  -->
+	<ddi:Fragment>
+		<l:CategoryScheme scopeOfUniqueness="Agency" isUniversallyUnique="true" versionDate="2222-02-02" externalReferenceDefaultURI="false" isPublished="false" xml:lang="eng-GB" isMaintainable="true">
+			<r:URN type="URN" typeOfIdentifier="Canonical">urn:ddi:int.esseric:e8781be4-01ed-11e4-9191-0800200c9a66:1.0</r:URN>
+			<r:Agency>int.esseric</r:Agency>
+			<r:ID type="ID">e8781be4-01ed-11e4-9191-0800200c9a66</r:ID>
+			<r:Version>1.0</r:Version>
+			<r:UserID typeOfUserID="add content">e4</r:UserID>
+			<r:VersionRationale>
+				<r:RationaleDescription>
+					<r:String>Add content</r:String>
+				</r:RationaleDescription>
+				<r:RationaleCode codeListID="e8781bea-01ed-11e4-9191-0800200c9a66" codeListName="add content" codeListAgencyName="ESSERIC" codeListVersionID="1.0" codeListURN="urn:ddi:int.esseric:e8781bea-01ed-11e4-9191-0800200c9a66:1.0" codeListSchemeURN="rn:ddi:int.esseric:e8781beb-01ed-11e4-9191-0800200c9a66:1.0">First publc version3</r:RationaleCode>
+			</r:VersionRationale>
+			<l:CategorySchemeName>
+				<r:String>add content</r:String>
+			</l:CategorySchemeName>
+			<r:Label maxLength="250">
+				<r:Content xml:lang="eng-GB" isTranslated="false" isTranslatable="true" isPlainText="false">add content</r:Content>
+			</r:Label>
+			<r:Description>
+				<r:Content xml:lang="eng-GB" isTranslated="false" isTranslatable="true" isPlainText="false">add content</r:Content>
+			</r:Description>
+			<l:Category scopeOfUniqueness="Agency" isUniversallyUnique="true" versionDate="2222-02-02" isVersionable="true" isMissing="false">
+				<r:URN type="URN" typeOfIdentifier="Canonical">urn:ddi:int.esseric:e8781bf0-01ed-11e4-9191-0800200c9a66:1.0</r:URN>
+				<r:Agency>int.esseric</r:Agency>
+				<r:ID type="ID">e8781bf0-01ed-11e4-9191-0800200c9a66</r:ID>
+				<r:Version>1.0</r:Version>
+				<r:UserID typeOfUserID="add content">f0</r:UserID>
+				<r:VersionRationale>
+					<r:RationaleDescription>
+						<r:String>Add content</r:String>
+					</r:RationaleDescription>
+					<r:RationaleCode codeListID="e8781bea-01ed-11e4-9191-0800200c9a66" codeListName="add content" codeListAgencyName="ESSERIC" codeListVersionID="1.0" codeListURN="urn:ddi:int.esseric:e8781bea-01ed-11e4-9191-0800200c9a66:1.0" codeListSchemeURN="rn:ddi:int.esseric:e8781beb-01ed-11e4-9191-0800200c9a66:1.0">First publc version</r:RationaleCode>
+				</r:VersionRationale>
+				<l:CategoryName isPreferred="true">
+					<r:String>Yes</r:String>
+				</l:CategoryName>
+				<r:Label maxLength="250">
+					<r:Content xml:lang="eng-GB" isTranslated="false" isTranslatable="true" isPlainText="true">Yes</r:Content>
+				</r:Label>
+			</l:Category>
+			<l:Category scopeOfUniqueness="Agency" isUniversallyUnique="true" versionDate="2222-02-02" isVersionable="true" isMissing="false">
+				<r:URN type="URN" typeOfIdentifier="Canonical">urn:ddi:int.esseric:e8781bf1-01ed-11e4-9191-0800200c9a66:1.0</r:URN>
+				<r:Agency>int.esseric</r:Agency>
+				<r:ID type="ID">e8781bf1-01ed-11e4-9191-0800200c9a66</r:ID>
+				<r:Version>1.0</r:Version>
+				<r:UserID typeOfUserID="add content">f1</r:UserID>
+				<r:VersionRationale>
+					<r:RationaleDescription>
+						<r:String>Add content</r:String>
+					</r:RationaleDescription>
+					<r:RationaleCode codeListID="e8781bea-01ed-11e4-9191-0800200c9a66" codeListName="add content" codeListAgencyName="ESSERIC" codeListVersionID="1.0" codeListURN="urn:ddi:int.esseric:e8781bea-01ed-11e4-9191-0800200c9a66:1.0" codeListSchemeURN="rn:ddi:int.esseric:e8781beb-01ed-11e4-9191-0800200c9a66:1.0">First publc version</r:RationaleCode>
+				</r:VersionRationale>
+				<l:CategoryName isPreferred="true">
+					<r:String>No</r:String>
+				</l:CategoryName>
+				<r:Label maxLength="250">
+					<r:Content xml:lang="eng-GB" isTranslated="false" isTranslatable="true" isPlainText="true">No</r:Content>
+				</r:Label>
+			</l:Category>
+			<l:Category scopeOfUniqueness="Agency" isUniversallyUnique="true" versionDate="2222-02-02" isVersionable="true" isMissing="false">
+				<r:URN type="URN" typeOfIdentifier="Canonical">urn:ddi:int.esseric:e8781bf2-01ed-11e4-9191-0800200c9a66:1.0</r:URN>
+				<r:Agency>int.esseric</r:Agency>
+				<r:ID type="ID">e8781bf2-01ed-11e4-9191-0800200c9a66</r:ID>
+				<r:Version>1.0</r:Version>
+				<r:UserID typeOfUserID="add content">f2</r:UserID>
+				<r:VersionRationale>
+					<r:RationaleDescription>
+						<r:String>Add content</r:String>
+					</r:RationaleDescription>
+					<r:RationaleCode codeListID="e8781bea-01ed-11e4-9191-0800200c9a66" codeListName="add content" codeListAgencyName="ESSERIC" codeListVersionID="1.0" codeListURN="urn:ddi:int.esseric:e8781bea-01ed-11e4-9191-0800200c9a66:1.0" codeListSchemeURN="rn:ddi:int.esseric:e8781beb-01ed-11e4-9191-0800200c9a66:1.0">First publc version</r:RationaleCode>
+				</r:VersionRationale>
+				<l:CategoryName isPreferred="true">
+					<r:String>Not eligible to vote</r:String>
+				</l:CategoryName>
+				<r:Label maxLength="250">
+					<r:Content xml:lang="eng-GB" isTranslated="false" isTranslatable="true" isPlainText="true">Not eligible to vote</r:Content>
+				</r:Label>
+			</l:Category>
+			<l:Category scopeOfUniqueness="Agency" isUniversallyUnique="true" versionDate="2222-02-02" isVersionable="true" isMissing="false">
+				<r:URN type="URN" typeOfIdentifier="Canonical">urn:ddi:int.esseric:e8781bf3-01ed-11e4-9191-0800200c9a66:1.0</r:URN>
+				<r:Agency>int.esseric</r:Agency>
+				<r:ID type="ID">e8781bf3-01ed-11e4-9191-0800200c9a66</r:ID>
+				<r:Version>1.0</r:Version>
+				<r:UserID typeOfUserID="add content">f3</r:UserID>
+				<r:VersionRationale>
+					<r:RationaleDescription>
+						<r:String>Add content</r:String>
+					</r:RationaleDescription>
+					<r:RationaleCode codeListID="e8781bea-01ed-11e4-9191-0800200c9a66" codeListName="add content" codeListAgencyName="ESSERIC" codeListVersionID="1.0" codeListURN="urn:ddi:int.esseric:e8781bea-01ed-11e4-9191-0800200c9a66:1.0" codeListSchemeURN="rn:ddi:int.esseric:e8781beb-01ed-11e4-9191-0800200c9a66:1.0">First publc version</r:RationaleCode>
+				</r:VersionRationale>
+				<l:CategoryName isPreferred="true">
+					<r:String>DK</r:String>
+				</l:CategoryName>
+				<r:Label maxLength="250">
+					<r:Content xml:lang="eng-GB" isTranslated="false" isTranslatable="true" isPlainText="true">(Don't know)</r:Content>
+				</r:Label>
+			</l:Category>
+		</l:CategoryScheme>
+	</ddi:Fragment>
+	<!--  - - - - - - - - - - - - - - - - - - - -  -->
+</ddi:FragmentInstance>

@@ -1,0 +1,431 @@
+
+
+<!DOCTYPE html>
+
+<html lang="en" data-content_root="../">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>DDICDILibrary &#8212; UML Model: DDI Cross Domain Integration (DDI-CDI 1.0)</title>
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=03e43079" />
+    <link rel="stylesheet" type="text/css" href="../_static/classic.css?v=4d097c01" />
+    <link rel="stylesheet" type="text/css" href="../_static/graphviz.css?v=4ae1632d" />
+    <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-design.min.css?v=95c83b7e" />
+    <link rel="stylesheet" type="text/css" href="../_static/custom.css?v=e6a9d92b" />
+    
+    <script src="../_static/jquery.js?v=5d32c60e"></script>
+    <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+    <script src="../_static/documentation_options.js?v=8a448e45"></script>
+    <script src="../_static/doctools.js?v=9bcbadda"></script>
+    <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="../_static/copybutton.js?v=f281be69"></script>
+    <script src="../_static/design-tabs.js?v=f930bc37"></script>
+    <script src="../_static/custom.js?v=5de7d6e5"></script>
+    <script src="../_static/definition.js?v=897f6d42"></script>
+    
+    <script src="../_static/sidebar.js"></script>
+    
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Classes" href="Classes/index.html" />
+    <link rel="prev" title="language" href="../Context/XMLSchema/language.html" /> 
+    <meta http-equiv="Content-Security-Policy" content="script-src 'self' 'unsafe-inline' https://cdn.datatables.net/ https://code.jquery.com/; style-src 'self' 'unsafe-inline' https://cdn.datatables.net/ https://code.jquery.com/; img-src 'self' https://cdn.datatables.net/;">
+    <!-- loaded before custom.js required. Done now with sphinxcontrib-jquery. See example Agent.html.
+    <script
+              src="https://code.jquery.com/jquery-3.7.1.min.js"
+              integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo="
+              crossorigin="anonymous"></script>
+    -->
+    <script
+              src="https://code.jquery.com/ui/1.13.2/jquery-ui.min.js"
+              integrity="sha256-lSjKY0/srUM9BE3dPm+c4fBo1dky2v27Gdjm2uoZaL0="
+              crossorigin="anonymous"></script>
+	<!--
+		Combined css and js downloads created with https://datatables.net/download/.
+		DataTables, Buttons (HTML5 export, JSZip, Print view), Search panes, Select, Minify, Concatenate
+	-->
+	<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/dt/jszip-2.5.0/dt-1.10.24/b-1.7.0/b-html5-1.7.0/b-print-1.7.0/sp-1.2.2/sl-1.3.3/datatables.min.css"/>
+	<script type="text/javascript" src="https://cdn.datatables.net/v/dt/jszip-2.5.0/dt-1.10.24/b-1.7.0/b-html5-1.7.0/b-print-1.7.0/sp-1.2.2/sl-1.3.3/datatables.min.js"></script>
+	<!-- For jquery tooltip. See: https://jqueryui.com/tooltip/ -->
+	<link rel="stylesheet" href="https://code.jquery.com/ui/1.13.2/themes/base/jquery-ui.css">
+	<script src="https://code.jquery.com/ui/1.13.2/jquery-ui.min.js"></script>
+    <!--
+    already loaded by sphinx
+	<script src="https://code.jquery.com/jquery-3.5.1.js" type="text/javascript" language="javascript"></script>
+	-->
+
+  </head><body>
+    <div class="related" role="navigation" aria-label="Related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="Classes/index.html" title="Classes"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="../Context/XMLSchema/language.html" title="language"
+             accesskey="P">previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">UML Model: DDI Cross Domain Integration (DDI-CDI 1.0)</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">DDICDILibrary</a></li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <section id="ddicdilibrary">
+<span id="ddicdimodels-ddicdilibrary"></span><h1>DDICDILibrary<a class="headerlink" href="#ddicdilibrary" title="Link to this heading">¶</a></h1>
+<div class="line-block">
+<div class="line"><strong>Fully qualified package name</strong>: DDICDIModels::DDICDILibrary</div>
+</div>
+<p>This package contains the classes, datatypes, and their definitions for all of the DDI-CDI model intended for direct use by implementers. It is organized into several sub-packages, as described below.</p>
+<hr class="docutils" />
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="Classes/index.html">Classes</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="Classes/Agents/index.html">Agents</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="Classes/Agents/Agent.html">Agent</a></li>
+<li class="toctree-l3"><a class="reference internal" href="Classes/Agents/AgentListing.html">AgentListing</a></li>
+<li class="toctree-l3"><a class="reference internal" href="Classes/Agents/AgentPosition.html">AgentPosition</a></li>
+<li class="toctree-l3"><a class="reference internal" href="Classes/Agents/AgentRelationship.html">AgentRelationship</a></li>
+<li class="toctree-l3"><a class="reference internal" href="Classes/Agents/AgentStructure.html">AgentStructure</a></li>
+<li class="toctree-l3"><a class="reference internal" href="Classes/Agents/Individual.html">Individual</a></li>
+<li class="toctree-l3"><a class="reference internal" href="Classes/Agents/Machine.html">Machine</a></li>
+<li class="toctree-l3"><a class="reference internal" href="Classes/Agents/Organization.html">Organization</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="Classes/Conceptual/index.html">Conceptual</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="Classes/Conceptual/Category.html">Category</a></li>
+<li class="toctree-l3"><a class="reference internal" href="Classes/Conceptual/CategoryPosition.html">CategoryPosition</a></li>
+<li class="toctree-l3"><a class="reference internal" href="Classes/Conceptual/CategoryRelationship.html">CategoryRelationship</a></li>
+<li class="toctree-l3"><a class="reference internal" href="Classes/Conceptual/CategoryRelationStructure.html">CategoryRelationStructure</a></li>
+<li class="toctree-l3"><a class="reference internal" href="Classes/Conceptual/CategorySet.html">CategorySet</a></li>
+<li class="toctree-l3"><a class="reference internal" href="Classes/Conceptual/Concept.html">Concept</a></li>
+<li class="toctree-l3"><a class="reference internal" href="Classes/Conceptual/ConceptMap.html">ConceptMap</a></li>
+<li class="toctree-l3"><a class="reference internal" href="Classes/Conceptual/ConceptRelationship.html">ConceptRelationship</a></li>
+<li class="toctree-l3"><a class="reference internal" href="Classes/Conceptual/ConceptStructure.html">ConceptStructure</a></li>
+<li class="toctree-l3"><a class="reference internal" href="Classes/Conceptual/ConceptSystem.html">ConceptSystem</a></li>
+<li class="toctree-l3"><a class="reference internal" href="Classes/Conceptual/ConceptSystemCorrespondence.html">ConceptSystemCorrespondence</a></li>
+<li class="toctree-l3"><a class="reference internal" href="Classes/Conceptual/ConceptualDomain.html">ConceptualDomain</a></li>
+<li class="toctree-l3"><a class="reference internal" href="Classes/Conceptual/ConceptualVariable.html">ConceptualVariable</a></li>
+<li class="toctree-l3"><a class="reference internal" href="Classes/Conceptual/InstanceVariable.html">InstanceVariable</a></li>
+<li class="toctree-l3"><a class="reference internal" href="Classes/Conceptual/Population.html">Population</a></li>
+<li class="toctree-l3"><a class="reference internal" href="Classes/Conceptual/RepresentedVariable.html">RepresentedVariable</a></li>
+<li class="toctree-l3"><a class="reference internal" href="Classes/Conceptual/SentinelConceptualDomain.html">SentinelConceptualDomain</a></li>
+<li class="toctree-l3"><a class="reference internal" href="Classes/Conceptual/SubstantiveConceptualDomain.html">SubstantiveConceptualDomain</a></li>
+<li class="toctree-l3"><a class="reference internal" href="Classes/Conceptual/Unit.html">Unit</a></li>
+<li class="toctree-l3"><a class="reference internal" href="Classes/Conceptual/UnitType.html">UnitType</a></li>
+<li class="toctree-l3"><a class="reference internal" href="Classes/Conceptual/Universe.html">Universe</a></li>
+<li class="toctree-l3"><a class="reference internal" href="Classes/Conceptual/VariableCollection.html">VariableCollection</a></li>
+<li class="toctree-l3"><a class="reference internal" href="Classes/Conceptual/VariablePosition.html">VariablePosition</a></li>
+<li class="toctree-l3"><a class="reference internal" href="Classes/Conceptual/VariableRelationship.html">VariableRelationship</a></li>
+<li class="toctree-l3"><a class="reference internal" href="Classes/Conceptual/VariableStructure.html">VariableStructure</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="Classes/DataDescription/index.html">DataDescription</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="Classes/DataDescription/Components/index.html">Components</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="Classes/DataDescription/Components/AttributeComponent.html">AttributeComponent</a></li>
+<li class="toctree-l4"><a class="reference internal" href="Classes/DataDescription/Components/ComponentPosition.html">ComponentPosition</a></li>
+<li class="toctree-l4"><a class="reference internal" href="Classes/DataDescription/Components/DataStructureComponent.html">DataStructureComponent</a></li>
+<li class="toctree-l4"><a class="reference internal" href="Classes/DataDescription/Components/DimensionComponent.html">DimensionComponent</a></li>
+<li class="toctree-l4"><a class="reference internal" href="Classes/DataDescription/Components/ForeignKey.html">ForeignKey</a></li>
+<li class="toctree-l4"><a class="reference internal" href="Classes/DataDescription/Components/ForeignKeyComponent.html">ForeignKeyComponent</a></li>
+<li class="toctree-l4"><a class="reference internal" href="Classes/DataDescription/Components/IdentifierComponent.html">IdentifierComponent</a></li>
+<li class="toctree-l4"><a class="reference internal" href="Classes/DataDescription/Components/MeasureComponent.html">MeasureComponent</a></li>
+<li class="toctree-l4"><a class="reference internal" href="Classes/DataDescription/Components/PrimaryKey.html">PrimaryKey</a></li>
+<li class="toctree-l4"><a class="reference internal" href="Classes/DataDescription/Components/PrimaryKeyComponent.html">PrimaryKeyComponent</a></li>
+<li class="toctree-l4"><a class="reference internal" href="Classes/DataDescription/Components/VariableDescriptorComponent.html">VariableDescriptorComponent</a></li>
+<li class="toctree-l4"><a class="reference internal" href="Classes/DataDescription/Components/VariableValueComponent.html">VariableValueComponent</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="Classes/DataDescription/Dimensional/index.html">Dimensional</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="Classes/DataDescription/Dimensional/DimensionalDataSet.html">DimensionalDataSet</a></li>
+<li class="toctree-l4"><a class="reference internal" href="Classes/DataDescription/Dimensional/DimensionalDataStructure.html">DimensionalDataStructure</a></li>
+<li class="toctree-l4"><a class="reference internal" href="Classes/DataDescription/Dimensional/DimensionalKey.html">DimensionalKey</a></li>
+<li class="toctree-l4"><a class="reference internal" href="Classes/DataDescription/Dimensional/DimensionalKeyDefinition.html">DimensionalKeyDefinition</a></li>
+<li class="toctree-l4"><a class="reference internal" href="Classes/DataDescription/Dimensional/DimensionalKeyDefinitionMember.html">DimensionalKeyDefinitionMember</a></li>
+<li class="toctree-l4"><a class="reference internal" href="Classes/DataDescription/Dimensional/DimensionalKeyMember.html">DimensionalKeyMember</a></li>
+<li class="toctree-l4"><a class="reference internal" href="Classes/DataDescription/Dimensional/DimensionGroup.html">DimensionGroup</a></li>
+<li class="toctree-l4"><a class="reference internal" href="Classes/DataDescription/Dimensional/QualifiedMeasure.html">QualifiedMeasure</a></li>
+<li class="toctree-l4"><a class="reference internal" href="Classes/DataDescription/Dimensional/RevisableDatum.html">RevisableDatum</a></li>
+<li class="toctree-l4"><a class="reference internal" href="Classes/DataDescription/Dimensional/Revision.html">Revision</a></li>
+<li class="toctree-l4"><a class="reference internal" href="Classes/DataDescription/Dimensional/ScopedMeasure.html">ScopedMeasure</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="Classes/DataDescription/KeyValue/index.html">KeyValue</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="Classes/DataDescription/KeyValue/ContextualComponent.html">ContextualComponent</a></li>
+<li class="toctree-l4"><a class="reference internal" href="Classes/DataDescription/KeyValue/InstanceKey.html">InstanceKey</a></li>
+<li class="toctree-l4"><a class="reference internal" href="Classes/DataDescription/KeyValue/KeyValueDataStore.html">KeyValueDataStore</a></li>
+<li class="toctree-l4"><a class="reference internal" href="Classes/DataDescription/KeyValue/KeyValueStructure.html">KeyValueStructure</a></li>
+<li class="toctree-l4"><a class="reference internal" href="Classes/DataDescription/KeyValue/MainKeyMember.html">MainKeyMember</a></li>
+<li class="toctree-l4"><a class="reference internal" href="Classes/DataDescription/KeyValue/SyntheticIdComponent.html">SyntheticIdComponent</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="Classes/DataDescription/Long/index.html">Long</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="Classes/DataDescription/Long/Descriptor.html">Descriptor</a></li>
+<li class="toctree-l4"><a class="reference internal" href="Classes/DataDescription/Long/DescriptorValueDomain.html">DescriptorValueDomain</a></li>
+<li class="toctree-l4"><a class="reference internal" href="Classes/DataDescription/Long/DescriptorVariable.html">DescriptorVariable</a></li>
+<li class="toctree-l4"><a class="reference internal" href="Classes/DataDescription/Long/LongDataSet.html">LongDataSet</a></li>
+<li class="toctree-l4"><a class="reference internal" href="Classes/DataDescription/Long/LongDataStructure.html">LongDataStructure</a></li>
+<li class="toctree-l4"><a class="reference internal" href="Classes/DataDescription/Long/LongKey.html">LongKey</a></li>
+<li class="toctree-l4"><a class="reference internal" href="Classes/DataDescription/Long/LongMainKeyMember.html">LongMainKeyMember</a></li>
+<li class="toctree-l4"><a class="reference internal" href="Classes/DataDescription/Long/ReferenceValue.html">ReferenceValue</a></li>
+<li class="toctree-l4"><a class="reference internal" href="Classes/DataDescription/Long/ReferenceValueDomain.html">ReferenceValueDomain</a></li>
+<li class="toctree-l4"><a class="reference internal" href="Classes/DataDescription/Long/ReferenceVariable.html">ReferenceVariable</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="Classes/DataDescription/Wide/index.html">Wide</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="Classes/DataDescription/Wide/WideDataSet.html">WideDataSet</a></li>
+<li class="toctree-l4"><a class="reference internal" href="Classes/DataDescription/Wide/WideDataStructure.html">WideDataStructure</a></li>
+<li class="toctree-l4"><a class="reference internal" href="Classes/DataDescription/Wide/WideKey.html">WideKey</a></li>
+<li class="toctree-l4"><a class="reference internal" href="Classes/DataDescription/Wide/WideKeyMember.html">WideKeyMember</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="Classes/DataDescription/ConceptualValue.html">ConceptualValue</a></li>
+<li class="toctree-l3"><a class="reference internal" href="Classes/DataDescription/DataPoint.html">DataPoint</a></li>
+<li class="toctree-l3"><a class="reference internal" href="Classes/DataDescription/DataSet.html">DataSet</a></li>
+<li class="toctree-l3"><a class="reference internal" href="Classes/DataDescription/DataStructure.html">DataStructure</a></li>
+<li class="toctree-l3"><a class="reference internal" href="Classes/DataDescription/Datum.html">Datum</a></li>
+<li class="toctree-l3"><a class="reference internal" href="Classes/DataDescription/InstanceValue.html">InstanceValue</a></li>
+<li class="toctree-l3"><a class="reference internal" href="Classes/DataDescription/Key.html">Key</a></li>
+<li class="toctree-l3"><a class="reference internal" href="Classes/DataDescription/KeyDefinition.html">KeyDefinition</a></li>
+<li class="toctree-l3"><a class="reference internal" href="Classes/DataDescription/KeyDefinitionMember.html">KeyDefinitionMember</a></li>
+<li class="toctree-l3"><a class="reference internal" href="Classes/DataDescription/KeyMember.html">KeyMember</a></li>
+<li class="toctree-l3"><a class="reference internal" href="Classes/DataDescription/Notation.html">Notation</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="Classes/FormatDescription/index.html">FormatDescription</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="Classes/FormatDescription/DataPointPosition.html">DataPointPosition</a></li>
+<li class="toctree-l3"><a class="reference internal" href="Classes/FormatDescription/DataPointRelationship.html">DataPointRelationship</a></li>
+<li class="toctree-l3"><a class="reference internal" href="Classes/FormatDescription/DataStore.html">DataStore</a></li>
+<li class="toctree-l3"><a class="reference internal" href="Classes/FormatDescription/InstanceVariableMap.html">InstanceVariableMap</a></li>
+<li class="toctree-l3"><a class="reference internal" href="Classes/FormatDescription/LogicalRecord.html">LogicalRecord</a></li>
+<li class="toctree-l3"><a class="reference internal" href="Classes/FormatDescription/LogicalRecordPosition.html">LogicalRecordPosition</a></li>
+<li class="toctree-l3"><a class="reference internal" href="Classes/FormatDescription/LogicalRecordRelationship.html">LogicalRecordRelationship</a></li>
+<li class="toctree-l3"><a class="reference internal" href="Classes/FormatDescription/LogicalRecordRelationStructure.html">LogicalRecordRelationStructure</a></li>
+<li class="toctree-l3"><a class="reference internal" href="Classes/FormatDescription/PhysicalDataSet.html">PhysicalDataSet</a></li>
+<li class="toctree-l3"><a class="reference internal" href="Classes/FormatDescription/PhysicalDataSetStructure.html">PhysicalDataSetStructure</a></li>
+<li class="toctree-l3"><a class="reference internal" href="Classes/FormatDescription/PhysicalLayoutRelationStructure.html">PhysicalLayoutRelationStructure</a></li>
+<li class="toctree-l3"><a class="reference internal" href="Classes/FormatDescription/PhysicalRecordSegment.html">PhysicalRecordSegment</a></li>
+<li class="toctree-l3"><a class="reference internal" href="Classes/FormatDescription/PhysicalRecordSegmentPosition.html">PhysicalRecordSegmentPosition</a></li>
+<li class="toctree-l3"><a class="reference internal" href="Classes/FormatDescription/PhysicalRecordSegmentRelationship.html">PhysicalRecordSegmentRelationship</a></li>
+<li class="toctree-l3"><a class="reference internal" href="Classes/FormatDescription/PhysicalRecordSegmentStructure.html">PhysicalRecordSegmentStructure</a></li>
+<li class="toctree-l3"><a class="reference internal" href="Classes/FormatDescription/PhysicalSegmentLayout.html">PhysicalSegmentLayout</a></li>
+<li class="toctree-l3"><a class="reference internal" href="Classes/FormatDescription/PhysicalSegmentLocation.html">PhysicalSegmentLocation</a></li>
+<li class="toctree-l3"><a class="reference internal" href="Classes/FormatDescription/RecordRelation.html">RecordRelation</a></li>
+<li class="toctree-l3"><a class="reference internal" href="Classes/FormatDescription/SegmentByText.html">SegmentByText</a></li>
+<li class="toctree-l3"><a class="reference internal" href="Classes/FormatDescription/UnitSegmentLayout.html">UnitSegmentLayout</a></li>
+<li class="toctree-l3"><a class="reference internal" href="Classes/FormatDescription/ValueMapping.html">ValueMapping</a></li>
+<li class="toctree-l3"><a class="reference internal" href="Classes/FormatDescription/ValueMappingPosition.html">ValueMappingPosition</a></li>
+<li class="toctree-l3"><a class="reference internal" href="Classes/FormatDescription/ValueMappingRelationship.html">ValueMappingRelationship</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="Classes/Process/index.html">Process</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="Classes/Process/Activity.html">Activity</a></li>
+<li class="toctree-l3"><a class="reference internal" href="Classes/Process/AllenIntervalAlgebra.html">AllenIntervalAlgebra</a></li>
+<li class="toctree-l3"><a class="reference internal" href="Classes/Process/ConditionalControlLogic.html">ConditionalControlLogic</a></li>
+<li class="toctree-l3"><a class="reference internal" href="Classes/Process/ControlLogic.html">ControlLogic</a></li>
+<li class="toctree-l3"><a class="reference internal" href="Classes/Process/Curator.html">Curator</a></li>
+<li class="toctree-l3"><a class="reference internal" href="Classes/Process/DeterministicImperative.html">DeterministicImperative</a></li>
+<li class="toctree-l3"><a class="reference internal" href="Classes/Process/InformationFlowDefinition.html">InformationFlowDefinition</a></li>
+<li class="toctree-l3"><a class="reference internal" href="Classes/Process/NonDeterministicDeclarative.html">NonDeterministicDeclarative</a></li>
+<li class="toctree-l3"><a class="reference internal" href="Classes/Process/Parameter.html">Parameter</a></li>
+<li class="toctree-l3"><a class="reference internal" href="Classes/Process/ProcessingAgent.html">ProcessingAgent</a></li>
+<li class="toctree-l3"><a class="reference internal" href="Classes/Process/ProductionEnvironment.html">ProductionEnvironment</a></li>
+<li class="toctree-l3"><a class="reference internal" href="Classes/Process/Rule.html">Rule</a></li>
+<li class="toctree-l3"><a class="reference internal" href="Classes/Process/RuleBasedScheduling.html">RuleBasedScheduling</a></li>
+<li class="toctree-l3"><a class="reference internal" href="Classes/Process/RuleSet.html">RuleSet</a></li>
+<li class="toctree-l3"><a class="reference internal" href="Classes/Process/Sequence.html">Sequence</a></li>
+<li class="toctree-l3"><a class="reference internal" href="Classes/Process/SequencePosition.html">SequencePosition</a></li>
+<li class="toctree-l3"><a class="reference internal" href="Classes/Process/Service.html">Service</a></li>
+<li class="toctree-l3"><a class="reference internal" href="Classes/Process/Step.html">Step</a></li>
+<li class="toctree-l3"><a class="reference internal" href="Classes/Process/TemporalConstraints.html">TemporalConstraints</a></li>
+<li class="toctree-l3"><a class="reference internal" href="Classes/Process/TemporalControlConstruct.html">TemporalControlConstruct</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="Classes/Representations/index.html">Representations</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="Classes/Representations/AuthorizationSource.html">AuthorizationSource</a></li>
+<li class="toctree-l3"><a class="reference internal" href="Classes/Representations/CategoryStatistic.html">CategoryStatistic</a></li>
+<li class="toctree-l3"><a class="reference internal" href="Classes/Representations/ClassificationFamily.html">ClassificationFamily</a></li>
+<li class="toctree-l3"><a class="reference internal" href="Classes/Representations/ClassificationIndex.html">ClassificationIndex</a></li>
+<li class="toctree-l3"><a class="reference internal" href="Classes/Representations/ClassificationIndexEntry.html">ClassificationIndexEntry</a></li>
+<li class="toctree-l3"><a class="reference internal" href="Classes/Representations/ClassificationIndexEntryPosition.html">ClassificationIndexEntryPosition</a></li>
+<li class="toctree-l3"><a class="reference internal" href="Classes/Representations/ClassificationItem.html">ClassificationItem</a></li>
+<li class="toctree-l3"><a class="reference internal" href="Classes/Representations/ClassificationItemPosition.html">ClassificationItemPosition</a></li>
+<li class="toctree-l3"><a class="reference internal" href="Classes/Representations/ClassificationItemRelationship.html">ClassificationItemRelationship</a></li>
+<li class="toctree-l3"><a class="reference internal" href="Classes/Representations/ClassificationItemStructure.html">ClassificationItemStructure</a></li>
+<li class="toctree-l3"><a class="reference internal" href="Classes/Representations/ClassificationPosition.html">ClassificationPosition</a></li>
+<li class="toctree-l3"><a class="reference internal" href="Classes/Representations/ClassificationSeries.html">ClassificationSeries</a></li>
+<li class="toctree-l3"><a class="reference internal" href="Classes/Representations/ClassificationSeriesStructure.html">ClassificationSeriesStructure</a></li>
+<li class="toctree-l3"><a class="reference internal" href="Classes/Representations/Code.html">Code</a></li>
+<li class="toctree-l3"><a class="reference internal" href="Classes/Representations/CodeList.html">CodeList</a></li>
+<li class="toctree-l3"><a class="reference internal" href="Classes/Representations/CodeListStructure.html">CodeListStructure</a></li>
+<li class="toctree-l3"><a class="reference internal" href="Classes/Representations/CodePosition.html">CodePosition</a></li>
+<li class="toctree-l3"><a class="reference internal" href="Classes/Representations/CodeRelationship.html">CodeRelationship</a></li>
+<li class="toctree-l3"><a class="reference internal" href="Classes/Representations/CorrespondenceTable.html">CorrespondenceTable</a></li>
+<li class="toctree-l3"><a class="reference internal" href="Classes/Representations/EnumerationDomain.html">EnumerationDomain</a></li>
+<li class="toctree-l3"><a class="reference internal" href="Classes/Representations/Level.html">Level</a></li>
+<li class="toctree-l3"><a class="reference internal" href="Classes/Representations/LevelStructure.html">LevelStructure</a></li>
+<li class="toctree-l3"><a class="reference internal" href="Classes/Representations/SentinelValueDomain.html">SentinelValueDomain</a></li>
+<li class="toctree-l3"><a class="reference internal" href="Classes/Representations/StatisticalClassification.html">StatisticalClassification</a></li>
+<li class="toctree-l3"><a class="reference internal" href="Classes/Representations/StatisticalClassificationRelationship.html">StatisticalClassificationRelationship</a></li>
+<li class="toctree-l3"><a class="reference internal" href="Classes/Representations/SubstantiveValueDomain.html">SubstantiveValueDomain</a></li>
+<li class="toctree-l3"><a class="reference internal" href="Classes/Representations/ValueAndConceptDescription.html">ValueAndConceptDescription</a></li>
+<li class="toctree-l3"><a class="reference internal" href="Classes/Representations/ValueDomain.html">ValueDomain</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="DataTypes/index.html">DataTypes</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="DataTypes/Enumerations/index.html">Enumerations</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="DataTypes/Enumerations/CategoryRelationCode.html">CategoryRelationCode</a></li>
+<li class="toctree-l3"><a class="reference internal" href="DataTypes/Enumerations/ComparisonOperator.html">ComparisonOperator</a></li>
+<li class="toctree-l3"><a class="reference internal" href="DataTypes/Enumerations/ComputationBaseList.html">ComputationBaseList</a></li>
+<li class="toctree-l3"><a class="reference internal" href="DataTypes/Enumerations/ControlConstruct.html">ControlConstruct</a></li>
+<li class="toctree-l3"><a class="reference internal" href="DataTypes/Enumerations/MatchingCriterion.html">MatchingCriterion</a></li>
+<li class="toctree-l3"><a class="reference internal" href="DataTypes/Enumerations/MemberRelationshipScope.html">MemberRelationshipScope</a></li>
+<li class="toctree-l3"><a class="reference internal" href="DataTypes/Enumerations/PointFormat.html">PointFormat</a></li>
+<li class="toctree-l3"><a class="reference internal" href="DataTypes/Enumerations/SchedulingStrategy.html">SchedulingStrategy</a></li>
+<li class="toctree-l3"><a class="reference internal" href="DataTypes/Enumerations/SexSpecification.html">SexSpecification</a></li>
+<li class="toctree-l3"><a class="reference internal" href="DataTypes/Enumerations/StructureExtent.html">StructureExtent</a></li>
+<li class="toctree-l3"><a class="reference internal" href="DataTypes/Enumerations/TableDirectionValues.html">TableDirectionValues</a></li>
+<li class="toctree-l3"><a class="reference internal" href="DataTypes/Enumerations/TemporalOperator.html">TemporalOperator</a></li>
+<li class="toctree-l3"><a class="reference internal" href="DataTypes/Enumerations/TemporalRelation.html">TemporalRelation</a></li>
+<li class="toctree-l3"><a class="reference internal" href="DataTypes/Enumerations/TextDirectionValues.html">TextDirectionValues</a></li>
+<li class="toctree-l3"><a class="reference internal" href="DataTypes/Enumerations/TrimValues.html">TrimValues</a></li>
+<li class="toctree-l3"><a class="reference internal" href="DataTypes/Enumerations/WhiteSpaceRule.html">WhiteSpaceRule</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="DataTypes/StructuredDataTypes/index.html">StructuredDataTypes</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="DataTypes/StructuredDataTypes/AccessInformation.html">AccessInformation</a></li>
+<li class="toctree-l3"><a class="reference internal" href="DataTypes/StructuredDataTypes/AccessLocation.html">AccessLocation</a></li>
+<li class="toctree-l3"><a class="reference internal" href="DataTypes/StructuredDataTypes/Address.html">Address</a></li>
+<li class="toctree-l3"><a class="reference internal" href="DataTypes/StructuredDataTypes/AgentInRole.html">AgentInRole</a></li>
+<li class="toctree-l3"><a class="reference internal" href="DataTypes/StructuredDataTypes/BibliographicName.html">BibliographicName</a></li>
+<li class="toctree-l3"><a class="reference internal" href="DataTypes/StructuredDataTypes/CatalogDetails.html">CatalogDetails</a></li>
+<li class="toctree-l3"><a class="reference internal" href="DataTypes/StructuredDataTypes/CombinedDate.html">CombinedDate</a></li>
+<li class="toctree-l3"><a class="reference internal" href="DataTypes/StructuredDataTypes/Command.html">Command</a></li>
+<li class="toctree-l3"><a class="reference internal" href="DataTypes/StructuredDataTypes/CommandCode.html">CommandCode</a></li>
+<li class="toctree-l3"><a class="reference internal" href="DataTypes/StructuredDataTypes/CommandFile.html">CommandFile</a></li>
+<li class="toctree-l3"><a class="reference internal" href="DataTypes/StructuredDataTypes/ContactInformation.html">ContactInformation</a></li>
+<li class="toctree-l3"><a class="reference internal" href="DataTypes/StructuredDataTypes/ControlledVocabularyEntry.html">ControlledVocabularyEntry</a></li>
+<li class="toctree-l3"><a class="reference internal" href="DataTypes/StructuredDataTypes/CorrespondenceDefinition.html">CorrespondenceDefinition</a></li>
+<li class="toctree-l3"><a class="reference internal" href="DataTypes/StructuredDataTypes/DateRange.html">DateRange</a></li>
+<li class="toctree-l3"><a class="reference internal" href="DataTypes/StructuredDataTypes/ElectronicMessageSystem.html">ElectronicMessageSystem</a></li>
+<li class="toctree-l3"><a class="reference internal" href="DataTypes/StructuredDataTypes/Email.html">Email</a></li>
+<li class="toctree-l3"><a class="reference internal" href="DataTypes/StructuredDataTypes/EmbargoInformation.html">EmbargoInformation</a></li>
+<li class="toctree-l3"><a class="reference internal" href="DataTypes/StructuredDataTypes/FundingInformation.html">FundingInformation</a></li>
+<li class="toctree-l3"><a class="reference internal" href="DataTypes/StructuredDataTypes/GeoRole.html">GeoRole</a></li>
+<li class="toctree-l3"><a class="reference internal" href="DataTypes/StructuredDataTypes/Identifier.html">Identifier</a></li>
+<li class="toctree-l3"><a class="reference internal" href="DataTypes/StructuredDataTypes/IndividualName.html">IndividualName</a></li>
+<li class="toctree-l3"><a class="reference internal" href="DataTypes/StructuredDataTypes/InternationalIdentifier.html">InternationalIdentifier</a></li>
+<li class="toctree-l3"><a class="reference internal" href="DataTypes/StructuredDataTypes/InternationalRegistrationDataIdentifier.html">InternationalRegistrationDataIdentifier</a></li>
+<li class="toctree-l3"><a class="reference internal" href="DataTypes/StructuredDataTypes/InternationalString.html">InternationalString</a></li>
+<li class="toctree-l3"><a class="reference internal" href="DataTypes/StructuredDataTypes/LabelForDisplay.html">LabelForDisplay</a></li>
+<li class="toctree-l3"><a class="reference internal" href="DataTypes/StructuredDataTypes/LanguageString.html">LanguageString</a></li>
+<li class="toctree-l3"><a class="reference internal" href="DataTypes/StructuredDataTypes/LicenseInformation.html">LicenseInformation</a></li>
+<li class="toctree-l3"><a class="reference internal" href="DataTypes/StructuredDataTypes/NonDdiIdentifier.html">NonDdiIdentifier</a></li>
+<li class="toctree-l3"><a class="reference internal" href="DataTypes/StructuredDataTypes/NonIsoDate.html">NonIsoDate</a></li>
+<li class="toctree-l3"><a class="reference internal" href="DataTypes/StructuredDataTypes/ObjectAttributeSelector.html">ObjectAttributeSelector</a></li>
+<li class="toctree-l3"><a class="reference internal" href="DataTypes/StructuredDataTypes/ObjectName.html">ObjectName</a></li>
+<li class="toctree-l3"><a class="reference internal" href="DataTypes/StructuredDataTypes/OrganizationName.html">OrganizationName</a></li>
+<li class="toctree-l3"><a class="reference internal" href="DataTypes/StructuredDataTypes/PairedControlledVocabularyEntry.html">PairedControlledVocabularyEntry</a></li>
+<li class="toctree-l3"><a class="reference internal" href="DataTypes/StructuredDataTypes/PrivateImage.html">PrivateImage</a></li>
+<li class="toctree-l3"><a class="reference internal" href="DataTypes/StructuredDataTypes/ProvenanceInformation.html">ProvenanceInformation</a></li>
+<li class="toctree-l3"><a class="reference internal" href="DataTypes/StructuredDataTypes/RationaleDefinition.html">RationaleDefinition</a></li>
+<li class="toctree-l3"><a class="reference internal" href="DataTypes/StructuredDataTypes/Reference.html">Reference</a></li>
+<li class="toctree-l3"><a class="reference internal" href="DataTypes/StructuredDataTypes/Selector.html">Selector</a></li>
+<li class="toctree-l3"><a class="reference internal" href="DataTypes/StructuredDataTypes/SpatialCoordinate.html">SpatialCoordinate</a></li>
+<li class="toctree-l3"><a class="reference internal" href="DataTypes/StructuredDataTypes/SpatialPoint.html">SpatialPoint</a></li>
+<li class="toctree-l3"><a class="reference internal" href="DataTypes/StructuredDataTypes/SpecializationRole.html">SpecializationRole</a></li>
+<li class="toctree-l3"><a class="reference internal" href="DataTypes/StructuredDataTypes/Statistic.html">Statistic</a></li>
+<li class="toctree-l3"><a class="reference internal" href="DataTypes/StructuredDataTypes/StructureSpecification.html">StructureSpecification</a></li>
+<li class="toctree-l3"><a class="reference internal" href="DataTypes/StructuredDataTypes/Telephone.html">Telephone</a></li>
+<li class="toctree-l3"><a class="reference internal" href="DataTypes/StructuredDataTypes/TextPositionSelector.html">TextPositionSelector</a></li>
+<li class="toctree-l3"><a class="reference internal" href="DataTypes/StructuredDataTypes/TimeRole.html">TimeRole</a></li>
+<li class="toctree-l3"><a class="reference internal" href="DataTypes/StructuredDataTypes/TypedString.html">TypedString</a></li>
+<li class="toctree-l3"><a class="reference internal" href="DataTypes/StructuredDataTypes/WebLink.html">WebLink</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="DataTypes/XMLSchemaDataTypes/index.html">XMLSchemaDataTypes</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="DataTypes/XMLSchemaDataTypes/XsdAnyUri.html">XsdAnyUri</a></li>
+<li class="toctree-l3"><a class="reference internal" href="DataTypes/XMLSchemaDataTypes/XsdDate.html">XsdDate</a></li>
+<li class="toctree-l3"><a class="reference internal" href="DataTypes/XMLSchemaDataTypes/XsdLanguage.html">XsdLanguage</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="DataTypes/ModelIdentification.html">ModelIdentification</a></li>
+</ul>
+</li>
+</ul>
+</div>
+</section>
+
+
+            <div class="clearer"></div>
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="Main">
+        <div class="sphinxsidebarwrapper">
+            <p class="logo"><a href="../index.html">
+              <img class="logo" src="../_static/cdi.svg" alt="Logo of "/>
+            </a></p>
+<search id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</search>
+<script>document.getElementById('searchbox').style.display = "block"</script>
+<h3><a href="../index.html">Table of Contents</a></h3>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../Context/index.html">Context</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">DDICDILibrary</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="Classes/index.html">Classes</a></li>
+<li class="toctree-l2"><a class="reference internal" href="DataTypes/index.html">DataTypes</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../DesignPatterns/index.html">DesignPatterns</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Appendices/index.html">Appendices</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../about/index.html">About</a></li>
+</ul>
+
+        </div>
+<div id="sidebarbutton" title="Collapse sidebar">
+<span>«</span>
+</div>
+
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="Related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="Classes/index.html" title="Classes"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="../Context/XMLSchema/language.html" title="language"
+             >previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">UML Model: DDI Cross Domain Integration (DDI-CDI 1.0)</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">DDICDILibrary</a></li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+    &#169; Copyright 2024, DDI Alliance.
+    </div>
+  </body>
+</html>

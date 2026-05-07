@@ -1,0 +1,165 @@
+{
+  "@context": [
+    "EnumerationDomain.jsonld",
+    {
+      "cdi": "http://ddialliance.org/Specification/DDI-CDI/1.0/RDF/",
+      "xsd": "http://www.w3.org/2001/XMLSchema#",
+
+      "allowsDuplicates": {
+        "@id": "cdi:StatisticalClassification-allowsDuplicates",
+        "@type": "xsd:boolean"
+      },
+      "availableLanguage": {
+        "@id": "cdi:StatisticalClassification-availableLanguage",
+        "@type": "xsd:language"
+      },
+      "catalogDetails": {
+        "@id": "cdi:StatisticalClassification-catalogDetails",
+        "@type": "@id",
+        "@context": "CatalogDetails.jsonld"
+      },
+      "changeFromBase": {
+        "@id": "cdi:StatisticalClassification-changeFromBase",
+        "@type": "@id",
+        "@context": "InternationalString.jsonld"
+      },
+      "copyright": {
+        "@id": "cdi:StatisticalClassification-copyright",
+        "@type": "@id",
+        "@context": "InternationalString.jsonld"
+      },
+      "displayLabel": {
+        "@id": "cdi:StatisticalClassification-displayLabel",
+        "@type": "@id",
+        "@context": "LabelForDisplay.jsonld"
+      },
+      "isCurrent": {
+        "@id": "cdi:StatisticalClassification-isCurrent",
+        "@type": "xsd:boolean"
+      },
+      "isFloating": {
+        "@id": "cdi:StatisticalClassification-isFloating",
+        "@type": "xsd:boolean"
+      },
+      "purposeOfVariant": {
+        "@id": "cdi:StatisticalClassification-purposeOfVariant",
+        "@type": "@id",
+        "@context": "InternationalString.jsonld"
+      },
+      "rationale": {
+        "@id": "cdi:StatisticalClassification-rationale",
+        "@type": "@id",
+        "@context": "InternationalString.jsonld"
+      },
+      "releaseDate": {
+        "@id": "cdi:StatisticalClassification-releaseDate",
+        "@type": "@id",
+        "@context": "CombinedDate.jsonld"
+      },
+      "updateChanges": {
+        "@id": "cdi:StatisticalClassification-updateChanges",
+        "@type": "@id",
+        "@context": "InternationalString.jsonld"
+      },
+      "usage": {
+        "@id": "cdi:StatisticalClassification-usage",
+        "@type": "@id",
+        "@context": "InternationalString.jsonld"
+      },
+      "validDates": {
+        "@id": "cdi:StatisticalClassification-validDates",
+        "@type": "@id",
+        "@context": "DateRange.jsonld"
+      },
+      
+      "isMaintainedBy": {
+        "@id": "cdi:StatisticalClassification_isMaintainedBy_Organization",
+        "@type": "@id",
+        "@context": "Organization.jsonld"
+      },
+      "has_ClassificationItem": {
+        "@id": "cdi:StatisticalClassification_has_ClassificationItem",
+        "@type": "@id",
+        "@context": "ClassificationItem.jsonld"
+      },
+      "has_ClassificationItemPosition": {
+        "@id": "cdi:StatisticalClassification_has_ClassificationItemPosition",
+        "@type": "@id",
+        "@context": "ClassificationItemPosition.jsonld"
+      },
+      "has_LevelStructure": {
+        "@id": "cdi:StatisticalClassification_has_LevelStructure",
+        "@type": "@id",
+        "@context": "LevelStructure.jsonld"
+      },
+      "isIndexedBy": {
+        "@id": "cdi:StatisticalClassification_isIndexedBy_ClassificationIndex",
+        "@type": "@id",
+        "@context": "ClassificationIndex.jsonld"
+      },
+      "isPredecessorOf": {
+        "@id": "cdi:StatisticalClassification_isPredecessorOf_StatisticalClassification",
+        "@type": "@id",
+        "@context": "StatisticalClassification.jsonld"
+      },
+      "isSuccessorOf": {
+        "@id": "cdi:StatisticalClassification_isSuccessorOf_StatisticalClassification",
+        "@type": "@id",
+        "@context": "StatisticalClassification.jsonld"
+      },
+      "isVariantOf": {
+        "@id": "cdi:StatisticalClassification_isVariantOf_StatisticalClassification",
+        "@type": "@id",
+        "@context": "StatisticalClassification.jsonld"
+      },
+      "structures_OF_ClassificationItemStructure": {
+        "@reverse": "cdi:ClassificationItemStructure_structures_StatisticalClassification",
+        "@type": "@id",
+        "@context": "ClassificationItemStructure.jsonld"
+      },
+      "indexes_OF_ClassificationPosition": {
+        "@reverse": "cdi:ClassificationPosition_indexes_StatisticalClassification",
+        "@type": "@id",
+        "@context": "ClassificationPosition.jsonld"
+      },
+      "has_StatisticalClassification_OF_ClassificationSeries": {
+        "@reverse": "cdi:ClassificationSeries_has_StatisticalClassification",
+        "@type": "@id",
+        "@context": "ClassificationSeries.jsonld"
+      },
+      "mapsTo_OF_CorrespondenceTable": {
+        "@reverse": "cdi:CorrespondenceTable_mapsTo_StatisticalClassification",
+        "@type": "@id",
+        "@context": "CorrespondenceTable.jsonld"
+      },
+      "isPredecessorOf_OF_StatisticalClassification": {
+        "@reverse": "cdi:StatisticalClassification_isPredecessorOf_StatisticalClassification",
+        "@type": "@id",
+        "@context": "StatisticalClassification.jsonld"
+      },
+      "isSuccessorOf_OF_StatisticalClassification": {
+        "@reverse": "cdi:StatisticalClassification_isSuccessorOf_StatisticalClassification",
+        "@type": "@id",
+        "@context": "StatisticalClassification.jsonld"
+      },
+      "isVariantOf_OF_StatisticalClassification": {
+        "@reverse": "cdi:StatisticalClassification_isVariantOf_StatisticalClassification",
+        "@type": "@id",
+        "@context": "StatisticalClassification.jsonld"
+      },
+      "hasSource_OF_StatisticalClassificationRelationship": {
+        "@reverse": "cdi:StatisticalClassificationRelationship_hasSource_StatisticalClassification",
+        "@type": "@id",
+        "@context": "StatisticalClassificationRelationship.jsonld"
+      },
+      "hasTarget_OF_StatisticalClassificationRelationship": {
+        "@reverse": "cdi:StatisticalClassificationRelationship_hasTarget_StatisticalClassification",
+        "@type": "@id",
+        "@context": "StatisticalClassificationRelationship.jsonld"
+      },
+      " comment ": "tag:json-should-support-trailing-commas"
+    }
+  ],
+  "generatedBy": "This code was generated by the Eclipse Acceleo project UCMIS M2T on 2025-01-25 15:34:49.",
+  "basedOn": "based on the UML data type DDICDIModels::DDICDILibrary::Classes::Representations::StatisticalClassification"
+}

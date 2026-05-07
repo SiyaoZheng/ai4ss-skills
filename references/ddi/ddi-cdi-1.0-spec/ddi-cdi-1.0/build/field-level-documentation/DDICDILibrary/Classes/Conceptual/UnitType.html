@@ -1,0 +1,747 @@
+
+
+<!DOCTYPE html>
+
+<html lang="en" data-content_root="../../../">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>UnitType &#8212; UML Model: DDI Cross Domain Integration (DDI-CDI 1.0)</title>
+    <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=03e43079" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/classic.css?v=4d097c01" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/graphviz.css?v=4ae1632d" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/sphinx-design.min.css?v=95c83b7e" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/custom.css?v=e6a9d92b" />
+    
+    <script src="../../../_static/jquery.js?v=5d32c60e"></script>
+    <script src="../../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+    <script src="../../../_static/documentation_options.js?v=8a448e45"></script>
+    <script src="../../../_static/doctools.js?v=9bcbadda"></script>
+    <script src="../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../../_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="../../../_static/copybutton.js?v=f281be69"></script>
+    <script src="../../../_static/design-tabs.js?v=f930bc37"></script>
+    <script src="../../../_static/custom.js?v=5de7d6e5"></script>
+    <script src="../../../_static/definition.js?v=897f6d42"></script>
+    
+    <script src="../../../_static/sidebar.js"></script>
+    
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" />
+    <link rel="next" title="Universe" href="Universe.html" />
+    <link rel="prev" title="Unit" href="Unit.html" /> 
+    <meta http-equiv="Content-Security-Policy" content="script-src 'self' 'unsafe-inline' https://cdn.datatables.net/ https://code.jquery.com/; style-src 'self' 'unsafe-inline' https://cdn.datatables.net/ https://code.jquery.com/; img-src 'self' https://cdn.datatables.net/;">
+    <!-- loaded before custom.js required. Done now with sphinxcontrib-jquery. See example Agent.html.
+    <script
+              src="https://code.jquery.com/jquery-3.7.1.min.js"
+              integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo="
+              crossorigin="anonymous"></script>
+    -->
+    <script
+              src="https://code.jquery.com/ui/1.13.2/jquery-ui.min.js"
+              integrity="sha256-lSjKY0/srUM9BE3dPm+c4fBo1dky2v27Gdjm2uoZaL0="
+              crossorigin="anonymous"></script>
+	<!--
+		Combined css and js downloads created with https://datatables.net/download/.
+		DataTables, Buttons (HTML5 export, JSZip, Print view), Search panes, Select, Minify, Concatenate
+	-->
+	<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/dt/jszip-2.5.0/dt-1.10.24/b-1.7.0/b-html5-1.7.0/b-print-1.7.0/sp-1.2.2/sl-1.3.3/datatables.min.css"/>
+	<script type="text/javascript" src="https://cdn.datatables.net/v/dt/jszip-2.5.0/dt-1.10.24/b-1.7.0/b-html5-1.7.0/b-print-1.7.0/sp-1.2.2/sl-1.3.3/datatables.min.js"></script>
+	<!-- For jquery tooltip. See: https://jqueryui.com/tooltip/ -->
+	<link rel="stylesheet" href="https://code.jquery.com/ui/1.13.2/themes/base/jquery-ui.css">
+	<script src="https://code.jquery.com/ui/1.13.2/jquery-ui.min.js"></script>
+    <!--
+    already loaded by sphinx
+	<script src="https://code.jquery.com/jquery-3.5.1.js" type="text/javascript" language="javascript"></script>
+	-->
+
+  </head><body>
+    <div class="related" role="navigation" aria-label="Related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="Universe.html" title="Universe"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="Unit.html" title="Unit"
+             accesskey="P">previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../../../index.html">UML Model: DDI Cross Domain Integration (DDI-CDI 1.0)</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="../../index.html" >DDICDILibrary</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="../index.html" >Classes</a> &#187;</li>
+          <li class="nav-item nav-item-3"><a href="index.html" accesskey="U">Conceptual</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">UnitType</a></li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <section id="unittype">
+<span id="ddicdimodels-ddicdilibrary-classes-conceptual-unittype"></span><h1>UnitType<a class="headerlink" href="#unittype" title="Link to this heading">¶</a></h1>
+<p><strong>Fully qualified class name</strong>: DDICDIModels::DDICDILibrary::Classes::Conceptual::<span class="target" id="index-0"></span>UnitType</p>
+<section id="definition">
+<h2>Definition<a class="headerlink" href="#definition" title="Link to this heading">¶</a></h2>
+<p><a class="reference internal" href="Unit.html#ddicdimodels-ddicdilibrary-classes-conceptual-unit"><span class="std std-ref">Unit</span></a> type is a type or class of objects of interest (units).</p>
+</section>
+<section id="examples">
+<h2>Examples<a class="headerlink" href="#examples" title="Link to this heading">¶</a></h2>
+<p>Person, Establishment, Household, State, Country, Dog, Automobile, Neutrino.</p>
+</section>
+<section id="explanatory-notes">
+<h2>Explanatory notes<a class="headerlink" href="#explanatory-notes" title="Link to this heading">¶</a></h2>
+<p><a class="reference internal" href="Unit.html#ddicdimodels-ddicdilibrary-classes-conceptual-unit"><span class="std std-ref">Unit</span></a> type is the most general in the hierarchy of unit type, universe, and population. It is a description of the basic characteristics for a general set of Units. A universe is a set of entities defined by a specialization of a unit type. A <a class="reference internal" href="Population.html#ddicdimodels-ddicdilibrary-classes-conceptual-population"><span class="std std-ref">Population</span></a> further narrows the specification to a specific time and geography.</p>
+<p>A unit type is used to describe a class or group of Units based on a single characteristic with no specification of time and geography. For example, the unit type of “Person” groups together a set of Units based on the characteristic that they are “Persons”.</p>
+<p>It concerns not only unit types used in dissemination, but anywhere in the statistical process. E.g. using administrative data might involve the use of a fiscal unit. [GSIM 1.1].</p>
+<div class="docutils container" id="diagram">
+<details class="sd-sphinx-override sd-dropdown sd-card sd-mb-3" open="open">
+<summary class="sd-summary-title sd-card-header">
+<span class="sd-summary-text">Diagram</span><span class="sd-summary-state-marker sd-summary-chevron-right"><svg version="1.1" width="1.5em" height="1.5em" class="sd-octicon sd-octicon-chevron-right" viewBox="0 0 24 24" aria-hidden="true"><path d="M8.72 18.78a.75.75 0 0 1 0-1.06L14.44 12 8.72 6.28a.751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018l6.25 6.25a.75.75 0 0 1 0 1.06l-6.25 6.25a.75.75 0 0 1-1.06 0Z"></path></svg></span></summary><div class="sd-summary-content sd-card-body docutils">
+<p class="plantuml">
+<object data="../../../_images/plantuml-4dd4462bca8f76f2d25bb18d1cf570270ec3988f.svg" type="image/svg+xml" style="width:1211px;height:832px;background:#FFFFFF;"></object></p>
+</div>
+</details></div>
+<div class="docutils container" id="inheritance">
+<details class="sd-sphinx-override sd-dropdown sd-card sd-mb-3">
+<summary class="sd-summary-title sd-card-header">
+<span class="sd-summary-text">Inheritance</span><span class="sd-summary-state-marker sd-summary-chevron-right"><svg version="1.1" width="1.5em" height="1.5em" class="sd-octicon sd-octicon-chevron-right" viewBox="0 0 24 24" aria-hidden="true"><path d="M8.72 18.78a.75.75 0 0 1 0-1.06L14.44 12 8.72 6.28a.751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018l6.25 6.25a.75.75 0 0 1 0 1.06l-6.25 6.25a.75.75 0 0 1-1.06 0Z"></path></svg></span></summary><div class="sd-summary-content sd-card-body docutils">
+<div class="regular line-block">
+<div class="line"><a class="reference internal" href="Concept.html#ddicdimodels-ddicdilibrary-classes-conceptual-concept"><span class="std std-ref">Conceptual::Concept</span></a></div>
+</div>
+<div class="regular line-block">
+<div class="line">  ᐊ── <span class="focus">Conceptual::UnitType</span></div>
+</div>
+<div class="regular line-block">
+<div class="line">    ᐊ── <a class="reference internal" href="Universe.html#ddicdimodels-ddicdilibrary-classes-conceptual-universe"><span class="std std-ref">Conceptual::Universe</span></a></div>
+</div>
+<div class="regular line-block">
+<div class="line">      ᐊ── <a class="reference internal" href="Population.html#ddicdimodels-ddicdilibrary-classes-conceptual-population"><span class="std std-ref">Conceptual::Population</span></a></div>
+</div>
+</div>
+</details></div>
+<div class="docutils container" id="attributes">
+<details class="sd-sphinx-override sd-dropdown sd-card sd-mb-3">
+<summary class="sd-summary-title sd-card-header">
+<span class="sd-summary-text">Attributes</span><span class="sd-summary-state-marker sd-summary-chevron-right"><svg version="1.1" width="1.5em" height="1.5em" class="sd-octicon sd-octicon-chevron-right" viewBox="0 0 24 24" aria-hidden="true"><path d="M8.72 18.78a.75.75 0 0 1 0-1.06L14.44 12 8.72 6.28a.751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018l6.25 6.25a.75.75 0 0 1 0 1.06l-6.25 6.25a.75.75 0 0 1-1.06 0Z"></path></svg></span></summary><div class="sd-summary-content sd-card-body docutils">
+<table class="datatable-attributes docutils align-default">
+<colgroup>
+<col style="width: 9.1%" />
+<col style="width: 9.1%" />
+<col style="width: 54.5%" />
+<col style="width: 9.1%" />
+<col style="width: 9.1%" />
+<col style="width: 9.1%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p class="sd-card-text">Name</p></th>
+<th class="head"><p class="sd-card-text">Inherited from</p></th>
+<th class="head"><p class="sd-card-text">Description</p></th>
+<th class="head"><p class="sd-card-text">Data Type</p></th>
+<th class="head"><p class="sd-card-text">Multiplicity</p></th>
+<th class="head"><p class="sd-card-text">Default value</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p class="sd-card-text">descriptiveText</p></td>
+<td><p class="sd-card-text">- <em>own class</em> -</p></td>
+<td><p class="sd-card-text">A short natural language account of the characteristics of the object.</p></td>
+<td><p class="sd-card-text"><a class="reference internal" href="../../DataTypes/StructuredDataTypes/InternationalString.html#ddicdimodels-ddicdilibrary-datatypes-structureddatatypes-internationalstring"><span class="std std-ref">InternationalString</span></a></p></td>
+<td><p class="sd-card-text">0..1</p></td>
+<td></td>
+</tr>
+<tr class="row-odd"><td><p class="sd-card-text">catalogDetails</p></td>
+<td><p class="sd-card-text"><a class="reference internal" href="Concept.html#ddicdimodels-ddicdilibrary-classes-conceptual-concept"><span class="std std-ref">Conceptual::Concept</span></a></p></td>
+<td><p class="sd-card-text">Bundles the information useful for a data catalog entry. Examples would be creator, contributor, title, copyright, embargo, and license information. A set of information useful for attribution, data discovery, and access. This is information that is tied to the identity of the object. If this information changes the version of the associated object changes.</p></td>
+<td><p class="sd-card-text"><a class="reference internal" href="../../DataTypes/StructuredDataTypes/CatalogDetails.html#ddicdimodels-ddicdilibrary-datatypes-structureddatatypes-catalogdetails"><span class="std std-ref">CatalogDetails</span></a></p></td>
+<td><p class="sd-card-text">0..1</p></td>
+<td></td>
+</tr>
+<tr class="row-even"><td><p class="sd-card-text">definition</p></td>
+<td><p class="sd-card-text"><a class="reference internal" href="Concept.html#ddicdimodels-ddicdilibrary-classes-conceptual-concept"><span class="std std-ref">Conceptual::Concept</span></a></p></td>
+<td><p class="sd-card-text">Natural language statement conveying the meaning of a concept, differentiating it from other concepts. Supports the use of multiple languages and structured text. ‘externalDefinition’ can’t be used if ‘definition’ is used.</p></td>
+<td><p class="sd-card-text"><a class="reference internal" href="../../DataTypes/StructuredDataTypes/InternationalString.html#ddicdimodels-ddicdilibrary-datatypes-structureddatatypes-internationalstring"><span class="std std-ref">InternationalString</span></a></p></td>
+<td><p class="sd-card-text">0..1</p></td>
+<td></td>
+</tr>
+<tr class="row-odd"><td><p class="sd-card-text">displayLabel</p></td>
+<td><p class="sd-card-text"><a class="reference internal" href="Concept.html#ddicdimodels-ddicdilibrary-classes-conceptual-concept"><span class="std std-ref">Conceptual::Concept</span></a></p></td>
+<td><p class="sd-card-text">A human-readable display label for the object. Supports the use of multiple languages. Repeat for labels with different content, for example, labels with differing length limitations.</p></td>
+<td><p class="sd-card-text"><a class="reference internal" href="../../DataTypes/StructuredDataTypes/LabelForDisplay.html#ddicdimodels-ddicdilibrary-datatypes-structureddatatypes-labelfordisplay"><span class="std std-ref">LabelForDisplay</span></a></p></td>
+<td><p class="sd-card-text">0..*</p></td>
+<td></td>
+</tr>
+<tr class="row-even"><td><p class="sd-card-text">externalDefinition</p></td>
+<td><p class="sd-card-text"><a class="reference internal" href="Concept.html#ddicdimodels-ddicdilibrary-classes-conceptual-concept"><span class="std std-ref">Conceptual::Concept</span></a></p></td>
+<td><p class="sd-card-text">A reference to an external definition of a concept (that is, a concept which is described outside the content of the DDI-CDI metadata description). An example is a SKOS concept. The definition property is assumed to duplicate the external one referenced if externalDefinition is used. Other corresponding properties are assumed to be included unchanged if used.</p></td>
+<td><p class="sd-card-text"><a class="reference internal" href="../../DataTypes/StructuredDataTypes/Reference.html#ddicdimodels-ddicdilibrary-datatypes-structureddatatypes-reference"><span class="std std-ref">Reference</span></a></p></td>
+<td><p class="sd-card-text">0..1</p></td>
+<td></td>
+</tr>
+<tr class="row-odd"><td><p class="sd-card-text">identifier</p></td>
+<td><p class="sd-card-text"><a class="reference internal" href="Concept.html#ddicdimodels-ddicdilibrary-classes-conceptual-concept"><span class="std std-ref">Conceptual::Concept</span></a></p></td>
+<td><p class="sd-card-text">Identifier for objects requiring short- or long-lasting referencing and management.</p></td>
+<td><p class="sd-card-text"><a class="reference internal" href="../../DataTypes/StructuredDataTypes/Identifier.html#ddicdimodels-ddicdilibrary-datatypes-structureddatatypes-identifier"><span class="std std-ref">Identifier</span></a></p></td>
+<td><p class="sd-card-text">0..1</p></td>
+<td></td>
+</tr>
+<tr class="row-even"><td><p class="sd-card-text">name</p></td>
+<td><p class="sd-card-text"><a class="reference internal" href="Concept.html#ddicdimodels-ddicdilibrary-classes-conceptual-concept"><span class="std std-ref">Conceptual::Concept</span></a></p></td>
+<td><p class="sd-card-text">Human understandable name (linguistic signifier, word, phrase, or mnemonic). May follow ISO/IEC 11179-5 naming principles, and have context provided to specify usage.</p></td>
+<td><p class="sd-card-text"><a class="reference internal" href="../../DataTypes/StructuredDataTypes/ObjectName.html#ddicdimodels-ddicdilibrary-datatypes-structureddatatypes-objectname"><span class="std std-ref">ObjectName</span></a></p></td>
+<td><p class="sd-card-text">0..*</p></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+</div>
+</details></div>
+<div class="docutils container" id="associations">
+<details class="sd-sphinx-override sd-dropdown sd-card sd-mb-3">
+<summary class="sd-summary-title sd-card-header">
+<span class="sd-summary-text">Associations</span><span class="sd-summary-state-marker sd-summary-chevron-right"><svg version="1.1" width="1.5em" height="1.5em" class="sd-octicon sd-octicon-chevron-right" viewBox="0 0 24 24" aria-hidden="true"><path d="M8.72 18.78a.75.75 0 0 1 0-1.06L14.44 12 8.72 6.28a.751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018l6.25 6.25a.75.75 0 0 1 0 1.06l-6.25 6.25a.75.75 0 0 1-1.06 0Z"></path></svg></span></summary><div class="sd-summary-content sd-card-body docutils">
+<table class="datatable-associations docutils align-default">
+<colgroup>
+<col style="width: 5.3%" />
+<col style="width: 10.5%" />
+<col style="width: 31.6%" />
+<col style="width: 5.3%" />
+<col style="width: 10.5%" />
+<col style="width: 10.5%" />
+<col style="width: 5.3%" />
+<col style="width: 5.3%" />
+<col style="width: 15.8%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p class="sd-card-text">Direction</p></th>
+<th class="head"><p class="sd-card-text">Association</p></th>
+<th class="head"><p class="sd-card-text">Description</p></th>
+<th class="head"><p class="sd-card-text">Multiplicity of UnitType</p></th>
+<th class="head"><p class="sd-card-text">Package of Other Class</p></th>
+<th class="head"><p class="sd-card-text">Other Class</p></th>
+<th class="head"><p class="sd-card-text">Multiplicity of other class</p></th>
+<th class="head"><p class="sd-card-text">Aggregation Kind</p></th>
+<th class="head"><p class="sd-card-text">Inherited from</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p class="sd-card-text">to</p></td>
+<td><p class="sd-card-text">AgentListing isDefinedBy Concept</p></td>
+<td><p class="sd-card-text">The conceptual basis for the collection of members.</p></td>
+<td><p class="sd-card-text">0..*</p></td>
+<td><p class="sd-card-text"><a class="reference internal" href="../Agents/index.html#ddicdimodels-ddicdilibrary-classes-agents"><span class="std std-ref">Agents</span></a></p></td>
+<td><p class="sd-card-text"><a class="reference internal" href="../Agents/AgentListing.html#ddicdimodels-ddicdilibrary-classes-agents-agentlisting"><span class="std std-ref">AgentListing</span></a></p></td>
+<td><p class="sd-card-text">0..*</p></td>
+<td><p class="sd-card-text">none</p></td>
+<td><p class="sd-card-text"><a class="reference internal" href="Concept.html#ddicdimodels-ddicdilibrary-classes-conceptual-concept"><span class="std std-ref">Conceptual::Concept</span></a></p></td>
+</tr>
+<tr class="row-odd"><td><p class="sd-card-text">to</p></td>
+<td><p class="sd-card-text">ClassificationFamily isDefinedBy Concept</p></td>
+<td><p class="sd-card-text">The conceptual basis for the collection of members.</p></td>
+<td><p class="sd-card-text">0..*</p></td>
+<td><p class="sd-card-text"><a class="reference internal" href="../Representations/index.html#ddicdimodels-ddicdilibrary-classes-representations"><span class="std std-ref">Representations</span></a></p></td>
+<td><p class="sd-card-text"><a class="reference internal" href="../Representations/ClassificationFamily.html#ddicdimodels-ddicdilibrary-classes-representations-classificationfamily"><span class="std std-ref">ClassificationFamily</span></a></p></td>
+<td><p class="sd-card-text">0..*</p></td>
+<td><p class="sd-card-text">none</p></td>
+<td><p class="sd-card-text"><a class="reference internal" href="Concept.html#ddicdimodels-ddicdilibrary-classes-conceptual-concept"><span class="std std-ref">Conceptual::Concept</span></a></p></td>
+</tr>
+<tr class="row-even"><td><p class="sd-card-text">to</p></td>
+<td><p class="sd-card-text">ClassificationIndex isDefinedBy Concept</p></td>
+<td><p class="sd-card-text">The conceptual basis for the collection of members.</p></td>
+<td><p class="sd-card-text">0..*</p></td>
+<td><p class="sd-card-text"><a class="reference internal" href="../Representations/index.html#ddicdimodels-ddicdilibrary-classes-representations"><span class="std std-ref">Representations</span></a></p></td>
+<td><p class="sd-card-text"><a class="reference internal" href="../Representations/ClassificationIndex.html#ddicdimodels-ddicdilibrary-classes-representations-classificationindex"><span class="std std-ref">ClassificationIndex</span></a></p></td>
+<td><p class="sd-card-text">0..*</p></td>
+<td><p class="sd-card-text">none</p></td>
+<td><p class="sd-card-text"><a class="reference internal" href="Concept.html#ddicdimodels-ddicdilibrary-classes-conceptual-concept"><span class="std std-ref">Conceptual::Concept</span></a></p></td>
+</tr>
+<tr class="row-odd"><td><p class="sd-card-text">to</p></td>
+<td><p class="sd-card-text">ClassificationSeries isDefinedBy Concept</p></td>
+<td><p class="sd-card-text">The conceptual basis for the collection of members.</p></td>
+<td><p class="sd-card-text">0..*</p></td>
+<td><p class="sd-card-text"><a class="reference internal" href="../Representations/index.html#ddicdimodels-ddicdilibrary-classes-representations"><span class="std std-ref">Representations</span></a></p></td>
+<td><p class="sd-card-text"><a class="reference internal" href="../Representations/ClassificationSeries.html#ddicdimodels-ddicdilibrary-classes-representations-classificationseries"><span class="std std-ref">ClassificationSeries</span></a></p></td>
+<td><p class="sd-card-text">0..*</p></td>
+<td><p class="sd-card-text">none</p></td>
+<td><p class="sd-card-text"><a class="reference internal" href="Concept.html#ddicdimodels-ddicdilibrary-classes-conceptual-concept"><span class="std std-ref">Conceptual::Concept</span></a></p></td>
+</tr>
+<tr class="row-even"><td><p class="sd-card-text">to</p></td>
+<td><p class="sd-card-text">Concept uses Concept</p></td>
+<td><p class="sd-card-text">The uses association is intended to describe specific relationships between Concepts and several of its sub-classes. This is documented in section VII.D.5 of the “DDI-Cross Domain Integration: Detailed Model” document.</p></td>
+<td><p class="sd-card-text">0..*</p></td>
+<td><p class="sd-card-text">- <em>own package</em> -</p></td>
+<td><p class="sd-card-text"><a class="reference internal" href="Concept.html#ddicdimodels-ddicdilibrary-classes-conceptual-concept"><span class="std std-ref">Concept</span></a></p></td>
+<td><p class="sd-card-text">0..*</p></td>
+<td><p class="sd-card-text">none</p></td>
+<td><p class="sd-card-text"><a class="reference internal" href="Concept.html#ddicdimodels-ddicdilibrary-classes-conceptual-concept"><span class="std std-ref">Conceptual::Concept</span></a></p></td>
+</tr>
+<tr class="row-odd"><td><p class="sd-card-text">to</p></td>
+<td><p class="sd-card-text">ConceptMap hasSource Concept</p></td>
+<td><p class="sd-card-text">Concept map has one to many source concepts.</p></td>
+<td><p class="sd-card-text">1..*</p></td>
+<td><p class="sd-card-text">- <em>own package</em> -</p></td>
+<td><p class="sd-card-text"><a class="reference internal" href="ConceptMap.html#ddicdimodels-ddicdilibrary-classes-conceptual-conceptmap"><span class="std std-ref">ConceptMap</span></a></p></td>
+<td><p class="sd-card-text">0..*</p></td>
+<td><p class="sd-card-text">none</p></td>
+<td><p class="sd-card-text"><a class="reference internal" href="Concept.html#ddicdimodels-ddicdilibrary-classes-conceptual-concept"><span class="std std-ref">Conceptual::Concept</span></a></p></td>
+</tr>
+<tr class="row-even"><td><p class="sd-card-text">to</p></td>
+<td><p class="sd-card-text">ConceptMap hasTarget Concept</p></td>
+<td><p class="sd-card-text">Concept map has one to many target concepts.</p></td>
+<td><p class="sd-card-text">1..*</p></td>
+<td><p class="sd-card-text">- <em>own package</em> -</p></td>
+<td><p class="sd-card-text"><a class="reference internal" href="ConceptMap.html#ddicdimodels-ddicdilibrary-classes-conceptual-conceptmap"><span class="std std-ref">ConceptMap</span></a></p></td>
+<td><p class="sd-card-text">0..*</p></td>
+<td><p class="sd-card-text">none</p></td>
+<td><p class="sd-card-text"><a class="reference internal" href="Concept.html#ddicdimodels-ddicdilibrary-classes-conceptual-concept"><span class="std std-ref">Conceptual::Concept</span></a></p></td>
+</tr>
+<tr class="row-odd"><td><p class="sd-card-text">to</p></td>
+<td><p class="sd-card-text">ConceptRelationship hasSource Concept</p></td>
+<td><p class="sd-card-text">Restricts source object to concept for the relationship.</p></td>
+<td><p class="sd-card-text">1..1</p></td>
+<td><p class="sd-card-text">- <em>own package</em> -</p></td>
+<td><p class="sd-card-text"><a class="reference internal" href="ConceptRelationship.html#ddicdimodels-ddicdilibrary-classes-conceptual-conceptrelationship"><span class="std std-ref">ConceptRelationship</span></a></p></td>
+<td><p class="sd-card-text">0..*</p></td>
+<td><p class="sd-card-text">none</p></td>
+<td><p class="sd-card-text"><a class="reference internal" href="Concept.html#ddicdimodels-ddicdilibrary-classes-conceptual-concept"><span class="std std-ref">Conceptual::Concept</span></a></p></td>
+</tr>
+<tr class="row-even"><td><p class="sd-card-text">to</p></td>
+<td><p class="sd-card-text">ConceptRelationship hasTarget Concept</p></td>
+<td><p class="sd-card-text">Restricts target object to concept for the relationship.</p></td>
+<td><p class="sd-card-text">1..1</p></td>
+<td><p class="sd-card-text">- <em>own package</em> -</p></td>
+<td><p class="sd-card-text"><a class="reference internal" href="ConceptRelationship.html#ddicdimodels-ddicdilibrary-classes-conceptual-conceptrelationship"><span class="std std-ref">ConceptRelationship</span></a></p></td>
+<td><p class="sd-card-text">0..*</p></td>
+<td><p class="sd-card-text">none</p></td>
+<td><p class="sd-card-text"><a class="reference internal" href="Concept.html#ddicdimodels-ddicdilibrary-classes-conceptual-concept"><span class="std std-ref">Conceptual::Concept</span></a></p></td>
+</tr>
+<tr class="row-odd"><td><p class="sd-card-text">to</p></td>
+<td><p class="sd-card-text">ConceptSystem has Concept</p></td>
+<td><p class="sd-card-text">Concept system has zero to many concepts.</p></td>
+<td><p class="sd-card-text">0..*</p></td>
+<td><p class="sd-card-text">- <em>own package</em> -</p></td>
+<td><p class="sd-card-text"><a class="reference internal" href="ConceptSystem.html#ddicdimodels-ddicdilibrary-classes-conceptual-conceptsystem"><span class="std std-ref">ConceptSystem</span></a></p></td>
+<td><p class="sd-card-text">0..*</p></td>
+<td><p class="sd-card-text">none</p></td>
+<td><p class="sd-card-text"><a class="reference internal" href="Concept.html#ddicdimodels-ddicdilibrary-classes-conceptual-concept"><span class="std std-ref">Conceptual::Concept</span></a></p></td>
+</tr>
+<tr class="row-even"><td><p class="sd-card-text">to</p></td>
+<td><p class="sd-card-text">ConceptSystem isDefinedBy Concept</p></td>
+<td><p class="sd-card-text">Concept system is defined by zero to many concepts. The conceptual basis for the collection of members.</p></td>
+<td><p class="sd-card-text">0..*</p></td>
+<td><p class="sd-card-text">- <em>own package</em> -</p></td>
+<td><p class="sd-card-text"><a class="reference internal" href="ConceptSystem.html#ddicdimodels-ddicdilibrary-classes-conceptual-conceptsystem"><span class="std std-ref">ConceptSystem</span></a></p></td>
+<td><p class="sd-card-text">0..*</p></td>
+<td><p class="sd-card-text">none</p></td>
+<td><p class="sd-card-text"><a class="reference internal" href="Concept.html#ddicdimodels-ddicdilibrary-classes-conceptual-concept"><span class="std std-ref">Conceptual::Concept</span></a></p></td>
+</tr>
+<tr class="row-odd"><td><p class="sd-card-text">to</p></td>
+<td><p class="sd-card-text">DataStore isDefinedBy Concept</p></td>
+<td><p class="sd-card-text">The conceptual basis for the collection of members.</p></td>
+<td><p class="sd-card-text">0..*</p></td>
+<td><p class="sd-card-text"><a class="reference internal" href="../FormatDescription/index.html#ddicdimodels-ddicdilibrary-classes-formatdescription"><span class="std std-ref">FormatDescription</span></a></p></td>
+<td><p class="sd-card-text"><a class="reference internal" href="../FormatDescription/DataStore.html#ddicdimodels-ddicdilibrary-classes-formatdescription-datastore"><span class="std std-ref">DataStore</span></a></p></td>
+<td><p class="sd-card-text">0..*</p></td>
+<td><p class="sd-card-text">none</p></td>
+<td><p class="sd-card-text"><a class="reference internal" href="Concept.html#ddicdimodels-ddicdilibrary-classes-conceptual-concept"><span class="std std-ref">Conceptual::Concept</span></a></p></td>
+</tr>
+<tr class="row-even"><td><p class="sd-card-text">to</p></td>
+<td><p class="sd-card-text">EnumerationDomain isDefinedBy Concept</p></td>
+<td><p class="sd-card-text">The conceptual basis for the collection of members.</p></td>
+<td><p class="sd-card-text">0..*</p></td>
+<td><p class="sd-card-text"><a class="reference internal" href="../Representations/index.html#ddicdimodels-ddicdilibrary-classes-representations"><span class="std std-ref">Representations</span></a></p></td>
+<td><p class="sd-card-text"><a class="reference internal" href="../Representations/EnumerationDomain.html#ddicdimodels-ddicdilibrary-classes-representations-enumerationdomain"><span class="std std-ref">EnumerationDomain</span></a></p></td>
+<td><p class="sd-card-text">0..*</p></td>
+<td><p class="sd-card-text">none</p></td>
+<td><p class="sd-card-text"><a class="reference internal" href="Concept.html#ddicdimodels-ddicdilibrary-classes-conceptual-concept"><span class="std std-ref">Conceptual::Concept</span></a></p></td>
+</tr>
+<tr class="row-odd"><td><p class="sd-card-text">to</p></td>
+<td><p class="sd-card-text">Level isDefinedBy Concept</p></td>
+<td><p class="sd-card-text">A concept or concept sub-type which describes the level.</p></td>
+<td><p class="sd-card-text">0..1</p></td>
+<td><p class="sd-card-text"><a class="reference internal" href="../Representations/index.html#ddicdimodels-ddicdilibrary-classes-representations"><span class="std std-ref">Representations</span></a></p></td>
+<td><p class="sd-card-text"><a class="reference internal" href="../Representations/Level.html#ddicdimodels-ddicdilibrary-classes-representations-level"><span class="std std-ref">Level</span></a></p></td>
+<td><p class="sd-card-text">0..*</p></td>
+<td><p class="sd-card-text">none</p></td>
+<td><p class="sd-card-text"><a class="reference internal" href="Concept.html#ddicdimodels-ddicdilibrary-classes-conceptual-concept"><span class="std std-ref">Conceptual::Concept</span></a></p></td>
+</tr>
+<tr class="row-even"><td><p class="sd-card-text">to</p></td>
+<td><p class="sd-card-text">LogicalRecord isDefinedBy Concept</p></td>
+<td><p class="sd-card-text">The conceptual basis for the collection of members.</p></td>
+<td><p class="sd-card-text">0..*</p></td>
+<td><p class="sd-card-text"><a class="reference internal" href="../FormatDescription/index.html#ddicdimodels-ddicdilibrary-classes-formatdescription"><span class="std std-ref">FormatDescription</span></a></p></td>
+<td><p class="sd-card-text"><a class="reference internal" href="../FormatDescription/LogicalRecord.html#ddicdimodels-ddicdilibrary-classes-formatdescription-logicalrecord"><span class="std std-ref">LogicalRecord</span></a></p></td>
+<td><p class="sd-card-text">0..*</p></td>
+<td><p class="sd-card-text">none</p></td>
+<td><p class="sd-card-text"><a class="reference internal" href="Concept.html#ddicdimodels-ddicdilibrary-classes-conceptual-concept"><span class="std std-ref">Conceptual::Concept</span></a></p></td>
+</tr>
+<tr class="row-odd"><td><p class="sd-card-text">to</p></td>
+<td><p class="sd-card-text">PhysicalDataSet isDefinedBy Concept</p></td>
+<td><p class="sd-card-text">The conceptual basis for the collection of members.</p></td>
+<td><p class="sd-card-text">0..*</p></td>
+<td><p class="sd-card-text"><a class="reference internal" href="../FormatDescription/index.html#ddicdimodels-ddicdilibrary-classes-formatdescription"><span class="std std-ref">FormatDescription</span></a></p></td>
+<td><p class="sd-card-text"><a class="reference internal" href="../FormatDescription/PhysicalDataSet.html#ddicdimodels-ddicdilibrary-classes-formatdescription-physicaldataset"><span class="std std-ref">PhysicalDataSet</span></a></p></td>
+<td><p class="sd-card-text">0..*</p></td>
+<td><p class="sd-card-text">none</p></td>
+<td><p class="sd-card-text"><a class="reference internal" href="Concept.html#ddicdimodels-ddicdilibrary-classes-conceptual-concept"><span class="std std-ref">Conceptual::Concept</span></a></p></td>
+</tr>
+<tr class="row-even"><td><p class="sd-card-text">to</p></td>
+<td><p class="sd-card-text">PhysicalRecordSegment isDefinedBy Concept</p></td>
+<td><p class="sd-card-text">The conceptual basis for the collection of members.</p></td>
+<td><p class="sd-card-text">0..*</p></td>
+<td><p class="sd-card-text"><a class="reference internal" href="../FormatDescription/index.html#ddicdimodels-ddicdilibrary-classes-formatdescription"><span class="std std-ref">FormatDescription</span></a></p></td>
+<td><p class="sd-card-text"><a class="reference internal" href="../FormatDescription/PhysicalRecordSegment.html#ddicdimodels-ddicdilibrary-classes-formatdescription-physicalrecordsegment"><span class="std std-ref">PhysicalRecordSegment</span></a></p></td>
+<td><p class="sd-card-text">0..*</p></td>
+<td><p class="sd-card-text">none</p></td>
+<td><p class="sd-card-text"><a class="reference internal" href="Concept.html#ddicdimodels-ddicdilibrary-classes-conceptual-concept"><span class="std std-ref">Conceptual::Concept</span></a></p></td>
+</tr>
+<tr class="row-odd"><td><p class="sd-card-text">to</p></td>
+<td><p class="sd-card-text">PhysicalSegmentLayout isDefinedBy Concept</p></td>
+<td><p class="sd-card-text">The conceptual basis for the collection of members.</p></td>
+<td><p class="sd-card-text">0..*</p></td>
+<td><p class="sd-card-text"><a class="reference internal" href="../FormatDescription/index.html#ddicdimodels-ddicdilibrary-classes-formatdescription"><span class="std std-ref">FormatDescription</span></a></p></td>
+<td><p class="sd-card-text"><a class="reference internal" href="../FormatDescription/PhysicalSegmentLayout.html#ddicdimodels-ddicdilibrary-classes-formatdescription-physicalsegmentlayout"><span class="std std-ref">PhysicalSegmentLayout</span></a></p></td>
+<td><p class="sd-card-text">0..*</p></td>
+<td><p class="sd-card-text">none</p></td>
+<td><p class="sd-card-text"><a class="reference internal" href="Concept.html#ddicdimodels-ddicdilibrary-classes-conceptual-concept"><span class="std std-ref">Conceptual::Concept</span></a></p></td>
+</tr>
+<tr class="row-even"><td><p class="sd-card-text">to</p></td>
+<td><p class="sd-card-text">VariableCollection isDefinedBy Concept</p></td>
+<td><p class="sd-card-text">The conceptual basis for the collection of members.</p></td>
+<td><p class="sd-card-text">0..*</p></td>
+<td><p class="sd-card-text">- <em>own package</em> -</p></td>
+<td><p class="sd-card-text"><a class="reference internal" href="VariableCollection.html#ddicdimodels-ddicdilibrary-classes-conceptual-variablecollection"><span class="std std-ref">VariableCollection</span></a></p></td>
+<td><p class="sd-card-text">0..*</p></td>
+<td><p class="sd-card-text">none</p></td>
+<td><p class="sd-card-text"><a class="reference internal" href="Concept.html#ddicdimodels-ddicdilibrary-classes-conceptual-concept"><span class="std std-ref">Conceptual::Concept</span></a></p></td>
+</tr>
+<tr class="row-odd"><td><p class="sd-card-text">to</p></td>
+<td><p class="sd-card-text">ConceptualVariable measures UnitType</p></td>
+<td><p class="sd-card-text">The measures association is intended to describe specific relationships between the ConceptualVariable and UnitType classes, and similar relationships between their sub-classes. This is documented in section VII.D.5 of the “DDI-Cross Domain Integration: Detailed Model” document.</p></td>
+<td><p class="sd-card-text">0..1</p></td>
+<td><p class="sd-card-text">- <em>own package</em> -</p></td>
+<td><p class="sd-card-text"><a class="reference internal" href="ConceptualVariable.html#ddicdimodels-ddicdilibrary-classes-conceptual-conceptualvariable"><span class="std std-ref">ConceptualVariable</span></a></p></td>
+<td><p class="sd-card-text">0..*</p></td>
+<td><p class="sd-card-text">none</p></td>
+<td><p class="sd-card-text">- <em>own class</em> -</p></td>
+</tr>
+<tr class="row-even"><td><p class="sd-card-text">to</p></td>
+<td><p class="sd-card-text">Unit has UnitType</p></td>
+<td><p class="sd-card-text">The unit type of the unit.</p></td>
+<td><p class="sd-card-text">0..*</p></td>
+<td><p class="sd-card-text">- <em>own package</em> -</p></td>
+<td><p class="sd-card-text"><a class="reference internal" href="Unit.html#ddicdimodels-ddicdilibrary-classes-conceptual-unit"><span class="std std-ref">Unit</span></a></p></td>
+<td><p class="sd-card-text">0..*</p></td>
+<td><p class="sd-card-text">none</p></td>
+<td><p class="sd-card-text">- <em>own class</em> -</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+</details></div>
+<div class="docutils container" id="encodings">
+<details class="sd-sphinx-override sd-dropdown sd-card sd-mb-3">
+<summary class="sd-summary-title sd-card-header">
+<span class="sd-summary-text">Syntax representations / encodings</span><span class="sd-summary-state-marker sd-summary-chevron-right"><svg version="1.1" width="1.5em" height="1.5em" class="sd-octicon sd-octicon-chevron-right" viewBox="0 0 24 24" aria-hidden="true"><path d="M8.72 18.78a.75.75 0 0 1 0-1.06L14.44 12 8.72 6.28a.751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018l6.25 6.25a.75.75 0 0 1 0 1.06l-6.25 6.25a.75.75 0 0 1-1.06 0Z"></path></svg></span></summary><div class="sd-summary-content sd-card-body docutils">
+<p class="sd-card-text">All syntax representations except the Canonical XMI are provided as reference points
+for specific implementations, or for use as defaults if sufficient in the form presented.</p>
+<div class="sd-tab-set docutils">
+<input checked="checked" id="sd-tab-item-0" name="sd-tab-set-0" type="radio">
+<label class="sd-tab-label" for="sd-tab-item-0">
+Canonical XMI</label><div class="sd-tab-content encoding docutils">
+<p class="sd-card-text">Fragment for the class <strong>UnitType</strong> (<a class="reference external" href="/encoding/xmi/ddi-cdi_canonical-unique-names.xmi">entire model as XMI</a>)</p>
+<div class="highlight-xml notranslate"><div class="highlight"><pre><span></span><span class="linenos"> 1</span><span class="nt">&lt;packagedElement</span><span class="w"> </span><span class="na">xmlns:StandardProfile=</span><span class="s">&quot;http://www.eclipse.org/uml2/5.0.0/UML/Profile/Standard&quot;</span>
+<span class="linenos"> 2</span><span class="w">                 </span><span class="na">xmlns:uml=</span><span class="s">&quot;http://www.eclipse.org/uml2/5.0.0/UML&quot;</span>
+<span class="linenos"> 3</span><span class="w">                 </span><span class="na">xmlns:xmi=</span><span class="s">&quot;http://www.omg.org/spec/XMI/20131001&quot;</span>
+<span class="hll"><span class="linenos"> 4</span><span class="w">                 </span><span class="na">xmi:id=</span><span class="s">&quot;DDICDIModels-DDICDILibrary-Classes-Conceptual-UnitType&quot;</span>
+</span><span class="linenos"> 5</span><span class="w">                 </span><span class="na">xmi:uuid=</span><span class="s">&quot;http://ddialliance.org/Specification/DDI-CDI/1.0/XMI/#UnitType&quot;</span>
+<span class="linenos"> 6</span><span class="w">                 </span><span class="na">xmi:type=</span><span class="s">&quot;uml:Class&quot;</span><span class="nt">&gt;</span>
+<span class="linenos"> 7</span><span class="w">   </span><span class="nt">&lt;ownedComment</span><span class="w"> </span><span class="na">xmi:id=</span><span class="s">&quot;DDICDIModels-DDICDILibrary-Classes-Conceptual-UnitType-ownedComment&quot;</span>
+<span class="linenos"> 8</span><span class="w">                 </span><span class="na">xmi:uuid=</span><span class="s">&quot;http://ddialliance.org/Specification/DDI-CDI/1.0/XMI/#UnitType-ownedComment&quot;</span>
+<span class="linenos"> 9</span><span class="w">                 </span><span class="na">xmi:type=</span><span class="s">&quot;uml:Comment&quot;</span><span class="nt">&gt;</span>
+<span class="linenos">10</span><span class="w">      </span><span class="nt">&lt;annotatedElement</span><span class="w"> </span><span class="na">xmi:idref=</span><span class="s">&quot;DDICDIModels-DDICDILibrary-Classes-Conceptual-UnitType&quot;</span><span class="nt">/&gt;</span>
+<span class="linenos">11</span><span class="w">      </span><span class="nt">&lt;body&gt;</span>Definition
+<span class="linenos">12</span>==========
+<span class="linenos">13</span>Unit<span class="w"> </span>type<span class="w"> </span>is<span class="w"> </span>a<span class="w"> </span>type<span class="w"> </span>or<span class="w"> </span>class<span class="w"> </span>of<span class="w"> </span>objects<span class="w"> </span>of<span class="w"> </span>interest<span class="w"> </span>(units).
+<span class="linenos">14</span>
+<span class="linenos">15</span>Examples
+<span class="linenos">16</span>========
+<span class="linenos">17</span>Person,<span class="w"> </span>Establishment,<span class="w"> </span>Household,<span class="w"> </span>State,<span class="w"> </span>Country,<span class="w"> </span>Dog,<span class="w"> </span>Automobile,<span class="w"> </span>Neutrino.
+<span class="linenos">18</span>
+<span class="linenos">19</span>Explanatory<span class="w"> </span>notes
+<span class="linenos">20</span>=================
+<span class="linenos">21</span>Unit<span class="w"> </span>type<span class="w"> </span>is<span class="w"> </span>the<span class="w"> </span>most<span class="w"> </span>general<span class="w"> </span>in<span class="w"> </span>the<span class="w"> </span>hierarchy<span class="w"> </span>of<span class="w"> </span>unit<span class="w"> </span>type,<span class="w"> </span>universe,<span class="w"> </span>and<span class="w"> </span>population.<span class="w"> </span>It<span class="w"> </span>is<span class="w"> </span>a<span class="w"> </span>description<span class="w"> </span>of<span class="w"> </span>the<span class="w"> </span>basic<span class="w"> </span>characteristics<span class="w"> </span>for<span class="w"> </span>a<span class="w"> </span>general<span class="w"> </span>set<span class="w"> </span>of<span class="w"> </span>Units.<span class="w"> </span>A<span class="w"> </span>universe<span class="w"> </span>is<span class="w"> </span>a<span class="w"> </span>set<span class="w"> </span>of<span class="w"> </span>entities<span class="w"> </span>defined<span class="w"> </span>by<span class="w"> </span>a<span class="w"> </span>specialization<span class="w"> </span>of<span class="w"> </span>a<span class="w"> </span>unit<span class="w"> </span>type.<span class="w"> </span>A<span class="w"> </span>Population<span class="w"> </span>further<span class="w"> </span>narrows<span class="w"> </span>the<span class="w"> </span>specification<span class="w"> </span>to<span class="w"> </span>a<span class="w"> </span>specific<span class="w"> </span>time<span class="w"> </span>and<span class="w"> </span>geography.
+<span class="linenos">22</span>
+<span class="linenos">23</span>A<span class="w"> </span>unit<span class="w"> </span>type<span class="w"> </span>is<span class="w"> </span>used<span class="w"> </span>to<span class="w"> </span>describe<span class="w"> </span>a<span class="w"> </span>class<span class="w"> </span>or<span class="w"> </span>group<span class="w"> </span>of<span class="w"> </span>Units<span class="w"> </span>based<span class="w"> </span>on<span class="w"> </span>a<span class="w"> </span>single<span class="w"> </span>characteristic<span class="w"> </span>with<span class="w"> </span>no<span class="w"> </span>specification<span class="w"> </span>of<span class="w"> </span>time<span class="w"> </span>and<span class="w"> </span>geography.<span class="w"> </span>For<span class="w"> </span>example,<span class="w"> </span>the<span class="w"> </span>unit<span class="w"> </span>type<span class="w"> </span>of<span class="w"> </span>&quot;Person&quot;<span class="w"> </span>groups<span class="w"> </span>together<span class="w"> </span>a<span class="w"> </span>set<span class="w"> </span>of<span class="w"> </span>Units<span class="w"> </span>based<span class="w"> </span>on<span class="w"> </span>the<span class="w"> </span>characteristic<span class="w"> </span>that<span class="w"> </span>they<span class="w"> </span>are<span class="w"> </span>&quot;Persons&quot;.
+<span class="linenos">24</span>
+<span class="linenos">25</span>It<span class="w"> </span>concerns<span class="w"> </span>not<span class="w"> </span>only<span class="w"> </span>unit<span class="w"> </span>types<span class="w"> </span>used<span class="w"> </span>in<span class="w"> </span>dissemination,<span class="w"> </span>but<span class="w"> </span>anywhere<span class="w"> </span>in<span class="w"> </span>the<span class="w"> </span>statistical<span class="w"> </span>process.<span class="w"> </span>E.g.<span class="w"> </span>using<span class="w"> </span>administrative<span class="w"> </span>data<span class="w"> </span>might<span class="w"> </span>involve<span class="w"> </span>the<span class="w"> </span>use<span class="w"> </span>of<span class="w"> </span>a<span class="w"> </span>fiscal<span class="w"> </span>unit.<span class="w"> </span>[GSIM<span class="w"> </span>1.1].<span class="nt">&lt;/body&gt;</span>
+<span class="linenos">26</span><span class="w">   </span><span class="nt">&lt;/ownedComment&gt;</span>
+<span class="linenos">27</span><span class="w">   </span><span class="nt">&lt;name&gt;</span>UnitType<span class="nt">&lt;/name&gt;</span>
+<span class="linenos">28</span><span class="w">   </span><span class="nt">&lt;generalization</span><span class="w"> </span><span class="na">xmi:id=</span><span class="s">&quot;DDICDIModels-DDICDILibrary-Classes-Conceptual-UnitType-generalization&quot;</span>
+<span class="linenos">29</span><span class="w">                   </span><span class="na">xmi:uuid=</span><span class="s">&quot;http://ddialliance.org/Specification/DDI-CDI/1.0/XMI/#UnitType-generalization&quot;</span>
+<span class="linenos">30</span><span class="w">                   </span><span class="na">xmi:type=</span><span class="s">&quot;uml:Generalization&quot;</span><span class="nt">&gt;</span>
+<span class="linenos">31</span><span class="w">      </span><span class="nt">&lt;general</span><span class="w"> </span><span class="na">xmi:idref=</span><span class="s">&quot;DDICDIModels-DDICDILibrary-Classes-Conceptual-Concept&quot;</span><span class="nt">/&gt;</span>
+<span class="linenos">32</span><span class="w">   </span><span class="nt">&lt;/generalization&gt;</span>
+<span class="linenos">33</span><span class="w">   </span><span class="nt">&lt;ownedAttribute</span><span class="w"> </span><span class="na">xmi:id=</span><span class="s">&quot;DDICDIModels-DDICDILibrary-Classes-Conceptual-UnitType-descriptiveText&quot;</span>
+<span class="linenos">34</span><span class="w">                   </span><span class="na">xmi:uuid=</span><span class="s">&quot;http://ddialliance.org/Specification/DDI-CDI/1.0/XMI/#UnitType-descriptiveText&quot;</span>
+<span class="linenos">35</span><span class="w">                   </span><span class="na">xmi:type=</span><span class="s">&quot;uml:Property&quot;</span><span class="nt">&gt;</span>
+<span class="linenos">36</span><span class="w">      </span><span class="nt">&lt;ownedComment</span><span class="w"> </span><span class="na">xmi:id=</span><span class="s">&quot;DDICDIModels-DDICDILibrary-Classes-Conceptual-UnitType-descriptiveText-ownedComment&quot;</span>
+<span class="linenos">37</span><span class="w">                    </span><span class="na">xmi:uuid=</span><span class="s">&quot;http://ddialliance.org/Specification/DDI-CDI/1.0/XMI/#UnitType-descriptiveText-ownedComment&quot;</span>
+<span class="linenos">38</span><span class="w">                    </span><span class="na">xmi:type=</span><span class="s">&quot;uml:Comment&quot;</span><span class="nt">&gt;</span>
+<span class="linenos">39</span><span class="w">         </span><span class="nt">&lt;annotatedElement</span><span class="w"> </span><span class="na">xmi:idref=</span><span class="s">&quot;DDICDIModels-DDICDILibrary-Classes-Conceptual-UnitType-descriptiveText&quot;</span><span class="nt">/&gt;</span>
+<span class="linenos">40</span><span class="w">         </span><span class="nt">&lt;body&gt;</span>A<span class="w"> </span>short<span class="w"> </span>natural<span class="w"> </span>language<span class="w"> </span>account<span class="w"> </span>of<span class="w"> </span>the<span class="w"> </span>characteristics<span class="w"> </span>of<span class="w"> </span>the<span class="w"> </span>object.<span class="nt">&lt;/body&gt;</span>
+<span class="linenos">41</span><span class="w">      </span><span class="nt">&lt;/ownedComment&gt;</span>
+<span class="linenos">42</span><span class="w">      </span><span class="nt">&lt;lowerValue</span><span class="w"> </span><span class="na">xmi:id=</span><span class="s">&quot;DDICDIModels-DDICDILibrary-Classes-Conceptual-UnitType-descriptiveText-lowerValue&quot;</span>
+<span class="linenos">43</span><span class="w">                  </span><span class="na">xmi:uuid=</span><span class="s">&quot;http://ddialliance.org/Specification/DDI-CDI/1.0/XMI/#UnitType-descriptiveText-lowerValue&quot;</span>
+<span class="linenos">44</span><span class="w">                  </span><span class="na">xmi:type=</span><span class="s">&quot;uml:LiteralInteger&quot;</span><span class="nt">/&gt;</span>
+<span class="linenos">45</span><span class="w">      </span><span class="nt">&lt;upperValue</span><span class="w"> </span><span class="na">xmi:id=</span><span class="s">&quot;DDICDIModels-DDICDILibrary-Classes-Conceptual-UnitType-descriptiveText-upperValue&quot;</span>
+<span class="linenos">46</span><span class="w">                  </span><span class="na">xmi:uuid=</span><span class="s">&quot;http://ddialliance.org/Specification/DDI-CDI/1.0/XMI/#UnitType-descriptiveText-upperValue&quot;</span>
+<span class="linenos">47</span><span class="w">                  </span><span class="na">xmi:type=</span><span class="s">&quot;uml:LiteralUnlimitedNatural&quot;</span><span class="nt">&gt;</span>
+<span class="linenos">48</span><span class="w">         </span><span class="nt">&lt;value&gt;</span>1<span class="nt">&lt;/value&gt;</span>
+<span class="linenos">49</span><span class="w">      </span><span class="nt">&lt;/upperValue&gt;</span>
+<span class="linenos">50</span><span class="w">      </span><span class="nt">&lt;name&gt;</span>descriptiveText<span class="nt">&lt;/name&gt;</span>
+<span class="linenos">51</span><span class="w">      </span><span class="nt">&lt;type</span><span class="w"> </span><span class="na">xmi:idref=</span><span class="s">&quot;DDICDIModels-DDICDILibrary-DataTypes-StructuredDataTypes-InternationalString&quot;</span><span class="nt">/&gt;</span>
+<span class="linenos">52</span><span class="w">   </span><span class="nt">&lt;/ownedAttribute&gt;</span>
+<span class="linenos">53</span><span class="nt">&lt;/packagedElement&gt;</span>
+</pre></div>
+</div>
+</div>
+<input id="sd-tab-item-1" name="sd-tab-set-0" type="radio">
+<label class="sd-tab-label" for="sd-tab-item-1">
+XML Schema</label><div class="sd-tab-content encoding docutils">
+<p class="sd-card-text">Fragment for the class <strong>UnitType</strong> (<a class="reference external" href="/encoding/xml-schema/ddi-cdi.xsd">entire XML Schema</a>)</p>
+<div class="highlight-xml notranslate"><div class="highlight"><pre><span></span><span class="hll"><span class="linenos"> 1</span><span class="nt">&lt;xs:element</span><span class="w"> </span><span class="na">name=</span><span class="s">&quot;UnitType&quot;</span>
+</span><span class="linenos"> 2</span><span class="w">            </span><span class="na">type=</span><span class="s">&quot;UnitTypeXsdType&quot;</span>
+<span class="linenos"> 3</span><span class="w">            </span><span class="na">xml:id=</span><span class="s">&quot;UnitType&quot;</span><span class="nt">&gt;</span>
+<span class="linenos"> 4</span><span class="w">  </span><span class="cm">&lt;!-- based on the UML class DDICDIModels::DDICDILibrary::Classes::Conceptual::UnitType --&gt;</span>
+<span class="linenos"> 5</span><span class="w">  </span><span class="nt">&lt;xs:annotation&gt;</span>
+<span class="linenos"> 6</span><span class="w">    </span><span class="nt">&lt;xs:documentation&gt;</span>Definition
+<span class="linenos"> 7</span><span class="w">          </span>==========
+<span class="linenos"> 8</span><span class="w">          </span>Unit<span class="w"> </span>type<span class="w"> </span>is<span class="w"> </span>a<span class="w"> </span>type<span class="w"> </span>or<span class="w"> </span>class<span class="w"> </span>of<span class="w"> </span>objects<span class="w"> </span>of<span class="w"> </span>interest<span class="w"> </span>(units).
+<span class="linenos"> 9</span><span class="w">          </span>
+<span class="linenos">10</span><span class="w">          </span>Examples
+<span class="linenos">11</span><span class="w">          </span>========
+<span class="linenos">12</span><span class="w">          </span>Person,<span class="w"> </span>Establishment,<span class="w"> </span>Household,<span class="w"> </span>State,<span class="w"> </span>Country,<span class="w"> </span>Dog,<span class="w"> </span>Automobile,<span class="w"> </span>Neutrino.
+<span class="linenos">13</span><span class="w">          </span>
+<span class="linenos">14</span><span class="w">          </span>Explanatory<span class="w"> </span>notes
+<span class="linenos">15</span><span class="w">          </span>=================
+<span class="linenos">16</span><span class="w">          </span>Unit<span class="w"> </span>type<span class="w"> </span>is<span class="w"> </span>the<span class="w"> </span>most<span class="w"> </span>general<span class="w"> </span>in<span class="w"> </span>the<span class="w"> </span>hierarchy<span class="w"> </span>of<span class="w"> </span>unit<span class="w"> </span>type,<span class="w"> </span>universe,<span class="w"> </span>and<span class="w"> </span>population.<span class="w"> </span>It<span class="w"> </span>is<span class="w"> </span>a<span class="w"> </span>description<span class="w"> </span>of<span class="w"> </span>the<span class="w"> </span>basic<span class="w"> </span>characteristics<span class="w"> </span>for<span class="w"> </span>a<span class="w"> </span>general<span class="w"> </span>set<span class="w"> </span>of<span class="w"> </span>Units.<span class="w"> </span>A<span class="w"> </span>universe<span class="w"> </span>is<span class="w"> </span>a<span class="w"> </span>set<span class="w"> </span>of<span class="w"> </span>entities<span class="w"> </span>defined<span class="w"> </span>by<span class="w"> </span>a<span class="w"> </span>specialization<span class="w"> </span>of<span class="w"> </span>a<span class="w"> </span>unit<span class="w"> </span>type.<span class="w"> </span>A<span class="w"> </span>Population<span class="w"> </span>further<span class="w"> </span>narrows<span class="w"> </span>the<span class="w"> </span>specification<span class="w"> </span>to<span class="w"> </span>a<span class="w"> </span>specific<span class="w"> </span>time<span class="w"> </span>and<span class="w"> </span>geography.
+<span class="linenos">17</span><span class="w">          </span>
+<span class="linenos">18</span><span class="w">          </span>A<span class="w"> </span>unit<span class="w"> </span>type<span class="w"> </span>is<span class="w"> </span>used<span class="w"> </span>to<span class="w"> </span>describe<span class="w"> </span>a<span class="w"> </span>class<span class="w"> </span>or<span class="w"> </span>group<span class="w"> </span>of<span class="w"> </span>Units<span class="w"> </span>based<span class="w"> </span>on<span class="w"> </span>a<span class="w"> </span>single<span class="w"> </span>characteristic<span class="w"> </span>with<span class="w"> </span>no<span class="w"> </span>specification<span class="w"> </span>of<span class="w"> </span>time<span class="w"> </span>and<span class="w"> </span>geography.<span class="w"> </span>For<span class="w"> </span>example,<span class="w"> </span>the<span class="w"> </span>unit<span class="w"> </span>type<span class="w"> </span>of<span class="w"> </span>&quot;Person&quot;<span class="w"> </span>groups<span class="w"> </span>together<span class="w"> </span>a<span class="w"> </span>set<span class="w"> </span>of<span class="w"> </span>Units<span class="w"> </span>based<span class="w"> </span>on<span class="w"> </span>the<span class="w"> </span>characteristic<span class="w"> </span>that<span class="w"> </span>they<span class="w"> </span>are<span class="w"> </span>&quot;Persons&quot;.
+<span class="linenos">19</span><span class="w">          </span>
+<span class="linenos">20</span><span class="w">          </span>It<span class="w"> </span>concerns<span class="w"> </span>not<span class="w"> </span>only<span class="w"> </span>unit<span class="w"> </span>types<span class="w"> </span>used<span class="w"> </span>in<span class="w"> </span>dissemination,<span class="w"> </span>but<span class="w"> </span>anywhere<span class="w"> </span>in<span class="w"> </span>the<span class="w"> </span>statistical<span class="w"> </span>process.<span class="w"> </span>E.g.<span class="w"> </span>using<span class="w"> </span>administrative<span class="w"> </span>data<span class="w"> </span>might<span class="w"> </span>involve<span class="w"> </span>the<span class="w"> </span>use<span class="w"> </span>of<span class="w"> </span>a<span class="w"> </span>fiscal<span class="w"> </span>unit.<span class="w"> </span>[GSIM<span class="w"> </span>1.1].<span class="nt">&lt;/xs:documentation&gt;</span>
+<span class="linenos">21</span><span class="w">  </span><span class="nt">&lt;/xs:annotation&gt;</span>
+<span class="linenos">22</span><span class="nt">&lt;/xs:element&gt;</span>
+<span class="linenos">23</span><span class="nt">&lt;xs:complexType</span><span class="w"> </span><span class="na">name=</span><span class="s">&quot;UnitTypeXsdType&quot;</span>
+<span class="linenos">24</span><span class="w">                </span><span class="na">xml:id=</span><span class="s">&quot;UnitTypeXsdType&quot;</span><span class="nt">&gt;</span>
+<span class="linenos">25</span><span class="w">  </span><span class="nt">&lt;xs:annotation&gt;</span>
+<span class="linenos">26</span><span class="w">    </span><span class="nt">&lt;xs:documentation&gt;</span>Definition
+<span class="linenos">27</span><span class="w">          </span>==========
+<span class="linenos">28</span><span class="w">          </span>Unit<span class="w"> </span>type<span class="w"> </span>is<span class="w"> </span>a<span class="w"> </span>type<span class="w"> </span>or<span class="w"> </span>class<span class="w"> </span>of<span class="w"> </span>objects<span class="w"> </span>of<span class="w"> </span>interest<span class="w"> </span>(units).
+<span class="linenos">29</span><span class="w">          </span>
+<span class="linenos">30</span><span class="w">          </span>Examples
+<span class="linenos">31</span><span class="w">          </span>========
+<span class="linenos">32</span><span class="w">          </span>Person,<span class="w"> </span>Establishment,<span class="w"> </span>Household,<span class="w"> </span>State,<span class="w"> </span>Country,<span class="w"> </span>Dog,<span class="w"> </span>Automobile,<span class="w"> </span>Neutrino.
+<span class="linenos">33</span><span class="w">          </span>
+<span class="linenos">34</span><span class="w">          </span>Explanatory<span class="w"> </span>notes
+<span class="linenos">35</span><span class="w">          </span>=================
+<span class="linenos">36</span><span class="w">          </span>Unit<span class="w"> </span>type<span class="w"> </span>is<span class="w"> </span>the<span class="w"> </span>most<span class="w"> </span>general<span class="w"> </span>in<span class="w"> </span>the<span class="w"> </span>hierarchy<span class="w"> </span>of<span class="w"> </span>unit<span class="w"> </span>type,<span class="w"> </span>universe,<span class="w"> </span>and<span class="w"> </span>population.<span class="w"> </span>It<span class="w"> </span>is<span class="w"> </span>a<span class="w"> </span>description<span class="w"> </span>of<span class="w"> </span>the<span class="w"> </span>basic<span class="w"> </span>characteristics<span class="w"> </span>for<span class="w"> </span>a<span class="w"> </span>general<span class="w"> </span>set<span class="w"> </span>of<span class="w"> </span>Units.<span class="w"> </span>A<span class="w"> </span>universe<span class="w"> </span>is<span class="w"> </span>a<span class="w"> </span>set<span class="w"> </span>of<span class="w"> </span>entities<span class="w"> </span>defined<span class="w"> </span>by<span class="w"> </span>a<span class="w"> </span>specialization<span class="w"> </span>of<span class="w"> </span>a<span class="w"> </span>unit<span class="w"> </span>type.<span class="w"> </span>A<span class="w"> </span>Population<span class="w"> </span>further<span class="w"> </span>narrows<span class="w"> </span>the<span class="w"> </span>specification<span class="w"> </span>to<span class="w"> </span>a<span class="w"> </span>specific<span class="w"> </span>time<span class="w"> </span>and<span class="w"> </span>geography.
+<span class="linenos">37</span><span class="w">          </span>
+<span class="linenos">38</span><span class="w">          </span>A<span class="w"> </span>unit<span class="w"> </span>type<span class="w"> </span>is<span class="w"> </span>used<span class="w"> </span>to<span class="w"> </span>describe<span class="w"> </span>a<span class="w"> </span>class<span class="w"> </span>or<span class="w"> </span>group<span class="w"> </span>of<span class="w"> </span>Units<span class="w"> </span>based<span class="w"> </span>on<span class="w"> </span>a<span class="w"> </span>single<span class="w"> </span>characteristic<span class="w"> </span>with<span class="w"> </span>no<span class="w"> </span>specification<span class="w"> </span>of<span class="w"> </span>time<span class="w"> </span>and<span class="w"> </span>geography.<span class="w"> </span>For<span class="w"> </span>example,<span class="w"> </span>the<span class="w"> </span>unit<span class="w"> </span>type<span class="w"> </span>of<span class="w"> </span>&quot;Person&quot;<span class="w"> </span>groups<span class="w"> </span>together<span class="w"> </span>a<span class="w"> </span>set<span class="w"> </span>of<span class="w"> </span>Units<span class="w"> </span>based<span class="w"> </span>on<span class="w"> </span>the<span class="w"> </span>characteristic<span class="w"> </span>that<span class="w"> </span>they<span class="w"> </span>are<span class="w"> </span>&quot;Persons&quot;.
+<span class="linenos">39</span><span class="w">          </span>
+<span class="linenos">40</span><span class="w">          </span>It<span class="w"> </span>concerns<span class="w"> </span>not<span class="w"> </span>only<span class="w"> </span>unit<span class="w"> </span>types<span class="w"> </span>used<span class="w"> </span>in<span class="w"> </span>dissemination,<span class="w"> </span>but<span class="w"> </span>anywhere<span class="w"> </span>in<span class="w"> </span>the<span class="w"> </span>statistical<span class="w"> </span>process.<span class="w"> </span>E.g.<span class="w"> </span>using<span class="w"> </span>administrative<span class="w"> </span>data<span class="w"> </span>might<span class="w"> </span>involve<span class="w"> </span>the<span class="w"> </span>use<span class="w"> </span>of<span class="w"> </span>a<span class="w"> </span>fiscal<span class="w"> </span>unit.<span class="w"> </span>[GSIM<span class="w"> </span>1.1].<span class="nt">&lt;/xs:documentation&gt;</span>
+<span class="linenos">41</span><span class="w">  </span><span class="nt">&lt;/xs:annotation&gt;</span>
+<span class="linenos">42</span><span class="w">  </span><span class="nt">&lt;xs:complexContent&gt;</span>
+<span class="linenos">43</span><span class="w">    </span><span class="nt">&lt;xs:extension</span><span class="w"> </span><span class="na">base=</span><span class="s">&quot;ConceptXsdType&quot;</span><span class="nt">&gt;</span>
+<span class="linenos">44</span><span class="w">      </span><span class="nt">&lt;xs:sequence&gt;</span>
+<span class="linenos">45</span><span class="w">        </span><span class="nt">&lt;xs:element</span><span class="w"> </span><span class="na">name=</span><span class="s">&quot;descriptiveText&quot;</span>
+<span class="linenos">46</span><span class="w">                    </span><span class="na">type=</span><span class="s">&quot;InternationalStringXsdType&quot;</span>
+<span class="linenos">47</span><span class="w">                    </span><span class="na">minOccurs=</span><span class="s">&quot;0&quot;</span>
+<span class="linenos">48</span><span class="w">                    </span><span class="na">maxOccurs=</span><span class="s">&quot;1&quot;</span>
+<span class="linenos">49</span><span class="w">                    </span><span class="na">xml:id=</span><span class="s">&quot;UnitType-descriptiveText&quot;</span><span class="nt">&gt;</span>
+<span class="linenos">50</span><span class="w">          </span><span class="nt">&lt;xs:annotation&gt;</span>
+<span class="linenos">51</span><span class="w">            </span><span class="nt">&lt;xs:documentation&gt;</span>A<span class="w"> </span>short<span class="w"> </span>natural<span class="w"> </span>language<span class="w"> </span>account<span class="w"> </span>of<span class="w"> </span>the<span class="w"> </span>characteristics<span class="w"> </span>of<span class="w"> </span>the<span class="w"> </span>object.<span class="nt">&lt;/xs:documentation&gt;</span>
+<span class="linenos">52</span><span class="w">          </span><span class="nt">&lt;/xs:annotation&gt;</span>
+<span class="linenos">53</span><span class="w">        </span><span class="nt">&lt;/xs:element&gt;</span>
+<span class="linenos">54</span><span class="w">      </span><span class="nt">&lt;/xs:sequence&gt;</span>
+<span class="linenos">55</span><span class="w">    </span><span class="nt">&lt;/xs:extension&gt;</span>
+<span class="linenos">56</span><span class="w">  </span><span class="nt">&lt;/xs:complexContent&gt;</span>
+<span class="linenos">57</span><span class="nt">&lt;/xs:complexType&gt;</span>
+</pre></div>
+</div>
+</div>
+<input id="sd-tab-item-2" name="sd-tab-set-0" type="radio">
+<label class="sd-tab-label" for="sd-tab-item-2">
+Ontology (Turtle)</label><div class="sd-tab-content encoding docutils">
+<p class="sd-card-text">Fragment for the class <strong>UnitType</strong> (<a class="reference external" href="/encoding/ontology/ddi-cdi.onto.ttl">main ontology</a>)</p>
+<div class="highlight-turtle notranslate"><div class="highlight"><pre><span></span><span class="linenos"> 1</span><span class="c"># class UnitType</span>
+<span class="linenos"> 2</span><span class="c"># based on the UML class DDICDIModels::DDICDILibrary::Classes::Conceptual::UnitType</span>
+<span class="hll"><span class="linenos"> 3</span><span class="nn">cdi</span><span class="p">:</span><span class="nt">UnitType</span>
+</span><span class="linenos"> 4</span>  <span class="kt">a</span> <span class="nn">rdfs</span><span class="p">:</span><span class="nt">Class</span><span class="p">,</span> <span class="nn">owl</span><span class="p">:</span><span class="nt">Class</span><span class="p">,</span> <span class="nn">ucmis</span><span class="p">:</span><span class="nt">Class</span><span class="p">;</span>
+<span class="linenos"> 5</span>  <span class="nn">rdfs</span><span class="p">:</span><span class="nt">label</span> <span class="s">&quot;UnitType&quot;</span><span class="p">;</span>
+<span class="linenos"> 6</span>  <span class="nn">rdfs</span><span class="p">:</span><span class="nt">comment</span> <span class="s">&quot;Definition\n==========\nUnit type is a type or class of objects of interest (units).\n\nExamples\n========\nPerson, Establishment, Household, State, Country, Dog, Automobile, Neutrino.\n\nExplanatory notes\n=================\nUnit type is the most general in the hierarchy of unit type, universe, and population. It is a description of the basic characteristics for a general set of Units. A universe is a set of entities defined by a specialization of a unit type. A Population further narrows the specification to a specific time and geography.\n\nA unit type is used to describe a class or group of Units based on a single characteristic with no specification of time and geography. For example, the unit type of \&quot;Person\&quot; groups together a set of Units based on the characteristic that they are \&quot;Persons\&quot;.\n\nIt concerns not only unit types used in dissemination, but anywhere in the statistical process. E.g. using administrative data might involve the use of a fiscal unit. [GSIM 1.1].&quot;</span><span class="o">@</span><span class="ge">en</span><span class="p">;</span>
+<span class="linenos"> 7</span>  <span class="nn">rdfs</span><span class="p">:</span><span class="nt">subClassOf</span> <span class="nn">cdi</span><span class="p">:</span><span class="nt">Concept</span><span class="p">;</span>
+<span class="linenos"> 8</span><span class="p">.</span>
+<span class="linenos"> 9</span>
+<span class="linenos">10</span><span class="nn">cdi</span><span class="p">:</span><span class="nt">UnitType-descriptiveText</span>
+<span class="linenos">11</span>  <span class="kt">a</span> <span class="nn">rdf</span><span class="p">:</span><span class="nt">Property</span><span class="p">,</span> <span class="nn">owl</span><span class="p">:</span><span class="nt">ObjectProperty</span><span class="p">,</span> <span class="nn">ucmis</span><span class="p">:</span><span class="nt">Attribute</span><span class="p">;</span>
+<span class="linenos">12</span>  <span class="nn">rdfs</span><span class="p">:</span><span class="nt">label</span> <span class="s">&quot;descriptiveText&quot;</span><span class="p">;</span>
+<span class="linenos">13</span>  <span class="nn">rdfs</span><span class="p">:</span><span class="nt">comment</span> <span class="s">&quot;A short natural language account of the characteristics of the object.&quot;</span><span class="o">@</span><span class="ge">en</span><span class="p">;</span>
+<span class="linenos">14</span>  <span class="nn">rdfs</span><span class="p">:</span><span class="nt">domain</span> <span class="nn">cdi</span><span class="p">:</span><span class="nt">UnitType</span><span class="p">;</span>
+<span class="linenos">15</span>  <span class="nn">rdfs</span><span class="p">:</span><span class="nt">range</span> <span class="nn">cdi</span><span class="p">:</span><span class="nt">InternationalString</span><span class="p">;</span>
+<span class="linenos">16</span><span class="p">.</span>
+</pre></div>
+</div>
+</div>
+<input id="sd-tab-item-3" name="sd-tab-set-0" type="radio">
+<label class="sd-tab-label" for="sd-tab-item-3">
+JSON-LD</label><div class="sd-tab-content encoding docutils">
+<p class="sd-card-text">Fragment for the class <strong>UnitType</strong> (<a class="reference external" href="/encoding/json-ld/ddi-cdi.jsonld">main JSON-LD</a>)</p>
+<div class="highlight-JSON-LD notranslate"><div class="highlight"><pre><span></span><span class="linenos"> 1</span><span class="p">{</span>
+<span class="linenos"> 2</span><span class="w">  </span><span class="nd">&quot;@context&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<span class="linenos"> 3</span><span class="w">    </span><span class="s2">&quot;Concept.jsonld&quot;</span><span class="p">,</span>
+<span class="linenos"> 4</span><span class="w">    </span><span class="p">{</span>
+<span class="hll"><span class="linenos"> 5</span><span class="w">      </span><span class="nt">&quot;cdi&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;http://ddialliance.org/Specification/DDI-CDI/1.0/RDF/&quot;</span><span class="p">,</span>
+</span><span class="linenos"> 6</span><span class="w">      </span><span class="nt">&quot;xsd&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;http://www.w3.org/2001/XMLSchema#&quot;</span><span class="p">,</span>
+<span class="linenos"> 7</span>
+<span class="linenos"> 8</span><span class="w">      </span><span class="nt">&quot;descriptiveText&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="linenos"> 9</span><span class="w">        </span><span class="nd">&quot;@id&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;cdi:UnitType-descriptiveText&quot;</span><span class="p">,</span>
+<span class="linenos">10</span><span class="w">        </span><span class="nd">&quot;@type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;@id&quot;</span><span class="p">,</span>
+<span class="linenos">11</span><span class="w">        </span><span class="nd">&quot;@context&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;InternationalString.jsonld&quot;</span>
+<span class="linenos">12</span><span class="w">      </span><span class="p">},</span>
+<span class="linenos">13</span><span class="w">      </span>
+<span class="linenos">14</span><span class="w">      </span><span class="nt">&quot;measures_OF_ConceptualVariable&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="linenos">15</span><span class="w">        </span><span class="nd">&quot;@reverse&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;cdi:ConceptualVariable_measures_UnitType&quot;</span><span class="p">,</span>
+<span class="linenos">16</span><span class="w">        </span><span class="nd">&quot;@type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;@id&quot;</span><span class="p">,</span>
+<span class="linenos">17</span><span class="w">        </span><span class="nd">&quot;@context&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;ConceptualVariable.jsonld&quot;</span>
+<span class="linenos">18</span><span class="w">      </span><span class="p">},</span>
+<span class="linenos">19</span><span class="w">      </span><span class="nt">&quot;has_UnitType_OF_Unit&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="linenos">20</span><span class="w">        </span><span class="nd">&quot;@reverse&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;cdi:Unit_has_UnitType&quot;</span><span class="p">,</span>
+<span class="linenos">21</span><span class="w">        </span><span class="nd">&quot;@type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;@id&quot;</span><span class="p">,</span>
+<span class="linenos">22</span><span class="w">        </span><span class="nd">&quot;@context&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Unit.jsonld&quot;</span>
+<span class="linenos">23</span><span class="w">      </span><span class="p">},</span>
+<span class="linenos">24</span><span class="w">      </span><span class="nt">&quot; comment &quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;tag:json-should-support-trailing-commas&quot;</span>
+<span class="linenos">25</span><span class="w">    </span><span class="p">}</span>
+<span class="linenos">26</span><span class="w">  </span><span class="p">],</span>
+<span class="linenos">27</span><span class="w">  </span><span class="nt">&quot;generatedBy&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;This code was generated by the Eclipse Acceleo project UCMIS M2T on 2025-01-25 16:58:29.&quot;</span><span class="p">,</span>
+<span class="linenos">28</span><span class="w">  </span><span class="nt">&quot;basedOn&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;based on the UML data type DDICDIModels::DDICDILibrary::Classes::Conceptual::UnitType&quot;</span>
+<span class="linenos">29</span><span class="p">}</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+</details></div>
+</section>
+</section>
+
+
+            <div class="clearer"></div>
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="Main">
+        <div class="sphinxsidebarwrapper">
+            <p class="logo"><a href="../../../index.html">
+              <img class="logo" src="../../../_static/cdi.svg" alt="Logo of "/>
+            </a></p>
+<search id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../../../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</search>
+<script>document.getElementById('searchbox').style.display = "block"</script>
+<h3><a href="../../../index.html">Table of Contents</a></h3>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../../Context/index.html">Context</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../../index.html">DDICDILibrary</a><ul class="current">
+<li class="toctree-l2 current"><a class="reference internal" href="../index.html">Classes</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="../Agents/index.html">Agents</a></li>
+<li class="toctree-l3 current"><a class="reference internal" href="index.html">Conceptual</a><ul class="current">
+<li class="toctree-l4"><a class="reference internal" href="Category.html">Category</a></li>
+<li class="toctree-l4"><a class="reference internal" href="CategoryPosition.html">CategoryPosition</a></li>
+<li class="toctree-l4"><a class="reference internal" href="CategoryRelationship.html">CategoryRelationship</a></li>
+<li class="toctree-l4"><a class="reference internal" href="CategoryRelationStructure.html">CategoryRelationStructure</a></li>
+<li class="toctree-l4"><a class="reference internal" href="CategorySet.html">CategorySet</a></li>
+<li class="toctree-l4"><a class="reference internal" href="Concept.html">Concept</a></li>
+<li class="toctree-l4"><a class="reference internal" href="ConceptMap.html">ConceptMap</a></li>
+<li class="toctree-l4"><a class="reference internal" href="ConceptRelationship.html">ConceptRelationship</a></li>
+<li class="toctree-l4"><a class="reference internal" href="ConceptStructure.html">ConceptStructure</a></li>
+<li class="toctree-l4"><a class="reference internal" href="ConceptSystem.html">ConceptSystem</a></li>
+<li class="toctree-l4"><a class="reference internal" href="ConceptSystemCorrespondence.html">ConceptSystemCorrespondence</a></li>
+<li class="toctree-l4"><a class="reference internal" href="ConceptualDomain.html">ConceptualDomain</a></li>
+<li class="toctree-l4"><a class="reference internal" href="ConceptualVariable.html">ConceptualVariable</a></li>
+<li class="toctree-l4"><a class="reference internal" href="InstanceVariable.html">InstanceVariable</a></li>
+<li class="toctree-l4"><a class="reference internal" href="Population.html">Population</a></li>
+<li class="toctree-l4"><a class="reference internal" href="RepresentedVariable.html">RepresentedVariable</a></li>
+<li class="toctree-l4"><a class="reference internal" href="SentinelConceptualDomain.html">SentinelConceptualDomain</a></li>
+<li class="toctree-l4"><a class="reference internal" href="SubstantiveConceptualDomain.html">SubstantiveConceptualDomain</a></li>
+<li class="toctree-l4"><a class="reference internal" href="Unit.html">Unit</a></li>
+<li class="toctree-l4 current"><a class="current reference internal" href="#">UnitType</a><ul>
+<li class="toctree-l5"><a class="reference internal" href="#definition">Definition</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#examples">Examples</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#explanatory-notes">Explanatory notes</a></li>
+</ul>
+</li>
+<li class="toctree-l4"><a class="reference internal" href="Universe.html">Universe</a></li>
+<li class="toctree-l4"><a class="reference internal" href="VariableCollection.html">VariableCollection</a></li>
+<li class="toctree-l4"><a class="reference internal" href="VariablePosition.html">VariablePosition</a></li>
+<li class="toctree-l4"><a class="reference internal" href="VariableRelationship.html">VariableRelationship</a></li>
+<li class="toctree-l4"><a class="reference internal" href="VariableStructure.html">VariableStructure</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../DataDescription/index.html">DataDescription</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../FormatDescription/index.html">FormatDescription</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../Process/index.html">Process</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../Representations/index.html">Representations</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../DataTypes/index.html">DataTypes</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../../DesignPatterns/index.html">DesignPatterns</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../Appendices/index.html">Appendices</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../about/index.html">About</a></li>
+</ul>
+
+        </div>
+<div id="sidebarbutton" title="Collapse sidebar">
+<span>«</span>
+</div>
+
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="Related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="Universe.html" title="Universe"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="Unit.html" title="Unit"
+             >previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../../../index.html">UML Model: DDI Cross Domain Integration (DDI-CDI 1.0)</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="../../index.html" >DDICDILibrary</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="../index.html" >Classes</a> &#187;</li>
+          <li class="nav-item nav-item-3"><a href="index.html" >Conceptual</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">UnitType</a></li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+    &#169; Copyright 2024, DDI Alliance.
+    </div>
+  </body>
+</html>

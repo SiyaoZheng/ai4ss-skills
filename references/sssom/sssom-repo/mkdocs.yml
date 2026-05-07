@@ -1,0 +1,84 @@
+site_name: "A Simple Standard for Sharing Ontology Mappings (SSSOM)"
+site_author: "The SSSOM Community"
+theme:
+  name: material
+  analytics:
+    gtag: G-2SYBSJVZ23
+  #  palette:
+  #    scheme: slate
+  #    primary: cyan
+  features:
+    - content.tabs.link
+extra:
+  version:
+    provider: mike
+plugins:
+  - search
+  - mermaid2
+markdown_extensions:
+  - pymdownx.highlight:
+      use_pygments: true
+  - pymdownx.inlinehilite
+  - pymdownx.snippets
+  - pymdownx.tabbed:
+  - pymdownx.critic
+  - pymdownx.caret
+  - pymdownx.keys
+  - pymdownx.mark
+  - pymdownx.tilde
+  - pymdownx.arithmatex:
+      generic: true
+  - admonition
+  #- pymdownx.emoji:
+  #    emoji_index: !!python/name:material.extensions.emoji.twemoji
+  #    emoji_generator: !!python/name:material.extensions.emoji.to_svg
+extra_javascript:
+  - javascripts/mathjax.js
+  - https://unpkg.com/mathjax@3/es5/tex-mml-chtml.js
+nav:
+  - Home: index.md
+  - Introduction: introduction.md
+  - Getting started: getting-started.md
+  - Specification:
+      - Introduction: spec-intro.md
+      - Data model:
+          - Introduction: spec-model.md
+          - LinkML documentation: linkml-index.md
+      - Serialisations:
+          - Introduction: spec-formats.md
+          - SSSOM/TSV serialisation: spec-formats-tsv.md
+          - SSSOM/JSON serialisation: spec-formats-json.md
+          - SSSOM/RDF serialisation: spec-formats-rdf.md
+          - OWL/RDF serialisation: spec-formats-owl.md
+      - Support functions:
+          - Introduction: spec-support.md
+          - Hashing mapping records: spec-support-hashing.md
+          - Applying Chaining Rules: chaining-rules.md
+  - Resources for contributors: contributing.md
+  - Resources for users:
+      - FAQ: faq.md
+      - Community:
+          - Use Cases: usecases.md
+          - Workshops: workshops.md
+          - Presentations: presentations.md
+      - Training materials:
+          - Overview: training.md
+          - Basic Tutorial: tutorial.md
+      - How to:
+          - Mapping Justifications: mapping-justifications.md
+          - How to use mapping predicates: mapping-predicates.md
+          - Set up a mapping registry/commons: mapping-commons.md
+          - A basic guide for the SSSOM toolkit: toolkit.md
+          - 5-Star Entity Mappings - Cheatsheet: 5star-mappings.md
+          - Matching tool implementation guide: matching-tool-implementation-guide.md
+          - How to gradually enrich OMOP mappings with SSSOM: tutorials/omop-mappings.md
+          - How to assess mapping confidence: confidence-model.md
+          - Identifying mapping records: record-identifiers.md
+      - Reference:
+          - Glossary: glossary.md
+  - Related documentation: related-documentation.md
+  - Funding: funding.md
+
+site_url: https://mapping-commons.github.io/sssom/
+repo_url: https://github.com/mapping-commons/sssom/
+edit_uri: "edit/master/src/docs/"

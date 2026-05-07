@@ -1,0 +1,143 @@
+ syntax="proto3";
+ package
+// metamodel_version: 1.7.0
+// A definition of an extension (non-standard) slot.
+message ExtensionDefinition
+ {
+  ncname slotName = 0
+  uriorcurie property = 0
+  uriorcurie typeHint = 0
+ }
+// Represents an individual mapping between a pair of entities.
+message Mapping
+ {
+  entityReference recordId = 0
+  entityReference subjectId = 0
+  string subjectLabel = 0
+  string subjectCategory = 0
+  entityReference predicateId = 0
+  string predicateLabel = 0
+  predicateModifierEnum predicateModifier = 0
+  entityReference objectId = 0
+  string objectLabel = 0
+  string objectCategory = 0
+  entityReference mappingJustification = 0
+ repeated  entityReference authorId = 0
+ repeated  string authorLabel = 0
+ repeated  entityReference reviewerId = 0
+ repeated  string reviewerLabel = 0
+ repeated  entityReference creatorId = 0
+ repeated  string creatorLabel = 0
+  nonRelativeURI license = 0
+  entityTypeEnum subjectType = 0
+  entityReference subjectSource = 0
+  string subjectSourceVersion = 0
+  entityTypeEnum objectType = 0
+  entityReference objectSource = 0
+  string objectSourceVersion = 0
+  entityTypeEnum predicateType = 0
+  nonRelativeURI mappingProvider = 0
+  entityReference mappingSource = 0
+  mappingCardinalityEnum mappingCardinality = 0
+ repeated  string cardinalityScope = 0
+  string mappingTool = 0
+  entityReference mappingToolId = 0
+  string mappingToolVersion = 0
+  date mappingDate = 0
+  date publicationDate = 0
+  date reviewDate = 0
+  double confidence = 0
+  double reviewerAgreement = 0
+ repeated  entityReference curationRule = 0
+ repeated  string curationRuleText = 0
+ repeated  entityReference subjectMatchField = 0
+ repeated  entityReference objectMatchField = 0
+ repeated  string matchString = 0
+ repeated  entityReference subjectPreprocessing = 0
+ repeated  entityReference objectPreprocessing = 0
+  double similarityScore = 0
+  string similarityMeasure = 0
+ repeated  nonRelativeURI seeAlso = 0
+  entityReference issueTrackerItem = 0
+  string other = 0
+  string comment = 0
+ }
+// A registry for managing mapping sets. It holds a set of mapping set references, and can import other registries.
+message MappingRegistry
+ {
+  entityReference mappingRegistryId = 0
+  string mappingRegistryTitle = 0
+  string mappingRegistryDescription = 0
+ repeated  nonRelativeURI imports = 0
+ repeated  mappingSetReference mappingSetReferences = 0
+  nonRelativeURI documentation = 0
+  nonRelativeURI homepage = 0
+  nonRelativeURI issueTracker = 0
+ }
+// Represents a set of mappings.
+message MappingSet
+ {
+  sssomVersionEnum sssomVersion = 0
+ repeated  prefix curieMap = 0
+ repeated  mapping mappings = 0
+  nonRelativeURI mappingSetId = 0
+  string mappingSetVersion = 0
+ repeated  nonRelativeURI mappingSetSource = 0
+  string mappingSetTitle = 0
+  string mappingSetDescription = 0
+  double mappingSetConfidence = 0
+ repeated  entityReference creatorId = 0
+ repeated  string creatorLabel = 0
+  nonRelativeURI license = 0
+  entityTypeEnum subjectType = 0
+  entityReference subjectSource = 0
+  string subjectSourceVersion = 0
+  entityTypeEnum objectType = 0
+  entityReference objectSource = 0
+  string objectSourceVersion = 0
+  entityTypeEnum predicateType = 0
+  nonRelativeURI mappingProvider = 0
+ repeated  string cardinalityScope = 0
+  string mappingTool = 0
+  entityReference mappingToolId = 0
+  string mappingToolVersion = 0
+  date mappingDate = 0
+  date publicationDate = 0
+ repeated  entityReference subjectMatchField = 0
+ repeated  entityReference objectMatchField = 0
+ repeated  entityReference subjectPreprocessing = 0
+ repeated  entityReference objectPreprocessing = 0
+  string similarityMeasure = 0
+ repeated  entityReference curationRule = 0
+ repeated  string curationRuleText = 0
+ repeated  nonRelativeURI seeAlso = 0
+  nonRelativeURI issueTracker = 0
+  string other = 0
+  string comment = 0
+ repeated  extensionDefinition extensionDefinitions = 0
+ }
+// A reference to a mapping set. It allows to augment mapping set metadata from the perspective of the registry, for example, providing confidence, or a local filename or a grouping.
+message MappingSetReference
+ {
+  nonRelativeURI mappingSetId = 0
+  nonRelativeURI mirrorFrom = 0
+  double registryConfidence = 0
+  string mappingSetGroup = 0
+  date lastUpdated = 0
+  string localName = 0
+ }
+message Prefix
+ {
+  ncname prefixName = 0
+  uri prefixUrl = 0
+ }
+// Metamodel extension class to describe slots whose value can be propagated down from the MappingSet class to the Mapping class.
+message Propagatable
+ {
+  boolean propagated = 0
+ }
+// Metamodel extension class to manage slots that may not exist in all versions of the model.
+message Versionable
+ {
+  sssomVersionEnum addedIn = 0
+ }
