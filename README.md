@@ -24,6 +24,8 @@ Install once. Works automatically. Survives context resets.
 
 | Date | Update |
 |------|--------|
+| 2026-05 | `cleaning-contract` and `cleaning-execute` released — full DDI 3-stage cleaning harness (declare → execute → audit) |
+| 2026-05 | `cleaning-contract` eval results: **100%** with-skill vs **53%** without-skill on 3 real PI datasets |
 | 2026-04 | `codebook-parse`, `latex-tables`, `analysis-explainer`, `r-performance`, `codex` released |
 | 2026-04 | Eval results published: **90.5%** accuracy on real PI datasets vs **23.8%** without skills |
 | 2026-04 | Launched at AI for Social Science (AI4SS) Online Lecture Series |
@@ -83,7 +85,9 @@ Think of them as tiny domain experts you install once and call automatically.
 
 ## 📊 Benchmarks
 
-Evaluated on real PI datasets. Tasks: variable classification, missing code detection, label reconciliation.
+Evaluated on real PI datasets. Each (eval × config) executed once.
+
+### `codebook-parse` (variable classification, missing code detection, label reconciliation)
 
 | Dataset | Variables | Challenge | With skill | Without skill |
 |---------|-----------|-----------|:----------:|:-------------:|
@@ -91,6 +95,15 @@ Evaluated on real PI datasets. Tasks: variable classification, missing code dete
 | Dickson 2014 | 560 | Positive missing codes | **6/7** | 3/7 |
 | ABS Wave 5 | — | DTA/SAV label discrepancy | **6/7** | 0/7 |
 | **Overall** | | | **90.5%** | **23.8%** |
+
+### `cleaning-contract` (recoding declaration, missing-code traps, weight assignment)
+
+| Dataset | Challenge | With skill | Without skill |
+|---------|-----------|:----------:|:-------------:|
+| CGSS 2021 | Shared recodes, scale reversal, weight assignment | **6/6** | 1/6 |
+| Dickson 2014 | Positive missing trap (A3A `9=doctorate` vs Q23 `9=refused`) | **6/6** | 4/6 |
+| ABS Wave 5 | Structural inapplicables (China `-1`), universe filter | **4/4** | 3/4 |
+| **Overall** | | **100%** | **53%** |
 
 ---
 
@@ -156,12 +169,25 @@ Delegates tasks to [OpenAI Codex CLI](https://github.com/openai/codex) for a sec
 
 ## ⚡ Installation
 
+> **Skill format**: most `*.skill` files in this repo are **zip archives**
+> (one exception: `codex.skill` is a directory). The install commands below
+> handle both — they unzip archives and copy directories. After install,
+> `~/.claude/skills/<skill-name>/SKILL.md` should exist.
+
 ### One-liner (Claude Code)
 
 ```bash
 git clone https://github.com/SiyaoZheng/ai4ss-skills.git
 mkdir -p ~/.claude/skills
-for d in ai4ss-skills/*.skill; do cp -r "$d" ~/.claude/skills/"$(basename "$d" .skill)"; done
+for s in ai4ss-skills/*.skill; do
+  name=$(basename "$s" .skill)
+  if [ -d "$s" ]; then
+    cp -r "$s" ~/.claude/skills/"$name"          # directory-format skill
+  else
+    rm -rf ~/.claude/skills/"$name"
+    unzip -q "$s" -d ~/.claude/skills/            # zip-format skill (extracts as <name>/)
+  fi
+done
 ```
 
 Verify: open Claude Code, type `/` — skills appear in the autocomplete list.
@@ -170,19 +196,28 @@ Verify: open Claude Code, type `/` — skills appear in the autocomplete list.
 
 ```bash
 mkdir -p ~/.claude/skills
-cp -r ai4ss-skills/codebook-parse.skill  ~/.claude/skills/codebook-parse
-cp -r ai4ss-skills/latex-tables.skill    ~/.claude/skills/latex-tables
-cp -r ai4ss-skills/r-performance.skill   ~/.claude/skills/r-performance
-cp -r ai4ss-skills/analysis-explainer.skill ~/.claude/skills/analysis-explainer
-cp -r ai4ss-skills/codex.skill           ~/.claude/skills/codex
+
+# Zip-format skills (most of them):
+unzip -q ai4ss-skills/codebook-parse.skill    -d ~/.claude/skills/
+unzip -q ai4ss-skills/cleaning-contract.skill -d ~/.claude/skills/
+unzip -q ai4ss-skills/cleaning-execute.skill  -d ~/.claude/skills/
+unzip -q ai4ss-skills/latex-tables.skill      -d ~/.claude/skills/
+unzip -q ai4ss-skills/r-performance.skill     -d ~/.claude/skills/
+unzip -q ai4ss-skills/analysis-explainer.skill -d ~/.claude/skills/
+
+# Directory-format skill:
+cp -r ai4ss-skills/codex.skill ~/.claude/skills/codex
 ```
 
 ### Cursor
 
+Cursor expects flat `.md` rules. Extract just the SKILL.md from each zip:
+
 ```bash
 mkdir -p .cursor/rules
-cp ai4ss-skills/latex-tables.skill   .cursor/rules/latex-tables.md
-cp ai4ss-skills/r-performance.skill  .cursor/rules/r-performance.md
+for s in latex-tables r-performance; do
+  unzip -p ai4ss-skills/${s}.skill ${s}/SKILL.md > .cursor/rules/${s}.md
+done
 ```
 
 ### Other tools
@@ -237,8 +272,8 @@ The `description` field controls auto-loading. Make it specific — the AI match
 | `analysis-explainer` | ✅ Released | |
 | `r-performance` | ✅ Released | |
 | `codex` | ✅ Released | |
-| `cleaning-contract` | 🔵 Planned | Declare recoding decisions in YAML before touching data |
-| `cleaning-execute` | 🔵 Planned | Execute contract → clean CSV + R script + audit log |
+| `cleaning-contract` | ✅ Released | Declare recoding decisions in YAML before touching data |
+| `cleaning-execute` | ✅ Released | Execute contract → clean CSV + R script + audit log |
 | `regression-ready` | ⬜ Stretch | Validate clean data against analysis plan |
 | `codebook-diff` | ⬜ Stretch | Diff two survey waves, surface variable renames and scale changes |
 
