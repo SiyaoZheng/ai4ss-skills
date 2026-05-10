@@ -76,6 +76,8 @@ Think of them as tiny domain experts you install once and call automatically.
 | Skill | What it does | Trigger |
 |-------|-------------|---------|
 | 📋 [`codebook-parse`](#-codebook-parse) | Parse `.dta`/`.sav`/PDF questionnaires → DDI-compliant YAML metadata | *"parse this codebook"* |
+| 🧾 [`cleaning-contract`](#-cleaning-contract) | Declare universe, missing, recode, derived-variable, weight, and harmonization decisions before touching data | *"write the cleaning contract"* |
+| 🧹 [`cleaning-execute`](#-cleaning-execute) | Execute the declared contract → clean CSV + reproducible R script + audit event | *"execute the cleaning contract"* |
 | 📊 [`latex-tables`](#-latex-tables) | Generate journal-ready LaTeX regression tables | *"make a LaTeX table"* |
 | 📝 [`analysis-explainer`](#-analysis-explainer) | Turn statistical output into clean technical documentation | *"explain these results"* |
 | ⚡ [`r-performance`](#-r-performance) | Profile and optimize slow R code for HPC clusters | *"this R code is too slow"* |
@@ -118,6 +120,30 @@ Reads survey data files (`.dta`, `.sav`, `.sas7bdat`) and questionnaire document
 - **Positive missing codes** — `9 = 无回答` on one variable, `9 = doctorate` on another; classified per-variable via `val_labels()`, never globally
 - **Structurally inapplicable variables** — comparative surveys (e.g., ABS Wave 5: questions about institutions that don't exist in China)
 - **Format discrepancies** — `.dta` vs `.sav` label conflicts in the same dataset
+
+---
+
+### 🧾 `cleaning-contract`
+
+Appends a `cleaning_contract` block to `ddi-metadata.yaml`. It records the
+researcher's choices for universe filters, missing treatment, recodes, scale
+reversal, derived variables, weights, analysis variables, and optional SSSOM-style
+harmonization mappings.
+
+- Contract first, data second — no raw data is modified at this stage
+- Positive missing-code traps must be confirmed per variable
+- Cross-wave mappings can include variable-level and per-code alignment metadata
+
+---
+
+### 🧹 `cleaning-execute`
+
+Reads `ddi-metadata.yaml` after `cleaning-contract` and applies the declared
+operations mechanically.
+
+- Writes `<stem>-clean.csv` for analysis
+- Writes `<stem>-cleaning.R` as the reproducible execution script
+- Appends a checksum-bearing `processing_events` audit entry
 
 ---
 

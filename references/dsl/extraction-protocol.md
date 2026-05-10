@@ -209,7 +209,12 @@ C₁ → C₂ 是 broader，当且仅当：
 | high     | high     | substantive | EXTRACTED | "ideal case... substantive governance" (p.36) |
 ```
 
-证据表 → DSL JSON 的编译由 `scripts/compile_evidence.py`（待实现）机械执行。
+证据表 → aiss DSL 的编译由 `dsl/scripts/compile_evidence.py` 机械执行。
+该脚本已实现，并被 `dsl/scripts/test_conformance.py` 覆盖；运行方式：
+
+```bash
+python3 dsl/scripts/compile_evidence.py dsl/scripts/test_fixtures/ding_evidence.md
+```
 
 ---
 
