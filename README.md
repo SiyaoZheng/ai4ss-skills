@@ -24,6 +24,7 @@ Install once. Works automatically. Survives context resets.
 
 | Date | Update |
 |------|--------|
+| 2026-06 | `sjtu-hpc` released — sanitized SJTU HPC/Slurm workflow guide with job templates and transfer references |
 | 2026-05 | `cleaning-contract` and `cleaning-execute` released — full DDI 3-stage cleaning harness (declare → execute → audit) |
 | 2026-05 | `cleaning-contract` eval results: **100%** with-skill vs **53%** without-skill on 3 real PI datasets |
 | 2026-04 | `codebook-parse`, `latex-tables`, `analysis-explainer`, `r-performance`, `codex` released |
@@ -81,6 +82,7 @@ Think of them as tiny domain experts you install once and call automatically.
 | 📊 [`latex-tables`](#-latex-tables) | Generate journal-ready LaTeX regression tables | *"make a LaTeX table"* |
 | 📝 [`analysis-explainer`](#-analysis-explainer) | Turn statistical output into clean technical documentation | *"explain these results"* |
 | ⚡ [`r-performance`](#-r-performance) | Profile and optimize slow R code for HPC clusters | *"this R code is too slow"* |
+| 🖥️ [`sjtu-hpc`](#-sjtu-hpc) | Run SJTU HPC/交我算 Slurm jobs with safer login, queue, storage, and transfer practices | *"run this on SJTU HPC"* |
 | 🤖 [`codex`](#-codex) | Delegate tasks to OpenAI Codex CLI for a second opinion | `codex review this file` |
 
 ---
@@ -177,6 +179,17 @@ R performance diagnosis and optimization for researchers hitting compute walls.
 
 ---
 
+### 🖥️ `sjtu-hpc`
+
+Guides SJTU HPC/交我算 work across SSH login, Slurm submission, queue choice, storage, data transfer, GPU jobs, and cleanup.
+
+- Uses placeholders for accounts, SSH keys, certificates, and IDEKube workspace IDs
+- Includes CPU/GPU/array/large-memory Slurm templates
+- Emphasizes `srun`/`sbatch` instead of running work on login nodes
+- Records data-transfer and storage hygiene checks for reproducible HPC workflows
+
+---
+
 ### 🤖 `codex`
 
 Delegates tasks to [OpenAI Codex CLI](https://github.com/openai/codex) for a second opinion or sandbox execution.
@@ -196,7 +209,7 @@ Delegates tasks to [OpenAI Codex CLI](https://github.com/openai/codex) for a sec
 ## ⚡ Installation
 
 > **Skill format**: most `*.skill` files in this repo are **zip archives**
-> (one exception: `codex.skill` is a directory). The install commands below
+> (`codex.skill` and `sjtu-hpc.skill` are directory-format skills). The install commands below
 > handle both — they unzip archives and copy directories. After install,
 > `~/.claude/skills/<skill-name>/SKILL.md` should exist.
 
@@ -233,6 +246,7 @@ unzip -q ai4ss-skills/analysis-explainer.skill -d ~/.claude/skills/
 
 # Directory-format skill:
 cp -r ai4ss-skills/codex.skill ~/.claude/skills/codex
+cp -r ai4ss-skills/sjtu-hpc.skill ~/.claude/skills/sjtu-hpc
 ```
 
 ### Cursor
@@ -297,6 +311,7 @@ The `description` field controls auto-loading. Make it specific — the AI match
 | `latex-tables` | ✅ Released | |
 | `analysis-explainer` | ✅ Released | |
 | `r-performance` | ✅ Released | |
+| `sjtu-hpc` | ✅ Released | SJTU HPC/交我算 Slurm, storage, transfer, and cleanup workflow guide |
 | `codex` | ✅ Released | |
 | `cleaning-contract` | ✅ Released | Declare recoding decisions in YAML before touching data |
 | `cleaning-execute` | ✅ Released | Execute contract → clean CSV + R script + audit log |
