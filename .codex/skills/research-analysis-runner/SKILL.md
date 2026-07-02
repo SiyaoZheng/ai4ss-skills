@@ -1,0 +1,112 @@
+---
+name: research-analysis-runner
+description: >
+  Social-science analysis execution skill for turning a study design brief and analysis-ready
+  data into first-pass tables, figures, model outputs, coding outputs, logs, and an analysis
+  run manifest. Use after study-design-builder and research-data-builder when the user asks
+  to run the first analysis, produce baseline/descriptive outputs, execute an analysis plan,
+  generate table or figure shells from data, or make results ready for methods review. Triggers:
+  "run analysis", "first table", "baseline model", "descriptive table", "analysis runner",
+  "execute analysis plan", "生成第一张表", "跑基准模型", "描述性统计", "结果清单".
+---
+
+# Research Analysis Runner
+
+Execute the first analysis loop from a design brief and analysis-ready materials. The skill produces outputs that can be reviewed, not final claims.
+
+## Scholar Workbench
+
+This skill answers: "设计和数据已经有了，第一批可检查结果怎么跑出来？" Its value is not deciding what results mean; it is making scripts, outputs, logs, and interpretation boundaries visible.
+
+## Core Rule
+
+Run the analysis plan, preserve logs, and stop before interpretation outruns evidence. Tables and figures are outputs; claims require downstream review and author judgment.
+
+## Hard Boundary
+
+Do not choose a final specification, select favorable results, write result prose, certify robustness, or declare causal validity. If the requested analysis changes the design, route back to `study-design-builder` or `methods-reviewer`.
+
+## Methodology Foundation
+
+This skill executes the `Answer strategy` part of the MIDA spine against a declared design source and analysis-ready data source.
+
+It must record script path, output path, sample note, diagnostic or uncertainty output when available, and `interpretation_boundary`. It cannot revise the inquiry, pick preferred results after seeing outputs, or convert outputs into final claims.
+
+When a `.aiss` model is present, every analysis output that bears on a declared concept, causal implication, or empirical bridge must carry the relevant model identifiers in the manifest.
+
+Before execution, the skill must pass the `analysis_readiness_check.csv` gate. This gate validates the clean data or extracted evidence object against the declared analysis plan, required variables, sample flow, variable provenance, and `.aiss` bridge alignment. This is the local `regression-ready` seam from `ai4ss-skills`, generalized to all first-pass analysis objects.
+
+## Workflow Contract
+
+- Upstream inputs: `study_design_brief.md`, `study_design_declaration.csv`, `research_model.aiss`, `analysis_plan_scaffold.md`, `analysis_readiness_check.csv`, analysis-ready data, variable dictionary, scripts, or source extraction outputs.
+- Produces: `analysis_readiness_check.csv` when missing, scripts or notebooks, tables, figures, logs, and `docs/analysis_run_manifest.csv`.
+- Handoff fields: `route_id`, `design_source`, `target_inquiry`, `analysis_plan_path`, `data_source`, `unit_of_analysis`, `required_variables`, `available_variables`, `missing_variables`, `sample_flow_path`, `merge_audit_path`, `variable_provenance_path`, `readiness_status`, `script_path`, `output_path`, `output_type`, `model_or_operation`, `sample_note`, `interpretation_boundary`, `validation_command`, `ai4ss_model_path`, `model_id`, `concept_id`, `causal_id`, `bridge_id`, `ai4ss_check_status`, `next_skill_route`.
+- Downstream routes: `methods-reviewer`, `academic-writing-scaffold`, `research-slides-builder`, `study-design-builder`, `research-data-builder`, or `ask_author`.
+
+## Routing Boundaries
+
+Use this skill only when a design source and analysis-ready material exist. Hand data construction or merge repair to `research-data-builder`. Hand design ambiguity to `study-design-builder`. Hand result-claim, inference, robustness, or identification audit to `methods-reviewer`. Hand writing support to `academic-writing-scaffold` only after methods review or author approval.
+
+## Workflow
+
+```
+Step -1: Check readiness
+-> Read AGENTS.md, design brief, analysis plan, data dictionary, and available data/scripts.
+-> Confirm unit, required variables, output paths, and no-write zones.
+-> If `research_model.aiss` is referenced, confirm it passes `scripts/validate_ai4ss_model.py` or record why not.
+-> Create or validate `analysis_readiness_check.csv` with `scripts/validate_analysis_readiness.py`.
+-> If readiness is `blocked`, stop and route back to design, data, methods, or author decision.
+-> If design_source, data_source, or analysis readiness evidence is missing, stop and route back.
+
+Step 0: Plan one analysis loop
+-> Choose the smallest requested operation: descriptive table, balance table, baseline model, figure shell, coding summary, or robustness candidate list.
+-> State expected outputs, script paths, log paths, and validation checks.
+
+Step 1: Execute reproducibly
+-> Write or update minimal scripts under scripts/ when needed.
+-> Save outputs under output/ or docs/ according to project conventions.
+-> Preserve command, timestamp, package versions when practical, sample notes, and warnings.
+
+Step 2: Build manifest
+-> Record every table, figure, model object, coding output, and log in `analysis_run_manifest.csv`.
+-> State interpretation boundaries for each output.
+-> Link each relevant output to `model_id`, `concept_id`, `causal_id`, or `bridge_id` from the `.aiss` model.
+
+Step 3: Stop for review
+-> Do not narrate final findings.
+-> Route outputs to `methods-reviewer` for validity and claim review, or to `research-slides-builder` only for verified teaching/demo artifacts.
+```
+
+## Default Outputs
+
+- `docs/analysis_run_manifest.csv`.
+- `docs/analysis_readiness_check.csv` before execution when one does not already exist.
+- Analysis scripts or notebooks under `scripts/`.
+- Tables and figures under `output/tables/`, `output/figures/`, or project-defined paths.
+- Logs under `output/logs/`.
+
+## Script Utilities
+
+- Run `scripts/validate_analysis_manifest.py <path>` to check the analysis run manifest.
+- Run `scripts/validate_analysis_readiness.py <path>` to check whether clean data can enter analysis execution.
+- Run `scripts/validate_ai4ss_model.py <path-to-research_model.aiss>` before treating model-linked outputs as reviewable.
+
+## Quality Bar
+
+- Require a design source and data source before execution.
+- Require `analysis_readiness_check.csv` to be `ready` or explicitly `warn` before execution.
+- Keep one analysis loop small enough to inspect.
+- Make every output path and sample note explicit.
+- Record failed or warning-producing runs separately; do not treat them as final outputs.
+- Preserve interpretation boundaries for each result.
+- Hand off to review before writing claims.
+
+## Reference Files
+
+| File | Content | Read when |
+|---|---|---|
+| [analysis-workflow.md](references/analysis-workflow.md) | Readiness checks, execution loop, logging, and stop rules | Running analysis from a design brief |
+| [manifest-schema.md](references/manifest-schema.md) | CSV schema for analysis outputs and interpretation boundaries | Creating or validating analysis manifests |
+| [readiness-schema.md](references/readiness-schema.md) | CSV schema for the regression-ready / analysis-ready gate | Checking cleaned data against a declared analysis plan |
+| [prompt-pack.md](references/prompt-pack.md) | Copy-ready prompts for readiness checks, first analysis loops, and review handoffs | Turning design/data into execution |
+| [worked-example.md](references/worked-example.md) | Digital-government feasibility table and baseline runner example | Teaching or demonstrating the skill |

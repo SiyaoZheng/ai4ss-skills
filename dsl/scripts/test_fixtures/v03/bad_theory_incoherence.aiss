@@ -1,0 +1,58 @@
+aiss version "0.3"
+
+paper bad.theory_incoherence {
+  title: "Bad Theory Incoherence"
+  kind: "article"
+  sources: [bad.src_text]
+}
+
+source bad.src_text {
+  kind: "article_text"
+  uri: "sources/bad_theory.txt"
+  media_type: "text/plain"
+  locator_scheme: "char"
+}
+
+span bad.s_theory_a {
+  source: bad.src_text
+  locator: "char:1-120"
+}
+
+span bad.s_theory_b {
+  source: bad.src_text
+  locator: "char:121-240"
+}
+
+concept bad.concept_public_scrutiny {
+  term: "public scrutiny"
+  spans: [bad.s_theory_a]
+}
+
+concept bad.concept_performative_governance {
+  term: "performative governance"
+  spans: [bad.s_theory_a]
+}
+
+claim bad.claim_scrutiny_affects_performance {
+  kind: "theoretical"
+  text: "Public scrutiny increases performative governance."
+  concepts: [bad.concept_public_scrutiny, bad.concept_performative_governance]
+  subject: bad.concept_public_scrutiny
+  predicate: "affects"
+  object: bad.concept_performative_governance
+  polarity: "positive"
+  modality: "asserted"
+  spans: [bad.s_theory_a]
+}
+
+claim bad.claim_scrutiny_no_effect_performance {
+  kind: "theoretical"
+  text: "Public scrutiny does not affect performative governance."
+  concepts: [bad.concept_public_scrutiny, bad.concept_performative_governance]
+  subject: bad.concept_public_scrutiny
+  predicate: "affects"
+  object: bad.concept_performative_governance
+  polarity: "null"
+  modality: "asserted"
+  spans: [bad.s_theory_b]
+}

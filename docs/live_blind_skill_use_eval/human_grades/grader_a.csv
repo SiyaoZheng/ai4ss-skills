@@ -1,0 +1,9 @@
+grader_id,packet_id,case_id,artifacts_0_30,traceability_0_20,boundary_0_20,validation_0_15,author_decision_0_15,total_0_100,notes
+grader_a,P001,data_provenance,29,19,19,15,15,97,"Strong concrete pipeline artifacts with clear stop gates and author choices"
+grader_a,P002,data_provenance,25,15,16,10,14,80,"Useful artifacts but weaker gates and some defaults need author approval"
+grader_a,P003,literature_evidence,28,18,19,12,14,91,"Strong source ledger and matrix design with clear verification boundary"
+grader_a,P004,literature_evidence,27,18,18,12,13,88,"Good screening and extraction structure with solid uncertainty handling"
+grader_a,P005,claim_discipline,29,19,20,13,15,96,"Excellent issue table and claim ledger with strong boundary control"
+grader_a,P006,claim_discipline,23,16,17,9,14,79,"Good claim checks but fewer auditable artifacts and weaker validation gates"
+grader_a,P007,revision_trace,28,18,20,13,15,94,"Strong confidentiality gate revision matrix and author-owned scaffold"
+grader_a,P008,revision_trace,25,16,18,11,14,84,"Solid workplan with useful checks but less trace structure and gating detail"

@@ -1,0 +1,3 @@
+slide_id,role,claim,source_artifact,sample_or_scope,uncertainty_or_caveat,privacy_status,visual,interpretation_boundary,risk,action
+S1,title,AI4SS workshop opening,not_applicable,not_applicable,not_applicable,cleared,title slide,not_applicable,privacy,verify
+S2,result,Policy pilot estimates are tied to Table 1,output/tables/table1.csv,linked firm-year sample during rollout window,uncertainty shown through confidence interval and model note,redacted,coefficient plot,supports bounded result display not final causal conclusion,overclaim,create

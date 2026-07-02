@@ -1,0 +1,4 @@
+interface:
+  display_name: "Research Data Builder"
+  short_description: "Build auditable social-science datasets"
+  default_prompt: "Use $research-data-builder to turn raw social-science files into an auditable analysis sample."

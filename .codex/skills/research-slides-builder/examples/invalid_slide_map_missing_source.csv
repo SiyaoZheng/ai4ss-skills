@@ -1,0 +1,2 @@
+slide_id,role,claim,source_artifact,sample_or_scope,uncertainty_or_caveat,privacy_status,visual,interpretation_boundary,risk,action
+S2,result,Policy pilot clearly works,not_applicable,none,none,cleared,large number,none,unsupported claim,create

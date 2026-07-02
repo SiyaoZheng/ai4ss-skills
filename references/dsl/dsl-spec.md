@@ -1,586 +1,1177 @@
-# aiss DSL — Core Specification v0.2
+# AISS DSL — Core Specification v0.3
 
-> 一个表达社会科学理论的外部 DSL。
-> 数学基础：FCA（形式概念分析）+ SCM（结构因果模型）+ Description Logic。
-> 设计参考：Alloy 的原语分离 · Z 的 schema 组合 · LinkML 的 schema-first · DeclareDesign 的设计即数据。
+> A discourse-native, deterministic DSL for representing the theory, empirics,
+> and asserted coupling structure of social-science texts.
+>
+> Status: normative design specification. The current Python scripts under
+> `dsl/scripts/` are v0.2 legacy prototypes and do not yet fully implement this
+> v0.3 specification.
 
-## 0. 设计原则
+## 0. Purpose
 
-1. **外部语法** — 独立语言，不嵌入 Python/R。有 parser，有 AST。
-2. **数学基础不必发明** — FCA 处理概念定义（θ），SCM 处理因果关系，DL 处理概念层次。
-3. **定义与验证分离** — 像 Alloy：先定义结构（attribute/concept/causal），再检查属性（check/derive）。
-4. **分层表达** — 像 OWL：Layer 0-1 可判定，Layer 2 半可判定，Layer 3 需人类判断。
-5. **Schema-first** — 像 LinkML：schema 是数据，数据是 schema 的实例。
+AISS is a DSL for compiling a social-science text into a machine-readable
+Paper AST. The AST is designed so deterministic programs can lint, run, diff,
+and write from it.
 
----
+AISS is not a method DSL. It does not assume that the text is causal, empirical
+in a narrow statistical sense, or organized as a modern journal article. It is
+for social-science work broadly understood: theory, description, fieldwork,
+historical comparison, interpretive analysis, data-driven empirical research,
+and mixed forms.
 
-## 1. Formal Context (from FCA)
+AISS is also not an Agent Harness. An Agent Harness may help produce candidate
+`.aiss` files, propose edits, ask questions, or decide which tool to call next.
+But the formal chain below must be deterministic program output:
 
-本 DSL 的数学基础是形式概念分析。每一个 concept 定义等价于 FCA 中的一个形式概念。
+```text
+compile(source) -> canonical PaperAST
+lint(PaperAST) -> deterministic diagnostics
+run(PaperAST, data, adapters) -> deterministic evidence/code/support outputs
+diff(PaperAST_A, PaperAST_B) -> deterministic structural diff
+write(PaperAST, template) -> deterministic manuscript/report
+```
 
-### 1.1 FCA 基本定义（Ganter & Wille 1999）
+No operation in this formal chain may call an LLM, use wall-clock time, depend on
+random ordering, depend on machine-specific absolute paths, or silently consult
+network resources.
 
-**形式上下文** K = (G, M, I)，其中 G 是对象集，M 是属性集，I ⊆ G × M 是关联关系。
+### 0.1 Requirements traceability
 
-**导出算子** (derivation operators)：
-- A↑ = { m ∈ M | ∀g ∈ A : (g,m) ∈ I }  — A 中所有对象共享的属性
-- B↓ = { g ∈ G | ∀m ∈ B : (g,m) ∈ I }  — 拥有 B 中所有属性的对象
+This section records the design requirements that v0.3 must satisfy.
 
-**形式概念** = (A, B) 满足 A↑ = B 且 B↓ = A。A = 外延 (extent)，B = 内涵 (intent)。
-
-**属性蕴涵** A → B 在 K 中有效，当 A↓ ⊆ B↓。
-
-### 1.2 映射到本 DSL
-
-| FCA | aiss DSL |
+| Requirement | Spec commitment |
 |---|---|
-| 形式上下文 K | 所有 attribute × 所有可能的 attribute value 组合 |
-| 属性 m ∈ M | 一个 attribute = value 对，如 `state_capacity=low` |
-| 对象 g ∈ G | 一个观测/案例（论文中通常隐式） |
-| 形式概念 (A, B) | 一个 concept，其 intent = θ 中输出为 1/Category 的 attribute 组合 |
-| 属性蕴涵 A → B | hasAttribute edge：拥有 attribute A → 拥有 concept C |
-| 概念格 | broader/narrower 关系（基于外延包含） |
+| The DSL is below an Agent Harness. | AISS defines source, AST, and deterministic tool outputs. Harness behavior is outside the formal chain. |
+| Focus on theory, empirics, and their coupling, not methods. | Core AST regions are Theory, Empirical, and Coupling. Method-specific work is adapter-level. |
+| Compile a social-science text into code-capable structure. | `compile` emits canonical Paper AST; `emit-code` maps AST plus deterministic adapters to generated code. |
+| Lint internal incoherence. | `lint` emits deterministic diagnostics over references, provenance, concepts, claims, empirical objects, coupling, and formal determinism. |
+| Run whether evidence supports theory. | `run` emits deterministic coupling assessments when explicit rules or adapters are available; otherwise it emits `not_assessable`, not an agent judgment. |
+| Compare two papers' ASTs. | `diff` compares canonical ASTs by ID and structural path without fuzzy matching. |
+| Compile and writing must be deterministic. | `compile`, `write`, generated code, and canonical JSON have fixed ordering, hashes, and no LLM calls. |
+| Do not assume sections. | Source is discourse-native; sections are optional locator metadata only. |
+| `gap` and diagnostics are not primitives. | Analyzer verdicts are forbidden in source and appear only as derived artifacts. |
+| The DSL must be usable for theory, description, and fieldwork. | Minimal valid sources do not require estimands, causal graphs, regression models, or sectioned article structure. |
 
-**θ 即 Intent**：一个 concept 的 θ 真值表就是 FCA 中该形式概念的内涵（intent）的直接表达。
+## 1. Design Commitments
 
----
+### 1.1 Discourse-native, not section-native
 
-## 2. Language Syntax
+AISS treats a text as an ordered discourse object grounded in source spans. A
+source may be a sectioned article, a book, a dialogue, an interview transcript,
+a fieldnote archive, a table, a figure, a dataset, or a code file.
 
-### 2.1 Lexical
+Sections are optional locator metadata. They are not ontology.
 
+The DSL MUST NOT require constructs such as `introduction`, `theory_section`,
+`methods_section`, or `results_section`. AISS must be able to represent a text
+such as Plato's *Republic*, a continuous interview transcript, or a fieldnote
+corpus without first forcing it into modern article sections.
+
+### 1.2 Theory, empirics, and coupling
+
+The core AST has three conceptual regions:
+
+```text
+Theory AST
+  concepts, claims, theoretical relations, mechanisms, scope claims
+
+Empirical AST
+  empirical materials, observations, results, artifacts, source objects
+
+Coupling AST
+  author-asserted or annotator-declared links between theory objects and
+  empirical objects
 ```
-ID        = [a-z][a-z0-9_]*
-QUALID    = ID "." ID               -- author.concept_name
-STRING    = "\"" ([^"\\] | "\\" .)* "\""   -- supports \" \\ \n \t escapes
-NUMBER    = [0-9]+ ( "." [0-9]+ )?
-BOOL      = "0" | "1"
-VALUE     = STRING | NUMBER | BOOL
-COMMENT   = "//" ... end-of-line
+
+The DSL source expresses what the text or annotator asserts. It does not express
+the analyzer's verdict about those assertions.
+
+### 1.3 Analyzer outputs are not source primitives
+
+The following are forbidden as source primitives:
+
+```text
+gap
+diagnostic
+support_score
+unsupported_claim
+overclaim
+next_action
+review_comment
+critique
+lint_result
 ```
 
-### 2.2 Top-Level Constructs
+These are deterministic outputs produced by tools after comparing AST objects.
+They MUST NOT be written as first-class DSL declarations in `.aiss` source.
 
+### 1.4 Progressive specificity
+
+AISS supports light and heavy encodings.
+
+A minimal valid source may declare only a source, spans, a few concepts, claims,
+empirical materials, and author-asserted coupling links. More formal work may
+add concept composition, value domains, executable artifacts, data manifests,
+and method adapters.
+
+The DSL SHOULD require more detail only when the source itself makes a stronger
+or more specific claim. A theoretical essay should not be forced to declare an
+estimand. A fieldwork account should not be forced to declare a regression
+model. A causal research design may declare those details through later adapter
+layers.
+
+### 1.5 Determinism first
+
+The same `.aiss` source, source objects, data artifacts, templates, adapter
+versions, and AISS compiler version MUST produce the same canonical outputs on
+different machines.
+
+The determinism target is canonical JSON equality. Byte-for-byte equality is
+required for normalized JSON, generated code, and deterministic writer output.
+
+## 2. Terminology
+
+| Term | Meaning |
+|---|---|
+| `.aiss source` | Human-editable DSL file. May be drafted by an agent, but is not trusted until compiled. |
+| Source object | External object being represented: PDF text, transcript, book, dataset, code, table, figure, note. |
+| Source span | Stable locator into a source object. A span is not necessarily a section. |
+| Paper AST | Canonical compiled representation of the text's theory, empirics, and coupling. |
+| Theory object | Concept, claim, theoretical relation, mechanism, or scope claim. |
+| Empirical object | Material, observation, result, table, figure, case, quote, dataset, or code artifact. |
+| Coupling object | Declared link that says how an empirical object is used for a theoretical object. |
+| Derived artifact | Output produced by compile, lint, run, diff, or write. Not source. |
+| Adapter | Deterministic plugin that maps selected AST objects into executable code or checks. |
+
+## 3. Source File Model
+
+### 3.1 File encoding
+
+`.aiss` source files MUST be UTF-8. Newlines MUST normalize to LF during
+compilation. The compiler MUST reject invalid UTF-8.
+
+### 3.2 Comments
+
+Line comments begin with `//` and continue to end of line. Block comments begin
+with `/*` and end with `*/`. Comments are discarded during compilation and MUST
+NOT affect canonical output.
+
+### 3.3 Declaration order
+
+Declaration order is not semantic. Forward references are allowed. The compiler
+MUST canonicalize output by deterministic ordering rules, not source order.
+
+The only order that may carry meaning is an explicit ordered field, such as
+`spans: [...]` or `sequence: [...]`.
+
+### 3.4 IDs
+
+IDs MUST be stable and globally qualified within the source file.
+
+```text
+ID      = [a-z][a-z0-9_]*
+QUALID  = ID "." ID ("." ID)*
 ```
-program = (attribute | concept | causal | bridge | model | fact | check | derive)*
+
+Recommended pattern:
+
+```text
+<namespace>.<object_kind>_<short_name>
 ```
 
-**没有 order 依赖**——可以 forward-reference。像 Alloy，声明顺序不影响语义。
+Examples:
 
-### 2.3 Attribute
-
+```text
+ding.concept_performative_governance
+ding.claim_lc_hs_performative
+plato.claim_justice_truth_debt
 ```
-attribute ding.state_capacity {
-  domain: ordinal
-  values: ["low", "high"]
-  description: "logistical and political capacity of a bureaucratic unit"
+
+IDs MUST NOT encode line numbers, timestamps, random UUIDs, or machine paths.
+
+### 3.5 Values
+
+```text
+STRING    = JSON string syntax
+NUMBER    = decimal literal, parsed as decimal not binary float
+BOOL      = true | false
+NULL      = null
+LIST      = [VALUE, ...]
+MAP       = { key: VALUE, ... }
+```
+
+Numbers in canonical JSON MUST be rendered using decimal canonical form. If a
+number cannot be represented deterministically, source SHOULD encode it as a
+string and the adapter may parse it later.
+
+## 4. Top-level Grammar
+
+This grammar defines the canonical v0.3 source surface. It is intentionally
+block-based to remain close to v0.2 while changing the ontology.
+
+```text
+program =
+  version_decl
+  (paper_decl
+   | source_decl
+   | span_decl
+   | concept_decl
+   | claim_decl
+   | relation_decl
+   | empirical_decl
+   | observation_decl
+   | coupling_decl
+   | artifact_decl
+   | adapter_decl)*
+
+version_decl = "aiss" "version" STRING
+```
+
+Required first declaration:
+
+```aiss
+aiss version "0.3"
+```
+
+The compiler MUST reject files without a version declaration. It MUST reject a
+v0.3 file that uses v0.2-only top-level keywords as formal declarations, unless
+the compiler is explicitly invoked in legacy migration mode.
+
+## 5. Provenance Layer
+
+The provenance layer grounds all theory, empirical, and coupling objects in
+source spans.
+
+### 5.1 `paper`
+
+`paper` declares the represented intellectual object. It is metadata, not a
+section tree.
+
+```aiss
+paper ding.performative_state {
+  title: "The Performative State"
+  authors: ["Iza Ding"]
+  year: "2022"
+  language: "en"
+  kind: "book"
+  sources: [ding.src_book]
 }
 ```
 
-**Fields**:
-- `domain` (required): `binary | ordinal | categorical | continuous`
-- `values` (required for binary/ordinal/categorical): 允许的值列表
-- `description` (optional): 自然语言定义
-- `source` (optional): 文本证据引用
+Fields:
 
-### 2.4 Concept
+| Field | Required | Type | Meaning |
+|---|---:|---|---|
+| `title` | yes | string | Canonical title. |
+| `authors` | no | list[string] | Author names as text. |
+| `year` | no | string | Publication year or known date string. |
+| `language` | no | string | BCP-47 code when known. |
+| `kind` | yes | string | `article`, `book`, `dialogue`, `transcript`, `fieldnotes`, `report`, `dataset`, or project-specific value. |
+| `sources` | yes | list[id] | Source objects used by this paper. |
+| `notes` | no | string | Non-semantic note. |
 
-```
-concept ding.governance_mode {
-  parents: [ding.state_capacity, ding.public_scrutiny]
-  theta: {
-    "[\"low\",  \"low\"]"  : "inert"
-    "[\"high\", \"low\"]"  : "paternalistic"
-    "[\"low\",  \"high\"]" : "performative"
-    "[\"high\", \"high\"]" : "substantive"
-  }
-  theta_domain: categorical
-  rule: exhaustive_typology
-  description: "2x2 typology: state capacity × public scrutiny → 4 governance modes"
-  source: "Ch.1, pp.35-36"
-  operationalization: "ethnographic observation at municipal EPB"
-  elsst_label: "governance"
+### 5.2 `source`
+
+`source` declares an external object that spans can locate into.
+
+```aiss
+source ding.src_book {
+  kind: "book_text"
+  uri: "sources/ding_performative_state.txt"
+  media_type: "text/plain"
+  checksum: "sha256:..."
+  locator_scheme: "char"
+  canonicalization: "utf8_lf"
 }
 ```
 
-**Fields**:
-- `parents` (required): 父属性列表，顺序与 θ 键中的值顺序对应
-- `theta` (required): 真值表。键 = parent values 的 JSON 数组字符串，值 = 0/1（binary concept）或 string（categorical/nominal concept）
-- `theta_domain` (optional): `binary | categorical | continuous`。缺省时由 θ 输出值推断
-- `rule` (required): composition rule
-- `description` (optional)
-- `source` (optional): 文本证据
-- `operationalization` (optional): 如何测量
-- `elsst_label` (optional): ELSST/TheSoz 对齐标签
+Fields:
 
-**θ 键的排序**：θ 键中 value 的顺序 == parents 列表中 attribute 的顺序。
+| Field | Required | Type | Meaning |
+|---|---:|---|---|
+| `kind` | yes | string | `pdf_text`, `book_text`, `transcript`, `dataset`, `table`, `figure`, `code`, etc. |
+| `uri` | yes | string | Relative project path or stable external URI. Relative paths are resolved against the `.aiss` file directory. |
+| `media_type` | yes | string | MIME-like media type. |
+| `checksum` | required for formal runs | string | `sha256:<hex>` hash of canonical source bytes. |
+| `locator_scheme` | yes | string | `char`, `line`, `page`, `paragraph`, `stephanus`, `table_cell`, `figure_region`, `turn`, etc. |
+| `canonicalization` | no | string | How bytes/text are normalized before hashing. |
 
-**hasAttribute 隐式生成**：`concept.parents` 字段在编译时自动生成对应的 `hasAttribute` edge（从 concept 到每个 parent attribute）。
+Source objects MUST NOT use machine-specific absolute paths in formal fixtures.
+Local absolute paths MAY be used in scratch authoring but MUST be rejected by
+`aiss compile --strict`.
 
-### 2.5 Composition Rules
+### 5.3 `span`
 
-| Rule | θ Pattern | FCA 对应 |
-|---|---|---|
-| `definitional` | Exactly 1 row → 1（binary θ） | 单例 intent |
-| `necessary_conjunction` | All parents at designated values → 1 | 精确匹配 intent |
-| `sufficient_conjunction` | Any parent at designated value → 1 | 析取 intent |
-| `aggregative` | Outcome monotonic in sum of parent values | 加性闭合 |
-| `threshold` | Σ ≥ k → 1 | 阈值分割 |
-| `family_resemblance` | Majority(parents satisfied) → 1 | 多数投票 |
-| `undecomposed` | θ = `{"none": 1}` | 原子概念（无属性分解） |
-| `exhaustive_typology` | All outcomes distinct nominal categories | 多值分区；不强行解释为 binary FCA membership |
+`span` declares a stable locator into a source object.
 
-### 2.6 Causal Relation
-
-```
-causal ding.lc_hs_to_performative {
-  source: ding.low_capacity_high_scrutiny
-  target: ding.performative_governance
-  direction: positive
-  condition: none
-  mechanism: "beleaguered bureaucracy — bureaucrats cannot fix the problem, so they fix the perception"
-  textual_support: EXTRACTED
+```aiss
+span ding.s_intro_001 {
+  source: ding.src_book
+  locator: "char:1024-1350"
+  kind: "paragraph"
+  quote_hash: "sha256:..."
 }
 ```
 
-**Fields**:
-- `source` (required): 原因 concept ID
-- `target` (required): 结果 concept ID
-- `direction` (required): `positive | negative | null | nonlinear`
-- `condition` (optional): 范围条件/调节变量
-- `mechanism` (optional): 因果路径
-- `textual_support` (required): `EXTRACTED | INFERRED | AMBIGUOUS`。这里只表示论文文本是否清楚提出该理论因果声称；不表示实证识别强度
+For a sectionless text:
 
-**语义边界**：`causal` 表达理论声称。理论上的因果性不等于实证上已经观察到因果关系；实证相关、事实观察、民族志证据或估计量是否与该理论声称可公度，由 `bridge` 表达。
-
-### 2.7 Bridge
-
-```
-bridge ding.measurement_pg {
-  type: measurement
-  concept: ding.performative_governance
-  method: participant_observation
-  validity: "observed bureaucratic actions coded as targeting problem vs. perception"
-  commensurability: strong
-}
-
-bridge ding.causal_bridge_1 {
-  type: causal
-  implication: ding.lc_hs_to_performative
-  estimand: none
-  commensurability: weak
-  note: "ethnographic evidence, no quantitative causal identification"
+```aiss
+span plato.s_331c {
+  source: plato.src_republic
+  locator: "stephanus:331c-331d"
+  kind: "dialogue_turn"
+  quote_hash: "sha256:..."
 }
 ```
 
-**Fields**:
-- `type` (required): `measurement | causal`
-- For measurement bridge:
-  - `concept` (required): 被测量的 concept
-  - `method` (required): 测量方法
-  - `validity` (optional): 效度说明
-- For causal bridge:
-  - `implication` (required): causal edge ID
-  - `estimand` (required or `none`): 实证估计量
-- `commensurability` (required): `strong | weak | unchecked`
+Fields:
 
-### 2.8 Model
+| Field | Required | Type | Meaning |
+|---|---:|---|---|
+| `source` | yes | id | Source object. |
+| `locator` | yes | string | Stable locator under the source's locator scheme. |
+| `kind` | no | string | `paragraph`, `dialogue_turn`, `table_cell`, `figure_caption`, `footnote`, etc. |
+| `quote` | no | string | Short excerpt for human review. Not trusted as source of truth. |
+| `quote_hash` | formal recommended | string | Hash of the canonical bytes/text covered by the locator. |
 
+The compiler MUST treat `locator` as opaque unless the source's locator adapter
+knows how to resolve it. Unknown locator schemes are allowed for compile but
+MUST produce a deterministic warning in strict validation.
+
+## 6. Theory AST Source Primitives
+
+Theory primitives represent what the text says conceptually or theoretically.
+They do not declare whether the text is correct.
+
+### 6.1 `concept`
+
+`concept` declares a term, category, construct, ideal type, mechanism component,
+or conceptual object.
+
+```aiss
+concept ding.concept_performative_governance {
+  term: "performative governance"
+  definition: "governance action directed at producing the appearance of responsiveness"
+  spans: [ding.s_intro_001]
+  variants: ["performance", "performative state behavior"]
+}
 ```
-model ding.performative_state {
-  attributes: [
-    ding.state_capacity
-    ding.public_scrutiny
-  ]
+
+Fields:
+
+| Field | Required | Type | Meaning |
+|---|---:|---|---|
+| `term` | yes | string | Canonical label. |
+| `definition` | no | string | Source-grounded definition or concise encoding. |
+| `spans` | yes | list[id] | Source spans grounding the concept declaration. |
+| `variants` | no | list[string] | Surface forms used in the source. |
+| `domain` | no | string | Substantive domain or population, not a value domain. |
+| `attributes` | no | list[id] | Other concepts or empirical descriptors used in a decomposition. |
+| `theta` | no | map | Optional formal composition table. |
+| `theta_kind` | no | string | `binary`, `categorical`, `ordinal`, or project-specific. |
+| `composition_rule` | no | string | `definition`, `typology`, `conjunction`, `threshold`, `family_resemblance`, etc. |
+
+`theta` is optional. Many theoretical concepts are intentionally not decomposed
+into a complete truth table. The absence of `theta` is not an error.
+
+When `theta` is present, the compiler MUST canonicalize it but MUST NOT infer
+missing rows unless a deterministic composition adapter is explicitly invoked.
+
+### 6.2 `claim`
+
+`claim` declares a proposition made, reported, questioned, or reconstructed in
+the text.
+
+```aiss
+claim ding.claim_lc_hs_performative {
+  kind: "theoretical"
+  text: "Low capacity combined with high scrutiny produces pressure toward performative governance."
   concepts: [
-    ding.governance_mode
-    ding.performative_governance
-    ding.substantive_governance
-    ding.inert_governance
-    ding.paternalistic_governance
-    ding.perceived_responsiveness
-    ding.performative_breakdown
+    ding.concept_performative_governance,
+    ding.concept_state_capacity,
+    ding.concept_public_scrutiny
   ]
-  causal: [
-    ding.lc_hs_to_performative
-  ]
-  bridges: [
-    ding.measurement_pg
-    ding.causal_bridge_1
-  ]
+  modality: "asserted"
+  spans: [ding.s_theory_014]
 }
 ```
 
-### 2.9 Relation Edges (broader/narrower/contrastsWith/related)
+Fields:
 
-```
-edge broader: ding.governance_mode -> ding.performative_governance {
-  confidence: EXTRACTED
-  source: "Ch.1, p.36"
+| Field | Required | Type | Meaning |
+|---|---:|---|---|
+| `kind` | yes | string | `theoretical`, `descriptive`, `interpretive`, `empirical`, `mechanism`, `scope`, `normative`, `counterclaim`, etc. |
+| `text` | yes | string | Canonical encoding of the claim. |
+| `concepts` | no | list[id] | Referenced concepts. |
+| `modality` | no | string | `asserted`, `tentative`, `questioned`, `reported`, `rejected`. |
+| `spans` | yes | list[id] | Source spans grounding the claim. |
+| `scope` | no | list[id] | Scope claims or concepts limiting applicability. |
+| `subject` | no | id | Optional structured proposition subject; must reference a concept. |
+| `predicate` | no | string | Optional structured proposition predicate such as `affects`, `requires`, `is_part_of`. |
+| `object` | no | id | Optional structured proposition object; must reference a concept. |
+| `polarity` | no | string | Optional structured polarity: `positive`, `negative`, `null`, `present`, or `absent`. |
+
+`claim.kind` does not prescribe method. A descriptive claim is not weaker than a
+causal claim; it simply belongs to a different semantic class.
+
+The `subject`/`predicate`/`object`/`polarity` fields are an optional deterministic
+claim-logic layer. They are not inferred from `text` by the compiler. When any
+of these fields is present, all four SHOULD be present. A linter may then check
+theory-level inconsistency mechanically. For example, two asserted claims with
+the same `(subject, predicate, object, scope)` signature but contradictory
+polarities such as `positive` vs. `null` or `present` vs. `absent` are
+deterministically inconsistent. Claims with `modality: "reported"`,
+`"questioned"`, or `"rejected"` are not treated as asserted commitments for this
+rule.
+
+Example:
+
+```aiss
+claim example.claim_scrutiny_increases_performance {
+  kind: "theoretical"
+  text: "Public scrutiny increases performative governance."
+  concepts: [example.concept_public_scrutiny, example.concept_performative_governance]
+  subject: example.concept_public_scrutiny
+  predicate: "affects"
+  object: example.concept_performative_governance
+  polarity: "positive"
+  modality: "asserted"
+  spans: [example.s_theory]
 }
 ```
 
-### 2.10 Facts — Static Constraints (Alloy-inspired)
+### 6.3 `relation`
 
-Facts 是必须始终成立的约束。相当于 T1-T8 验证规则的声明形式。
+`relation` declares a source-grounded relationship among theory objects.
 
+```aiss
+relation ding.rel_performative_contrasts_substantive {
+  type: "contrasts_with"
+  from: ding.concept_performative_governance
+  to: ding.concept_substantive_governance
+  text: "Performative governance is contrasted with substantive governance."
+  spans: [ding.s_typology_004]
+}
 ```
-fact theta_completeness {
-  all c: concept where c.parents != [] {
-    // definitional concepts: sparse θ OK — only C=1 rows need be listed
-    if c.rule == "definitional" {
-      count(v in c.theta.values where v == 1 or v == "1") == 1
-        and |c.theta| <= product(|p.values| for p in c.parents)
-    } else {
-      |c.theta| == product(|p.values| for p in c.parents)
+
+Common `type` values:
+
+| Type | Meaning |
+|---|---|
+| `defines` | One object defines or specifies another. |
+| `subtype_of` | More specific concept under a broader concept. |
+| `part_of` | Component relation. |
+| `contrasts_with` | Explicit contrast or opposition. |
+| `elaborates` | One claim elaborates another. |
+| `entails` | One claim implies another in the author's argument. |
+| `mechanism_for` | Mechanism claim connects to an outcome claim. |
+| `scope_of` | A scope claim limits another claim. |
+| `predicts` | Theory claim states an expected empirical pattern. |
+| `responds_to` | Claim answers, rebuts, or modifies another claim. |
+
+Fields:
+
+| Field | Required | Type | Meaning |
+|---|---:|---|---|
+| `type` | yes | string | Relation type. |
+| `from` | yes | id | Source object ID. |
+| `to` | yes | id | Target object ID. |
+| `text` | no | string | Canonical explanation. |
+| `spans` | yes | list[id] | Source spans grounding the relation. |
+
+A causal relation, when needed, is represented as a `claim` and/or `relation`
+with an appropriate type such as `mechanism_for` or `predicts`. Causal inference
+details are adapter-level concerns, not the default ontology.
+
+## 7. Empirical AST Source Primitives
+
+Empirical primitives represent what empirical material the text uses or reports.
+They are intentionally broader than statistical data.
+
+### 7.1 `empirical`
+
+`empirical` declares a material object, case, dataset, passage, episode, table,
+figure, quote set, field site, or archive.
+
+```aiss
+empirical ding.emp_field_observations {
+  kind: "field_observation_set"
+  label: "municipal environmental protection observations"
+  description: "Field observations used as empirical material for performative governance."
+  spans: [ding.s_methods_002, ding.s_case_011]
+  artifacts: []
+}
+```
+
+Fields:
+
+| Field | Required | Type | Meaning |
+|---|---:|---|---|
+| `kind` | yes | string | `case`, `interview`, `field_observation_set`, `dataset`, `table`, `figure`, `archive`, `quote`, `document`, etc. |
+| `label` | yes | string | Human-readable label. |
+| `description` | no | string | Concise description. |
+| `spans` | yes | list[id] | Source spans grounding the empirical object. |
+| `artifacts` | no | list[id] | Data/code/table artifacts linked to this object. |
+
+### 7.2 `observation`
+
+`observation` declares an empirical pattern, result, quoted statement, table
+entry, contrast, event, count, or reported finding.
+
+```aiss
+observation ding.obs_night_inspections {
+  kind: "field_pattern"
+  text: "Officials perform visible night inspections during public scrutiny."
+  about: [ding.emp_field_observations]
+  concepts: [ding.concept_performative_governance]
+  spans: [ding.s_case_011]
+}
+```
+
+Fields:
+
+| Field | Required | Type | Meaning |
+|---|---:|---|---|
+| `kind` | yes | string | `field_pattern`, `quote`, `statistic`, `table_result`, `case_event`, `comparison`, `model_result`, etc. |
+| `text` | yes | string | Canonical statement of the observation/result. |
+| `about` | yes | list[id] | Empirical objects or artifacts this observation is about. |
+| `concepts` | no | list[id] | Concepts the source associates with the observation. |
+| `value` | no | value | Deterministic value when the result is structured. |
+| `spans` | yes | list[id] | Source spans grounding the observation. |
+
+`observation` is not a verdict. It records a reported empirical object or
+pattern. Whether it supports a theory claim is handled through declared
+coupling and later analysis.
+
+### 7.3 `artifact`
+
+`artifact` declares an external machine object used by empirical or runnable
+analysis.
+
+```aiss
+artifact ding.art_table2_csv {
+  kind: "data"
+  uri: "data/table2.csv"
+  media_type: "text/csv"
+  checksum: "sha256:..."
+  role: "input"
+}
+```
+
+Fields:
+
+| Field | Required | Type | Meaning |
+|---|---:|---|---|
+| `kind` | yes | string | `data`, `code`, `table`, `figure`, `model_output`, `appendix`, `template`. |
+| `uri` | yes | string | Relative path or stable URI. |
+| `media_type` | yes | string | MIME-like type. |
+| `checksum` | required for formal runs | string | `sha256:<hex>`. |
+| `role` | no | string | `input`, `declared_output`, `reference`, `template`. |
+
+Artifacts are source inputs to deterministic operations. They are not generated
+outputs unless declared as reference artifacts for comparison.
+
+## 8. Coupling AST Source Primitives
+
+Coupling primitives record asserted links between theory and empirics. They do
+not declare the analyzer's assessment of the link.
+
+### 8.1 `coupling`
+
+```aiss
+coupling ding.coup_obs_supports_claim {
+  type: "supports"
+  theory: ding.claim_lc_hs_performative
+  empirical: ding.obs_night_inspections
+  text: "The paper uses visible inspections as evidence for performative governance under scrutiny."
+  asserted_by: "paper"
+  spans: [ding.s_case_011, ding.s_discussion_003]
+}
+```
+
+Fields:
+
+| Field | Required | Type | Meaning |
+|---|---:|---|---|
+| `type` | yes | string | Role asserted for the link. |
+| `theory` | yes | id | Claim, concept, or theory relation. |
+| `empirical` | yes | id | Observation, empirical object, or artifact. |
+| `text` | no | string | Canonical explanation of the asserted link. |
+| `asserted_by` | yes | string | `paper`, `annotator`, `dataset_manifest`, `adapter`. |
+| `spans` | yes | list[id] | Source spans grounding the coupling declaration. |
+
+Common `type` values:
+
+| Type | Meaning |
+|---|---|
+| `supports` | The source presents empirical material as supporting a theory claim. |
+| `illustrates` | The material is presented as an example or illustration. |
+| `operationalizes` | The material or observation is used as an empirical expression of a concept. |
+| `tests` | The material/result is presented as testing a claim. |
+| `motivates` | The material motivates a theory object. |
+| `qualifies` | The material limits or qualifies a theory claim. |
+| `contrasts` | The material is used to contrast with a theory claim or concept. |
+
+The compiler MUST preserve `asserted_by`. A linter may later distinguish paper
+assertions from annotator-added coupling, but that distinction is output, not a
+source verdict.
+
+## 9. Adapter Boundary
+
+Specific methods are not core DSL primitives. They are deterministic adapters
+that consume subsets of Paper AST.
+
+Examples:
+
+```text
+regression_adapter(PaperAST, artifacts) -> generated R/Python code + results
+interview_table_adapter(PaperAST, artifacts) -> coded quote table
+case_trace_adapter(PaperAST, artifacts) -> process-trace matrix
+concept_lattice_adapter(PaperAST) -> concept lattice output
+```
+
+Adapter requirements:
+
+1. MUST declare an adapter ID and semantic version.
+2. MUST declare which AST object types and artifact media types it consumes.
+3. MUST produce canonical output with stable hashes.
+4. MUST NOT call an LLM during formal execution.
+5. MUST fail or skip deterministically when required inputs are missing.
+
+### 9.1 `adapter`
+
+An `.aiss` source may declare which deterministic adapters are allowed for
+formal `run` or `emit-code`.
+
+```aiss
+adapter aiss.adapter_concept_lattice {
+  version: "0.3.0"
+  consumes: ["concept", "relation"]
+  produces: ["code", "report"]
+}
+```
+
+Declaring an adapter does not execute it. It only restricts what the formal run
+is allowed to use.
+
+## 10. Canonical Paper AST
+
+`compile` converts `.aiss` source into canonical JSON. The exact JSON schema is
+versioned as `aiss.paper_ast.v0.3`.
+
+### 10.1 Required top-level JSON shape
+
+```json
+{
+  "schema": "aiss.paper_ast.v0.3",
+  "compiler": {
+    "name": "aiss",
+    "version": "0.3.0"
+  },
+  "input": {
+    "source_hash": "sha256:...",
+    "strict": true
+  },
+  "paper": {},
+  "sources": [],
+  "spans": [],
+  "objects": [],
+  "relations": [],
+  "indices": {
+    "theory": [],
+    "empirical": [],
+    "coupling": []
+  }
+}
+```
+
+### 10.2 Canonical ordering
+
+Canonical JSON MUST use:
+
+1. UTF-8.
+2. LF newlines.
+3. Two-space indentation.
+4. No trailing spaces.
+5. Object keys in schema-defined order, not insertion order.
+6. Declaration arrays sorted by `id`, except fields whose names end with
+   `_sequence`, which preserve explicit source order.
+7. Diagnostics sorted by `(severity_rank, code, primary_id, message)`.
+8. Diff operations sorted by `(path, op, id)`.
+
+The compiler MUST NOT preserve arbitrary source declaration order.
+
+### 10.3 Hashes
+
+The compiler MUST compute:
+
+| Hash | Input |
+|---|---|
+| `source_hash` | Normalized `.aiss` source after UTF-8/LF normalization and comment removal. |
+| `ast_hash` | Canonical Paper AST excluding volatile tool metadata. |
+| `artifact_hash` | Canonical bytes of each referenced artifact after declared canonicalization. |
+| `writer_hash` | Canonical writer output bytes. |
+
+Timestamps MUST NOT be embedded in canonical outputs.
+
+## 11. Formal Operations
+
+### 11.1 `compile`
+
+```text
+aiss compile input.aiss --json > build/paper.ast.json
+```
+
+Inputs:
+
+```text
+.aiss source
+referenced source objects if --strict
+referenced artifacts if --strict
+compiler version
+```
+
+Output:
+
+```text
+canonical PaperAST JSON
+```
+
+Compile MUST:
+
+1. Parse source.
+2. Resolve all IDs.
+3. Validate required fields.
+4. Validate forbidden source primitives.
+5. Canonicalize all objects.
+6. Build theory, empirical, and coupling indices.
+7. Emit canonical JSON or deterministic errors.
+
+Compile MUST NOT:
+
+1. Infer missing claims.
+2. Judge support strength.
+3. Create gap objects.
+4. Call an LLM.
+5. Depend on document section names.
+
+### 11.2 `lint`
+
+```text
+aiss lint build/paper.ast.json --json > build/lint.json
+```
+
+Lint consumes Paper AST and emits deterministic diagnostics.
+
+Diagnostic JSON shape:
+
+```json
+{
+  "schema": "aiss.lint_report.v0.3",
+  "ast_hash": "sha256:...",
+  "diagnostics": [
+    {
+      "code": "AISS-REF-001",
+      "severity": "error",
+      "primary_id": "ding.coup_obs_supports_claim",
+      "message": "Coupling references a missing empirical object.",
+      "related_ids": []
     }
-  }
-}
-
-fact no_self_loop {
-  no e: edge where e.source == e.target
-}
-
-fact hasAttribute_domain {
-  all e: edge where e.relation == "hasAttribute" {
-    typeof(e.source) == concept and typeof(e.target) == attribute
-  }
-}
-
-fact causes_domain {
-  all e: edge where e.relation == "causes" {
-    typeof(e.source) == concept and typeof(e.target) == concept
-  }
-}
-
-fact id_format {
-  all id: ID where id is QUALID {
-    id matches /^[a-z][a-z0-9_]*\.[a-z][a-z0-9_]*$/
-  }
-}
-
-fact no_orphan_concepts {
-  all c: concept {
-    c in edges.source or c in edges.target or c.rule == "undecomposed"
-  }
-}
-```
-
-### 2.11 Check — 验证命令 (Alloy-inspired)
-
-```
-check theta_completeness on ding.performative_state
-check rule_consistency on ding.performative_state
-check reference_integrity on ding.performative_state
-```
-
-### 2.12 Derive — 推导命令
-
-```
-derive implications from ding.performative_state
-derive transitive_closure from ding.performative_state
-derive ibe_profile from ding.performative_state
-```
-
----
-
-## 3. Complete Example: Ding (2022)
-
-```
-// ============================================================
-// Model: The Performative State
-// Source: Ding, Iza. 2022. The Performative State.
-//         Cornell University Press.
-// ============================================================
-
-// ---- Attributes (FCA: 这是 M —— 属性集) ----
-
-attribute ding.state_capacity {
-  domain: ordinal
-  values: ["low", "high"]
-  description: "logistical and political capacity of a bureaucratic unit to deliver on governance goals"
-  source: "Ch.1, pp.25-35"
-}
-
-attribute ding.public_scrutiny {
-  domain: ordinal
-  values: ["low", "high"]
-  description: "degree to which public is attuned to an issue and exerting pressure on the state"
-  source: "Ch.1, pp.25-35"
-}
-
-// ---- Concepts (FCA: 这是形式概念) ----
-
-// 2×2 typology — composite concept
-concept ding.governance_mode {
-  parents: [ding.state_capacity, ding.public_scrutiny]
-  theta: {
-    "[\"low\",  \"low\"]"  : "inert"
-    "[\"high\", \"low\"]"  : "paternalistic"
-    "[\"low\",  \"high\"]" : "performative"
-    "[\"high\", \"high\"]" : "substantive"
-  }
-  rule: exhaustive_typology
-  description: "typology of state-bureaucratic behavior along two dimensions"
-  source: "Ch.1, pp.35-36"
-  elsst_label: "governance"
-}
-
-// Individual governance modes — derived from the typology
-// Each has a 1-row θ (definitional) because it IS a specific cell of the typology
-concept ding.performative_governance {
-  parents: [ding.state_capacity, ding.public_scrutiny]
-  theta: {
-    "[\"low\", \"high\"]": 1
-  }
-  rule: definitional
-  description: "deployment of visual, verbal, and gestural symbols of good governance"
-  source: "Introduction, p.7"
-  operationalization: "ethnographic coding: does bureaucratic action target problem substance or public perception?"
-  elsst_label: "governance"
-}
-
-concept ding.substantive_governance {
-  parents: [ding.state_capacity, ding.public_scrutiny]
-  theta: {
-    "[\"high\", \"high\"]": 1
-  }
-  rule: definitional
-  description: "governance geared towards delivering effective results"
-  source: "Ch.1, p.36"
-}
-
-concept ding.inert_governance {
-  parents: [ding.state_capacity, ding.public_scrutiny]
-  theta: {
-    "[\"low\", \"low\"]": 1
-  }
-  rule: definitional
-  description: "state neither has capacity nor faces pressure — inert"
-  source: "Ch.1, p.35"
-}
-
-concept ding.paternalistic_governance {
-  parents: [ding.state_capacity, ding.public_scrutiny]
-  theta: {
-    "[\"high\", \"low\"]": 1
-  }
-  rule: definitional
-  description: "high capacity, low scrutiny — paternalistic (predatory or developmental)"
-  source: "Ch.1, p.36"
-}
-
-// The conjunction condition: low capacity + high scrutiny
-// Ding's theory: THIS specific combination causes performative governance
-concept ding.low_capacity_high_scrutiny {
-  parents: [ding.state_capacity, ding.public_scrutiny]
-  theta: {
-    "[\"low\", \"high\"]": 1
-  }
-  rule: definitional
-  description: "the condition of being under-resourced yet under intense public pressure"
-  source: "Ch.1, pp.35-36"
-}
-
-// Audience-side concepts
-concept ding.perceived_responsiveness {
-  parents: []
-  theta: {
-    "\"none\"": 1
-  }
-  rule: undecomposed
-  description: "citizens' perception that the government is responsive to their concerns"
-  operationalization: "citizen surveys and interviews"
-}
-
-concept ding.performative_breakdown {
-  parents: []
-  theta: {
-    "\"none\"": 1
-  }
-  rule: undecomposed
-  description: "when performative governance ceases to occur or fails to work"
-  source: "Ch.5, p.135"
-}
-
-concept ding.audience_cynicism {
-  parents: []
-  theta: {
-    "\"none\"": 1
-  }
-  rule: undecomposed
-  description: "citizens learn to see through the performance"
-  source: "Ch.5"
-}
-
-// ---- Causal Relations (SCM: 因果 DAG) ----
-
-causal ding.lc_hs_to_performative {
-  source: ding.low_capacity_high_scrutiny
-  target: ding.performative_governance
-  direction: positive
-  condition: none
-  mechanism: "beleaguered bureaucracy"
-  textual_support: EXTRACTED
-}
-
-causal ding.performative_to_perception {
-  source: ding.performative_governance
-  target: ding.perceived_responsiveness
-  direction: positive
-  condition: "audience not cynical"
-  mechanism: "impression management — appearing responsive, benevolent, humble"
-  textual_support: EXTRACTED
-}
-
-causal ding.cynicism_to_breakdown {
-  source: ding.audience_cynicism
-  target: ding.performative_breakdown
-  direction: positive
-  condition: none
-  mechanism: "audience learns to see through performance → performance loses effect"
-  textual_support: INFERRED
-}
-
-// ---- Edges ----
-
-edge broader: ding.governance_mode -> ding.performative_governance {
-  confidence: EXTRACTED
-  source: "typology structure, Ch.1"
-}
-
-edge broader: ding.governance_mode -> ding.substantive_governance {
-  confidence: EXTRACTED
-  source: "typology structure, Ch.1"
-}
-
-edge broader: ding.governance_mode -> ding.inert_governance {
-  confidence: EXTRACTED
-  source: "typology structure, Ch.1"
-}
-
-edge broader: ding.governance_mode -> ding.paternalistic_governance {
-  confidence: EXTRACTED
-  source: "typology structure, Ch.1"
-}
-
-// ---- Bridges ----
-
-bridge ding.measurement_pg {
-  type: measurement
-  concept: ding.performative_governance
-  method: participant_observation
-  validity: "key observable implications: night inspections, dress/consumption behavior in public, emotional management toward citizens"
-  commensurability: strong
-}
-
-bridge ding.causal_bridge_1 {
-  type: causal
-  implication: ding.lc_hs_to_performative
-  estimand: none
-  commensurability: weak
-  note: "no quantitative causal identification; ethnographic plausibility probe"
-}
-
-// ---- Model ----
-
-model ding.performative_state {
-  attributes: [
-    ding.state_capacity
-    ding.public_scrutiny
-  ]
-  concepts: [
-    ding.governance_mode
-    ding.low_capacity_high_scrutiny
-    ding.performative_governance
-    ding.substantive_governance
-    ding.inert_governance
-    ding.paternalistic_governance
-    ding.perceived_responsiveness
-    ding.performative_breakdown
-    ding.audience_cynicism
-  ]
-  causal: [
-    ding.lc_hs_to_performative
-    ding.performative_to_perception
-    ding.cynicism_to_breakdown
-  ]
-  bridges: [
-    ding.measurement_pg
-    ding.causal_bridge_1
   ]
 }
-
-// ---- Verification ----
-
-check theta_completeness on ding.performative_state
-  // ✓ governance_mode: 4/4 rows (exhaustive_typology)
-  // ✓ performative_governance: 1 row (definitional, sparse θ valid)
-  // ✓ substantive_governance: 1 row (definitional, sparse θ valid)
-  // ✓ inert_governance: 1 row (definitional, sparse θ valid)
-  // ✓ paternalistic_governance: 1 row (definitional, sparse θ valid)
-  // ✓ undecomposed concepts: {"none": 1}
-
-check rule_consistency on ding.performative_state
-  // ✓ governance_mode: exhaustive_typology → 4 unique outcomes
-  // ✓ performative_governance: definitional → 1 row = 1
-
-check reference_integrity on ding.performative_state
-  // ✓ all edge targets resolve to nodes
-
-derive implications from ding.performative_state
-  // → 3 causal implications derived
-
-derive ibe_profile from ding.performative_state
-  // → has_explanations: true (3 causal edges)
-  // → has_facts: true (9 concepts, 2 attributes)
-  // → has_bridge: weak (1 measurement bridge strong, 1 causal bridge weak)
-  // → contribution_type: explanation_with_weak_evidence
 ```
 
----
+Lint diagnostics are derived artifacts. They are not `.aiss` source primitives.
 
-## 4. 分层语义
+Initial required diagnostic families:
 
-| Layer | 原语 | 可判定性 | 数学基础 |
-|---|---|---|---|
-| 0 | attribute, concept, θ | Decidable | FCA |
-| 1 | broader, narrower, contrastsWith, related | Decidable | Description Logic (subsumption) |
-| 2 | causal, direction, condition, mechanism | Semi-decidable | SCM (DAG-based identification) |
-| 3 | bridge, commensurability | Undecidable | 需人类判断 |
+| Family | Example |
+|---|---|
+| `AISS-SYN-*` | Syntax and parse errors. |
+| `AISS-REF-*` | Missing or invalid references. |
+| `AISS-PROV-*` | Missing source span or unresolved locator. |
+| `AISS-CONCEPT-*` | Concept term drift, duplicate definitions, undeclared variants. |
+| `AISS-CLAIM-*` | Claim conflicts, unscoped universal claims, ambiguous modality. |
+| `AISS-EMP-*` | Empirical object lacks source grounding or artifact checksum. |
+| `AISS-COUP-*` | Coupling link points to incompatible object classes or lacks source grounding. |
+| `AISS-FORMAL-*` | Determinism contract violations. |
 
-一个 model 可以只使用 Layer 0（纯描述），或 Layer 0-1（概念分类学），或 Layer 0-2（因果理论），或全部四层（完整的研究设计评估）。
+Lint MAY flag overclaim or unsupported coupling, but only through deterministic
+rules over the AST. It MUST NOT use an LLM to decide those results.
 
----
+### 11.3 `run`
 
-## 5. 与 JSON Schema 的关系
-
-外部语法 (.aiss) 是**人类可读的源文件**。JSON 是**机器可处理的编译输出**。
-
-```
-.aiss 文件 (human authoring)
-    ↓ parser
-  AST (typed, verifiable)
-    ↓ compiler
-  JSON (schema conforming, for graphify/toolchain)
+```text
+aiss run build/paper.ast.json --adapters adapters.lock --out build/run
 ```
 
-Compiler：`aiss compile model.aiss → graph.json`（待实现）。
+`run` executes deterministic adapters over the AST and declared artifacts. It
+also produces deterministic coupling assessments for declared theory-empirical
+links when an explicit adapter or rule can evaluate the link.
 
-Parser：`aiss parse model.aiss → AST + check results`（待实现）。
+Run output MUST include:
 
----
-
-## 6. 提取管道集成
-
+```json
+{
+  "schema": "aiss.run_report.v0.3",
+  "ast_hash": "sha256:...",
+  "adapter_lock_hash": "sha256:...",
+  "units": [
+    {
+      "adapter": "aiss.adapter_concept_lattice",
+      "version": "0.3.0",
+      "status": "executed",
+      "inputs": [],
+      "outputs": []
+    }
+  ],
+  "coupling_assessments": [
+    {
+      "coupling_id": "ding.coup_obs_supports_claim",
+      "status": "not_assessable",
+      "rule": null,
+      "basis": [],
+      "message": "No deterministic adapter is available for this coupling type."
+    }
+  ]
+}
 ```
-paper.txt → [extraction protocol] → evidence table → [compiler] → .aiss file
-                                                                      ↓
-                                                                 [aiss parser]
-                                                                      ↓
-                                                                   JSON
-                                                                      ↓
-                                                                 [graphify]
+
+Allowed statuses:
+
+```text
+executed
+skipped_missing_input
+skipped_no_adapter
+failed_deterministic
 ```
 
-提取协议（extraction-protocol.md）定义 agent 如何从论文填写证据表。编译器机械编译证据表 → .aiss。Parser 验证 .aiss → JSON。整个管道中，只有证据表填写依赖 LLM agent 的判断，其余步骤是确定性的。
+Allowed coupling assessment statuses:
+
+```text
+supported
+partially_supported
+not_supported
+contradicted
+not_assessable
+skipped_missing_input
+failed_deterministic
+```
+
+Coupling assessments are derived artifacts. They MUST NOT be declared in `.aiss`
+source. A support status is valid only when produced by a deterministic rule or
+adapter whose version is recorded in the run report. If no deterministic rule is
+available, the correct output is `not_assessable`.
+
+Run MUST NOT silently invent data, code, parameters, support criteria, or method
+choices.
+
+### 11.4 `emit-code`
+
+```text
+aiss emit-code build/paper.ast.json --target python --out build/code
+```
+
+`emit-code` generates deterministic code from the AST and adapter set. Generated
+code is a derived artifact.
+
+Code generation MUST:
+
+1. Include a header with AISS version, adapter versions, AST hash, and target.
+2. Use stable file names.
+3. Use stable ordering of generated functions and checks.
+4. Include no timestamps.
+5. Include no machine-specific absolute paths.
+
+If no adapter can generate runnable code for an object, the generator MUST emit
+a deterministic manifest explaining the skip. It MUST NOT ask an agent to fill
+in the missing method.
+
+### 11.5 `diff`
+
+```text
+aiss diff paper_a.ast.json paper_b.ast.json --json > build/diff.json
+```
+
+Diff compares canonical ASTs.
+
+Diff output shape:
+
+```json
+{
+  "schema": "aiss.diff_report.v0.3",
+  "left_ast_hash": "sha256:...",
+  "right_ast_hash": "sha256:...",
+  "operations": [
+    {
+      "op": "changed",
+      "path": "/objects/ding.claim_lc_hs_performative/text",
+      "left": "...",
+      "right": "..."
+    }
+  ]
+}
+```
+
+Matching rules:
+
+1. Match by stable ID first.
+2. If IDs differ and `same_as` metadata exists in both ASTs, match by `same_as`.
+3. Otherwise report add/remove; do not use fuzzy semantic matching in formal diff.
+
+Optional fuzzy or embedding-based comparison may exist as an Agent Harness tool,
+but it is not `aiss diff`.
+
+### 11.6 `write`
+
+```text
+aiss write build/paper.ast.json --template templates/reviewer_report.md \
+  > build/report.md
+```
+
+`write` is deterministic rendering from AST plus template. It is not freeform
+LLM writing.
+
+Template language MUST be deliberately small:
+
+```text
+literal text
+field interpolation
+for loops over canonical arrays
+if/else over explicit booleans or nonempty arrays
+include by relative path with checksum
+```
+
+Template language MUST NOT include:
+
+```text
+LLM calls
+network calls
+random functions
+current time/date
+filesystem glob order without sorting
+arbitrary shell execution
+```
+
+Writer output is a derived artifact. A later Agent Harness may polish it, but
+that polished draft is outside the formal deterministic `write` operation unless
+the edits are committed back into deterministic source/templates.
+
+## 12. Validation Rules
+
+### 12.1 Source-level validation
+
+The compiler MUST reject:
+
+1. Duplicate IDs.
+2. Missing required fields.
+3. References to undeclared IDs.
+4. Top-level derived-output keywords such as `gap` or `diagnostic`.
+5. Invalid UTF-8.
+6. v0.2 declarations in v0.3 mode without explicit migration mode.
+
+The compiler SHOULD warn:
+
+1. Objects without source spans.
+2. Source spans without `quote_hash`.
+3. Source objects without checksums in non-strict mode.
+4. Absolute local paths.
+5. Unknown locator schemes.
+
+### 12.2 AST-level lint rules
+
+Initial v0.3 lint rules:
+
+| Code | Severity | Rule |
+|---|---|---|
+| `AISS-REF-001` | error | Referenced ID does not exist. |
+| `AISS-PROV-001` | warning/error in strict | Object lacks source spans. |
+| `AISS-PROV-002` | warning | Span locator cannot be resolved by available locator adapter. |
+| `AISS-CONCEPT-001` | warning | Same term declared in multiple concepts without relation. |
+| `AISS-CONCEPT-002` | warning | Same concept has conflicting definitions. |
+| `AISS-CLAIM-001` | warning | Claim references a concept not otherwise grounded. |
+| `AISS-CLAIM-002` | warning | Claim partially uses structured proposition fields but omits one of `subject`, `predicate`, `object`, `polarity`. |
+| `AISS-CLAIM-003` | warning | Structured claim polarity is outside the deterministic polarity vocabulary. |
+| `AISS-CLAIM-010` | error | Two asserted structured claims share the same `(subject, predicate, object, scope)` signature with contradictory polarity. |
+| `AISS-EMP-001` | warning | Empirical object has no artifact or observation linked to it. |
+| `AISS-EMP-002` | error in strict run | Runnable artifact lacks checksum. |
+| `AISS-COUP-001` | error | Coupling theory endpoint is not a theory object. |
+| `AISS-COUP-002` | error | Coupling empirical endpoint is not an empirical object. |
+| `AISS-COUP-003` | warning | Claim has empirical concepts but no declared coupling. |
+| `AISS-FORMAL-001` | error | Canonical JSON cannot be reproduced from the same input. |
+
+Support-strength diagnostics MAY be added later, but they must be defined as
+deterministic comparisons over explicit AST fields.
+
+## 13. Migration from v0.2
+
+v0.2 constructs are not formal aliases in v0.3.
+
+| v0.2 | v0.3 migration |
+|---|---|
+| `attribute` | Usually `concept` attribute metadata or empirical descriptor; not a top-level default primitive. |
+| `concept` with `theta` | `concept` with optional `theta`, `theta_kind`, and `composition_rule`. |
+| `causal` | `claim` plus `relation` such as `mechanism_for` or `predicts`; method details go to adapters. |
+| `bridge` | `coupling` when it records author-asserted theory-empirical linkage; analyzer verdicts become lint/run outputs. |
+| `model` | `paper` plus compiler-generated Paper AST indices. |
+| `check` and `derive` | CLI operations, not source declarations. |
+
+Migration mode MAY read v0.2 files and emit v0.3 candidate source. Migration
+output MUST be treated as a generated patch requiring review before formal
+compile.
+
+## 14. Examples
+
+### 14.1 Minimal sectionless theory text
+
+This example is illustrative only. It shows that the source is grounded in
+spans, not article sections.
+
+```aiss
+aiss version "0.3"
+
+paper plato.republic {
+  title: "Republic"
+  authors: ["Plato"]
+  year: "unknown"
+  language: "grc"
+  kind: "dialogue"
+  sources: [plato.src_republic]
+}
+
+source plato.src_republic {
+  kind: "dialogue_text"
+  uri: "sources/republic.txt"
+  media_type: "text/plain"
+  checksum: "sha256:..."
+  locator_scheme: "stephanus"
+}
+
+span plato.s_331c {
+  source: plato.src_republic
+  locator: "stephanus:331c-331d"
+  kind: "dialogue_turn"
+  quote_hash: "sha256:..."
+}
+
+concept plato.concept_justice {
+  term: "justice"
+  spans: [plato.s_331c]
+}
+
+claim plato.claim_justice_definition_candidate {
+  kind: "theoretical"
+  text: "Justice is considered through a candidate definition in the dialogue."
+  concepts: [plato.concept_justice]
+  modality: "reported"
+  spans: [plato.s_331c]
+}
+```
+
+### 14.2 Theory, empirics, and coupling
+
+```aiss
+aiss version "0.3"
+
+paper example.paper {
+  title: "Example Paper"
+  authors: ["Example Author"]
+  year: "2026"
+  language: "en"
+  kind: "article"
+  sources: [example.src_text]
+}
+
+source example.src_text {
+  kind: "article_text"
+  uri: "sources/example.txt"
+  media_type: "text/plain"
+  checksum: "sha256:..."
+  locator_scheme: "char"
+}
+
+span example.s_theory {
+  source: example.src_text
+  locator: "char:100-260"
+  kind: "paragraph"
+  quote_hash: "sha256:..."
+}
+
+span example.s_empirical {
+  source: example.src_text
+  locator: "char:800-980"
+  kind: "paragraph"
+  quote_hash: "sha256:..."
+}
+
+concept example.concept_public_scrutiny {
+  term: "public scrutiny"
+  definition: "Public attention and pressure directed at state action."
+  spans: [example.s_theory]
+}
+
+claim example.claim_scrutiny_changes_behavior {
+  kind: "theoretical"
+  text: "Public scrutiny changes bureaucratic behavior."
+  concepts: [example.concept_public_scrutiny]
+  modality: "asserted"
+  spans: [example.s_theory]
+}
+
+empirical example.emp_case_material {
+  kind: "case"
+  label: "case material"
+  description: "Empirical material presented in the example paper."
+  spans: [example.s_empirical]
+}
+
+observation example.obs_visible_action {
+  kind: "case_event"
+  text: "Officials shifted toward visible public actions during scrutiny."
+  about: [example.emp_case_material]
+  concepts: [example.concept_public_scrutiny]
+  spans: [example.s_empirical]
+}
+
+coupling example.coup_case_supports_claim {
+  type: "supports"
+  theory: example.claim_scrutiny_changes_behavior
+  empirical: example.obs_visible_action
+  text: "The paper presents the case event as support for the scrutiny claim."
+  asserted_by: "paper"
+  spans: [example.s_empirical]
+}
+```
+
+## 15. Non-goals for v0.3
+
+The following are intentionally out of core scope:
+
+1. Full method ontology.
+2. Causal identification language.
+3. Statistical model specification.
+4. LLM extraction protocol.
+5. Agent Harness orchestration.
+6. Peer-review style judgment by model.
+7. Section-classification pipeline.
+
+These may be separate adapters, skills, or Harness workflows. They must not
+become assumptions in the core DSL.
+
+## 16. Implementation Checklist
+
+A v0.3 implementation is conformant only if it can:
+
+1. Parse `.aiss` v0.3 source.
+2. Reject forbidden derived-output primitives in source.
+3. Compile to canonical Paper AST JSON.
+4. Produce the same canonical JSON across machines given the same inputs.
+5. Lint with deterministic diagnostic codes.
+6. Run deterministic adapters and emit `not_assessable` rather than guessing
+   when evidence support cannot be evaluated by code.
+7. Emit deterministic code or a deterministic skip manifest.
+8. Diff two ASTs without fuzzy matching.
+9. Write deterministic reports from templates.
+10. Treat section headings as optional locator metadata.
+11. Keep method-specific execution behind deterministic adapters.
+12. Keep LLM/Agent behavior outside compile, lint, run, diff, and write.

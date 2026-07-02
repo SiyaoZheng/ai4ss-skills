@@ -1,0 +1,4 @@
+interface:
+  display_name: "Study Design Builder"
+  short_description: "Turn a research route into a concrete study design"
+  default_prompt: "Use $study-design-builder to turn this selected research route into a design brief, decision register, and downstream handoff plan."

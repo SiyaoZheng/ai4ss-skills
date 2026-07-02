@@ -1,0 +1,5 @@
+firm_id,city_id,year,platform_exposure,green_patent_count,treated_post
+F001,C001,2021,0,1,0
+F001,C001,2022,1,2,1
+F002,C002,2021,0,0,0
+F002,C002,2022,0,1,0

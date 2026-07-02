@@ -1,0 +1,4 @@
+interface:
+  display_name: "Methods Reviewer"
+  short_description: "Audit empirical designs and outputs"
+  default_prompt: "Use $methods-reviewer to audit my empirical design, scripts, and reported results before submission."

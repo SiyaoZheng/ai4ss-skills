@@ -1,0 +1,9 @@
+packet_id,case_id,artifacts,traceability,boundary,validation,author_decision,total
+P001,data_provenance,30.0,20.0,20.0,15.0,15.0,100.0
+P002,data_provenance,15.0,10.0,6.0,0.0,15.0,46.0
+P003,literature_evidence,10.0,10.0,13.0,0.0,15.0,48.0
+P004,literature_evidence,30.0,15.0,20.0,15.0,15.0,95.0
+P005,claim_discipline,30.0,15.0,20.0,15.0,15.0,95.0
+P006,claim_discipline,0.0,10.0,6.0,0.0,15.0,31.0
+P007,revision_trace,30.0,15.0,20.0,15.0,15.0,95.0
+P008,revision_trace,0.0,10.0,6.0,0.0,15.0,31.0

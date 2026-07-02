@@ -1,5 +1,7 @@
 PLAN.md
 *.DS_Store
+__pycache__/
+*.pyc
 --output
 .claude/
 cleaning-contract-skill-extracted/

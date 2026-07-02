@@ -1,0 +1,49 @@
+Adrian, **City-Year Panel Build Handoff**
+
+Target unit: `city_id x year`, 2010-2021. Raw files stay read-only. No row counts are filled until the scripts run.
+
+I would produce:
+
+- `scripts/10_ingest_sources.R`: read raw files, normalize column types, hash inputs, check required columns.
+- `scripts/20_resolve_policy_timing.R`: collapse duplicate city policy records into one verified `pilot_start_year`; write ambiguous cases to `output/audit/policy_timing_review.csv`.
+- `scripts/30_build_city_year_outcome.R`: repair patent `city_id` only when `firm_id` maps uniquely to an active firm-city record; aggregate `green_patent_count` to city-year; unresolved records go to `output/audit/patents_missing_city_review.csv`.
+- `scripts/40_merge_city_panel.R`: build the 2010-2021 city-year frame, merge policy timing, patent outcome, firm-derived fields if used, and controls.
+- `scripts/50_construct_variables.R`: create `treated_city`, `post`, `event_time`, `green_patents_city_year`, control variables, and named sample flags.
+- `scripts/60_audit_panel.R`: write audit tables and stop if key gates fail.
+
+Main output: `data/analysis/city_year_panel_2010_2021.csv`.
+
+Audit outputs:
+
+- `output/audit/sample_flow.csv`: each row-changing step, before/after counts, city counts, year range, reason, status.
+- `output/audit/merge_audit.csv`: every merge, keys, match counts, left/right-only rows, duplicate-key rows, review file.
+- `output/audit/variable_provenance.csv`: source variables and construction rule for every derived variable.
+- `output/audit/duplicate_keys.csv`: duplicate `city_id`, `firm_id-year`, and `city_id-year` diagnostics.
+- `output/audit/missingness_core_variables.csv`: missingness for outcome, timing, controls, and sample flags.
+- `output/logs/build_city_year_panel.log`: command, timestamp, package versions, input hashes, success/failure.
+
+Key construction rules:
+
+- Policy timing: `treated_city = 1` only when a city has a verified nonmissing `pilot_start_year`. If a city has multiple announcement dates, default to “needs review” unless the dates clearly duplicate the same announcement. Do not silently choose earliest date.
+- Post: `post = 1` when `treated_city == 1` and `year >= pilot_start_year`; otherwise `0` for never-treated cities.
+- Outcome: aggregate `green_patent_count` from firm-year to city-year after resolving firm city assignment. Missing patent city IDs are repaired only from unambiguous firm records.
+- Controls: seven cities missing 2012 controls are retained in review output and flagged in the panel; they are not dropped inside a merge.
+- Sample flags: keep `in_year_window`, `has_verified_city_id`, `has_verified_policy_timing`, `has_outcome_rule_ready`, `has_controls`, `analysis_sample_main`.
+
+Stop conditions:
+
+- `city_id x year` is not unique after any merge.
+- Policy duplicates leave treated cities with unresolved timing.
+- Patent rows with missing `city_id` cannot be repaired but materially affect city-year outcomes.
+- A many-to-many merge expands rows unexpectedly.
+- Controls are missing for treated cities in key pre/post years without an explicit handling decision.
+
+Author decisions needed before final analysis sample:
+
+1. Should the city universe be all cities appearing in firms, controls, policy list, or only their intersection?
+2. For multiple policy announcements, is treatment based on first announcement, implementation, or official pilot approval?
+3. Does `patents.csv` contain complete firm-year zeroes, or only observed patenting firm-years?
+4. Is `exit_year` inclusive for active-firm assignment?
+5. Should missing 2012 controls be imputed, flagged and retained, or excluded from the main sample?
+
+General reproducibility grounding checked: [The Turing Way reproducible research guide](https://book.the-turing-way.org/reproducible-research/reproducible-research/) and [Data Management: The First Step in Reproducible Research](https://pmc.ncbi.nlm.nih.gov/articles/PMC10880825/).

@@ -1,0 +1,4 @@
+interface:
+  display_name: "Literature Matrix"
+  short_description: "Search and structure evidence with citations"
+  default_prompt: "Use $literature-matrix to build a source-grounded literature matrix for my research question."

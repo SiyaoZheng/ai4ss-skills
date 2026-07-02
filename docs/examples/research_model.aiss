@@ -1,0 +1,83 @@
+// Minimal AI4SS research model fixture for local skillpack validation.
+// The syntax is parsed by the current ai4ss-skills DSL implementation.
+
+attribute demo.platform_exposure {
+  domain: binary
+  values: ["absent", "present"]
+  description: "whether a unit is exposed to a digital-government platform"
+  source: "teaching fixture"
+}
+
+attribute demo.innovation_output {
+  domain: ordinal
+  values: ["low", "high"]
+  description: "observed innovation output category"
+  source: "teaching fixture"
+}
+
+concept demo.exposed_unit {
+  parents: [demo.platform_exposure]
+  theta: {
+    "[\"present\"]": 1
+  }
+  rule: definitional
+  description: "unit exposed to the platform"
+  source: "study design declaration"
+}
+
+concept demo.high_innovation {
+  parents: [demo.innovation_output]
+  theta: {
+    "[\"high\"]": 1
+  }
+  rule: definitional
+  description: "unit with high innovation output"
+  source: "study design declaration"
+}
+
+causal demo.exposure_to_innovation {
+  source: demo.exposed_unit
+  target: demo.high_innovation
+  direction: positive
+  condition: none
+  mechanism: "administrative-friction reduction"
+  textual_support: INFERRED
+}
+
+bridge demo.measurement_exposure {
+  type: measurement
+  concept: demo.exposed_unit
+  method: "administrative rollout record"
+  validity: "requires source-verified rollout dates and unit linkage"
+  commensurability: weak
+}
+
+bridge demo.causal_bridge_exposure {
+  type: causal
+  implication: demo.exposure_to_innovation
+  estimand: "average effect of platform exposure on high innovation within linked units and declared time window"
+  commensurability: weak
+  note: "teaching fixture; not a final identification claim"
+}
+
+model demo.platform_innovation {
+  attributes: [
+    demo.platform_exposure
+    demo.innovation_output
+  ]
+  concepts: [
+    demo.exposed_unit
+    demo.high_innovation
+  ]
+  causal: [
+    demo.exposure_to_innovation
+  ]
+  bridges: [
+    demo.measurement_exposure
+    demo.causal_bridge_exposure
+  ]
+}
+
+check theta_completeness on demo.platform_innovation
+check reference_integrity on demo.platform_innovation
+derive ibe_profile from demo.platform_innovation

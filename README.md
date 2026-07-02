@@ -24,6 +24,7 @@ Install once. Works automatically. Survives context resets.
 
 | Date | Update |
 |------|--------|
+| 2026-07 | AI4SS research-factory skillpack migrated into `.codex/skills`: 9 Codex/project skills around the unified `.aiss` DSL workflow |
 | 2026-06 | `sjtu-hpc` released — sanitized SJTU HPC/Slurm workflow guide with job templates and transfer references |
 | 2026-05 | `cleaning-contract` and `cleaning-execute` released — full DDI 3-stage cleaning harness (declare → execute → audit) |
 | 2026-05 | `cleaning-contract` eval results: **100%** with-skill vs **53%** without-skill on 3 real PI datasets |
@@ -84,6 +85,40 @@ Think of them as tiny domain experts you install once and call automatically.
 | ⚡ [`r-performance`](#-r-performance) | Profile and optimize slow R code for HPC clusters | *"this R code is too slow"* |
 | 🖥️ [`sjtu-hpc`](#-sjtu-hpc) | Run SJTU HPC/交我算 Slurm jobs with safer login, queue, storage, and transfer practices | *"run this on SJTU HPC"* |
 | 🤖 [`codex`](#-codex) | Delegate tasks to OpenAI Codex CLI for a second opinion | `codex review this file` |
+
+### AI4SS research-factory skills
+
+The repo now also contains a Codex/project skillpack under `.codex/skills`
+with `.agents/skills` symlinked to the same source. These skills are not
+manuscript-writing shortcuts. They form an autonomous research-factory workflow
+around the `.aiss` DSL and the MIDA spine:
+
+```text
+rough topic -> route cards -> MIDA declaration -> .aiss model/check ->
+literature/data gates -> analysis readiness -> analysis manifest ->
+bounded claim handoff
+```
+
+| Skill | Role |
+|-------|------|
+| `research-starter` | Turn a rough topic, source pile, dataset folder, or policy phenomenon into route cards and a minimum viable study |
+| `study-design-builder` | Declare MIDA and, when needed, create or update `research_model.aiss` plus checker output |
+| `research-data-builder` | Build auditable analysis samples, sample-flow tables, merge audits, and variable provenance |
+| `literature-matrix` | Build source-grounded literature matrices and deterministic literature evidence `.aiss` fragments |
+| `research-analysis-runner` | Run first-pass analysis only after `analysis_readiness_check.csv` passes or explicitly warns |
+| `methods-reviewer` | Diagnose methods, model/data/answer alignment, robustness, and claim-support gaps |
+| `academic-writing-scaffold` | Build claim ledgers and section scaffolds without writing final manuscript prose |
+| `research-slides-builder` | Convert verified research artifacts into slide maps and source maps |
+| `reviewer-response` | Turn reviewer comments into revision matrices and author-fillable response scaffolds |
+
+Validate the factory skillpack from the repo root:
+
+```bash
+python3 scripts/validate_skillpack_workflow.py
+python3 scripts/validate_methodology_foundations.py docs/methodology_source_matrix.csv
+python3 scripts/validate_ai4ss_model.py docs/examples/research_model.aiss
+python3 scripts/run_factory_level_eval.py --clean
+```
 
 ---
 

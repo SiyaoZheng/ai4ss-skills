@@ -1,0 +1,76 @@
+aiss version "0.3"
+
+paper example.paper {
+  title: "Example Paper"
+  authors: ["Example Author"]
+  year: "2026"
+  language: "en"
+  kind: "article"
+  sources: [example.src_text]
+}
+
+source example.src_text {
+  kind: "article_text"
+  uri: "sources/example.txt"
+  media_type: "text/plain"
+  checksum: "sha256:2222222222222222222222222222222222222222222222222222222222222222"
+  locator_scheme: "char"
+}
+
+span example.s_theory {
+  source: example.src_text
+  locator: "char:100-260"
+  kind: "paragraph"
+  quote_hash: "sha256:3333333333333333333333333333333333333333333333333333333333333333"
+}
+
+span example.s_empirical {
+  source: example.src_text
+  locator: "char:800-980"
+  kind: "paragraph"
+  quote_hash: "sha256:4444444444444444444444444444444444444444444444444444444444444444"
+}
+
+concept example.concept_public_scrutiny {
+  term: "public scrutiny"
+  definition: "Public attention and pressure directed at state action."
+  spans: [example.s_theory]
+}
+
+concept example.concept_visible_action {
+  term: "visible public action"
+  definition: "Action performed for public visibility."
+  spans: [example.s_empirical]
+}
+
+claim example.claim_scrutiny_changes_behavior {
+  kind: "theoretical"
+  text: "Public scrutiny redirects bureaucratic behavior toward visible action."
+  concepts: [example.concept_public_scrutiny, example.concept_visible_action]
+  modality: "asserted"
+  spans: [example.s_theory]
+}
+
+empirical example.emp_case_material {
+  kind: "case"
+  label: "case material"
+  description: "Empirical material presented in the example paper."
+  spans: [example.s_empirical]
+}
+
+observation example.obs_visible_action {
+  kind: "case_event"
+  text: "Officials shifted toward visible public actions during scrutiny."
+  about: [example.emp_case_material]
+  concepts: [example.concept_public_scrutiny, example.concept_visible_action]
+  spans: [example.s_empirical]
+}
+
+coupling example.coup_case_supports_claim {
+  type: "supports"
+  theory: example.claim_scrutiny_changes_behavior
+  empirical: example.obs_visible_action
+  text: "The paper presents the case event as support for the scrutiny claim."
+  asserted_by: "paper"
+  spans: [example.s_empirical]
+}

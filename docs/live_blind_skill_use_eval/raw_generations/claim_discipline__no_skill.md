@@ -1,0 +1,52 @@
+Adrian，以下是给研究者的结果段落准备材料。
+
+**Claim Discipline Memo**
+
+当前证据支持一个较窄的主结果：在双向固定效应 DID 设定下，试点城市在政策后绿色专利产出显著增加。首选表中 `pilot_city × post` 系数为 0.085，SE = 0.031，p < 0.01，包含城市和年份固定效应，并按城市聚类，样本为 2,840 个城市-年份。若因变量为 `ln_green_patents`，可将结果解释为约 8.5% 的相对增加，但应说明这是基于对数近似。
+
+当前草稿说法过强。尤其是「major surge」「through increased R&D subsidies」「proves digital government upgrades local innovation capacity」三处超出证据。
+
+**Claim Check Table**
+
+| draft claim element | evidence status | issue | recommended treatment |
+|---|---|---|---|
+| pilot causes green innovation increase | partially supported | DID estimate显著，但识别仍依赖平行趋势等假设 | 可以作为主结果，但需绑定模型设定和识别条件 |
+| major surge | weak | 0.085 是有意义的正向效应，但「major」需要基准均值、分布或政策尺度支持 | 删除或改为中性强度描述 |
+| through increased R&D subsidies | not causally supported | 机制表只是正相关，不能证明中介机制 | 放入机制相关性小节，标为 suggestive evidence |
+| proves digital government upgrades local innovation capacity | unsupported | 「proves」和「capacity」都是更高层级结论，当前证据只观察绿色专利 | 改为限定在绿色创新产出指标，不上升到整体能力证明 |
+| event-study supports timing | mixed but usable | 多数 leads 接近 0，但 `lead_1 = 0.040`, p = 0.08，提示政策前一年已有弱差异 | 需要在文中透明报告，并避免声称平行趋势完全无忧 |
+| robustness/placebo | missing | 没有 placebo test | 结果 section 中不要写「robustly」或「rule out」类表述 |
+
+**Result Section Outline**
+
+1. **Main DID result**
+   - 先报告模型、样本、固定效应、聚类层级。
+   - 报告核心系数：0.085，SE = 0.031，p < 0.01，N = 2,840。
+   - 解释为绿色专利对数指标上的正向变化。
+   - 避免把统计显著性写成政策机制已经确定。
+
+2. **Dynamic pattern / pre-trend evidence**
+   - 说明事件研究以 `t=-1` 为 omitted period。
+   - 报告多数 leads 接近 0。
+   - 单独交代 `lead_1 = 0.040`, p = 0.08，表示政策前一年存在边际显著的正向差异，需要谨慎。
+   - 如果图中政策后系数逐步上升，可描述为时间路径与政策效应一致，但不能说它完全证明平行趋势。
+
+3. **Mechanism evidence**
+   - 将 R&D subsidy receipt 作为机制线索，而非因果机制证明。
+   - 明确其性质是 pilot 与补贴获得之间的正相关。
+   - 不要写「through increased R&D subsidies」作为确定机制。
+   - 若要加强机制，需要中介识别、时序检验、排除共同冲击，或更直接的政策分配证据。
+
+4. **Limitations within result section**
+   - 没有 placebo test。
+   - 事件研究中有一个政策前 lead 边际显著。
+   - 机制结果不是因果识别。
+   - 绿色专利是创新产出的一个指标，不等同于整体地方创新能力。
+
+**Author Decision Questions**
+
+1. 是否有基准均值或分布信息，可以判断 0.085 的实质大小？如果没有，避免使用「major」。
+2. `lead_1` 的边际显著是否来自政策提前预期、样本构成、或其他先行政策？是否能做窗口调整或分组检查？
+3. 是否可以补做 placebo test，例如假政策年份、非试点城市随机分配、或无关结果变量？
+4. 机制表是否有时间顺序设计？补贴是否发生在绿色专利增长之前？
+5. 研究问题是否真的要论证「digital government upgrades innovation capacity」，还是更稳妥地聚焦「试点与绿色专利产出增加相关，并在 DID 设定下具有因果解释条件」？

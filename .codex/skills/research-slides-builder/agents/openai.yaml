@@ -1,0 +1,4 @@
+interface:
+  display_name: "Research Slides Builder"
+  short_description: "Convert results into research presentations"
+  default_prompt: "Use $research-slides-builder to turn verified research results into slides with traceable evidence."
