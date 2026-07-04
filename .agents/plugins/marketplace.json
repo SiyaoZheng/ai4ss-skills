@@ -1,0 +1,20 @@
+{
+  "name": "ai4ss-skills-local",
+  "interface": {
+    "displayName": "AI4SS Local Plugins"
+  },
+  "plugins": [
+    {
+      "name": "ai4ss-skills",
+      "source": {
+        "source": "local",
+        "path": "./"
+      },
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL"
+      },
+      "category": "Productivity"
+    }
+  ]
+}

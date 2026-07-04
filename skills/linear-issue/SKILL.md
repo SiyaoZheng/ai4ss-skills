@@ -1,6 +1,7 @@
 ---
 name: linear-issue
-description: USE PROACTIVELY — any time the user wants to log, track, file, or plan work, create a Linear issue. Trigger on ANY mention of creating/managing tasks, bugs, issues, pipelines, analyses, papers, infrastructure work, or follow-ups. Even if the user doesn't say "Linear" or "issue", if they describe work that should be tracked, create it. Trigger phrases: "file a bug", "create a task", "log this", "track this", "make an issue", "what's the status of", "find issues", "update the issue", "comment on TA-", "link this to", "I need to", "we should", "let's do".
+description: >
+  USE PROACTIVELY — any time the user wants to log, track, file, or plan work, create a Linear issue. Trigger on ANY mention of creating/managing tasks, bugs, issues, pipelines, analyses, papers, infrastructure work, or follow-ups. Even if the user doesn't say "Linear" or "issue", if they describe work that should be tracked, create it. Trigger phrases: "file a bug", "create a task", "log this", "track this", "make an issue", "what's the status of", "find issues", "update the issue", "comment on TA-", "link this to", "I need to", "we should", "let's do".
 ---
 
 # Linear is SSOT — Never Touch GitHub Issues

@@ -6,6 +6,8 @@ PLAN.md
 !.codex/skills
 .agents/*
 !.agents/skills
+!.agents/plugins/
+!.agents/plugins/marketplace.json
 
 # Editor and OS noise
 .DS_Store

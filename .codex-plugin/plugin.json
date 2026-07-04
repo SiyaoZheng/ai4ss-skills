@@ -1,0 +1,38 @@
+{
+  "name": "ai4ss-skills",
+  "version": "0.1.0",
+  "description": "Research infrastructure for agent-assisted social science: reusable skills, .aiss research objects, validation gates, and bounded handoff workflows.",
+  "author": {
+    "name": "Siyao Zheng",
+    "url": "https://github.com/SiyaoZheng"
+  },
+  "homepage": "https://github.com/SiyaoZheng/ai4ss-skills",
+  "repository": "https://github.com/SiyaoZheng/ai4ss-skills",
+  "license": "GPL-3.0",
+  "keywords": [
+    "social-science",
+    "research",
+    "methodology",
+    "skills",
+    "aiss"
+  ],
+  "skills": "./skills/",
+  "interface": {
+    "displayName": "AI4SS Skills",
+    "shortDescription": "Agent-assisted social-science research workflows.",
+    "longDescription": "Bundle AI4SS skills for inspectable social-science work: research routing, MIDA study design, literature and data gates, analysis readiness, methods review, writing scaffolds, slides, reviewer-response matrices, and specialist support.",
+    "developerName": "Siyao Zheng",
+    "category": "Productivity",
+    "capabilities": [
+      "Read",
+      "Write"
+    ],
+    "websiteURL": "https://github.com/SiyaoZheng/ai4ss-skills",
+    "defaultPrompt": [
+      "Use AI4SS Skills to turn this rough research topic into candidate routes and the next executable action.",
+      "Use AI4SS Skills to check whether this analysis is ready to run and produce an analysis manifest.",
+      "Use AI4SS Skills to audit this social-science design with bounded claims."
+    ],
+    "brandColor": "#2457A7"
+  }
+}

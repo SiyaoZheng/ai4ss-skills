@@ -1,0 +1,15 @@
+{
+  "name": "ai4ss-skills-local",
+  "description": "Local marketplace for AI4SS social-science research workflow plugins.",
+  "owner": {
+    "name": "Siyao Zheng",
+    "url": "https://github.com/SiyaoZheng"
+  },
+  "plugins": [
+    {
+      "name": "ai4ss-skills",
+      "description": "Research infrastructure for agent-assisted social science with reusable skills, .aiss research objects, validation gates, and bounded handoff workflows.",
+      "source": "./"
+    }
+  ]
+}
