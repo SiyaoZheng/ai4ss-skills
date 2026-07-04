@@ -98,6 +98,8 @@ Step 4: Stop deliberately
 
 - Run `scripts/validate_research_routes.py <path>` to check the route-card sidecar when one is produced.
 - Run `python3 dsl/scripts/aiss.py compile <path-to-research_model.aiss>` and `python3 dsl/scripts/aiss.py lint <path-to-research_model.aiss>` when a route-only `.aiss` artifact is produced.
+- Treat validator failures as starter artifacts, not terminal noise: record the failed command, the exact schema or import error, the fix, and the rerun result before handing off.
+- If an installed validator cannot import `ai4ss_factory_contracts`, set `AI4SS_SKILLS_ROOT` to the `ai4ss-skills` source checkout and rerun; do not ignore the validation gate.
 
 ## Quality Bar
 

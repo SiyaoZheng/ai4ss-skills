@@ -22,6 +22,14 @@ This skill answers: "数据怎么来的，样本怎么变的？" Its value is no
 
 Never overwrite raw data. Read project instructions first, write scripts and derived data to explicit output paths, and make every sample-size change explainable.
 
+## Runtime Failure Guardrails
+
+- Discover files with `Path.exists()`, `Path.glob()`, `rg --files`, or quoted shell patterns before reading them. Run `scripts/check_runtime_contract.py` for path/glob checks; do not let unquoted zsh globs decide whether data exists.
+- Run dependency preflights before long data work: import required Python modules and load required R packages in the same interpreter that will run the pipeline.
+- Inspect schemas before selecting or renaming columns. If a requested variable is absent, write the missing-column result into the audit artifact and stop or repair the data step.
+- Run project scripts from the project root or set their source path explicitly so local imports such as `config` resolve correctly.
+- Every nonzero command exit is a pipeline finding. Record command, error, root cause, fix, and rerun status before saying the data are ready.
+
 ## Methodology Foundation
 
 This skill realizes the `Data strategy` part of the MIDA spine. It makes sampling, source selection, measurement, extraction, linkage, transformation, missingness, and provenance inspectable before any answer strategy or claim depends on the data.
@@ -59,6 +67,7 @@ Step 0: Classify the task
 Step 1: Plan before edits
 -> List files to read, files to modify, expected outputs, and validation checks.
 -> Do not touch raw files, credentials, or confidential folders.
+-> Run `scripts/check_runtime_contract.py --cwd <project> --path <input-or-quoted-glob> --data <input-data> --required-columns <cols> --key-columns <keys> --python-import <module> --r-package <pkg>` for the checks that match the pipeline step.
 
 Step 2: Build in stages
 -> Preserve raw -> interim -> analysis separation.
@@ -68,6 +77,7 @@ Step 2: Build in stages
 Step 3: Validate
 -> Report row counts, unique IDs, year ranges, duplicates, missingness, merge rates, and constructed-variable rules.
 -> Save audit artifacts, not only chat summaries.
+-> Re-run the exact data-building command from a clean shell after code changes; do not validate stale derived files.
 -> Update an AI-use ledger when AI-assisted extraction or transformation affects a manuscript, shared dataset, or teaching artifact.
 ```
 
@@ -78,6 +88,7 @@ For a full pipeline, produce or update:
 - A runnable script such as `scripts/10_build_panel.R` or `scripts/merge_panel.py`.
 - A derived data file under `data/interim/` or `data/analysis/`.
 - `output/logs/<step>.log` with command, timestamp, package versions when relevant, and success or failure.
+- A failure log entry for every nonzero run that affected the current data state.
 - `output/audit/sample_flow.csv` or `.md`.
 - `output/audit/merge_audit.csv` when any merge or match occurs.
 - `docs/changelog.md` entry when files change.
@@ -85,6 +96,7 @@ For a full pipeline, produce or update:
 
 ## Script Utilities
 
+- Run `scripts/check_runtime_contract.py --cwd <project> ...` to check files/globs, Python imports, R packages, data schema, duplicate CSV keys, expected outputs, and output freshness. Quote shell globs.
 - Run `scripts/validate_data_audits.py sample_flow <path>` to check sample-flow columns.
 - Run `scripts/validate_data_audits.py merge_audit <path>` to check merge-audit columns.
 - Run `scripts/validate_data_audits.py variable_provenance <path>` to check provenance columns.

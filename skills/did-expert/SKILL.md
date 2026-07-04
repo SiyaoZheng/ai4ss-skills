@@ -13,6 +13,12 @@ description: >
 
 Guide for applying Difference-in-Differences methods in applied research, grounded in Baker, Callaway, Cunningham, Goodman-Bacon & Sant'Anna (2025, JEL) and the Callaway & Sant'Anna (2021) R `did` package.
 
+## Implementation Gate
+
+Before diagnosing DID results, make the analysis script rerunnable from a clean process. Use `Rscript --vanilla`, load every required package explicitly, create output directories in code, and define every plot/table object before use. Errors such as `object '<plot>' not found`, missing package functions, or stale figure files are implementation blockers, not DID diagnostics.
+
+After editing DID plotting or estimation code, rerun the full script and assert that every declared diagnostic table and figure exists. If the script fails, fix that failure before interpreting pre-trends, placebo tests, or estimator differences.
+
 ## Core Principle: 2x2 Building Blocks
 
 All DID designs are aggregations of 2x2 comparisons. Each building block has:

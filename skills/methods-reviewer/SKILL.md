@@ -22,6 +22,13 @@ This skill answers: "结果解释有没有说过头？" Its value is not replaci
 
 Review first, edit second. User permission may authorize focused code, table, or figure fixes after the review, but manuscript claims must remain claim-ledger rows, risk labels, and author revision targets. Do not provide replacement manuscript wording.
 
+## Failure Audit First
+
+- Inspect recent nonzero command exits, runtime errors, missing files, missing columns, stale outputs, and validation failures before substantive methods judgments.
+- Treat a failed script that still leaves old tables or figures on disk as a blocker: the audit must distinguish current successful outputs from stale artifacts.
+- Issue tables should include runtime failures when they affect reproducibility, sample construction, model specification, or output trustworthiness.
+- Do not review a coefficient, figure, or table as evidence unless its generating command has a successful rerun or an explicit stale-output warning.
+
 ## Methodology Foundation
 
 This skill is the `Diagnose` and `Redesign` layer of the MIDA spine. It checks whether declared `Model`, `Inquiry`, `Data strategy`, `Answer strategy`, executed outputs, and public claims still refer to the same research design.
@@ -97,6 +104,7 @@ If a Markdown issue table is shown to the user, keep a CSV sidecar with these ex
 
 ## Script Utilities
 
+- When output freshness, missing dependencies, missing columns, or duplicate keys are in scope, run `research-analysis-runner/scripts/check_runtime_contract.py --cwd <project> ...` or inspect its JSON report before reviewing result claims.
 - Run `scripts/validate_issue_table.py <path>` to check the issue-table schema and severity labels.
 - Run `scripts/validate_ai4ss_model.py <path-to-research_model.aiss>` when a model-linked issue is in scope.
 

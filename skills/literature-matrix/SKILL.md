@@ -21,6 +21,13 @@ This skill answers: "文献证据是不是一手来源？" Its value is not summ
 
 Do not invent citations, DOI, publication status, consensus claims, or findings. If a source cannot be verified, mark it as unverified and keep it out of the main evidence table.
 
+## Runtime and Validation Guardrails
+
+- Use safe file discovery (`Path.glob`, `rg --files`, or quoted patterns) when inventorying matrices, theory sidecars, PDFs, and reports; unquoted brace globs in zsh are a known failure mode.
+- Run the relevant matrix, discovery, theory-synthesis, or evidence-compile validator before finalizing a handoff or webpage.
+- If a validator fails, do not summarize the matrix as complete. Fix the source IDs, required fields, verification labels, or import path and rerun.
+- When running an installed validator outside this repo, set `AI4SS_SKILLS_ROOT` to the `ai4ss-skills` source checkout if factory-contract imports are unavailable.
+
 ## Search Quality Rule
 
 Do not stop at schema design when the user needs a literature base. Unless the user already supplies a closed PDF/Zotero set, produce a candidate discovery ledger first: search strata, exact queries, seed sources, backward/forward chasing targets, source-status labels, and next verification actions. A literature matrix without a candidate ledger is incomplete for open-ended search tasks.
