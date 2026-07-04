@@ -67,6 +67,13 @@ DIMENSION_TERMS = {
     ],
     "evidence_data_chain": [
         "literature_matrix.csv",
+        "literature_theory_synthesis.csv",
+        "theory_rival_map.csv",
+        "theory_scope_map.csv",
+        "theory_evidence.md",
+        "validate_theory_workbench.py",
+        "compile_evidence.py",
+        "proposed_aiss_object",
         "compiled_ai4ss_path",
         "sample_flow.csv",
         "merge_audit.csv",
@@ -89,6 +96,8 @@ DIMENSION_TERMS = {
         "Author should decide",
         "Claim boundary",
         "no manuscript prose",
+        "no theory-section prose",
+        "theory_workbench.md",
         "bounded claim",
     ],
     "end_to_end_continuity": [
@@ -150,6 +159,24 @@ CASES = [
             "manifest, and bounded claim handoff inspectable before any manuscript "
             "prose is written."
         ),
+    ),
+    FactoryCase(
+        case_id="platform_theory_mapping",
+        rough_topic=(
+            "What theoretical mechanism could connect digital-government platform "
+            "exposure to firm green innovation, and what rival explanations should "
+            "remain visible?"
+        ),
+        available_materials=(
+            "a verified literature matrix row, seed design declaration, and notes "
+            "about administrative-friction and baseline city-capacity explanations"
+        ),
+        task=(
+            "Turn verified literature evidence into a theory-mapping handoff. The "
+            "chain should preserve source paper ids, proposed .aiss objects, rival "
+            "or boundary conditions, observable implications, and author-owned "
+            "decisions without writing theory-section prose."
+        ),
     )
 ]
 
@@ -203,7 +230,8 @@ def factory_output() -> FactoryOutput:
         summary=(
             "The agent produces a linked research-state chain rather than a final "
             "answer. It starts with .aiss route declarations and a minimum viable "
-            "study, declares MIDA as .aiss rows, saves a checked .aiss model, compiles literature evidence when "
+            "study, declares MIDA as .aiss rows, saves a checked .aiss model, "
+            "validates theory workbench sidecars and compiles literature or theory evidence when "
             "it affects the model, routes survey/data cleaning through upstream "
             "ai4ss-skills where relevant, runs an analysis-readiness gate, records "
             "first-pass outputs in a manifest, and hands bounded claims to review."
@@ -217,14 +245,19 @@ def factory_output() -> FactoryOutput:
             "ai4ss_check_report.txt",
             "literature_candidate_discovery.csv",
             "literature_matrix.csv with evidence_table_path, compiled_ai4ss_path, evidence_compile_status, model_id, concept_id, causal_id, bridge_id",
+            "literature_theory_synthesis.csv with synthesis_type, source_paper_ids, proposed_aiss_object, evidence_strength, rival_or_boundary, observable_implication, author_decision_needed",
+            "theory_rival_map.csv with rival_id, target_synthesis_id, discriminating_observation, evidence_needed, status, next_skill_route",
+            "theory_scope_map.csv with scope_id, who_where_when, boundary_failure_mode, observable_implication, author_decision_needed, status",
+            "theory_evidence.md compiled through compile_evidence.py into .aiss concept, causal, bridge, model, and decision declarations",
             "sample_flow.csv",
             "merge_audit.csv",
             "variable_provenance.csv",
             "DDI metadata and cleaning audit paths when codebook-parse, cleaning-contract, and cleaning-execute apply",
             "analysis_readiness_check.csv",
             "analysis_run_manifest.csv with first-pass table, diagnostic output, readiness_status, interpretation_boundary",
-            "methods issue_table.csv",
+            "methods issue_table.csv with rival, scope, mechanism weakness, and overclaim rows",
             "claim_ledger.csv",
+            "theory_workbench.md author review scaffold",
             "AI-use ledger entry",
         ],
         gate_statuses=[
@@ -233,10 +266,13 @@ def factory_output() -> FactoryOutput:
             "G3 pass: research_model.aiss checked through aiss.py compile/lint/run",
             "G4 pass: bridge_id=demo.causal_bridge_exposure records empirical bridge and weak commensurability",
             "G5 pass: literature evidence uses compiled_ai4ss_path and validate_literature_evidence_compile.py",
-            "G6 pass: data contract includes sample_flow.csv, merge_audit.csv, variable_provenance.csv, and upstream cleaning-route placeholders",
-            "G7 pass: analysis_readiness_check.csv reports readiness_status before execution",
-            "G8 pass: analysis_run_manifest.csv links outputs back to model_id=demo.platform_innovation and bridge_id=demo.causal_bridge_exposure",
-            "G9 pass: bounded claim and no manuscript prose until methods review",
+            "G6 pass: validate_theory_workbench.py checks literature_theory_synthesis.csv, theory_rival_map.csv, theory_scope_map.csv, and theory_evidence.md before model handoff",
+            "G7 pass: theory_evidence.md reuses compile_evidence.py and only ready_for_aiss objects can become .aiss concept, causal, bridge, or model declarations",
+            "G8 pass: rival and scope weaknesses route to methods issue_table.csv or author decision rather than final theory-section prose",
+            "G9 pass: data contract includes sample_flow.csv, merge_audit.csv, variable_provenance.csv, and upstream cleaning-route placeholders",
+            "G10 pass: analysis_readiness_check.csv reports readiness_status before execution",
+            "G11 pass: analysis_run_manifest.csv links outputs back to model_id=demo.platform_innovation and bridge_id=demo.causal_bridge_exposure",
+            "G12 pass: bounded claim and no manuscript prose until methods review",
         ],
         trace_markers=[
             "route_id=R1",
@@ -249,12 +285,19 @@ def factory_output() -> FactoryOutput:
             "concept_id=demo.exposed_unit; demo.high_innovation",
             "causal_id=demo.exposure_to_innovation",
             "bridge_id=demo.causal_bridge_exposure",
+            "synthesis_id=TS2 links literature_theory_synthesis.csv -> causal:demo.exposure_to_innovation",
+            "rival_id=RV1 in theory_rival_map.csv routes baseline city capacity to methods-reviewer",
+            "scope_id=SC1 in theory_scope_map.csv routes audited rollout scope to ask_author",
+            "literature_theory_synthesis.csv -> theory_evidence.md -> compile_evidence.py -> concept:demo.exposed_unit; causal:demo.exposure_to_innovation; bridge:demo.causal_bridge_exposure",
             "next_skill_route moves from study-design-builder to research-data-builder, research-analysis-runner, and methods-reviewer",
         ],
         validator_refs=[
             "python3 scripts/validate_ai4ss_model.py docs/examples/research_model.aiss",
             "validate_ai4ss_model.py uses unified aiss.py compile/lint/run semantics",
             "python3 scripts/validate_literature_evidence_compile.py skills/literature-matrix/examples/valid_literature_matrix.csv",
+            "python3 skills/literature-matrix/scripts/validate_literature_theory_synthesis.py skills/literature-matrix/examples/valid_literature_theory_synthesis.csv",
+            "python3 scripts/validate_theory_workbench.py docs/examples/theory_workbench/valid",
+            "python3 dsl/scripts/compile_evidence.py docs/examples/theory_workbench/valid/theory_evidence.md > docs/examples/theory_workbench_output.aiss",
             "python3 scripts/validate_analysis_readiness.py skills/research-analysis-runner/examples/valid_analysis_readiness_check.csv",
             "python3 skills/research-analysis-runner/scripts/validate_analysis_manifest.py skills/research-analysis-runner/examples/valid_analysis_run_manifest.csv",
             "python3 skills/literature-matrix/scripts/validate_literature_matrix.py skills/literature-matrix/examples/valid_literature_matrix.csv",
@@ -264,7 +307,8 @@ def factory_output() -> FactoryOutput:
             "author decision: whether the target comparison is substantively credible",
             "author decision: acceptable missing-link threshold before firm-year analysis",
             "author decision: whether to abandon causal language if bridge/readiness stays weak",
-            "no manuscript prose; only bounded claim entries for author review",
+            "author decision: whether mechanism strength and theoretical contribution are only framing hypotheses or author-approved claims",
+            "no manuscript prose; no theory-section prose; only bounded claim entries and theory_workbench.md slots for author review",
         ],
         risky_moves=[],
     )
@@ -455,11 +499,15 @@ guess the production condition. No condition labels are provided.
 - Award `.aiss` points when model paths, IDs, checker/bridge diagnostics, and
   stable concept or causal references are present.
 - Award evidence/data points when literature, source, sample-flow, merge, and
-  variable-provenance artifacts are tied to the same route and model.
+  variable-provenance artifacts are tied to the same route and model. For theory
+  mapping, also look for validated `literature_theory_synthesis.csv`,
+  `theory_rival_map.csv`, `theory_scope_map.csv`, `theory_evidence.md`, and
+  `compile_evidence.py` reuse.
 - Award analysis-loop points only when readiness is checked before execution and
   first-pass outputs link back to the declared design.
-- Award boundary points when the packet avoids manuscript prose and leaves
-  scholarly judgment to the researcher.
+- Award boundary points when the packet avoids manuscript or theory-section
+  prose and leaves novelty, theoretical contribution, mechanism strength, and
+  scope framing to the researcher.
 - Award continuity points when the same route, model, bridge, and design-source
   identifiers travel across the chain.
 

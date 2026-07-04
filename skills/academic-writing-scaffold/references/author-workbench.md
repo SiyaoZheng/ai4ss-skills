@@ -36,6 +36,20 @@ Use this table as the default handoff to the author:
 
 The agent may fill the middle column; the author writes the final text.
 
+## Theory Workbench
+
+When literature-to-theory sidecars are present, use
+`references/theory_workbench.md` as the author-facing review view. The agent may
+fill evidence slots from `literature_theory_synthesis.csv`,
+`theory_rival_map.csv`, `theory_scope_map.csv`, validated `.aiss` ids, and
+methods issue rows. The author writes final theory prose and decides novelty,
+theoretical contribution, mechanism strength, scope framing, and rival
+prioritization.
+
+Do not turn the workbench into final literature review, final theory prose, or
+polished contribution language. If a row cannot be grounded in validated
+evidence or an explicit author premise, keep it as a decision question.
+
 ## Evidence Map Procedure
 
 1. List all evidence artifacts.
@@ -53,6 +67,11 @@ Ask these when evidence does not determine the writing choice:
 - Which literature audience is primary?
 - Should the paper foreground method, data, or substantive contribution?
 - How strong should causal language be?
+- Is the mechanism a framing hypothesis, tested implication, or theoretical
+  contribution?
+- Which rival explanation should remain visible in the theory section?
+- Is the scope condition a substantive boundary or only a data availability
+  limit?
 - Which limitations should be in the main text rather than appendix?
 - What is the preferred estimand wording?
 - Which null or fragile findings should be acknowledged?

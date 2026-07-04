@@ -1,0 +1,253 @@
+// Generated from evidence table; author: theory
+aiss version "0.4"
+
+paper theory.evidence_packet {
+  title: "Evidence packet for theory"
+  authors: ["theory"]
+  year: "undated"
+  language: "en"
+  kind: "evidence_packet"
+  sources: [theory.src_evidence]
+}
+
+source theory.src_evidence {
+  kind: "structured_evidence_markdown"
+  uri: "evidence://theory"
+  media_type: "text/markdown"
+  locator_scheme: "section"
+}
+
+// ---- Workflow ----
+
+span theory.span_route_r1 {
+  source: theory.src_evidence
+  locator: "Routes/theory.route_r1"
+  quote_hash: "sha256:d5622581bc7ac0b767d0688758b7b0b12d562d905ccd82dbca0cb8ccfd7c1192"
+}
+
+route theory.route_r1 {
+  question: "What theoretical mechanism could connect digital-government platform exposure to firm green innovation?"
+  status: selected
+  study_type: theory_mapping
+  unit_of_analysis: "firm-year / city-year"
+  inquiry: "effect of city platform exposure on firm green patent count"
+  data_strategy: "source-verified rollout records linked to firm innovation outcomes"
+  answer_strategy: "theory workbench before analysis or manuscript prose"
+  stop_reason: "author must decide mechanism strength and contribution before final prose"
+  next_skill_route: ask_author
+  candidate_concepts: ["theory.exposed_unit", "theory.high_innovation"]
+  spans: [theory.span_route_r1]
+}
+
+span theory.span_mida_r1_model {
+  source: theory.src_evidence
+  locator: "MIDA/theory.mida_r1_model"
+  quote_hash: "sha256:77b27ac4462af96b3a64e27a061e25401511dacd9bd341b904b136c4d201a514"
+}
+
+mida theory.mida_r1_model {
+  route: theory.route_r1
+  component: model
+  text: "Platform exposure, innovation output, mechanism candidate, rival explanation, and scope condition are declared for theory workbench review."
+  status: declared
+  concepts: ["theory.exposed_unit", "theory.high_innovation"]
+  causal: ["theory.exposure_to_innovation"]
+  bridges: ["theory.measurement_exposure", "theory.causal_bridge_exposure"]
+  model: theory.platform_innovation
+  spans: [theory.span_mida_r1_model]
+}
+
+span theory.span_decision_r1_theory_scope {
+  source: theory.src_evidence
+  locator: "Decisions/theory.decision_r1_theory_scope"
+  quote_hash: "sha256:18534158b0bc8ed6cbb2004bc8b680bacf0a257e15031c5aabe68325cb44b667"
+}
+
+decision theory.decision_r1_theory_scope {
+  route: theory.route_r1
+  component: model
+  decision: "Author must decide whether the mechanism is a framing hypothesis, tested implication, or broader theoretical contribution."
+  status: needs_author_decision
+  owner: author
+  next_skill_route: ask_author
+  causal: ["theory.exposure_to_innovation"]
+  spans: [theory.span_decision_r1_theory_scope]
+}
+
+// ---- Attributes ----
+
+span theory.span_platform_exposure {
+  source: theory.src_evidence
+  locator: "Attributes/theory.platform_exposure"
+  quote_hash: "sha256:81163f48c1c9a8800fb62710da337a230866e083d2f4f96f0ee1016ca1421290"
+}
+
+attribute theory.platform_exposure {
+  domain: binary
+  values: ["absent", "present"]
+  description: "whether a unit is exposed to a digital-government platform"
+  source: "docs/examples/theory_workbench/valid/literature_theory_synthesis.csv#TS1"
+  spans: [theory.span_platform_exposure]
+}
+
+span theory.span_innovation_output {
+  source: theory.src_evidence
+  locator: "Attributes/theory.innovation_output"
+  quote_hash: "sha256:3b5dccd9d4a762f77cbf444bf294ff678d20feb2cab81a63e0aa1380994c07e0"
+}
+
+attribute theory.innovation_output {
+  domain: ordinal
+  values: ["low", "high"]
+  description: "observed green innovation output category"
+  source: "docs/examples/theory_workbench/valid/literature_theory_synthesis.csv#TS2"
+  spans: [theory.span_innovation_output]
+}
+
+// ---- Concepts ----
+
+span theory.span_exposed_unit {
+  source: theory.src_evidence
+  locator: "Concepts/theory.exposed_unit"
+  quote_hash: "sha256:81163f48c1c9a8800fb62710da337a230866e083d2f4f96f0ee1016ca1421290"
+}
+
+concept theory.exposed_unit {
+  term: "exposed unit"
+  definition: "Unit exposed to the platform in the declared and auditable rollout window."
+  spans: [theory.span_exposed_unit]
+  parents: ["theory.platform_exposure"]
+  theta: {
+    "[\"absent\"]": 0
+    "[\"present\"]": 1
+  }
+  rule: definitional
+  description: "Unit exposed to the platform in the declared and auditable rollout window."
+  source: "docs/examples/theory_workbench/valid/literature_theory_synthesis.csv#TS1"
+  operationalization: "administrative rollout record linked to unit identifiers before outcome measurement"
+}
+
+span theory.span_high_innovation {
+  source: theory.src_evidence
+  locator: "Concepts/theory.high_innovation"
+  quote_hash: "sha256:3b5dccd9d4a762f77cbf444bf294ff678d20feb2cab81a63e0aa1380994c07e0"
+}
+
+concept theory.high_innovation {
+  term: "high innovation"
+  definition: "Unit with high observed green innovation output under the declared measurement rule."
+  spans: [theory.span_high_innovation]
+  parents: ["theory.innovation_output"]
+  theta: {
+    "[\"low\"]": 0
+    "[\"high\"]": 1
+  }
+  rule: definitional
+  description: "Unit with high observed green innovation output under the declared measurement rule."
+  source: "docs/examples/theory_workbench/valid/literature_theory_synthesis.csv#TS2"
+  operationalization: "green patent count or validated innovation output category"
+}
+
+// ---- Causal Relations ----
+
+span theory.span_exposure_to_innovation {
+  source: theory.src_evidence
+  locator: "Causal Relations/theory.exposure_to_innovation"
+  quote_hash: "sha256:69632ea66c12af7573d954c4708f602c8e25a27a1126f18e8abf038ea3fca83f"
+}
+
+causal theory.exposure_to_innovation {
+  source: theory.exposed_unit
+  target: theory.high_innovation
+  direction: positive
+  condition: none
+  mechanism: "city administrative agencies reduce approval and service friction after platform rollout, giving firms more capacity to pursue green innovation outputs"
+  textual_support: INFERRED
+  spans: [theory.span_exposure_to_innovation]
+}
+
+// ---- Edges ----
+
+span theory.span_edge_exposed_unit_high_innovation {
+  source: theory.src_evidence
+  locator: "Edges/theory.edge_exposed_unit_high_innovation"
+  quote_hash: "sha256:5bf6f542c6c169097b333896774da371a06d13c9a2140ca071e2b17f18b9a2d1"
+}
+
+edge theory.edge_exposed_unit_high_innovation {
+  type: related
+  source: theory.exposed_unit
+  target: theory.high_innovation
+  textual_support: EXTRACTED
+  source_locator: "docs/examples/theory_workbench/valid/theory_rival_map.csv#RV1"
+  spans: [theory.span_edge_exposed_unit_high_innovation]
+}
+
+// ---- Bridges ----
+
+span theory.span_measurement_exposure {
+  source: theory.src_evidence
+  locator: "Bridges/theory.measurement_exposure"
+  quote_hash: "sha256:06079f35d58c24b1c7850a9553a65eed3316daf729cc3d108952a3ef6fd7de7b"
+}
+
+bridge theory.measurement_exposure {
+  type: measurement
+  concept: theory.exposed_unit
+  method: "audited rollout date linked to unit identifiers"
+  validity: "requires rollout dates and unit linkage before outcome measurement"
+  commensurability: weak
+  note: "scope and mechanism strength remain author decisions"
+  spans: [theory.span_measurement_exposure]
+}
+
+span theory.span_causal_bridge_exposure {
+  source: theory.src_evidence
+  locator: "Bridges/theory.causal_bridge_exposure"
+  quote_hash: "sha256:52506774d94565c5b6baa7a54fc587c85b2a6698c97bc981eacec96d3a46a8ed"
+}
+
+bridge theory.causal_bridge_exposure {
+  type: causal
+  implication: theory.exposure_to_innovation
+  estimand: none
+  commensurability: weak
+  note: "rival baseline city capacity requires methods review before causal language"
+  spans: [theory.span_causal_bridge_exposure]
+}
+
+// ---- Model ----
+
+model theory.platform_innovation {
+  attributes: ["theory.platform_exposure", "theory.innovation_output"]
+  concepts: ["theory.exposed_unit", "theory.high_innovation"]
+  causal: ["theory.exposure_to_innovation"]
+  bridges: ["theory.measurement_exposure", "theory.causal_bridge_exposure"]
+}
+
+// ---- Verification ----
+
+check theory.check_theta_completeness {
+  type: theta_completeness
+  on: theory.platform_innovation
+}
+
+check theory.check_rule_consistency {
+  type: rule_consistency
+  on: theory.platform_innovation
+}
+
+check theory.check_reference_integrity {
+  type: reference_integrity
+  on: theory.platform_innovation
+}
+
+derive theory.derive_implications {
+  type: implications
+  from: theory.platform_innovation
+}
+
+derive theory.derive_ibe_profile {
+  type: ibe_profile
+  from: theory.platform_innovation
+}

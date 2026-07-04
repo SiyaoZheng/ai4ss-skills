@@ -23,11 +23,15 @@ guess the production condition. No condition labels are provided.
 - Award `.aiss` points when model paths, IDs, checker/bridge diagnostics, and
   stable concept or causal references are present.
 - Award evidence/data points when literature, source, sample-flow, merge, and
-  variable-provenance artifacts are tied to the same route and model.
+  variable-provenance artifacts are tied to the same route and model. For theory
+  mapping, also look for validated `literature_theory_synthesis.csv`,
+  `theory_rival_map.csv`, `theory_scope_map.csv`, `theory_evidence.md`, and
+  `compile_evidence.py` reuse.
 - Award analysis-loop points only when readiness is checked before execution and
   first-pass outputs link back to the declared design.
-- Award boundary points when the packet avoids manuscript prose and leaves
-  scholarly judgment to the researcher.
+- Award boundary points when the packet avoids manuscript or theory-section
+  prose and leaves novelty, theoretical contribution, mechanism strength, and
+  scope framing to the researcher.
 - Award continuity points when the same route, model, bridge, and design-source
   identifiers travel across the chain.
 

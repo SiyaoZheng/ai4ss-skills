@@ -1,3 +1,5 @@
 packet_id,case_id,research_object,mida_design,ai4ss_model_check,evidence_data_chain,analysis_loop,boundary_author_decision,end_to_end_continuity,risk_penalty,total
-P001,city_platform_green_patents,5.0,3.8,4.3,0.0,3.0,4.3,0.0,13.0,7.3
-P002,city_platform_green_patents,15.0,15.0,10.7,15.0,15.0,10.7,10.0,0.0,91.4
+P001,city_platform_green_patents,5.0,3.8,4.3,0.0,3.0,3.3,0.0,13.0,6.4
+P002,city_platform_green_patents,15.0,15.0,10.7,15.0,15.0,11.7,10.0,0.0,92.4
+P003,platform_theory_mapping,15.0,15.0,10.7,15.0,15.0,11.7,10.0,0.0,92.4
+P004,platform_theory_mapping,5.0,3.8,4.3,0.0,3.0,3.3,0.0,13.0,6.4

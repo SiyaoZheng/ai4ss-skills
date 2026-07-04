@@ -30,6 +30,22 @@ The common language is adapted from the MIDA and declare-diagnose-redesign frame
 
 `Estimand` is important, but it is not the whole framework. In this pack it lives inside `Inquiry`. A causal project should name the target comparison, population, outcome, exposure/treatment, time window, and scale. A descriptive, text, qualitative, or literature-synthesis project should name its target quantity, construct, classification, sequence, or synthesis claim with the same precision.
 
+## Theory Workbench Boundary
+
+The shared theory engine is a workflow layer across existing skills, not a new
+top-level skill. Literature evidence enters through `literature_matrix.csv` and
+`literature_theory_synthesis.csv`; rival explanations and scope conditions are
+kept in `theory_rival_map.csv` and `theory_scope_map.csv`; model-ready objects
+are compiled from `theory_evidence.md` through the existing
+`dsl/scripts/compile_evidence.py` path.
+
+The methodology role is narrow: make candidate concepts, mechanisms, observable
+implications, rivals, and scope conditions inspectable before the author writes.
+Validated `ready_for_aiss` objects can support `.aiss` `concept`, `claim`,
+`relation`, `causal`, `bridge`, and `model` declarations. Novelty, theoretical
+contribution, mechanism strength, scope framing, and rival prioritization
+remain author-owned `decision` declarations or Author Workbench questions.
+
 ## Skill Assignment
 
 | workflow stage | skill | methodology role | must declare or preserve |
@@ -37,10 +53,10 @@ The common language is adapted from the MIDA and declare-diagnose-redesign frame
 | Route discovery | `research-starter` | Pre-declaration: write candidate `.aiss` `route` declarations before committing | rough Model, candidate Inquiry, possible Data strategy, possible Answer strategy, diagnosability, failure signal |
 | Design | `study-design-builder` | Primary declaration: turn a selected `.aiss` `route` into seven `mida` declarations and author `decision` declarations | Model, Inquiry, Data strategy, Answer strategy, diagnosands, author decisions |
 | Data | `research-data-builder` | Data strategy realization and audit | sample/source rule, measurement, extraction, linkage, transformations, row loss, missingness, provenance |
-| Literature | `literature-matrix` | Evidence-as-data strategy for literature claims | source scope, search strata, screening rule, source status, extraction fields, synthesis eligibility |
+| Literature | `literature-matrix` | Evidence-as-data strategy for literature claims | source scope, search strata, screening rule, source status, extraction fields, synthesis eligibility, optional theory workbench handoff |
 | Analysis | `research-analysis-runner` | Answer strategy execution | design source, data source, code path, output path, sample note, uncertainty/diagnostic output, interpretation boundary |
-| Methods review | `methods-reviewer` | Diagnose and redesign | design-output-claim alignment, diagnosands, method-specific risks, recommended redesigns |
-| Writing scaffold | `academic-writing-scaffold` | Reporting discipline | target inquiry, evidence source, support level, citation/source gap, author decision, AI-writing boundary |
+| Methods review | `methods-reviewer` | Diagnose and redesign | design-output-claim alignment, diagnosands, rival/scope/mechanism risks, method-specific risks, recommended redesigns |
+| Writing scaffold | `academic-writing-scaffold` | Reporting discipline | target inquiry, evidence source, support level, citation/source gap, theory workbench questions, author decision, AI-writing boundary |
 | Slides | `research-slides-builder` | Public communication from declared evidence | claim slot, source artifact, sample/scope, uncertainty or caveat, privacy status |
 | Revision | `reviewer-response` | Redesign and reconciliation under peer review | reviewer request, MIDA element affected, evidence action, manuscript location, confidentiality, author decision |
 
@@ -103,6 +119,9 @@ object durable and checkable.
 - `study-design-builder` becomes the central declaration skill. It selects a `.aiss` route, declares MIDA, and records decisions; estimand or target quantity belongs there only alongside Model, Data strategy, Answer strategy, and diagnosands.
 - `research-starter` may propose routes, but those `.aiss` routes are provisional MIDA sketches, not valid designs.
 - `research-data-builder`, `literature-matrix`, and `research-analysis-runner` are not generic productivity skills. They realize the Data strategy and Answer strategy in auditable artifacts.
+- Theory mapping is not a prose generator. It is a validated handoff from
+  verified literature rows to existing `.aiss` model declarations and bounded
+  author decisions.
 - `methods-reviewer` is the diagnostic layer. It should ask whether the declared design, executed outputs, and claims line up.
 - Writing, slides, and reviewer response are reporting/redesign layers. They must preserve the declared inquiry and diagnosed limits rather than create new scholarly claims.
 

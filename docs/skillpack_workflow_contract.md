@@ -12,7 +12,7 @@ defines how each skill updates or mirrors that computable research object.
 |---|---|
 | `.aiss` research object | Unified computable IR: route declarations, MIDA rows, author decisions, source spans, claims, empirical objects, couplings, attributes, concepts, causal implications, empirical bridges, checks, and derived diagnostics |
 | MIDA declaration | Seven `mida` declarations for the selected route: Model, Inquiry, Data strategy, Answer strategy, Diagnose, Redesign, Report boundary |
-| Skill sidecars | Human-readable or validator-friendly projections: route cards, design declarations, DDI metadata, cleaning contracts, sample flow, literature matrix, compiled literature evidence, analysis readiness check, analysis manifest, claim ledger |
+| Skill sidecars | Human-readable or validator-friendly projections: route cards, design declarations, DDI metadata, cleaning contracts, sample flow, literature matrix, theory workbench sidecars, compiled literature/theory evidence, analysis readiness check, analysis manifest, claim ledger |
 
 `research-starter` may create provisional `route` declarations without a final
 model. `study-design-builder` selects a route, writes the seven `mida`
@@ -30,7 +30,7 @@ See `docs/ai4ss_dsl_factory_integration.md` for the full integration rule.
 | 0. Start | 这个研究怎么先动起来？ | `research-starter` | `.aiss` `route` declarations, mirrored by `research_starter_packet.md` and `research_route_cards.csv` | Design |
 | 1. Design | 这个路线怎样落成可执行设计？ | `study-design-builder` | selected `.aiss` `route`, seven `mida` declarations, `decision` declarations, `research_model.aiss`, `ai4ss_check_report.txt` | Data, literature, analysis |
 | 2a. Data | 数据怎么来的，样本怎么变的？ | `research-data-builder` | derived data, `sample_flow.csv`, `merge_audit.csv`, `variable_provenance.csv`; for survey cleaning: `ddi-metadata.yaml`, `cleaning_contract`, execution audit | Analysis, methods review |
-| 2b. Literature | 文献证据是不是一手来源？ | `literature-matrix` | `literature_candidate_discovery.csv`, `literature_matrix.csv`, optional compiled literature `.aiss` evidence | Design, writing scaffold |
+| 2b. Literature | 文献证据是不是一手来源？ | `literature-matrix` | `literature_candidate_discovery.csv`, `literature_matrix.csv`, optional theory workbench (`literature_theory_synthesis.csv`, `theory_rival_map.csv`, `theory_scope_map.csv`, `theory_evidence.md`), optional compiled literature/theory `.aiss` evidence | Design, methods review, writing scaffold |
 | 3. Analysis | 第一批可检查结果怎么跑出来？ | `research-analysis-runner` | `analysis_readiness_check.csv`, scripts, tables, figures, logs, `analysis_run_manifest.csv` | Methods review |
 | 4. Review | 结果解释有没有说过头？ | `methods-reviewer` | issue table, recommended checks, author decisions | Analysis, writing, revision |
 | 5a. Writing scaffold | 作者怎样自己写得更稳？ | `academic-writing-scaffold` | claim ledger, section scaffold, citation gaps | Author drafting |
@@ -48,12 +48,16 @@ Every skill should preserve these fields when available:
 | `mida_id` | Stable `.aiss` `mida` declaration id from `study-design-builder`, when applicable |
 | `decision_decl_id` | Stable `.aiss` `decision` declaration id for author-owned choices, when applicable |
 | `mida_component` | `.aiss` `mida` component touched by this artifact, when applicable |
+| `synthesis_id` | Theory synthesis row id from `literature_theory_synthesis.csv`, when applicable |
+| `rival_id` | Rival explanation row id from `theory_rival_map.csv`, when applicable |
+| `scope_id` | Scope condition row id from `theory_scope_map.csv`, when applicable |
 | `design_source` | Path to the design brief or decision register |
 | `target_inquiry` | The declared inquiry, estimand, target quantity, construct, classification target, process-tracing claim, or synthesis question |
 | `data_source` | Path to source data, derived data, or extracted source output |
 | `analysis_plan_path` | Path to analysis plan, preregistration scaffold, or script plan |
 | `readiness_status` | `ready`, `warn`, or `blocked` result from `analysis_readiness_check.csv` |
 | `evidence_compile_status` | `compiled`, `needs_review`, `blocked`, or `not_applicable` status for literature evidence to `.aiss` compilation |
+| `theory_workbench_status` | `ready_for_aiss`, `needs_author_decision`, `needs_methods_review`, `blocked`, or `not_applicable` status for theory sidecars |
 | `source_artifacts` | Literature matrix, source ledger, notes, PDFs, tables, figures, logs |
 | `known_gaps` | Missing data, unresolved source, unclear design choice, or failed validation |
 | `author_decisions` | Decisions that require researcher judgment |
@@ -91,6 +95,21 @@ Use `docs/methodology_foundations.md` as the canonical explanation and `docs/met
 | `Diagnose` | Bias, precision, power, measurement risk, source-status risk, row loss, reproducibility, and claim-support mismatch |
 | `Redesign` | Smaller first loop, revised measure, added source, changed estimator, stronger comparison, or abandoned route |
 | `Report` | Claim ledger, source map, AI-use ledger, author decision point, and communication boundary |
+
+## Theory Workbench Contract
+
+The shared theory engine is implemented as a reusable workflow layer across
+`literature-matrix`, `study-design-builder`, `methods-reviewer`, and
+`academic-writing-scaffold`. It reuses existing contracts:
+
+- Sidecar fields live in `scripts/ai4ss_factory_contracts/sidecars.py`.
+- Route/status checks live in `scripts/ai4ss_factory_contracts/workflow.py`.
+- Model output is compiled through `dsl/scripts/compile_evidence.py`.
+- Model validity is checked through `scripts/validate_ai4ss_model.py`.
+- Rival, scope, mechanism weakness, and overclaim are reviewed through the
+  existing methods issue table.
+- Author-facing theory review uses the Author Workbench boundary; final theory
+  prose remains author-written.
 
 ## Common Skill Requirements
 

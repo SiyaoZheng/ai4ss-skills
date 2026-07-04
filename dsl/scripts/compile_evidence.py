@@ -52,6 +52,9 @@ def parse_evidence_table(text: str) -> dict[str, Any]:
         "edges": [],
         "bridges": [],
         "model": None,
+        "routes": [],
+        "mida": [],
+        "decisions": [],
     }
 
     current_section: str | None = None
@@ -111,6 +114,24 @@ def parse_evidence_table(text: str) -> dict[str, Any]:
                 result["model"] = {"id": _extract_id(entity_name), "attributes": [], "concepts": [],
                                    "causal": [], "bridges": []}
                 current_entity = result["model"]
+            elif current_section == "Routes":
+                current_entity = {"id": _extract_id(entity_name), "question": "", "status": "candidate",
+                                  "study_type": "theory_mapping", "unit_of_analysis": "",
+                                  "inquiry": "", "data_strategy": "", "answer_strategy": "",
+                                  "stop_reason": "", "next_skill_route": "ask_author",
+                                  "candidate_concepts": []}
+                result["routes"].append(current_entity)
+            elif current_section == "MIDA":
+                current_entity = {"id": _extract_id(entity_name), "route": "", "component": "",
+                                  "text": "", "status": "declared", "concepts": [],
+                                  "causal": [], "bridges": [], "model": ""}
+                result["mida"].append(current_entity)
+            elif current_section == "Decisions":
+                current_entity = {"id": _extract_id(entity_name), "route": "", "component": "",
+                                  "decision": "", "status": "needs_author_decision",
+                                  "owner": "author", "next_skill_route": "ask_author",
+                                  "causal": []}
+                result["decisions"].append(current_entity)
             collecting_table = False
             current_table = None
             continue
@@ -191,7 +212,7 @@ def _set_field(entity: dict, key: str, value: str):
         "note": "note",
     }
     field = mapping.get(key, key)
-    if field == "parents" or field == "values":
+    if field in {"parents", "values", "candidate_concepts", "concepts", "causal", "bridges"}:
         # Parse list: "state_capacity, public_scrutiny" → ["state_capacity", "public_scrutiny"]
         entity[field] = [v.strip() for v in value.split(",") if v.strip()]
     elif field == "source" and "relation" in entity and entity.get("source"):
@@ -276,6 +297,60 @@ def compile_to_aiss(evidence: dict) -> str:
         _emit("}")
         _emit("")
         return span_id
+
+    # Workflow declarations
+    if evidence.get("routes") or evidence.get("mida") or evidence.get("decisions"):
+        _emit("// ---- Workflow ----")
+        _emit("")
+        for route in evidence.get("routes", []):
+            span_id = span_for(route["id"], f"Routes/{route['id']}", route.get("question", ""))
+            _emit(f"route {route['id']} {{")
+            _emit(f"  question: {_quote(route.get('question', ''))}")
+            _emit(f"  status: {route.get('status', 'candidate')}")
+            _emit(f"  study_type: {route.get('study_type', 'theory_mapping')}")
+            _emit(f"  unit_of_analysis: {_quote(route.get('unit_of_analysis', ''))}")
+            _emit(f"  inquiry: {_quote(route.get('inquiry', ''))}")
+            _emit(f"  data_strategy: {_quote(route.get('data_strategy', ''))}")
+            _emit(f"  answer_strategy: {_quote(route.get('answer_strategy', ''))}")
+            _emit(f"  stop_reason: {_quote(route.get('stop_reason', ''))}")
+            _emit(f"  next_skill_route: {route.get('next_skill_route', 'ask_author')}")
+            candidate_concepts = route.get("candidate_concepts", [])
+            if candidate_concepts:
+                _emit(f"  candidate_concepts: {json.dumps(candidate_concepts)}")
+            _emit(f"  spans: [{span_id}]")
+            _emit("}")
+            _emit("")
+        for row in evidence.get("mida", []):
+            span_id = span_for(row["id"], f"MIDA/{row['id']}", row.get("text", ""))
+            _emit(f"mida {row['id']} {{")
+            _emit(f"  route: {row.get('route', '')}")
+            _emit(f"  component: {row.get('component', '')}")
+            _emit(f"  text: {_quote(row.get('text', ''))}")
+            _emit(f"  status: {row.get('status', 'declared')}")
+            for key in ("concepts", "causal", "bridges"):
+                items = row.get(key, [])
+                if items:
+                    _emit(f"  {key}: {json.dumps(items)}")
+            if row.get("model"):
+                _emit(f"  model: {row['model']}")
+            _emit(f"  spans: [{span_id}]")
+            _emit("}")
+            _emit("")
+        for decision in evidence.get("decisions", []):
+            span_id = span_for(decision["id"], f"Decisions/{decision['id']}", decision.get("decision", ""))
+            _emit(f"decision {decision['id']} {{")
+            _emit(f"  route: {decision.get('route', '')}")
+            _emit(f"  component: {decision.get('component', '')}")
+            _emit(f"  decision: {_quote(decision.get('decision', ''))}")
+            _emit(f"  status: {decision.get('status', 'needs_author_decision')}")
+            _emit(f"  owner: {decision.get('owner', 'author')}")
+            _emit(f"  next_skill_route: {decision.get('next_skill_route', 'ask_author')}")
+            causal = decision.get("causal", [])
+            if causal:
+                _emit(f"  causal: {json.dumps(causal)}")
+            _emit(f"  spans: [{span_id}]")
+            _emit("}")
+            _emit("")
 
     # Attributes
     _emit("// ---- Attributes ----")
@@ -364,7 +439,7 @@ def compile_to_aiss(evidence: dict) -> str:
                 direction = "positive"
             _emit(f"  direction: {direction}")
             cond = c.get("condition", "none")
-            _emit(f"  condition: {cond if cond else 'none'}")
+            _emit(f"  condition: {_value_literal(cond) if cond else 'none'}")
             mech = c.get("mechanism", "")
             _emit(f"  mechanism: {_quote(mech) if mech else 'none'}")
             conf = c.get("textual_support") or c.get("confidence", "EXTRACTED")
@@ -415,13 +490,13 @@ def compile_to_aiss(evidence: dict) -> str:
                 if b.get("concept"):
                     _emit(f"  concept: {b['concept']}")
                 if b.get("method"):
-                    _emit(f"  method: {b['method']}")
+                    _emit(f"  method: {_value_literal(b['method'])}")
                 if b.get("validity"):
                     _emit(f"  validity: {_quote(b['validity'])}")
             else:
                 if b.get("implication"):
                     _emit(f"  implication: {b['implication']}")
-                _emit(f"  estimand: {b.get('estimand', 'none')}")
+                _emit(f"  estimand: {_value_literal(b.get('estimand', 'none'))}")
             comm = b.get("commensurability", "strong")
             if comm not in VALID_COMMENSURABILITY:
                 comm = "strong"
@@ -591,6 +666,40 @@ EVIDENCE_TEMPLATE = """## Paper Metadata
 - **concepts**: {author}.c1, {author}.c2, ...
 - **causal**: {author}.causal1, ...
 - **bridges**: {author}.bridge1, ...
+
+## Routes
+### {author}.route_r1
+- **question**: ...
+- **status**: candidate | selected | rejected | blocked
+- **study_type**: theory_mapping
+- **unit_of_analysis**: ...
+- **inquiry**: ...
+- **data_strategy**: ...
+- **answer_strategy**: ...
+- **stop_reason**: ...
+- **next_skill_route**: ask_author
+- **candidate_concepts**: {author}.c1, {author}.c2
+
+## MIDA
+### {author}.mida_r1_model
+- **route**: {author}.route_r1
+- **component**: model
+- **text**: ...
+- **status**: declared
+- **concepts**: {author}.c1, {author}.c2
+- **causal**: {author}.causal1
+- **bridges**: {author}.bridge1
+- **model**: {author}.model_id
+
+## Decisions
+### {author}.decision_r1_theory
+- **route**: {author}.route_r1
+- **component**: model
+- **decision**: ...
+- **status**: needs_author_decision
+- **owner**: author
+- **next_skill_route**: ask_author
+- **causal**: {author}.causal1
 """
 
 

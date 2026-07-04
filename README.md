@@ -1,16 +1,19 @@
 <p align="center">
-  <img src="docs/assets/readme/ai4ss-logo.svg" alt="ai4ss-skills logo" width="112">
+  <img src="docs/assets/readme/ai4ss-header.svg" alt="AI4SS research infrastructure: skills, .aiss objects, validation gates, evaluation evidence, and bounded handoff" width="100%">
 </p>
 
 <div align="center">
 
 # ai4ss-skills
 
-### Turn agent conversations into computable social-science research objects.
+### Research infrastructure for agent-assisted social science.
 
-`ai4ss-skills` is a methodology-enforcing research factory for computational
-social scientists. Skills are the operator interface; `.aiss` is the computable
-research object; validators and eval packets keep the handoff inspectable.
+AI4SS turns AI-agent labor into durable research objects: route declarations,
+study designs, source ledgers, data contracts, analysis manifests, method
+audits, claim ledgers, slide maps, and reviewer-response matrices.
+
+It treats the model as a worker inside a research operating system, not as the
+operating system itself.
 
 [![License: GPL-3.0](https://img.shields.io/badge/License-GPL--3.0-blue.svg)](LICENSE)
 [![Python](https://img.shields.io/badge/Python-%3E%3D3.10-3776AB?logo=python&logoColor=white)](https://python.org)
@@ -18,250 +21,236 @@ research object; validators and eval packets keep the handoff inspectable.
 [![Claude Code](https://img.shields.io/badge/Claude%20Code-compatible-blueviolet?logo=anthropic)](https://docs.anthropic.com/en/docs/claude-code/skills)
 [![Cursor](https://img.shields.io/badge/Cursor-compatible-000000?logo=cursor)](https://cursor.com)
 
-**[Start](#start) | [Factory](#factory-architecture) | [Workflow](#research-workflow) | [Skills](#skills) | [Evidence](#evidence) | [Validate](#validate) | [Boundaries](#boundaries)**
+**[Start Here](#start-here) | [Infrastructure](#infrastructure) | [Capabilities](#capabilities) | [Skills](#skills) | [Evidence](#evidence) | [Limits](#limits)**
 
 </div>
 
-<p align="center">
-  <img src="docs/assets/readme/ai4ss-header.svg" alt="AI4SS research factory: inputs move through skills, the .aiss research object, validators, and bounded handoff" width="100%">
-</p>
+<table>
+  <tr>
+    <td align="center"><strong>19</strong><br>installable skills</td>
+    <td align="center"><strong>.aiss v0.4</strong><br>research object IR</td>
+    <td align="center"><strong>9</strong><br>workflow gates</td>
+    <td align="center"><strong>4</strong><br>evaluation tracks</td>
+    <td align="center"><strong>92.4 / 100</strong><br>factory structural score</td>
+  </tr>
+</table>
 
----
+## The Bet
 
-## From Chat Output To Research State
+AI agents can already produce fluent research-shaped text. That is not the
+hard part. The hard part is making agent work usable inside scholarship without
+losing the things research depends on: source status, design choices, data
+lineage, missingness decisions, analysis readiness, method review, authorship
+boundaries, and revision traceability.
 
-AI research help is usually conversational. It can produce a plausible plan,
-summarize papers, suggest variables, or draft interpretation. The problem is
-that the handoff often lives only in chat memory.
+This repository is a working infrastructure layer for that problem. It combines
+installable skills, a unified `.aiss` research object, schema-bearing sidecars,
+validators, examples, and evaluation packets. The ambition is not to make an
+agent sound like a scholar. The ambition is to make its work inspectable enough
+that a scholar can use, reject, revise, teach, and extend it.
 
-This repository makes the handoff concrete.
-
-| Chat output | AI4SS research state |
+| AI failure mode | Infrastructure response |
 |---|---|
-| Polished prose plan | Stable route, MIDA, and decision declarations |
-| "I cleaned the data" | DDI metadata, cleaning contract, execution audit, sample flow |
-| Literature notes in prose | Source ledger, extraction matrix, compiled `.aiss` evidence |
-| Tables with unclear provenance | Readiness gate, scripts, logs, analysis manifest |
-| Final-sounding answer | Issue table, claim ledger, explicit author decision point |
+| Plausible topic advice with no next action | Route cards, stop reasons, minimum viable study |
+| "Research design" reduced to a slogan | MIDA declarations, decision registers, diagnosands |
+| Literature review as unsourced synthesis | Discovery, screening, extraction, source-status gates |
+| Data cleaning remembered in prose | DDI metadata, cleaning contract, execution audit, sample flow |
+| Tables detached from design | Analysis readiness gate, scripts, logs, run manifest |
+| Methods issues found too late | Issue table, redesign routes, validation commands |
+| Writing help that becomes ghostwriting | Claim ledger, paragraph slots, author decision points |
+| Reviewer response without evidence trace | Revision matrix, manuscript locations, action status |
 
-The ambition is not to replace the researcher. It is to make AI useful before
-it writes prose, and to leave behind research objects that a scholar can
-inspect, reject, revise, rerun, and cite.
+The big claim is infrastructural: agent-assisted social science needs durable
+research objects and quality gates, not only better prompts.
 
-## Choose Your Path
+## Start Here
 
-| Try it | Understand it | Audit it |
-|---|---|---|
-| Install the skills and run a starter prompt. | Read the factory architecture and `.aiss` object map. | Inspect the validation commands, eval packets, and evidence limits. |
-| [Start in minutes](#start) | [See the factory](#factory-architecture) | [Read the evidence](#evidence) |
-
-## Factory Architecture
-
-The project has three coordinated layers:
-
-- **Skills are the operator interface.** They turn research tasks into
-  structured outputs and route work across the factory.
-- **`.aiss` is the computable research object.** It carries routes, MIDA rows,
-  decisions, source spans, bridges, checks, and model objects in one workflow
-  DSL.
-- **Validators, evals, and ledgers are the trust layer.** They keep handoffs
-  inspectable and make overclaiming harder.
-
-The shared methodology spine is:
-
-```text
-Declare MIDA -> Diagnose -> Redesign -> Report with bounded claims
-```
-
-MIDA means:
-
-| Element | What must become explicit |
-|---|---|
-| Model | Units, constructs, mechanisms, assumptions, scope conditions |
-| Inquiry | Causal estimand, descriptive quantity, measurement target, classification target, process-tracing claim, or synthesis question |
-| Data strategy | Sampling, source selection, measurement, extraction, linkage, missingness, and source-screening rules |
-| Answer strategy | Estimator, coding rule, synthesis rule, diagnostic comparison, table or figure shell, or qualitative inference procedure |
-
-## Research Workflow
-
-| Stage | Scholar question | Primary skill | Canonical artifact | Gate |
-|---|---|---|---|---|
-| Start | Can this become a study? | [`research-starter`](skills/research-starter/SKILL.md) | `.aiss` `route` declarations, route cards | Stop reason, missing material, next route |
-| Design | What is the executable design? | [`study-design-builder`](skills/study-design-builder/SKILL.md) | selected route, seven `mida` declarations, decisions | Complete MIDA and author choices |
-| Data/Literature | Where did evidence and samples come from? | [`research-data-builder`](skills/research-data-builder/SKILL.md), [`literature-matrix`](skills/literature-matrix/SKILL.md) | sample flow, source matrix, compiled evidence | Data contract and source status |
-| Analysis | Can first results be run and checked? | [`research-analysis-runner`](skills/research-analysis-runner/SKILL.md) | readiness check, scripts, logs, manifest | Readiness and design linkage |
-| Review | Is the interpretation overreaching? | [`methods-reviewer`](skills/methods-reviewer/SKILL.md) | issue table, recommended checks | Method/data/claim alignment |
-| Report | How can the author write safely? | [`academic-writing-scaffold`](skills/academic-writing-scaffold/SKILL.md), [`research-slides-builder`](skills/research-slides-builder/SKILL.md), [`reviewer-response`](skills/reviewer-response/SKILL.md) | claim ledger, slide map, revision matrix | Bounded claims and author decisions |
-
-## The `.aiss` Research Object
-
-`.aiss` version `0.4` compiles into `aiss.unified_ast.v0.4`: one AST for
-workflow, evidence, and research-model regions.
-
-```aiss
-aiss version "0.4"
-
-route demo.route_r1 { ... }
-mida demo.mida_r1_model { ... }
-decision demo.decision_r1_identification { ... }
-check demo.check_reference_integrity { ... }
-```
-
-The deterministic entrypoint is:
-
-```bash
-python3 dsl/scripts/aiss.py compile docs/examples/research_model.aiss
-python3 dsl/scripts/aiss.py lint docs/examples/research_model.aiss
-python3 dsl/scripts/aiss.py run docs/examples/research_model.aiss
-```
-
-Sidecars are readable projections of the same research state, not a second
-workflow language:
-
-```text
-research_route_cards.csv
-study_design_declaration.csv
-design_decision_register.csv
-ddi-metadata.yaml
-sample_flow.csv
-literature_matrix.csv
-analysis_readiness_check.csv
-analysis_run_manifest.csv
-issue_table.csv
-claim_ledger.csv
-revision_matrix.csv
-```
-
-## Start
-
-Install every skill into Claude Code:
+Clone the repository and run the basic workflow validator:
 
 ```bash
 git clone https://github.com/SiyaoZheng/ai4ss-skills.git
-mkdir -p ~/.claude/skills
-
-for s in ai4ss-skills/skills/*; do
-  [ -f "$s/SKILL.md" ] || continue
-  name=$(basename "$s")
-  rm -rf ~/.claude/skills/"$name"
-  cp -R "$s" ~/.claude/skills/"$name"
-done
+cd ai4ss-skills
+python3 scripts/validate_skillpack_workflow.py
 ```
 
-Then start with a research-factory prompt:
+| Reader | First path |
+|---|---|
+| Agent operating in this repo | Read [`AGENTS.md`](AGENTS.md), then the relevant `skills/<skill-name>/SKILL.md` |
+| Skill user | Copy or symlink `skills/<skill-name>/` into `~/.codex/skills`, `~/.claude/skills`, or `~/.agents/skills` |
+| Skill developer | Edit only the canonical `skills/` tree, then run the validation gates |
+| Research-methods reviewer | Start with [`docs/skillpack_workflow_contract.md`](docs/skillpack_workflow_contract.md) and [`docs/methodology_foundations.md`](docs/methodology_foundations.md) |
 
-```text
-Use research-starter. I have a rough topic: city digital-government platforms
-and firm green innovation. Create candidate research routes, stop reasons, and
-the next executable research action. Do not write manuscript prose.
-```
+The repository-local `.codex/skills` and `.agents/skills` entries are symlinks
+to `../skills`. Runtime copies are installs, not a second source tree.
 
-Or begin from a data bottleneck:
+## Infrastructure
 
-```text
-Parse this survey codebook into DDI metadata. Treat missing codes per variable;
-do not globally recode positive values as missing.
-```
+AI4SS has five working layers.
+
+| Layer | What it does | Where to look |
+|---|---|---|
+| Skill layer | Gives agents task-specific operating procedures for social-science work | [`skills/`](skills/) |
+| Research object layer | Stores route, design, source, evidence, model, bridge, check, and decision state | [`docs/examples/research_model.aiss`](docs/examples/research_model.aiss) |
+| Sidecar layer | Keeps human-readable projections for classrooms, collaborators, validators, and authors | skill `examples/` and `references/` |
+| Gate layer | Checks workflow contracts, design declarations, data and literature readiness, `.aiss` validity, and ledgers | [`scripts/`](scripts/) |
+| Evidence layer | Runs structural evals and benchmarks so claims about the skillpack are inspectable | [`docs/factory_level_eval/`](docs/factory_level_eval/) |
+
+The `.aiss` version `0.4` object compiles to `aiss.unified_ast.v0.4`, with
+workflow declarations, evidence and source grounding, and research-model
+declarations in one AST. CSV, YAML, and Markdown sidecars remain important, but
+they are projections of the research object rather than competing workflow
+languages.
+
+The internal design grammar is MIDA: Model, Inquiry, Data strategy, and Answer
+strategy, followed by Diagnose, Redesign, and bounded Report. That grammar is
+not the whole project. It is the discipline that lets the broader workbench
+stay coherent across start-up, data work, literature, analysis, methods review,
+writing scaffolds, slides, and revision.
+
+## Capabilities
+
+AI4SS is broader than a methodology checker. It covers the work loops where
+computational social scientists actually lose time, provenance, and judgment.
+
+| Work loop | What the skillpack can do today |
+|---|---|
+| Research start-up | Turn a rough topic, source pile, dataset folder, or policy phenomenon into route cards, a minimum viable study, failure signals, and next actions |
+| Study design | Promote a selected route into MIDA declarations, design briefs, decision registers, `.aiss` model/check objects, and analysis-plan scaffolds |
+| Survey cleaning | Parse Stata/SPSS/SAS/CSV/PDF/DOCX codebooks into DDI metadata, declare recodes before execution, and mechanically run the cleaning contract |
+| Data engineering | Build auditable analysis samples with scripts, sample flows, merge audits, variable provenance, and raw-to-analysis separation |
+| Literature and theory | Discover, verify, screen, extract, and cluster sources; create literature matrices, theory synthesis sidecars, rival/scope maps, and compiled `.aiss` evidence |
+| Analysis execution | Check analysis readiness, run first-pass tables/figures/models/coding outputs, preserve logs, and build an analysis manifest |
+| Methods review | Audit design-data-output-claim alignment, inference, robustness, reproducibility, theory risks, and overclaiming |
+| Reporting | Build claim ledgers, evidence inventories, writing scaffolds, slide maps, source maps, and revision matrices without taking over final author prose |
+| Specialist support | Provide DID guidance, LaTeX table generation, result explanation for collaborators, R performance advice, SJTU HPC workflows, Codex delegation, and Linear issue tracking |
+
+The practical workflow is a relay:
+
+`rough topic -> route declarations -> MIDA declarations -> data/literature gates -> analysis readiness -> analysis manifest -> method review -> bounded claim handoff`
+
+## What This Looks Like
+
+If a user wants to study whether municipal digital-government platforms affect
+firm green innovation, the first useful output is not an introduction. It is a
+research packet: candidate routes, material gaps, first feasible data or source
+action, and a stop reason.
+
+If one route survives, the design builder promotes it into `.aiss` route and
+MIDA declarations. Data and literature skills then build auditable evidence
+objects. The analysis runner only executes after the readiness gate. Methods
+review checks whether output and claim still refer to the same design. Writing
+and slides receive claim slots and source maps, not submission-ready prose.
+
+The same infrastructure also supports narrower jobs: a DDI survey-cleaning
+harness, a literature source-verification matrix, a DID methods audit, an R
+performance review, an HPC Slurm handoff, or a reviewer-response matrix.
 
 ## Skills
 
-All installable skills live in one canonical tree:
+All installable skills live in one canonical source tree:
+`skills/<skill-name>/SKILL.md`.
 
-```text
-skills/<skill-name>/SKILL.md
-```
-
-`.codex/skills` and `.agents/skills` are symlinks to that same source tree.
-There is no second skin for Codex, Agents, or released skill archives.
-
-### Factory chain
+### Research Factory
 
 | Stage | Skill | Owns |
 |---|---|---|
-| Start | [`research-starter`](skills/research-starter/SKILL.md) | Candidate routes, minimum viable study, next executable action |
-| Design | [`study-design-builder`](skills/study-design-builder/SKILL.md) | Selected route, seven MIDA declarations, decision register, `.aiss` model/check |
-| Data | [`research-data-builder`](skills/research-data-builder/SKILL.md) | Data pipeline, sample flow, merge audit, variable provenance |
-| Literature | [`literature-matrix`](skills/literature-matrix/SKILL.md) | Literature discovery, source screening, extraction matrix, compiled evidence |
-| Analysis | [`research-analysis-runner`](skills/research-analysis-runner/SKILL.md) | Analysis readiness gate, first-pass outputs, analysis manifest |
-| Review | [`methods-reviewer`](skills/methods-reviewer/SKILL.md) | Method, data, answer, and claim alignment diagnostics |
-| Report | [`academic-writing-scaffold`](skills/academic-writing-scaffold/SKILL.md), [`research-slides-builder`](skills/research-slides-builder/SKILL.md), [`reviewer-response`](skills/reviewer-response/SKILL.md) | Claim ledger, source map, slide map, revision matrix, author-fillable response scaffold |
+| Start | [`research-starter`](skills/research-starter/SKILL.md) | candidate routes, minimum viable study, next executable action |
+| Design | [`study-design-builder`](skills/study-design-builder/SKILL.md) | selected route, MIDA declarations, decision register, `.aiss` model/check |
+| Data | [`research-data-builder`](skills/research-data-builder/SKILL.md) | data pipeline, sample flow, merge audit, variable provenance |
+| Literature | [`literature-matrix`](skills/literature-matrix/SKILL.md) | source discovery, screening, extraction matrix, compiled evidence |
+| Analysis | [`research-analysis-runner`](skills/research-analysis-runner/SKILL.md) | analysis readiness gate, first-pass outputs, analysis manifest |
+| Review | [`methods-reviewer`](skills/methods-reviewer/SKILL.md) | method, data, answer, and claim alignment diagnostics |
+| Report | [`academic-writing-scaffold`](skills/academic-writing-scaffold/SKILL.md), [`research-slides-builder`](skills/research-slides-builder/SKILL.md), [`reviewer-response`](skills/reviewer-response/SKILL.md) | claim ledger, source map, slide map, revision matrix, author-fillable scaffolds |
 
-<details>
-<summary>Specialist and utility skills</summary>
+### Specialist And Tooling Skills
 
 | Skill | Owns |
 |---|---|
 | [`codebook-parse`](skills/codebook-parse/SKILL.md) | DDI survey metadata SSOT from data and codebooks |
-| [`cleaning-contract`](skills/cleaning-contract/SKILL.md) | Declared cleaning decisions before transformation |
-| [`cleaning-execute`](skills/cleaning-execute/SKILL.md) | Mechanical execution of a declared cleaning contract |
+| [`cleaning-contract`](skills/cleaning-contract/SKILL.md) | declared cleaning decisions before transformation |
+| [`cleaning-execute`](skills/cleaning-execute/SKILL.md) | mechanical execution of a declared cleaning contract |
 | [`did-expert`](skills/did-expert/SKILL.md) | DID and panel causal inference diagnostics |
-| [`latex-tables`](skills/latex-tables/SKILL.md) | Publication-style LaTeX tables |
-| [`analysis-explainer`](skills/analysis-explainer/SKILL.md) | Technical result documentation for collaborators |
-| [`r-performance`](skills/r-performance/SKILL.md) | R profiling, optimization, and HPC-oriented performance advice |
-| [`sjtu-hpc`](skills/sjtu-hpc/SKILL.md) | SJTU HPC and Slurm workflow guidance |
+| [`latex-tables`](skills/latex-tables/SKILL.md) | publication-style LaTeX tables and HTML previews |
+| [`analysis-explainer`](skills/analysis-explainer/SKILL.md) | technical result documentation for collaborators |
+| [`r-performance`](skills/r-performance/SKILL.md) | R profiling, optimization, and parallelization advice |
+| [`sjtu-hpc`](skills/sjtu-hpc/SKILL.md) | SJTU HPC, Slurm, queues, transfer, cleanup, and job templates |
 | [`codex`](skills/codex/SKILL.md) | OpenAI Codex CLI delegation from another agent |
-| [`linear-issue`](skills/linear-issue/SKILL.md) | Work tracking through Linear issues |
+| [`linear-issue`](skills/linear-issue/SKILL.md) | work tracking through Linear issues |
 
-</details>
+## Validation
+
+Run these gates from the repository root after changing the research-factory
+skillpack.
+
+| Gate | Command |
+|---|---|
+| Workflow contract | `python3 scripts/validate_skillpack_workflow.py` |
+| Methodology foundations | `python3 scripts/validate_methodology_foundations.py docs/methodology_source_matrix.csv` |
+| AI-use ledger | `python3 scripts/validate_ai_use_ledger.py docs/ai_use_ledger.csv` |
+| `.aiss` model | `python3 scripts/validate_ai4ss_model.py docs/examples/research_model.aiss` |
+| Literature evidence compile | `python3 scripts/validate_literature_evidence_compile.py skills/literature-matrix/examples/valid_literature_matrix.csv` |
+| Analysis readiness | `python3 scripts/validate_analysis_readiness.py skills/research-analysis-runner/examples/valid_analysis_readiness_check.csv` |
+| Factory-level eval | `python3 scripts/run_factory_level_eval.py --clean` |
+
+For DSL work, use `dsl/scripts/aiss.py` as the unified v0.4 entrypoint for
+`compile`, `lint`, and `run`.
+
+Key docs:
+
+- [`docs/skillpack_workflow_contract.md`](docs/skillpack_workflow_contract.md)
+- [`docs/ai4ss_dsl_factory_integration.md`](docs/ai4ss_dsl_factory_integration.md)
+- [`docs/methodology_foundations.md`](docs/methodology_foundations.md)
+- [`docs/skillpack_gap_map.md`](docs/skillpack_gap_map.md)
+- [`docs/ai_use_ledger.schema.md`](docs/ai_use_ledger.schema.md)
 
 ## Evidence
 
 These evaluations measure structure, continuity, validation gates, and boundary
-discipline. They do not prove empirical truth or replace expert review.
+discipline. They do not prove empirical truth and they do not replace expert
+review.
 
 | Evaluation | Baseline | AI4SS skill/factory | What it measures |
 |---|---:|---:|---|
-| Factory-level structural packet | 7.3 / 100 | 91.4 / 100 | Full-chain continuity from rough topic to bounded claim handoff |
-| Live skill-use evaluation | 84.4 / 100 | 94.1 / 100 | Inspectable artifacts, traceability markers, validation gates, author decisions |
-| Structural skill-use simulation | 39.0 / 100 | 96.2 / 100 | Whether canonical artifacts and gates appear in controlled packets |
-| Cleaning-contract benchmark | 53% pass rate | 100% pass rate | Survey cleaning contracts on three real PI datasets |
+| Factory-level structural packet | 6.4 / 100 | 92.4 / 100 | full-chain continuity from rough topic to bounded claim handoff |
+| Live skill-use evaluation | 84.4 / 100 | 94.1 / 100 | inspectable artifacts, traceability markers, validation gates, author decisions |
+| Structural skill-use simulation | 39.0 / 100 | 96.2 / 100 | whether canonical artifacts and gates appear in controlled packets |
+| Cleaning-contract benchmark | 53% pass rate | 100% pass rate | survey cleaning contracts on three real PI datasets |
 
-Key reports:
+Reports:
 
 - [`docs/factory_level_eval/unblinded_report.md`](docs/factory_level_eval/unblinded_report.md)
 - [`docs/live_blind_skill_use_eval/unblinded_report.md`](docs/live_blind_skill_use_eval/unblinded_report.md)
 - [`docs/blind_skill_use_eval/unblinded_report.md`](docs/blind_skill_use_eval/unblinded_report.md)
 - [`docs/evals/cleaning-contract/iteration-1/benchmark.md`](docs/evals/cleaning-contract/iteration-1/benchmark.md)
 
-## Validate
+## Repository Map
 
-Run the current factory checks from the repository root:
+| Path | Purpose |
+|---|---|
+| `skills/` | canonical source tree for installable skills |
+| `dsl/` | `.aiss` parser, compiler, linter, and runner |
+| `docs/` | contracts, methodology docs, examples, evaluation packets |
+| `scripts/` | validators and evaluation generators |
+| `references/` | source and DSL reference material |
+| `.codex/skills`, `.agents/skills` | symlinks to `../skills` |
 
-```bash
-python3 scripts/validate_skillpack_workflow.py
-python3 scripts/validate_methodology_foundations.py docs/methodology_source_matrix.csv
-python3 scripts/validate_ai_use_ledger.py docs/ai_use_ledger.csv
-python3 scripts/validate_ai4ss_model.py docs/examples/research_model.aiss
-python3 scripts/validate_literature_evidence_compile.py skills/literature-matrix/examples/valid_literature_matrix.csv
-python3 scripts/validate_analysis_readiness.py skills/research-analysis-runner/examples/valid_analysis_readiness_check.csv
-python3 scripts/run_factory_level_eval.py --clean
-```
+## Limits
 
-## Boundaries
+The infrastructure is ambitious, but its claims are bounded.
 
-This project is deliberately not a paper-writing bot.
-
-- It must not write final manuscript prose for the author.
-- It must not write final reviewer-response prose for the author.
-- It must not treat deterministic structural checks as live peer review.
-- It must not turn `.aiss` checker success into identification validity.
-- It must preserve missing data, source uncertainty, diagnosed limits, and
-  author decisions.
-- It is a methodology-enforcing workflow, not a complete specialist-methods
-  system for every empirical design.
-
-## Repository Layout
-
-```text
-.
-|-- skills/                 # canonical source tree for every installable skill
-|-- dsl/                    # .aiss parser, compiler, linter, and runner
-|-- docs/                   # workflow contracts, methodology docs, eval packets
-|-- scripts/                # validators and evaluation generators
-|-- references/             # source and DSL reference material
-|-- .codex/skills -> ../skills
-`-- .agents/skills -> ../skills
-```
+- It does not certify that an empirical claim is true.
+- It does not turn `.aiss` checker success into identification validity.
+- It does not replace source reading, data inspection, ethics review, or
+  author judgment.
+- It does not write final manuscript prose, final reviewer-response prose, or
+  final scholarly claims for the author.
+- It is not yet a universal specialist-methods system. DID is covered, while
+  IV, RD, RCT, survey, network, spatial, ML evaluation, qualitative interviews,
+  and ethics/confidentiality review remain watchlist areas unless added as
+  specialist skills.
+- The strongest current factory evaluation is structural. A stronger live field
+  evaluation should use independently generated outputs, independent human
+  expert graders, and inter-rater reliability before unblinding.
 
 ## Contributing
 
@@ -272,10 +261,15 @@ A good contribution should:
 
 1. live under `skills/<skill-name>/`,
 2. include a `SKILL.md` with precise trigger language,
-3. define its methodology role in the MIDA spine,
+3. define its role in the broader research infrastructure,
 4. preserve upstream handoff fields when available,
 5. produce inspectable artifacts rather than final scholarly claims,
-6. add examples or validators when the output has a schema.
+6. add examples or validators when the output has a schema,
+7. update the AI-use ledger when externally shared teaching or research
+   workflow artifacts change.
+
+Before opening a PR, run the validation commands above and include the exact
+commands and results in the PR description.
 
 ## Cite
 

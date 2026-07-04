@@ -23,7 +23,7 @@ This skill sits in the `Report` layer of the MIDA spine. It preserves the declar
 
 The core check is whether a proposed claim still matches the declared `Model`, `Inquiry`, `Data strategy`, and `Answer strategy`, or whether it silently turns an output into a stronger scholarly claim.
 
-When a `.aiss` model is present, claim rows must preserve the relevant model, concept, causal, or bridge ids and the model check status. A checked model element can support a claim slot; it still cannot become AI-written manuscript prose.
+When a `.aiss` model is present, claim rows must preserve the relevant model, concept, causal, or bridge ids and the model check status. A checked model element can support a claim slot; it still cannot become AI-written manuscript prose. When a theory workbench is present, use it as an author review surface for evidence slots, rival/scope questions, and claim boundaries; do not convert it into final literature-review or theory prose.
 
 ## Hard Boundary
 
@@ -38,11 +38,12 @@ Allowed outputs:
 - Table-to-claim audits.
 - Citation-gap lists.
 - Causal-language risk checks.
+- Theory workbench tables with evidence and decision slots.
 - Issue labels, revision targets, and author decision questions.
 
 ## Workflow Contract
 
-- Upstream inputs: study design brief, `study_design_declaration.csv`, `research_model.aiss`, literature matrix, analysis run manifest, methods issue table, data audit outputs, author draft, table/figure captions, or reviewer-response evidence.
+- Upstream inputs: study design brief, `study_design_declaration.csv`, `research_model.aiss`, literature matrix, `literature_theory_synthesis.csv`, `theory_rival_map.csv`, `theory_scope_map.csv`, `theory_evidence.md`, analysis run manifest, methods issue table, data audit outputs, author draft, table/figure captions, or reviewer-response evidence.
 - Produces: evidence inventory, claim ledger, section outline, paragraph skeletons with slots, citation gaps, causal-language risk notes, and author decision points.
 - Handoff fields: `route_id`, `target_inquiry`, `evidence_sources`, `claim_ledger`, `interpretation_boundary`, `diagnosed_limit`, `unsupported_claims`, `citation_gaps`, `author_decisions`, `ai4ss_model_path`, `model_id`, `concept_id`, `causal_id`, `bridge_id`, `ai4ss_check_status`, `commensurability_status`, `ai_writing_boundary`, `next_skill_route`.
 - Downstream routes: `methods-reviewer`, `literature-matrix`, `research-slides-builder`, `reviewer-response`, `ask_author`, or `none`.
@@ -63,10 +64,12 @@ Step -1: Clarify the writing task
 Step 0: Inventory evidence
 -> Read tables, figures, captions, model notes, literature matrices, and research design notes.
 -> Separate design facts, estimates, diagnostics, literature facts, interpretations, and speculative mechanisms.
+-> If theory workbench sidecars are present, separate model-ready objects from rival, scope, novelty, contribution, and mechanism-strength decisions.
 
 Step 1: Build scaffold
 -> Use references/section-scaffolds.md for section-specific outlines.
 -> Use references/claim-audit.md to map claims to evidence and flag unsupported language.
+-> Use references/theory_workbench.md when literature-to-theory objects need author review before prose.
 -> If `.aiss` model ids are available, attach each claim slot to the relevant concept, causal implication, or bridge.
 
 Step 2: Return author-facing materials
@@ -98,6 +101,7 @@ If any table is returned in Markdown, also write or request a CSV sidecar with t
 
 - Run `scripts/validate_claim_ledger.py <path>` to check claim-ledger columns and authorship-boundary markers.
 - Run `scripts/validate_ai4ss_model.py <path-to-research_model.aiss>` before using model-linked claims as evidence-ready slots.
+- Run `scripts/validate_theory_workbench.py <workbench-dir>` before treating theory workbench inputs as bounded claim slots.
 
 ## Standards
 
@@ -116,4 +120,5 @@ If any table is returned in Markdown, also write or request a CSV sidecar with t
 | [claim-audit.md](references/claim-audit.md) | Claim types, evidence mapping, and wording-risk checks | Auditing evidence or a user draft |
 | [prompt-pack.md](references/prompt-pack.md) | Copy-ready prompts for evidence maps, claim ledgers, paragraph skeletons, and draft audits | Turning writing support into bounded agent tasks |
 | [author-workbench.md](references/author-workbench.md) | Author-only workflow that separates AI-produced scaffold from human-authored prose | Keeping the academic writing boundary operational |
+| [theory_workbench.md](references/theory_workbench.md) | Theory workbench template for evidence slots, rival/scope checks, and author decisions | Reviewing literature-to-theory handoffs before prose |
 | [worked-example.md](references/worked-example.md) | Example result-section scaffold and claim audit without final prose | Teaching or demonstrating the skill |

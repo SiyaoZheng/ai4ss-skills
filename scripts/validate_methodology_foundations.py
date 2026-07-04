@@ -60,7 +60,7 @@ EXPECTED_ARTIFACTS = {
     "research-starter": ("research_route_cards.csv", "research_model.aiss"),
     "study-design-builder": ("study_design_declaration.csv", "design_decision_register.csv", "research_model.aiss"),
     "research-data-builder": ("sample_flow.csv", "merge_audit.csv", "variable_provenance.csv"),
-    "literature-matrix": ("literature_candidate_discovery.csv", "literature_matrix.csv"),
+    "literature-matrix": ("literature_candidate_discovery.csv", "literature_matrix.csv", "literature_theory_synthesis.csv"),
     "research-analysis-runner": ("analysis_readiness_check.csv", "analysis_run_manifest.csv"),
     "methods-reviewer": ("issue_table.csv",),
     "academic-writing-scaffold": ("claim_ledger.csv",),
@@ -93,6 +93,21 @@ SCHEMA_REQUIREMENTS = {
         ),
     },
     "study-design-builder": {
+        "references/design-workflow.md": (
+            "theory_mapping",
+            "literature_theory_synthesis.csv",
+            "theory_rival_map.csv",
+            "theory_scope_map.csv",
+            "theory_evidence.md",
+            "validate_theory_workbench.py",
+            "ready_for_aiss",
+            "proposed_aiss_object",
+            "design_decision_register.csv",
+            "decision",
+            "concept",
+            "causal",
+            "bridge",
+        ),
         "references/declaration-schema.md": (
             "study_design_declaration.csv",
             "mida_id",
@@ -164,6 +179,19 @@ SCHEMA_REQUIREMENTS = {
             "compiled_ai4ss_path",
             "evidence_compile_status",
         ),
+        "references/theory-synthesis.md": (
+            "literature_theory_synthesis.csv",
+            "theory_rival_map.csv",
+            "theory_scope_map.csv",
+            "theory_evidence.md",
+            "compile_evidence.py",
+            "synthesis_type",
+            "source_paper_ids",
+            "proposed_aiss_object",
+            "author_decision_needed",
+            "actor:",
+            "discriminating_observation",
+        ),
         "scripts/validate_literature_discovery.py": ("route_id", "design_source", "target_inquiry"),
         "scripts/validate_literature_matrix.py": (
             "route_id",
@@ -179,6 +207,13 @@ SCHEMA_REQUIREMENTS = {
             "evidence_table_path",
             "compiled_ai4ss_path",
         ),
+        "scripts/validate_literature_theory_synthesis.py": (
+            "literature_theory_synthesis",
+            "synthesis_type",
+            "source_paper_ids",
+            "proposed_aiss_object",
+            "author_decision_needed",
+        ),
         "examples/valid_literature_candidate_discovery.csv": ("route_id", "design_source", "target_inquiry"),
         "examples/valid_literature_matrix.csv": (
             "route_id",
@@ -188,6 +223,15 @@ SCHEMA_REQUIREMENTS = {
             "evidence_table_path",
             "compiled_ai4ss_path",
             "evidence_compile_status",
+        ),
+        "examples/valid_literature_theory_synthesis.csv": (
+            "route_id",
+            "design_source",
+            "target_inquiry",
+            "synthesis_type",
+            "source_paper_ids",
+            "proposed_aiss_object",
+            "author_decision_needed",
         ),
     },
     "research-analysis-runner": {
@@ -242,11 +286,38 @@ SCHEMA_REQUIREMENTS = {
         ),
     },
     "methods-reviewer": {
+        "references/audit-checklist.md": (
+            "literature_theory_synthesis.csv",
+            "theory_rival_map.csv",
+            "theory_scope_map.csv",
+            "mechanisms",
+            "rival explanation",
+            "scope rows",
+            "discriminating observable implication",
+            "source status",
+            "issue table",
+        ),
         "references/issue-examples.md": ("route_id", "design_source", "target_inquiry", "mida_component"),
         "scripts/validate_issue_table.py": ("route_id", "design_source", "target_inquiry", "mida_component", "ai4ss_model_path"),
         "examples/valid_issue_table.csv": ("route_id", "design_source", "target_inquiry", "mida_component", "research_model.aiss"),
     },
     "academic-writing-scaffold": {
+        "references/author-workbench.md": (
+            "theory_workbench.md",
+            "literature_theory_synthesis.csv",
+            "theory_rival_map.csv",
+            "theory_scope_map.csv",
+            "final theory prose",
+            "author writes",
+        ),
+        "references/theory_workbench.md": (
+            "literature_theory_synthesis.csv",
+            "theory_rival_map.csv",
+            "theory_scope_map.csv",
+            "compile_evidence.py",
+            "validate_theory_workbench.py",
+            "author must write final prose",
+        ),
         "references/claim-audit.md": ("target_inquiry", "interpretation_boundary", "diagnosed_limit"),
         "scripts/validate_claim_ledger.py": ("target_inquiry", "interpretation_boundary", "diagnosed_limit", "ai4ss_model_path"),
         "examples/valid_claim_ledger.csv": ("target_inquiry", "interpretation_boundary", "diagnosed_limit", "research_model.aiss"),
@@ -276,6 +347,27 @@ SCHEMA_REQUIREMENTS = {
         "scripts/validate_revision_matrix.py": ("mida_element_affected",),
         "examples/valid_revision_matrix.csv": ("mida_element_affected",),
     },
+}
+
+REPO_REQUIREMENTS = {
+    "scripts/validate_theory_workbench.py": (
+        "literature_theory_synthesis.csv",
+        "theory_rival_map.csv",
+        "theory_scope_map.csv",
+        "compile_evidence.py",
+        "ai4ss_factory_contracts.sidecars",
+        "ai4ss_factory_contracts.workflow",
+        "ready_for_aiss",
+        "author-owned",
+    ),
+    "dsl/scripts/compile_evidence.py": (
+        "Routes",
+        "MIDA",
+        "Decisions",
+        "route",
+        "mida",
+        "decision",
+    ),
 }
 
 
@@ -384,6 +476,23 @@ def main() -> int:
             for term in required_terms:
                 if term.lower() not in text:
                     errors.append(f"{skill}: {relative_path} missing `{term}`")
+
+    for relative_path, required_terms in REPO_REQUIREMENTS.items():
+        path = repo_root / relative_path
+        if not path.exists():
+            errors.append(f"repo: missing theory engine contract file {relative_path}")
+            continue
+        try:
+            text = read_schema_enforcement_text(path, repo_root)
+        except UnicodeDecodeError as exc:
+            errors.append(f"repo: cannot read {relative_path}: {exc}")
+            continue
+        except OSError as exc:
+            errors.append(f"repo: cannot read theory engine contract for {relative_path}: {exc}")
+            continue
+        for term in required_terms:
+            if term.lower() not in text:
+                errors.append(f"repo: {relative_path} missing `{term}`")
 
     if errors:
         return fail(f"{args.csv_path}: {'; '.join(errors)}")

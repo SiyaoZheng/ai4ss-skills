@@ -75,6 +75,24 @@ ALLOWED_NEXT_ROUTES: dict[str, set[str]] = {
         "ask_author",
         "none",
     },
+    "literature_theory_synthesis": {
+        "study-design-builder",
+        "academic-writing-scaffold",
+        "methods-reviewer",
+        "ask_author",
+    },
+    "theory_rival_map": {
+        "methods-reviewer",
+        "study-design-builder",
+        "academic-writing-scaffold",
+        "ask_author",
+    },
+    "theory_scope_map": {
+        "methods-reviewer",
+        "study-design-builder",
+        "academic-writing-scaffold",
+        "ask_author",
+    },
     "analysis_readiness": {
         "research-analysis-runner",
         "research-data-builder",

@@ -6,16 +6,18 @@ Randomization seed: `20260701`
 
 ## Result Summary
 
-- Average `generic_agent`: **7.3 / 100**
-- Average `ai4ss_factory`: **91.4 / 100**
-- Average gain: **84.1 points**
+- Average `generic_agent`: **6.4 / 100**
+- Average `ai4ss_factory`: **92.4 / 100**
+- Average gain: **86.0 points**
 
 ## Packet Scores
 
 | packet | case | condition | research object | MIDA | .aiss | evidence/data | analysis | boundary | continuity | penalty | total |
 |---|---|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|
-| P001 | `city_platform_green_patents` | `generic_agent` | 5.0 | 3.8 | 4.3 | 0.0 | 3.0 | 4.3 | 0.0 | 13.0 | 7.3 |
-| P002 | `city_platform_green_patents` | `ai4ss_factory` | 15.0 | 15.0 | 10.7 | 15.0 | 15.0 | 10.7 | 10.0 | 0.0 | 91.4 |
+| P001 | `city_platform_green_patents` | `generic_agent` | 5.0 | 3.8 | 4.3 | 0.0 | 3.0 | 3.3 | 0.0 | 13.0 | 6.4 |
+| P002 | `city_platform_green_patents` | `ai4ss_factory` | 15.0 | 15.0 | 10.7 | 15.0 | 15.0 | 11.7 | 10.0 | 0.0 | 92.4 |
+| P003 | `platform_theory_mapping` | `ai4ss_factory` | 15.0 | 15.0 | 10.7 | 15.0 | 15.0 | 11.7 | 10.0 | 0.0 | 92.4 |
+| P004 | `platform_theory_mapping` | `generic_agent` | 5.0 | 3.8 | 4.3 | 0.0 | 3.0 | 3.3 | 0.0 | 13.0 | 6.4 |
 
 ## Interpretation
 

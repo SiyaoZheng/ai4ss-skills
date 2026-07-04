@@ -24,7 +24,7 @@ Required columns:
 | `source_status` | ready_for_extraction, needs_primary_source, needs_pdf, needs_version_check, background_only, duplicate_candidate, excluded, unverified |
 | `reason` | Why the item is in or out |
 | `next_action` | retrieve_pdf, open_primary_page, check_doi, deduplicate, extract_matrix_row, exclude, ask_author |
-| `relevance_axis` | firm_innovation, public_sector_productivity, digital_government, ai_adoption, method_anchor, measurement, other |
+| `relevance_axis` | Project-specific axis or generic axis: concept, mechanism, boundary_condition, rival_explanation, observable_implication, method_anchor, measurement, other |
 | `found_from` | Search engine, database, seed paper, Zotero, local ref, or citation chasing source |
 | `access_date` | YYYY-MM-DD |
 

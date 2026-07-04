@@ -29,7 +29,7 @@ This skill is the primary MIDA declaration layer. It turns a selected route into
 
 `Estimand` belongs inside `Inquiry`, not in place of the whole design. For non-causal work, the same slot must name the target descriptive quantity, construct, classification target, process-tracing claim, or synthesis question.
 
-This skill owns the `.aiss` workflow upgrade from provisional route to design. It marks one `.aiss` `route` as `selected`, writes seven `mida` declarations, records author-owned `decision` declarations, and then adds the model layer when conceptual, construct, causal, or bridge structure matters.
+This skill owns the `.aiss` workflow upgrade from provisional route to design. It marks one `.aiss` `route` as `selected`, writes seven `mida` declarations, records author-owned `decision` declarations, and then adds the model layer when conceptual, construct, causal, or bridge structure matters. When a theory workbench handoff exists, it may use validated `literature_theory_synthesis.csv`, `theory_rival_map.csv`, `theory_scope_map.csv`, and `theory_evidence.md` as evidence for existing `.aiss` `concept`, `claim`, `relation`, `causal`, `bridge`, or `model` declarations, while leaving novelty, rival choice, scope choice, and mechanism strength as author decisions.
 
 ## Hard Boundary
 
@@ -37,7 +37,7 @@ Do not write manuscript prose, final preregistration prose, final causal claims,
 
 ## Workflow Contract
 
-- Upstream inputs: `research_starter_packet.md`, `research_route_cards.csv`, route-only `research_model.aiss`, seed literature notes, variable dictionaries, data previews, policy timelines, author notes, or an existing design-level `research_model.aiss`.
+- Upstream inputs: `research_starter_packet.md`, `research_route_cards.csv`, route-only `research_model.aiss`, `literature_theory_synthesis.csv`, optional `theory_rival_map.csv`, optional `theory_scope_map.csv`, optional `theory_evidence.md`, seed literature notes, variable dictionaries, data previews, policy timelines, author notes, or an existing design-level `research_model.aiss`.
 - Produces: `docs/study_design_brief.md`, `docs/study_design_declaration.csv`, optionally `docs/design_decision_register.csv`, `docs/research_model.aiss`, and `docs/ai4ss_check_report.txt`.
 - Handoff fields: `route_id`, `route_decl_id`, `mida_id`, `decision_decl_id`, `model_scope`, `inquiry`, `study_type`, `unit_of_analysis`, `outcome`, `exposure_or_treatment`, `comparison`, `data_strategy`, `answer_strategy`, `diagnosands_or_gates`, `redesign_options`, `interpretation_boundary`, `author_decisions`, `ai4ss_model_path`, `model_id`, `concept_id`, `causal_id`, `bridge_id`, `ai4ss_check_status`, `commensurability_status`, `next_skill_route`.
 - Downstream routes: `research-data-builder`, `literature-matrix`, `research-analysis-runner`, `methods-reviewer`, `did-expert`, or `ask_author`.
@@ -66,6 +66,11 @@ Step 0: Declare MIDA
 
 Step 0.5: Compile or update the `.aiss` model layer
 -> When concepts, measurement bridges, causal implications, or theory-to-evidence links matter, add or update `concept`, `claim`, `attribute`, `causal`, `bridge`, and `model` declarations in the same `research_model.aiss`.
+-> If `literature_theory_synthesis.csv` is present, use its `proposed_aiss_object`, `source_paper_ids`, `rival_or_boundary`, `observable_implication`, `evidence_strength`, and `author_decision_needed` fields to decide which model-layer objects are proposed, diagnosed, blocked, or left for the author.
+-> If the full theory workbench is present, run or require `scripts/validate_theory_workbench.py <workbench-dir>` before using it.
+-> Only workbench objects that pass validation and are marked `ready_for_aiss` may be compiled into or used to update `.aiss` model-layer declarations.
+-> Route rival explanations, scope drift, unresolved theoretical contribution, and mechanism-strength choices into `design_decision_register.csv` and `.aiss` `decision` declarations instead of model facts.
+-> In `study_design_declaration.csv`, cite `literature_theory_synthesis.csv` in `evidence_source` for affected MIDA rows; do not add new columns.
 -> Preserve stable `route_decl_id`, `mida_id`, `decision_decl_id`, `model_id`, `concept_id`, `causal_id`, and `bridge_id` values in the declaration sidecars.
 -> Run `scripts/validate_ai4ss_model.py docs/research_model.aiss` when the toolchain is available, and save the output to `docs/ai4ss_check_report.txt`.
 -> Treat `aiss.py lint` errors as a design artifact failure, not as a cosmetic warning.
@@ -97,11 +102,14 @@ Step 3: Register decisions
 
 - Run `scripts/validate_study_design_declaration.py <path>` to check the MIDA declaration sidecar.
 - Run `scripts/validate_design_decisions.py <path>` to check the design decision register.
+- Run `scripts/validate_theory_workbench.py <workbench-dir>` before consuming full theory workbench sidecars.
 - Run `scripts/validate_ai4ss_model.py docs/research_model.aiss` to check the DSL model through `aiss.py compile`, `aiss.py lint`, and `aiss.py run`.
 
 ## Quality Bar
 
 - Keep design choices traceable to route cards or supplied materials.
+- Keep theory-mapping choices traceable to verified literature synthesis sidecars when they come from literature.
+- Consume only validated `ready_for_aiss` theory workbench objects as `.aiss` model-layer input.
 - Separate feasible first analysis from full-paper ambition.
 - Do not default every project to causal panel regression.
 - Record unresolved author decisions instead of smoothing them into a fake design.

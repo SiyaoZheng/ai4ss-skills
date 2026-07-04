@@ -28,11 +28,11 @@ This skill is the `Diagnose` and `Redesign` layer of the MIDA spine. It checks w
 
 The review must name diagnosands or gates such as wrong estimand, weak comparison, measurement mismatch, inference mismatch, reproducibility failure, source-status risk, or overclaiming. Redesign recommendations remain author decisions unless the user explicitly asks for implementation.
 
-When a `.aiss` model is present, reviewing the model is part of the methods audit: `aiss.py compile/lint/run` errors, missing bridges, unchecked commensurability, and model-to-output mismatch are reportable issues.
+When a `.aiss` model is present, reviewing the model is part of the methods audit: `aiss.py compile/lint/run` errors, missing bridges, unchecked commensurability, and model-to-output mismatch are reportable issues. When a theory workbench is present, rival explanations, scope drift, vague mechanisms, non-discriminating observable implications, weak source status, and theory overclaim are issue-table rows, not a separate theory-review schema.
 
 ## Workflow Contract
 
-- Upstream inputs: `study_design_brief.md`, `study_design_declaration.csv`, `research_model.aiss`, `ai4ss_check_report.txt`, `analysis_run_manifest.csv`, scripts, logs, tables, figures, data audit outputs, literature matrices, manuscript snippets, or reviewer comments.
+- Upstream inputs: `study_design_brief.md`, `study_design_declaration.csv`, `research_model.aiss`, `ai4ss_check_report.txt`, `analysis_run_manifest.csv`, scripts, logs, tables, figures, data audit outputs, literature matrices, `literature_theory_synthesis.csv`, `theory_rival_map.csv`, `theory_scope_map.csv`, manuscript snippets, or reviewer comments.
 - Produces: issue table, method-risk notes, recommended checks, open author decisions, and validation commands run.
 - Handoff fields: `route_id`, `design_source`, `target_inquiry`, `mida_component`, `analysis_outputs`, `issue_table`, `severity`, `evidence`, `next_action`, `author_decisions`, `ai4ss_model_path`, `model_id`, `concept_id`, `causal_id`, `bridge_id`, `ai4ss_check_status`, `commensurability_status`, `next_skill_route`.
 - Downstream routes: `research-data-builder`, `research-analysis-runner`, `study-design-builder`, `academic-writing-scaffold`, `reviewer-response`, `research-slides-builder`, `did-expert`, or `ask_author`.
@@ -58,6 +58,7 @@ Step 1: Inspect evidence
 -> Check whether tables/figures expose sample, variables, FE, clustering, and uncertainty.
 -> Trace suspicious numbers back to scripts or logs.
 -> Compare `.aiss` concepts, causal implications, and bridges against design declarations, data audits, and analysis manifests.
+-> If a theory workbench is present, audit rival explanations, scope rows, mechanism parts, source-status support, and observable implications against the declared design.
 
 Step 2: Produce issue table
 -> Use severity and confidence.
@@ -80,6 +81,7 @@ Step 3: Recommend next actions
 - Reporting: table labels, figure axes, omitted periods, N, sample notes.
 - Reproducibility: runnable scripts, paths, logs, seeds, package versions.
 - Claims: causal language, mechanism claims, external validity, policy implications.
+- Theory: vague mechanisms, missing rival explanation, scope drift, non-discriminating observable implication, weak source status, theory overclaim.
 
 ## Output Shape
 

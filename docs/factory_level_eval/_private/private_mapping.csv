@@ -1,3 +1,5 @@
 packet_id,case_id,condition
 P001,city_platform_green_patents,generic_agent
 P002,city_platform_green_patents,ai4ss_factory
+P003,platform_theory_mapping,ai4ss_factory
+P004,platform_theory_mapping,generic_agent

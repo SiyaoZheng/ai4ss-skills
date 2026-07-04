@@ -40,6 +40,8 @@ Use `study_design_declaration.csv` when a selected route becomes a reusable desi
 - `report_boundary` must have a concrete `interpretation_boundary`.
 - If `ai4ss_model_path` is not `not_applicable:<reason>`, it must end with `.aiss` and point to the artifact containing the selected `route` and mirrored `mida` declarations.
 - If `study_type` is `causal`, `theory_mapping`, `mixed_methods`, or construct-heavy qualitative work, the row set should either point to `research_model.aiss` or state why a DSL model is not applicable.
+- When a `theory_mapping` row depends on `literature_theory_synthesis.csv`, put that sidecar path in `evidence_source` and preserve unresolved novelty, mechanism-strength, or rival-explanation choices in `author_decision_needed` or a `decision` declaration.
+- When full theory workbench sidecars are present, reference `literature_theory_synthesis.csv`, `theory_rival_map.csv`, `theory_scope_map.csv`, or `theory_evidence.md` in existing `evidence_source` cells as needed; do not add columns to `study_design_declaration.csv`.
 - `ai4ss_check_status=fail` is not a valid ready handoff.
 - Causal or measurement rows with a `causal_id` or `bridge_id` must declare `commensurability_status` rather than leaving it implicit.
 - Rows with `needs_author_decision` route to `ask_author`.
