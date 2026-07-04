@@ -24,6 +24,7 @@ Install once. Works automatically. Survives context resets.
 
 | Date | Update |
 |------|--------|
+| 2026-07 | `did-expert` released — DID/panel causal inference guide covering modern estimators (CS, SA, BJS, fect, synthdid), diagnostics, and writing |
 | 2026-07 | AI4SS research-factory skillpack migrated into `.codex/skills`: 9 Codex/project skills around the unified `.aiss` DSL workflow |
 | 2026-06 | `sjtu-hpc` released — sanitized SJTU HPC/Slurm workflow guide with job templates and transfer references |
 | 2026-05 | `cleaning-contract` and `cleaning-execute` released — full DDI 3-stage cleaning harness (declare → execute → audit) |
@@ -84,6 +85,7 @@ Think of them as tiny domain experts you install once and call automatically.
 | 📝 [`analysis-explainer`](#-analysis-explainer) | Turn statistical output into clean technical documentation | *"explain these results"* |
 | ⚡ [`r-performance`](#-r-performance) | Profile and optimize slow R code for HPC clusters | *"this R code is too slow"* |
 | 🖥️ [`sjtu-hpc`](#-sjtu-hpc) | Run SJTU HPC/交我算 Slurm jobs with safer login, queue, storage, and transfer practices | *"run this on SJTU HPC"* |
+| 🎯 [`did-expert`](#-did-expert) | DID/panel causal inference guide — modern estimators, diagnostics, TWFE pitfalls, and writing up results | *"DID", "event study", "staggered treatment"* |
 | 🤖 [`codex`](#-codex) | Delegate tasks to OpenAI Codex CLI for a second opinion | `codex review this file` |
 
 ### AI4SS research-factory skills
@@ -94,15 +96,16 @@ manuscript-writing shortcuts. They form an autonomous research-factory workflow
 around the `.aiss` DSL and the MIDA spine:
 
 ```text
-rough topic -> route cards -> MIDA declaration -> .aiss model/check ->
+rough topic -> .aiss route declarations -> .aiss MIDA declarations ->
+.aiss model/check ->
 literature/data gates -> analysis readiness -> analysis manifest ->
 bounded claim handoff
 ```
 
 | Skill | Role |
 |-------|------|
-| `research-starter` | Turn a rough topic, source pile, dataset folder, or policy phenomenon into route cards and a minimum viable study |
-| `study-design-builder` | Declare MIDA and, when needed, create or update `research_model.aiss` plus checker output |
+| `research-starter` | Turn a rough topic, source pile, dataset folder, or policy phenomenon into provisional `.aiss` route declarations, route-card mirrors, and a minimum viable study |
+| `study-design-builder` | Select a route, declare `.aiss` MIDA rows, and create or update `research_model.aiss` plus `aiss.py lint/run` output |
 | `research-data-builder` | Build auditable analysis samples, sample-flow tables, merge audits, and variable provenance |
 | `literature-matrix` | Build source-grounded literature matrices and deterministic literature evidence `.aiss` fragments |
 | `research-analysis-runner` | Run first-pass analysis only after `analysis_readiness_check.csv` passes or explicitly warns |
@@ -116,7 +119,10 @@ Validate the factory skillpack from the repo root:
 ```bash
 python3 scripts/validate_skillpack_workflow.py
 python3 scripts/validate_methodology_foundations.py docs/methodology_source_matrix.csv
+python3 scripts/validate_ai_use_ledger.py docs/ai_use_ledger.csv
 python3 scripts/validate_ai4ss_model.py docs/examples/research_model.aiss
+python3 scripts/validate_literature_evidence_compile.py .codex/skills/literature-matrix/examples/valid_literature_matrix.csv
+python3 scripts/validate_analysis_readiness.py .codex/skills/research-analysis-runner/examples/valid_analysis_readiness_check.csv
 python3 scripts/run_factory_level_eval.py --clean
 ```
 
@@ -282,6 +288,9 @@ unzip -q ai4ss-skills/analysis-explainer.skill -d ~/.claude/skills/
 # Directory-format skill:
 cp -r ai4ss-skills/codex.skill ~/.claude/skills/codex
 cp -r ai4ss-skills/sjtu-hpc.skill ~/.claude/skills/sjtu-hpc
+
+# did-expert (zip format):
+unzip -q ai4ss-skills/did-expert.skill -d ~/.claude/skills/
 ```
 
 ### Cursor
