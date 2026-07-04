@@ -6,7 +6,7 @@ Audit date: 2026-06-26
 
 The methodology foundation is now strong enough for the workshop workflow, with one important boundary: it is a methodology-enforcing cross-skill scaffold, not a universal specialist-methods system.
 
-The framework choice is defensible: `Declare MIDA -> Diagnose -> Redesign -> Report with bounded claims` is a coherent research-design spine, and it is much stronger than a loose bundle of methods citations. The earlier weakness was implementation: the spine was visible in docs and every `SKILL.md`, but not consistently forced by canonical artifact schemas and validators. That gap has now been remediated by moving MIDA fields into sidecar schemas, validators, valid examples, and the cross-skill methodology validator.
+The framework choice is defensible: `Declare MIDA -> Diagnose -> Redesign -> Report with bounded claims` is a coherent research-design spine, and it is much stronger than a loose bundle of methods citations. The earlier weakness was implementation: the spine was visible in docs and every `SKILL.md`, but not consistently forced by canonical artifact schemas and validators. That gap was first remediated by moving MIDA fields into sidecar schemas, validators, valid examples, and the cross-skill methodology validator; the current contract goes further by making route, MIDA, and decision state first-class `.aiss` declarations.
 
 Practical judgment:
 
@@ -26,10 +26,10 @@ The audit findings below are retained because they record the failure mode. The 
 
 | original issue | status | concrete remediation |
 |---|---|---|
-| `study-design-builder` did not force a MIDA-shaped design brief | Remediated | Added `study_design_declaration.csv`, `declaration-schema.md`, `validate_study_design_declaration.py`, and valid examples requiring `model`, `inquiry`, `data_strategy`, `answer_strategy`, `diagnose`, `redesign`, and `report_boundary` rows |
+| `study-design-builder` did not force a MIDA-shaped design brief | Remediated and fused into `.aiss` | Added `study_design_declaration.csv`, `declaration-schema.md`, `validate_study_design_declaration.py`, and valid examples requiring `model`, `inquiry`, `data_strategy`, `answer_strategy`, `diagnose`, `redesign`, and `report_boundary` rows; current rows preserve `.aiss` `mida_id` values |
 | Validators could create false confidence by checking prose rather than schemas | Remediated | Upgraded `scripts/validate_methodology_foundations.py` to check skill-local schema references, validator scripts, and valid examples for required MIDA fields |
 | Reporting and revision schemas lost declared methodology fields | Remediated | Added `target_inquiry`, `interpretation_boundary`, `diagnosed_limit`, `sample_or_scope`, `uncertainty_or_caveat`, `privacy_status`, and `mida_element_affected` to downstream schemas and validators |
-| Route cards were useful but not true pre-declarations | Remediated | Added `model_scope`, `candidate_inquiry`, `possible_data_strategy`, and `possible_answer_strategy` to route-card schema, examples, and validator |
+| Route cards were useful but not true pre-declarations | Remediated and fused into `.aiss` | Added `model_scope`, `candidate_inquiry`, `possible_data_strategy`, and `possible_answer_strategy` to route-card schema, examples, and validator; current route cards preserve `.aiss` `route_decl_id` values |
 | Data and literature provenance were not always tethered to design | Remediated | Added `route_id`, `design_source`, and `target_inquiry` to data, literature, analysis, and methods sidecars where design tethering matters |
 | Specialist methods remain incomplete | Watchlist | Kept DID delegated to `$did-expert`; other specialist methods should become new skills only when course cases require them |
 
@@ -144,7 +144,7 @@ Impact: the selected foundation is sound; the remaining problem is operational e
 
 The skillpack is no longer just agent monologue. It has a credible methodology spine and real workflow structure.
 
-After remediation, MIDA has moved from prose into schemas, validators, examples, and the cross-skill contract. The correct claim is now:
+After remediation, MIDA has moved from prose into `.aiss` workflow declarations, sidecar schemas, validators, examples, and the cross-skill contract. The correct claim is now:
 
 > This is a coherent methodology-enforcing teaching workflow for moving a research project from route discovery to design, data/literature, analysis, diagnosis, reporting, and revision. It is not a complete specialist-methods system for every empirical design.
 

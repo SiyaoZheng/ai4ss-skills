@@ -5,6 +5,7 @@ from __future__ import annotations
 
 import argparse
 import csv
+import json
 import subprocess
 import sys
 from pathlib import Path
@@ -47,9 +48,9 @@ def find_toolchain(explicit: Path | None) -> Path:
         ]
     )
     for candidate in candidates:
-        if (candidate / "compile_evidence.py").exists():
+        if (candidate / "compile_evidence.py").exists() and (candidate / "aiss.py").exists():
             return candidate
-    raise FileNotFoundError("cannot find ai4ss-skills dsl/scripts with compile_evidence.py")
+    raise FileNotFoundError("cannot find ai4ss-skills dsl/scripts with compile_evidence.py and aiss.py")
 
 
 def resolve_path(path_text: str, csv_path: Path, repo_root: Path) -> Path | None:
@@ -77,15 +78,29 @@ def compile_evidence(toolchain: Path, evidence_path: Path) -> str:
     return result.stdout
 
 
-def check_ai4ss(toolchain: Path, compiled_path: Path) -> str | None:
-    result = subprocess.run(
-        [sys.executable, str(toolchain / "aiss_checker.py"), str(compiled_path)],
+def check_aiss(toolchain: Path, compiled_path: Path) -> str | None:
+    compile_result = subprocess.run(
+        [sys.executable, str(toolchain / "aiss.py"), "compile", str(compiled_path)],
         text=True,
         capture_output=True,
         check=False,
     )
-    if result.returncode != 0:
-        return result.stderr.strip() or result.stdout.strip() or "aiss_checker.py failed"
+    if compile_result.returncode != 0:
+        return compile_result.stderr.strip() or compile_result.stdout.strip() or "aiss.py compile failed"
+    lint_result = subprocess.run(
+        [sys.executable, str(toolchain / "aiss.py"), "lint", str(compiled_path)],
+        text=True,
+        capture_output=True,
+        check=False,
+    )
+    if lint_result.returncode != 0:
+        return lint_result.stderr.strip() or lint_result.stdout.strip() or "aiss.py lint failed"
+    try:
+        lint_payload = json.loads(lint_result.stdout)
+    except json.JSONDecodeError:
+        return lint_result.stdout.strip() or "aiss.py lint returned invalid JSON"
+    if not lint_payload.get("ok"):
+        return lint_result.stdout.strip() or "aiss.py lint did not report ok=true"
     return None
 
 
@@ -131,9 +146,9 @@ def main() -> int:
             if generated != saved:
                 errors.append(f"{rid}: compiled_ai4ss_path does not match deterministic compile_evidence.py output")
                 continue
-            check_error = check_ai4ss(toolchain, compiled_path)
+            check_error = check_aiss(toolchain, compiled_path)
             if check_error:
-                errors.append(f"{rid}: compiled_ai4ss_path failed aiss_checker.py: {check_error}")
+                errors.append(f"{rid}: compiled_ai4ss_path failed aiss.py validation: {check_error}")
                 continue
             checked += 1
         elif status == "not_applicable":

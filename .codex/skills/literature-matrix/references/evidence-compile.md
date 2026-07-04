@@ -7,8 +7,8 @@ evidence markdown is the compiler input.
 
 ## Compiler Contract
 
-The local wrapper must call the upstream `ai4ss-skills` `compile_evidence.py`
-script. Do not fork a second compiler.
+The local wrapper must call the repository `compile_evidence.py` script. Do not
+fork a second compiler.
 
 ```bash
 python3 .codex/skills/literature-matrix/scripts/compile_literature_evidence.py \
@@ -23,8 +23,8 @@ python3 scripts/validate_literature_evidence_compile.py docs/literature_matrix.c
 ```
 
 The validator recompiles `evidence_table_path`, compares the generated output
-byte-for-byte with `compiled_ai4ss_path`, and checks the compiled file with the
-upstream `.aiss` checker.
+byte-for-byte with `compiled_ai4ss_path`, and checks the compiled file with
+`aiss.py compile` and `aiss.py lint`.
 
 ## Matrix Fields
 

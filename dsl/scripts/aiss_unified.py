@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
-"""AISS v0.3 deterministic toolchain core.
+"""AISS deterministic toolchain core.
 
-This module implements the v0.3 source parser, canonical PaperAST compiler,
+This module implements the unified v0.4 source parser, canonical AST compiler,
 lint/run/diff/write helpers, and code-manifest generation. It intentionally
 does not call LLMs or consult network resources.
 """
@@ -18,9 +18,10 @@ import re
 import sys
 
 
-SCHEMA_VERSION = "0.3"
-COMPILER_VERSION = "0.3.0"
-PAPER_AST_SCHEMA = "aiss.paper_ast.v0.3"
+SCHEMA_VERSION = "0.4"
+SUPPORTED_SCHEMA_VERSIONS = {"0.4"}
+COMPILER_VERSION = "0.4.0"
+UNIFIED_AST_SCHEMA = "aiss.unified_ast.v0.4"
 
 SOURCE_DECLARATIONS = {
     "paper",
@@ -36,18 +37,26 @@ SOURCE_DECLARATIONS = {
     "adapter",
 }
 
-V02_ONLY_DECLARATIONS = {
+MODEL_DECLARATIONS = {
     "attribute",
     "causal",
     "bridge",
     "model",
     "edge",
-    "fact",
     "check",
     "derive",
 }
 
+WORKFLOW_DECLARATIONS = {
+    "route",
+    "mida",
+    "decision",
+}
+
+ALL_DECLARATIONS = SOURCE_DECLARATIONS | MODEL_DECLARATIONS | WORKFLOW_DECLARATIONS
+
 FORBIDDEN_DERIVED_DECLARATIONS = {
+    "fact",
     "gap",
     "diagnostic",
     "support_score",
@@ -59,9 +68,21 @@ FORBIDDEN_DERIVED_DECLARATIONS = {
     "lint_result",
 }
 
-THEORY_KINDS = {"concept", "claim", "relation"}
+THEORY_KINDS = {"concept", "claim", "relation", "causal"}
 EMPIRICAL_KINDS = {"empirical", "observation", "artifact"}
 COUPLING_KINDS = {"coupling"}
+MODEL_KINDS = {"attribute", "bridge", "edge", "model", "check", "derive"}
+WORKFLOW_KINDS = {"route", "mida", "decision"}
+MIDA_COMPONENTS = {
+    "model",
+    "inquiry",
+    "data_strategy",
+    "answer_strategy",
+    "diagnose",
+    "redesign",
+    "report_boundary",
+}
+ROUTE_STATUSES = {"candidate", "selected", "rejected", "blocked"}
 
 REQUIRED_FIELDS: dict[str, tuple[str, ...]] = {
     "paper": ("title", "kind", "sources"),
@@ -75,12 +96,33 @@ REQUIRED_FIELDS: dict[str, tuple[str, ...]] = {
     "coupling": ("type", "theory", "empirical", "asserted_by", "spans"),
     "artifact": ("kind", "uri", "media_type"),
     "adapter": ("version", "consumes", "produces"),
+    "attribute": ("domain", "values"),
+    "causal": ("source", "target", "direction"),
+    "edge": ("type", "source", "target"),
+    "bridge": ("type",),
+    "model": (),
+    "check": ("type", "on"),
+    "derive": ("type", "from"),
+    "route": (
+        "question",
+        "status",
+        "study_type",
+        "unit_of_analysis",
+        "inquiry",
+        "data_strategy",
+        "answer_strategy",
+        "stop_reason",
+        "next_skill_route",
+    ),
+    "mida": ("route", "component", "text", "status"),
+    "decision": ("route", "component", "decision", "status", "owner", "next_skill_route"),
 }
 
 REFERENCE_FIELDS: dict[str, dict[str, str]] = {
     "paper": {"sources": "source"},
     "span": {"source": "source"},
-    "concept": {"spans": "span", "attributes": "any"},
+    "attribute": {"spans": "span"},
+    "concept": {"spans": "span", "attributes": "attribute", "parents": "attribute"},
     "claim": {
         "concepts": "concept",
         "spans": "span",
@@ -89,9 +131,48 @@ REFERENCE_FIELDS: dict[str, dict[str, str]] = {
         "object": "concept",
     },
     "relation": {"from": "theory", "to": "theory", "spans": "span"},
+    "causal": {"source": "concept", "target": "concept", "claim": "claim", "spans": "span"},
+    "edge": {"source": "any", "target": "any", "spans": "span"},
     "empirical": {"spans": "span", "artifacts": "artifact"},
     "observation": {"about": "empirical", "concepts": "concept", "spans": "span"},
     "coupling": {"theory": "theory", "empirical": "empirical", "spans": "span"},
+    "bridge": {
+        "concept": "concept",
+        "implication": "causal",
+        "coupling": "coupling",
+        "empirical": "empirical",
+        "spans": "span",
+    },
+    "model": {
+        "attributes": "attribute",
+        "concepts": "concept",
+        "causal": "causal",
+        "bridges": "bridge",
+    },
+    "check": {"on": "model"},
+    "derive": {"from": "model"},
+    "route": {
+        "spans": "span",
+        "candidate_concepts": "concept",
+        "candidate_causal": "causal",
+        "candidate_bridges": "bridge",
+    },
+    "mida": {
+        "route": "route",
+        "spans": "span",
+        "concepts": "concept",
+        "causal": "causal",
+        "bridges": "bridge",
+        "model": "model",
+    },
+    "decision": {
+        "route": "route",
+        "spans": "span",
+        "concepts": "concept",
+        "causal": "causal",
+        "bridges": "bridge",
+        "model": "model",
+    },
 }
 
 STRUCTURED_CLAIM_FIELDS = ("subject", "predicate", "object", "polarity")
@@ -204,6 +285,76 @@ class AdapterDecl(BaseDecl):
         return "adapter"
 
 
+@dataclass(frozen=True)
+class AttributeDecl(BaseDecl):
+    @property
+    def kind(self) -> str:
+        return "attribute"
+
+
+@dataclass(frozen=True)
+class CausalDecl(BaseDecl):
+    @property
+    def kind(self) -> str:
+        return "causal"
+
+
+@dataclass(frozen=True)
+class BridgeDecl(BaseDecl):
+    @property
+    def kind(self) -> str:
+        return "bridge"
+
+
+@dataclass(frozen=True)
+class ModelDecl(BaseDecl):
+    @property
+    def kind(self) -> str:
+        return "model"
+
+
+@dataclass(frozen=True)
+class EdgeDecl(BaseDecl):
+    @property
+    def kind(self) -> str:
+        return "edge"
+
+
+@dataclass(frozen=True)
+class CheckDecl(BaseDecl):
+    @property
+    def kind(self) -> str:
+        return "check"
+
+
+@dataclass(frozen=True)
+class DeriveDecl(BaseDecl):
+    @property
+    def kind(self) -> str:
+        return "derive"
+
+
+@dataclass(frozen=True)
+class RouteDecl(BaseDecl):
+    @property
+    def kind(self) -> str:
+        return "route"
+
+
+@dataclass(frozen=True)
+class MidaDecl(BaseDecl):
+    @property
+    def kind(self) -> str:
+        return "mida"
+
+
+@dataclass(frozen=True)
+class DecisionDecl(BaseDecl):
+    @property
+    def kind(self) -> str:
+        return "decision"
+
+
 DECL_CLASSES = {
     "paper": PaperDecl,
     "source": SourceDecl,
@@ -216,11 +367,21 @@ DECL_CLASSES = {
     "coupling": CouplingDecl,
     "artifact": ArtifactDecl,
     "adapter": AdapterDecl,
+    "attribute": AttributeDecl,
+    "causal": CausalDecl,
+    "bridge": BridgeDecl,
+    "model": ModelDecl,
+    "edge": EdgeDecl,
+    "check": CheckDecl,
+    "derive": DeriveDecl,
+    "route": RouteDecl,
+    "mida": MidaDecl,
+    "decision": DecisionDecl,
 }
 
 
 @dataclass(frozen=True)
-class V03Program:
+class AissProgram:
     version: str
     declarations: tuple[BaseDecl, ...]
     source_text: str
@@ -367,18 +528,20 @@ class Parser:
         self.pos += 1
         return tok
 
-    def parse(self) -> V03Program:
+    def parse(self) -> AissProgram:
         self.eat("BARE", "aiss")
         self.eat("BARE", "version")
         version = self.eat("STRING").value
-        if version != SCHEMA_VERSION:
-            self.error(f"expected aiss version {SCHEMA_VERSION!r}, got {version!r}")
+        if version not in SUPPORTED_SCHEMA_VERSIONS:
+            self.error(
+                f"expected aiss version in {sorted(SUPPORTED_SCHEMA_VERSIONS)!r}, got {version!r}"
+            )
 
         declarations: list[BaseDecl] = []
         while self.current().typ != "EOF":
             declarations.append(self.parse_declaration())
 
-        return V03Program(
+        return AissProgram(
             version=version,
             declarations=tuple(declarations),
             source_text=self.text,
@@ -472,11 +635,11 @@ class Parser:
         return values
 
 
-def parse_source(text: str, filename: str = "<input>") -> V03Program:
+def parse_source(text: str, filename: str = "<input>") -> AissProgram:
     return Parser(text, filename).parse()
 
 
-def parse_file(path: str | Path) -> V03Program:
+def parse_file(path: str | Path) -> AissProgram:
     source_path = Path(path)
     text = source_path.read_text(encoding="utf-8")
     return parse_source(text, str(source_path))
@@ -488,7 +651,7 @@ def compile_file(path: str | Path, *, strict: bool = False) -> dict[str, Any]:
     return compile_program(program, strict=strict)
 
 
-def compile_program(program: V03Program, *, strict: bool = False) -> dict[str, Any]:
+def compile_program(program: AissProgram, *, strict: bool = False) -> dict[str, Any]:
     validate_program_shape(program)
 
     papers = [d for d in program.declarations if d.kind == "paper"]
@@ -501,19 +664,27 @@ def compile_program(program: V03Program, *, strict: bool = False) -> dict[str, A
 
     sources = [record_from_decl(d) for d in program.declarations if d.kind == "source"]
     spans = [record_from_decl(d) for d in program.declarations if d.kind == "span"]
-    objects = [
-        object_record(d)
-        for d in program.declarations
-        if d.kind in {"concept", "claim", "empirical", "observation", "artifact", "adapter"}
-    ]
-    relations = [
-        relation_record(d)
-        for d in program.declarations
-        if d.kind in {"relation", "coupling"}
-    ]
+    object_kinds = {
+        "concept",
+        "claim",
+        "empirical",
+        "observation",
+        "artifact",
+        "adapter",
+        "attribute",
+    }
+    relation_kinds = {"relation", "coupling", "causal", "bridge", "edge"}
+    objects = [object_record(d) for d in program.declarations if d.kind in object_kinds]
+    relations = [relation_record(d) for d in program.declarations if d.kind in relation_kinds]
+    models = [record_from_decl(d) for d in program.declarations if d.kind == "model"]
+    checks = [record_from_decl(d) for d in program.declarations if d.kind == "check"]
+    derives = [record_from_decl(d) for d in program.declarations if d.kind == "derive"]
+    routes = [record_from_decl(d) for d in program.declarations if d.kind == "route"]
+    mida = [record_from_decl(d) for d in program.declarations if d.kind == "mida"]
+    decisions = [record_from_decl(d) for d in program.declarations if d.kind == "decision"]
 
     ast: dict[str, Any] = {
-        "schema": PAPER_AST_SCHEMA,
+        "schema": UNIFIED_AST_SCHEMA,
         "compiler": {
             "name": "aiss",
             "version": COMPILER_VERSION,
@@ -527,14 +698,28 @@ def compile_program(program: V03Program, *, strict: bool = False) -> dict[str, A
         "spans": sorted_records(spans),
         "objects": sorted_records(objects),
         "relations": sorted_records(relations),
+        "workflow": {
+            "routes": sorted_records(routes),
+            "mida": sorted_records(mida),
+            "decisions": sorted_records(decisions),
+        },
+        "models": sorted_records(models),
+        "checks": sorted_records(checks),
+        "derives": sorted_records(derives),
         "indices": {
             "theory": sorted_ids(
-                [d.id for d in program.declarations if d.kind in {"concept", "claim", "relation"}]
+                [d.id for d in program.declarations if d.kind in THEORY_KINDS]
             ),
             "empirical": sorted_ids(
                 [d.id for d in program.declarations if d.kind in {"empirical", "observation", "artifact"}]
             ),
-            "coupling": sorted_ids([d.id for d in program.declarations if d.kind == "coupling"]),
+            "coupling": sorted_ids([d.id for d in program.declarations if d.kind in {"coupling", "bridge"}]),
+            "model": sorted_ids(
+                [d.id for d in program.declarations if d.kind in {"attribute", "model", "check", "derive"}]
+            ),
+            "workflow": sorted_ids(
+                [d.id for d in program.declarations if d.kind in WORKFLOW_KINDS]
+            ),
         },
     }
     ast_hash = sha256_text(canonical_json(ast))
@@ -544,20 +729,14 @@ def compile_program(program: V03Program, *, strict: bool = False) -> dict[str, A
     return canonicalize(ast)
 
 
-def validate_program_shape(program: V03Program) -> None:
+def validate_program_shape(program: AissProgram) -> None:
     seen: dict[str, int] = {}
     for decl in program.declarations:
         kind = decl.kind
         if isinstance(decl, BaseDecl) and type(decl) is BaseDecl:
             unknown = decl.fields.get("__unknown_kind__", kind)
-            if unknown in V02_ONLY_DECLARATIONS:
-                raise AissError(
-                    f"{program.filename}:{decl.line}: v0.2 declaration {unknown!r} is not valid in v0.3 mode"
-                )
             raise AissError(f"{program.filename}:{decl.line}: unknown declaration kind {unknown!r}")
-        if kind in V02_ONLY_DECLARATIONS:
-            raise AissError(f"{program.filename}:{decl.line}: v0.2 declaration {kind!r} is not valid in v0.3 mode")
-        if kind not in SOURCE_DECLARATIONS:
+        if kind not in ALL_DECLARATIONS:
             raise AissError(f"{program.filename}:{decl.line}: unknown declaration kind {kind!r}")
         if decl.id in seen:
             raise AissError(
@@ -584,6 +763,10 @@ def object_record(decl: BaseDecl) -> dict[str, Any]:
         record["category"] = "theory"
     elif decl.kind in EMPIRICAL_KINDS:
         record["category"] = "empirical"
+    elif decl.kind in MODEL_KINDS:
+        record["category"] = "model"
+    elif decl.kind in WORKFLOW_KINDS:
+        record["category"] = "workflow"
     else:
         record["category"] = "tooling"
     return record
@@ -591,7 +774,12 @@ def object_record(decl: BaseDecl) -> dict[str, Any]:
 
 def relation_record(decl: BaseDecl) -> dict[str, Any]:
     record = record_from_decl(decl)
-    record["category"] = "coupling" if decl.kind == "coupling" else "theory"
+    if decl.kind in {"coupling", "bridge"}:
+        record["category"] = "coupling"
+    elif decl.kind in {"causal", "edge"}:
+        record["category"] = "model"
+    else:
+        record["category"] = "theory"
     return record
 
 
@@ -639,7 +827,7 @@ def lint_ast(ast: dict[str, Any], *, strict: bool | None = None) -> dict[str, An
     for record in records:
         kind = record_decl_type(record)
         rid = record.get("id", "<unknown>")
-        if kind in {"concept", "claim", "relation", "empirical", "observation", "coupling"}:
+        if kind in {"concept", "claim", "relation", "empirical", "observation", "coupling", "route", "mida", "decision"}:
             if not record.get("spans"):
                 diag("AISS-PROV-001", "error" if strict_mode else "warning", rid, f"{kind} lacks source spans")
 
@@ -753,15 +941,234 @@ def lint_ast(ast: dict[str, Any], *, strict: bool | None = None) -> dict[str, An
         if not linked and not empirical.get("artifacts"):
             diag("AISS-EMP-001", "warning", empirical["id"], "empirical object has no artifact or observation linked to it")
 
+    routes = [r for r in records if record_decl_type(r) == "route"]
+    for route in routes:
+        status = str(route.get("status", ""))
+        if status not in ROUTE_STATUSES:
+            diag("AISS-WF-001", "warning", route["id"], f"route status should be one of {sorted(ROUTE_STATUSES)}, got {status!r}")
+        if status == "selected" and route.get("next_skill_route") == "ask_author":
+            diag("AISS-WF-002", "warning", route["id"], "selected route still routes to ask_author")
+
+    mida_by_route: dict[str, set[str]] = {}
+    for row in [r for r in records if record_decl_type(r) == "mida"]:
+        route_id = str(row.get("route", ""))
+        component = str(row.get("component", ""))
+        if component not in MIDA_COMPONENTS:
+            diag("AISS-WF-003", "warning", row["id"], f"mida component should be one of {sorted(MIDA_COMPONENTS)}, got {component!r}")
+        if route_id:
+            mida_by_route.setdefault(route_id, set()).add(component)
+
+    for route in routes:
+        if route.get("status") != "selected":
+            continue
+        components = mida_by_route.get(route["id"], set())
+        missing = sorted(MIDA_COMPONENTS - components)
+        if missing:
+            diag(
+                "AISS-WF-004",
+                "warning",
+                route["id"],
+                f"selected route lacks MIDA components: {', '.join(missing)}",
+            )
+
     diagnostics = sorted(
         diagnostics,
         key=lambda d: (severity_rank(d["severity"]), d["code"], d["primary_id"], d["message"]),
     )
     return {
-        "schema": "aiss.lint_report.v0.3",
+        "schema": "aiss.lint_report.v0.4",
         "ast_hash": ast_hash(ast),
         "diagnostics": diagnostics,
         "ok": not any(d["severity"] == "error" for d in diagnostics),
+    }
+
+
+def compute_model_diagnostics(ast: dict[str, Any]) -> dict[str, Any]:
+    records = all_records(ast)
+    causals = [r for r in records if record_decl_type(r) == "causal"]
+    bridges = [r for r in records if record_decl_type(r) == "bridge"]
+    models = [r for r in records if record_decl_type(r) == "model"]
+    bridges_by_implication = {
+        str(bridge.get("implication")): bridge
+        for bridge in bridges
+        if bridge.get("implication")
+    }
+
+    diagnosands: list[dict[str, Any]] = []
+    for causal in causals:
+        causal_id = causal["id"]
+        bridge = bridges_by_implication.get(causal_id)
+        support_text = " ".join(
+            str(bridge.get(field, ""))
+            for field in ("method", "validity", "estimand", "note")
+            if bridge and bridge.get(field)
+        )
+        evidence_type = detect_evidence_type(support_text)
+        evidence_score = {
+            "experiment": 1.0,
+            "quasi_experiment": 0.8,
+            "observational": 0.4,
+            "qualitative": 0.3,
+            "unspecified": 0.1,
+            "none": 0.0,
+        }[evidence_type]
+        has_mechanism = bool(causal.get("mechanism") and causal.get("mechanism") != "none")
+        has_condition = bool(causal.get("condition") and causal.get("condition") != "none")
+        has_estimand = bool(bridge and bridge.get("estimand") and bridge.get("estimand") != "none")
+        has_bridge = bridge is not None
+        score = evidence_score
+        if has_mechanism:
+            score += 0.10
+        if has_condition:
+            score += 0.05
+        if has_estimand:
+            score += 0.15
+        if has_bridge:
+            score += 0.10
+        score = min(score, 1.0)
+
+        declared = str(bridge.get("commensurability", "unchecked")) if bridge else "unchecked"
+        gaps: list[str] = []
+        if evidence_type == "none":
+            gaps.append("no_evidence")
+        if not has_mechanism:
+            gaps.append("no_mechanism")
+        if not has_bridge:
+            gaps.append("no_bridge")
+        if not has_estimand:
+            gaps.append("no_estimand")
+        if declared == "unchecked":
+            gaps.append("declared_unchecked")
+        elif declared == "weak" and evidence_score >= 0.8:
+            gaps.append("declared_weak_but_evidence_is_strong")
+        elif declared == "strong" and evidence_score < 0.4:
+            gaps.append("declared_strong_but_evidence_is_weak")
+
+        diagnosands.append({
+            "causal_id": causal_id,
+            "declared": declared,
+            "evidence_type": evidence_type,
+            "computed_score": round(score, 2),
+            "gaps": sorted(gaps),
+        })
+
+    profiles: list[dict[str, Any]] = []
+    for model in models:
+        causal_ids = [str(item) for item in coerce_list(model.get("causal", []))]
+        bridge_ids = [str(item) for item in coerce_list(model.get("bridges", []))]
+        model_diags = [diag for diag in diagnosands if diag["causal_id"] in causal_ids]
+        bridged = [diag for diag in model_diags if "no_bridge" not in diag["gaps"]]
+        coverage = len(bridged) / max(len(causal_ids), 1)
+        avg_score = sum(float(diag["computed_score"]) for diag in model_diags) / max(len(model_diags), 1)
+        has_strong_bridge = any(
+            str(bridge.get("id")) in bridge_ids and bridge.get("commensurability") == "strong"
+            for bridge in bridges
+        )
+        if not causal_ids:
+            contribution = "facts_only"
+        elif has_strong_bridge:
+            contribution = "full_study_with_strong_bridge"
+        elif coverage > 0:
+            contribution = "explanation_with_evidence"
+        else:
+            contribution = "explanation_without_evidence"
+        gaps = []
+        if causal_ids and coverage == 0:
+            gaps.append(f"{len(causal_ids)} causal edges, 0 bridged to empirics")
+        elif causal_ids and coverage < 1.0:
+            gaps.append(f"{len(causal_ids) - len(bridged)}/{len(causal_ids)} edges lack bridges")
+        unchecked = sum(1 for diag in model_diags if "declared_unchecked" in diag["gaps"])
+        if unchecked:
+            gaps.append(f"{unchecked} edges declared 'unchecked'")
+        profiles.append({
+            "model_id": model["id"],
+            "contribution_type": contribution,
+            "avg_score": round(avg_score, 2),
+            "coverage": round(coverage, 2),
+            "gaps": sorted(gaps),
+        })
+
+    return {
+        "diagnosands": sorted(diagnosands, key=lambda item: item["causal_id"]),
+        "ibe_profiles": sorted(profiles, key=lambda item: item["model_id"]),
+    }
+
+
+def detect_evidence_type(text: str) -> str:
+    if not text or text == "none":
+        return "none"
+    text_lower = text.lower()
+    patterns = [
+        ("experiment", (r"experiment", r"randomi[sz]ed", r"random assignment", r"rct", r"field experiment")),
+        ("quasi_experiment", (r"difference.in.difference", r"did", r"regression discontinuity", r"rdd", r"instrumental variable", r"\biv\b", r"natural experiment", r"synthetic control", r"fixed effects", r"panel")),
+        ("observational", (r"regression", r"ols", r"logit", r"probit", r"correlation", r"association", r"survey")),
+        ("qualitative", (r"ethnograph", r"fieldwork", r"case study", r"process tracing", r"interview")),
+    ]
+    for label, label_patterns in patterns:
+        if any(re.search(pattern, text_lower) for pattern in label_patterns):
+            return label
+    return "unspecified"
+
+
+def compute_workflow_diagnostics(ast: dict[str, Any]) -> dict[str, Any]:
+    workflow = ast.get("workflow", {})
+    if not isinstance(workflow, dict):
+        workflow = {}
+    routes = workflow.get("routes", []) if isinstance(workflow.get("routes", []), list) else []
+    mida = workflow.get("mida", []) if isinstance(workflow.get("mida", []), list) else []
+    decisions = workflow.get("decisions", []) if isinstance(workflow.get("decisions", []), list) else []
+
+    mida_by_route: dict[str, set[str]] = {}
+    for row in mida:
+        route_id = str(row.get("route", ""))
+        component = str(row.get("component", ""))
+        if route_id:
+            mida_by_route.setdefault(route_id, set()).add(component)
+
+    route_profiles: list[dict[str, Any]] = []
+    for route in routes:
+        route_id = str(route.get("id", ""))
+        components = mida_by_route.get(route_id, set())
+        missing = sorted(MIDA_COMPONENTS - components)
+        status = str(route.get("status", ""))
+        if status == "selected" and not missing:
+            readiness = "mida_declared"
+        elif status == "selected":
+            readiness = "mida_incomplete"
+        elif status == "candidate":
+            readiness = "route_candidate"
+        else:
+            readiness = status or "unknown"
+        route_profiles.append({
+            "route_id": route_id,
+            "status": status,
+            "study_type": route.get("study_type"),
+            "next_skill_route": route.get("next_skill_route"),
+            "mida_components": sorted(components),
+            "missing_mida_components": missing,
+            "readiness": readiness,
+        })
+
+    decision_counts: dict[str, int] = {}
+    for decision in decisions:
+        status = str(decision.get("status", ""))
+        decision_counts[status] = decision_counts.get(status, 0) + 1
+
+    selected_routes = sorted(
+        str(route.get("id"))
+        for route in routes
+        if route.get("status") == "selected" and route.get("id")
+    )
+    return {
+        "selected_routes": selected_routes,
+        "route_profiles": sorted(route_profiles, key=lambda item: item["route_id"]),
+        "decision_counts": canonicalize(decision_counts),
+        "author_decisions_open": sum(
+            1
+            for decision in decisions
+            if str(decision.get("owner", "")).casefold() == "author"
+            and str(decision.get("status", "")).casefold() not in {"resolved", "rejected"}
+        ),
     }
 
 
@@ -797,11 +1204,13 @@ def run_ast(ast: dict[str, Any], *, adapter_lock_path: str | Path | None = None)
     ]
 
     return canonicalize({
-        "schema": "aiss.run_report.v0.3",
+        "schema": "aiss.run_report.v0.4",
         "ast_hash": ast_hash(ast),
         "adapter_lock_hash": adapter_lock_hash,
         "units": sorted(units, key=lambda unit: unit["adapter"]),
         "coupling_assessments": sorted(coupling_assessments, key=lambda item: item["coupling_id"]),
+        "workflow_diagnostics": compute_workflow_diagnostics(ast),
+        "model_diagnostics": compute_model_diagnostics(ast),
     })
 
 
@@ -816,7 +1225,7 @@ def emit_code_manifest(ast: dict[str, Any], *, target: str = "python") -> dict[s
         if record_decl_type(record) in {"claim", "observation", "artifact"}
     ]
     return canonicalize({
-        "schema": "aiss.code_manifest.v0.3",
+        "schema": "aiss.code_manifest.v0.4",
         "ast_hash": ast_hash(ast),
         "target": target,
         "status": "skipped_no_adapter" if skipped else "no_code_units",
@@ -832,7 +1241,7 @@ def diff_asts(left: dict[str, Any], right: dict[str, Any]) -> dict[str, Any]:
     collect_diff("/", left_norm, right_norm, operations)
     operations = sorted(operations, key=lambda op: (op["path"], op["op"], json.dumps(op, sort_keys=True, ensure_ascii=False)))
     return canonicalize({
-        "schema": "aiss.diff_report.v0.3",
+        "schema": "aiss.diff_report.v0.4",
         "left_ast_hash": ast_hash(left),
         "right_ast_hash": ast_hash(right),
         "operations": operations,
@@ -896,6 +1305,14 @@ def all_records(ast: dict[str, Any]) -> list[dict[str, Any]]:
     records.extend(ast.get("spans", []))
     records.extend(ast.get("objects", []))
     records.extend(ast.get("relations", []))
+    workflow = ast.get("workflow", {})
+    if isinstance(workflow, dict):
+        records.extend(workflow.get("routes", []))
+        records.extend(workflow.get("mida", []))
+        records.extend(workflow.get("decisions", []))
+    records.extend(ast.get("models", []))
+    records.extend(ast.get("checks", []))
+    records.extend(ast.get("derives", []))
     return records
 
 
@@ -992,7 +1409,7 @@ def diff_normalize(ast: dict[str, Any]) -> dict[str, Any]:
         if k not in {"compiler", "input", "hashes"}
     }
     normalized = canonicalize(reduced)
-    for key in ("sources", "spans", "objects", "relations"):
+    for key in ("sources", "spans", "objects", "relations", "models", "checks", "derives"):
         if key in normalized:
             normalized[key] = {record["id"]: record for record in normalized[key]}
     return normalized
@@ -1178,7 +1595,7 @@ def stringify_template_value(value: Any) -> str:
 
 
 def main(argv: list[str] | None = None) -> int:
-    parser = argparse.ArgumentParser(prog="aiss", description="AISS v0.3 deterministic toolchain")
+    parser = argparse.ArgumentParser(prog="aiss", description="AISS v0.4 unified deterministic toolchain")
     sub = parser.add_subparsers(dest="command", required=True)
 
     compile_p = sub.add_parser("compile")

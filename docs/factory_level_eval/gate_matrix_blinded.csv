@@ -5,9 +5,9 @@ P001,city_platform_green_patents,3,No research_model.aiss or ai4ss_check_report.
 P001,city_platform_green_patents,4,Literature and data tasks are suggested but not linked to compiled evidence or audit sidecars
 P001,city_platform_green_patents,5,No analysis_readiness_check.csv before model execution
 P001,city_platform_green_patents,6,Claim boundary is stated informally
-P002,city_platform_green_patents,1,G1 pass: route_id=R1 creates a research object with a failure signal
-P002,city_platform_green_patents,2,G2 pass: design_source=docs/study_design_declaration.csv declares MIDA
-P002,city_platform_green_patents,3,G3 pass: research_model.aiss checked through aiss_checker.py
+P002,city_platform_green_patents,1,G1 pass: route_id=R1 and route_decl_id=demo.route_r1 create a .aiss research object with a failure signal
+P002,city_platform_green_patents,2,G2 pass: design_source=docs/study_design_declaration.csv mirrors .aiss MIDA declarations through mida_id values
+P002,city_platform_green_patents,3,G3 pass: research_model.aiss checked through aiss.py compile/lint/run
 P002,city_platform_green_patents,4,G4 pass: bridge_id=demo.causal_bridge_exposure records empirical bridge and weak commensurability
 P002,city_platform_green_patents,5,G5 pass: literature evidence uses compiled_ai4ss_path and validate_literature_evidence_compile.py
 P002,city_platform_green_patents,6,"G6 pass: data contract includes sample_flow.csv, merge_audit.csv, variable_provenance.csv, and upstream cleaning-route placeholders"

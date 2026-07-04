@@ -1,6 +1,6 @@
 # Design Workflow
 
-The design builder sits between starter and execution. It turns a route into a design brief that other skills can use.
+The design builder sits between starter and execution. It turns a provisional `.aiss` `route` into a selected route, seven `.aiss` `mida` declarations, a design brief, and model-layer declarations when needed.
 
 ## MIDA Design Brief
 
@@ -40,7 +40,7 @@ The smallest table, figure, model, coding exercise, or source matrix needed next
 next_skill_route, inputs, outputs expected, validation command if available.
 ```
 
-Mirror the brief in `study_design_declaration.csv` whenever the design will be reused by downstream skills.
+Mirror the brief in `study_design_declaration.csv` whenever the design will be reused by downstream skills. The CSV mirrors `.aiss` `mida` declarations and must preserve `mida_id`; it is not a second canonical design language. Mirror unresolved author choices in `design_decision_register.csv` with `decision_decl_id` values from `.aiss` `decision` declarations.
 
 ## Stop Rules
 

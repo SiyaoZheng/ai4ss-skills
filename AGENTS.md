@@ -17,7 +17,8 @@ This repository is the development home for AI4SS skills.
 Maintain the research-factory skills as one workflow:
 
 ```text
-rough topic -> route cards -> MIDA declaration -> .aiss model/check ->
+rough topic -> .aiss route declarations -> .aiss MIDA declarations ->
+.aiss model/check ->
 literature/data gates -> analysis readiness -> analysis manifest ->
 bounded claim handoff
 ```
@@ -46,13 +47,13 @@ python3 scripts/validate_analysis_readiness.py .codex/skills/research-analysis-r
 python3 scripts/run_factory_level_eval.py --clean
 ```
 
-The `.aiss` validators reuse the upstream DSL toolchain in this same repo
-through `dsl/scripts/aiss_checker.py`, `aiss_bridge.py`, and related scripts.
+The `.aiss` validators use the unified v0.4 DSL entrypoint in this repo:
+`dsl/scripts/aiss.py compile`, `aiss.py lint`, and `aiss.py run`.
 
 ## Boundaries
 
 - Do not turn research-factory skills into paper-writing skills.
-- Do not use `.ai4ss` for local research-model artifacts.
+- Do not use the former local research-model extension for local artifacts.
 - Do not present deterministic structural evaluations as live double-blind
   evidence.
 - Keep AI-use ledger rows updated when AI changes externally shared teaching or

@@ -70,7 +70,7 @@ Step 3: Extract
 -> Fill the matrix schema before any narrative synthesis.
 -> Extract methods as research design facts, not vague topic labels.
 -> If a `.aiss` model exists, bind each source row to the relevant concept, causal implication, bridge, or `not_applicable:<reason>`.
--> If the source row creates or revises model elements, create structured evidence markdown and compile it into `.aiss` with the local wrapper around upstream `compile_evidence.py`.
+-> If the source row creates or revises model elements, create structured evidence markdown and compile it into `.aiss` with the local wrapper around unified v0.4 `compile_evidence.py`.
 
 Step 4: Verify
 -> Spot-check bibliographic metadata, identification strategy, data source, and result direction against the source.

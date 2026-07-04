@@ -1,11 +1,5 @@
 #!/usr/bin/env python3
-"""Validate a local `.aiss` research model with the ai4ss-skills DSL tools.
-
-The upstream repository still names the parser/checker modules `aiss_*`.
-This wrapper makes the local contract explicit: project artifacts use the
-`.aiss` extension, while the current upstream implementation supplies the
-parser, checker, and bridge diagnosands.
-"""
+"""Validate a local `.aiss` research model with the unified AISS v0.4 CLI."""
 
 from __future__ import annotations
 
@@ -17,7 +11,18 @@ import sys
 from pathlib import Path
 
 
-REQUIRED_TERMS = ("attribute", "concept", "model")
+REQUIRED_TERMS = (
+    "aiss version \"0.4\"",
+    "paper",
+    "source",
+    "span",
+    "route",
+    "mida",
+    "decision",
+    "attribute",
+    "concept",
+    "model",
+)
 
 
 def fail(message: str) -> int:
@@ -52,15 +57,15 @@ def candidate_tool_roots() -> list[Path]:
 def find_toolchain() -> Path | None:
     for root in candidate_tool_roots():
         scripts = root / "dsl" / "scripts"
-        if (scripts / "aiss_checker.py").exists() and (scripts / "aiss_bridge.py").exists():
+        if (scripts / "aiss.py").exists():
             return scripts
     return None
 
 
-def run_tool(script: Path, model_path: Path, json_output: bool) -> subprocess.CompletedProcess[str]:
-    cmd = [sys.executable, str(script), str(model_path)]
-    if json_output:
-        cmd.append("--json")
+def run_aiss(toolchain: Path, command: str, model_path: Path, *, strict: bool = False) -> subprocess.CompletedProcess[str]:
+    cmd = [sys.executable, str(toolchain / "aiss.py"), command, str(model_path)]
+    if strict and command in {"compile", "lint"}:
+        cmd.append("--strict")
     return subprocess.run(cmd, text=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE, check=False)
 
 
@@ -68,7 +73,7 @@ def main() -> int:
     parser = argparse.ArgumentParser()
     parser.add_argument("model_path", type=Path)
     parser.add_argument("--json", action="store_true", help="Emit wrapper JSON instead of text.")
-    parser.add_argument("--skip-bridge", action="store_true", help="Skip bridge diagnosands.")
+    parser.add_argument("--no-strict", action="store_true", help="Do not promote missing span provenance during lint.")
     args = parser.parse_args()
 
     model_path = args.model_path
@@ -90,39 +95,44 @@ def main() -> int:
             f"or clone SiyaoZheng/ai4ss-skills. searched: {searched}"
         )
 
-    checker = run_tool(toolchain / "aiss_checker.py", model_path, True)
-    bridge = None if args.skip_bridge else run_tool(toolchain / "aiss_bridge.py", model_path, True)
+    strict = not args.no_strict
+    compile_result = run_aiss(toolchain, "compile", model_path, strict=strict)
+    lint_result = run_aiss(toolchain, "lint", model_path, strict=strict)
+    run_result = run_aiss(toolchain, "run", model_path)
 
-    ok = checker.returncode == 0 and (bridge is None or bridge.returncode == 0)
+    lint_payload = _parse_json_or_text(lint_result.stdout)
+    lint_ok = isinstance(lint_payload, dict) and bool(lint_payload.get("ok"))
+    ok = compile_result.returncode == 0 and lint_result.returncode == 0 and run_result.returncode == 0 and lint_ok
     if args.json:
         payload = {
             "ok": ok,
             "model_path": str(model_path),
             "toolchain": str(toolchain),
-            "checker": {
-                "returncode": checker.returncode,
-                "stdout": _parse_json_or_text(checker.stdout),
-                "stderr": checker.stderr.strip(),
+            "compile": {
+                "returncode": compile_result.returncode,
+                "stdout": _parse_json_or_text(compile_result.stdout),
+                "stderr": compile_result.stderr.strip(),
             },
-            "bridge": None
-            if bridge is None
-            else {
-                "returncode": bridge.returncode,
-                "stdout": _parse_json_or_text(bridge.stdout),
-                "stderr": bridge.stderr.strip(),
+            "lint": {
+                "returncode": lint_result.returncode,
+                "stdout": lint_payload,
+                "stderr": lint_result.stderr.strip(),
+            },
+            "run": {
+                "returncode": run_result.returncode,
+                "stdout": _parse_json_or_text(run_result.stdout),
+                "stderr": run_result.stderr.strip(),
             },
         }
         print(json.dumps(payload, ensure_ascii=False, indent=2))
     else:
         print(f"AI4SS model: {model_path}")
         print(f"Toolchain: {toolchain}")
-        print(checker.stdout.rstrip())
-        if checker.stderr.strip():
-            print(checker.stderr.rstrip(), file=sys.stderr)
-        if bridge is not None:
-            print(bridge.stdout.rstrip())
-            if bridge.stderr.strip():
-                print(bridge.stderr.rstrip(), file=sys.stderr)
+        for label, result in (("compile", compile_result), ("lint", lint_result), ("run", run_result)):
+            print(f"## aiss.py {label}")
+            print(result.stdout.rstrip())
+            if result.stderr.strip():
+                print(result.stderr.rstrip(), file=sys.stderr)
         print("PASS .aiss model validation" if ok else "FAIL .aiss model validation")
 
     return 0 if ok else 1

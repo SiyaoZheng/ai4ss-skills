@@ -140,7 +140,7 @@ Inputs:
 
 Do not write review prose.
 For each model-affecting source row:
-1. create structured evidence markdown using the upstream compile_evidence.py format;
+1. create structured evidence markdown using the unified v0.4 compile_evidence.py format;
 2. compile it with compile_literature_evidence.py to a `.aiss` output;
 3. update literature_matrix.csv fields evidence_table_path, compiled_ai4ss_path, evidence_compile_status, and evidence_compile_command;
 4. run validate_literature_matrix.py and validate_literature_evidence_compile.py.

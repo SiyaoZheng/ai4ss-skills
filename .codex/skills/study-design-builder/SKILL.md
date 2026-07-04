@@ -2,11 +2,11 @@
 name: study-design-builder
 description: >
   Social-science study design builder for turning a selected research route, starter packet,
-  literature clues, data affordances, or policy phenomenon into a design brief, estimand map,
-  variable/source needs, analysis plan, and author decision register. Use after research-starter
-  and before data construction, literature extraction, analysis execution, or methods audit when
-  the user asks to make a research design concrete, define unit/outcome/treatment, compare design
-  routes, build an analysis plan, or prepare a preregistration-style scaffold. Triggers: "study
+  literature clues, or data affordances into a design brief, estimand map, variable/source needs,
+  analysis plan, and author decision register. Use after research-starter and before data
+  construction, literature extraction, analysis execution, or methods audit when the user asks to
+  make a selected research route concrete, define unit/outcome/treatment, compare design routes,
+  build an analysis plan, or prepare a preregistration-style scaffold. Triggers: "study
   design", "research design brief", "estimand", "analysis plan", "turn route into design",
   "研究设计", "把选题落成设计", "变量和识别怎么定", "分析计划", "预分析计划".
 ---
@@ -29,7 +29,7 @@ This skill is the primary MIDA declaration layer. It turns a selected route into
 
 `Estimand` belongs inside `Inquiry`, not in place of the whole design. For non-causal work, the same slot must name the target descriptive quantity, construct, classification target, process-tracing claim, or synthesis question.
 
-When conceptual, construct, causal, or bridge structure matters, this skill also owns the `.aiss` research-model layer. The `.aiss` file is the computable representation of Model and parts of Inquiry/Diagnose; it does not replace the MIDA declaration.
+This skill owns the `.aiss` workflow upgrade from provisional route to design. It marks one `.aiss` `route` as `selected`, writes seven `mida` declarations, records author-owned `decision` declarations, and then adds the model layer when conceptual, construct, causal, or bridge structure matters.
 
 ## Hard Boundary
 
@@ -37,14 +37,18 @@ Do not write manuscript prose, final preregistration prose, final causal claims,
 
 ## Workflow Contract
 
-- Upstream inputs: `research_starter_packet.md`, `research_route_cards.csv`, seed literature notes, variable dictionaries, data previews, policy timelines, author notes, or an existing `research_model.aiss`.
-- Produces: `docs/study_design_brief.md`, `docs/study_design_declaration.csv`, optionally `docs/design_decision_register.csv`, and when model structure matters `docs/research_model.aiss` plus `docs/ai4ss_check_report.txt`.
-- Handoff fields: `route_id`, `model_scope`, `inquiry`, `study_type`, `unit_of_analysis`, `outcome`, `exposure_or_treatment`, `comparison`, `data_strategy`, `answer_strategy`, `diagnosands_or_gates`, `redesign_options`, `interpretation_boundary`, `author_decisions`, `ai4ss_model_path`, `model_id`, `concept_id`, `causal_id`, `bridge_id`, `ai4ss_check_status`, `commensurability_status`, `next_skill_route`.
+- Upstream inputs: `research_starter_packet.md`, `research_route_cards.csv`, route-only `research_model.aiss`, seed literature notes, variable dictionaries, data previews, policy timelines, author notes, or an existing design-level `research_model.aiss`.
+- Produces: `docs/study_design_brief.md`, `docs/study_design_declaration.csv`, optionally `docs/design_decision_register.csv`, `docs/research_model.aiss`, and `docs/ai4ss_check_report.txt`.
+- Handoff fields: `route_id`, `route_decl_id`, `mida_id`, `decision_decl_id`, `model_scope`, `inquiry`, `study_type`, `unit_of_analysis`, `outcome`, `exposure_or_treatment`, `comparison`, `data_strategy`, `answer_strategy`, `diagnosands_or_gates`, `redesign_options`, `interpretation_boundary`, `author_decisions`, `ai4ss_model_path`, `model_id`, `concept_id`, `causal_id`, `bridge_id`, `ai4ss_check_status`, `commensurability_status`, `next_skill_route`.
 - Downstream routes: `research-data-builder`, `literature-matrix`, `research-analysis-runner`, `methods-reviewer`, `did-expert`, or `ask_author`.
 
 ## Routing Boundaries
 
 Use this skill after a route exists but before the project has a stable analysis plan. Hand data construction to `research-data-builder`, source discovery to `literature-matrix`, first analysis execution to `research-analysis-runner`, and identification audit to `methods-reviewer` or `$did-expert`.
+
+If the user only has a vague topic or policy phenomenon and no selected route,
+stop and route to `research-starter` or `ask_author`; do not synthesize a full
+MIDA declaration from a blank slate.
 
 ## Workflow
 
@@ -52,17 +56,19 @@ Use this skill after a route exists but before the project has a stable analysis
 Step -1: Orient to the selected route
 -> Read starter packet, route cards, author notes, data previews, and seed sources.
 -> Confirm route_id, study type, unit, material status, and hard boundaries.
+-> If no route_id or provisional `.aiss` `route` exists, stop with a handoff to `research-starter` or `ask_author`.
 
 Step 0: Declare MIDA
 -> Build the design brief with explicit Model, Inquiry, Data Strategy, Answer Strategy, Diagnose, Redesign, and Report Boundary sections.
--> Mirror the declaration in `study_design_declaration.csv`.
+-> Update `research_model.aiss`: mark the selected `.aiss` `route` as `selected` and add exactly seven `mida` declarations for Model, Inquiry, Data Strategy, Answer Strategy, Diagnose, Redesign, and Report Boundary.
+-> Mirror the `.aiss` declaration in `study_design_declaration.csv`.
 -> Mark each element as author supplied, inferred from material or literature, agent proposed, or unresolved.
 
-Step 0.5: Compile or update the AI4SS DSL model
--> When concepts, measurement bridges, causal implications, or theory-to-evidence links matter, create or update `research_model.aiss`.
--> Preserve stable `model_id`, `concept_id`, `causal_id`, and `bridge_id` values in the declaration sidecar.
+Step 0.5: Compile or update the `.aiss` model layer
+-> When concepts, measurement bridges, causal implications, or theory-to-evidence links matter, add or update `concept`, `claim`, `attribute`, `causal`, `bridge`, and `model` declarations in the same `research_model.aiss`.
+-> Preserve stable `route_decl_id`, `mida_id`, `decision_decl_id`, `model_id`, `concept_id`, `causal_id`, and `bridge_id` values in the declaration sidecars.
 -> Run `scripts/validate_ai4ss_model.py docs/research_model.aiss` when the toolchain is available, and save the output to `docs/ai4ss_check_report.txt`.
--> Treat checker errors as a design artifact failure, not as a cosmetic warning.
+-> Treat `aiss.py lint` errors as a design artifact failure, not as a cosmetic warning.
 
 Step 1: Map design choices
 -> List candidate descriptive, causal, text, qualitative, or mixed-method designs that fit the route.
@@ -83,14 +89,15 @@ Step 3: Register decisions
 - `docs/study_design_brief.md`.
 - `docs/study_design_declaration.csv`.
 - `docs/design_decision_register.csv` when multiple design choices or unresolved decisions exist.
-- `docs/research_model.aiss` and `docs/ai4ss_check_report.txt` when conceptual, causal, measurement, or bridge structure matters.
+- `docs/research_model.aiss` with selected `route`, seven `mida` declarations, `decision` declarations, and model-layer declarations when conceptual, causal, measurement, or bridge structure matters.
+- `docs/ai4ss_check_report.txt`.
 - Optional `docs/analysis_plan_scaffold.md` for the first analysis runner handoff.
 
 ## Script Utilities
 
 - Run `scripts/validate_study_design_declaration.py <path>` to check the MIDA declaration sidecar.
 - Run `scripts/validate_design_decisions.py <path>` to check the design decision register.
-- Run `scripts/validate_ai4ss_model.py docs/research_model.aiss` to check the DSL model through the current `ai4ss-skills` parser/checker/bridge toolchain.
+- Run `scripts/validate_ai4ss_model.py docs/research_model.aiss` to check the DSL model through `aiss.py compile`, `aiss.py lint`, and `aiss.py run`.
 
 ## Quality Bar
 

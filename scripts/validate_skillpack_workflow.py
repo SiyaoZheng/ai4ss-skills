@@ -32,7 +32,15 @@ REQUIRED_SECTIONS = [
 OUTPUT_SECTION_RE = re.compile(r"^## (Default Outputs|Required Outputs|Output Shape)$", re.MULTILINE)
 FRONTMATTER_RE = re.compile(r"^---\n(?P<body>.*?)\n---", re.DOTALL)
 AI4SS_REQUIRED_SKILL_TERMS = {
-    "study-design-builder": ("research_model.aiss", "ai4ss_model_path", "ai4ss_check_status"),
+    "research-starter": ("research_model.aiss", "route_decl_id", "aiss_check_status"),
+    "study-design-builder": (
+        "research_model.aiss",
+        "route_decl_id",
+        "mida_id",
+        "decision_decl_id",
+        "ai4ss_model_path",
+        "ai4ss_check_status",
+    ),
     "research-data-builder": ("research_model.aiss", "ai4ss_model_path", "codebook-parse", "cleaning-contract", "cleaning-execute"),
     "literature-matrix": (
         "research_model.aiss",
@@ -60,8 +68,10 @@ DOC_CONTENT_REQUIREMENTS = {
     "ai4ss_dsl_factory_integration.md": (
         ".aiss",
         "research_model.aiss",
-        "aiss_checker.py",
-        "aiss_bridge.py",
+        "aiss.py compile",
+        "aiss.py lint",
+        "aiss.py run",
+        "aiss.unified_ast.v0.4",
         "codebook-parse",
         "cleaning-contract",
         "cleaning-execute",
@@ -77,8 +87,16 @@ DOC_CONTENT_REQUIREMENTS = {
         "ai4ss_check_status",
         "analysis_readiness_check.csv",
     ),
-    "scholar_workbenches.md": (".aiss", "MIDA", "analysis_readiness_check.csv", "run_factory_level_eval.py"),
-    "methodology_foundations.md": (".aiss", "MIDA"),
+    "scholar_workbenches.md": (
+        ".aiss",
+        "MIDA",
+        "route declarations",
+        "mida",
+        "decision",
+        "analysis_readiness_check.csv",
+        "run_factory_level_eval.py",
+    ),
+    "methodology_foundations.md": (".aiss", "MIDA", "route_decl_id", "mida_id", "decision_decl_id"),
 }
 
 

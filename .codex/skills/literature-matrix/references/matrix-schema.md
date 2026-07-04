@@ -42,7 +42,7 @@ Use this schema for empirical social-science literature.
 | `causal_id` | DSL causal implication id supported or challenged by this source row, or `not_applicable:<reason>` |
 | `bridge_id` | DSL empirical bridge id supported or challenged by this source row, or `not_applicable:<reason>` |
 | `ai4ss_check_status` | `pass`, `warn`, `not_run`, or `not_applicable` |
-| `evidence_table_path` | Structured evidence markdown compiled by upstream `compile_evidence.py`, or `not_applicable:<reason>` |
+| `evidence_table_path` | Structured evidence markdown compiled by unified v0.4 `compile_evidence.py`, or `not_applicable:<reason>` |
 | `compiled_ai4ss_path` | Deterministically compiled `.aiss` model or fragment, or `not_applicable:<reason>` |
 | `evidence_compile_status` | `compiled`, `needs_review`, `blocked`, or `not_applicable` |
 | `evidence_compile_command` | Exact compile/validate command, or `not_run_reason:<reason>` |

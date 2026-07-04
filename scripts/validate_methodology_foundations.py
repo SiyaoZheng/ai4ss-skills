@@ -57,8 +57,8 @@ REQUIRED_SPINE_TERMS = {
 }
 
 EXPECTED_ARTIFACTS = {
-    "research-starter": ("research_route_cards.csv",),
-    "study-design-builder": ("study_design_declaration.csv", "design_decision_register.csv"),
+    "research-starter": ("research_route_cards.csv", "research_model.aiss"),
+    "study-design-builder": ("study_design_declaration.csv", "design_decision_register.csv", "research_model.aiss"),
     "research-data-builder": ("sample_flow.csv", "merge_audit.csv", "variable_provenance.csv"),
     "literature-matrix": ("literature_candidate_discovery.csv", "literature_matrix.csv"),
     "research-analysis-runner": ("analysis_readiness_check.csv", "analysis_run_manifest.csv"),
@@ -71,18 +71,21 @@ EXPECTED_ARTIFACTS = {
 SCHEMA_REQUIREMENTS = {
     "research-starter": {
         "references/route-card-schema.md": (
+            "route_decl_id",
             "model_scope",
             "candidate_inquiry",
             "possible_data_strategy",
             "possible_answer_strategy",
         ),
         "scripts/validate_research_routes.py": (
+            "route_decl_id",
             "model_scope",
             "candidate_inquiry",
             "possible_data_strategy",
             "possible_answer_strategy",
         ),
         "examples/valid_research_route_cards.csv": (
+            "route_decl_id",
             "model_scope",
             "candidate_inquiry",
             "possible_data_strategy",
@@ -92,6 +95,7 @@ SCHEMA_REQUIREMENTS = {
     "study-design-builder": {
         "references/declaration-schema.md": (
             "study_design_declaration.csv",
+            "mida_id",
             "mida_component",
             "declaration_text",
             "diagnosand_or_gate",
@@ -101,6 +105,7 @@ SCHEMA_REQUIREMENTS = {
             "ai4ss_check_status",
         ),
         "scripts/validate_study_design_declaration.py": (
+            "mida_id",
             "mida_component",
             "inquiry",
             "data_strategy",
@@ -112,12 +117,28 @@ SCHEMA_REQUIREMENTS = {
             "ai4ss_check_status",
         ),
         "examples/valid_study_design_declaration.csv": (
+            "mida_id",
             "mida_component",
             "declaration_text",
             "diagnosand_or_gate",
             "redesign_option",
             "interpretation_boundary",
             "research_model.aiss",
+        ),
+        "references/decision-register-schema.md": (
+            "decision_decl_id",
+            "mida_component",
+            "downstream_skill_route",
+        ),
+        "scripts/validate_design_decisions.py": (
+            "decision_decl_id",
+            "mida_component",
+            "downstream_skill_route",
+        ),
+        "examples/valid_design_decision_register.csv": (
+            "decision_decl_id",
+            "mida_component",
+            "downstream_skill_route",
         ),
     },
     "research-data-builder": {
@@ -282,6 +303,18 @@ def load_rows(path: Path) -> tuple[list[str], list[dict[str, str]]]:
         return fields, rows
 
 
+def read_schema_enforcement_text(path: Path, repo_root: Path) -> str:
+    text = path.read_text(encoding="utf-8-sig").lower()
+    contract_paths: list[Path] = []
+    if "ai4ss_factory_contracts.sidecars" in text or "sidecar_fields(" in text:
+        contract_paths.append(repo_root / "scripts" / "ai4ss_factory_contracts" / "sidecars.py")
+    if "ai4ss_factory_contracts.workflow" in text or "route_enum_error" in text or "status_route_errors" in text:
+        contract_paths.append(repo_root / "scripts" / "ai4ss_factory_contracts" / "workflow.py")
+    for contract_path in contract_paths:
+        text += "\n" + contract_path.read_text(encoding="utf-8-sig").lower()
+    return text
+
+
 def main() -> int:
     parser = argparse.ArgumentParser()
     parser.add_argument("csv_path", type=Path, default=Path("docs/methodology_source_matrix.csv"), nargs="?")
@@ -341,9 +374,12 @@ def main() -> int:
                 errors.append(f"{skill}: missing schema enforcement file {relative_path}")
                 continue
             try:
-                text = path.read_text(encoding="utf-8-sig").lower()
+                text = read_schema_enforcement_text(path, repo_root)
             except UnicodeDecodeError as exc:
                 errors.append(f"{skill}: cannot read {relative_path}: {exc}")
+                continue
+            except OSError as exc:
+                errors.append(f"{skill}: cannot read schema contract for {relative_path}: {exc}")
                 continue
             for term in required_terms:
                 if term.lower() not in text:

@@ -28,7 +28,7 @@ This skill is the `Diagnose` and `Redesign` layer of the MIDA spine. It checks w
 
 The review must name diagnosands or gates such as wrong estimand, weak comparison, measurement mismatch, inference mismatch, reproducibility failure, source-status risk, or overclaiming. Redesign recommendations remain author decisions unless the user explicitly asks for implementation.
 
-When a `.aiss` model is present, reviewing the model is part of the methods audit: parser/checker errors, missing bridges, unchecked commensurability, and model-to-output mismatch are reportable issues.
+When a `.aiss` model is present, reviewing the model is part of the methods audit: `aiss.py compile/lint/run` errors, missing bridges, unchecked commensurability, and model-to-output mismatch are reportable issues.
 
 ## Workflow Contract
 

@@ -5,7 +5,8 @@ This evaluation is intentionally broader than the earlier skill-use packet
 tests. It asks whether a rough research topic is turned into a traceable
 research factory chain:
 
-rough topic -> route cards -> MIDA declaration -> .aiss model/checks ->
+rough topic -> .aiss route declarations -> .aiss MIDA declarations ->
+.aiss model/checks ->
 literature/data evidence gates -> analysis readiness -> analysis manifest ->
 bounded claim/review artifacts.
 
@@ -41,6 +42,7 @@ DIMENSION_TERMS = {
         "research_starter_packet.md",
         "research_route_cards.csv",
         "route_id",
+        "route_decl_id",
         "minimum viable study",
         "failure_signal",
     ],
@@ -50,13 +52,16 @@ DIMENSION_TERMS = {
         "Inquiry",
         "Data strategy",
         "Answer strategy",
+        "mida_id",
         "design_decision_register.csv",
+        "decision_decl_id",
     ],
     "ai4ss_model_check": [
         "research_model.aiss",
         "ai4ss_check_report.txt",
-        "aiss_checker.py",
-        "aiss_bridge.py",
+        "aiss.py compile",
+        "aiss.py lint",
+        "aiss.py run",
         "model_id",
         "bridge_id",
     ],
@@ -88,6 +93,8 @@ DIMENSION_TERMS = {
     ],
     "end_to_end_continuity": [
         "route_id=R1",
+        "route_decl_id=demo.route_r1",
+        "mida_id=demo.mida_r1_inquiry",
         "model_id=demo.platform_innovation",
         "bridge_id=demo.causal_bridge_exposure",
         "design_source=docs/study_design_declaration.csv",
@@ -195,17 +202,17 @@ def factory_output() -> FactoryOutput:
         condition="ai4ss_factory",
         summary=(
             "The agent produces a linked research-state chain rather than a final "
-            "answer. It starts with route cards and a minimum viable study, declares "
-            "MIDA, saves a checked .aiss model, compiles literature evidence when "
+            "answer. It starts with .aiss route declarations and a minimum viable "
+            "study, declares MIDA as .aiss rows, saves a checked .aiss model, compiles literature evidence when "
             "it affects the model, routes survey/data cleaning through upstream "
             "ai4ss-skills where relevant, runs an analysis-readiness gate, records "
             "first-pass outputs in a manifest, and hands bounded claims to review."
         ),
         artifacts=[
             "research_starter_packet.md",
-            "research_route_cards.csv with route_id=R1, minimum viable study, materials_gap, first_action, failure_signal, stop_reason, next_skill_route",
-            "study_design_declaration.csv covering Model, Inquiry, Data strategy, Answer strategy, Diagnose, Redesign, and Report boundary",
-            "design_decision_register.csv",
+            "research_route_cards.csv with route_id=R1, route_decl_id=demo.route_r1, minimum viable study, materials_gap, first_action, failure_signal, stop_reason, next_skill_route",
+            "study_design_declaration.csv with mida_id values covering Model, Inquiry, Data strategy, Answer strategy, Diagnose, Redesign, and Report boundary",
+            "design_decision_register.csv with decision_decl_id values",
             "research_model.aiss",
             "ai4ss_check_report.txt",
             "literature_candidate_discovery.csv",
@@ -221,9 +228,9 @@ def factory_output() -> FactoryOutput:
             "AI-use ledger entry",
         ],
         gate_statuses=[
-            "G1 pass: route_id=R1 creates a research object with a failure signal",
-            "G2 pass: design_source=docs/study_design_declaration.csv declares MIDA",
-            "G3 pass: research_model.aiss checked through aiss_checker.py",
+            "G1 pass: route_id=R1 and route_decl_id=demo.route_r1 create a .aiss research object with a failure signal",
+            "G2 pass: design_source=docs/study_design_declaration.csv mirrors .aiss MIDA declarations through mida_id values",
+            "G3 pass: research_model.aiss checked through aiss.py compile/lint/run",
             "G4 pass: bridge_id=demo.causal_bridge_exposure records empirical bridge and weak commensurability",
             "G5 pass: literature evidence uses compiled_ai4ss_path and validate_literature_evidence_compile.py",
             "G6 pass: data contract includes sample_flow.csv, merge_audit.csv, variable_provenance.csv, and upstream cleaning-route placeholders",
@@ -233,6 +240,9 @@ def factory_output() -> FactoryOutput:
         ],
         trace_markers=[
             "route_id=R1",
+            "route_decl_id=demo.route_r1",
+            "mida_id=demo.mida_r1_inquiry",
+            "decision_decl_id=demo.decision_r1_identification",
             "design_source=docs/study_design_declaration.csv",
             "ai4ss_model_path=docs/examples/research_model.aiss",
             "model_id=demo.platform_innovation",
@@ -243,7 +253,7 @@ def factory_output() -> FactoryOutput:
         ],
         validator_refs=[
             "python3 scripts/validate_ai4ss_model.py docs/examples/research_model.aiss",
-            "validate_ai4ss_model.py reuses upstream aiss_checker.py and aiss_bridge.py semantics",
+            "validate_ai4ss_model.py uses unified aiss.py compile/lint/run semantics",
             "python3 scripts/validate_literature_evidence_compile.py .codex/skills/literature-matrix/examples/valid_literature_matrix.csv",
             "python3 scripts/validate_analysis_readiness.py .codex/skills/research-analysis-runner/examples/valid_analysis_readiness_check.csv",
             "python3 .codex/skills/research-analysis-runner/scripts/validate_analysis_manifest.py .codex/skills/research-analysis-runner/examples/valid_analysis_run_manifest.csv",
@@ -268,7 +278,7 @@ def write_text(path: Path, text: str) -> None:
 def write_csv(path: Path, rows: list[dict[str, str]], fieldnames: list[str]) -> None:
     path.parent.mkdir(parents=True, exist_ok=True)
     with path.open("w", newline="", encoding="utf-8") as f:
-        writer = csv.DictWriter(f, fieldnames=fieldnames)
+        writer = csv.DictWriter(f, fieldnames=fieldnames, lineterminator="\n")
         writer.writeheader()
         writer.writerows(rows)
 
@@ -437,10 +447,11 @@ guess the production condition. No condition labels are provided.
 
 ## Scoring Guidance
 
-- Award research-object points when a rough topic becomes route cards, a minimum
-  viable study, stop reason, and failure signal.
-- Award MIDA points when Model, Inquiry, Data strategy, Answer strategy,
-  diagnosands, redesign, and reporting boundary are explicit.
+- Award research-object points when a rough topic becomes `.aiss` route
+  declarations, mirrored route cards, a minimum viable study, stop reason, and
+  failure signal.
+- Award MIDA points when `.aiss` `mida` declarations cover Model, Inquiry, Data
+  strategy, Answer strategy, diagnosands, redesign, and reporting boundary.
 - Award `.aiss` points when model paths, IDs, checker/bridge diagnostics, and
   stable concept or causal references are present.
 - Award evidence/data points when literature, source, sample-flow, merge, and

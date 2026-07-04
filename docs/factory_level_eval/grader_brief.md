@@ -15,10 +15,11 @@ guess the production condition. No condition labels are provided.
 
 ## Scoring Guidance
 
-- Award research-object points when a rough topic becomes route cards, a minimum
-  viable study, stop reason, and failure signal.
-- Award MIDA points when Model, Inquiry, Data strategy, Answer strategy,
-  diagnosands, redesign, and reporting boundary are explicit.
+- Award research-object points when a rough topic becomes `.aiss` route
+  declarations, mirrored route cards, a minimum viable study, stop reason, and
+  failure signal.
+- Award MIDA points when `.aiss` `mida` declarations cover Model, Inquiry, Data
+  strategy, Answer strategy, diagnosands, redesign, and reporting boundary.
 - Award `.aiss` points when model paths, IDs, checker/bridge diagnostics, and
   stable concept or causal references are present.
 - Award evidence/data points when literature, source, sample-flow, merge, and

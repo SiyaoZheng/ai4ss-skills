@@ -12,6 +12,7 @@ Usage:
 
 from __future__ import annotations
 import json
+import hashlib
 import re
 import sys
 from pathlib import Path
@@ -234,15 +235,53 @@ def compile_to_aiss(evidence: dict) -> str:
     """Compile parsed evidence dict into .aiss source code."""
     lines: list[str] = []
     author = evidence.get("author", "unknown")
+    namespace = _namespace_from_evidence(evidence, author)
+    source_id = f"{namespace}.src_evidence"
+    paper_id = f"{namespace}.evidence_packet"
     _emit = lines.append
 
-    _emit(f"// Generated from evidence table — author: {author}")
+    _emit(f"// Generated from evidence table; author: {author}")
+    _emit('aiss version "0.4"')
     _emit("")
+
+    _emit(f"paper {paper_id} {{")
+    _emit(f"  title: {_quote(f'Evidence packet for {author}')}")
+    _emit(f"  authors: [{_quote(str(author))}]")
+    _emit('  year: "undated"')
+    _emit('  language: "en"')
+    _emit('  kind: "evidence_packet"')
+    _emit(f"  sources: [{source_id}]")
+    _emit("}")
+    _emit("")
+
+    _emit(f"source {source_id} {{")
+    _emit('  kind: "structured_evidence_markdown"')
+    _emit(f"  uri: {_quote(f'evidence://{namespace}')}")
+    _emit('  media_type: "text/markdown"')
+    _emit('  locator_scheme: "section"')
+    _emit("}")
+    _emit("")
+
+    span_ids: dict[str, str] = {}
+
+    def span_for(entity_id: str, label: str, source_text: str = "") -> str:
+        if entity_id in span_ids:
+            return span_ids[entity_id]
+        span_id = f"{namespace}.span_{_local_slug(entity_id)}"
+        span_ids[entity_id] = span_id
+        _emit(f"span {span_id} {{")
+        _emit(f"  source: {source_id}")
+        _emit(f"  locator: {_quote(label)}")
+        _emit(f"  quote_hash: {_quote(_hash_text(source_text or label))}")
+        _emit("}")
+        _emit("")
+        return span_id
 
     # Attributes
     _emit("// ---- Attributes ----")
     _emit("")
     for attr in evidence.get("attributes", []):
+        span_id = span_for(attr["id"], f"Attributes/{attr['id']}", attr.get("source", ""))
         _emit(f"attribute {attr['id']} {{")
         domain = attr.get("domain", "binary")
         if domain not in VALID_DOMAINS:
@@ -257,6 +296,7 @@ def compile_to_aiss(evidence: dict) -> str:
             _emit(f"  description: {_quote(attr['description'])}")
         if attr.get("source"):
             _emit(f"  source: {_quote(attr['source'])}")
+        _emit(f"  spans: [{span_id}]")
         _emit("}")
         _emit("")
 
@@ -264,7 +304,12 @@ def compile_to_aiss(evidence: dict) -> str:
     _emit("// ---- Concepts ----")
     _emit("")
     for c in evidence.get("concepts", []):
+        span_id = span_for(c["id"], f"Concepts/{c['id']}", c.get("source", ""))
         _emit(f"concept {c['id']} {{")
+        _emit(f"  term: {_quote(_term_from_id(c['id']))}")
+        definition = c.get("description") or _term_from_id(c["id"])
+        _emit(f"  definition: {_quote(definition)}")
+        _emit(f"  spans: [{span_id}]")
         parents = c.get("parents", [])
         if isinstance(parents, str):
             parents = [p.strip() for p in parents.split(",") if p.strip()]
@@ -285,7 +330,7 @@ def compile_to_aiss(evidence: dict) -> str:
                     elif kl != "evidence" and kl != "confidence" and kl != "source" and kl != "quote":
                         key_parts.append(v)
                 key_str = json.dumps(key_parts)
-                _emit(f"    {json.dumps(key_str)}: {value}")
+                _emit(f"    {json.dumps(key_str)}: {_value_literal(str(value))}")
             _emit("  }")
         else:
             _emit('  theta: {"none": 1}')
@@ -310,6 +355,7 @@ def compile_to_aiss(evidence: dict) -> str:
         _emit("// ---- Causal Relations ----")
         _emit("")
         for c in evidence["causals"]:
+            span_id = span_for(c["id"], f"Causal Relations/{c['id']}", c.get("textual_support", ""))
             _emit(f"causal {c['id']} {{")
             _emit(f"  source: {c.get('source', '')}")
             _emit(f"  target: {c.get('target', '')}")
@@ -325,6 +371,7 @@ def compile_to_aiss(evidence: dict) -> str:
             if conf not in VALID_CONFIDENCE:
                 conf = "EXTRACTED"
             _emit(f"  textual_support: {conf}")
+            _emit(f"  spans: [{span_id}]")
             _emit("}")
             _emit("")
 
@@ -338,14 +385,20 @@ def compile_to_aiss(evidence: dict) -> str:
                 rel = "related"
             src = e.get("source", "")
             tgt = e.get("target", "")
+            edge_id = e.get("id") or f"{namespace}.edge_{_local_slug(src)}_{_local_slug(tgt)}"
+            span_id = span_for(edge_id, f"Edges/{edge_id}", e.get("source_location", ""))
             conf = e.get("confidence", "EXTRACTED")
             if conf not in VALID_CONFIDENCE:
                 conf = "EXTRACTED"
             src_loc = e.get("source_location", "")
-            _emit(f"edge {rel}: {src} -> {tgt} {{")
-            _emit(f"  confidence: {conf}")
+            _emit(f"edge {edge_id} {{")
+            _emit(f"  type: {rel}")
+            _emit(f"  source: {src}")
+            _emit(f"  target: {tgt}")
+            _emit(f"  textual_support: {conf}")
             if src_loc and src_loc != src:
-                _emit(f"  source: {_quote(src_loc)}")
+                _emit(f"  source_locator: {_quote(src_loc)}")
+            _emit(f"  spans: [{span_id}]")
             _emit("}")
             _emit("")
 
@@ -354,6 +407,7 @@ def compile_to_aiss(evidence: dict) -> str:
         _emit("// ---- Bridges ----")
         _emit("")
         for b in evidence["bridges"]:
+            span_id = span_for(b["id"], f"Bridges/{b['id']}", b.get("note", "") or b.get("validity", ""))
             _emit(f"bridge {b['id']} {{")
             btype = b.get("type", "measurement")
             _emit(f"  type: {btype}")
@@ -374,6 +428,7 @@ def compile_to_aiss(evidence: dict) -> str:
             _emit(f"  commensurability: {comm}")
             if b.get("note"):
                 _emit(f"  note: {_quote(b['note'])}")
+            _emit(f"  spans: [{span_id}]")
             _emit("}")
             _emit("")
 
@@ -388,10 +443,7 @@ def compile_to_aiss(evidence: dict) -> str:
             if isinstance(items, str):
                 items = [i.strip() for i in items.split(",") if i.strip()]
             if items:
-                _emit(f"  {key}: [")
-                for item in items:
-                    _emit(f"    {item}")
-                _emit("  ]")
+                _emit(f"  {key}: {json.dumps(items)}")
         _emit("}")
         _emit("")
 
@@ -399,11 +451,30 @@ def compile_to_aiss(evidence: dict) -> str:
     if model:
         _emit("// ---- Verification ----")
         _emit("")
-        _emit(f"check theta_completeness on {model['id']}")
-        _emit(f"check rule_consistency on {model['id']}")
-        _emit(f"check reference_integrity on {model['id']}")
-        _emit(f"derive implications from {model['id']}")
-        _emit(f"derive ibe_profile from {model['id']}")
+        _emit(f"check {namespace}.check_theta_completeness {{")
+        _emit("  type: theta_completeness")
+        _emit(f"  on: {model['id']}")
+        _emit("}")
+        _emit("")
+        _emit(f"check {namespace}.check_rule_consistency {{")
+        _emit("  type: rule_consistency")
+        _emit(f"  on: {model['id']}")
+        _emit("}")
+        _emit("")
+        _emit(f"check {namespace}.check_reference_integrity {{")
+        _emit("  type: reference_integrity")
+        _emit(f"  on: {model['id']}")
+        _emit("}")
+        _emit("")
+        _emit(f"derive {namespace}.derive_implications {{")
+        _emit("  type: implications")
+        _emit(f"  from: {model['id']}")
+        _emit("}")
+        _emit("")
+        _emit(f"derive {namespace}.derive_ibe_profile {{")
+        _emit("  type: ibe_profile")
+        _emit(f"  from: {model['id']}")
+        _emit("}")
 
     return "\n".join(lines) + "\n"
 
@@ -411,6 +482,52 @@ def compile_to_aiss(evidence: dict) -> str:
 def _quote(s: str) -> str:
     """JSON-quote a string for .aiss."""
     return json.dumps(s, ensure_ascii=False)
+
+
+def _hash_text(text: str) -> str:
+    return "sha256:" + hashlib.sha256(text.encode("utf-8")).hexdigest()
+
+
+def _namespace_from_evidence(evidence: dict, author: str) -> str:
+    candidate_ids: list[str] = []
+    model = evidence.get("model")
+    if isinstance(model, dict):
+        candidate_ids.append(str(model.get("id", "")))
+    for key in ("attributes", "concepts", "causals", "bridges"):
+        for item in evidence.get(key, []):
+            if isinstance(item, dict):
+                candidate_ids.append(str(item.get("id", "")))
+    for candidate in candidate_ids:
+        if "." in candidate:
+            return _slug_id(candidate.split(".", 1)[0])
+    return _slug_id(author or "evidence")
+
+
+def _slug_id(text: str) -> str:
+    slug = re.sub(r"[^a-z0-9_]+", "_", text.lower()).strip("_")
+    if not slug or not re.match(r"[a-z]", slug):
+        slug = f"aiss_{slug or 'evidence'}"
+    return slug
+
+
+def _local_slug(entity_id: str) -> str:
+    local = entity_id.split(".")[-1]
+    return _slug_id(local)
+
+
+def _term_from_id(entity_id: str) -> str:
+    return entity_id.split(".")[-1].replace("_", " ")
+
+
+def _value_literal(value: str) -> str:
+    value = value.strip()
+    if re.fullmatch(r"-?\d+(\.\d+)?", value):
+        return value
+    if value in {"true", "false", "null"}:
+        return value
+    if re.fullmatch(r"[A-Za-z_][A-Za-z0-9_.-]*", value):
+        return value
+    return _quote(value)
 
 
 # ---------------------------------------------------------------------------

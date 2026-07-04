@@ -42,7 +42,7 @@ Finding: the shared methodology spine was present in documentation and `SKILL.md
 
 Change:
 
-- Added `study_design_declaration.csv` as the hard MIDA declaration sidecar for `study-design-builder`.
+- Added `study_design_declaration.csv` as a MIDA declaration projection for `study-design-builder`.
 - Upgraded route cards into pre-declarations with `model_scope`, `candidate_inquiry`, `possible_data_strategy`, and `possible_answer_strategy`.
 - Threaded `design_source` and `target_inquiry` through data, literature, analysis, methods, writing, slides, and revision sidecars where those artifacts depend on a design.
 - Added `mida_component`, `mida_element_affected`, `interpretation_boundary`, `diagnosed_limit`, `sample_or_scope`, `uncertainty_or_caveat`, and privacy/boundary fields to downstream contracts where needed.
@@ -55,16 +55,16 @@ Decision:
 ## Round 5: Explicit DSL Gap
 
 Finding: local workflow and MIDA sidecars were being treated as if they were the
-factory language. That missed the explicit `.aiss` DSL in
-`SiyaoZheng/ai4ss-skills`: a parsable research-model language for attributes,
-concepts, theta rules, causal implications, empirical bridges, checks, FCA
-diagnostics, graph compilation, and commensurability review.
+factory language. That missed the explicit `.aiss` DSL: a parsable,
+source-grounded research language for spans, claims, empirical objects,
+couplings, attributes, concepts, theta rules, causal implications, empirical
+bridges, checks, model diagnostics, and deterministic diffs.
 
 Change:
 
 - Added `docs/ai4ss_dsl_factory_integration.md`.
 - Reframed `docs/skillpack_workflow_contract.md` around three layers:
-  MIDA declaration, `.aiss` research-model IR, and skill-local sidecars.
+  MIDA declaration, unified `.aiss` v0.4 IR, and skill-local sidecars.
 - Marked `study-design-builder` as natural owner optional
   `research_model.aiss` and `ai4ss_check_report.txt`.
 - Marked `research-data-builder` as route into `ai4ss-skills`
@@ -77,12 +77,15 @@ Decision:
   orchestration metadata is needed, it should point to `research_model.aiss`,
   MIDA declarations, DDI/cleaning contracts, analysis manifests, and claim
   ledgers rather than replacing them.
+- Do not maintain separate PaperAST and research-model DSLs. Version `0.4`
+  fuses source/span grounding and research-model declarations into one
+  `aiss.unified_ast.v0.4`.
 
 Closed in the hardening pass:
 
-- Added `scripts/validate_ai4ss_model.py`, which requires `.aiss` files while
-  reusing the upstream `aiss_checker.py` and `aiss_bridge.py` semantics.
-- Added `docs/examples/research_model.aiss` as a local fixture.
+- Added `scripts/validate_ai4ss_model.py`, which requires `.aiss` v0.4 files
+  and runs `aiss.py compile`, `aiss.py lint`, and `aiss.py run`.
+- Added `docs/examples/research_model.aiss` as a unified local fixture.
 - Extended `study_design_declaration.csv`, data audits, literature matrices,
   analysis manifests, methods issue tables, and claim ledgers with
   `ai4ss_model_path`, model ids, `ai4ss_check_status`, and where relevant
@@ -97,9 +100,9 @@ Closed in the hardening pass:
 - Closed the evidence compiler integration gap by adding literature-matrix
   fields for `evidence_table_path`, `compiled_ai4ss_path`, and
   `evidence_compile_status`, plus `validate_literature_evidence_compile.py`.
-  The validator recompiles evidence markdown through upstream
-  `compile_evidence.py`, compares the saved `.aiss` output byte-for-byte, and
-  runs the upstream checker.
+  The validator recompiles evidence markdown through `compile_evidence.py`,
+  compares the saved `.aiss` output byte-for-byte, and validates the result
+  through `aiss.py compile/lint`.
 
 Factory-level evaluation closure:
 
@@ -107,19 +110,47 @@ Factory-level evaluation closure:
 - Added `docs/factory_level_eval/` with protocol, grader brief, blinded
   packets, private mapping, gate matrix, human grading sheet, rule-based scores,
   and unblinded report.
-- The package now tests the whole rough-topic -> route cards -> MIDA declaration
-  -> `.aiss` model/check -> literature/data gates -> analysis readiness ->
-  analysis manifest -> bounded-claim handoff chain as a first-order autonomous
-  research factory task.
+- The package now tests the whole rough-topic -> `.aiss` route declarations ->
+  `.aiss` MIDA declarations -> `.aiss` model/check -> literature/data gates ->
+  analysis readiness -> analysis manifest -> bounded-claim handoff chain as a
+  first-order autonomous research factory task.
 - Limit: this closes the deterministic structural-evaluation gap, not the
   stronger live independent field-evaluation gap.
+
+## Round 6: Workflow DSL Fusion
+
+Finding: route cards and MIDA declarations were still partly treated as
+sidecar-level workflow objects, while `.aiss` was treated as a later
+research-model attachment. Codex appserver tests confirmed the stage boundary:
+`research-starter` is the blank-slate entry skill and may create route-only
+candidate `.aiss` declarations when durable state is useful; `study-design-builder`
+is not a blank-slate entry skill and should only promote an existing route to a
+selected route with seven MIDA declarations. See
+`docs/appserver_behavior_tests.md`.
+
+Change:
+
+- Made `route`, `mida`, and `decision` first-class `.aiss` v0.4 declarations.
+- Upgraded `research-starter` so durable route cards mirror `.aiss` `route`
+  declarations through `route_decl_id`.
+- Upgraded `study-design-builder` so selected routes own seven `.aiss` `mida`
+  declarations through `mida_id` and author-owned choices through
+  `decision_decl_id`.
+- Reframed CSV/Markdown sidecars as projections of the unified `.aiss`
+  workflow object, not a second workflow DSL.
+
+Decision:
+
+- There is one local workflow DSL: `.aiss` v0.4. Sidecars remain useful for
+  humans, classrooms, and validators, but they must point back to stable `.aiss`
+  declarations when they represent route, MIDA, or decision state.
 
 ## Current Skillpack
 
 | layer | skill | owns | must not own |
 |---|---|---|---|
-| Production | `research-starter` | route cards and minimum viable study | final prose or validity claims |
-| Production | `study-design-builder` | design brief and decision register | final identification judgment |
+| Production | `research-starter` | `.aiss` route declarations, route-card projections, and minimum viable study | final prose or validity claims |
+| Production | `study-design-builder` | selected `.aiss` route, MIDA declarations, design brief, and decision register | final identification judgment |
 | Production | `research-data-builder` | data pipeline and provenance | research design choice |
 | Production | `literature-matrix` | source discovery and extraction | literature review prose |
 | Production | `research-analysis-runner` | first-pass outputs and manifests | interpretation or result selection |

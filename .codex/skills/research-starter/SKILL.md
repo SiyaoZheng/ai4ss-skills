@@ -23,9 +23,9 @@ This skill answers: "这个研究怎么先动起来？" Its value is not robustn
 
 This skill is the pre-declaration layer of the MIDA spine: it sketches possible `Model`, `Inquiry`, `Data strategy`, and `Answer strategy` routes before the researcher commits to a design.
 
-Each route card must preserve a rough inquiry or target quantity, available evidence, possible first answer strategy, diagnosability, failure signal, and author decision point. These sketches are not valid designs until `study-design-builder` declares the full MIDA object.
+Each route card must preserve a rough inquiry or target quantity, available evidence, possible first answer strategy, diagnosability, failure signal, and author decision point. These sketches are not valid designs until `study-design-builder` selects one route and declares the full MIDA object.
 
-Starter output may name candidate concepts, causal links, or empirical bridges, but it must not create a final `.aiss` model. The DSL model becomes durable only after `study-design-builder` declares the route.
+Starter output may name candidate concepts, causal links, or empirical bridges, but it must not create a final model layer. When the work needs a durable research object, create or update `research_model.aiss` with provisional `.aiss` `route` declarations only; `study-design-builder` later marks one route `selected`, adds seven `mida` declarations, and only then adds stable model/bridge objects when warranted.
 
 ## Core Rule
 
@@ -34,8 +34,8 @@ Produce research objects, not polished paper prose. The default output is a `res
 ## Workflow Contract
 
 - Upstream inputs: rough topic, source pile, dataset folder, policy phenomenon, author notes, or a request for "what can I do next?"
-- Produces: `docs/research_starter_packet.md` and optionally `docs/research_route_cards.csv`.
-- Handoff fields: `route_id`, `research_question`, `model_scope`, `candidate_inquiry`, `candidate_concepts`, `candidate_causal_links`, `candidate_empirical_bridges`, `possible_data_strategy`, `possible_answer_strategy`, `study_type`, `unit_of_analysis`, `materials_available`, `materials_gap`, `first_action`, `failure_signal`, `stop_reason`, `researcher_decision_needed`, `next_skill_route`.
+- Produces: `docs/research_starter_packet.md`, optionally `docs/research_route_cards.csv`, and when persistence is useful a route-only `docs/research_model.aiss`.
+- Handoff fields: `route_id`, `route_decl_id`, `ai4ss_model_path`, `research_question`, `model_scope`, `candidate_inquiry`, `candidate_concepts`, `candidate_causal_links`, `candidate_empirical_bridges`, `possible_data_strategy`, `possible_answer_strategy`, `study_type`, `unit_of_analysis`, `materials_available`, `materials_gap`, `first_action`, `failure_signal`, `stop_reason`, `researcher_decision_needed`, `aiss_check_status`, `next_skill_route`.
 - Downstream routes: `study-design-builder`, `research-data-builder`, `literature-matrix`, `methods-reviewer`, `academic-writing-scaffold`, `research-slides-builder`, `did-expert`, or `ask_author`.
 
 ## Hard Boundary
@@ -70,6 +70,7 @@ Step 0: Inventory materials
 Step 1: Build route cards
 -> For open-ended topics, produce 2-4 route cards before choosing.
 -> Each route card must name the question, phenomenon, unit, material path, first action, expected first output, feasibility status, stop reason, researcher decision, and next skill route.
+-> When a persistent workflow artifact is requested or needed, mirror each route card as a `.aiss` `route` declaration with `status: candidate`, not as a final model.
 -> If the user already picked one route, still record rejected alternatives briefly.
 
 Step 2: Define a minimum viable study
@@ -90,11 +91,13 @@ Step 4: Stop deliberately
 
 - `docs/research_starter_packet.md` for the one-page workbench.
 - `docs/research_route_cards.csv` when there are multiple candidate routes or the packet will be reused.
+- Optional route-only `docs/research_model.aiss` containing `.aiss` `route` declarations when the workflow should continue as a durable DSL object.
 - Optional `docs/first_loop_log.md` when the skill actually inspects files, queries sources, or runs code.
 
 ## Script Utilities
 
 - Run `scripts/validate_research_routes.py <path>` to check the route-card sidecar when one is produced.
+- Run `python3 dsl/scripts/aiss.py compile <path-to-research_model.aiss>` and `python3 dsl/scripts/aiss.py lint <path-to-research_model.aiss>` when a route-only `.aiss` artifact is produced.
 
 ## Quality Bar
 

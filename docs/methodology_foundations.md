@@ -34,8 +34,8 @@ The common language is adapted from the MIDA and declare-diagnose-redesign frame
 
 | workflow stage | skill | methodology role | must declare or preserve |
 |---|---|---|---|
-| Route discovery | `research-starter` | Pre-declaration: sketch candidate MIDA routes before committing | rough Model, candidate Inquiry, possible Data strategy, possible Answer strategy, diagnosability, failure signal |
-| Design | `study-design-builder` | Primary declaration: turn a selected route into a design object | Model, Inquiry, Data strategy, Answer strategy, diagnosands, author decisions |
+| Route discovery | `research-starter` | Pre-declaration: write candidate `.aiss` `route` declarations before committing | rough Model, candidate Inquiry, possible Data strategy, possible Answer strategy, diagnosability, failure signal |
+| Design | `study-design-builder` | Primary declaration: turn a selected `.aiss` `route` into seven `mida` declarations and author `decision` declarations | Model, Inquiry, Data strategy, Answer strategy, diagnosands, author decisions |
 | Data | `research-data-builder` | Data strategy realization and audit | sample/source rule, measurement, extraction, linkage, transformations, row loss, missingness, provenance |
 | Literature | `literature-matrix` | Evidence-as-data strategy for literature claims | source scope, search strata, screening rule, source status, extraction fields, synthesis eligibility |
 | Analysis | `research-analysis-runner` | Answer strategy execution | design source, data source, code path, output path, sample note, uncertainty/diagnostic output, interpretation boundary |
@@ -48,11 +48,14 @@ The common language is adapted from the MIDA and declare-diagnose-redesign frame
 
 These fields are the minimum cross-skill vocabulary. A skill does not need to fill every field, but it must preserve fields supplied upstream and mark missing fields explicitly when they matter.
 
-The hard design artifact is `study_design_declaration.csv`. `study_design_brief.md` is readable context; downstream skills should treat the declaration CSV as the reusable design source when they need a validator-ready MIDA object.
+The hard design object is `research_model.aiss`: a selected `.aiss` `route`, seven `mida` declarations, and author-owned `decision` declarations. `study_design_brief.md`, `research_route_cards.csv`, `study_design_declaration.csv`, and `design_decision_register.csv` are readable projections of that object for humans and validators.
 
 | field | why it matters |
 |---|---|
 | `route_id` | Keeps alternative designs from collapsing into one vague project |
+| `route_decl_id` | Points route sidecars to the matching `.aiss` `route` declaration |
+| `mida_id` | Points design-declaration rows to the matching `.aiss` `mida` declaration |
+| `decision_decl_id` | Points decision-register rows to the matching `.aiss` `decision` declaration |
 | `model_scope` | Names population, unit, place/time, construct, mechanism, and assumptions |
 | `inquiry` | Names the target estimand, descriptive quantity, measurement target, classification target, or synthesis question |
 | `data_strategy` | Names source selection, sampling, measurement, extraction, linkage, and missingness rules |
@@ -66,10 +69,15 @@ The hard design artifact is `study_design_declaration.csv`. `study_design_brief.
 
 The methodology spine now has an implementation layer: the `.aiss` DSL in
 `SiyaoZheng/ai4ss-skills`. This is not another methods citation. It is a
-computable representation for the Model and parts of Inquiry and Diagnose.
+computable representation for workflow state, source grounding, model structure,
+and deterministic diagnostics in one language.
 
 Use `.aiss` for:
 
+- route status, route handoff, selected route, MIDA declarations, and author
+  decisions
+- source, span, claim, relation, empirical, observation, coupling, artifact, and
+  adapter records
 - attributes and allowed domains
 - concepts, parent attributes, theta tables, construction rules, sources, and
   operationalizations
@@ -83,17 +91,17 @@ Do not use `.aiss` as a replacement for:
 - full data strategy, including sampling, cleaning, linkage, extraction, and
   missingness sidecars
 - full answer strategy, including estimator/coding/synthesis scripts
-- author decisions, ethics/confidentiality checks, AI-use disclosure, and final
-  manuscript prose
+- ethics/confidentiality checks, AI-use disclosure, and final manuscript prose
 
 In factory terms: MIDA tells the scholar what kind of research object they are
-building. `.aiss` makes the model portion of that object durable and checkable.
+building. `.aiss` makes the workflow, evidence, and model portions of that
+object durable and checkable.
 
 ## What This Changes In Practice
 
 - A skill cannot claim methodology grounding by citing methods papers alone. It must state which part of the research-design spine it operates.
-- `study-design-builder` becomes the central declaration skill. It is where estimand or target quantity belongs, but only alongside Model, Data strategy, Answer strategy, and diagnosands.
-- `research-starter` may propose routes, but those routes are provisional MIDA sketches, not valid designs.
+- `study-design-builder` becomes the central declaration skill. It selects a `.aiss` route, declares MIDA, and records decisions; estimand or target quantity belongs there only alongside Model, Data strategy, Answer strategy, and diagnosands.
+- `research-starter` may propose routes, but those `.aiss` routes are provisional MIDA sketches, not valid designs.
 - `research-data-builder`, `literature-matrix`, and `research-analysis-runner` are not generic productivity skills. They realize the Data strategy and Answer strategy in auditable artifacts.
 - `methods-reviewer` is the diagnostic layer. It should ask whether the declared design, executed outputs, and claims line up.
 - Writing, slides, and reviewer response are reporting/redesign layers. They must preserve the declared inquiry and diagnosed limits rather than create new scholarly claims.

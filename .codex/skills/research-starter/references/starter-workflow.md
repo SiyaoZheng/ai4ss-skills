@@ -34,6 +34,9 @@ What the current materials can support, cannot support, and might support after 
 ## Route Cards
 Two to four candidate routes, or one selected route plus rejected alternatives.
 
+## AISS Route Declarations
+`research_model.aiss` route declarations when a durable workflow object is created; otherwise state `not_created:<reason>`.
+
 ## Minimum Viable Study
 The smallest study that can produce one checkable observation.
 
@@ -73,3 +76,7 @@ The first loop is complete only when the researcher has:
 - one stop reason;
 - one author decision point;
 - one handoff route or a clear reason not to continue.
+
+If the loop is meant to continue across skills, it should also have either a
+route-only `.aiss` artifact or a clear reason why no durable `.aiss` route was
+created.

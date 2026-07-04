@@ -1,5 +1,0 @@
-aiss version "0.3"
-
-gap bad.gap_claim_evidence {
-  text: "Analyzer output must not be source."
-}

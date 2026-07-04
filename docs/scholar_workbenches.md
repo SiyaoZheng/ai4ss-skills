@@ -8,8 +8,8 @@ The skill universe has two layers.
 
 | layer | scholar problem | local skill | minimum artifact | success criterion |
 |---|---|---|---|---|
-| First-order production | 这个研究怎么先动起来？ | `research-starter` | `research_starter_packet.md`, route cards, minimum viable study, handoff prompt | A feasible first research loop exists, with a stop reason and researcher decision point |
-| First-order production | 这个路线怎样落成可执行设计？ | `study-design-builder` | `study_design_brief.md`, `design_decision_register.csv` | Unit, constructs, comparison, evidence needs, and first analysis plan are explicit |
+| First-order production | 这个研究怎么先动起来？ | `research-starter` | `.aiss` candidate `route` declarations, `research_starter_packet.md`, route cards, minimum viable study, handoff prompt | A feasible first research loop exists, with a stop reason and researcher decision point |
+| First-order production | 这个路线怎样落成可执行设计？ | `study-design-builder` | selected `.aiss` `route`, seven `mida` declarations, `decision` declarations, design sidecars | Unit, constructs, comparison, evidence needs, and first analysis plan are explicit |
 | First-order production | 第一批可检查结果怎么跑出来？ | `research-analysis-runner` | `analysis_readiness_check.csv`, scripts, logs, tables/figures, `analysis_run_manifest.csv` | Outputs pass a readiness gate and keep sample notes and interpretation boundaries |
 | Second-order audit | 这个研究对象是否站得住、说得清、可追溯？ | Evidence and review skills | Validated ledgers, matrices, audit tables, revision traces | The generated evidence chain can be inspected, corrected, and approved |
 
@@ -18,12 +18,13 @@ The first layer is not a shortcut to paper writing. It is a way to turn a loose 
 ## Computable Research Object
 
 The workbench should not rely only on conversation memory. Once a route becomes
-a design, the project should have two linked representations:
+a design, the project should have one computable representation plus readable
+projections:
 
 | representation | purpose |
 |---|---|
-| MIDA declaration | Researcher-readable statement of model, inquiry, data strategy, answer strategy, diagnosands, redesign options, and reporting boundary |
-| `.aiss` model | Machine-checkable representation of attributes, concepts, theta rules, causal implications, empirical bridges, and model diagnostics |
+| `.aiss` research object | Machine-checkable route, MIDA declaration, author decisions, source spans, attributes, concepts, theta rules, causal implications, empirical bridges, and diagnostics |
+| Sidecar projections | Human-readable route cards, design declarations, decision registers, data/literature audits, analysis manifests, and claim ledgers |
 
 This is the difference between asking Codex to analyze and building an
 autonomous research factory. Codex can reason in prose. A factory needs stable
@@ -42,8 +43,8 @@ Declare MIDA -> Diagnose -> Redesign -> Report with bounded claims
 
 | spine element | where it appears in the local workflow |
 |---|---|
-| Pre-declare possible routes | `research-starter` route cards |
-| Declare MIDA | `study-design-builder` design brief |
+| Pre-declare possible routes | `research-starter` `.aiss` route declarations, mirrored as route cards |
+| Declare MIDA | `study-design-builder` selected `.aiss` route plus seven `mida` declarations |
 | Realize Data strategy | `research-data-builder`, `literature-matrix`, deterministic literature evidence compilation when sources update `.aiss` |
 | Execute Answer strategy | `research-analysis-runner` |
 | Diagnose and redesign | `methods-reviewer`, `reviewer-response` |
@@ -53,8 +54,8 @@ Declare MIDA -> Diagnose -> Redesign -> Report with bounded claims
 
 | scholar question | workbench | local skill | minimum artifact | stop gate |
 |---|---|---|---|---|
-| 这个研究怎么先动起来？ | Research starter workbench | `research-starter` | `research_starter_packet.md`, `research_route_cards.csv` when useful | `stop_reason`, `researcher_decision_needed`, `next_skill_route` |
-| 这个路线怎样落成可执行设计？ | Study design workbench | `study-design-builder` | `study_design_brief.md`, `design_decision_register.csv` | unresolved author decisions and downstream route |
+| 这个研究怎么先动起来？ | Research starter workbench | `research-starter` | candidate `.aiss` route declarations, `research_starter_packet.md`, `research_route_cards.csv` when useful | `stop_reason`, `researcher_decision_needed`, `next_skill_route` |
+| 这个路线怎样落成可执行设计？ | Study design workbench | `study-design-builder` | selected `.aiss` route, seven `mida` declarations, `study_design_brief.md`, `design_decision_register.csv` | unresolved author decisions and downstream route |
 | 第一批可检查结果怎么跑出来？ | Analysis runner workbench | `research-analysis-runner` | `analysis_readiness_check.csv`, scripts, outputs, logs, `analysis_run_manifest.csv` | readiness status, interpretation boundary, and methods-review route |
 
 The starter workbench should answer practical questions:
@@ -79,7 +80,7 @@ The starter workbench should answer practical questions:
 
 The first-order layer is useful only if it creates a usable research object:
 
-- It turns a rough theme into route cards with data, source, method, and failure signals.
+- It turns a rough theme into `.aiss` route declarations with data, source, method, and failure signals.
 - It makes feasibility visible before the researcher spends weeks on an impossible topic.
 - It gives ordinary scholars a first executable action instead of a methodology lecture.
 - It stops at author decision points instead of writing the paper.
@@ -96,8 +97,8 @@ The second-order layer is useful only when it reduces scholarly risk:
 
 Teach the sequence before the tool names:
 
-1. First, make one research loop exist: route, material, first action, stop reason.
-2. Turn the selected route into a design brief: unit, constructs, comparison, evidence needs, and first analysis plan.
+1. First, make one research loop exist: `.aiss` route, material, first action, stop reason.
+2. Turn the selected `.aiss` route into a design brief and seven `mida` declarations: unit, constructs, comparison, evidence needs, and first analysis plan.
 3. Execute one analysis loop only after `analysis_readiness_check.csv` validates the design source, data source, required variables, sample/audit paths, and `.aiss` bridge alignment where applicable.
 4. Then, when the route produces evidence, use the second-order workbenches to inspect it.
 
@@ -117,7 +118,8 @@ a gate matrix, a hidden condition mapping, a human grading sheet, deterministic
 rule-based scores, and an unblinded report. It scores the full chain:
 
 ```text
-rough topic -> route cards -> MIDA declaration -> .aiss model/check ->
+rough topic -> .aiss route declarations -> .aiss MIDA declarations ->
+.aiss model/check ->
 literature/data gates -> analysis readiness -> analysis manifest ->
 bounded claim handoff
 ```

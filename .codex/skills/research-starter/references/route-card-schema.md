@@ -1,12 +1,13 @@
 # Route Card Schema
 
-Use `research_route_cards.csv` when comparing multiple ways to make a rough idea researchable.
+Use `research_route_cards.csv` when comparing multiple ways to make a rough idea researchable. In the unified workflow this CSV is a human-readable mirror of `.aiss` `route` declarations, not a separate route language.
 
 ## Required Columns
 
 | column | meaning |
 |---|---|
 | `route_id` | Stable id such as `R1` |
+| `route_decl_id` | Stable `.aiss` route id such as `project.route_r1`, or `not_created:<reason>` |
 | `working_title` | Short provisional title |
 | `research_question` | One-sentence question, not a finished contribution claim |
 | `phenomenon` | Empirical or theoretical phenomenon being studied |
@@ -35,4 +36,5 @@ Use `research_route_cards.csv` when comparing multiple ways to make a rough idea
 - `expected_first_output` must be inspectable: file, table shell, source list, data preview, figure shell, route memo, or prompt.
 - `handoff_ready` requires a downstream `next_skill_route`, not `none`.
 - `not_feasible` requires a concrete `failure_signal`.
-- `model_scope`, `candidate_inquiry`, `possible_data_strategy`, and `possible_answer_strategy` are provisional. They exist to help `study-design-builder` declare MIDA, not to certify the design.
+- `model_scope`, `candidate_inquiry`, `possible_data_strategy`, and `possible_answer_strategy` are provisional. They exist to help `study-design-builder` select a `.aiss` route and declare MIDA, not to certify the design.
+- When a durable `.aiss` artifact is produced, every non-rejected row should have a matching `route` declaration with `status: candidate` or `status: selected`.

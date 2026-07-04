@@ -4,34 +4,26 @@
 from __future__ import annotations
 
 import argparse
-import csv
 import sys
 from pathlib import Path
 
+sys.path.insert(0, str(Path(__file__).resolve().parents[4] / "scripts"))
 
-EXPECTED_FIELDS = [
-    "decision_id",
-    "route_id",
-    "mida_component",
-    "design_component",
-    "current_choice",
-    "choice_source",
-    "status",
-    "evidence_needed",
-    "risk_if_wrong",
-    "author_decision_needed",
-    "downstream_skill_route",
-]
+from ai4ss_factory_contracts.sidecars import (
+    CSV_LOAD_EXCEPTIONS,
+    blank_required_cells,
+    duplicate_values,
+    exact_field_error,
+    fail,
+    is_aiss_id,
+    load_rows,
+    sidecar_fields,
+)
+from ai4ss_factory_contracts.workflow import MIDA_COMPONENTS, route_enum_error, status_route_errors
 
-ALLOWED_MIDA_COMPONENTS = {
-    "model",
-    "inquiry",
-    "data_strategy",
-    "answer_strategy",
-    "diagnose",
-    "redesign",
-    "report_boundary",
-}
+EXPECTED_FIELDS = sidecar_fields("design_decisions")
+
+ALLOWED_MIDA_COMPONENTS = MIDA_COMPONENTS
 ALLOWED_SOURCES = {
     "author_supplied",
     "material_inferred",
@@ -47,44 +39,6 @@ ALLOWED_STATUS = {
     "ready_for_handoff",
     "rejected",
 }
-ALLOWED_ROUTES = {
-    "research-data-builder",
-    "literature-matrix",
-    "research-analysis-runner",
-    "methods-reviewer",
-    "did-expert",
-    "ask_author",
-    "none",
-}
-
-
-def fail(message: str) -> int:
-    print(f"FAIL {message}")
-    return 1
-
-
-def load_rows(path: Path) -> tuple[list[str], list[dict[str, str]]]:
-    with path.open(newline="", encoding="utf-8-sig") as f:
-        reader = csv.reader(f)
-        header = next(reader, None)
-        if header is None:
-            raise ValueError("empty file")
-        fields = [cell.strip() for cell in header]
-        if any(not field for field in fields):
-            raise ValueError("blank header cell")
-        duplicates = sorted({field for field in fields if fields.count(field) > 1})
-        if duplicates:
-            raise ValueError(f"duplicate columns: {', '.join(duplicates)}")
-        rows: list[dict[str, str]] = []
-        for line_no, row in enumerate(reader, start=2):
-            if len(row) != len(fields):
-                raise ValueError(f"row {line_no}: expected {len(fields)} cells, got {len(row)}")
-            if not any(cell.strip() for cell in row):
-                raise ValueError(f"row {line_no}: blank data row")
-            rows.append({field: row[i].strip() for i, field in enumerate(fields)})
-        if not rows:
-            raise ValueError("no data rows")
-        return fields, rows
 
 
 def row_id(row: dict[str, str], index: int) -> str:
@@ -98,28 +52,24 @@ def main() -> int:
 
     try:
         fields, rows = load_rows(args.csv_path)
-    except (OSError, UnicodeDecodeError, csv.Error, ValueError) as exc:
+    except CSV_LOAD_EXCEPTIONS as exc:
         return fail(f"{args.csv_path}: {exc}")
 
-    if fields != EXPECTED_FIELDS:
-        return fail(
-            f"{args.csv_path}: expected exact columns {', '.join(EXPECTED_FIELDS)}; "
-            f"got {', '.join(fields)}"
-        )
+    if error := exact_field_error(args.csv_path, fields, EXPECTED_FIELDS):
+        return fail(error)
 
-    blank_required = [
-        f"{row_id(row, i)}:{column}"
-        for i, row in enumerate(rows)
-        for column in EXPECTED_FIELDS
-        if not row.get(column)
-    ]
+    blank_required = blank_required_cells(rows, EXPECTED_FIELDS, row_id)
     if blank_required:
         return fail(f"{args.csv_path}: blank required cells: {', '.join(blank_required[:10])}")
 
-    ids = [row["decision_id"] for row in rows]
-    duplicates = sorted({decision_id for decision_id in ids if ids.count(decision_id) > 1})
+    duplicates = duplicate_values(rows, "decision_id")
     if duplicates:
         return fail(f"{args.csv_path}: duplicate decision_id values: {', '.join(duplicates[:10])}")
+    duplicate_decision_decl_ids = duplicate_values(rows, "decision_decl_id")
+    if duplicate_decision_decl_ids:
+        return fail(
+            f"{args.csv_path}: duplicate decision_decl_id values: {', '.join(duplicate_decision_decl_ids[:10])}"
+        )
 
     enum_errors: list[str] = []
     logic_errors: list[str] = []
@@ -131,17 +81,25 @@ def main() -> int:
             enum_errors.append(f"{rid}:choice_source={row['choice_source']}")
         if row["status"] not in ALLOWED_STATUS:
             enum_errors.append(f"{rid}:status={row['status']}")
-        if row["downstream_skill_route"] not in ALLOWED_ROUTES:
-            enum_errors.append(f"{rid}:downstream_skill_route={row['downstream_skill_route']}")
+        if error := route_enum_error(
+            "design_decisions",
+            rid,
+            row["downstream_skill_route"],
+            field="downstream_skill_route",
+        ):
+            enum_errors.append(error)
 
-        if row["status"] == "ready_for_handoff" and row["downstream_skill_route"] in {"none", "ask_author"}:
-            logic_errors.append(f"{rid}: ready_for_handoff requires a downstream skill")
-        if row["status"] == "needs_author_decision" and row["downstream_skill_route"] != "ask_author":
-            logic_errors.append(f"{rid}: needs_author_decision should route to ask_author")
-        if row["status"] == "needs_data_check" and row["downstream_skill_route"] != "research-data-builder":
-            logic_errors.append(f"{rid}: needs_data_check should route to research-data-builder")
-        if row["status"] == "needs_literature_check" and row["downstream_skill_route"] != "literature-matrix":
-            logic_errors.append(f"{rid}: needs_literature_check should route to literature-matrix")
+        if not is_aiss_id(row["decision_decl_id"]):
+            logic_errors.append(f"{rid}: decision_decl_id must be a stable .aiss decision declaration id")
+        logic_errors.extend(
+            status_route_errors(
+                "design_decisions",
+                row["status"],
+                row["downstream_skill_route"],
+                rid,
+                field="downstream_skill_route",
+            )
+        )
         if row["status"] == "rejected" and len(row["risk_if_wrong"]) < 10:
             logic_errors.append(f"{rid}: rejected decisions need a concrete risk_if_wrong")
 

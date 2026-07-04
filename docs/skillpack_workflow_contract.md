@@ -4,21 +4,22 @@ This contract keeps the local AI4SS skills coherent as one research workflow rat
 
 ## Factory IR
 
-The workflow contract is not the DSL. For autonomous research-factory behavior,
-the explicit DSL is the `.aiss` research-model language in
-`SiyaoZheng/ai4ss-skills`. This local contract defines skill handoffs around
-that computable research object.
+The workflow contract is implemented by the `.aiss` version `0.4` DSL, compiled
+through `dsl/scripts/aiss.py` into `aiss.unified_ast.v0.4`. This local contract
+defines how each skill updates or mirrors that computable research object.
 
 | object | role |
 |---|---|
-| MIDA declaration | Human-readable research-design spine: Model, Inquiry, Data strategy, Answer strategy, Diagnose, Redesign, Report |
-| `.aiss` model | Computable research-model IR: attributes, concepts, causal implications, empirical bridges, checks, and derived diagnostics |
-| Skill sidecars | Stage-specific evidence: route cards, design declarations, DDI metadata, cleaning contracts, sample flow, literature matrix, compiled literature evidence, analysis readiness check, analysis manifest, claim ledger |
+| `.aiss` research object | Unified computable IR: route declarations, MIDA rows, author decisions, source spans, claims, empirical objects, couplings, attributes, concepts, causal implications, empirical bridges, checks, and derived diagnostics |
+| MIDA declaration | Seven `mida` declarations for the selected route: Model, Inquiry, Data strategy, Answer strategy, Diagnose, Redesign, Report boundary |
+| Skill sidecars | Human-readable or validator-friendly projections: route cards, design declarations, DDI metadata, cleaning contracts, sample flow, literature matrix, compiled literature evidence, analysis readiness check, analysis manifest, claim ledger |
 
-The primary design skill should be able to produce or update
-`research_model.aiss` when conceptual or causal structure matters. Downstream
-skills should preserve model identifiers when an artifact depends on a declared
-concept, causal implication, or empirical bridge.
+`research-starter` may create provisional `route` declarations without a final
+model. `study-design-builder` selects a route, writes the seven `mida`
+declarations, and creates or updates `research_model.aiss` when conceptual or
+causal structure matters. Downstream skills should preserve model identifiers
+and source-span grounding when an artifact depends on a declared route, MIDA
+component, concept, causal implication, empirical bridge, or claim.
 
 See `docs/ai4ss_dsl_factory_integration.md` for the full integration rule.
 
@@ -26,8 +27,8 @@ See `docs/ai4ss_dsl_factory_integration.md` for the full integration rule.
 
 | stage | scholar question | primary skill | canonical artifact | next stage |
 |---|---|---|---|---|
-| 0. Start | 这个研究怎么先动起来？ | `research-starter` | `research_starter_packet.md`, `research_route_cards.csv` | Design |
-| 1. Design | 这个路线怎样落成可执行设计？ | `study-design-builder` | `study_design_brief.md`, `study_design_declaration.csv`, `design_decision_register.csv`, optional `research_model.aiss`, `ai4ss_check_report.txt` | Data, literature, analysis |
+| 0. Start | 这个研究怎么先动起来？ | `research-starter` | `.aiss` `route` declarations, mirrored by `research_starter_packet.md` and `research_route_cards.csv` | Design |
+| 1. Design | 这个路线怎样落成可执行设计？ | `study-design-builder` | selected `.aiss` `route`, seven `mida` declarations, `decision` declarations, `research_model.aiss`, `ai4ss_check_report.txt` | Data, literature, analysis |
 | 2a. Data | 数据怎么来的，样本怎么变的？ | `research-data-builder` | derived data, `sample_flow.csv`, `merge_audit.csv`, `variable_provenance.csv`; for survey cleaning: `ddi-metadata.yaml`, `cleaning_contract`, execution audit | Analysis, methods review |
 | 2b. Literature | 文献证据是不是一手来源？ | `literature-matrix` | `literature_candidate_discovery.csv`, `literature_matrix.csv`, optional compiled literature `.aiss` evidence | Design, writing scaffold |
 | 3. Analysis | 第一批可检查结果怎么跑出来？ | `research-analysis-runner` | `analysis_readiness_check.csv`, scripts, tables, figures, logs, `analysis_run_manifest.csv` | Methods review |
@@ -42,7 +43,11 @@ Every skill should preserve these fields when available:
 
 | field | meaning |
 |---|---|
-| `route_id` | Stable route id from `research-starter` |
+| `route_id` | Human-readable route key such as `R1`, preserved across sidecars |
+| `route_decl_id` | Stable `.aiss` `route` declaration id from `research-starter` |
+| `mida_id` | Stable `.aiss` `mida` declaration id from `study-design-builder`, when applicable |
+| `decision_decl_id` | Stable `.aiss` `decision` declaration id for author-owned choices, when applicable |
+| `mida_component` | `.aiss` `mida` component touched by this artifact, when applicable |
 | `design_source` | Path to the design brief or decision register |
 | `target_inquiry` | The declared inquiry, estimand, target quantity, construct, classification target, process-tracing claim, or synthesis question |
 | `data_source` | Path to source data, derived data, or extracted source output |
