@@ -7,7 +7,7 @@ This example is for teaching evidence-matrix construction, not for making a subs
 ```text
 Build `.aiss` source-evidence declarations for empirical studies on place-based policy and innovation.
 Focus on papers that identify effects using DID, event studies, RD, IV, or synthetic-control designs.
-Do not write review prose.
+If review working prose is drafted, keep it AI-disclosed and source-linked.
 ```
 
 ## Search Strata

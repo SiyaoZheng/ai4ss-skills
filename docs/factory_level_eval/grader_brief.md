@@ -28,11 +28,14 @@ guess the production condition. No condition labels are provided.
   source-status, and model-update declarations.
 - Award analysis-loop points only when readiness is checked before execution and
   first-pass outputs link back to the declared design.
-- Award boundary points when the packet avoids manuscript or theory-section
-  prose and leaves novelty, theoretical contribution, mechanism strength, and
-  scope framing to the researcher.
+- Award boundary points when manuscript or theory-section working text remains
+  AI-disclosed and direct-submission gated, declares transparency and
+  replication-package status, and leaves novelty, theoretical contribution,
+  mechanism strength, disclosure wording, and scope framing to the researcher.
 - Award continuity points when the same route, model, bridge, and design-source
-  identifiers travel across the chain.
+  identifiers travel across the chain with registration, analysis-plan, data,
+  code, reporting, and replication-package status.
 
-Penalize direct manuscript writing, causal claims before readiness, unverified
-source synthesis, and treating a checker pass as proof of identification.
+Penalize hidden-AI or direct-submission-ready manuscript writing, causal claims
+before readiness, unverified source synthesis, and treating a checker pass as
+proof of identification.

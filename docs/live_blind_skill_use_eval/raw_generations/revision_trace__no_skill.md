@@ -1,4 +1,4 @@
-Adrian, below is the planning deliverable I would give the researcher, not final response-letter prose.
+Adrian, below is the planning deliverable I would give the researcher; any response text remains AI-assisted working text until the direct-submission gate passes.
 
 ## Revision Trace Plan
 

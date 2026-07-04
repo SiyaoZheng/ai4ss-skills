@@ -1,4 +1,4 @@
 interface:
   display_name: "Reviewer Response"
   short_description: "Turn reviews into traceable revision plans"
-  default_prompt: "Use $reviewer-response to convert reviewer comments into a revision matrix and author-fillable response scaffold."
+  default_prompt: "Use $reviewer-response to convert reviewer comments into a revision matrix and AI-disclosed response working draft."

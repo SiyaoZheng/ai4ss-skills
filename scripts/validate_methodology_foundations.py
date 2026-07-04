@@ -46,14 +46,31 @@ ALLOWED_COMPONENTS = {
 
 REQUIRED_SPINE_TERMS = {
     "research-starter": ("inquiry", "data_strategy", "answer_strategy", "failure_signal"),
-    "study-design-builder": ("inquiry", "data_strategy", "answer_strategy", "diagnosands_or_gates"),
-    "research-data-builder": ("measurement", "linkage", "provenance"),
-    "literature-matrix": ("source_scope", "screening", "synthesis"),
-    "research-analysis-runner": ("design_source", "data_source", "interpretation_boundary"),
-    "methods-reviewer": ("inquiry", "data_strategy", "answer_strategy", "overclaim"),
-    "academic-writing-scaffold": ("support level", "interpretation_boundary", "author_decision"),
+    "study-design-builder": ("inquiry", "data_strategy", "answer_strategy", "analysis_plan_path", "diagnosands_or_gates"),
+    "research-data-builder": ("measurement", "linkage", "provenance", "data_transparency_status"),
+    "literature-matrix": ("source_scope", "search_strategy_status", "screening", "synthesis"),
+    "research-analysis-runner": ("design_source", "data_source", "interpretation_boundary", "computational_reproducibility_status"),
+    "methods-reviewer": ("inquiry", "data_strategy", "answer_strategy", "deviation_log_status", "overclaim"),
+    "academic-writing-scaffold": (
+        "support level",
+        "interpretation_boundary",
+        "top_disclosure_matrix",
+        "ai_contribution_disclosure",
+        "direct_submission_status",
+        "author_decision",
+    ),
     "research-slides-builder": ("source artifact", "privacy", "interpretation_boundary"),
-    "reviewer-response": ("MIDA element", "confidentiality", "author decision"),
+    "reviewer-response": (
+        "MIDA element",
+        "confidentiality",
+        "revision_transparency_status",
+        "deviation_log_status",
+        "ai_contribution_disclosure",
+        "human_accountability_status",
+        "submission_policy_check_status",
+        "direct_submission_status",
+        "author decision",
+    ),
 }
 
 EXPECTED_AISS_DECLARATIONS = {
@@ -65,6 +82,7 @@ EXPECTED_AISS_DECLARATIONS = {
         "decision declarations",
         "model declarations",
         "check declarations",
+        "protocol and analysis plan status",
     ),
     "research-data-builder": (
         "research_model.aiss",
@@ -75,6 +93,7 @@ EXPECTED_AISS_DECLARATIONS = {
         "coupling declarations",
         "bridge declarations",
         "data checks",
+        "FAIR metadata checks",
     ),
     "literature-matrix": (
         "research_model.aiss",
@@ -87,6 +106,7 @@ EXPECTED_AISS_DECLARATIONS = {
         "causal declarations",
         "bridge declarations",
         "source-status checks",
+        "search-strategy transparency checks",
     ),
     "research-analysis-runner": (
         "research_model.aiss",
@@ -96,12 +116,14 @@ EXPECTED_AISS_DECLARATIONS = {
         "derive declarations",
         "observation declarations",
         "bounded claim declarations",
+        "computational reproducibility checks",
     ),
     "methods-reviewer": (
         "research_model.aiss",
         "diagnostic check declarations",
         "redesign decision declarations",
         "claim-support declarations",
+        "deviation-log decisions",
     ),
     "academic-writing-scaffold": (
         "research_model.aiss",
@@ -109,6 +131,7 @@ EXPECTED_AISS_DECLARATIONS = {
         "report-boundary declarations",
         "citation-gap decisions",
         "author decision declarations",
+        "TOP disclosure matrix",
     ),
     "research-slides-builder": (
         "research_model.aiss",
@@ -123,6 +146,9 @@ EXPECTED_AISS_DECLARATIONS = {
         "affected MIDA links",
         "evidence artifact declarations",
         "response-boundary declarations",
+        "deviation-log decisions",
+        "AI contribution disclosure",
+        "direct-submission status",
     ),
 }
 

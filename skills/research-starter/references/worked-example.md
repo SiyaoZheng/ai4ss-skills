@@ -11,9 +11,9 @@ Available materials:
 - Three seed papers on digital government and innovation.
 - Notes from a policy report.
 
-Hard boundaries:
+Boundaries:
 
-- No final manuscript prose.
+- No hidden-AI or direct-submission-ready prose.
 - Do not claim causality before identification review.
 - Do not use confidential firm documents.
 

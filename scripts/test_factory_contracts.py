@@ -13,6 +13,9 @@ from ai4ss_factory_contracts.workflow import (
 
 def main() -> None:
     assert "target_inquiry" in CORE_HANDOFF_FIELDS
+    assert "replication_package_status" in CORE_HANDOFF_FIELDS
+    assert "ai_contribution_disclosure" in CORE_HANDOFF_FIELDS
+    assert "direct_submission_status" in CORE_HANDOFF_FIELDS
     assert "ai4ss_model_path" in MODEL_LINK_FIELDS
     assert MODEL_LINK_FIELDS[-1] == "ai4ss_check_status"
 
@@ -25,6 +28,19 @@ def main() -> None:
     ]
     assert status_route_errors("analysis_check", "ready", "methods-reviewer", "C1") == [
         "C1: ready rows must route to research-analysis-runner"
+    ]
+    assert "research-analysis-runner" in allowed_routes("transparency_package")
+    assert status_route_errors("transparency_package", "needs_code_statement", "research-data-builder", "T1") == [
+        "T1: needs_code_statement should route to research-analysis-runner"
+    ]
+    assert status_route_errors("revision_package", "needs_new_analysis", "reviewer-response", "R2") == [
+        "R2: needs_new_analysis should route to research-analysis-runner"
+    ]
+    assert status_route_errors("reporting_package", "submission_gate_incomplete", "research-slides-builder", "P1") == [
+        "P1: submission_gate_incomplete should route to academic-writing-scaffold, methods-reviewer, or ask_author"
+    ]
+    assert status_route_errors("revision_package", "ready_for_ai_disclosed_response", "academic-writing-scaffold", "R3") == [
+        "R3: ready_for_ai_disclosed_response should route to reviewer-response"
     ]
 
 

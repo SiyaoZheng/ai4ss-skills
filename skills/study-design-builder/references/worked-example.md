@@ -27,4 +27,4 @@ First analysis plan:
 
 Stop reason:
 
-- The author must decide whether a causal route is substantively credible or whether the study should become descriptive.
+- The researcher must decide whether a causal route is substantively credible or whether the study should become descriptive.

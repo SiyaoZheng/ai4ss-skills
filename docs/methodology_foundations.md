@@ -36,15 +36,16 @@ The shared theory engine is a workflow layer across existing skills, not a new
 top-level skill. Literature evidence enters through `.aiss` `paper`, `source`,
 `span`, `claim`, `relation`, `concept`, `causal`, `bridge`, `check`, and
 `decision` declarations. Rival explanations, scope conditions, model-ready
-objects, and author-owned theory choices live in `.aiss`; external notes are
+objects, and human-accountable theory choices live in `.aiss`; external notes are
 only evidence artifacts referenced by that object.
 
 The methodology role is narrow: make candidate concepts, mechanisms, observable
-implications, rivals, and scope conditions inspectable before the author writes.
+implications, rivals, scope conditions, and disclosure status inspectable before
+working text is marked direct-submission ready.
 Validated `ready_for_aiss` objects can support `.aiss` `concept`, `claim`,
 `relation`, `causal`, `bridge`, and `model` declarations. Novelty, theoretical
 contribution, mechanism strength, scope framing, and rival prioritization
-remain author-owned `decision` declarations or Author Workbench questions.
+remain human-accountable `decision` declarations or Author Workbench questions.
 
 ## Skill Assignment
 
@@ -56,7 +57,7 @@ remain author-owned `decision` declarations or Author Workbench questions.
 | Literature | `literature-matrix` | Evidence-as-data strategy for literature claims | source scope, search strata, screening rule, source status, extraction fields, synthesis eligibility, optional theory workbench handoff |
 | Analysis | `research-analysis-runner` | Answer strategy execution | design source, data source, code path, output path, sample note, uncertainty/diagnostic output, interpretation boundary |
 | Methods review | `methods-reviewer` | Diagnose and redesign | design-output-claim alignment, diagnosands, rival/scope/mechanism risks, method-specific risks, recommended redesigns |
-| Writing scaffold | `academic-writing-scaffold` | Reporting discipline | target inquiry, evidence source, support level, citation/source gap, theory workbench questions, author decision, AI-writing boundary |
+| Writing scaffold | `academic-writing-scaffold` | AI-disclosed reporting discipline | target inquiry, evidence source, support level, citation/source gap, theory workbench questions, author decision, AI contribution disclosure, direct-submission status |
 | Slides | `research-slides-builder` | Public communication from declared evidence | claim slot, source artifact, sample/scope, uncertainty or caveat, privacy status |
 | Revision | `reviewer-response` | Redesign and reconciliation under peer review | reviewer request, MIDA element affected, evidence action, manuscript location, confidentiality, author decision |
 
@@ -64,7 +65,7 @@ remain author-owned `decision` declarations or Author Workbench questions.
 
 These fields are the minimum cross-skill vocabulary. A skill does not need to fill every field, but it must preserve fields supplied upstream and mark missing fields explicitly when they matter.
 
-The hard design object is `research_model.aiss`: a selected `.aiss` `route`, seven `mida` declarations, and author-owned `decision` declarations. Chat summaries and external notes are readable projections only; they are not handoff contracts.
+The hard design object is `research_model.aiss`: a selected `.aiss` `route`, seven `mida` declarations, and human-accountable `decision` declarations. Chat summaries and external notes are readable projections only; they are not handoff contracts.
 
 | field | why it matters |
 |---|---|
@@ -107,7 +108,8 @@ Do not use `.aiss` as a replacement for:
 - full data strategy, including sampling, cleaning, linkage, extraction, and
   missingness evidence artifacts
 - full answer strategy, including estimator/coding/synthesis scripts
-- ethics/confidentiality checks, AI-use disclosure, and final manuscript prose
+- ethics/confidentiality checks, AI-use disclosure, submission-policy checks, and
+  direct-submission status
 
 In factory terms: MIDA tells the scholar what kind of research object they are
 building. `.aiss` makes the workflow, evidence, and model portions of that

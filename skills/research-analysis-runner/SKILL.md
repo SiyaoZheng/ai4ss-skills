@@ -52,8 +52,8 @@ When a `.aiss` model is present, every analysis output that bears on a declared 
 ## Workflow Contract
 
 - Upstream inputs: `research_model.aiss`, selected route declarations, seven MIDA declarations, analysis-ready data, variable dictionary, scripts, source extraction outputs, or author-approved analysis instructions.
-- Produces: scripts or notebooks, tables, figures, logs, model outputs, coding outputs, and `.aiss` readiness `check`, analysis `artifact`, `adapter`, `derive`, `observation`, bounded `claim`, or `decision` declarations.
-- Handoff fields: `route_id`, `design_source`, `target_inquiry`, `analysis_plan_path`, `data_source`, `unit_of_analysis`, `required_variables`, `available_variables`, `missing_variables`, `readiness_status`, `script_path`, `output_path`, `output_type`, `model_or_operation`, `sample_note`, `interpretation_boundary`, `validation_command`, `ai4ss_model_path`, `model_id`, `concept_id`, `causal_id`, `bridge_id`, `ai4ss_check_status`, `next_skill_route`.
+- Produces: scripts or notebooks, tables, figures, logs, model outputs, coding outputs, analysis-code transparency status, computational reproducibility status, replication-package analysis components, and `.aiss` readiness `check`, analysis `artifact`, `adapter`, `derive`, `observation`, bounded `claim`, or `decision` declarations.
+- Handoff fields: `route_id`, `design_source`, `target_inquiry`, `analysis_plan_path`, `deviation_log_status`, `data_source`, `unit_of_analysis`, `required_variables`, `available_variables`, `missing_variables`, `readiness_status`, `script_path`, `output_path`, `output_type`, `model_or_operation`, `sample_note`, `analysis_code_transparency_status`, `computational_reproducibility_status`, `replication_package_status`, `interpretation_boundary`, `validation_command`, `ai4ss_model_path`, `model_id`, `concept_id`, `causal_id`, `bridge_id`, `ai4ss_check_status`, `next_skill_route`.
 - Downstream routes: `methods-reviewer`, `academic-writing-scaffold`, `research-slides-builder`, `study-design-builder`, `research-data-builder`, or `ask_author`.
 
 ## Routing Boundaries
@@ -80,6 +80,7 @@ Step 1: Execute
 Step 2: Inspect outputs
 -> Verify every declared table, figure, model output, and log exists and is fresh.
 -> Record output-to-design links as `.aiss` declarations.
+-> Record whether the code, runtime, seed, data locator, deviations from the declared analysis plan, and replication-package files are sufficient for computational reproduction.
 -> Do not interpret beyond the declared `interpretation_boundary`.
 
 Step 3: Hand off
@@ -92,6 +93,7 @@ Step 3: Hand off
 - Updated `research_model.aiss` or deterministic `.aiss` fragment with readiness checks and analysis artifact declarations.
 - Runnable scripts or notebooks used for the analysis.
 - Tables, figures, model objects, coding outputs, and logs referenced from `.aiss`.
+- Analysis-code transparency, computational reproducibility, deviation-log, and replication-package status.
 - Runtime preflight and validation command results.
 - Blocked handoff with `next_skill_route` when readiness fails.
 

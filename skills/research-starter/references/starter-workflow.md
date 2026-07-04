@@ -62,7 +62,8 @@ Stop when any of these is true:
 
 - The next step requires author judgment about novelty, theory, causal credibility, or public claim strength.
 - The material path is unknown, inaccessible, confidential, or not yet approved for AI use.
-- The proposed action would draft final manuscript prose.
+- The proposed action would present AI-assisted prose as direct-submission ready
+  or as having no AI involvement.
 - The route depends on data, variables, or sources that have not been verified.
 - A downstream skill has a narrower responsibility and should take over.
 

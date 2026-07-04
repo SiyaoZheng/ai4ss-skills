@@ -1,6 +1,7 @@
 # Section Scaffolds
 
-Use these as author-facing structures. Do not fill them with final prose.
+Use these as manuscript structures. They may be filled with AI-assisted working
+prose only when disclosure status and direct-submission status remain visible.
 
 ## Introduction Scaffold
 

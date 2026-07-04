@@ -16,8 +16,8 @@ Use this reference to map evidence to claims and identify writing risks.
 | `diagnosed_limit` | Diagnosed design, data, source, inference, or reporting limit |
 | `risk` | overclaim, missing citation, wrong estimand, causal language, unsupported mechanism, scale ambiguity |
 | `author_action` | revise_target, cite, soften, delete, add_evidence, decide |
-| `author_boundary` | scaffold_only, author_draft_audit, needs_author_decision |
-| `artifact_kind` | scaffold_only, author_draft_audit, decision_prompt |
+| `ai_disclosure_boundary` | disclosed_working_text, author_draft_audit, submission_gate_required |
+| `artifact_kind` | scaffold, ai_assisted_working_text, author_draft_audit, decision_prompt |
 
 ## Table-To-Claim Check
 

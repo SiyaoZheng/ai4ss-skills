@@ -30,9 +30,9 @@ operating system itself.
   <tr>
     <td align="center"><strong>19</strong><br>installable skills</td>
     <td align="center"><strong>.aiss v0.4</strong><br>research object IR</td>
-    <td align="center"><strong>9</strong><br>workflow gates</td>
+    <td align="center"><strong>12</strong><br>workflow gates</td>
     <td align="center"><strong>4</strong><br>evaluation tracks</td>
-    <td align="center"><strong>92.4 / 100</strong><br>factory structural score</td>
+    <td align="center"><strong>78.7 / 100</strong><br>factory structural score</td>
   </tr>
 </table>
 
@@ -58,7 +58,7 @@ reject, revise, teach, and extend it.
 | Data cleaning remembered in prose | DDI metadata, cleaning contract, execution audit, `.aiss` row-loss checks |
 | Tables detached from design | `.aiss` readiness checks, scripts, logs, analysis artifacts |
 | Methods issues found too late | `.aiss` diagnostic checks, redesign routes, validation commands |
-| Writing help that becomes ghostwriting | Bounded claim declarations, paragraph slots, author decision points |
+| Writing help that hides AI involvement | Bounded claim declarations, AI-use disclosure, paragraph drafts, submission gate |
 | Reviewer response without traceability | Reviewer-request decisions, manuscript locations, action status |
 
 The core claim is infrastructural: agent-assisted social science needs durable
@@ -126,7 +126,7 @@ The research-factory spine is:
 ```text
 rough topic -> .aiss route declarations -> .aiss MIDA declarations ->
 literature/data gates -> .aiss analysis readiness -> .aiss analysis artifacts ->
-bounded claim handoff
+transparency package -> bounded claim handoff -> AI-disclosed manuscript package
 ```
 
 The methodology spine is:
@@ -145,7 +145,7 @@ In practice:
 | Literature | What is the source-backed evidence? | `literature-matrix` | `.aiss` source-evidence declarations and source-status checks |
 | Analysis | Is this ready to run? | `research-analysis-runner` | `.aiss` readiness checks, scripts, outputs, analysis artifacts |
 | Review | Are method and claim aligned? | `methods-reviewer` | Issues, redesign options, author decisions |
-| Report | How does the author communicate safely? | `academic-writing-scaffold`, `research-slides-builder`, `reviewer-response` | Bounded claims, source map, presentation artifacts, reviewer decisions |
+| Report/package | How does the author communicate and submit safely? | `academic-writing-scaffold`, `research-slides-builder`, `reviewer-response` | Bounded claims, source map, TOP disclosure matrix, replication-package status, presentation artifacts, reviewer decisions |
 
 The workflow is a relay, not a chain of prose requests. Each stage should
 preserve identifiers, source paths, known gaps, validation commands, and
@@ -173,7 +173,7 @@ The local `.aiss` version `0.4` object compiles to
 - `decision` declarations
 - source spans
 - claims, concepts, attributes, causal relations, empirical objects, and bridges
-- checks and derived diagnostics
+- checks, transparency status, replication-package status, and derived diagnostics
 
 CSV files, YAML files, and derived Markdown notes are not workflow state.
 Agents may reference external source artifacts from `.aiss`, but handoff
@@ -191,7 +191,7 @@ MIDA keeps design work concrete:
 | Answer strategy | Estimator, coding rule, synthesis rule, diagnostic comparison, table shell, or qualitative inference procedure |
 | Diagnose | Bias, precision, measurement risk, source-status risk, row loss, reproducibility, and claim-support mismatch |
 | Redesign | Smaller first loop, revised measure, added source, changed estimator, stronger comparison, or abandoned route |
-| Report boundary | Claim ledger, source map, AI-use ledger, author decision point, and communication boundary |
+| Report boundary | Claim ledger, source map, AI-use ledger, transparency disclosures, replication-package status, author decision point, and communication boundary |
 
 ## Skills
 
@@ -208,7 +208,7 @@ source tree.
 | [`literature-matrix`](skills/literature-matrix/SKILL.md) | Discover, screen, and extract source-backed literature evidence | Candidate discovery, screening/extraction matrix, compiled evidence |
 | [`research-analysis-runner`](skills/research-analysis-runner/SKILL.md) | Run first-pass outputs after readiness checks | `.aiss` readiness checks, scripts, tables, figures, logs, analysis artifacts |
 | [`methods-reviewer`](skills/methods-reviewer/SKILL.md) | Audit design, data, answer, and claim alignment | Methods issues, redesign routes, author decisions |
-| [`academic-writing-scaffold`](skills/academic-writing-scaffold/SKILL.md) | Prepare author-fillable writing scaffolds | Claim ledger, argument map, paragraph slots, citation gaps |
+| [`academic-writing-scaffold`](skills/academic-writing-scaffold/SKILL.md) | Prepare AI-disclosed manuscript work | Claim ledger, argument map, paragraph slots, working drafts, citation gaps, submission gate |
 | [`research-slides-builder`](skills/research-slides-builder/SKILL.md) | Convert verified evidence into presentation structure | Slide map, source map, visual result narrative |
 | [`reviewer-response`](skills/reviewer-response/SKILL.md) | Convert reviews into a traceable revision plan | Revision matrix, manuscript locations, response scaffold |
 
@@ -274,7 +274,7 @@ review.
 
 | Evaluation | Baseline | AI4SS skill/factory | What it measures |
 |---|---:|---:|---|
-| Factory-level structural packet | 6.4 / 100 | 92.4 / 100 | Continuity from rough topic to bounded claim handoff |
+| Factory-level structural packet | 5.5 / 100 | 78.7 / 100 | Continuity from rough topic to AI-disclosed manuscript package |
 | Live skill-use evaluation | 84.4 / 100 | 94.1 / 100 | Inspectable artifacts, traceability markers, validation gates, author decisions |
 | Structural skill-use simulation | 39.0 / 100 | 96.2 / 100 | Whether canonical artifacts and gates appear in controlled packets |
 | Cleaning-contract benchmark | 53% pass rate | 100% pass rate | Survey cleaning contracts on three real PI datasets |
@@ -314,8 +314,11 @@ AI4SS is intentionally bounded.
 - It does not turn `.aiss` checker success into identification validity.
 - It does not replace source reading, data inspection, ethics review, or author
   judgment.
-- It does not directly write final manuscript prose, final reviewer-response
-  prose, or final scholarly claims.
+- Its only manuscript-facing AI boundary is disclosure and submission gating:
+  skills may draft, revise, audit, and assemble working manuscript or
+  reviewer-response text, but must not present output as submission-ready or as
+  having no AI involvement unless AI contribution disclosure, human
+  accountability, and outlet-policy checks are explicit.
 - It does not treat deterministic structural evaluations as live double-blind
   evidence.
 - It is not yet a universal specialist-methods system. DID is covered; IV, RD,
@@ -323,9 +326,10 @@ AI4SS is intentionally bounded.
   ethics/confidentiality review remain watchlist areas unless added as
   specialist skills.
 
-The rule for outward-facing scholarship is simple: AI may create inspectable
-research objects, ledgers, manifests, diagnostics, and author decision points.
-The author owns final claims.
+The rule for outward-facing scholarship is simple: AI participation is allowed
+across the workflow, including working prose, but the manuscript package must
+carry AI-use disclosure, human accountability, direct-submission status, and
+policy-check status before it can be treated as submission-ready.
 
 ## Development
 
@@ -347,7 +351,8 @@ A good contribution should:
 2. include `SKILL.md` with precise trigger language,
 3. define its role in the research-factory spine,
 4. preserve upstream handoff fields when available,
-5. produce inspectable artifacts rather than final scholarly claims,
+5. produce inspectable artifacts and disclosed AI-assisted working text rather
+   than submission-ready text with hidden AI involvement,
 6. include examples or validators when the output has a schema,
 7. update the AI-use ledger when externally shared teaching or research
    workflow artifacts change.

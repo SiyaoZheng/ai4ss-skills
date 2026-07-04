@@ -1,7 +1,7 @@
 # Literature To Theory Synthesis
 
-Use this reference when verified literature rows need to inform theory mapping
-without writing literature-review prose or claiming theoretical contribution.
+Use this reference when verified literature rows need to inform theory mapping,
+AI-disclosed literature-review working prose, or theoretical contribution checks.
 
 This is the literature-side entrypoint for the shared theory engine. It is not a
 new skill, a new DSL, or a theory chapter generator. It produces auditable
@@ -87,8 +87,8 @@ Rival rows diagnose theory risk. They normally route to `methods-reviewer` or
 
 ## Scope Check Declarations
 
-`.aiss scope-check declarations` records scope conditions before the author writes a
-scope or contribution claim. Required columns come from the shared
+`.aiss scope-check declarations` records scope conditions before a scope or
+contribution claim is marked direct-submission ready. Required columns come from the shared
 `theory_scope_map` .aiss projection contract:
 
 | column | meaning |
@@ -152,7 +152,7 @@ python3 scripts/validate_ai4ss_model.py docs/research_model.aiss
 
 ## Boundary
 
-This .aiss projection is not a theory section and not a novelty claim. It records
-candidate theoretical objects, visible support, rival or boundary concerns,
-observable implications, and author decisions. The researcher owns theoretical
-contribution, mechanism strength, and final prose.
+This `.aiss` projection should not be marked direct-submission ready by itself.
+It records candidate theoretical objects, visible support, rival or boundary
+concerns, observable implications, author decisions, and disclosure status for
+any AI-assisted working prose.

@@ -66,14 +66,14 @@ existing `.aiss` model-layer declarations: `concept`, `claim`, `relation`,
 `causal`, `bridge`, and `model`. `evidence_strength=unverified`, unresolved
 rival choice, unresolved scope choice, novelty, theoretical contribution, and
 mechanism strength must stay out of model facts. Record those items in
-`.aiss decision declarations` and mirror them as author-owned `.aiss`
+`.aiss decision declarations` and mirror them as human-accountable `.aiss`
 `decision` declarations.
 
 Record the .aiss projection path in the affected `.aiss MIDA declarations`
 `evidence_source` cells. Do not add new declaration columns and do not create a
 new DSL declaration kind. Rows with unresolved novelty, mechanism strength,
 scope conditions, or rival-explanation choices should create or preserve
-author-owned `decision` declarations instead of becoming final theory claims.
+human-accountable `decision` declarations instead of becoming submission-ready theory claims.
 
 Recommended sequence:
 
@@ -92,7 +92,7 @@ Stop before:
 - declaring identification credible;
 - choosing a final estimand when the author has not approved it;
 - running models without an analysis-ready dataset and a design source;
-- writing final prose.
+- presenting AI-assisted prose as no-AI or direct-submission ready.
 
 ## Design Types
 

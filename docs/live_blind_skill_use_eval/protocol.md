@@ -59,8 +59,8 @@ current mapping, run `package` with the seed disclosed in `_private/randomizatio
   replacement for independent human graders.
 - Packet contents may still reveal style differences even after condition labels
   are removed.
-- Scores estimate usefulness for traceable research assistance, not truth,
-  publication quality, or final scholarly responsibility.
+- Scores estimate usefulness for traceable research assistance, not empirical
+  truth, publication-quality evidence, or completed human-accountability review.
 
 ## Method References
 

@@ -1,4 +1,4 @@
-Adrian, final prose must be authored by the researcher.
+Adrian, any prose here is AI-assisted working text and is not direct-submission ready until disclosure, accountability, and policy status are explicit.
 
 **Evidence Inventory**
 
@@ -13,7 +13,7 @@ Adrian, final prose must be authored by the researcher.
 
 | severity | issue | evidence | why it matters | next action | status |
 |---|---|---|---|---|---|
-| P1 | Draft overstates causal certainty | “causes”, “proves”; event-study has `lead_1 = 0.040`, p = 0.08; no placebo | DID can support causal interpretation only under assumptions; marginal pre-period movement and missing placebo make “proves” too strong | Replace proof language with an author-written, assumption-bounded claim; explicitly note the event-study diagnostic | overclaim |
+| P1 | Draft overstates causal certainty | “causes”, “proves”; event-study has `lead_1 = 0.040`, p = 0.08; no placebo | DID can support causal interpretation only under assumptions; marginal pre-period movement and missing placebo make “proves” too strong | Replace proof language with AI-disclosed, assumption-bounded working text; explicitly note the event-study diagnostic | overclaim |
 | P1 | Mechanism claim exceeds evidence | Mechanism table shows positive association with R&D subsidy receipt, not causal identification | “Through increased R&D subsidies” implies mediation evidence that has not been established | Treat subsidies as suggestive mechanism evidence only; add stronger mechanism design or remove channel language | unsupported mechanism |
 | P2 | Magnitude language is not benchmarked | β = 0.085 on log outcome | “major surge” is evaluative and needs a substantive benchmark | Report coefficient, SE, N, FE, clustering, and optional semi-log scale; justify any magnitude adjective with baseline or benchmark | scale ambiguity |
 | P2 | Missing placebo diagnostic | No placebo test run | Weakens robustness package for a policy DID claim | Add placebo timing, placebo outcome, or untreated-policy falsification test with a clear null | missing evidence |

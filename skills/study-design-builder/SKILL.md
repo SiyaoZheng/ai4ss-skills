@@ -39,17 +39,24 @@ This skill is the primary MIDA declaration layer. It turns a selected route into
 
 `Estimand` belongs inside `Inquiry`, not in place of the whole design. For non-causal work, the same slot must name the target descriptive quantity, construct, classification target, process-tracing claim, or synthesis question.
 
-This skill owns the `.aiss` workflow upgrade from provisional route to design. It marks one `.aiss` `route` as `selected`, writes seven `mida` declarations, records author-owned `decision` declarations, and then adds the model layer when conceptual, construct, causal, or bridge structure matters. When literature or theory evidence exists, it must be represented as `.aiss` `paper`, `source`, `span`, `claim`, `relation`, `check`, or `decision` declarations before it updates `.aiss` `concept`, `causal`, `bridge`, or `model` declarations.
+This skill owns the `.aiss` workflow upgrade from provisional route to design. It marks one `.aiss` `route` as `selected`, writes seven `mida` declarations, records human-accountable `decision` declarations, and then adds the model layer when conceptual, construct, causal, or bridge structure matters. When literature or theory evidence exists, it must be represented as `.aiss` `paper`, `source`, `span`, `claim`, `relation`, `check`, or `decision` declarations before it updates `.aiss` `concept`, `causal`, `bridge`, or `model` declarations.
 
-## Hard Boundary
+## Single Manuscript-Facing Boundary
 
-Do not write manuscript prose, final preregistration prose, final causal claims, or polished theory sections. Do not certify that an identification strategy is valid. Provide structured choices, evidence needs, risks, and author decision points.
+AI may draft working protocol, preregistration, theory, or manuscript text only
+when it is marked as AI-assisted and not direct-submission ready. The only
+disallowed manuscript-facing output is hidden-AI or submission-ready
+presentation without AI contribution disclosure, human accountability,
+outlet-policy status, and direct-submission status. This skill still does not
+certify that an
+identification strategy is valid; it records design choices, evidence needs,
+risks, and author decision points.
 
 ## Workflow Contract
 
 - Upstream inputs: route-only `research_model.aiss`, seed literature notes, variable dictionaries, data previews, policy timelines, author notes, or an existing design-level `research_model.aiss`.
-- Produces: `docs/research_model.aiss` with selected `route`, seven `mida` declarations, author `decision` declarations, model declarations, and check declarations; optional chat-facing notes may be displayed from `.aiss`.
-- Handoff fields: `route_id`, `route_decl_id`, `mida_id`, `decision_decl_id`, `model_scope`, `inquiry`, `study_type`, `unit_of_analysis`, `outcome`, `exposure_or_treatment`, `comparison`, `data_strategy`, `answer_strategy`, `diagnosands_or_gates`, `redesign_options`, `interpretation_boundary`, `author_decisions`, `ai4ss_model_path`, `model_id`, `concept_id`, `causal_id`, `bridge_id`, `ai4ss_check_status`, `commensurability_status`, `next_skill_route`.
+- Produces: `docs/research_model.aiss` with selected `route`, seven `mida` declarations, author `decision` declarations, registration/protocol/analysis-plan status, model declarations, and check declarations; optional chat-facing notes may be displayed from `.aiss`.
+- Handoff fields: `route_id`, `route_decl_id`, `mida_id`, `decision_decl_id`, `model_scope`, `inquiry`, `study_type`, `unit_of_analysis`, `outcome`, `exposure_or_treatment`, `comparison`, `data_strategy`, `answer_strategy`, `diagnosands_or_gates`, `registration_status`, `protocol_path`, `analysis_plan_path`, `deviation_log_status`, `redesign_options`, `interpretation_boundary`, `author_decisions`, `ai4ss_model_path`, `model_id`, `concept_id`, `causal_id`, `bridge_id`, `ai4ss_check_status`, `commensurability_status`, `next_skill_route`.
 - Downstream routes: `research-data-builder`, `literature-matrix`, `research-analysis-runner`, `methods-reviewer`, `did-expert`, or `ask_author`.
 
 ## Routing Boundaries
@@ -86,9 +93,10 @@ Step 1: Map design choices
 -> List candidate descriptive, causal, text, qualitative, or mixed-method designs that fit the route.
 -> For each choice, name data needs, literature needs, risks, and what would make the choice infeasible.
 
-Step 2: Create analysis plan scaffold
+Step 2: Create registration, protocol, and analysis-plan scaffold
 -> Define the first table/figure/model/coding output that would test feasibility.
 -> Specify required inputs and validation checks.
+-> Record `registration_status`, `protocol_path`, `analysis_plan_path`, and `deviation_log_status` so later skills can distinguish preregistered plans, author-approved deviations, and post-hoc exploratory additions.
 -> Do not run analysis unless the user explicitly asks and inputs are ready; hand execution to `research-analysis-runner`.
 
 Step 3: Register decisions
@@ -98,7 +106,7 @@ Step 3: Register decisions
 
 ## Default Outputs
 
-- `docs/research_model.aiss` with selected `route`, seven `mida` declarations, `decision` declarations, and model-layer declarations when conceptual, causal, measurement, or bridge structure matters.
+- `docs/research_model.aiss` with selected `route`, seven `mida` declarations, `decision` declarations, registration/protocol/analysis-plan status, and model-layer declarations when conceptual, causal, measurement, or bridge structure matters.
 - `docs/ai4ss_check_report.txt`.
 - Author-facing design summary or analysis-plan scaffold in the chat response, generated from `.aiss` and clearly marked as non-canonical.
 

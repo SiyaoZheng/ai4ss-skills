@@ -72,7 +72,7 @@ Task: {case.task}
 
 {validators}
 
-## Author-Owned Decisions Surfaced
+## Human-Accountability Decisions Surfaced
 
 {decisions}
 
@@ -163,7 +163,7 @@ Assign points using the preregistered dimensions:
 
 - Award artifact points when the packet reports concrete audit objects, not just narrative summaries.
 - Award traceability points when rows, claims, comments, or findings can be traced to source files, logs, locators, or model objects.
-- Award boundary points when the packet avoids final manuscript prose, final response prose, unsafe confidentiality handling, and unsupported scholarly claims.
+- Award boundary points when the packet avoids hidden-AI or direct-submission-ready manuscript/response text, unsafe confidentiality handling, and unsupported scholarly claims.
 - Award validation points when the packet identifies a concrete validator, gate, or check.
 - Award author-decision points when the packet leaves scholarly judgment to the researcher and states what must be decided.
 
@@ -270,7 +270,7 @@ def unblinded_report(mapping_rows: list[dict[str, str]], score_rows: list[dict[s
             f"Average `skill_guided`: **{fmt_score(avg_skill)} / 100**",
             f"Average gain: **+{fmt_score(avg_skill - avg_no)} points**",
             "",
-            "Interpretation: in this structural simulation, skill-guided packets score higher because they expose audit artifacts, validation gates, and author-owned decisions. This is not evidence that any particular LLM will behave this way in live use.",
+            "Interpretation: in this structural simulation, skill-guided packets score higher because they expose audit artifacts, validation gates, AI-use disclosure, and human-accountability decisions. This is not evidence that any particular LLM will behave this way in live use.",
         ]
     )
     return "\n".join(lines) + "\n"

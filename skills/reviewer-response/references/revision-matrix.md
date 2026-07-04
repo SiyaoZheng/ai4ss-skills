@@ -13,7 +13,7 @@ Use this schema to make an R&R traceable.
 | `planned_action` | What will change or be checked |
 | `evidence_needed` | Table, figure, source, analysis, or manuscript note |
 | `file_or_section` | Manuscript section, appendix, script, table, or figure |
-| `owner` | `author` or `agent`; writing and manuscript/response prose actions must be author-owned |
+| `owner` | `author` or `agent`; writing and manuscript/response text actions must preserve AI disclosure and human accountability |
 | `done_evidence` | Output path or manuscript location proving completion |
 | `response_summary` | One-sentence reply logic |
 | `author_position_status` | author_decided, needs_author, not_applicable |
@@ -34,6 +34,7 @@ Handle first:
 
 Every `accept` or `partial` item must have `done_evidence`.
 Every `rebut` or `cannot_do` item must have a concise reason and, where possible, a manuscript clarification.
-Every `needs_author` item must be surfaced before the author writes final prose.
+Every `needs_author` item must be surfaced before direct-submission status can
+be marked ready.
 Every item using reviewer reports, editor letters, confidential manuscripts, or collaborator comments must have `confidentiality_status` before any external tool use. Rows marked `needs_approval` or `do_not_share` cannot be agent-owned and cannot request external tools.
 Every substantive request must map to a MIDA element so revisions do not change the design silently.

@@ -78,8 +78,8 @@ CASES = [
         workbench="Literature evidence",
         task=(
             "Create a source-grounded literature base for AI/digital-government "
-            "adoption, innovation, and public-sector productivity before any "
-            "literature-review prose is written."
+            "adoption, innovation, and public-sector productivity with source locators "
+            "and AI-use disclosure status for any literature-review working text."
         ),
     ),
     Case(
@@ -88,8 +88,8 @@ CASES = [
         workbench="Claim discipline",
         task=(
             "Audit whether a DID table, event-study figure, mechanism table, and "
-            "draft result claim support the intended interpretation without writing "
-            "manuscript prose."
+            "draft result claim support the intended interpretation, and keep any "
+            "manuscript working text disclosure-gated."
         ),
     ),
     Case(
@@ -98,8 +98,7 @@ CASES = [
         workbench="Revision trace",
         task=(
             "Turn confidential reviewer comments into a traceable R&R workplan, "
-            "evidence checks, and author-owned response scaffold without writing "
-            "final response prose."
+            "evidence checks, and AI-disclosed response working text."
         ),
     ),
 ]
@@ -213,8 +212,8 @@ current mapping, run `package` with the seed disclosed in `_private/randomizatio
   replacement for independent human graders.
 - Packet contents may still reveal style differences even after condition labels
   are removed.
-- Scores estimate usefulness for traceable research assistance, not truth,
-  publication quality, or final scholarly responsibility.
+- Scores estimate usefulness for traceable research assistance, not empirical
+  truth, publication-quality evidence, or completed human-accountability review.
 
 ## Method References
 
@@ -261,8 +260,8 @@ or `unblinded_report.md` during grading.
   reviewer-request declarations.
 - Award traceability points when rows, claims, comments, or findings can be traced
   to files, logs, locators, model objects, or explicit source checks.
-- Award boundary points when the packet avoids final manuscript prose, final
-  response prose, unsafe confidentiality handling, and unsupported claims.
+- Award boundary points when the packet avoids hidden-AI or direct-submission-ready
+  manuscript/response text, unsafe confidentiality handling, and unsupported claims.
 - Award validation points when the packet names a concrete validator, gate, or
   check that could fail.
 - Award author-decision points when scholarly judgment remains visibly assigned
@@ -549,13 +548,13 @@ This report joins frozen blinded grades to `_private/private_mapping.csv`.
 This evaluation supports a narrow claim: in these four live generated tasks,
 skill-guided outputs were more useful when usefulness is defined as producing
 inspectable research artifacts, traceability markers, explicit authorship
-boundaries, validation gates, and author-owned decision points.
+boundaries, validation gates, AI-use disclosure, and human-accountability decision points.
 
 {exception_note}
 
 It does not show that skill-guided agents are always better, that the artifacts
-are empirically correct, or that the final scholarly claims are valid. Those
-remain author responsibilities and require source/data inspection.
+are empirically correct, or that scholarly claims have completed
+human-accountability review. Those require source/data inspection.
 
 ## Limits
 
@@ -564,7 +563,7 @@ remain author responsibilities and require source/data inspection.
 - Agent graders are not independent human experts.
 - Cases are controlled scenarios, not full field deployments.
 - The rubric favors traceable research workflow behavior by design; it should not
-  be used to rank final prose quality.
+  be used to rank direct-submission prose readiness.
 """
 
 

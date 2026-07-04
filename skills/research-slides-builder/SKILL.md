@@ -35,13 +35,13 @@ When a slide references a concept, causal implication, bridge, estimate, figure,
 ## Workflow Contract
 
 - Upstream inputs: `research_model.aiss`, checked `.aiss` claims, tables, figures, data artifacts, literature evidence, methods-review findings, author draft notes, venue/audience constraints, or existing deck files.
-- Produces: slide structure, source-linked claim slots, visual object instructions, privacy checks, deck artifacts when requested, and `.aiss` presentation `artifact`, bounded `claim`, source-link, `check`, or `decision` declarations.
-- Handoff fields: `route_id`, `target_inquiry`, `claim_id`, `source_artifact`, `sample_or_scope`, `uncertainty_or_caveat`, `privacy_status`, `visual_object`, `interpretation_boundary`, `author_decisions`, `ai4ss_model_path`, `model_id`, `concept_id`, `causal_id`, `bridge_id`, `ai4ss_check_status`, `next_skill_route`.
+- Produces: slide structure, source-linked claim slots, visual object instructions, privacy checks, reporting-transparency reminders, deck artifacts when requested, and `.aiss` presentation `artifact`, bounded `claim`, source-link, `check`, or `decision` declarations.
+- Handoff fields: `route_id`, `target_inquiry`, `claim_id`, `source_artifact`, `sample_or_scope`, `uncertainty_or_caveat`, `privacy_status`, `reporting_transparency_status`, `visual_object`, `interpretation_boundary`, `author_decisions`, `ai4ss_model_path`, `model_id`, `concept_id`, `causal_id`, `bridge_id`, `ai4ss_check_status`, `next_skill_route`.
 - Downstream routes: `methods-reviewer`, `academic-writing-scaffold`, `reviewer-response`, `ask_author`, or `none`.
 
 ## Routing Boundaries
 
-Use this skill for source-linked presentation planning and deck artifact creation. Use `methods-reviewer` when evidence validity is uncertain. Use `academic-writing-scaffold` for paper-oriented writing support. Do not use this skill to create final scholarly claims or fabricate visual evidence.
+Use this skill for source-linked presentation planning and deck artifact creation. Use `methods-reviewer` when evidence validity is uncertain. Use `academic-writing-scaffold` for paper-oriented writing support and reporting disclosures. Do not use this skill to create no-AI/direct-submission scholarly claims, hide data/code limits, or fabricate visual evidence.
 
 ## Workflow
 

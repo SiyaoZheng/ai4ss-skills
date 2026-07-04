@@ -29,7 +29,10 @@ Starter output may name candidate concepts, causal links, or empirical bridges, 
 
 ## Core Rule
 
-Produce `.aiss` research objects, not polished paper prose. The default workflow output is `research_model.aiss` with candidate `route` declarations, stop reasons, and researcher decision points. Chat summaries are display only, not workflow state.
+Produce `.aiss` research objects first. The default workflow output is
+`research_model.aiss` with candidate `route` declarations, stop reasons, and
+researcher decision points. Chat summaries and any AI-assisted working prose are
+display only, not workflow state.
 
 ## AI4SS Runtime Gate
 
@@ -43,13 +46,17 @@ downstream as if AI4SS had been declared.
 ## Workflow Contract
 
 - Upstream inputs: rough topic, source pile, dataset folder, policy phenomenon, author notes, or a request for "what can I do next?"
-- Produces: route-only `docs/research_model.aiss` with candidate `.aiss` `route` declarations and author-owned `decision` declarations; optional chat-facing notes may be displayed from it.
-- Handoff fields: `route_id`, `route_decl_id`, `ai4ss_model_path`, `research_question`, `model_scope`, `candidate_inquiry`, `candidate_concepts`, `candidate_causal_links`, `candidate_empirical_bridges`, `possible_data_strategy`, `possible_answer_strategy`, `study_type`, `unit_of_analysis`, `materials_available`, `materials_gap`, `first_action`, `failure_signal`, `stop_reason`, `researcher_decision_needed`, `aiss_check_status`, `next_skill_route`.
+- Produces: route-only `docs/research_model.aiss` with candidate `.aiss` `route` declarations, human-accountable `decision` declarations, and a first-pass transparency target; optional chat-facing notes may be displayed from it.
+- Handoff fields: `route_id`, `route_decl_id`, `ai4ss_model_path`, `research_question`, `model_scope`, `candidate_inquiry`, `candidate_concepts`, `candidate_causal_links`, `candidate_empirical_bridges`, `possible_data_strategy`, `possible_answer_strategy`, `study_type`, `unit_of_analysis`, `materials_available`, `materials_gap`, `registration_relevance`, `transparency_level_target`, `first_action`, `failure_signal`, `stop_reason`, `researcher_decision_needed`, `aiss_check_status`, `next_skill_route`.
 - Downstream routes: `study-design-builder`, `research-data-builder`, `literature-matrix`, `methods-reviewer`, `academic-writing-scaffold`, `research-slides-builder`, `did-expert`, or `ask_author`.
 
-## Hard Boundary
+## Single Manuscript-Facing Boundary
 
-Do not draft final manuscript prose, abstracts, introductions, literature review prose, results prose, conclusions, final reviewer responses, or authorial claims for direct submission. AI can propose routes, evidence affordances, analysis skeletons, and decision questions; the researcher owns novelty, theory, identification judgment, final claims, and final wording.
+AI may draft, revise, or sketch working text only when it is clearly marked as
+AI-assisted and not direct-submission ready. The only disallowed
+manuscript-facing output is hidden-AI or submission-ready presentation without
+AI contribution disclosure, human accountability, outlet-policy status, and
+direct-submission status.
 
 ## Routing Boundaries
 
@@ -79,6 +86,7 @@ Step 0: Inventory materials
 Step 1: Build candidate route declarations
 -> For open-ended topics, produce 2-4 `.aiss` `route` declarations before choosing.
 -> Each route declaration must name the question, phenomenon, unit, material path, first action, expected first output, feasibility status, stop reason, researcher decision, and next skill route.
+-> Mark whether the route is registration-relevant and what transparency target it implies for materials, data, code, and reporting.
 -> When the work will continue in the research-factory workflow, write each candidate directly as a `.aiss` `route` declaration with `status: candidate`, not as a final model.
 -> Do not send data, literature, analysis, review, writing, slide, or revision work downstream unless `route_decl_id` and `ai4ss_model_path` are present in `.aiss` or the handoff is explicitly blocked.
 -> If the user already picked one route, still record rejected alternatives briefly.
@@ -90,7 +98,7 @@ Step 2: Define a minimum viable study
 Step 3: Run or specify one next action
 -> Execute the next action only when inputs are present and the action is safe.
 -> Otherwise write the exact handoff prompt the researcher can use next.
--> Keep the action material-to-action: inspect, sample, retrieve, sketch, or scaffold. Do not write the paper.
+-> Keep the action material-to-action: inspect, sample, retrieve, sketch, scaffold, or draft AI-disclosed working text through the proper downstream skill.
 
 Step 4: Stop deliberately
 -> End with `stop_reason`, `researcher_decision_needed`, `handoff_prompt`, and `next_skill_route`.

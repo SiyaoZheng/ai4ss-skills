@@ -63,7 +63,7 @@ A production `research_model.aiss` should normally include:
 - seven `mida` declarations for the selected route: `model`, `inquiry`,
   `data_strategy`, `answer_strategy`, `diagnose`, `redesign`, and
   `report_boundary`
-- `decision` declarations for author-owned route, design, data, claim, or
+- `decision` declarations for human-accountable route, design, data, claim, or
   handoff choices
 - `attribute` and `concept` declarations for the model vocabulary
 - `causal` and `bridge` declarations when a causal or measurement claim matters
@@ -104,7 +104,7 @@ The unified `.aiss` AST is the computable research object inside that spine.
 | Answer strategy | `mida` row, requested checks, derives, adapters when available | scripts, tables, figures, model objects, run logs |
 | Diagnose | `mida` row, lint diagnostics, workflow/model diagnostics, bridge coverage, commensurability signals | robustness outputs and reviewer notes as cited artifacts |
 | Redesign | `mida` row, changed IDs and structural diffs | author decision notes as cited sources |
-| Report | `mida` row, bounded claim handoff through checked IDs | AI-use ledger, slides, response drafts, and author notes as cited artifacts |
+| Report | `mida` row, bounded claim handoff, disclosure matrix, AI-use disclosure, direct-submission status, and manuscript package through checked IDs | AI-use ledger, slides, response drafts, replication package notes, and author notes as cited artifacts |
 
 ## Skillpack Integration
 
@@ -116,9 +116,9 @@ The unified `.aiss` AST is the computable research object inside that spine.
 | `research-data-builder` | Adds data `source`, `artifact`, `empirical`, `observation`, `coupling`, `bridge`, `check`, and `decision` declarations and routes survey cleaning through AI4SS DDI skills when relevant |
 | `research-analysis-runner` | Requires `.aiss` readiness checks and links outputs back to model, concept, causal, bridge, or claim IDs |
 | `methods-reviewer` | Reviews `.aiss` lint/run output, bridge coverage, commensurability, and claim-support alignment, then records diagnostics as `.aiss` checks and decisions |
-| `academic-writing-scaffold` | Builds report-boundary claim slots from checked `.aiss` IDs; does not write final manuscript prose |
+| `academic-writing-scaffold` | Builds report-boundary claim slots, TOP disclosure matrices, AI-disclosed manuscript assembly checklists, and working prose from checked `.aiss` IDs when requested |
 | `research-slides-builder` | Uses checked `.aiss` concepts, bridges, and diagnosed limits as presentation source links |
-| `reviewer-response` | Maps reviewer requests to MIDA elements and `.aiss` IDs without writing final response prose |
+| `reviewer-response` | Maps reviewer requests to MIDA elements, `.aiss` IDs, deviation logs, revision-transparency status, and AI-disclosed response working text |
 
 Survey cleaning remains inside AI4SS through the DDI harness route:
 `codebook-parse` -> `cleaning-contract` -> `cleaning-execute`.
@@ -149,6 +149,9 @@ confirmed the intended staged behavior for a blank-slate topic:
 | G7 Analysis readiness passed | `.aiss` readiness `check` declarations | clean data do not match inquiry or bridge alignment is unchecked |
 | G8 Analysis links back to design | `.aiss` analysis artifact/check/derive declarations with model/claim references | tables or figures cannot be traced to declared inquiry |
 | G9 Reporting bounded | `.aiss` bounded claim/report declarations and AI-use ledger where required | unchecked causal/measurement claims become prose |
+| G10 Transparency package declared | `.aiss` checks, artifacts, or decisions for registration, protocol, analysis plan, materials, data, code, reporting, FAIR metadata, and deviation logs | final paper package depends on undocumented availability or undisclosed deviations |
+| G11 Replication package status declared | `.aiss` artifact/check declarations for scripts, runtime, data locators, logs, seeds, and restricted-access notes | outputs cannot be rerun or explained by another researcher |
+| G12 AI-disclosed manuscript package bounded | disclosure matrix, AI contribution disclosure, human accountability status, submission policy check, direct-submission status, and manuscript assembly status | manuscript or response text is treated as submission-ready or no-AI while AI involvement, accountability, policy checks, or claim boundaries remain hidden |
 
 ## Evaluation
 
@@ -160,7 +163,7 @@ chain:
 rough topic -> .aiss route declarations -> .aiss MIDA declarations ->
 .aiss model/check ->
 literature/data gates -> .aiss analysis readiness -> .aiss analysis artifacts ->
-bounded claim handoff
+transparency package -> bounded claim handoff -> AI-disclosed manuscript package
 ```
 
 That evaluation checks artifact continuity and gate coverage. It does not prove

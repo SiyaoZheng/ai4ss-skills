@@ -11,8 +11,10 @@ Inputs:
 Selected route:
 <route_id or "choose the most feasible route and explain why">
 
-Produce a study_design_brief.md and, if there are unresolved choices, .aiss decision declarations.
-Do not write manuscript prose or certify identification validity.
+Produce a study design brief, optional AI-assisted working text, and, if there
+are unresolved choices, `.aiss` decision declarations. Do not certify
+identification validity or treat the output as direct-submission ready without
+AI-use disclosure and policy checks.
 ```
 
 ## Route Comparison

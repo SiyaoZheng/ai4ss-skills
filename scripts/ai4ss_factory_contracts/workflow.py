@@ -42,6 +42,20 @@ CORE_HANDOFF_FIELDS = (
     "route_id",
     "design_source",
     "target_inquiry",
+    "registration_status",
+    "protocol_path",
+    "analysis_plan_path",
+    "materials_transparency_status",
+    "data_transparency_status",
+    "analysis_code_transparency_status",
+    "reporting_transparency_status",
+    "replication_package_status",
+    "fair_metadata_status",
+    "deviation_log_status",
+    "ai_contribution_disclosure",
+    "human_accountability_status",
+    "submission_policy_check_status",
+    "direct_submission_status",
     "author_decisions",
     "validation_commands",
     "interpretation_boundary",
@@ -122,6 +136,42 @@ ALLOWED_NEXT_ROUTES: dict[str, set[str]] = {
         "ask_author",
         "none",
     },
+    "registration_plan": {
+        "study-design-builder",
+        "research-data-builder",
+        "literature-matrix",
+        "research-analysis-runner",
+        "methods-reviewer",
+        "ask_author",
+        "none",
+    },
+    "transparency_package": {
+        "research-data-builder",
+        "research-analysis-runner",
+        "methods-reviewer",
+        "academic-writing-scaffold",
+        "reviewer-response",
+        "ask_author",
+        "none",
+    },
+    "reporting_package": {
+        "academic-writing-scaffold",
+        "methods-reviewer",
+        "research-slides-builder",
+        "reviewer-response",
+        "ask_author",
+        "none",
+    },
+    "revision_package": {
+        "reviewer-response",
+        "methods-reviewer",
+        "research-analysis-runner",
+        "research-data-builder",
+        "literature-matrix",
+        "academic-writing-scaffold",
+        "ask_author",
+        "none",
+    },
 }
 
 
@@ -190,6 +240,39 @@ def status_route_errors(
             errors.append(f"{row_label}: reviewable outputs require a next_skill_route")
         if route == "academic-writing-scaffold" and status != "ready_for_review":
             errors.append(f"{row_label}: writing scaffold requires ready_for_review status")
+    elif context == "registration_plan":
+        if status == "ready_for_registration" and route in {"none"}:
+            errors.append(f"{row_label}: ready_for_registration requires author or downstream transparency review")
+        if status == "needs_author_decision" and route != "ask_author":
+            errors.append(f"{row_label}: needs_author_decision should route to ask_author")
+        if status == "needs_analysis_plan" and route != "study-design-builder":
+            errors.append(f"{row_label}: needs_analysis_plan should route to study-design-builder")
+    elif context == "transparency_package":
+        expected = {
+            "needs_data_statement": {"research-data-builder"},
+            "needs_code_statement": {"research-analysis-runner"},
+            "needs_reporting_boundary": {"academic-writing-scaffold"},
+            "needs_reproducibility_review": {"methods-reviewer"},
+        }.get(status)
+        if expected and route not in expected:
+            target = next(iter(expected))
+            errors.append(f"{row_label}: {status} should route to {target}")
+    elif context == "reporting_package":
+        if status == "ready_for_ai_disclosed_draft" and route not in {"academic-writing-scaffold", "ask_author"}:
+            errors.append(f"{row_label}: ready_for_ai_disclosed_draft should route to academic-writing-scaffold or ask_author")
+        if status == "submission_gate_incomplete" and route not in {"academic-writing-scaffold", "methods-reviewer", "ask_author"}:
+            errors.append(
+                f"{row_label}: submission_gate_incomplete should route to academic-writing-scaffold, methods-reviewer, or ask_author"
+            )
+        if status == "needs_methods_review" and route != "methods-reviewer":
+            errors.append(f"{row_label}: needs_methods_review should route to methods-reviewer")
+    elif context == "revision_package":
+        if status == "needs_new_analysis" and route != "research-analysis-runner":
+            errors.append(f"{row_label}: needs_new_analysis should route to research-analysis-runner")
+        if status == "needs_new_data" and route != "research-data-builder":
+            errors.append(f"{row_label}: needs_new_data should route to research-data-builder")
+        if status == "ready_for_ai_disclosed_response" and route != "reviewer-response":
+            errors.append(f"{row_label}: ready_for_ai_disclosed_response should route to reviewer-response")
     else:
         raise KeyError(f"unknown AI4SS workflow context: {context}")
     return errors

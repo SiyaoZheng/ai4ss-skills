@@ -96,11 +96,18 @@ DIMENSION_TERMS = {
     "boundary_author_decision": [
         "bounded claim declarations",
         "AI-use ledger",
+        "TOP disclosure matrix",
+        "replication_package_status",
+        "deviation_log_status",
+        "AI-disclosed manuscript package",
+        "transparency package",
         "author decision",
         "Author should decide",
         "Claim boundary",
-        "no manuscript prose",
-        "no theory-section prose",
+        "ai_contribution_disclosure",
+        "human_accountability_status",
+        "submission_policy_check_status",
+        "direct_submission_status",
         "bounded claim",
     ],
     "end_to_end_continuity": [
@@ -110,12 +117,21 @@ DIMENSION_TERMS = {
         "model_id=demo.platform_innovation",
         "bridge_id=demo.causal_bridge_exposure",
         "design_source=docs/research_model.aiss",
+        "registration_status",
+        "analysis_plan_path",
+        "materials_transparency_status",
+        "analysis_code_transparency_status",
+        "reporting_transparency_status",
+        "ai_contribution_disclosure",
+        "human_accountability_status",
+        "submission_policy_check_status",
+        "direct_submission_status",
         "next_skill_route",
     ],
 }
 
 RISK_PENALTIES = {
-    "writes manuscript prose": 8,
+    "hidden AI or direct-submission-ready prose": 8,
     "causal claim before readiness": 5,
     "treats checker pass as proof": 6,
     "prose-only handoff": 4,
@@ -159,8 +175,8 @@ CASES = [
             "Turn the rough topic into a first-pass autonomous research-factory "
             "chain. The chain should make the research object, design declaration, "
             ".aiss model, evidence/data gates, .aiss analysis readiness, .aiss "
-            "analysis artifacts, and bounded claim handoff inspectable before any manuscript "
-            "prose is written."
+            "analysis artifacts, transparency package, bounded claim handoff, and "
+            "AI-disclosed manuscript package with direct-submission status inspectable."
         ),
     ),
     FactoryCase(
@@ -177,8 +193,8 @@ CASES = [
         task=(
             "Turn verified literature evidence into a theory-mapping handoff. The "
             "chain should preserve source paper ids, proposed .aiss objects, rival "
-            "or boundary conditions, observable implications, and author-owned "
-            "decisions without writing theory-section prose."
+            "or boundary conditions, observable implications, AI-use disclosure, "
+            "and author decisions."
         ),
     )
 ]
@@ -207,6 +223,7 @@ def generic_output() -> FactoryOutput:
             "Literature and data tasks are suggested but not linked to .aiss evidence or data declarations",
             "No .aiss readiness check before model execution",
             "Claim boundary is stated informally",
+            "No transparency package or replication-package status",
         ],
         trace_markers=[
             "variable names: rollout, treated_city, green_patent_count",
@@ -237,22 +254,28 @@ def factory_output() -> FactoryOutput:
             "records literature, theory, data, and analysis evidence as .aiss declarations when "
             "it affects the model, routes survey/data cleaning through upstream "
             "ai4ss-skills where relevant, runs .aiss readiness checks, records "
-            "first-pass outputs as .aiss analysis artifacts, and hands bounded claims to review."
+            "first-pass outputs as .aiss analysis artifacts, declares transparency and "
+            "replication-package status, and hands bounded claims to an AI-disclosed manuscript package."
         ),
         artifacts=[
             "research_model.aiss route declarations with route_id=R1, route_decl_id=demo.route_r1, minimum viable study, materials_gap, first_action, failure_signal, stop_reason, next_skill_route",
             "research_model.aiss selected route and seven mida declarations covering Model, Inquiry, Data strategy, Answer strategy, Diagnose, Redesign, and Report boundary",
+            "registration_status=registration_relevant, protocol_path=docs/protocol_scaffold.md, analysis_plan_path=docs/analysis_plan.md, deviation_log_status=none_declared",
             "research_model.aiss decision declarations with decision_decl_id values",
             "research_model.aiss",
             "ai4ss_check_report.txt",
             ".aiss paper/source/span/claim/relation declarations for verified literature evidence",
             ".aiss concept/causal/bridge/check/decision declarations for theory mapping, rivals, scope, and source status",
             ".aiss source/artifact/empirical/observation/coupling/bridge/check declarations for data construction and row-loss evidence",
+            "materials_transparency_status=partial, data_transparency_status=restricted, fair_metadata_status=needs_review, replication_package_status=partial",
             "DDI metadata and cleaning audit paths when codebook-parse, cleaning-contract, and cleaning-execute apply",
             ".aiss readiness check declarations",
             ".aiss analysis artifact declarations with first-pass table, diagnostic output, readiness_status, and interpretation_boundary",
+            "analysis_code_transparency_status=runnable, computational_reproducibility_status=partial, runtime and seed notes referenced from .aiss",
             ".aiss diagnostic check declarations for rival, scope, mechanism weakness, and overclaim risks",
             ".aiss bounded claim declarations",
+            "top_disclosure_matrix with reporting_transparency_status=needs_author_review",
+            "AI-disclosed manuscript package checklist with ai_contribution_disclosure=required, human_accountability_status=needs_author_review, submission_policy_check_status=not_checked, direct_submission_status=not_ready",
             "AI-use ledger entry",
         ],
         gate_statuses=[
@@ -261,13 +284,13 @@ def factory_output() -> FactoryOutput:
             "G3 pass: research_model.aiss checked through aiss.py compile/lint/run",
             "G4 pass: bridge_id=demo.causal_bridge_exposure records empirical bridge and weak commensurability",
             "G5 pass: literature evidence is recorded as .aiss paper/source/span/claim declarations",
-            "G6 pass: theory mapping records rivals, scope, and mechanism weakness as .aiss checks or decisions before model handoff",
-            "G7 pass: only source-grounded .aiss declarations can become concept, causal, bridge, or model declarations",
-            "G8 pass: rival and scope weaknesses route to methods-reviewer or author decision rather than final theory-section prose",
-            "G9 pass: data contract includes .aiss source, artifact, empirical, observation, coupling, bridge, and check declarations plus upstream cleaning-route placeholders",
-            "G10 pass: .aiss readiness checks report readiness_status before execution",
-            "G11 pass: .aiss analysis artifacts link outputs back to model_id=demo.platform_innovation and bridge_id=demo.causal_bridge_exposure",
-            "G12 pass: bounded claim and no manuscript prose until methods review",
+            "G6 pass: data contract includes .aiss source, artifact, empirical, observation, coupling, bridge, and check declarations plus upstream cleaning-route placeholders",
+            "G7 pass: .aiss readiness checks report readiness_status before execution",
+            "G8 pass: .aiss analysis artifacts link outputs back to model_id=demo.platform_innovation and bridge_id=demo.causal_bridge_exposure",
+            "G9 pass: bounded claim with AI-use disclosure and direct-submission gate visible",
+            "G10 pass: transparency package declares registration, protocol, analysis_plan_path, materials, data, code, reporting, FAIR metadata, and deviation_log_status",
+            "G11 pass: replication_package_status records scripts, runtime, data locators, seeds, logs, and restricted-access notes",
+            "G12 pass: AI-disclosed manuscript package uses top_disclosure_matrix, ai_contribution_disclosure, human_accountability_status, submission_policy_check_status, and direct_submission_status",
         ],
         trace_markers=[
             "route_id=R1",
@@ -275,6 +298,16 @@ def factory_output() -> FactoryOutput:
             "mida_id=demo.mida_r1_inquiry",
             "decision_decl_id=demo.decision_r1_identification",
             "design_source=docs/research_model.aiss",
+            "registration_status=registration_relevant",
+            "analysis_plan_path=docs/analysis_plan.md",
+            "materials_transparency_status=partial",
+            "analysis_code_transparency_status=runnable",
+            "reporting_transparency_status=needs_author_review",
+            "ai_contribution_disclosure=required",
+            "human_accountability_status=needs_author_review",
+            "submission_policy_check_status=not_checked",
+            "direct_submission_status=not_ready",
+            "replication_package_status=partial",
             "ai4ss_model_path=docs/examples/research_model.aiss",
             "model_id=demo.platform_innovation",
             "concept_id=demo.exposed_unit; demo.high_innovation",
@@ -298,7 +331,8 @@ def factory_output() -> FactoryOutput:
             "author decision: acceptable missing-link threshold before firm-year analysis",
             "author decision: whether to abandon causal language if bridge/readiness stays weak",
             "author decision: whether mechanism strength and theoretical contribution are only framing hypotheses or author-approved claims",
-            "no manuscript prose; no theory-section prose; only bounded claim declarations and author decision slots for review",
+            "AI-assisted working prose remains disclosure-gated; bounded claim declarations and author decision slots are visible for review",
+            "author decision: disclosure wording and replication-package access limits before final paper submission",
         ],
         risky_moves=[],
     )
@@ -390,7 +424,7 @@ Task: {case.task}
 
 {validators}
 
-## Author-Owned Decisions
+## Human-Accountability Decisions
 
 {decisions}
 
@@ -494,14 +528,17 @@ guess the production condition. No condition labels are provided.
   source-status, and model-update declarations.
 - Award analysis-loop points only when readiness is checked before execution and
   first-pass outputs link back to the declared design.
-- Award boundary points when the packet avoids manuscript or theory-section
-  prose and leaves novelty, theoretical contribution, mechanism strength, and
-  scope framing to the researcher.
+- Award boundary points when manuscript or theory-section working text remains
+  AI-disclosed and direct-submission gated, declares transparency and
+  replication-package status, and leaves novelty, theoretical contribution,
+  mechanism strength, disclosure wording, and scope framing to the researcher.
 - Award continuity points when the same route, model, bridge, and design-source
-  identifiers travel across the chain.
+  identifiers travel across the chain with registration, analysis-plan, data,
+  code, reporting, and replication-package status.
 
-Penalize direct manuscript writing, causal claims before readiness, unverified
-source synthesis, and treating a checker pass as proof of identification.
+Penalize hidden-AI or direct-submission-ready manuscript writing, causal claims
+before readiness, unverified source synthesis, and treating a checker pass as
+proof of identification.
 """
 
 
@@ -624,7 +661,7 @@ def unblinded_report(mapping_rows: list[dict[str, str]], score_rows: list[dict[s
             "",
             "## Interpretation",
             "",
-            "The structural comparison exposes the specific gap that the local `.aiss` factory is meant to close: a careful generic agent can outline a credible study, but the handoff remains prose-heavy and weakly replayable. The factory packet scores higher because it carries the same route, design source, model IDs, bridge IDs, evidence gates, data contracts, readiness checks, analysis artifacts, and bounded claim handoff through the whole chain.",
+            "The structural comparison exposes the specific gap that the local `.aiss` factory is meant to close: a careful generic agent can outline a credible study, but the handoff remains prose-heavy and weakly replayable. The factory packet scores higher because it carries the same route, design source, model IDs, bridge IDs, evidence gates, data contracts, readiness checks, analysis artifacts, transparency package, replication-package status, and bounded claim handoff through the whole chain.",
             "",
             "The appropriate claim is narrow. This package verifies that the local workflow now has an evaluable factory-level contract and a reproducible scoring harness. It does not prove that live agents will always use the factory correctly, that empirical claims are true, or that `.aiss` checker success establishes identification validity.",
             "",

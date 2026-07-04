@@ -5,33 +5,35 @@ P001,city_platform_green_patents,3,No research_model.aiss or ai4ss_check_report.
 P001,city_platform_green_patents,4,Literature and data tasks are suggested but not linked to .aiss evidence or data declarations
 P001,city_platform_green_patents,5,No .aiss readiness check before model execution
 P001,city_platform_green_patents,6,Claim boundary is stated informally
+P001,city_platform_green_patents,7,No transparency package or replication-package status
 P002,city_platform_green_patents,1,G1 pass: route_id=R1 and route_decl_id=demo.route_r1 create a .aiss research object with a failure signal
 P002,city_platform_green_patents,2,G2 pass: design_source=docs/research_model.aiss contains .aiss MIDA declarations through mida_id values
 P002,city_platform_green_patents,3,G3 pass: research_model.aiss checked through aiss.py compile/lint/run
 P002,city_platform_green_patents,4,G4 pass: bridge_id=demo.causal_bridge_exposure records empirical bridge and weak commensurability
 P002,city_platform_green_patents,5,G5 pass: literature evidence is recorded as .aiss paper/source/span/claim declarations
-P002,city_platform_green_patents,6,"G6 pass: theory mapping records rivals, scope, and mechanism weakness as .aiss checks or decisions before model handoff"
-P002,city_platform_green_patents,7,"G7 pass: only source-grounded .aiss declarations can become concept, causal, bridge, or model declarations"
-P002,city_platform_green_patents,8,G8 pass: rival and scope weaknesses route to methods-reviewer or author decision rather than final theory-section prose
-P002,city_platform_green_patents,9,"G9 pass: data contract includes .aiss source, artifact, empirical, observation, coupling, bridge, and check declarations plus upstream cleaning-route placeholders"
-P002,city_platform_green_patents,10,G10 pass: .aiss readiness checks report readiness_status before execution
-P002,city_platform_green_patents,11,G11 pass: .aiss analysis artifacts link outputs back to model_id=demo.platform_innovation and bridge_id=demo.causal_bridge_exposure
-P002,city_platform_green_patents,12,G12 pass: bounded claim and no manuscript prose until methods review
+P002,city_platform_green_patents,6,"G6 pass: data contract includes .aiss source, artifact, empirical, observation, coupling, bridge, and check declarations plus upstream cleaning-route placeholders"
+P002,city_platform_green_patents,7,G7 pass: .aiss readiness checks report readiness_status before execution
+P002,city_platform_green_patents,8,G8 pass: .aiss analysis artifacts link outputs back to model_id=demo.platform_innovation and bridge_id=demo.causal_bridge_exposure
+P002,city_platform_green_patents,9,G9 pass: bounded claim with AI-use disclosure and direct-submission gate visible
+P002,city_platform_green_patents,10,"G10 pass: transparency package declares registration, protocol, analysis_plan_path, materials, data, code, reporting, FAIR metadata, and deviation_log_status"
+P002,city_platform_green_patents,11,"G11 pass: replication_package_status records scripts, runtime, data locators, seeds, logs, and restricted-access notes"
+P002,city_platform_green_patents,12,"G12 pass: AI-disclosed manuscript package uses top_disclosure_matrix, ai_contribution_disclosure, human_accountability_status, submission_policy_check_status, and direct_submission_status"
 P003,platform_theory_mapping,1,G1 pass: route_id=R1 and route_decl_id=demo.route_r1 create a .aiss research object with a failure signal
 P003,platform_theory_mapping,2,G2 pass: design_source=docs/research_model.aiss contains .aiss MIDA declarations through mida_id values
 P003,platform_theory_mapping,3,G3 pass: research_model.aiss checked through aiss.py compile/lint/run
 P003,platform_theory_mapping,4,G4 pass: bridge_id=demo.causal_bridge_exposure records empirical bridge and weak commensurability
 P003,platform_theory_mapping,5,G5 pass: literature evidence is recorded as .aiss paper/source/span/claim declarations
-P003,platform_theory_mapping,6,"G6 pass: theory mapping records rivals, scope, and mechanism weakness as .aiss checks or decisions before model handoff"
-P003,platform_theory_mapping,7,"G7 pass: only source-grounded .aiss declarations can become concept, causal, bridge, or model declarations"
-P003,platform_theory_mapping,8,G8 pass: rival and scope weaknesses route to methods-reviewer or author decision rather than final theory-section prose
-P003,platform_theory_mapping,9,"G9 pass: data contract includes .aiss source, artifact, empirical, observation, coupling, bridge, and check declarations plus upstream cleaning-route placeholders"
-P003,platform_theory_mapping,10,G10 pass: .aiss readiness checks report readiness_status before execution
-P003,platform_theory_mapping,11,G11 pass: .aiss analysis artifacts link outputs back to model_id=demo.platform_innovation and bridge_id=demo.causal_bridge_exposure
-P003,platform_theory_mapping,12,G12 pass: bounded claim and no manuscript prose until methods review
+P003,platform_theory_mapping,6,"G6 pass: data contract includes .aiss source, artifact, empirical, observation, coupling, bridge, and check declarations plus upstream cleaning-route placeholders"
+P003,platform_theory_mapping,7,G7 pass: .aiss readiness checks report readiness_status before execution
+P003,platform_theory_mapping,8,G8 pass: .aiss analysis artifacts link outputs back to model_id=demo.platform_innovation and bridge_id=demo.causal_bridge_exposure
+P003,platform_theory_mapping,9,G9 pass: bounded claim with AI-use disclosure and direct-submission gate visible
+P003,platform_theory_mapping,10,"G10 pass: transparency package declares registration, protocol, analysis_plan_path, materials, data, code, reporting, FAIR metadata, and deviation_log_status"
+P003,platform_theory_mapping,11,"G11 pass: replication_package_status records scripts, runtime, data locators, seeds, logs, and restricted-access notes"
+P003,platform_theory_mapping,12,"G12 pass: AI-disclosed manuscript package uses top_disclosure_matrix, ai_contribution_disclosure, human_accountability_status, submission_policy_check_status, and direct_submission_status"
 P004,platform_theory_mapping,1,"Research route described in prose, but no .aiss route_id or failure_signal declaration"
 P004,platform_theory_mapping,2,"Design is partly stated, but no selected .aiss route plus seven MIDA declarations"
 P004,platform_theory_mapping,3,No research_model.aiss or ai4ss_check_report.txt
 P004,platform_theory_mapping,4,Literature and data tasks are suggested but not linked to .aiss evidence or data declarations
 P004,platform_theory_mapping,5,No .aiss readiness check before model execution
 P004,platform_theory_mapping,6,Claim boundary is stated informally
+P004,platform_theory_mapping,7,No transparency package or replication-package status

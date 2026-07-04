@@ -89,7 +89,7 @@ Change:
 
 - Made `route`, `mida`, and `decision` first-class `.aiss` v0.4 declarations.
 - Upgraded `research-starter` so durable route state is stored as `.aiss` `route` declarations through `route_decl_id`.
-- Upgraded `study-design-builder` so selected routes own seven `.aiss` `mida` declarations through `mida_id` and author-owned choices through `decision_decl_id`.
+- Upgraded `study-design-builder` so selected routes own seven `.aiss` `mida` declarations through `mida_id` and human-accountable choices through `decision_decl_id`.
 - Reframed CSV and derived Markdown outputs as non-contract projections, not a workflow DSL.
 
 Decision:
@@ -100,15 +100,47 @@ Decision:
 
 | layer | skill | owns | must not own |
 |---|---|---|---|
-| Production | `research-starter` | `.aiss` route declarations and minimum viable study | final prose or validity claims |
+| Production | `research-starter` | `.aiss` route declarations and minimum viable study | validity claims or no-AI submission status |
 | Production | `study-design-builder` | selected `.aiss` route, MIDA declarations, design decisions, and checks | final identification judgment |
 | Production | `research-data-builder` | data pipeline, provenance, and `.aiss` data declarations | research design choice |
-| Production | `literature-matrix` | source discovery, extraction, and `.aiss` evidence declarations | literature review prose |
+| Production | `literature-matrix` | source discovery, extraction, and `.aiss` evidence declarations | undisclosed no-AI literature-review status |
 | Production | `research-analysis-runner` | first-pass outputs and `.aiss` analysis artifacts | interpretation or result selection |
 | Audit | `methods-reviewer` | diagnostic checks and redesign decisions | first execution as default |
-| Scaffold | `academic-writing-scaffold` | bounded claim slots and author writing scaffold | manuscript prose |
+| Scaffold | `academic-writing-scaffold` | bounded claim slots, AI-disclosed working prose, and manuscript package gate | hidden-AI submission-ready prose |
 | Scaffold | `research-slides-builder` | presentation artifacts and evidence-source mapping | new research findings |
-| Revision | `reviewer-response` | reviewer-request decisions and response-boundary checks | final response prose |
+| Revision | `reviewer-response` | reviewer-request decisions, response-boundary checks, and AI-disclosed response working text | hidden-AI submission-ready response |
+
+## Round 7: End-to-Paper Transparency Boundary
+
+Finding: the factory covered the research-state chain well, but the final paper
+boundary was too implicit. The older boundary over-relied on bans against
+AI-assisted drafting, while the ecosystem did not strongly name the AI-disclosed
+submission package:
+registration/protocol/analysis plan, materials/data/code transparency,
+computational reproducibility, reporting disclosure, deviation log, and
+replication-package status.
+
+Change:
+
+- Added route contexts for `registration_plan`, `transparency_package`,
+  `reporting_package`, and `revision_package`.
+- Extended shared handoff fields with registration, protocol, analysis-plan,
+  materials/data/code/reporting transparency, FAIR metadata, deviation-log, and
+  replication-package status.
+- Reframed `academic-writing-scaffold` as the owner of manuscript assembly
+  status, disclosure matrices, AI contribution disclosure, human accountability
+  status, direct-submission status, and outlet-policy check status.
+- Made `study-design-builder`, `research-data-builder`,
+  `research-analysis-runner`, `methods-reviewer`, and `reviewer-response`
+  explicitly preserve the transparency fields they own.
+
+Decision:
+
+- The skillpack has one manuscript-facing AI boundary: working manuscript or
+  reviewer-response text may be AI-assisted, but it is
+  `submission_ineligible_ai_assisted_working_text` until AI involvement,
+  human accountability, and outlet-policy checks are explicit. Do not
+  reintroduce blanket bans on AI drafting.
 
 ## Remaining Watchlist
 

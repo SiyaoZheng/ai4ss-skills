@@ -38,15 +38,15 @@ Literature evidence that affects the model must enter `.aiss` directly or throug
 
 This skill realizes the literature side of the `Data strategy` and `Diagnose` parts of the MIDA spine. Literature is evidence data: it needs source scope, screening rules, extraction fields, verification status, and claim-support limits.
 
-The skill can propose model edits only as source-grounded `.aiss` declarations or author `decision` declarations. It does not write final literature-review prose or decide theoretical novelty.
+The skill can propose model edits as source-grounded `.aiss` declarations, author `decision` declarations, or AI-disclosed literature-review working text. It does not mark theoretical novelty or direct-submission status ready without source support, disclosure, and human-accountability gates.
 
 When verified literature changes a concept, causal implication, bridge, mechanism, rival explanation, or scope condition, the model change must preserve `ai4ss_model_path`, source spans, and author decision status.
 
 ## Workflow Contract
 
 - Upstream inputs: `research_model.aiss`, route declarations, MIDA declarations, seed papers, Zotero/PDF sets, bibliographies, search questions, source-verification requests, or author-supplied scope rules.
-- Produces: verified source locators, screening and extraction evidence, evidence clusters, open source questions, and `.aiss` `paper`, `source`, `span`, `claim`, `relation`, `concept`, `causal`, `bridge`, `check`, or `decision` declarations.
-- Handoff fields: `route_id`, `design_source`, `target_inquiry`, `source_scope`, `source_status`, `paper_id`, `span_id`, `claim_id`, `concept_id`, `causal_id`, `bridge_id`, `evidence_strength`, `author_decisions`, `ai4ss_model_path`, `ai4ss_check_status`, `validation_commands`, `next_skill_route`.
+- Produces: verified source locators, search-strategy and source-status transparency evidence, screening and extraction evidence, evidence clusters, open source questions, and `.aiss` `paper`, `source`, `span`, `claim`, `relation`, `concept`, `causal`, `bridge`, `check`, or `decision` declarations.
+- Handoff fields: `route_id`, `design_source`, `target_inquiry`, `source_scope`, `search_strategy_status`, `source_status`, `paper_id`, `span_id`, `claim_id`, `concept_id`, `causal_id`, `bridge_id`, `evidence_strength`, `materials_transparency_status`, `author_decisions`, `ai4ss_model_path`, `ai4ss_check_status`, `validation_commands`, `next_skill_route`.
 - Downstream routes: `study-design-builder`, `methods-reviewer`, `academic-writing-scaffold`, `research-slides-builder`, `reviewer-response`, or `ask_author`.
 
 ## Routing Boundaries
@@ -63,6 +63,7 @@ Step -1: Scope
 
 Step 0: Search plan
 -> Declare source scope, search strata, exact queries or seed sources, source types, and next verification actions.
+-> Treat query strings, databases, inclusion/exclusion rules, access dates, and source-status labels as transparency materials that may need to be reported or replicated.
 -> Use live search when coverage or publication status may have changed.
 
 Step 1: Gather and verify
@@ -80,7 +81,8 @@ Step 3: Update `.aiss`
 
 Step 4: Hand off
 -> Return evidence clusters, open source questions, touched `.aiss` ids, and validation commands.
--> Do not write final manuscript prose.
+-> If literature-review working prose is requested, mark it as AI-assisted,
+source-linked, and not direct-submission ready unless the disclosure gate passes.
 ```
 
 ## Default Outputs

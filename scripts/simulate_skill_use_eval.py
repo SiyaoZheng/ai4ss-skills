@@ -63,7 +63,7 @@ CASES = (
             trace_markers=("row counts", "raw data untouched"),
             validator_refs=(),
             author_decisions=("ask whether to include controls",),
-            risky_moves=("does not write a merge review declaration", "variable construction is described only in prose"),
+            risky_moves=("omits a merge review declaration", "variable construction is described only in prose"),
             summary="Returns a usable cleaned dataset and some row-count evidence, but merge ambiguity and variable provenance remain weak.",
         ),
         skill_guided=SimulatedOutput(
@@ -115,8 +115,8 @@ CASES = (
             trace_markers=("estimand", "sample and N"),
             validator_refs=(),
             author_decisions=("ask whether wording is too strong",),
-            risky_moves=("writes final manuscript prose", "mechanism evidence is not separated from interpretation"),
-            summary="Returns a plausible paragraph plus notes, but it crosses the direct-writing boundary and under-specifies claim strength.",
+            risky_moves=("hidden AI or direct-submission-ready prose", "mechanism evidence is not separated from interpretation"),
+            summary="Returns a plausible paragraph plus notes, but it lacks disclosure/direct-submission status and under-specifies claim strength.",
         ),
         skill_guided=SimulatedOutput(
             condition="skill_guided",
@@ -125,7 +125,7 @@ CASES = (
             validator_refs=("validate_ai4ss_model.py", "validate_ai4ss_model.py"),
             author_decisions=("author decides causal language", "author decides whether mechanism claim needs new analysis"),
             risky_moves=(),
-            summary="Returns claim slots and risks, leaving final prose and scholarly judgment to the author; FE/cluster still need model-object confirmation.",
+            summary="Returns claim slots, risks, and visible AI-use/submission gate status; FE/cluster still need model-object confirmation.",
         ),
     ),
     EvalCase(
@@ -141,8 +141,8 @@ CASES = (
             trace_markers=("comment_id", "planned_action"),
             validator_refs=(),
             author_decisions=("ask if tone is acceptable",),
-            risky_moves=("writes final response prose", "done evidence is missing for several promised changes"),
-            summary="Returns a plausible response package, but author cannot verify every promised change before prose appears.",
+            risky_moves=("hidden AI or direct-submission-ready prose", "done evidence is missing for several promised changes"),
+            summary="Returns a plausible response package, but it lacks a visible disclosure/direct-submission gate and done evidence for several promised changes.",
         ),
         skill_guided=SimulatedOutput(
             condition="skill_guided",
@@ -205,9 +205,9 @@ def render_report() -> str:
     lines.append("|---|---:|---|")
     lines.append("| artifacts | 30 | Did the agent produce the canonical audit objects? |")
     lines.append("| traceability | 20 | Can claims or rows be traced to sources, logs, or model objects? |")
-    lines.append("| boundary | 20 | Did the agent avoid direct final academic prose or unsafe scholarly moves? |")
+    lines.append("| boundary | 20 | Did the agent keep AI-use disclosure and direct-submission gates visible while avoiding unsafe scholarly moves? |")
     lines.append("| validation | 15 | Did the agent name the relevant validator or gate? |")
-    lines.append("| author_decision | 15 | Did the agent surface decisions the researcher must own? |")
+    lines.append("| author_decision | 15 | Did the agent surface human-accountability decisions? |")
     lines.append("")
     lines.append("## Results")
     lines.append("")
@@ -251,9 +251,9 @@ def render_report() -> str:
     lines.append("")
     lines.append("## Interpretation")
     lines.append("")
-    lines.append("The simulated gain comes mostly from three changes: canonical artifacts appear, risky direct-writing moves are penalized, and validation gates become explicit. The skill-guided condition is not more creative; it is more inspectable.")
+    lines.append("The simulated gain comes mostly from three changes: canonical artifacts appear, hidden-AI or direct-submission risks are penalized, and validation gates become explicit. The skill-guided condition is not more creative; it is more inspectable.")
     lines.append("")
-    lines.append("For teaching, this is the right claim: skills are useful only if they change the agent from answer production to audit-object production.")
+    lines.append("For teaching, this is the right claim: skills are useful only if they change the agent from answer production to inspectable, AI-disclosed research objects and working text.")
     lines.append("")
     lines.append("## Case Details")
     lines.append("")

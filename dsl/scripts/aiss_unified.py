@@ -1180,28 +1180,51 @@ def run_ast(ast: dict[str, Any], *, adapter_lock_path: str | Path | None = None)
         adapter_lock_hash = sha256_bytes(b"")
 
     declared_adapters = [r for r in ast.get("objects", []) if record_decl_type(r) == "adapter"]
+
+    def adapter_for_coupling(coupling: dict[str, Any]) -> dict[str, Any] | None:
+        coupling_type = str(coupling.get("type", ""))
+        coupling_targets = {coupling["id"], record_decl_type(coupling), coupling_type}
+        for adapter in sorted(declared_adapters, key=lambda item: item["id"]):
+            consumes = {str(item) for item in coerce_list(adapter.get("consumes"))}
+            produces = {str(item) for item in coerce_list(adapter.get("produces"))}
+            can_consume = bool(consumes & coupling_targets)
+            can_produce = bool(produces & {"assessment", "coupling_assessment", f"{coupling_type}_assessment"})
+            if can_consume and can_produce:
+                return adapter
+        return None
+
     units = [
         {
             "adapter": adapter["id"],
             "version": adapter.get("version"),
-            "status": "skipped_no_adapter",
+            "status": "registered",
             "inputs": [],
             "outputs": [],
         }
         for adapter in declared_adapters
     ]
 
-    coupling_assessments = [
-        {
-            "coupling_id": coupling["id"],
-            "status": "not_assessable",
-            "rule": None,
-            "basis": [],
-            "message": "No deterministic adapter is available for this coupling type.",
-        }
-        for coupling in ast.get("relations", [])
-        if record_decl_type(coupling) == "coupling"
-    ]
+    coupling_assessments = []
+    for coupling in ast.get("relations", []):
+        if record_decl_type(coupling) != "coupling":
+            continue
+        adapter = adapter_for_coupling(coupling)
+        if adapter:
+            coupling_assessments.append({
+                "coupling_id": coupling["id"],
+                "status": "assessable_via_adapter",
+                "rule": adapter["id"],
+                "basis": sorted_ids(coerce_list(coupling.get("spans", []))),
+                "message": "Declared adapter covers this coupling type.",
+            })
+        else:
+            coupling_assessments.append({
+                "coupling_id": coupling["id"],
+                "status": "not_assessable",
+                "rule": None,
+                "basis": [],
+                "message": "No deterministic adapter is available for this coupling type.",
+            })
 
     return canonicalize({
         "schema": "aiss.run_report.v0.4",

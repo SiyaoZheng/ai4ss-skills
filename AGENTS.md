@@ -21,7 +21,7 @@ Maintain the research-factory skills as one workflow:
 rough topic -> .aiss route declarations -> .aiss MIDA declarations ->
 .aiss model/check ->
 literature/data gates -> .aiss analysis readiness -> .aiss analysis artifacts ->
-bounded claim handoff
+transparency package -> bounded claim handoff -> AI-disclosed manuscript package
 ```
 
 The methodology spine is:
@@ -30,10 +30,14 @@ The methodology spine is:
 Declare MIDA -> Diagnose -> Redesign -> Report with bounded claims
 ```
 
-AI assistance must not directly write final manuscript prose, final reviewer
-response prose, or final scholarly claims. Skills should create inspectable
-`.aiss` research objects, diagnostics, evidence artifacts, and author decision
-points. CSV files and derived Markdown notes are not workflow state.
+The only manuscript-facing AI boundary in this skillpack is disclosure and
+submission gating: skills may help draft, revise, audit, and assemble working
+manuscript or reviewer-response text, but they must not present any output as
+submission-ready or as having no AI involvement unless AI contribution
+disclosure, human accountability, and outlet-policy checks are explicit.
+Skills should create inspectable `.aiss` research objects, diagnostics,
+evidence artifacts, transparency status, replication-package status, and
+decision points. CSV files and derived Markdown notes are not workflow state.
 
 ## Validation
 
@@ -52,7 +56,9 @@ The `.aiss` validators use the unified v0.4 DSL entrypoint in this repo:
 
 ## Boundaries
 
-- Do not turn research-factory skills into paper-writing skills.
+- The only AI-writing/submission boundary is the disclosure and direct-submission
+  gate above; do not reintroduce blanket bans on AI drafting manuscript,
+  reviewer-response, or scholarly working prose.
 - Do not use the former local research-model extension for local artifacts.
 - Do not present deterministic structural evaluations as live double-blind
   evidence.

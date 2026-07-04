@@ -11,8 +11,8 @@ Rough question or phenomenon:
 Available materials:
 <files, notes, links, seed papers, datasets, or "none yet">
 
-Hard boundaries:
-<confidentiality, no final prose, no scraping, no personal data, no invented sources>
+Boundaries:
+<confidentiality, no hidden-AI/direct-submission-ready prose, no scraping, no personal data, no invented sources>
 
 Desired next action:
 <one small action you want the agent to attempt>
@@ -27,7 +27,8 @@ Given this rough topic and materials, produce 2-4 research route cards.
 
 For each route, include research_question, study_type, unit_of_analysis, materials_available, materials_gap, first_action, expected_first_output, failure_signal, feasibility_status, stop_reason, researcher_decision_needed, and next_skill_route.
 
-Do not write final paper prose. Do not invent data availability or citations.
+Do not present working prose as no-AI or direct-submission ready. Do not invent
+data availability or citations.
 ```
 
 ## Minimum Viable Study
@@ -37,7 +38,10 @@ Choose the smallest viable study among these route cards.
 
 Explain why it can be attempted first, what it can teach us, what it cannot claim, and what one action should happen next.
 
-Stop before robustness checks, final claims, or manuscript prose.
+Route robustness checks to the design or analysis skills, and do not mark
+claims as direct-submission ready until evidence and disclosure gates pass. If
+working prose is needed, mark it as AI-assisted and route it through the
+disclosure gate.
 ```
 
 ## First Action

@@ -17,6 +17,7 @@ source demo.src_design {
   uri: "docs/examples/research_model.aiss"
   media_type: "text/aiss"
   locator_scheme: "line"
+  checksum: "sha256:fixture-design-brief"
 }
 
 source demo.src_literature {
@@ -24,6 +25,7 @@ source demo.src_literature {
   uri: "docs/examples/research_model.aiss"
   media_type: "text/aiss"
   locator_scheme: "declaration"
+  checksum: "sha256:fixture-literature-evidence-declaration"
 }
 
 span demo.span_platform_exposure {
@@ -70,7 +72,7 @@ route demo.route_r1 {
   inquiry: "average effect of platform exposure on high innovation within linked units and declared time window"
   data_strategy: "source-verified rollout records linked to firm innovation outcomes"
   answer_strategy: "first pass design declaration and readiness checks before any estimation"
-  stop_reason: "teaching fixture; author must approve identification and claim strength"
+  stop_reason: "teaching fixture; researcher must approve identification and claim strength"
   next_skill_route: research-data-builder
   candidate_concepts: [demo.exposed_unit, demo.high_innovation]
   spans: [demo.span_route_r1]
@@ -132,7 +134,7 @@ mida demo.mida_r1_redesign {
 mida demo.mida_r1_report_boundary {
   route: demo.route_r1
   component: report_boundary
-  text: "Report only bounded teaching-fixture diagnostics; do not claim final causal credibility or manuscript-ready results."
+  text: "Report only bounded teaching-fixture diagnostics; do not mark causal credibility or manuscript package status direct-submission ready without the disclosure gate."
   status: declared
   spans: [demo.span_mida_r1]
 }
@@ -140,7 +142,7 @@ mida demo.mida_r1_report_boundary {
 decision demo.decision_r1_identification {
   route: demo.route_r1
   component: inquiry
-  decision: "Author must decide whether the causal route is substantively worth pursuing after source and data checks."
+  decision: "Researcher must decide whether the causal route is substantively worth pursuing after source and data checks."
   status: needs_author_decision
   owner: author
   next_skill_route: ask_author
@@ -233,6 +235,12 @@ coupling demo.coupling_literature_to_claim {
   empirical: demo.empirical_city_panel
   asserted_by: "literature_matrix row smith_2024_city_ai"
   spans: [demo.span_literature_smith]
+}
+
+adapter demo.adapter_design_route_support {
+  version: "fixture-v1"
+  consumes: [design_route_support]
+  produces: [coupling_assessment]
 }
 
 causal demo.exposure_to_innovation {

@@ -14,7 +14,8 @@ Outcomes: [outcomes]
 Methods of interest: [DID, IV, RD, synthetic control, qualitative, mixed]
 Period/language limits: [limits]
 
-Do not write a literature review.
+Do not present any literature-review working text as no-AI or direct-submission
+ready.
 
 First produce:
 1. inclusion criteria;
@@ -53,7 +54,8 @@ Do not summarize findings yet.
 ```text
 Use $literature-matrix for an open-ended literature base.
 
-Do not write review prose and do not jump directly to synthesis.
+Do not jump directly to synthesis. Any review prose must remain AI-disclosed
+working text with source locators.
 First produce `.aiss source-discovery declarations` with:
 - search_stratum;
 - exact query_or_seed;
@@ -117,7 +119,9 @@ Return a dedupe log with merge decisions and confidence.
 ```text
 Use $literature-matrix to turn verified `.aiss` source-evidence declarations into evidence clusters.
 
-Do not write manuscript prose.
+If you draft literature-review working prose, mark it as AI-assisted, keep
+source locators visible, and set direct-submission status to not ready until
+disclosure and policy checks pass.
 
 Output:
 1. clusters by research question, method, setting, mechanism, or disagreement;
@@ -138,7 +142,7 @@ Inputs:
 - source row ids: [paper_id list]
 - research_model.aiss if present: [path]
 
-Do not write review prose.
+Do not present review prose as no-AI or direct-submission ready.
 For each model-affecting source row:
 1. update `paper`, `source`, `span`, `claim`, `relation`, `concept`, `causal`, `bridge`, `check`, or `decision` declarations in `.aiss`;
 2. preserve source locators and unresolved author decisions;
@@ -169,12 +173,13 @@ Bad prompt:
 写一段 AI 与科研创新的文献综述，引用最近论文。
 
 Improved prompt:
-Use $literature-matrix to search and extract a validator-ready .aiss literature evidence declarations first.
-Do not write prose. For each row include verification_level, claim_source_section,
+Use $literature-matrix to search and extract validator-ready `.aiss` literature
+evidence declarations first. If working prose is drafted, mark it AI-assisted.
+For each row include verification_level, claim_source_section,
 claim_source_locator, access_date, version_used, and included_in_synthesis.
 
 Expected behavior:
 Plan search strata -> verify primary or local sources -> extract rows -> mark secondary_only
-as not synthesis-ready -> run validate_ai4ss_model.py -> return evidence clusters and
-author decisions, not paragraphs.
+as not synthesis-ready -> run validate_ai4ss_model.py -> return evidence clusters,
+author decisions, and AI-disclosure/direct-submission status for any working text.
 ```

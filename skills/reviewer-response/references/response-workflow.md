@@ -1,6 +1,8 @@
 # Response Workflow
 
-Use this reference for journal R&R planning and response scaffolds. Do not produce final submission-ready response prose.
+Use this reference for journal R&R planning, response scaffolds, and
+AI-disclosed response working text. Do not present AI-assisted response text as
+direct-submission ready or no-AI until the disclosure/submission gate passes.
 
 ## 1. Comment Decomposition
 

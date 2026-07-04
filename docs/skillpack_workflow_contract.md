@@ -55,7 +55,7 @@ Research-factory skills must not execute as generic helpers that bypass the
 | 2b. Literature | 文献证据是不是一手来源？ | `literature-matrix` | `paper`, `source`, `span`, `claim`, `relation`, `concept`, `causal`, `bridge`, `check`, and `decision` declarations for verified literature evidence | Design, methods review, writing scaffold |
 | 3. Analysis | 第一批可检查结果怎么跑出来？ | `research-analysis-runner` | `artifact`, `adapter`, `check`, `derive`, `observation`, `claim`, and `decision` declarations linking outputs to MIDA | Methods review |
 | 4. Review | 结果解释有没有说过头？ | `methods-reviewer` | diagnostic `check` declarations, redesign `decision` declarations, bounded claim links | Analysis, writing, revision |
-| 5a. Writing scaffold | 作者怎样自己写得更稳？ | `academic-writing-scaffold` | report-boundary `mida`, bounded `claim` declarations, citation-gap `decision` declarations | Author drafting |
+| 5a. Writing and paper package scaffold | 作者怎样写得更稳、披露得更清楚？ | `academic-writing-scaffold` | report-boundary `mida`, bounded `claim` declarations, citation-gap `decision` declarations, TOP disclosure matrix, AI-use disclosure, direct-submission status, and manuscript assembly checklist | AI-disclosed drafting |
 | 5b. Slides | 已验证证据怎样讲给听众？ | `research-slides-builder` | `artifact`, bounded `claim`, source-link, privacy `check`, and presentation `decision` declarations | Author presentation |
 | 5c. Revision | 返修有没有证据链？ | `reviewer-response` | reviewer-request `decision`, affected MIDA links, evidence `artifact`, and response-boundary declarations | Data, analysis, writing |
 
@@ -69,7 +69,7 @@ available:
 | `route_id` | Human-readable route key such as `R1`, preserved as metadata on `.aiss` declarations |
 | `route_decl_id` | Stable `.aiss` `route` declaration id from `research-starter` |
 | `mida_id` | Stable `.aiss` `mida` declaration id from `study-design-builder`, when applicable |
-| `decision_decl_id` | Stable `.aiss` `decision` declaration id for author-owned choices, when applicable |
+| `decision_decl_id` | Stable `.aiss` `decision` declaration id for human-accountable choices, when applicable |
 | `mida_component` | `.aiss` `mida` component touched by this artifact, when applicable |
 | `synthesis_id` | Theory synthesis declaration id, when applicable |
 | `rival_id` | Rival explanation decision/check id, when applicable |
@@ -78,6 +78,15 @@ available:
 | `target_inquiry` | The declared inquiry, estimand, target quantity, construct, classification target, process-tracing claim, or synthesis question |
 | `data_source` | Path to source data, derived data, or extracted source output |
 | `analysis_plan_path` | Path to analysis plan, preregistration scaffold, or script plan |
+| `registration_status` | Whether the study route is unregistered, registration-relevant, registered, or requires author decision |
+| `protocol_path` | Path to protocol or protocol scaffold when one exists |
+| `materials_transparency_status` | Whether source materials, search protocols, instruments, or extraction materials are open, restricted, confidential, unavailable, or require author disclosure |
+| `data_transparency_status` | Whether raw/derived data are open, restricted, confidential, synthetic, unavailable, or require author disclosure |
+| `analysis_code_transparency_status` | Whether code, scripts, notebooks, runtime, seeds, and dependencies are available and runnable |
+| `reporting_transparency_status` | Whether manuscript/deck/response disclosures cover design, evidence, data, code, limits, and AI use |
+| `replication_package_status` | Whether the project has a complete, partial, restricted, or blocked replication package |
+| `fair_metadata_status` | Whether data/code/materials have enough metadata, locators, checksums, and formats for reuse |
+| `deviation_log_status` | Whether deviations from registration, protocol, or analysis plan are absent, declared, unresolved, or human-accountable |
 | `readiness_status` | `ready`, `warn`, or `blocked` status from `.aiss` readiness checks |
 | `evidence_compile_status` | `compiled`, `needs_review`, `blocked`, or `not_applicable` status for literature evidence in `.aiss` |
 | `theory_workbench_status` | `ready_for_aiss`, `needs_author_decision`, `needs_methods_review`, `blocked`, or `not_applicable` status for theory declarations |
@@ -99,6 +108,40 @@ When a stage depends on a declared `.aiss` model, preserve these identifiers in
 - `ai4ss_check_status`
 - `commensurability_status`
 
+## Transparency Standard Boundary
+
+The research factory treats current open-science transparency practices as
+handoff requirements, not as optional appendix cleanup. The relevant boundary is:
+
+```text
+registration/protocol/analysis plan -> materials/data/code transparency ->
+computational reproducibility -> reporting disclosure -> AI-disclosed manuscript package
+```
+
+The only manuscript-facing AI boundary in this skillpack is disclosure and
+direct-submission gating. Skills may draft, revise, audit, and assemble working
+manuscript or reviewer-response text. They must not present any output as
+submission-ready or as having no AI involvement unless `.aiss` or linked
+artifacts make AI contribution disclosure, human accountability,
+outlet-policy-check status, study registration, protocol, analysis-plan,
+materials, data, analytic code, reporting, deviation-log, and
+replication-package status visible.
+
+| transparency object | primary owner | downstream check |
+|---|---|---|
+| Study registration/protocol/analysis plan | `study-design-builder` | `methods-reviewer`; `reviewer-response` when revisions change the plan |
+| Search strategy and source-status ledger | `literature-matrix` | `academic-writing-scaffold`; `methods-reviewer` |
+| Materials/data availability and FAIR metadata | `research-data-builder` | `research-analysis-runner`; `methods-reviewer` |
+| Analytic code, runtime, seeds, and computational reproducibility | `research-analysis-runner` | `methods-reviewer` |
+| Reporting disclosure matrix and AI-disclosed manuscript assembly checklist | `academic-writing-scaffold` | `ask_author`; `reviewer-response` |
+| Revision transparency and deviation log | `reviewer-response` | `methods-reviewer`; affected production skill |
+
+All manuscript or response working text produced before the gate is
+`submission_ineligible_ai_assisted_working_text`. The gate passes only when the
+package records `ai_contribution_disclosure`, `human_accountability_status`,
+`submission_policy_check_status`, and `direct_submission_status`. This replaces
+the prior blanket ban on AI-assisted manuscript, theory, or response drafting.
+
 ## Methodology Spine
 
 The workflow is not a sequence of agent conveniences. It is a research-design relay:
@@ -117,7 +160,7 @@ Use `docs/methodology_foundations.md` as the canonical explanation and `docs/met
 | `Answer strategy` | Estimator, coding rule, synthesis rule, diagnostic comparison, table/figure shell, or qualitative inference procedure |
 | `Diagnose` | Bias, precision, power, measurement risk, source-status risk, row loss, reproducibility, and claim-support mismatch |
 | `Redesign` | Smaller first loop, revised measure, added source, changed estimator, stronger comparison, or abandoned route |
-| `Report` | Bounded claim declarations, source map, AI-use ledger, author decision point, and communication boundary |
+| `Report` | Bounded claim declarations, source map, AI-use ledger, AI contribution disclosure, direct-submission status, author decision point, and communication boundary |
 
 ## Theory Workbench Contract
 
@@ -130,8 +173,8 @@ The shared theory engine is implemented as a reusable workflow layer across
 - Model validity is checked through `scripts/validate_ai4ss_model.py`.
 - Rival, scope, mechanism weakness, and overclaim are reviewed through `.aiss`
   `check` and `decision` declarations.
-- Author-facing theory review uses the Author Workbench boundary; final theory
-  prose remains author-written.
+- Author-facing theory review uses the single disclosure/submission gate when
+  working theory prose is drafted.
 
 ## Common Skill Requirements
 

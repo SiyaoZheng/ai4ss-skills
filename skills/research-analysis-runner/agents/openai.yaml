@@ -1,4 +1,4 @@
 interface:
   display_name: "Research Analysis Runner"
   short_description: "Execute first-pass social-science analysis outputs"
-  default_prompt: "Use $research-analysis-runner to execute this analysis plan into tables, figures, logs, and an analysis run manifest without writing final claims."
+  default_prompt: "Use $research-analysis-runner to execute this analysis plan into tables, figures, logs, and an analysis run manifest with interpretation boundaries and disclosure-ready claim slots."

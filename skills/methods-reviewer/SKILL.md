@@ -18,7 +18,7 @@ This skill answers: "结果解释有没有说过头？" Its value is not produci
 
 ## Core Rule
 
-Find bugs, risks, missing evidence, and author decisions first. Do not invent robustness results, rewrite the design silently, or convert diagnostic findings into final manuscript prose.
+Find bugs, risks, missing evidence, and author decisions first. Do not invent robustness results, rewrite the design silently, or convert diagnostic findings into no-AI or direct-submission-ready manuscript text.
 
 ## AI4SS Runtime Gate
 
@@ -30,18 +30,18 @@ Methods findings must become `.aiss` diagnostic `check`, redesign `decision`, or
 
 This skill owns `Diagnose` and `Redesign` in the MIDA spine. It compares declared `Model`, `Inquiry`, `Data strategy`, and `Answer strategy` against the actual data pipeline, scripts, outputs, tables, figures, and proposed claims.
 
-The review must preserve `ai4ss_model_path`, model ids, concept ids, causal ids, bridge ids, `ai4ss_check_status`, and `commensurability_status` when they exist. It can recommend redesign, but final scholarly judgment remains with the author.
+The review must preserve `ai4ss_model_path`, model ids, concept ids, causal ids, bridge ids, `ai4ss_check_status`, and `commensurability_status` when they exist. It can recommend redesign, but scholarly judgment remains human-accountable.
 
 ## Workflow Contract
 
 - Upstream inputs: `research_model.aiss`, selected route and MIDA declarations, AI4SS check output, scripts, logs, tables, figures, data artifacts, literature evidence, manuscript snippets, slide claims, or reviewer comments.
-- Produces: diagnostic findings, method-risk notes, recommended checks, open author decisions, validation commands run, and `.aiss` `check`, `decision`, or bounded claim-support declarations.
-- Handoff fields: `route_id`, `design_source`, `target_inquiry`, `mida_component`, `analysis_outputs`, `severity`, `evidence`, `next_action`, `author_decisions`, `ai4ss_model_path`, `model_id`, `concept_id`, `causal_id`, `bridge_id`, `ai4ss_check_status`, `commensurability_status`, `next_skill_route`.
+- Produces: diagnostic findings, method-risk notes, recommended checks, open author decisions, validation commands run, reproducibility and deviation-log findings, and `.aiss` `check`, `decision`, or bounded claim-support declarations.
+- Handoff fields: `route_id`, `design_source`, `target_inquiry`, `mida_component`, `analysis_outputs`, `severity`, `evidence`, `next_action`, `computational_reproducibility_status`, `deviation_log_status`, `author_decisions`, `ai4ss_model_path`, `model_id`, `concept_id`, `causal_id`, `bridge_id`, `ai4ss_check_status`, `commensurability_status`, `next_skill_route`.
 - Downstream routes: `research-data-builder`, `research-analysis-runner`, `study-design-builder`, `academic-writing-scaffold`, `reviewer-response`, `research-slides-builder`, `did-expert`, or `ask_author`.
 
 ## Routing Boundaries
 
-Use this skill to audit evidence for identification validity, result-claim fit, robustness, inference, and reproducibility. Do not use it to build data pipelines; hand data construction to `research-data-builder`. Do not use it as the first executor of an analysis plan; hand execution to `research-analysis-runner`. Do not use it to write manuscript prose or response letters; hand evidence-ready scaffolds to `academic-writing-scaffold` or `reviewer-response`.
+Use this skill to audit evidence for identification validity, result-claim fit, robustness, inference, transparency-standard fit, preregistration or analysis-plan deviations, and reproducibility. Do not use it to build data pipelines; hand data construction to `research-data-builder`. Do not use it as the first executor of an analysis plan; hand execution to `research-analysis-runner`. For AI-disclosed manuscript or response working text, hand evidence-ready material to `academic-writing-scaffold` or `reviewer-response`.
 
 ## Workflow
 
@@ -52,7 +52,7 @@ Step -1: Orient
 -> For DID/event-study as the central task, invoke $did-expert first when available; use this skill to wrap its findings into `.aiss` diagnostics.
 
 Step 0: Build audit scope
--> Data construction, model specification, inference, diagnostics, robustness, reporting, reproducibility, and claims.
+-> Data construction, model specification, preregistration or protocol deviations, inference, diagnostics, robustness, reporting, reproducibility, and claims.
 
 Step 1: Inspect evidence
 -> Compare stated design against actual scripts and outputs.

@@ -47,8 +47,8 @@ When an upstream `.aiss` model exists, data artifacts must preserve `ai4ss_model
 ## Workflow Contract
 
 - Upstream inputs: `research_model.aiss`, selected route declarations, seven MIDA declarations, raw data, source files, variable dictionaries, extraction rules, DDI metadata, or an analysis plan's data requirements.
-- Produces: derived data, runnable scripts, row-count logs, merge diagnostics, missingness diagnostics, variable-construction evidence, DDI cleaning artifacts when routed through `ai4ss-skills`, and `.aiss` `source`, `artifact`, `empirical`, `observation`, `coupling`, `bridge`, `check`, or `decision` declarations that reference those files.
-- Handoff fields: `route_id`, `design_source`, `target_inquiry`, `data_source`, `unit_of_analysis`, `sample_restrictions`, `constructed_variables`, `known_data_gaps`, `ai4ss_model_path`, `model_id`, `concept_id`, `causal_id`, `bridge_id`, `ai4ss_check_status`, `validation_commands`, `next_skill_route`.
+- Produces: derived data, runnable scripts, row-count logs, merge diagnostics, missingness diagnostics, variable-construction evidence, DDI cleaning artifacts when routed through `ai4ss-skills`, materials/data transparency status, FAIR metadata status, replication-package data components, and `.aiss` `source`, `artifact`, `empirical`, `observation`, `coupling`, `bridge`, `check`, or `decision` declarations that reference those files.
+- Handoff fields: `route_id`, `design_source`, `target_inquiry`, `data_source`, `unit_of_analysis`, `sample_restrictions`, `constructed_variables`, `known_data_gaps`, `materials_transparency_status`, `data_transparency_status`, `fair_metadata_status`, `replication_package_status`, `ai4ss_model_path`, `model_id`, `concept_id`, `causal_id`, `bridge_id`, `ai4ss_check_status`, `validation_commands`, `next_skill_route`.
 - Downstream routes: `research-analysis-runner`, `methods-reviewer`, `academic-writing-scaffold`, `research-slides-builder`, `study-design-builder`, or `ask_author`.
 
 ## Routing Boundaries
@@ -84,6 +84,7 @@ Step 3: Validate
 -> Rerun scripts from a clean process.
 -> Confirm output existence, freshness, row counts, schema, and failed-command history.
 -> Add `.aiss` `check` or `decision` declarations for unresolved data gaps.
+-> Record materials/data availability, access limits, checksum or locator status, and FAIR metadata readiness before handing off to analysis or writing.
 
 Step 4: Hand off
 -> Return the script paths, output paths, validation commands, and `.aiss` ids touched.
@@ -95,6 +96,7 @@ Step 4: Hand off
 - Updated `research_model.aiss` or deterministic `.aiss` fragment containing the data `source`, `artifact`, `empirical`, `observation`, `coupling`, `bridge`, `check`, and `decision` declarations touched by the data work.
 - Runnable scripts or notebooks for the derived data step.
 - Derived data files and diagnostics referenced from `.aiss`.
+- Materials/data transparency and FAIR metadata status for any eventual replication package.
 - Command logs or runtime reports referenced from `.aiss`.
 - Blocked handoff with `next_skill_route` when AI4SS declarations are missing or insufficient.
 

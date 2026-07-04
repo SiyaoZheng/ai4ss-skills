@@ -33,14 +33,15 @@ Do not edit files yet.
 ## Convert Results To Slides
 
 ```text
-Use $research-slides-builder to convert verified results into a .aiss presentation artifact declarations and author-fillable slide outline.
+Use $research-slides-builder to convert verified results into `.aiss`
+presentation artifact declarations and AI-disclosed slide working text.
 
 Requirements:
 - one main claim slot per slide;
 - every result claim points to a table, figure, log, or author note;
 - preserve sample, FE, clustering, uncertainty, and limits;
 - do not invent findings or policy implications;
-- do not write final academic slide prose unless it is supplied by the author;
+- any AI-written slide prose must remain source-linked and AI-disclosed;
 - include an evidence-gap list.
 ```
 
@@ -58,7 +59,8 @@ Please:
 3. use existing classes when possible;
 4. preserve Chinese style rules;
 5. do not add personal info;
-6. for academic research slides, preserve author-supplied wording or use author-fillable claim slots;
+6. for academic research slides, preserve author-supplied wording or mark
+   AI-written wording as disclosed working text;
 7. preview or inspect final HTML if feasible.
 ```
 
@@ -99,13 +101,13 @@ Show process, not only final outputs:
 ## Result Figure Slide
 
 ```text
-Use $research-slides-builder to create a `.aiss` presentation artifact declaration and author-fillable slide outline around one figure.
+Use $research-slides-builder to create a `.aiss` presentation artifact declaration and AI-disclosed slide working text around one figure.
 
 Figure: [path]
 Supporting table/log: [path]
 
 Return:
-- title claim slot, not final academic wording;
+- source-linked title claim or AI-disclosed working wording;
 - figure treatment;
 - source/limit line;
 - notes on axes, units, baseline period, uncertainty;

@@ -10,9 +10,9 @@ This deterministic simulation compares a careful generic agent with a skill-guid
 |---|---:|---|
 | artifacts | 30 | Did the agent produce the canonical audit objects? |
 | traceability | 20 | Can claims or rows be traced to sources, logs, or model objects? |
-| boundary | 20 | Did the agent avoid direct final academic prose or unsafe scholarly moves? |
+| boundary | 20 | Did the agent keep AI-use disclosure and direct-submission gates visible while avoiding unsafe scholarly moves? |
 | validation | 15 | Did the agent name the relevant validator or gate? |
-| author_decision | 15 | Did the agent surface decisions the researcher must own? |
+| author_decision | 15 | Did the agent surface human-accountability decisions? |
 
 ## Results
 
@@ -29,9 +29,9 @@ Average gain: **+57.2 points**
 
 ## Interpretation
 
-The simulated gain comes mostly from three changes: canonical artifacts appear, risky direct-writing moves are penalized, and validation gates become explicit. The skill-guided condition is not more creative; it is more inspectable.
+The simulated gain comes mostly from three changes: canonical artifacts appear, hidden-AI or direct-submission risks are penalized, and validation gates become explicit. The skill-guided condition is not more creative; it is more inspectable.
 
-For teaching, this is the right claim: skills are useful only if they change the agent from answer production to audit-object production.
+For teaching, this is the right claim: skills are useful only if they change the agent from answer production to inspectable, AI-disclosed research objects and working text.
 
 ## Case Details
 
@@ -41,7 +41,7 @@ Task: Build a city-year analysis sample from raw panel, controls, and policy lis
 
 | condition | artifacts | trace markers | risky moves | summary |
 |---|---|---|---|---|
-| `no_skill` (46.0) | analysis_panel.csv, loose summary statistics, .aiss row-loss checks, output/logs/build_panel.log | row counts, raw data untouched | does not write a merge review declaration, variable construction is described only in prose | Returns a usable cleaned dataset and some row-count evidence, but merge ambiguity and variable provenance remain weak. |
+| `no_skill` (46.0) | analysis_panel.csv, loose summary statistics, .aiss row-loss checks, output/logs/build_panel.log | row counts, raw data untouched | omits a merge review declaration, variable construction is described only in prose | Returns a usable cleaned dataset and some row-count evidence, but merge ambiguity and variable provenance remain weak. |
 | `skill_guided` (100.0) | .aiss row-loss checks, .aiss merge checks, .aiss variable-provenance observations, output/logs/build_panel.log | row counts, merge unmatched rows, variable construction rule, raw data untouched | none | Returns the derived data plus checked .aiss declarations that expose row loss and merge ambiguity. |
 
 ### `literature_evidence`
@@ -59,8 +59,8 @@ Task: Prepare result-section support from table1, event-study figure, and resear
 
 | condition | artifacts | trace markers | risky moves | summary |
 |---|---|---|---|---|
-| `no_skill` (31.0) | result prose draft, loose claim notes | estimand, sample and N | writes final manuscript prose, mechanism evidence is not separated from interpretation | Returns a plausible paragraph plus notes, but it crosses the direct-writing boundary and under-specifies claim strength. |
-| `skill_guided` (95.0) | .aiss diagnostic checks, .aiss bounded claim declarations, .aiss author decision declarations | estimand, sample and N, support_level | none | Returns claim slots and risks, leaving final prose and scholarly judgment to the author; FE/cluster still need model-object confirmation. |
+| `no_skill` (31.0) | result prose draft, loose claim notes | estimand, sample and N | hidden AI or direct-submission-ready prose, mechanism evidence is not separated from interpretation | Returns a plausible paragraph plus notes, but it lacks disclosure/direct-submission status and under-specifies claim strength. |
+| `skill_guided` (95.0) | .aiss diagnostic checks, .aiss bounded claim declarations, .aiss author decision declarations | estimand, sample and N, support_level | none | Returns claim slots, risks, and visible AI-use/submission gate status; FE/cluster still need model-object confirmation. |
 
 ### `revision_trace`
 
@@ -68,5 +68,5 @@ Task: Process reviewer comments about identification, mechanism evidence, and li
 
 | condition | artifacts | trace markers | risky moves | summary |
 |---|---|---|---|---|
-| `no_skill` (31.0) | response letter draft, loose revision plan | comment_id, planned_action | writes final response prose, done evidence is missing for several promised changes | Returns a plausible response package, but author cannot verify every promised change before prose appears. |
+| `no_skill` (31.0) | response letter draft, loose revision plan | comment_id, planned_action | hidden AI or direct-submission-ready prose, done evidence is missing for several promised changes | Returns a plausible response package, but it lacks a visible disclosure/direct-submission gate and done evidence for several promised changes. |
 | `skill_guided` (95.0) | .aiss reviewer-request decisions, revision_trace/, .aiss open author decisions | comment_id, planned_action, confidentiality_status | none | Returns a response scaffold with evidence links and open decisions; done_evidence still depends on actual analysis completion. |

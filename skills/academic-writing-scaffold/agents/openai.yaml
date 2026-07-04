@@ -1,4 +1,4 @@
 interface:
   display_name: "Academic Writing Scaffold"
-  short_description: "Plan paper sections without direct drafting"
-  default_prompt: "Use $academic-writing-scaffold to build an evidence map and section scaffold without writing final manuscript prose."
+  short_description: "Build AI-disclosed paper drafts and claim checks"
+  default_prompt: "Use $academic-writing-scaffold to build an evidence map, working section draft, and AI-use disclosure/submission gate."

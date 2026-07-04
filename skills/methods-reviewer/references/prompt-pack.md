@@ -33,7 +33,8 @@ Bad prompt:
 Improved prompt:
 Use $methods-reviewer to audit the table, script, research design, and claimed result.
 Return a CSV-ready issue table with severity, issue, evidence, why_it_matters,
-next_action, and status. Do not rewrite the paper.
+next_action, and status. Do not present rewritten text as no-AI or
+direct-submission ready.
 
 Expected behavior:
 Read design and output -> trace table notes to scripts -> identify confirmed bugs,
@@ -80,7 +81,8 @@ For each claim, classify:
 - missing evidence;
 - needs author judgment.
 
-Do not rewrite the paper. Provide issue notes.
+Provide issue notes and, when useful, AI-assisted working revision targets.
+Do not present rewritten text as no-AI or direct-submission ready.
 ```
 
 ## Reproducibility Audit

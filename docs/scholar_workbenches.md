@@ -13,7 +13,7 @@ The skill universe has two layers.
 | First-order production | 第一批可检查结果怎么跑出来？ | `research-analysis-runner` | `.aiss` readiness checks, scripts, logs, tables/figures, analysis artifacts | Outputs pass a readiness gate and keep sample notes and interpretation boundaries |
 | Second-order audit | 这个研究对象是否站得住、说得清、可追溯？ | Evidence and review skills | `.aiss` source, artifact, check, decision, and bounded claim declarations | The generated evidence chain can be inspected, corrected, and approved |
 
-The first layer is not a shortcut to paper writing. It is a way to turn a loose idea, source pile, dataset folder, or policy phenomenon into a route that can be tried. The second layer should not be forced before there is something to audit.
+The first layer is not a shortcut to hidden-AI submission. It is a way to turn a loose idea, source pile, dataset folder, or policy phenomenon into a route that can be tried. The second layer should not be forced before there is something to audit.
 
 ## Computable Research Object
 
@@ -48,7 +48,7 @@ Declare MIDA -> Diagnose -> Redesign -> Report with bounded claims
 | Realize Data strategy | `research-data-builder`, `literature-matrix`, deterministic evidence declarations when sources update `.aiss` |
 | Execute Answer strategy | `research-analysis-runner` |
 | Diagnose and redesign | `methods-reviewer`, `reviewer-response` |
-| Report bounded claims | `academic-writing-scaffold`, `research-slides-builder`, `reviewer-response` |
+| Report bounded claims and transparency package | `academic-writing-scaffold`, `research-slides-builder`, `reviewer-response` |
 
 ## First-Order Workbench
 
@@ -63,7 +63,7 @@ The starter workbench should answer practical questions:
 - What are 2-4 feasible research routes from this rough topic?
 - What materials already exist, and what is missing?
 - What is the smallest study that can teach us whether to continue?
-- What one action can an agent do next without crossing authorship or confidentiality boundaries?
+- What one action can an agent do next while keeping AI disclosure and confidentiality status visible?
 - Which downstream skill should take over after that action?
 - What design choice or first analysis should be attempted only after researcher confirmation?
 
@@ -91,7 +91,8 @@ The second-order layer is useful only when it reduces scholarly risk:
 - It keeps literature synthesis tied to verified primary or local sources rather than model memory.
 - It can turn verified sources into deterministic `.aiss` evidence fragments when a model element is affected.
 - It separates evidence-supported claims from interpretation, mechanism speculation, and author judgment.
-- It turns reviewer comments into auditable actions before the author writes final response prose.
+- It turns reviewer comments into auditable actions and AI-disclosed response working text before direct-submission status is marked ready.
+- It preserves registration, protocol, analysis-plan, materials, data, code, reporting, deviation-log, AI-use disclosure, direct-submission status, and replication-package status before a paper package is assembled.
 
 ## Teaching Rule
 
@@ -101,8 +102,9 @@ Teach the sequence before the tool names:
 2. Turn the selected `.aiss` route into a design brief and seven `mida` declarations: unit, constructs, comparison, evidence needs, and first analysis plan.
 3. Execute one analysis loop only after `.aiss` readiness checks validate the design source, data source, required variables, sample/audit paths, and bridge alignment where applicable.
 4. Then, when the route produces evidence, use the second-order workbenches to inspect it.
+5. Before paper submission or R&R handoff, assemble a bounded transparency package: disclosure matrix, replication-package status, deviation log, AI contribution disclosure, human accountability status, outlet-policy check, direct-submission status, and working-text slots.
 
-Do not present AI as a writing shortcut. Present the agent as a research workbench that creates intermediate objects the researcher can inspect, revise, reject, and approve.
+Do not present AI-assisted text as no-AI or direct-submission ready. Present the agent as a research workbench that creates intermediate objects and working text the researcher can inspect, revise, reject, approve, and disclose.
 
 ## Factory-Level Evaluation
 
@@ -121,7 +123,7 @@ rule-based scores, and an unblinded report. It scores the full chain:
 rough topic -> .aiss route declarations -> .aiss MIDA declarations ->
 .aiss model/check ->
 literature/data gates -> analysis readiness -> analysis artifacts ->
-bounded claim handoff
+transparency package -> bounded claim handoff -> AI-disclosed manuscript package
 ```
 
 This is the right classroom artifact for explaining why the workbench is more
@@ -161,7 +163,7 @@ The older non-blinded demonstration can still be regenerated with:
 python3 scripts/simulate_skill_use_eval.py --output docs/skill_use_eval.simulated_report.md
 ```
 
-Both simulations check output structure, not model intelligence. Their teaching claim is narrow: skills are useful only when they make `.aiss` declarations, validation gates, and author-owned decisions appear in the workflow. A true double-blind evaluation would still require independently generated live outputs, concealed condition assignment, independent human graders, and inter-rater reliability checks.
+Both simulations check output structure, not model intelligence. Their teaching claim is narrow: skills are useful only when they make `.aiss` declarations, validation gates, AI-use disclosure, and human accountability decisions appear in the workflow. A true double-blind evaluation would still require independently generated live outputs, concealed condition assignment, independent human graders, and inter-rater reliability checks.
 
 The live package is condition-blinded for scoring, not fully double-blind. Generators know their assigned condition, and packet style can still reveal clues. Its appropriate claim is narrower: in these controlled tasks, skill-guided agents can be compared against careful generic agents on traceability, boundary discipline, validation gates, and author decision visibility.
 

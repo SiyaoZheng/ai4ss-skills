@@ -1,6 +1,6 @@
 # Worked Example: R&R Decomposition
 
-This example shows response planning without final response prose.
+This example shows response planning with AI-disclosed response working text.
 
 ## Reviewer Comment
 
@@ -26,7 +26,7 @@ R2.3: The paper relies heavily on a DID design, but the parallel trends assumpti
 | R2.3c | cohort timing table; pre-treatment outcome comparison |
 | R2.3d | model script and table note |
 
-## Author-Fillable Scaffold
+## AI-Disclosed Response Working Draft
 
 ### R2.3a
 
@@ -38,6 +38,7 @@ R2.3: The paper relies heavily on a DID design, but the parallel trends assumpti
 | evidence/location | [section/table/figure path] |
 | boundary | [what the diagnostic can and cannot prove] |
 | risk note | do not claim pre-trend test proves parallel trends |
+| working response text | [AI-assisted working text; not direct-submission ready until gate passes] |
 
 ### R2.3c
 
@@ -49,16 +50,19 @@ R2.3: The paper relies heavily on a DID design, but the parallel trends assumpti
 | evidence/location | [appendix or main table] |
 | boundary | [remaining selection concern] |
 | risk note | avoid dismissing the concern if only partially tested |
+| working response text | [AI-assisted working text; not direct-submission ready until gate passes] |
 
 ## Done-Evidence Audit
 
-Before final author response:
+Before direct-submission status is marked ready:
 
 - event-study figure exists and opens;
 - omitted period and confidence bands are visible;
 - table note states city clustering;
 - revised manuscript actually discusses early adopters;
 - response scaffold does not promise stronger evidence than the diagnostics provide.
+- AI contribution disclosure, human accountability, confidentiality, and
+  outlet-policy status are explicit.
 
 ## Validator-Ready Matrix Row
 
@@ -72,6 +76,7 @@ R2.3b,add event-study figure,robustness,diagnose,high,accept,produce event-study
 What students should notice:
 
 - The agent splits one paragraph into four tasks.
-- The agent does not write the final letter.
+- The agent may draft working response text, but it is labeled AI-assisted and
+  gated before direct submission.
 - The author decides the strategic stance.
 - Every response slot points to evidence or a manuscript location.

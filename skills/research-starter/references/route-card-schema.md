@@ -32,7 +32,8 @@ Use `.aiss route declarations` when comparing multiple ways to make a rough idea
 - Open-ended tasks should have 2-4 route cards.
 - At least one route should be small enough to attempt within a day.
 - `first_action` must be an action on materials, sources, code skeletons, or decision scaffolds.
-- `first_action` must not be final manuscript writing.
+- `first_action` must not present AI-assisted manuscript writing as no-AI or
+  direct-submission ready.
 - `expected_first_output` must be inspectable: file, table shell, source list, data preview, figure shell, route memo, or prompt.
 - `handoff_ready` requires a downstream `next_skill_route`, not `none`.
 - `not_feasible` requires a concrete `failure_signal`.
