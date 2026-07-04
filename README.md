@@ -1,7 +1,3 @@
-<p align="center">
-  <img src="docs/assets/readme/hero-factory.png" alt="AI4SS research factory visual overview" width="100%">
-</p>
-
 <div align="center">
 
 # ai4ss-skills
@@ -53,8 +49,6 @@ inspect, reject, revise, rerun, and cite.
 
 ## Factory Architecture
 
-![AI4SS factory stack](docs/assets/readme/factory-stack.png)
-
 The project has three coordinated layers:
 
 - **Skills are the operator interface.** They turn research tasks into
@@ -82,8 +76,6 @@ MIDA means:
 
 ## Research Workflow
 
-![AI4SS workflow timeline](docs/assets/readme/workflow-timeline.png)
-
 | Stage | Scholar question | Primary skill | Canonical artifact | Gate |
 |---|---|---|---|---|
 | Start | Can this become a study? | [`research-starter`](skills/research-starter/SKILL.md) | `.aiss` `route` declarations, route cards | Stop reason, missing material, next route |
@@ -94,8 +86,6 @@ MIDA means:
 | Report | How can the author write safely? | [`academic-writing-scaffold`](skills/academic-writing-scaffold/SKILL.md), [`research-slides-builder`](skills/research-slides-builder/SKILL.md), [`reviewer-response`](skills/reviewer-response/SKILL.md) | claim ledger, slide map, revision matrix | Bounded claims and author decisions |
 
 ## The `.aiss` Research Object
-
-![AISS object map](docs/assets/readme/aiss-object-map.png)
 
 `.aiss` version `0.4` compiles into `aiss.unified_ast.v0.4`: one AST for
 workflow, evidence, and research-model regions.
@@ -207,8 +197,6 @@ There is no second skin for Codex, Agents, or released skill archives.
 </details>
 
 ## Evidence
-
-![AI4SS evidence dashboard](docs/assets/readme/evidence-dashboard.png)
 
 These evaluations measure structure, continuity, validation gates, and boundary
 discipline. They do not prove empirical truth or replace expert review.
