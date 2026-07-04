@@ -54,14 +54,14 @@ Use this checklist to review social-science empirical work.
 
 ## Theory Workbench
 
-- `literature_theory_synthesis.csv` rows use verified source status before model
+- `.aiss theory synthesis declarations` rows use verified source status before model
   handoff.
 - Mechanisms name actor, action, mediating condition, and outcome link.
 - Each nontrivial candidate has a rival explanation or explicit
   `not_applicable:<reason>`.
-- Rival rows in `theory_rival_map.csv` state what the rival explains well,
+- Rival rows in `.aiss rival-check declarations` state what the rival explains well,
   what it explains poorly, and a discriminating observable implication.
-- Scope rows in `theory_scope_map.csv` name who/where/when, scope logic,
+- Scope rows in `.aiss scope-check declarations` name who/where/when, scope logic,
   boundary failure mode, observable implication, and author decision.
 - Observable implications can distinguish the proposed mechanism from the
   rival, rather than restating the main outcome.

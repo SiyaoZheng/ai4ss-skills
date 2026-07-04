@@ -228,7 +228,7 @@ Decision route:
 
 - If weights are used but target population is unstated, output `status=reporting_gap`, `severity=P2`, and request a weight note.
 - If survey design affects inference but SEs ignore it, output `status=serious_risk`, `severity=P1`, and request design-aware SEs or a limitation.
-- If convenience samples are generalized, output `status=overclaim`, `severity=P1`, and route wording to a claim ledger.
+- If convenience samples are generalized, output `status=overclaim`, `severity=P1`, and route wording to `.aiss` bounded claim declarations.
 
 ## Text-As-Data / LLM Extraction
 

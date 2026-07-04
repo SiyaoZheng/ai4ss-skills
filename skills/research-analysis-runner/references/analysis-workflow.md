@@ -4,14 +4,14 @@ The analysis runner owns execution, not interpretation. It turns a design source
 
 ## Readiness Gate
 
-Do not run analysis until `analysis_readiness_check.csv` validates the cleaned
+Do not run analysis until `.aiss readiness checks` validates the cleaned
 data or source output against the declared plan. The gate must know:
 
 - design source path;
 - data or source output path;
 - unit of analysis;
 - required variables or coding fields;
-- sample flow, merge audit, and variable provenance paths when data were transformed;
+- `.aiss` row-loss checks, merge checks, and variable-provenance observations when data were transformed;
 - `.aiss` model and bridge alignment when a model is present;
 - requested first output;
 - output directory;

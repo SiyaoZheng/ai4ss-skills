@@ -5,7 +5,7 @@ This example is for teaching evidence-matrix construction, not for making a subs
 ## User Task
 
 ```text
-Build a literature matrix for empirical studies on place-based policy and innovation.
+Build `.aiss` source-evidence declarations for empirical studies on place-based policy and innovation.
 Focus on papers that identify effects using DID, event studies, RD, IV, or synthetic-control designs.
 Do not write review prose.
 ```
@@ -22,7 +22,7 @@ Do not write review prose.
 
 ## Candidate Discovery Rows
 
-Before extraction, create `literature_candidate_discovery.csv`.
+Before extraction, create `.aiss source-discovery declarations`.
 
 | candidate_id | search_stratum | source_type | source_status | next_action | why it matters |
 |---|---|---|---|---|---|
@@ -41,7 +41,7 @@ Before extraction, create `literature_candidate_discovery.csv`.
 | Paper D | duplicate | working paper and journal article are same paper |
 | Paper E | unverified | search snippet only; no stable source |
 
-## Matrix Row Example
+## Source-Evidence Declaration Example
 
 | column | example value |
 |---|---|
@@ -97,4 +97,4 @@ What students should notice:
 - The agent does not jump to "the literature shows".
 - Publication status is a variable, not an assumption.
 - Method labels are extracted from methods text, not search snippets.
-- The output is a matrix and cluster map that the researcher uses before writing.
+- The output is checked evidence declarations and cluster notes that the researcher uses before writing.

@@ -21,7 +21,7 @@ conditions are:
 - `generic_agent`: careful research-assistant planning without the local
   `.aiss` factory gates.
 - `ai4ss_factory`: workflow constrained by MIDA, `.aiss` model objects, local
-  sidecars, validators, and author-decision boundaries.
+  validators, and author-decision boundaries.
 
 ## Blinding
 

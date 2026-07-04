@@ -13,7 +13,7 @@ Inputs:
 - research design: [path]
 - tables: [paths]
 - figures: [paths]
-- literature matrix: [path]
+- `.aiss` literature evidence declarations: [path]
 - author notes: [path]
 
 Hard boundary:
@@ -22,7 +22,7 @@ Hard boundary:
 
 Output:
 1. evidence inventory;
-2. claim ledger;
+2. `.aiss` bounded claim declarations;
 3. which claims are supported, partial, weak, or missing;
 4. author decisions needed before writing.
 ```
@@ -91,7 +91,7 @@ Do not rewrite the section. Provide issue-by-issue notes and optional micro-leve
 ## Literature Review Scaffold
 
 ```text
-Use $academic-writing-scaffold with this literature matrix.
+Use $academic-writing-scaffold with these checked `.aiss` literature evidence declarations.
 
 Goal: prepare an author-facing literature review structure.
 
@@ -140,6 +140,6 @@ evidence paths, risk labels, revision targets, and author decision questions.
 Do not provide replacement wording or final manuscript prose.
 
 Expected behavior:
-Inventory tables and figures -> create claim ledger -> validate the CSV sidecar ->
+Inventory tables and figures -> create bounded claim declarations -> validate the .aiss declaration set ->
 flag unsupported mechanism claims -> stop at author-facing scaffold.
 ```

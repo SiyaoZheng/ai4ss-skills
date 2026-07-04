@@ -38,10 +38,10 @@ The agent may fill the middle column; the author writes the final text.
 
 ## Theory Workbench
 
-When literature-to-theory sidecars are present, use
-`references/theory_workbench.md` as the author-facing review view. The agent may
-fill evidence slots from `literature_theory_synthesis.csv`,
-`theory_rival_map.csv`, `theory_scope_map.csv`, validated `.aiss` ids, and
+When literature-to-theory .aiss projections are present, use
+`references/author workbench declarations` as the author-facing review view. The agent may
+fill evidence slots from `.aiss theory synthesis declarations`,
+`.aiss rival-check declarations`, `.aiss scope-check declarations`, validated `.aiss` ids, and
 methods issue rows. The author writes final theory prose and decides novelty,
 theoretical contribution, mechanism strength, scope framing, and rival
 prioritization.

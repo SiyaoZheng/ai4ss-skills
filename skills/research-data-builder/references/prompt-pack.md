@@ -50,7 +50,7 @@ Requirements:
 1. write scripts under scripts/ with numbered filenames;
 2. never overwrite data/raw/;
 3. write the model-ready sample to data/analysis/;
-4. write sample_flow.csv, merge_audit.csv, variable_provenance.csv, and a run log;
+4. write .aiss row-loss checks, .aiss merge checks, .aiss variable-provenance observations, and a run log;
 5. stop and report if duplicate keys or ambiguous treatment timing appear.
 ```
 
@@ -66,7 +66,7 @@ Inspect:
 - the left and right key columns;
 - duplicate keys;
 - unmatched records;
-- existing merge audit outputs.
+- existing `.aiss` merge-check outputs.
 
 Return a table with:
 - root cause;
@@ -137,7 +137,7 @@ Check:
 - merge rates;
 - missingness in core variables;
 - sample restrictions;
-- variable provenance;
+- `.aiss` variable-provenance observations;
 - audit files and logs.
 
 Return: PASS / WARN / FAIL with evidence paths and concrete next actions.
@@ -151,8 +151,8 @@ Bad prompt:
 
 Improved prompt:
 Use $research-data-builder to build an auditable sample. Never overwrite data/raw/.
-Produce sample_flow.csv, merge_audit.csv, variable_provenance.csv, and logs.
-Validate every CSV sidecar with validate_data_audits.py.
+Produce .aiss row-loss checks, .aiss merge checks, .aiss variable-provenance observations, and logs.
+Validate every .aiss declaration set with validate_ai4ss_model.py.
 
 Expected behavior:
 Inspect project rules -> identify unit and keys -> check duplicates before merging ->

@@ -6,7 +6,7 @@ This example demonstrates support without direct manuscript writing.
 
 - `output/tables/table1_baseline.csv`
 - `output/figures/event_study.svg`
-- `output/audit/sample_flow.csv`
+- `output/audit/.aiss row-loss checks`
 - `docs/research_design.md`
 
 ## Evidence Inventory
@@ -15,7 +15,7 @@ This example demonstrates support without direct manuscript writing.
 |---|---|---|
 | `table1_baseline.csv` | estimate | main DID result |
 | `event_study.svg` | diagnostic | pre-trend and dynamic pattern |
-| `sample_flow.csv` | design fact | final sample and restrictions |
+| `.aiss row-loss checks` | design fact | final sample and restrictions |
 | `research_design.md` | design fact | unit, treatment, FE, clustering |
 
 ## Claim Ledger
@@ -35,7 +35,7 @@ This example demonstrates support without direct manuscript writing.
 | 1 | orient reader to table | table title, model column, sample | write what Table 1 estimates |
 | 2 | state preferred estimate | coefficient, SE/CI, N, FE, clustering | write magnitude and uncertainty |
 | 3 | connect event-study diagnostic | baseline period, pre-treatment coefficients, bands | write diagnostic interpretation carefully |
-| 4 | state boundary | sample flow, missingness, design assumption | write limitation and next check |
+| 4 | state boundary | `.aiss` row-loss checks, missingness, design assumption | write limitation and next check |
 
 ## Disallowed Final Prose
 

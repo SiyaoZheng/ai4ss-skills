@@ -26,18 +26,18 @@ The common language is adapted from the MIDA and declare-diagnose-redesign frame
 | Answer strategy | Estimator, coding procedure, synthesis rule, diagnostic comparison, table/figure shell, or qualitative inference procedure | How will the evidence be converted into an answer? |
 | Diagnose | Bias, precision, power, coverage, measurement risk, source-screening risk, linkage loss, reproducibility status, and claim-support mismatch | What can go wrong, and how would we know before overclaiming? |
 | Redesign | Neighboring feasible designs, smaller first loops, added data, revised measures, changed estimators, or abandoned routes | What should change when the current design is too weak? |
-| Report | Claim ledger, source map, AI-use ledger, author decision points, and public communication boundaries | What can be said, by whom, and with what evidence? |
+| Report | Bounded claim declarations, source map, AI-use ledger, author decision points, and public communication boundaries | What can be said, by whom, and with what evidence? |
 
 `Estimand` is important, but it is not the whole framework. In this pack it lives inside `Inquiry`. A causal project should name the target comparison, population, outcome, exposure/treatment, time window, and scale. A descriptive, text, qualitative, or literature-synthesis project should name its target quantity, construct, classification, sequence, or synthesis claim with the same precision.
 
 ## Theory Workbench Boundary
 
 The shared theory engine is a workflow layer across existing skills, not a new
-top-level skill. Literature evidence enters through `literature_matrix.csv` and
-`literature_theory_synthesis.csv`; rival explanations and scope conditions are
-kept in `theory_rival_map.csv` and `theory_scope_map.csv`; model-ready objects
-are compiled from `theory_evidence.md` through the existing
-`dsl/scripts/compile_evidence.py` path.
+top-level skill. Literature evidence enters through `.aiss` `paper`, `source`,
+`span`, `claim`, `relation`, `concept`, `causal`, `bridge`, `check`, and
+`decision` declarations. Rival explanations, scope conditions, model-ready
+objects, and author-owned theory choices live in `.aiss`; external notes are
+only evidence artifacts referenced by that object.
 
 The methodology role is narrow: make candidate concepts, mechanisms, observable
 implications, rivals, and scope conditions inspectable before the author writes.
@@ -64,14 +64,14 @@ remain author-owned `decision` declarations or Author Workbench questions.
 
 These fields are the minimum cross-skill vocabulary. A skill does not need to fill every field, but it must preserve fields supplied upstream and mark missing fields explicitly when they matter.
 
-The hard design object is `research_model.aiss`: a selected `.aiss` `route`, seven `mida` declarations, and author-owned `decision` declarations. `study_design_brief.md`, `research_route_cards.csv`, `study_design_declaration.csv`, and `design_decision_register.csv` are readable projections of that object for humans and validators.
+The hard design object is `research_model.aiss`: a selected `.aiss` `route`, seven `mida` declarations, and author-owned `decision` declarations. Chat summaries and external notes are readable projections only; they are not handoff contracts.
 
 | field | why it matters |
 |---|---|
 | `route_id` | Keeps alternative designs from collapsing into one vague project |
-| `route_decl_id` | Points route sidecars to the matching `.aiss` `route` declaration |
-| `mida_id` | Points design-declaration rows to the matching `.aiss` `mida` declaration |
-| `decision_decl_id` | Points decision-register rows to the matching `.aiss` `decision` declaration |
+| `route_decl_id` | Points downstream work to the matching `.aiss` `route` declaration |
+| `mida_id` | Points downstream work to the matching `.aiss` `mida` declaration |
+| `decision_decl_id` | Points downstream work to the matching `.aiss` `decision` declaration |
 | `model_scope` | Names population, unit, place/time, construct, mechanism, and assumptions |
 | `inquiry` | Names the target estimand, descriptive quantity, measurement target, classification target, or synthesis question |
 | `data_strategy` | Names source selection, sampling, measurement, extraction, linkage, and missingness rules |
@@ -105,7 +105,7 @@ Use `.aiss` for:
 Do not use `.aiss` as a replacement for:
 
 - full data strategy, including sampling, cleaning, linkage, extraction, and
-  missingness sidecars
+  missingness evidence artifacts
 - full answer strategy, including estimator/coding/synthesis scripts
 - ethics/confidentiality checks, AI-use disclosure, and final manuscript prose
 

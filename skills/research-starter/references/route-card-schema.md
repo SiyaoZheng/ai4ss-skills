@@ -1,6 +1,6 @@
 # Route Card Schema
 
-Use `research_route_cards.csv` when comparing multiple ways to make a rough idea researchable. In the unified workflow this CSV is a human-readable mirror of `.aiss` `route` declarations, not a separate route language.
+Use `.aiss route declarations` when comparing multiple ways to make a rough idea researchable. In the unified workflow this CSV is a human-readable mirror of `.aiss` `route` declarations, not a separate route language.
 
 ## Required Columns
 

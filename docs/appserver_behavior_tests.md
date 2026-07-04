@@ -52,6 +52,6 @@ selected .aiss route + seven mida declarations + decisions ->
 model/check declarations when design structure warrants them
 ```
 
-CSV and Markdown sidecars remain useful projections, but they must preserve
-`route_decl_id`, `mida_id`, or `decision_decl_id` when they mirror workflow
-state.
+CSV files and derived Markdown notes are source artifacts only. They must not
+mirror or replace workflow state; handoff state belongs in checked `.aiss`
+declarations with `route_decl_id`, `mida_id`, or `decision_decl_id` when needed.

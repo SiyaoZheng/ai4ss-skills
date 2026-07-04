@@ -76,7 +76,7 @@ FAIL when:
 
 Minimum evidence:
 
-- `merge_audit.csv`;
+- `.aiss merge checks`;
 - unmatched files;
 - duplicate-key diagnostics.
 
@@ -101,7 +101,7 @@ FAIL when:
 
 Minimum evidence:
 
-- `variable_provenance.csv`;
+- `.aiss variable-provenance observations`;
 - cross-tab for treatment and timing;
 - range and missingness checks.
 
@@ -125,7 +125,7 @@ FAIL when:
 
 Minimum evidence:
 
-- `sample_flow.csv`;
+- `.aiss row-loss checks`;
 - missingness report;
 - restriction flags retained at least in interim data.
 
@@ -162,6 +162,6 @@ Minimum evidence:
 | silent row explosion | N increases after merge | duplicate keys or many-to-many join | stop, create duplicate audit, aggregate or disambiguate |
 | fake balanced panel | rows missing but filled by expand grid | accidental zero-fill | keep missing explicit, never zero-fill unless substantively justified |
 | treatment leakage | treatment uses post-outcome information | constructing policy from outcome data | rebuild treatment from source list |
-| lost raw provenance | final data has no source columns | over-cleaned pipeline | add source ids and variable provenance |
+| lost raw provenance | final data has no source columns | over-cleaned pipeline | add source ids and `.aiss` provenance observations |
 | ambiguous IDs | `city_id` and `city_code` mixed | inconsistent naming | harmonize once and document mapping |
 | text hallucination | extracted values not in source snippets | LLM free extraction | require snippets and manual review flags |

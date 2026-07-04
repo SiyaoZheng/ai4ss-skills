@@ -23,11 +23,12 @@ That AST has connected workflow, evidence, and model regions:
 | Evidence and discourse grounding | `paper`, `source`, `span`, `claim`, `relation`, `empirical`, `observation`, `coupling`, `artifact`, `adapter` | Records where concepts and claims come from and what empirical material they point to |
 | Research model | `attribute`, `concept`, `causal`, `bridge`, `edge`, `model`, `check`, `derive` | Represents the MIDA-facing model, causal implications, measurement/causal bridges, requested checks, and derived diagnostics |
 
-These are not separate DSLs. They are areas of one AST. Route cards and MIDA
-declarations are first-class workflow declarations, while CSV/Markdown sidecars
-are readable mirrors for humans and validators. Research-model objects should
-carry source spans whenever they are grounded in a design brief, literature row,
-dataset artifact, or analysis output.
+These are not separate DSLs. They are areas of one AST. Route and MIDA
+declarations are first-class workflow declarations. CSV, Markdown, chat memory,
+and ad hoc tables are not workflow state and must not be used as handoff
+contracts. Research-model objects should carry source spans whenever they are
+grounded in a design brief, literature row, dataset artifact, or analysis
+output.
 
 ## Entry Point
 
@@ -95,38 +96,41 @@ Declare MIDA -> Diagnose -> Redesign -> Report with bounded claims
 
 The unified `.aiss` AST is the computable research object inside that spine.
 
-| MIDA element | `.aiss` coverage | sidecars still needed |
+| MIDA element | `.aiss` coverage | external artifacts referenced by `.aiss` |
 |---|---|---|
-| Model | `mida` row, attributes, concepts, theta rules, relations, mechanisms, scope notes | design brief view, decision-register view |
-| Inquiry | `mida` row, causal links, claim objects, bridge estimands | target quantity, population, comparison, time window view |
-| Data strategy | `mida` row, source objects, empirical objects, measurement bridges, artifacts | sample flow, cleaning contract, linkage audit, missingness notes |
-| Answer strategy | `mida` row, requested checks, derives, adapters when available | analysis scripts, table/figure shells, run manifest |
-| Diagnose | `mida` row, lint diagnostics, workflow/model diagnostics, bridge coverage, commensurability signals | methods-review issue table, robustness outputs |
-| Redesign | `mida` row, changed IDs and structural diffs | author-decision view |
-| Report | `mida` row, bounded claim handoff through checked IDs | claim ledger, AI-use ledger, slides, reviewer-response scaffold |
+| Model | `mida` row, attributes, concepts, theta rules, relations, mechanisms, scope notes | design notes and author decision notes as cited sources |
+| Inquiry | `mida` row, causal links, claim objects, bridge estimands | source notes that state target quantity, population, comparison, or time window |
+| Data strategy | `mida` row, source objects, empirical objects, measurement bridges, artifacts | raw/derived data, cleaning logs, linkage logs, missingness diagnostics |
+| Answer strategy | `mida` row, requested checks, derives, adapters when available | scripts, tables, figures, model objects, run logs |
+| Diagnose | `mida` row, lint diagnostics, workflow/model diagnostics, bridge coverage, commensurability signals | robustness outputs and reviewer notes as cited artifacts |
+| Redesign | `mida` row, changed IDs and structural diffs | author decision notes as cited sources |
+| Report | `mida` row, bounded claim handoff through checked IDs | AI-use ledger, slides, response drafts, and author notes as cited artifacts |
 
 ## Skillpack Integration
 
 | local skill | relationship to `.aiss` v0.4 |
 |---|---|
-| `research-starter` | Creates or updates provisional `route` declarations and mirrors them as route cards with `route_decl_id`; it does not finalize model claims |
-| `study-design-builder` | Selects a `route`, writes the seven `mida` declarations with `mida_id`, records author choices as `decision` declarations with `decision_decl_id`, owns `research_model.aiss`, `ai4ss_check_report.txt`, and MIDA-to-model mapping when conceptual or causal structure matters |
-| `literature-matrix` | Produces source-grounded rows and, when a source affects the model, compiles deterministic evidence fragments with `compile_evidence.py` |
-| `research-data-builder` | Preserves `ai4ss_model_path`, concept/causal/bridge IDs, and routes survey cleaning through `codebook-parse`, `cleaning-contract`, and `cleaning-execute` when relevant |
-| `research-analysis-runner` | Requires `analysis_readiness_check.csv` and links outputs back to model, concept, causal, bridge, or claim IDs |
-| `methods-reviewer` | Reviews `.aiss` lint/run output, bridge coverage, commensurability, and claim-support alignment |
-| `academic-writing-scaffold` | Builds claim ledgers from checked IDs; does not write final manuscript prose |
-| `research-slides-builder` | Uses checked concepts, bridges, and diagnosed limits as source-map entries |
+| `research-starter` | Creates or updates provisional `route` declarations; it does not finalize model claims |
+| `study-design-builder` | Selects a `route`, writes the seven `mida` declarations with `mida_id`, records author choices as `decision` declarations with `decision_decl_id`, owns `research_model.aiss`, `ai4ss_check_report.txt`, and MIDA-to-model mapping |
+| `literature-matrix` | Adds source-grounded `paper`, `source`, `span`, `claim`, `relation`, `concept`, `causal`, `bridge`, `check`, and `decision` declarations directly to `.aiss` or deterministic `.aiss` fragments |
+| `research-data-builder` | Adds data `source`, `artifact`, `empirical`, `observation`, `coupling`, `bridge`, `check`, and `decision` declarations and routes survey cleaning through AI4SS DDI skills when relevant |
+| `research-analysis-runner` | Requires `.aiss` readiness checks and links outputs back to model, concept, causal, bridge, or claim IDs |
+| `methods-reviewer` | Reviews `.aiss` lint/run output, bridge coverage, commensurability, and claim-support alignment, then records diagnostics as `.aiss` checks and decisions |
+| `academic-writing-scaffold` | Builds report-boundary claim slots from checked `.aiss` IDs; does not write final manuscript prose |
+| `research-slides-builder` | Uses checked `.aiss` concepts, bridges, and diagnosed limits as presentation source links |
 | `reviewer-response` | Maps reviewer requests to MIDA elements and `.aiss` IDs without writing final response prose |
+
+Survey cleaning remains inside AI4SS through the DDI harness route:
+`codebook-parse` -> `cleaning-contract` -> `cleaning-execute`.
 
 ## Appserver-Observed Entry Boundaries
 
 The Codex appserver behavior test in `docs/appserver_behavior_tests.md`
 confirmed the intended staged behavior for a blank-slate topic:
 
-- `research-starter` is the correct zero-to-one entry skill. It creates route
-  cards, a minimum viable study, stop reasons, and optional candidate `.aiss`
-  `route` declarations.
+- `research-starter` is the correct zero-to-one entry skill. It creates
+  candidate `.aiss` `route` declarations, a minimum viable study, stop reasons,
+  and author decisions.
 - `study-design-builder` is the route-to-design skill. With no selected route,
   it should stop or route back to `research-starter` / `ask_author`; after a
   route exists, it writes the selected route, exactly seven `mida` declarations,
@@ -136,15 +140,15 @@ confirmed the intended staged behavior for a blank-slate topic:
 
 | gate | required artifact | failure signal |
 |---|---|---|
-| G1 Research object exists | `.aiss` `route` declarations, optionally mirrored in `research_starter_packet.md` and route cards | only topic prose |
-| G2 Design declared | selected `.aiss` `route` plus seven `mida` declarations, optionally mirrored in `study_design_declaration.csv` | no selected route, incomplete MIDA, or no stable IDs |
+| G1 Research object exists | `.aiss` `route` declarations | only topic prose or ad hoc tables |
+| G2 Design declared | selected `.aiss` `route` plus seven `mida` declarations | no selected route, incomplete MIDA, or no stable IDs |
 | G3 Unified workflow/model checks run | `ai4ss_check_report.txt` or logged `aiss.py compile/lint/run` output | parse errors, lint errors, missing references, missing spans, missing MIDA coverage |
 | G4 Empirical bridge declared | `bridge` rows or equivalent design fields | causal or measurement claim lacks empirical bridge |
-| G5 Literature evidence compiled when it changes the model | `evidence_table_path`, `compiled_ai4ss_path`, `evidence_compile_status` | source rows revise the model only in prose or saved `.aiss` differs from `compile_evidence.py` output |
-| G6 Data contract exists when data are transformed | DDI metadata, cleaning contract, execution audit, sample flow | raw-to-analysis path depends on memory or undocumented recodes |
-| G7 Analysis readiness passed | `analysis_readiness_check.csv` | clean data do not match inquiry or bridge alignment is unchecked |
-| G8 Analysis links back to design | analysis manifest with model/claim references | tables or figures cannot be traced to declared inquiry |
-| G9 Reporting bounded | claim ledger and AI-use ledger where required | unchecked causal/measurement claims become prose |
+| G5 Literature evidence compiled when it changes the model | `.aiss` source/span/claim/model declarations generated by `compile_evidence.py` or equivalent checked `.aiss` output | sources revise the model only in prose or ad hoc tables |
+| G6 Data contract exists when data are transformed | `.aiss` data source, artifact, empirical, observation, coupling, bridge, and check declarations | raw-to-analysis path depends on memory or undocumented recodes |
+| G7 Analysis readiness passed | `.aiss` readiness `check` declarations | clean data do not match inquiry or bridge alignment is unchecked |
+| G8 Analysis links back to design | `.aiss` analysis artifact/check/derive declarations with model/claim references | tables or figures cannot be traced to declared inquiry |
+| G9 Reporting bounded | `.aiss` bounded claim/report declarations and AI-use ledger where required | unchecked causal/measurement claims become prose |
 
 ## Evaluation
 
@@ -155,7 +159,7 @@ chain:
 ```text
 rough topic -> .aiss route declarations -> .aiss MIDA declarations ->
 .aiss model/check ->
-literature/data gates -> analysis readiness -> analysis manifest ->
+literature/data gates -> .aiss analysis readiness -> .aiss analysis artifacts ->
 bounded claim handoff
 ```
 

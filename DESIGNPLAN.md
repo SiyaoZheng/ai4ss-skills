@@ -78,7 +78,7 @@ Keep the README organized around the reader's decision path.
 6. **The `.aiss` Research Object**
    - Show the minimal `.aiss` skeleton.
    - Name `compile`, `lint`, and `run` as the deterministic entrypoints.
-   - Explain sidecars as projections, not a second workflow language.
+   - Explain CSV files and derived Markdown notes as source artifacts only, not workflow state.
 
 7. **Start**
    - Keep install commands and first prompts close to the top.
@@ -141,8 +141,6 @@ python3 scripts/validate_skillpack_workflow.py
 python3 scripts/validate_methodology_foundations.py docs/methodology_source_matrix.csv
 python3 scripts/validate_ai_use_ledger.py docs/ai_use_ledger.csv
 python3 scripts/validate_ai4ss_model.py docs/examples/research_model.aiss
-python3 scripts/validate_literature_evidence_compile.py skills/literature-matrix/examples/valid_literature_matrix.csv
-python3 scripts/validate_analysis_readiness.py skills/research-analysis-runner/examples/valid_analysis_readiness_check.csv
 python3 scripts/run_factory_level_eval.py --clean
 ```
 

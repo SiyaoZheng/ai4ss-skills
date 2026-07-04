@@ -6,7 +6,7 @@ Audit date: 2026-06-26
 
 The methodology foundation is now strong enough for the workshop workflow, with one important boundary: it is a methodology-enforcing cross-skill scaffold, not a universal specialist-methods system.
 
-The framework choice is defensible: `Declare MIDA -> Diagnose -> Redesign -> Report with bounded claims` is a coherent research-design spine, and it is much stronger than a loose bundle of methods citations. The earlier weakness was implementation: the spine was visible in docs and every `SKILL.md`, but not consistently forced by canonical artifact schemas and validators. That gap was first remediated by moving MIDA fields into sidecar schemas, validators, valid examples, and the cross-skill methodology validator; the current contract goes further by making route, MIDA, and decision state first-class `.aiss` declarations.
+The framework choice is defensible: `Declare MIDA -> Diagnose -> Redesign -> Report with bounded claims` is a coherent research-design spine, and it is much stronger than a loose bundle of methods citations. The earlier weakness was implementation: the spine was visible in docs and every `SKILL.md`, but not consistently forced by canonical artifact schemas and validators. That gap was first remediated by moving MIDA fields into .aiss projection schemas, validators, valid examples, and the cross-skill methodology validator; the current contract goes further by making route, MIDA, and decision state first-class `.aiss` declarations.
 
 Practical judgment:
 
@@ -26,11 +26,11 @@ The audit findings below are retained because they record the failure mode. The 
 
 | original issue | status | concrete remediation |
 |---|---|---|
-| `study-design-builder` did not force a MIDA-shaped design brief | Remediated and fused into `.aiss` | Added `study_design_declaration.csv`, `declaration-schema.md`, `validate_study_design_declaration.py`, and valid examples requiring `model`, `inquiry`, `data_strategy`, `answer_strategy`, `diagnose`, `redesign`, and `report_boundary` rows; current rows preserve `.aiss` `mida_id` values |
+| `study-design-builder` did not force a MIDA-shaped design brief | Remediated and fused into `.aiss` | Added `.aiss MIDA declarations`, `declaration-schema.md`, `validate_ai4ss_model.py`, and valid examples requiring `model`, `inquiry`, `data_strategy`, `answer_strategy`, `diagnose`, `redesign`, and `report_boundary` rows; current rows preserve `.aiss` `mida_id` values |
 | Validators could create false confidence by checking prose rather than schemas | Remediated | Upgraded `scripts/validate_methodology_foundations.py` to check skill-local schema references, validator scripts, and valid examples for required MIDA fields |
 | Reporting and revision schemas lost declared methodology fields | Remediated | Added `target_inquiry`, `interpretation_boundary`, `diagnosed_limit`, `sample_or_scope`, `uncertainty_or_caveat`, `privacy_status`, and `mida_element_affected` to downstream schemas and validators |
 | Route cards were useful but not true pre-declarations | Remediated and fused into `.aiss` | Added `model_scope`, `candidate_inquiry`, `possible_data_strategy`, and `possible_answer_strategy` to route-card schema, examples, and validator; current route cards preserve `.aiss` `route_decl_id` values |
-| Data and literature provenance were not always tethered to design | Remediated | Added `route_id`, `design_source`, and `target_inquiry` to data, literature, analysis, and methods sidecars where design tethering matters |
+| Data and literature provenance were not always tethered to design | Remediated | Added `route_id`, `design_source`, and `target_inquiry` to data, literature, analysis, and methods .aiss projections where design tethering matters |
 | Specialist methods remain incomplete | Watchlist | Kept DID delegated to `$did-expert`; other specialist methods should become new skills only when course cases require them |
 
 ## Evidence Checked
@@ -43,7 +43,7 @@ python3 scripts/validate_skillpack_workflow.py
 python3 scripts/validate_ai_use_ledger.py docs/ai_use_ledger.csv
 ```
 
-All valid example sidecars for the nine local skills also passed their local validators.
+All valid example .aiss projections for the nine local skills also passed their local validators.
 
 External source check:
 
@@ -66,7 +66,7 @@ That template is reasonable, but it does not force the author or agent to explic
 - `Redesign`
 - `Report boundary`
 
-The `design_decision_register.csv` schema is also generic decision tracking. It has `design_component`, `current_choice`, `status`, and routing fields, but no controlled MIDA component field and no explicit `inquiry`, `data_strategy`, `answer_strategy`, or `diagnosand` fields.
+The `.aiss decision declarations` schema is also generic decision tracking. It has `design_component`, `current_choice`, `status`, and routing fields, but no controlled MIDA component field and no explicit `inquiry`, `data_strategy`, `answer_strategy`, or `diagnosand` fields.
 
 Impact: the most important skill can pass validation while producing a design object that is adjacent to MIDA but not formally declared in MIDA terms.
 
@@ -80,11 +80,11 @@ Impact: current PASS means "the documentation names the framework", not "the wor
 
 ### P1. Reporting and revision schemas do not preserve all declared methodology fields
 
-The `academic-writing-scaffold` methodology section says it preserves inquiry or estimand, evidence source, support level, uncertainty, diagnosed limits, and author decisions. Its `claim_ledger.csv` schema does not require `target_inquiry`, `interpretation_boundary`, `uncertainty`, or `diagnosed_limit`.
+The `academic-writing-scaffold` methodology section says it preserves inquiry or estimand, evidence source, support level, uncertainty, diagnosed limits, and author decisions. Its `.aiss bounded claim declarations` schema does not require `target_inquiry`, `interpretation_boundary`, `uncertainty`, or `diagnosed_limit`.
 
-The `research-slides-builder` methodology section says slide claims should preserve inquiry or estimand, sample/scope, source artifact, uncertainty/caveat, privacy status, and interpretation boundary. Its `slide_map.csv` schema only requires `slide_id`, `role`, `claim`, `source_artifact`, `visual`, `risk`, and `action`.
+The `research-slides-builder` methodology section says slide claims should preserve inquiry or estimand, sample/scope, source artifact, uncertainty/caveat, privacy status, and interpretation boundary. Its `.aiss presentation artifact declarations` schema only requires `slide_id`, `role`, `claim`, `source_artifact`, `visual`, `risk`, and `action`.
 
-The `reviewer-response` methodology section says every reviewer request should map to the affected MIDA element. Its `revision_matrix.csv` schema does not require a `mida_element_affected` column.
+The `reviewer-response` methodology section says every reviewer request should map to the affected MIDA element. Its `.aiss reviewer-request decisions` schema does not require a `mida_element_affected` column.
 
 Impact: downstream reporting skills may keep source links while losing the design object they are supposed to report or redesign.
 
@@ -98,9 +98,9 @@ Impact: the starter can create feasible route cards without giving the design bu
 
 ### P2. Data and literature provenance are strong, but design tethering is uneven
 
-`research-data-builder` has strong sample-flow, merge-audit, and variable-provenance schemas. `literature-matrix` has a strong candidate-discovery and source-verification package.
+`research-data-builder` has strong `.aiss` row-loss, merge-check, and variable-provenance declarations. `literature-matrix` has a strong candidate-discovery and source-verification package.
 
-The weakness is not provenance. The weakness is that these outputs are not always forced to retain their relation to the current `Inquiry` or design source. The analysis manifest does this better because it requires `design_source`, `data_source`, and `interpretation_boundary`.
+The weakness is not provenance. The weakness is that these outputs are not always forced to retain their relation to the current `Inquiry` or design source. `.aiss` analysis artifacts do this better because they require `design_source`, `data_source`, and `interpretation_boundary`.
 
 Impact: data and literature work can be reproducible without being tightly connected to the declared research question.
 
@@ -122,16 +122,16 @@ Impact: the selected foundation is sound; the remaining problem is operational e
 
 1. Make `study-design-builder` produce an explicit MIDA design brief.
    - Add headings for `Model`, `Inquiry`, `Data strategy`, `Answer strategy`, `Diagnose`, `Redesign`, and `Report boundary`.
-   - Update `design_decision_register.csv` to include `mida_component` or create a separate `study_design_declaration.csv`.
+   - Update `.aiss decision declarations` to include `mida_component` or create a separate `.aiss MIDA declarations`.
 
 2. Add a method-declaration validator.
    - It should validate actual design artifacts, not only the methodology matrix.
    - It should fail when causal projects lack an estimand-like inquiry, non-causal projects lack a target quantity/construct/classification/synthesis question, or any project lacks data and answer strategy.
 
 3. Thread methodology fields into downstream schemas.
-   - `claim_ledger.csv`: add `target_inquiry`, `interpretation_boundary`, `diagnosed_limit`.
-   - `slide_map.csv`: add `sample_or_scope`, `uncertainty_or_caveat`, `privacy_status`, `interpretation_boundary`.
-   - `revision_matrix.csv`: add `mida_element_affected`.
+   - `.aiss bounded claim declarations`: add `target_inquiry`, `interpretation_boundary`, `diagnosed_limit`.
+   - `.aiss presentation artifact declarations`: add `sample_or_scope`, `uncertainty_or_caveat`, `privacy_status`, `interpretation_boundary`.
+   - `.aiss reviewer-request decisions`: add `mida_element_affected`.
 
 4. Strengthen route cards as pre-declarations.
    - Add provisional `model_scope`, `candidate_inquiry`, `possible_data_strategy`, and `possible_answer_strategy`.
@@ -144,7 +144,7 @@ Impact: the selected foundation is sound; the remaining problem is operational e
 
 The skillpack is no longer just agent monologue. It has a credible methodology spine and real workflow structure.
 
-After remediation, MIDA has moved from prose into `.aiss` workflow declarations, sidecar schemas, validators, examples, and the cross-skill contract. The correct claim is now:
+After remediation, MIDA has moved from prose into `.aiss` workflow declarations, .aiss projection schemas, validators, examples, and the cross-skill contract. The correct claim is now:
 
 > This is a coherent methodology-enforcing teaching workflow for moving a research project from route discovery to design, data/literature, analysis, diagnosis, reporting, and revision. It is not a complete specialist-methods system for every empirical design.
 

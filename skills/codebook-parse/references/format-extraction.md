@@ -136,7 +136,7 @@ for (v in vars) {
 
 ---
 
-## CSV with data dictionary sidecar
+## CSV with companion data dictionary
 
 Some datasets ship as `data.csv` + `codebook.csv` (or Excel).
 Common column names in the dictionary file:
@@ -243,7 +243,7 @@ tables <- content[content$content_type == "table cell", ]
 ```
 
 **Parsing strategy**: reconstruct each Word table into a data.frame, then map columns
-to SSOT fields using the same heuristic as the CSV sidecar (column name matching table
+to SSOT fields using the same heuristic as the CSV dictionary (column name matching table
 in the CSV section below). If the document uses running prose instead of tables, treat
 it like a PDF: extract text and parse with LLM assistance.
 

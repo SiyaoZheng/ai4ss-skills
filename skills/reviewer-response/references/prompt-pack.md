@@ -24,10 +24,10 @@ Task:
 Do not write final response prose.
 ```
 
-## Revision Matrix
+## Reviewer-Request Declarations
 
 ```text
-Use $reviewer-response to build a revision matrix.
+Use $reviewer-response to build `.aiss` reviewer-request decisions.
 
 For each comment, include:
 - comment_id;
@@ -54,11 +54,11 @@ Flag anything that requires author judgment before drafting.
 Use $reviewer-response to check whether our planned responses are supported.
 
 Inputs:
-- revision matrix: [path]
+- `.aiss` reviewer-request decisions: [path]
 - revised manuscript: [path]
 - new tables/figures/appendices: [paths]
 
-For each matrix row, check:
+For each reviewer-request decision, check:
 - does the promised change exist?
 - is table/figure number current?
 - does response logic match evidence?

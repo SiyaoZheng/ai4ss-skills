@@ -10,63 +10,86 @@ defines how each skill updates or mirrors that computable research object.
 
 | object | role |
 |---|---|
-| `.aiss` research object | Unified computable IR: route declarations, MIDA rows, author decisions, source spans, claims, empirical objects, couplings, attributes, concepts, causal implications, empirical bridges, checks, and derived diagnostics |
+| `.aiss` research object | The only workflow state: route declarations, MIDA rows, author decisions, source spans, claims, empirical objects, couplings, attributes, concepts, causal implications, empirical bridges, artifacts, adapters, checks, and diagnostics |
 | MIDA declaration | Seven `mida` declarations for the selected route: Model, Inquiry, Data strategy, Answer strategy, Diagnose, Redesign, Report boundary |
-| Skill sidecars | Human-readable or validator-friendly projections: route cards, design declarations, DDI metadata, cleaning contracts, sample flow, literature matrix, theory workbench sidecars, compiled literature/theory evidence, analysis readiness check, analysis manifest, claim ledger |
+| Inspection files | Optional human-facing exports, logs, tables, figures, data files, or notes referenced by the `.aiss` workflow. They are not handoff contracts and cannot substitute for `.aiss` declarations. |
 
 `research-starter` may create provisional `route` declarations without a final
 model. `study-design-builder` selects a route, writes the seven `mida`
-declarations, and creates or updates `research_model.aiss` when conceptual or
-causal structure matters. Downstream skills should preserve model identifiers
-and source-span grounding when an artifact depends on a declared route, MIDA
-component, concept, causal implication, empirical bridge, or claim.
+declarations, and creates or updates `research_model.aiss`. Downstream skills
+must update or reference the same `.aiss` object when they add data, literature,
+analysis, review, reporting, or revision work.
 
 See `docs/ai4ss_dsl_factory_integration.md` for the full integration rule.
 
+## AI4SS Execution Gate
+
+Research-factory skills must not execute as generic helpers that bypass the
+`.aiss` research object. The factory entrypoint is always AI4SS:
+
+1. If the project has only a rough topic or material pile, `research-starter`
+   must create or update `.aiss` `route` declarations before downstream work is
+   treated as a factory artifact.
+2. If a route exists but no selected route plus seven MIDA declarations exists,
+   `study-design-builder` must create or repair `research_model.aiss` before
+   data, literature, analysis, review, writing, slides, or revision skills run
+   as production workflow stages.
+3. Downstream skills may inventory files and report a blocker, but they must
+   not create an alternative workflow record in CSV, Markdown, chat memory, or
+   an ad hoc table. Production state lives in `.aiss`.
+4. Optional logs, data files, tables, figures, decks, or notes may exist only as
+   evidence artifacts referenced by `.aiss` `source`, `artifact`, `empirical`,
+   `observation`, `claim`, `check`, `derive`, or `decision` declarations.
+5. If the AI4SS object is missing, invalid, or insufficient for the requested
+   stage, the correct output is a blocked handoff with `next_skill_route` set to
+   `research-starter`, `study-design-builder`, `methods-reviewer`, or
+   `ask_author`; continuing without the AI4SS object is a contract violation.
+
 ## Workflow Map
 
-| stage | scholar question | primary skill | canonical artifact | next stage |
+| stage | scholar question | primary skill | canonical `.aiss` state | next stage |
 |---|---|---|---|---|
-| 0. Start | 这个研究怎么先动起来？ | `research-starter` | `.aiss` `route` declarations, mirrored by `research_starter_packet.md` and `research_route_cards.csv` | Design |
-| 1. Design | 这个路线怎样落成可执行设计？ | `study-design-builder` | selected `.aiss` `route`, seven `mida` declarations, `decision` declarations, `research_model.aiss`, `ai4ss_check_report.txt` | Data, literature, analysis |
-| 2a. Data | 数据怎么来的，样本怎么变的？ | `research-data-builder` | derived data, `sample_flow.csv`, `merge_audit.csv`, `variable_provenance.csv`; for survey cleaning: `ddi-metadata.yaml`, `cleaning_contract`, execution audit | Analysis, methods review |
-| 2b. Literature | 文献证据是不是一手来源？ | `literature-matrix` | `literature_candidate_discovery.csv`, `literature_matrix.csv`, optional theory workbench (`literature_theory_synthesis.csv`, `theory_rival_map.csv`, `theory_scope_map.csv`, `theory_evidence.md`), optional compiled literature/theory `.aiss` evidence | Design, methods review, writing scaffold |
-| 3. Analysis | 第一批可检查结果怎么跑出来？ | `research-analysis-runner` | `analysis_readiness_check.csv`, scripts, tables, figures, logs, `analysis_run_manifest.csv` | Methods review |
-| 4. Review | 结果解释有没有说过头？ | `methods-reviewer` | issue table, recommended checks, author decisions | Analysis, writing, revision |
-| 5a. Writing scaffold | 作者怎样自己写得更稳？ | `academic-writing-scaffold` | claim ledger, section scaffold, citation gaps | Author drafting |
-| 5b. Slides | 已验证证据怎样讲给听众？ | `research-slides-builder` | slide map, source map, evidence gaps | Author presentation |
-| 5c. Revision | 返修有没有证据链？ | `reviewer-response` | revision matrix, revision plan, response scaffold | Data, analysis, writing |
+| 0. Start | 这个研究怎么先动起来？ | `research-starter` | candidate `route` declarations plus author `decision` declarations | Design |
+| 1. Design | 这个路线怎样落成可执行设计？ | `study-design-builder` | selected `route`, exactly seven `mida` declarations, author `decision` declarations, and model/check declarations | Data, literature, analysis |
+| 2a. Data | 数据怎么来的，样本怎么变的？ | `research-data-builder` | `source`, `artifact`, `empirical`, `observation`, `coupling`, `bridge`, `check`, and `decision` declarations for data construction and row-loss evidence | Analysis, methods review |
+| 2b. Literature | 文献证据是不是一手来源？ | `literature-matrix` | `paper`, `source`, `span`, `claim`, `relation`, `concept`, `causal`, `bridge`, `check`, and `decision` declarations for verified literature evidence | Design, methods review, writing scaffold |
+| 3. Analysis | 第一批可检查结果怎么跑出来？ | `research-analysis-runner` | `artifact`, `adapter`, `check`, `derive`, `observation`, `claim`, and `decision` declarations linking outputs to MIDA | Methods review |
+| 4. Review | 结果解释有没有说过头？ | `methods-reviewer` | diagnostic `check` declarations, redesign `decision` declarations, bounded claim links | Analysis, writing, revision |
+| 5a. Writing scaffold | 作者怎样自己写得更稳？ | `academic-writing-scaffold` | report-boundary `mida`, bounded `claim` declarations, citation-gap `decision` declarations | Author drafting |
+| 5b. Slides | 已验证证据怎样讲给听众？ | `research-slides-builder` | `artifact`, bounded `claim`, source-link, privacy `check`, and presentation `decision` declarations | Author presentation |
+| 5c. Revision | 返修有没有证据链？ | `reviewer-response` | reviewer-request `decision`, affected MIDA links, evidence `artifact`, and response-boundary declarations | Data, analysis, writing |
 
 ## Shared Handoff Fields
 
-Every skill should preserve these fields when available:
+Every skill should preserve these identifiers in `.aiss` declarations when
+available:
 
 | field | meaning |
 |---|---|
-| `route_id` | Human-readable route key such as `R1`, preserved across sidecars |
+| `route_id` | Human-readable route key such as `R1`, preserved as metadata on `.aiss` declarations |
 | `route_decl_id` | Stable `.aiss` `route` declaration id from `research-starter` |
 | `mida_id` | Stable `.aiss` `mida` declaration id from `study-design-builder`, when applicable |
 | `decision_decl_id` | Stable `.aiss` `decision` declaration id for author-owned choices, when applicable |
 | `mida_component` | `.aiss` `mida` component touched by this artifact, when applicable |
-| `synthesis_id` | Theory synthesis row id from `literature_theory_synthesis.csv`, when applicable |
-| `rival_id` | Rival explanation row id from `theory_rival_map.csv`, when applicable |
-| `scope_id` | Scope condition row id from `theory_scope_map.csv`, when applicable |
+| `synthesis_id` | Theory synthesis declaration id, when applicable |
+| `rival_id` | Rival explanation decision/check id, when applicable |
+| `scope_id` | Scope condition decision/check id, when applicable |
 | `design_source` | Path to the design brief or decision register |
 | `target_inquiry` | The declared inquiry, estimand, target quantity, construct, classification target, process-tracing claim, or synthesis question |
 | `data_source` | Path to source data, derived data, or extracted source output |
 | `analysis_plan_path` | Path to analysis plan, preregistration scaffold, or script plan |
-| `readiness_status` | `ready`, `warn`, or `blocked` result from `analysis_readiness_check.csv` |
-| `evidence_compile_status` | `compiled`, `needs_review`, `blocked`, or `not_applicable` status for literature evidence to `.aiss` compilation |
-| `theory_workbench_status` | `ready_for_aiss`, `needs_author_decision`, `needs_methods_review`, `blocked`, or `not_applicable` status for theory sidecars |
-| `source_artifacts` | Literature matrix, source ledger, notes, PDFs, tables, figures, logs |
+| `readiness_status` | `ready`, `warn`, or `blocked` status from `.aiss` readiness checks |
+| `evidence_compile_status` | `compiled`, `needs_review`, `blocked`, or `not_applicable` status for literature evidence in `.aiss` |
+| `theory_workbench_status` | `ready_for_aiss`, `needs_author_decision`, `needs_methods_review`, `blocked`, or `not_applicable` status for theory declarations |
+| `source_artifacts` | Source locators, notes, PDFs, tables, figures, logs, and other evidence files referenced by `.aiss` |
 | `known_gaps` | Missing data, unresolved source, unclear design choice, or failed validation |
 | `author_decisions` | Decisions that require researcher judgment |
 | `validation_commands` | Commands run or exact commands still needed |
 | `interpretation_boundary` | What the artifact can and cannot support |
 | `next_skill_route` | The next skill or `ask_author` / `none` |
 
-When a stage depends on a declared `.aiss` model, preserve these optional fields
-in sidecars where applicable:
+When a stage depends on a declared `.aiss` model, preserve these identifiers in
+`.aiss` metadata where applicable:
 
 - `ai4ss_model_path`
 - `model_id`
@@ -94,7 +117,7 @@ Use `docs/methodology_foundations.md` as the canonical explanation and `docs/met
 | `Answer strategy` | Estimator, coding rule, synthesis rule, diagnostic comparison, table/figure shell, or qualitative inference procedure |
 | `Diagnose` | Bias, precision, power, measurement risk, source-status risk, row loss, reproducibility, and claim-support mismatch |
 | `Redesign` | Smaller first loop, revised measure, added source, changed estimator, stronger comparison, or abandoned route |
-| `Report` | Claim ledger, source map, AI-use ledger, author decision point, and communication boundary |
+| `Report` | Bounded claim declarations, source map, AI-use ledger, author decision point, and communication boundary |
 
 ## Theory Workbench Contract
 
@@ -102,12 +125,11 @@ The shared theory engine is implemented as a reusable workflow layer across
 `literature-matrix`, `study-design-builder`, `methods-reviewer`, and
 `academic-writing-scaffold`. It reuses existing contracts:
 
-- Sidecar fields live in `scripts/ai4ss_factory_contracts/sidecars.py`.
 - Route/status checks live in `scripts/ai4ss_factory_contracts/workflow.py`.
 - Model output is compiled through `dsl/scripts/compile_evidence.py`.
 - Model validity is checked through `scripts/validate_ai4ss_model.py`.
-- Rival, scope, mechanism weakness, and overclaim are reviewed through the
-  existing methods issue table.
+- Rival, scope, mechanism weakness, and overclaim are reviewed through `.aiss`
+  `check` and `decision` declarations.
 - Author-facing theory review uses the Author Workbench boundary; final theory
   prose remains author-written.
 
@@ -122,14 +144,18 @@ Each local skill must have:
 - `## Script Utilities`
 - `## Reference Files`
 
-The workflow contract is intentionally short. Detailed schemas belong in skill-local `references/` files and deterministic checks belong in skill-local `scripts/`. A skill is incomplete if it only cites methods sources but does not state its role in the design spine.
+The workflow contract is intentionally short. Detailed `.aiss` declaration
+patterns belong in skill-local `references/` files and deterministic checks
+belong in `dsl/scripts/aiss.py` or `scripts/validate_ai4ss_model.py`. A skill is
+incomplete if it only cites methods sources but does not state its role in the
+design spine.
 
 ## Gap Decisions From Round 2
 
 Two gaps were found after adding `research-starter`:
 
-- Design gap: no skill owned the move from route cards to unit, constructs, comparison, evidence needs, and first analysis plan. Added `study-design-builder`.
-- Execution gap: no skill owned the move from design plus analysis-ready data to first-pass outputs, logs, and result manifests. Added `research-analysis-runner`; it now requires `analysis_readiness_check.csv` before execution.
+- Design gap: no skill owned the move from candidate route declarations to unit, constructs, comparison, evidence needs, and first analysis plan. Added `study-design-builder`.
+- Execution gap: no skill owned the move from design plus analysis-ready data to first-pass outputs and logs. Added `research-analysis-runner`; it now requires `.aiss` readiness checks before execution.
 
 These are production skills. They do not replace the second-order audit skills.
 

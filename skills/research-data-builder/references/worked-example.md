@@ -29,9 +29,9 @@ Target output:
 |---|---|---|---|
 | ingest | `scripts/10_ingest_city_sources.R` | `data/interim/source_inventory.csv` | file existence, column names |
 | harmonize | `scripts/20_harmonize_city_ids.R` | `data/interim/city_sources_harmonized.csv` | duplicate key check |
-| merge | `scripts/30_merge_city_panel.R` | `data/interim/city_panel_merged.csv` | merge audit |
-| construct | `scripts/40_construct_variables.R` | `data/analysis/city_panel_analysis.csv` | variable provenance |
-| audit | `scripts/50_audit_analysis_sample.R` | `output/audit/sample_flow.csv` | sample flow and missingness |
+| merge | `scripts/30_merge_city_panel.R` | `data/interim/city_panel_merged.csv` | `.aiss` merge checks |
+| construct | `scripts/40_construct_variables.R` | `data/analysis/city_panel_analysis.csv` | `.aiss` variable-provenance observations |
+| audit | `scripts/50_audit_analysis_sample.R` | `output/audit/.aiss row-loss checks` | row-loss and missingness checks |
 
 ## Good Agent Trace
 
@@ -49,14 +49,14 @@ Tool actions should show file reads, column inspection, duplicate checks, script
 
 ## Example Audit Rows
 
-`sample_flow.csv`
+`.aiss row-loss checks`
 
 | step | input_path | output_path | n_before | n_after | units_before | units_after | years_before | years_after | reason | check_status | notes |
 |---|---|---|---:|---:|---:|---:|---|---|---|---|---|
 | raw_patents | data/raw/patents_city_year.csv | data/interim/patents_city_year.csv | 3420 | 3420 | 285 | 285 | 2012-2023 | 2012-2023 | read source | pass | no row loss |
 | drop_missing_outcome | data/interim/city_panel_merged.csv | data/analysis/city_panel_analysis.csv | 3420 | 3388 | 285 | 285 | 2012-2023 | 2012-2023 | 32 city-years lack patent_count | warn | review missingness |
 
-`merge_audit.csv`
+`.aiss merge checks`
 
 | merge_name | left_path | right_path | keys | left_rows | right_rows | matched_rows | left_only_rows | right_only_rows | duplicate_key_rows | action | review_path |
 |---|---|---|---|---:|---:|---:|---:|---:|---:|---|---|
@@ -64,7 +64,7 @@ Tool actions should show file reads, column inspection, duplicate checks, script
 | policy_timing | data/interim/patents_harmonized.csv | data/raw/policy_pilots.xlsx | city_id | 3420 | 265 | 240 | 3180 | 0 | 0 | keep | output/audit/never_treated_cities.csv |
 | controls | data/interim/city_policy_panel.csv | data/raw/city_controls.csv | city_id;year | 3420 | 3440 | 3310 | 78 | 120 | 0 | repair | output/audit/missing_controls.csv |
 
-`variable_provenance.csv`
+`.aiss variable-provenance observations`
 
 | variable | source_variables | rule | script_path | validation | status |
 |---|---|---|---|---|---|

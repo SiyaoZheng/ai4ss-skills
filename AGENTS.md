@@ -20,7 +20,7 @@ Maintain the research-factory skills as one workflow:
 ```text
 rough topic -> .aiss route declarations -> .aiss MIDA declarations ->
 .aiss model/check ->
-literature/data gates -> analysis readiness -> analysis manifest ->
+literature/data gates -> .aiss analysis readiness -> .aiss analysis artifacts ->
 bounded claim handoff
 ```
 
@@ -32,7 +32,8 @@ Declare MIDA -> Diagnose -> Redesign -> Report with bounded claims
 
 AI assistance must not directly write final manuscript prose, final reviewer
 response prose, or final scholarly claims. Skills should create inspectable
-research objects, ledgers, manifests, diagnostics, and author decision points.
+`.aiss` research objects, diagnostics, evidence artifacts, and author decision
+points. CSV files and derived Markdown notes are not workflow state.
 
 ## Validation
 
@@ -43,8 +44,6 @@ python3 scripts/validate_skillpack_workflow.py
 python3 scripts/validate_methodology_foundations.py docs/methodology_source_matrix.csv
 python3 scripts/validate_ai_use_ledger.py docs/ai_use_ledger.csv
 python3 scripts/validate_ai4ss_model.py docs/examples/research_model.aiss
-python3 scripts/validate_literature_evidence_compile.py skills/literature-matrix/examples/valid_literature_matrix.csv
-python3 scripts/validate_analysis_readiness.py skills/research-analysis-runner/examples/valid_analysis_readiness_check.csv
 python3 scripts/run_factory_level_eval.py --clean
 ```
 

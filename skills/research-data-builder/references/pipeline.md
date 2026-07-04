@@ -19,7 +19,7 @@ data/raw/          # immutable source files
 data/interim/      # cleaned but not final
 data/analysis/     # model-ready samples
 scripts/           # numbered, runnable steps
-output/audit/      # sample flow, merge, missingness, provenance
+output/audit/      # row loss, merge diagnostics, missingness, provenance
 output/tables/
 output/figures/
 output/logs/
@@ -43,7 +43,7 @@ Recommended stages:
 1. `00_setup`: environment, packages, project paths.
 2. `10_ingest`: read raw files and normalize names/types without changing meaning.
 3. `20_clean`: recode variables, handle duplicates, apply explicit filters.
-4. `30_merge`: join sources and write merge audit.
+4. `30_merge`: join sources and write merge diagnostics.
 5. `40_construct`: build treatment, outcomes, controls, and sample flags.
 6. `50_export_analysis`: write analysis sample and final audit report.
 

@@ -11,7 +11,7 @@ description: >
   PDF", "read the codebook Word file", or any time a user provides a survey file and
   wants to begin cleaning, labelling, or reproducible analysis. Supported inputs:
   Stata .dta, SPSS .sav, SAS .sas7bdat, CFPS YAML wrapper, DDI Codebook 2.5 XML,
-  CSV with a data dictionary sidecar, PDF questionnaire or codebook, Word .docx
+  CSV with a companion data dictionary, PDF questionnaire or codebook, Word .docx
   variable documentation.
 ---
 
@@ -46,7 +46,7 @@ Infer from file extension or ask the user:
 | `.sas7bdat` | SAS | Structured (R) |
 | `.yaml` with `content_base64` | CFPS YAML wrapper | Structured (R, decode first) |
 | `.xml` with DDI namespace | DDI Codebook 2.5 XML | Structured (R `xml2`) |
-| `.csv` + sidecar `.csv` / `.xlsx` | CSV + data dictionary | Structured (R `readr`/`readxl`) |
+| `.csv` + dictionary `.csv` / `.xlsx` | CSV + data dictionary | Structured (R `readr`/`readxl`) |
 | `.pdf` | Questionnaire or codebook PDF | **LLM-assisted** (extract text, parse yourself) |
 | `.docx` | Word codebook | **LLM-assisted** (R `officer`, then parse) |
 

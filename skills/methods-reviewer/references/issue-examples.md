@@ -20,7 +20,7 @@ Use these examples to calibrate severity and avoid vague reviews.
 | issue | `scripts/30_merge.R` joins city controls to firm-year data by `city_id` only, causing row multiplication |
 | evidence | N increases from 120,000 to 1,440,000 after merge; controls have 12 years per city |
 | why_it_matters | estimates use duplicated firm rows and invalid standard errors |
-| next_action | merge by `city_id, year`; regenerate sample flow |
+| next_action | merge by `city_id, year`; regenerate `.aiss` row-loss checks |
 | status | confirmed_bug |
 
 ### P1: Wrong Clustering Level

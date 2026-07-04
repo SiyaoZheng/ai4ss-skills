@@ -38,7 +38,7 @@ next_action, and status. Do not rewrite the paper.
 Expected behavior:
 Read design and output -> trace table notes to scripts -> identify confirmed bugs,
 risks, and author decisions -> route DID-specific details to /did-expert if central
--> run validate_issue_table.py on the CSV sidecar.
+-> run validate_ai4ss_model.py on the .aiss declaration set.
 ```
 
 ## Regression Table Audit

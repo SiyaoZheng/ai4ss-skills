@@ -41,8 +41,8 @@ Task: Build a city-year analysis sample from raw panel, controls, and policy lis
 
 | condition | artifacts | trace markers | risky moves | summary |
 |---|---|---|---|---|
-| `no_skill` (46.0) | analysis_panel.csv, summary_stats.md, sample_flow.csv, output/logs/build_panel.log | row counts, raw data untouched | does not write a merge review file, variable construction is described only in prose | Returns a usable cleaned dataset and some row-count evidence, but merge ambiguity and variable provenance remain weak. |
-| `skill_guided` (100.0) | sample_flow.csv, merge_audit.csv, variable_provenance.csv, output/logs/build_panel.log | row counts, merge unmatched rows, variable construction rule, raw data untouched | none | Returns the derived data plus audit sidecars that expose row loss and merge ambiguity. |
+| `no_skill` (46.0) | analysis_panel.csv, loose summary statistics, .aiss row-loss checks, output/logs/build_panel.log | row counts, raw data untouched | does not write a merge review declaration, variable construction is described only in prose | Returns a usable cleaned dataset and some row-count evidence, but merge ambiguity and variable provenance remain weak. |
+| `skill_guided` (100.0) | .aiss row-loss checks, .aiss merge checks, .aiss variable-provenance observations, output/logs/build_panel.log | row counts, merge unmatched rows, variable construction rule, raw data untouched | none | Returns the derived data plus checked .aiss declarations that expose row loss and merge ambiguity. |
 
 ### `literature_evidence`
 
@@ -50,8 +50,8 @@ Task: Build a literature base for AI adoption and innovation outcomes before wri
 
 | condition | artifacts | trace markers | risky moves | summary |
 |---|---|---|---|---|
-| `no_skill` (48.0) | literature_matrix.csv, literature_review_notes.md | DOI or source URL, verification_level | mixes secondary summaries into synthesis | Returns a rough matrix and memo, but source locators and synthesis eligibility are not enforced. |
-| `skill_guided` (95.0) | literature_matrix.csv, literature_screening_log.md, source_locators.csv | DOI or source URL, claim_source_locator, verification_level | none | Returns a matrix that mostly separates verified primary sources from unverified or secondary-only evidence; synthesis eligibility still needs spot checking. |
+| `no_skill` (48.0) | .aiss literature evidence declarations, loose literature notes | DOI or source URL, verification_level | mixes secondary summaries into synthesis | Returns rough source notes, but source locators and synthesis eligibility are not enforced. |
+| `skill_guided` (95.0) | .aiss literature evidence declarations, .aiss screening decisions, .aiss source locators | DOI or source URL, claim_source_locator, verification_level | none | Returns checked source-evidence declarations that mostly separate verified primary sources from unverified or secondary-only evidence; synthesis eligibility still needs spot checking. |
 
 ### `claim_discipline`
 
@@ -59,8 +59,8 @@ Task: Prepare result-section support from table1, event-study figure, and resear
 
 | condition | artifacts | trace markers | risky moves | summary |
 |---|---|---|---|---|
-| `no_skill` (31.0) | results_paragraph.md, claim_notes.md | estimand, sample and N | writes final manuscript prose, mechanism evidence is not separated from interpretation | Returns a plausible paragraph plus notes, but it crosses the direct-writing boundary and under-specifies claim strength. |
-| `skill_guided` (95.0) | methods_issue_table.csv, claim_ledger.csv, author_decision_questions.md | estimand, sample and N, support_level | none | Returns claim slots and risks, leaving final prose and scholarly judgment to the author; FE/cluster still need model-object confirmation. |
+| `no_skill` (31.0) | result prose draft, loose claim notes | estimand, sample and N | writes final manuscript prose, mechanism evidence is not separated from interpretation | Returns a plausible paragraph plus notes, but it crosses the direct-writing boundary and under-specifies claim strength. |
+| `skill_guided` (95.0) | .aiss diagnostic checks, .aiss bounded claim declarations, .aiss author decision declarations | estimand, sample and N, support_level | none | Returns claim slots and risks, leaving final prose and scholarly judgment to the author; FE/cluster still need model-object confirmation. |
 
 ### `revision_trace`
 
@@ -68,5 +68,5 @@ Task: Process reviewer comments about identification, mechanism evidence, and li
 
 | condition | artifacts | trace markers | risky moves | summary |
 |---|---|---|---|---|
-| `no_skill` (31.0) | response_letter_draft.md, revision_plan.md | comment_id, planned_action | writes final response prose, done evidence is missing for several promised changes | Returns a plausible response package, but author cannot verify every promised change before prose appears. |
-| `skill_guided` (95.0) | revision_matrix.csv, revision_trace/, open_author_decisions.md | comment_id, planned_action, confidentiality_status | none | Returns a response scaffold with evidence links and open decisions; done_evidence still depends on actual analysis completion. |
+| `no_skill` (31.0) | response letter draft, loose revision plan | comment_id, planned_action | writes final response prose, done evidence is missing for several promised changes | Returns a plausible response package, but author cannot verify every promised change before prose appears. |
+| `skill_guided` (95.0) | .aiss reviewer-request decisions, revision_trace/, .aiss open author decisions | comment_id, planned_action, confidentiality_status | none | Returns a response scaffold with evidence links and open decisions; done_evidence still depends on actual analysis completion. |

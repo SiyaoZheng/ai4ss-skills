@@ -2,7 +2,7 @@
 
 Use these prompts for research presentations and teaching decks.
 
-## Slide Map First
+## Presentation Declarations First
 
 ```text
 Use $research-slides-builder.
@@ -15,10 +15,10 @@ Inputs:
 - research design: [path]
 - tables: [paths]
 - figures: [paths]
-- literature matrix or notes: [paths]
+- checked `.aiss` literature evidence declarations or source notes: [paths]
 - existing deck: [path if any]
 
-Output a slide map:
+Output `.aiss` presentation artifact declarations:
 - slide_id;
 - role;
 - one claim or task;
@@ -33,7 +33,7 @@ Do not edit files yet.
 ## Convert Results To Slides
 
 ```text
-Use $research-slides-builder to convert verified results into a slide_map.csv and author-fillable slide outline.
+Use $research-slides-builder to convert verified results into a .aiss presentation artifact declarations and author-fillable slide outline.
 
 Requirements:
 - one main claim slot per slide;
@@ -99,7 +99,7 @@ Show process, not only final outputs:
 ## Result Figure Slide
 
 ```text
-Use $research-slides-builder to create a slide-map row and author-fillable slide outline around one figure.
+Use $research-slides-builder to create a `.aiss` presentation artifact declaration and author-fillable slide outline around one figure.
 
 Figure: [path]
 Supporting table/log: [path]
@@ -119,12 +119,12 @@ Bad prompt:
 帮我做一个很有冲击力的研究汇报，结论写得强一点。
 
 Improved prompt:
-Use $research-slides-builder to create a slide_map.csv first. Every result slide must
-point to a table, figure, log, literature matrix row, or author note. Route empirical
+Use $research-slides-builder to create a .aiss presentation artifact declarations first. Every result slide must
+point to a table, figure, log, `.aiss` source-evidence id, or author note. Route empirical
 validity doubts to $methods-reviewer before editing the deck.
 
 Expected behavior:
-Inventory sources -> build slide map -> mark unsupported claims as gaps -> validate
-slide_map.csv -> edit only verified slide claims -> inspect the final deck for overflow
+Inventory sources -> build presentation declarations -> mark unsupported claims as gaps -> validate
+.aiss presentation artifact declarations -> edit only verified slide claims -> inspect the final deck for overflow
 and privacy leaks.
 ```

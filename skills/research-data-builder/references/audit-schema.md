@@ -2,7 +2,7 @@
 
 Use these schemas to make data-building work reviewable.
 
-## `sample_flow.csv`
+## `.aiss row-loss checks`
 
 One row per sample-changing step.
 
@@ -30,7 +30,7 @@ One row per sample-changing step.
 | `bridge_id` | DSL empirical bridge id served by this step, or `not_applicable:<reason>` |
 | `ai4ss_check_status` | `pass`, `warn`, `not_run`, or `not_applicable` |
 
-## `merge_audit.csv`
+## `.aiss merge checks`
 
 One row per merge key group or per source pair.
 
@@ -58,7 +58,7 @@ One row per merge key group or per source pair.
 | `bridge_id` | DSL empirical bridge id served by this merge, or `not_applicable:<reason>` |
 | `ai4ss_check_status` | `pass`, `warn`, `not_run`, or `not_applicable` |
 
-## `variable_provenance.csv`
+## `.aiss variable-provenance observations`
 
 One row per constructed variable.
 

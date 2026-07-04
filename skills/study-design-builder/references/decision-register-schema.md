@@ -1,6 +1,6 @@
 # Design Decision Register Schema
 
-Use `design_decision_register.csv` when design choices must be tracked across skills. In the unified workflow this sidecar mirrors `.aiss` `decision` declarations for the selected route; it is not a second decision language.
+Use `.aiss decision declarations` when design choices must be tracked across skills. In the unified workflow this .aiss projection mirrors `.aiss` `decision` declarations for the selected route; it is not a second decision language.
 
 ## Required Columns
 
@@ -8,7 +8,7 @@ Use `design_decision_register.csv` when design choices must be tracked across sk
 |---|---|
 | `decision_id` | Stable id such as `D1` |
 | `decision_decl_id` | Stable `.aiss` decision id such as `project.decision_r1_identification` |
-| `route_id` | Route from `research_route_cards.csv` |
+| `route_id` | Route from `.aiss route declarations` |
 | `mida_component` | `model`, `inquiry`, `data_strategy`, `answer_strategy`, `diagnose`, `redesign`, or `report_boundary` |
 | `design_component` | Component being decided |
 | `current_choice` | Current proposed choice or open option |

@@ -41,28 +41,102 @@ AI4SS_REQUIRED_SKILL_TERMS = {
         "ai4ss_model_path",
         "ai4ss_check_status",
     ),
-    "research-data-builder": ("research_model.aiss", "ai4ss_model_path", "codebook-parse", "cleaning-contract", "cleaning-execute"),
+    "research-data-builder": (
+        "research_model.aiss",
+        "ai4ss_model_path",
+        "source",
+        "artifact",
+        "empirical",
+        "observation",
+        "coupling",
+        "bridge",
+        "check",
+        "decision",
+        "codebook-parse",
+        "cleaning-contract",
+        "cleaning-execute",
+    ),
     "literature-matrix": (
         "research_model.aiss",
         "ai4ss_model_path",
+        "paper",
+        "source",
+        "span",
+        "claim",
+        "relation",
         "concept_id",
+        "causal",
         "bridge_id",
-        "evidence_table_path",
-        "compiled_ai4ss_path",
-        "evidence_compile_status",
+        "check",
+        "decision",
     ),
     "research-analysis-runner": (
         "research_model.aiss",
         "ai4ss_model_path",
+        "artifact",
+        "adapter",
+        "derive",
+        "observation",
+        "claim",
+        "decision",
         "bridge_id",
-        "analysis_readiness_check.csv",
         "readiness_status",
     ),
-    "methods-reviewer": ("research_model.aiss", "ai4ss_model_path", "commensurability_status"),
-    "academic-writing-scaffold": ("research_model.aiss", "ai4ss_model_path", "commensurability_status"),
-    "research-slides-builder": ("research_model.aiss", "ai4ss_model_path"),
-    "reviewer-response": ("research_model.aiss", "ai4ss_model_path"),
+    "methods-reviewer": ("research_model.aiss", "ai4ss_model_path", "check", "decision", "commensurability_status"),
+    "academic-writing-scaffold": (
+        "research_model.aiss",
+        "ai4ss_model_path",
+        "claim_id",
+        "commensurability_status",
+        "ai_writing_boundary",
+    ),
+    "research-slides-builder": (
+        "research_model.aiss",
+        "ai4ss_model_path",
+        "claim_id",
+        "privacy_status",
+        "visual_object",
+    ),
+    "reviewer-response": (
+        "research_model.aiss",
+        "ai4ss_model_path",
+        "comment_id",
+        "mida_element_affected",
+        "confidentiality_status",
+    ),
 }
+
+FORBIDDEN_WORKFLOW_TERMS = (
+    "sidecar",
+    "research_route_cards.csv",
+    "study_design_declaration.csv",
+    "design_decision_register.csv",
+    "sample_flow.csv",
+    "merge_audit.csv",
+    "variable_provenance.csv",
+    "literature_candidate_discovery.csv",
+    "literature_matrix.csv",
+    "literature_theory_synthesis.csv",
+    "theory_rival_map.csv",
+    "theory_scope_map.csv",
+    "theory_evidence.md",
+    "analysis_readiness_check.csv",
+    "analysis_run_manifest.csv",
+    "issue_table.csv",
+    "claim_ledger.csv",
+    "slide_map.csv",
+    "revision_matrix.csv",
+    "_packet.md",
+    "_log.md",
+    "_questions.md",
+    "_plan.md",
+    "_scaffold.md",
+)
+
+RUNTIME_REFERENCE_FORBIDDEN_TERMS = FORBIDDEN_WORKFLOW_TERMS + (
+    "literature matrix",
+    "ordinary literature matrix",
+)
 
 DOC_CONTENT_REQUIREMENTS = {
     "ai4ss_dsl_factory_integration.md": (
@@ -75,7 +149,6 @@ DOC_CONTENT_REQUIREMENTS = {
         "codebook-parse",
         "cleaning-contract",
         "cleaning-execute",
-        "analysis_readiness_check.csv",
         "compile_evidence.py",
         "MIDA",
         "run_factory_level_eval.py",
@@ -85,7 +158,6 @@ DOC_CONTENT_REQUIREMENTS = {
         "research_model.aiss",
         "ai4ss_model_path",
         "ai4ss_check_status",
-        "analysis_readiness_check.csv",
     ),
     "scholar_workbenches.md": (
         ".aiss",
@@ -93,7 +165,6 @@ DOC_CONTENT_REQUIREMENTS = {
         "route declarations",
         "mida",
         "decision",
-        "analysis_readiness_check.csv",
         "run_factory_level_eval.py",
     ),
     "methodology_foundations.md": (".aiss", "MIDA", "route_decl_id", "mida_id", "decision_decl_id"),
@@ -145,6 +216,10 @@ def validate_skill(skill_dir: Path) -> list[str]:
     for term in AI4SS_REQUIRED_SKILL_TERMS.get(skill_dir.name, ()):
         if term not in text:
             errors.append(f"{skill_dir.name}: missing AI4SS DSL term `{term}`")
+    lowered = text.lower()
+    for forbidden in FORBIDDEN_WORKFLOW_TERMS:
+        if forbidden.lower() in lowered:
+            errors.append(f"{skill_dir.name}: forbidden legacy workflow artifact `{forbidden}`")
 
     contract_start = text.find("## Workflow Contract")
     if contract_start >= 0:
@@ -172,6 +247,20 @@ def validate_skill(skill_dir: Path) -> list[str]:
     references = skill_dir / "references"
     if not references.exists() or not any(references.glob("*.md")):
         errors.append(f"{skill_dir.name}: missing reference markdown files")
+    else:
+        for reference_path in sorted(references.glob("*.md")):
+            try:
+                reference_text = reference_path.read_text(encoding="utf-8")
+            except UnicodeDecodeError as exc:
+                errors.append(f"{skill_dir.name}: cannot read {reference_path.relative_to(skill_dir)}: {exc}")
+                continue
+            reference_lowered = reference_text.lower()
+            for forbidden in RUNTIME_REFERENCE_FORBIDDEN_TERMS:
+                if forbidden.lower() in reference_lowered:
+                    relative_path = reference_path.relative_to(skill_dir)
+                    errors.append(
+                        f"{skill_dir.name}: {relative_path} uses forbidden legacy workflow artifact `{forbidden}`"
+                    )
 
     return errors
 
@@ -209,16 +298,12 @@ def main() -> int:
                 if term not in text:
                     errors.append(f"{doc_name}: missing `{term}`")
             forbidden_terms = ("research_model.ai4ss", ".ai4ss")
-            for forbidden in forbidden_terms:
+            for forbidden in forbidden_terms + FORBIDDEN_WORKFLOW_TERMS:
                 if forbidden in text:
                     errors.append(f"{doc_name}: forbidden legacy artifact term `{forbidden}`")
 
     if not Path("scripts/validate_ai4ss_model.py").exists():
         errors.append("missing scripts/validate_ai4ss_model.py")
-    if not Path("scripts/validate_analysis_readiness.py").exists():
-        errors.append("missing scripts/validate_analysis_readiness.py")
-    if not Path("scripts/validate_literature_evidence_compile.py").exists():
-        errors.append("missing scripts/validate_literature_evidence_compile.py")
     if not Path("scripts/run_factory_level_eval.py").exists():
         errors.append("missing scripts/run_factory_level_eval.py")
     if not (args.docs_dir / "examples" / "research_model.aiss").exists():

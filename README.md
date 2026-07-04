@@ -9,8 +9,9 @@
 ### Research infrastructure for agent-assisted social science.
 
 AI4SS turns agent work into durable research objects: route declarations,
-study designs, source ledgers, data contracts, analysis manifests, methods
-diagnostics, claim ledgers, slide maps, and reviewer-response matrices.
+study designs, source-evidence declarations, data contracts, analysis artifacts,
+methods diagnostics, bounded claims, presentation artifacts, and reviewer
+decision traces.
 
 It treats the model as a worker inside a research operating system, not as the
 operating system itself.
@@ -44,21 +45,21 @@ data lineage, missingness decisions, analysis readiness, methods review,
 authorship boundaries, and revision traceability.
 
 This repository is a working infrastructure layer for that problem. It combines
-installable agent skills, a unified `.aiss` research object, sidecar schemas,
-validators, examples, and evaluation packets. The goal is not to make an agent
-sound like a scholar. The goal is to make its work inspectable enough that a
-scholar can use, reject, revise, teach, and extend it.
+installable agent skills, a unified `.aiss` research object, validators,
+examples, and evaluation packets. The goal is not to make an agent sound like a
+scholar. The goal is to make its work inspectable enough that a scholar can use,
+reject, revise, teach, and extend it.
 
 | AI failure mode | AI4SS response |
 |---|---|
-| Plausible topic advice with no next action | Route cards, stop reasons, minimum viable study |
+| Plausible topic advice with no next action | `.aiss` route declarations, stop reasons, minimum viable study |
 | "Research design" reduced to a slogan | MIDA declarations, decision registers, diagnosands |
-| Literature review as unsourced synthesis | Discovery ledgers, screening matrices, source-status gates |
-| Data cleaning remembered in prose | DDI metadata, cleaning contract, execution audit, sample flow |
-| Tables detached from design | Analysis readiness gate, scripts, logs, run manifest |
-| Methods issues found too late | Issue table, redesign routes, validation commands |
-| Writing help that becomes ghostwriting | Claim ledger, paragraph slots, author decision points |
-| Reviewer response without traceability | Revision matrix, manuscript locations, action status |
+| Literature review as unsourced synthesis | `.aiss` source-evidence declarations and source-status gates |
+| Data cleaning remembered in prose | DDI metadata, cleaning contract, execution audit, `.aiss` row-loss checks |
+| Tables detached from design | `.aiss` readiness checks, scripts, logs, analysis artifacts |
+| Methods issues found too late | `.aiss` diagnostic checks, redesign routes, validation commands |
+| Writing help that becomes ghostwriting | Bounded claim declarations, paragraph slots, author decision points |
+| Reviewer response without traceability | Reviewer-request decisions, manuscript locations, action status |
 
 The core claim is infrastructural: agent-assisted social science needs durable
 research objects and quality gates, not only better prompts.
@@ -124,7 +125,7 @@ The research-factory spine is:
 
 ```text
 rough topic -> .aiss route declarations -> .aiss MIDA declarations ->
-literature/data gates -> analysis readiness -> analysis manifest ->
+literature/data gates -> .aiss analysis readiness -> .aiss analysis artifacts ->
 bounded claim handoff
 ```
 
@@ -138,13 +139,13 @@ In practice:
 
 | Stage | Scholar question | Primary skill | Durable output |
 |---|---|---|---|
-| Start | What can this become? | `research-starter` | Route cards, stop reason, next executable action |
+| Start | What can this become? | `research-starter` | `.aiss` route declarations, stop reason, next executable action |
 | Design | What exactly is the study? | `study-design-builder` | Selected route, MIDA declarations, decision register, `.aiss` model/check |
-| Data | Can the data support the design? | `research-data-builder` | Sample flow, merge audit, variable provenance, data pipeline |
-| Literature | What is the source-backed evidence? | `literature-matrix` | Discovery ledger, screening/extraction matrix, compiled evidence |
-| Analysis | Is this ready to run? | `research-analysis-runner` | Readiness check, scripts, outputs, analysis run manifest |
+| Data | Can the data support the design? | `research-data-builder` | `.aiss` source/artifact/empirical declarations, row-loss checks, data pipeline |
+| Literature | What is the source-backed evidence? | `literature-matrix` | `.aiss` source-evidence declarations and source-status checks |
+| Analysis | Is this ready to run? | `research-analysis-runner` | `.aiss` readiness checks, scripts, outputs, analysis artifacts |
 | Review | Are method and claim aligned? | `methods-reviewer` | Issues, redesign options, author decisions |
-| Report | How does the author communicate safely? | `academic-writing-scaffold`, `research-slides-builder`, `reviewer-response` | Claim ledger, source map, slide map, revision matrix |
+| Report | How does the author communicate safely? | `academic-writing-scaffold`, `research-slides-builder`, `reviewer-response` | Bounded claims, source map, presentation artifacts, reviewer decisions |
 
 The workflow is a relay, not a chain of prose requests. Each stage should
 preserve identifiers, source paths, known gaps, validation commands, and
@@ -158,7 +159,7 @@ AI4SS has five working layers.
 |---|---|---|
 | Skill layer | Gives agents task-specific operating procedures | [`skills/`](skills/) |
 | Research object layer | Stores route, design, source, evidence, model, bridge, check, and decision state | [`docs/examples/research_model.aiss`](docs/examples/research_model.aiss) |
-| Sidecar layer | Keeps human-readable or validator-friendly projections | skill `examples/` and `references/` |
+| Source artifact layer | Keeps cited PDFs, logs, scripts, tables, figures, and author notes outside workflow state | project source folders |
 | Gate layer | Checks workflow contracts, readiness, evidence, `.aiss` validity, and ledgers | [`scripts/`](scripts/) |
 | Evidence layer | Runs structural evals and benchmarks | [`docs/factory_level_eval/`](docs/factory_level_eval/) |
 
@@ -174,8 +175,9 @@ The local `.aiss` version `0.4` object compiles to
 - claims, concepts, attributes, causal relations, empirical objects, and bridges
 - checks and derived diagnostics
 
-CSV, YAML, and Markdown sidecars remain important. They are projections of the
-research object rather than competing workflow languages.
+CSV files, YAML files, and derived Markdown notes are not workflow state.
+Agents may reference external source artifacts from `.aiss`, but handoff
+contracts must live in checked `.aiss` declarations.
 
 ### MIDA
 
@@ -200,11 +202,11 @@ source tree.
 
 | Skill | When to use it | Owns |
 |---|---|---|
-| [`research-starter`](skills/research-starter/SKILL.md) | Rough topic, source pile, vague policy phenomenon, or "what can I do next?" | Route cards, minimum viable study, next action |
+| [`research-starter`](skills/research-starter/SKILL.md) | Rough topic, source pile, vague policy phenomenon, or "what can I do next?" | `.aiss` route declarations, minimum viable study, next action |
 | [`study-design-builder`](skills/study-design-builder/SKILL.md) | Turn a selected route into an executable design | MIDA declarations, estimand map, decision register, `.aiss` model/check |
-| [`research-data-builder`](skills/research-data-builder/SKILL.md) | Build or repair an auditable analysis sample | Data pipeline, sample flow, merge audit, variable provenance |
+| [`research-data-builder`](skills/research-data-builder/SKILL.md) | Build or repair an auditable analysis sample | Data pipeline plus `.aiss` source/artifact/empirical/check declarations |
 | [`literature-matrix`](skills/literature-matrix/SKILL.md) | Discover, screen, and extract source-backed literature evidence | Candidate discovery, screening/extraction matrix, compiled evidence |
-| [`research-analysis-runner`](skills/research-analysis-runner/SKILL.md) | Run first-pass outputs after readiness checks | Readiness check, scripts, tables, figures, logs, run manifest |
+| [`research-analysis-runner`](skills/research-analysis-runner/SKILL.md) | Run first-pass outputs after readiness checks | `.aiss` readiness checks, scripts, tables, figures, logs, analysis artifacts |
 | [`methods-reviewer`](skills/methods-reviewer/SKILL.md) | Audit design, data, answer, and claim alignment | Methods issues, redesign routes, author decisions |
 | [`academic-writing-scaffold`](skills/academic-writing-scaffold/SKILL.md) | Prepare author-fillable writing scaffolds | Claim ledger, argument map, paragraph slots, citation gaps |
 | [`research-slides-builder`](skills/research-slides-builder/SKILL.md) | Convert verified evidence into presentation structure | Slide map, source map, visual result narrative |
@@ -235,8 +237,6 @@ python3 scripts/validate_skillpack_workflow.py
 python3 scripts/validate_methodology_foundations.py docs/methodology_source_matrix.csv
 python3 scripts/validate_ai_use_ledger.py docs/ai_use_ledger.csv
 python3 scripts/validate_ai4ss_model.py docs/examples/research_model.aiss
-python3 scripts/validate_literature_evidence_compile.py skills/literature-matrix/examples/valid_literature_matrix.csv
-python3 scripts/validate_analysis_readiness.py skills/research-analysis-runner/examples/valid_analysis_readiness_check.csv
 python3 scripts/run_factory_level_eval.py --clean
 ```
 

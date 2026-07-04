@@ -1,6 +1,6 @@
 # Study Design Declaration Schema
 
-Use `study_design_declaration.csv` when a selected route becomes a reusable design source. In the unified workflow this sidecar mirrors `.aiss` `mida` declarations; the canonical design object is the selected `.aiss` `route` plus seven `.aiss` `mida` rows.
+Use `.aiss MIDA declarations` when a selected route becomes a reusable design source. In the unified workflow this .aiss projection mirrors `.aiss` `mida` declarations; the canonical design object is the selected `.aiss` `route` plus seven `.aiss` `mida` rows.
 
 ## Required Columns
 
@@ -8,7 +8,7 @@ Use `study_design_declaration.csv` when a selected route becomes a reusable desi
 |---|---|
 | `declaration_id` | Stable id such as `M1` |
 | `mida_id` | Stable `.aiss` MIDA id such as `project.mida_r1_model` |
-| `route_id` | Route from `research_route_cards.csv` and matching `.aiss` `route` declaration |
+| `route_id` | Route from `.aiss route declarations` and matching `.aiss` `route` declaration |
 | `study_type` | `descriptive`, `causal`, `prediction`, `text_analysis`, `case_comparison`, `qualitative`, `mixed_methods`, or `theory_mapping` |
 | `mida_component` | `model`, `inquiry`, `data_strategy`, `answer_strategy`, `diagnose`, `redesign`, or `report_boundary` |
 | `declaration_text` | The declared content for this component |
@@ -40,8 +40,8 @@ Use `study_design_declaration.csv` when a selected route becomes a reusable desi
 - `report_boundary` must have a concrete `interpretation_boundary`.
 - If `ai4ss_model_path` is not `not_applicable:<reason>`, it must end with `.aiss` and point to the artifact containing the selected `route` and mirrored `mida` declarations.
 - If `study_type` is `causal`, `theory_mapping`, `mixed_methods`, or construct-heavy qualitative work, the row set should either point to `research_model.aiss` or state why a DSL model is not applicable.
-- When a `theory_mapping` row depends on `literature_theory_synthesis.csv`, put that sidecar path in `evidence_source` and preserve unresolved novelty, mechanism-strength, or rival-explanation choices in `author_decision_needed` or a `decision` declaration.
-- When full theory workbench sidecars are present, reference `literature_theory_synthesis.csv`, `theory_rival_map.csv`, `theory_scope_map.csv`, or `theory_evidence.md` in existing `evidence_source` cells as needed; do not add columns to `study_design_declaration.csv`.
+- When a `theory_mapping` row depends on `.aiss theory synthesis declarations`, put that .aiss projection path in `evidence_source` and preserve unresolved novelty, mechanism-strength, or rival-explanation choices in `author_decision_needed` or a `decision` declaration.
+- When full theory workbench .aiss projections are present, reference `.aiss theory synthesis declarations`, `.aiss rival-check declarations`, `.aiss scope-check declarations`, or `.aiss evidence fragment` in existing `evidence_source` cells as needed; do not add columns to `.aiss MIDA declarations`.
 - `ai4ss_check_status=fail` is not a valid ready handoff.
 - Causal or measurement rows with a `causal_id` or `bridge_id` must declare `commensurability_status` rather than leaving it implicit.
 - Rows with `needs_author_decision` route to `ask_author`.

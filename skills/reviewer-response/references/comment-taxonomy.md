@@ -6,15 +6,15 @@ Use this taxonomy to decompose reviewer reports into atomic requests.
 
 | type | what reviewer asks | typical evidence |
 |---|---|---|
-| contribution | clarify novelty, audience, theory, or positioning | introduction, literature matrix |
+| contribution | clarify novelty, audience, theory, or positioning | introduction, checked source-evidence declarations |
 | identification | justify assumptions or comparison | design note, diagnostics, robustness |
-| data | explain source, sample, variable construction, missingness | data audit, variable provenance |
+| data | explain source, sample, variable construction, missingness | data audit, `.aiss` provenance observations |
 | measurement | validate construct, coding, or extraction | validation table, source snippets |
 | model | change specification, FE, controls, estimator | scripts, model outputs |
 | inference | standard errors, clustering, multiple testing, weak IV, power | scripts, robustness outputs |
 | robustness | add checks, placebo, sensitivity, alternative samples | robustness plan/output |
 | heterogeneity | subgroup or mechanism requests | design and power assessment |
-| literature | cite or engage missing literature | literature matrix |
+| literature | cite or engage missing literature | checked source-evidence declarations |
 | writing | clarify, reorganize, shorten, tone down | author draft |
 | scope | requests beyond study design | author decision |
 | formatting | tables, figures, appendix, journal style | manuscript files |
@@ -62,10 +62,10 @@ Mark `needs_author` when:
 | type | minimum evidence before response scaffold |
 |---|---|
 | identification | design note, diagnostic table/figure, assumption wording |
-| data | sample flow, variable provenance, missingness report |
+| data | `.aiss` row-loss checks, provenance observations, missingness report |
 | model | script path, output table, model notes |
 | inference | clustering/SE code, sensitivity output |
-| literature | verified matrix row or source |
+| literature | checked source-evidence declaration or source |
 | writing | revised section location and author decision |
 | formatting | updated file/page/table number |
 

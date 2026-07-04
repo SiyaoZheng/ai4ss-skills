@@ -20,10 +20,10 @@ source demo.src_design {
 }
 
 source demo.src_literature {
-  kind: "literature_matrix_row"
-  uri: "skills/literature-matrix/examples/valid_literature_matrix.csv"
-  media_type: "text/csv"
-  locator_scheme: "paper_id"
+  kind: "literature_evidence_declaration"
+  uri: "docs/examples/research_model.aiss"
+  media_type: "text/aiss"
+  locator_scheme: "declaration"
 }
 
 span demo.span_platform_exposure {
@@ -40,7 +40,7 @@ span demo.span_innovation_output {
 
 span demo.span_literature_smith {
   source: demo.src_literature
-  locator: "paper_id=smith_2024_city_ai"
+  locator: "claim:demo.claim_exposure_increases_innovation"
   quote_hash: "sha256:fixture-smith-2024-city-ai"
 }
 

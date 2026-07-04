@@ -1,6 +1,6 @@
 # Analysis Run Manifest Schema
 
-Use `analysis_run_manifest.csv` to make first-pass analysis outputs reviewable.
+Use `.aiss analysis artifact declarations` to make first-pass analysis outputs reviewable.
 
 ## Required Columns
 
@@ -16,7 +16,7 @@ Use `analysis_run_manifest.csv` to make first-pass analysis outputs reviewable.
 | `output_type` | `table`, `figure`, `model`, `coded_data`, `log`, or `diagnostic` |
 | `model_or_operation` | Formula, operation name, or coding action |
 | `sample_note` | Unit, period, sample restrictions, or source slice |
-| `readiness_check_path` | Path to `analysis_readiness_check.csv` used before execution |
+| `readiness_check_path` | Path to `.aiss readiness checks` used before execution |
 | `readiness_status` | `ready`, `warn`, or `blocked` status from the readiness gate |
 | `status` | `ready_for_review`, `needs_review`, `warning`, or `blocked` |
 | `validation_command` | Command run or `not_run_reason:<reason>` |

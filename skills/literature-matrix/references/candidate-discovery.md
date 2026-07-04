@@ -4,7 +4,7 @@ Use this reference when the researcher has an open-ended topic or needs current 
 
 ## Discovery Package
 
-Produce `literature_candidate_discovery.csv` before extraction when sources are not already fixed.
+Produce `.aiss source-discovery declarations` before extraction when sources are not already fixed.
 
 Required columns:
 

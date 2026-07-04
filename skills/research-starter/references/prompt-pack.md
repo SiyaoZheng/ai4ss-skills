@@ -17,7 +17,7 @@ Hard boundaries:
 Desired next action:
 <one small action you want the agent to attempt>
 
-Return a research_starter_packet.md with route cards, a minimum viable study, stop reason, researcher decision needed, handoff prompt, and next_skill_route.
+Return a .aiss route declaration summary with route cards, a minimum viable study, stop reason, researcher decision needed, handoff prompt, and next_skill_route.
 ```
 
 ## Route Cards

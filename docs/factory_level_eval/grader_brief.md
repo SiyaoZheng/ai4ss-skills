@@ -22,11 +22,10 @@ guess the production condition. No condition labels are provided.
   strategy, Answer strategy, diagnosands, redesign, and reporting boundary.
 - Award `.aiss` points when model paths, IDs, checker/bridge diagnostics, and
   stable concept or causal references are present.
-- Award evidence/data points when literature, source, sample-flow, merge, and
-  variable-provenance artifacts are tied to the same route and model. For theory
-  mapping, also look for validated `literature_theory_synthesis.csv`,
-  `theory_rival_map.csv`, `theory_scope_map.csv`, `theory_evidence.md`, and
-  `compile_evidence.py` reuse.
+- Award evidence/data points when literature, source, data provenance, row-loss,
+  and bridge artifacts are tied to the same route and model through `.aiss`.
+  For theory mapping, also look for validated `.aiss` literature, rival, scope,
+  source-status, and model-update declarations.
 - Award analysis-loop points only when readiness is checked before execution and
   first-pass outputs link back to the declared design.
 - Award boundary points when the packet avoids manuscript or theory-section

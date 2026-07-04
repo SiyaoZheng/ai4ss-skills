@@ -2,8 +2,6 @@
 
 from __future__ import annotations
 
-from .sidecars import sidecar_field_group
-
 
 RESEARCH_FACTORY_SKILLS = (
     "research-starter",
@@ -40,12 +38,27 @@ MIDA_COMPONENTS = {
 
 MIDA_COMPONENTS_WITH_REPORT = MIDA_COMPONENTS | {"report"}
 
-CORE_HANDOFF_FIELDS = tuple(sidecar_field_group("core_handoff"))
+CORE_HANDOFF_FIELDS = (
+    "route_id",
+    "design_source",
+    "target_inquiry",
+    "author_decisions",
+    "validation_commands",
+    "interpretation_boundary",
+    "next_skill_route",
+)
 
-MODEL_LINK_FIELDS = tuple(sidecar_field_group("model_link"))
+MODEL_LINK_FIELDS = (
+    "ai4ss_model_path",
+    "model_id",
+    "concept_id",
+    "causal_id",
+    "bridge_id",
+    "ai4ss_check_status",
+)
 
 ALLOWED_NEXT_ROUTES: dict[str, set[str]] = {
-    "research_routes": {
+    "route": {
         "study-design-builder",
         "research-data-builder",
         "literature-matrix",
@@ -57,7 +70,7 @@ ALLOWED_NEXT_ROUTES: dict[str, set[str]] = {
         "ask_author",
         "none",
     },
-    "study_design_declaration": {
+    "mida": {
         "research-data-builder",
         "literature-matrix",
         "research-analysis-runner",
@@ -66,7 +79,7 @@ ALLOWED_NEXT_ROUTES: dict[str, set[str]] = {
         "ask_author",
         "none",
     },
-    "design_decisions": {
+    "decision": {
         "research-data-builder",
         "literature-matrix",
         "research-analysis-runner",
@@ -75,32 +88,32 @@ ALLOWED_NEXT_ROUTES: dict[str, set[str]] = {
         "ask_author",
         "none",
     },
-    "literature_theory_synthesis": {
+    "literature_evidence": {
         "study-design-builder",
         "academic-writing-scaffold",
         "methods-reviewer",
         "ask_author",
     },
-    "theory_rival_map": {
+    "rival_check": {
         "methods-reviewer",
         "study-design-builder",
         "academic-writing-scaffold",
         "ask_author",
     },
-    "theory_scope_map": {
+    "scope_check": {
         "methods-reviewer",
         "study-design-builder",
         "academic-writing-scaffold",
         "ask_author",
     },
-    "analysis_readiness": {
+    "analysis_check": {
         "research-analysis-runner",
         "research-data-builder",
         "study-design-builder",
         "methods-reviewer",
         "ask_author",
     },
-    "analysis_manifest": {
+    "analysis_artifact": {
         "methods-reviewer",
         "academic-writing-scaffold",
         "research-slides-builder",
@@ -138,10 +151,10 @@ def status_route_errors(
     field: str = "next_skill_route",
 ) -> list[str]:
     errors: list[str] = []
-    if context == "research_routes":
+    if context == "route":
         if status == "handoff_ready" and route in {"none", "ask_author"}:
             errors.append(f"{row_label}: handoff_ready requires a downstream next_skill_route")
-    elif context == "study_design_declaration":
+    elif context == "mida":
         expected = {
             "needs_author_decision": {"ask_author"},
             "needs_data_check": {"research-data-builder"},
@@ -154,7 +167,7 @@ def status_route_errors(
                 errors.append(f"{row_label}: {status} should route to {target}")
             else:
                 errors.append(f"{row_label}: {status} should route to methods-reviewer or did-expert")
-    elif context == "design_decisions":
+    elif context == "decision":
         if status == "ready_for_handoff" and route in {"none", "ask_author"}:
             errors.append(f"{row_label}: ready_for_handoff requires a downstream skill")
         expected = {
@@ -165,14 +178,14 @@ def status_route_errors(
         if expected and route not in expected:
             target = next(iter(expected))
             errors.append(f"{row_label}: {status} should route to {target}")
-    elif context == "analysis_readiness":
+    elif context == "analysis_check":
         if status == "ready" and route != "research-analysis-runner":
             errors.append(f"{row_label}: ready rows must route to research-analysis-runner")
         if status == "warn" and route not in {"research-analysis-runner", "methods-reviewer"}:
             errors.append(f"{row_label}: warn rows must route to analysis or methods review")
         if status == "blocked" and route == "research-analysis-runner":
             errors.append(f"{row_label}: blocked rows cannot route to research-analysis-runner")
-    elif context == "analysis_manifest":
+    elif context == "analysis_artifact":
         if status in {"ready_for_review", "needs_review"} and route == "none":
             errors.append(f"{row_label}: reviewable outputs require a next_skill_route")
         if route == "academic-writing-scaffold" and status != "ready_for_review":

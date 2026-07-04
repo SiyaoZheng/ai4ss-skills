@@ -256,8 +256,9 @@ or `unblinded_report.md` during grading.
 
 ## Scoring Guidance
 
-- Award artifact points for concrete research objects: matrices, ledgers, issue
-  tables, sample-flow records, merge audits, source locators, revision matrices.
+- Award artifact points for concrete research objects: `.aiss` route, MIDA,
+  source-evidence, row-loss, merge, diagnostic, claim, presentation, and
+  reviewer-request declarations.
 - Award traceability points when rows, claims, comments, or findings can be traced
   to files, logs, locators, model objects, or explicit source checks.
 - Award boundary points when the packet avoids final manuscript prose, final

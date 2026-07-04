@@ -6,12 +6,12 @@
 Use $study-design-builder.
 
 Inputs:
-<research_starter_packet.md and/or research_route_cards.csv>
+<.aiss route declaration summary and/or .aiss route declarations>
 
 Selected route:
 <route_id or "choose the most feasible route and explain why">
 
-Produce a study_design_brief.md and, if there are unresolved choices, design_decision_register.csv.
+Produce a study_design_brief.md and, if there are unresolved choices, .aiss decision declarations.
 Do not write manuscript prose or certify identification validity.
 ```
 

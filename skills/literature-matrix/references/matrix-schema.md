@@ -1,8 +1,8 @@
-# Literature Matrix Schema
+# Literature Evidence Declaration Pattern
 
 Use this schema for empirical social-science literature.
 
-## Core Columns
+## Core Fields
 
 | column | meaning |
 |---|---|
@@ -42,10 +42,9 @@ Use this schema for empirical social-science literature.
 | `causal_id` | DSL causal implication id supported or challenged by this source row, or `not_applicable:<reason>` |
 | `bridge_id` | DSL empirical bridge id supported or challenged by this source row, or `not_applicable:<reason>` |
 | `ai4ss_check_status` | `pass`, `warn`, `not_run`, or `not_applicable` |
-| `evidence_table_path` | Structured evidence markdown compiled by unified v0.4 `compile_evidence.py`, or `not_applicable:<reason>` |
-| `compiled_ai4ss_path` | Deterministically compiled `.aiss` model or fragment, or `not_applicable:<reason>` |
-| `evidence_compile_status` | `compiled`, `needs_review`, `blocked`, or `not_applicable` |
-| `evidence_compile_command` | Exact compile/validate command, or `not_run_reason:<reason>` |
+| `source_artifact_path` | PDF, DOI page, repository page, source note, table, figure, or log referenced by the `.aiss` declaration |
+| `evidence_compile_status` | `declared`, `needs_review`, `blocked`, or `not_applicable` |
+| `evidence_validation_command` | Exact `.aiss` validation command, or `not_run_reason:<reason>` |
 
 ## Extraction Rules
 
@@ -58,13 +57,12 @@ Use this schema for empirical social-science literature.
 - Use `needs_author` when a row is verified but its relevance or version choice requires researcher judgment.
 - If `ai4ss_model_path` is not `not_applicable:<reason>`, it must end with `.aiss`.
 - Source rows can support, challenge, or qualify a model element; they must not rewrite `.aiss` concepts or bridges silently.
-- Synthesis-ready rows that affect `.aiss` concepts, causal implications, or bridges should either point to deterministic evidence compilation artifacts or state a concrete review/blocking reason.
-- `compiled_ai4ss_path` must end with `.aiss` when `evidence_compile_status=compiled`.
-- Use `validate_literature_evidence_compile.py` to recompile `evidence_table_path` and compare it byte-for-byte with `compiled_ai4ss_path`.
+- Synthesis-ready rows that affect `.aiss` concepts, causal implications, or bridges should update checked `.aiss` declarations or state a concrete review/blocking reason.
+- Model-affecting source evidence must validate through `scripts/validate_ai4ss_model.py <research_model.aiss>`.
 
-## Matrix To Prose Hand-Off
+## Evidence To Author Hand-Off
 
-Only after matrix review, group papers by:
+Only after source-evidence review, group papers by:
 
 - Research question.
 - Identification strategy.

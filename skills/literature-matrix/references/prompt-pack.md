@@ -22,7 +22,7 @@ First produce:
 3. search strata;
 4. exact search queries;
 5. source hierarchy;
-6. matrix columns you will fill.
+6. `.aiss` source-evidence fields you will fill.
 ```
 
 ## Search And Screen
@@ -53,8 +53,8 @@ Do not summarize findings yet.
 ```text
 Use $literature-matrix for an open-ended literature base.
 
-Do not write review prose and do not jump directly to a literature matrix.
-First produce `literature_candidate_discovery.csv` with:
+Do not write review prose and do not jump directly to synthesis.
+First produce `.aiss source-discovery declarations` with:
 - search_stratum;
 - exact query_or_seed;
 - title, authors, year when visible;
@@ -75,7 +75,7 @@ Only after candidate discovery, identify which rows are ready for extraction.
 ## Extract From PDFs Or Zotero Export
 
 ```text
-Use $literature-matrix to extract a literature matrix from the supplied PDFs/Zotero export.
+Use $literature-matrix to extract `.aiss` source-evidence declarations from the supplied PDFs/Zotero export.
 
 For each paper, extract only what is visible in the source:
 - verification_level;
@@ -115,7 +115,7 @@ Return a dedupe log with merge decisions and confidence.
 ## Evidence Cluster Outline
 
 ```text
-Use $literature-matrix to turn the verified matrix into evidence clusters.
+Use $literature-matrix to turn verified `.aiss` source-evidence declarations into evidence clusters.
 
 Do not write manuscript prose.
 
@@ -134,27 +134,26 @@ Output:
 Use $literature-matrix to compile verified source evidence into a `.aiss` fragment.
 
 Inputs:
-- literature_matrix.csv: [path]
+- .aiss literature evidence declarations: [path]
 - source row ids: [paper_id list]
 - research_model.aiss if present: [path]
 
 Do not write review prose.
 For each model-affecting source row:
-1. create structured evidence markdown using the unified v0.4 compile_evidence.py format;
-2. compile it with compile_literature_evidence.py to a `.aiss` output;
-3. update literature_matrix.csv fields evidence_table_path, compiled_ai4ss_path, evidence_compile_status, and evidence_compile_command;
-4. run validate_literature_matrix.py and validate_literature_evidence_compile.py.
+1. update `paper`, `source`, `span`, `claim`, `relation`, `concept`, `causal`, `bridge`, `check`, or `decision` declarations in `.aiss`;
+2. preserve source locators and unresolved author decisions;
+3. run `python3 scripts/validate_ai4ss_model.py <research_model.aiss>`.
 
-If the source is verified but not enough to compile a model fragment, set evidence_compile_status=needs_review and state the author decision needed.
+If the source is verified but not enough to update a model fragment, set `evidence_compile_status=needs_review` inside `.aiss` metadata and state the author decision needed.
 ```
 
-## Refresh Existing Matrix
+## Refresh Existing Evidence Declarations
 
 ```text
-Use $literature-matrix to refresh this existing matrix.
+Use $literature-matrix to refresh these existing `.aiss` source-evidence declarations.
 
 Inputs:
-- existing matrix: [path]
+- existing research_model.aiss: [path]
 - search window: [date range or recent years]
 - target journals/working paper series: [list]
 
@@ -170,12 +169,12 @@ Bad prompt:
 写一段 AI 与科研创新的文献综述，引用最近论文。
 
 Improved prompt:
-Use $literature-matrix to search and extract a validator-ready literature_matrix.csv first.
+Use $literature-matrix to search and extract a validator-ready .aiss literature evidence declarations first.
 Do not write prose. For each row include verification_level, claim_source_section,
 claim_source_locator, access_date, version_used, and included_in_synthesis.
 
 Expected behavior:
 Plan search strata -> verify primary or local sources -> extract rows -> mark secondary_only
-as not synthesis-ready -> run validate_literature_matrix.py -> return evidence clusters and
+as not synthesis-ready -> run validate_ai4ss_model.py -> return evidence clusters and
 author decisions, not paragraphs.
 ```
