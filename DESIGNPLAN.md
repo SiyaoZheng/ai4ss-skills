@@ -1,11 +1,12 @@
 # README Design Plan
 
-This plan supersedes the earlier `gpt-image-2` asset plan.
+This plan supersedes the earlier abstract `gpt-image-2` asset plan.
 
-The generated README images were removed because they did not carry enough
-project-specific meaning. The homepage should now use only visuals that are
-auditable from the repository itself: exact Markdown tables, Mermaid diagrams
-when they clarify structure, badges, code blocks, and links to real reports.
+The first generated README images were removed because they did not carry
+enough project-specific meaning. The homepage should use visuals only when they
+are auditable from the repository itself: exact Markdown tables, Mermaid
+diagrams when they clarify structure, badges, code blocks, links to real
+reports, and committed SVG brand assets with literal project semantics.
 
 ## Goal
 
@@ -17,13 +18,15 @@ research factory:
 - validators, eval packets, and ledgers are the trust layer,
 - the output is inspectable research state, not final scholarly prose.
 
-The homepage should look intentional, but its design should come from
-information architecture rather than decorative images.
+The homepage should look intentional. Its design should come from information
+architecture and a small number of meaningful brand assets, not decorative
+images.
 
 ## Visual Policy
 
-Do not use generated bitmap illustrations for the README unless the image is
-specific, inspectable, and materially clearer than text.
+Use a logo and header image when they are exact, semantic, and committed as
+editable SVG. Do not use generated bitmap illustrations for the README unless
+the image is specific, inspectable, and materially clearer than text.
 
 Avoid:
 
@@ -35,6 +38,8 @@ Avoid:
 
 Prefer:
 
+- a stable SVG logo that encodes the `.aiss` research-object kernel,
+- a semantic SVG header that shows the real factory pipeline,
 - compact comparison tables,
 - Mermaid diagrams with exact labels,
 - short code blocks for `.aiss` and validation commands,
@@ -47,10 +52,12 @@ Prefer:
 Keep the README organized around the reader's decision path.
 
 1. **Top definition**
+   - Show the committed SVG logo above the title.
    - Name the repository.
    - State the promise: turn agent conversations into computable
      social-science research objects.
    - Link to the main sections.
+   - Add the committed SVG header immediately after the badge/nav block.
 
 2. **From Chat Output To Research State**
    - Use the two-column transformation table.
@@ -89,10 +96,33 @@ Keep the README organized around the reader's decision path.
 10. **Validate, Boundaries, Repository Layout, Contributing, Cite, License**
     - Keep these sections textual and exact.
 
+## Brand Assets
+
+The README has two committed SVG assets:
+
+```text
+docs/assets/readme/ai4ss-logo.svg
+docs/assets/readme/ai4ss-header.svg
+```
+
+The logo should stay compact and recognizable at small sizes. It represents a
+`.aiss` research object connected to skills, validators, decisions, and bounded
+claims.
+
+The header should act as the README head image. It should show the real
+research-factory path:
+
+```text
+inputs -> skills -> .aiss -> validators -> bounded handoff
+```
+
+Both assets must remain truthful diagrams, not atmospheric art. If their labels
+or architecture become stale, update the SVG instead of replacing it with a
+generic generated image.
+
 ## README Asset Rule
 
-`docs/assets/readme/` should stay empty or absent unless a future asset passes
-all of these checks:
+`docs/assets/readme/` should contain only assets that pass all of these checks:
 
 1. It shows a real repository object, report, rendered artifact, or exact
    diagram that cannot be expressed better in Markdown.

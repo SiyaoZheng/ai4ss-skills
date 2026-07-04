@@ -1,0 +1,102 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 360" role="img" aria-labelledby="title desc">
+  <title id="title">ai4ss-skills research factory header</title>
+  <desc id="desc">A semantic pipeline showing rough inputs moving through skills, the .aiss research object, validators, and bounded handoff.</desc>
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1200" y2="360" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#f8fafc"/>
+      <stop offset="0.55" stop-color="#ffffff"/>
+      <stop offset="1" stop-color="#ecfeff"/>
+    </linearGradient>
+    <linearGradient id="blueTeal" x1="430" y1="96" x2="1010" y2="236" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#2563eb"/>
+      <stop offset="1" stop-color="#0f766e"/>
+    </linearGradient>
+    <filter id="shadow" x="-10%" y="-20%" width="120%" height="150%">
+      <feDropShadow dx="0" dy="8" stdDeviation="8" flood-color="#0f172a" flood-opacity="0.12"/>
+    </filter>
+    <pattern id="grid" width="28" height="28" patternUnits="userSpaceOnUse">
+      <path d="M28 0H0V28" fill="none" stroke="#e2e8f0" stroke-width="1"/>
+    </pattern>
+  </defs>
+
+  <rect width="1200" height="360" rx="28" fill="url(#bg)"/>
+  <rect width="1200" height="360" rx="28" fill="url(#grid)" opacity="0.55"/>
+  <rect x="22" y="22" width="1156" height="316" rx="24" fill="none" stroke="#cbd5e1" stroke-width="2"/>
+
+  <g transform="translate(62 70)">
+    <rect x="0" y="0" width="150" height="150" rx="34" fill="#ffffff" stroke="#cbd5e1" stroke-width="2" filter="url(#shadow)"/>
+    <rect x="43" y="30" width="64" height="90" rx="14" fill="#ffffff" stroke="#0f172a" stroke-width="3"/>
+    <rect x="52" y="42" width="46" height="26" rx="8" fill="url(#blueTeal)"/>
+    <text x="75" y="61" text-anchor="middle" font-family="Inter, ui-sans-serif, system-ui, sans-serif" font-size="14" font-weight="800" fill="#ffffff">.aiss</text>
+    <circle cx="28" cy="44" r="13" fill="#ffffff" stroke="#2563eb" stroke-width="3"/>
+    <circle cx="122" cy="44" r="13" fill="#ffffff" stroke="#0f766e" stroke-width="3"/>
+    <circle cx="28" cy="106" r="13" fill="#ffffff" stroke="#d97706" stroke-width="3"/>
+    <circle cx="122" cy="106" r="13" fill="#ffffff" stroke="#0f172a" stroke-width="3"/>
+    <path d="M42 44h20M88 44h20M42 106h20M88 106h20" stroke="#94a3b8" stroke-width="4" stroke-linecap="round"/>
+  </g>
+
+  <text x="252" y="100" font-family="Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, Segoe UI, sans-serif" font-size="48" font-weight="850" fill="#0f172a">ai4ss-skills</text>
+  <text x="254" y="138" font-family="Inter, ui-sans-serif, system-ui, sans-serif" font-size="21" font-weight="650" fill="#334155">Research factory for AI4SS</text>
+  <text x="254" y="172" font-family="Inter, ui-sans-serif, system-ui, sans-serif" font-size="18" fill="#475569">Computable social-science research objects.</text>
+
+  <g transform="translate(254 218)">
+    <rect x="0" y="0" width="96" height="34" rx="17" fill="#eff6ff" stroke="#bfdbfe"/>
+    <text x="48" y="22" text-anchor="middle" font-family="Inter, ui-sans-serif, system-ui, sans-serif" font-size="14" font-weight="750" fill="#1d4ed8">skills</text>
+    <rect x="112" y="0" width="116" height="34" rx="17" fill="#ecfdf5" stroke="#99f6e4"/>
+    <text x="170" y="22" text-anchor="middle" font-family="Inter, ui-sans-serif, system-ui, sans-serif" font-size="14" font-weight="750" fill="#0f766e">.aiss v0.4</text>
+    <rect x="244" y="0" width="132" height="34" rx="17" fill="#fff7ed" stroke="#fed7aa"/>
+    <text x="310" y="22" text-anchor="middle" font-family="Inter, ui-sans-serif, system-ui, sans-serif" font-size="14" font-weight="750" fill="#b45309">bounded claims</text>
+  </g>
+
+  <g transform="translate(650 74)" filter="url(#shadow)">
+    <rect x="0" y="0" width="160" height="86" rx="18" fill="#ffffff" stroke="#cbd5e1" stroke-width="2"/>
+    <text x="20" y="30" font-family="Inter, ui-sans-serif, system-ui, sans-serif" font-size="15" font-weight="800" fill="#0f172a">Inputs</text>
+    <text x="20" y="54" font-family="Inter, ui-sans-serif, system-ui, sans-serif" font-size="13" fill="#475569">topic, sources,</text>
+    <text x="20" y="72" font-family="Inter, ui-sans-serif, system-ui, sans-serif" font-size="13" fill="#475569">data, comments</text>
+  </g>
+
+  <g transform="translate(835 74)" filter="url(#shadow)">
+    <rect x="0" y="0" width="160" height="86" rx="18" fill="#eff6ff" stroke="#93c5fd" stroke-width="2"/>
+    <text x="20" y="30" font-family="Inter, ui-sans-serif, system-ui, sans-serif" font-size="15" font-weight="800" fill="#1d4ed8">Skills</text>
+    <text x="20" y="54" font-family="Inter, ui-sans-serif, system-ui, sans-serif" font-size="13" fill="#334155">route, MIDA,</text>
+    <text x="20" y="72" font-family="Inter, ui-sans-serif, system-ui, sans-serif" font-size="13" fill="#334155">contracts, gates</text>
+  </g>
+
+  <g transform="translate(1020 74)" filter="url(#shadow)">
+    <rect x="0" y="0" width="128" height="206" rx="22" fill="#ffffff" stroke="#0f172a" stroke-width="3"/>
+    <rect x="18" y="20" width="92" height="42" rx="12" fill="url(#blueTeal)"/>
+    <text x="64" y="47" text-anchor="middle" font-family="Inter, ui-sans-serif, system-ui, sans-serif" font-size="19" font-weight="850" fill="#ffffff">.aiss</text>
+    <text x="64" y="94" text-anchor="middle" font-family="Inter, ui-sans-serif, system-ui, sans-serif" font-size="14" font-weight="750" fill="#0f172a">compile</text>
+    <text x="64" y="124" text-anchor="middle" font-family="Inter, ui-sans-serif, system-ui, sans-serif" font-size="14" font-weight="750" fill="#0f172a">lint</text>
+    <text x="64" y="154" text-anchor="middle" font-family="Inter, ui-sans-serif, system-ui, sans-serif" font-size="14" font-weight="750" fill="#0f172a">run</text>
+    <line x1="32" y1="174" x2="96" y2="174" stroke="#cbd5e1" stroke-width="5" stroke-linecap="round"/>
+  </g>
+
+  <g transform="translate(650 194)" filter="url(#shadow)">
+    <rect x="0" y="0" width="160" height="86" rx="18" fill="#f0fdfa" stroke="#99f6e4" stroke-width="2"/>
+    <text x="20" y="30" font-family="Inter, ui-sans-serif, system-ui, sans-serif" font-size="15" font-weight="800" fill="#0f766e">Validators</text>
+    <text x="20" y="54" font-family="Inter, ui-sans-serif, system-ui, sans-serif" font-size="13" fill="#334155">eval packets,</text>
+    <text x="20" y="72" font-family="Inter, ui-sans-serif, system-ui, sans-serif" font-size="13" fill="#334155">ledgers, checks</text>
+  </g>
+
+  <g transform="translate(835 194)" filter="url(#shadow)">
+    <rect x="0" y="0" width="160" height="86" rx="18" fill="#fff7ed" stroke="#fed7aa" stroke-width="2"/>
+    <text x="20" y="30" font-family="Inter, ui-sans-serif, system-ui, sans-serif" font-size="15" font-weight="800" fill="#b45309">Handoff</text>
+    <text x="20" y="54" font-family="Inter, ui-sans-serif, system-ui, sans-serif" font-size="13" fill="#334155">claim ledger,</text>
+    <text x="20" y="72" font-family="Inter, ui-sans-serif, system-ui, sans-serif" font-size="13" fill="#334155">author decisions</text>
+  </g>
+
+  <path d="M814 117h13" stroke="#2563eb" stroke-width="4" stroke-linecap="round"/>
+  <path d="M827 117l-9-7v14z" fill="#2563eb"/>
+  <path d="M999 117h13" stroke="#2563eb" stroke-width="4" stroke-linecap="round"/>
+  <path d="M1012 117l-9-7v14z" fill="#2563eb"/>
+  <path d="M1020 182h-28c-18 0-28 14-28 30v24" fill="none" stroke="#0f766e" stroke-width="4" stroke-linecap="round"/>
+  <path d="M964 236l-7-9h14z" fill="#0f766e"/>
+  <path d="M835 236h-47" stroke="#0f766e" stroke-width="4" stroke-linecap="round"/>
+  <path d="M788 236l9-7v14z" fill="#0f766e"/>
+
+  <g transform="translate(62 286)">
+    <rect x="0" y="0" width="1078" height="38" rx="19" fill="#0f172a"/>
+    <text x="539" y="25" text-anchor="middle" font-family="Inter, ui-sans-serif, system-ui, sans-serif" font-size="15" font-weight="750" fill="#ffffff">Declare MIDA -&gt; Diagnose -&gt; Redesign -&gt; Report with bounded claims</text>
+  </g>
+</svg>

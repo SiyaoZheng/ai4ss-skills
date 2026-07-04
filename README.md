@@ -1,3 +1,7 @@
+<p align="center">
+  <img src="docs/assets/readme/ai4ss-logo.svg" alt="ai4ss-skills logo" width="112">
+</p>
+
 <div align="center">
 
 # ai4ss-skills
@@ -17,6 +21,10 @@ research object; validators and eval packets keep the handoff inspectable.
 **[Start](#start) | [Factory](#factory-architecture) | [Workflow](#research-workflow) | [Skills](#skills) | [Evidence](#evidence) | [Validate](#validate) | [Boundaries](#boundaries)**
 
 </div>
+
+<p align="center">
+  <img src="docs/assets/readme/ai4ss-header.svg" alt="AI4SS research factory: inputs move through skills, the .aiss research object, validators, and bounded handoff" width="100%">
+</p>
 
 ---
 

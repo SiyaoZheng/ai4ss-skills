@@ -1,0 +1,37 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" role="img" aria-labelledby="title desc">
+  <title id="title">ai4ss-skills logo</title>
+  <desc id="desc">A computable .aiss research object connected to skills, validation gates, and bounded claims.</desc>
+  <defs>
+    <linearGradient id="panel" x1="32" y1="24" x2="224" y2="232" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#f8fafc"/>
+      <stop offset="1" stop-color="#e0f2fe"/>
+    </linearGradient>
+    <linearGradient id="kernel" x1="74" y1="58" x2="182" y2="198" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#2563eb"/>
+      <stop offset="1" stop-color="#0f766e"/>
+    </linearGradient>
+  </defs>
+
+  <rect x="14" y="14" width="228" height="228" rx="48" fill="url(#panel)" stroke="#cbd5e1" stroke-width="3"/>
+  <path d="M54 86h42M160 86h42M54 170h42M160 170h42" stroke="#94a3b8" stroke-width="8" stroke-linecap="round"/>
+  <path d="M84 80l20 20M172 80l-20 20M84 176l20-20M172 176l-20-20" stroke="#cbd5e1" stroke-width="5" stroke-linecap="round"/>
+
+  <rect x="74" y="58" width="108" height="140" rx="22" fill="#ffffff" stroke="#0f172a" stroke-width="4"/>
+  <rect x="88" y="74" width="80" height="38" rx="12" fill="url(#kernel)"/>
+  <text x="128" y="99" text-anchor="middle" font-family="Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, Segoe UI, sans-serif" font-size="22" font-weight="800" fill="#ffffff">.aiss</text>
+
+  <line x1="98" y1="132" x2="158" y2="132" stroke="#cbd5e1" stroke-width="6" stroke-linecap="round"/>
+  <line x1="98" y1="152" x2="146" y2="152" stroke="#cbd5e1" stroke-width="6" stroke-linecap="round"/>
+  <line x1="98" y1="172" x2="158" y2="172" stroke="#cbd5e1" stroke-width="6" stroke-linecap="round"/>
+
+  <circle cx="54" cy="86" r="20" fill="#ffffff" stroke="#2563eb" stroke-width="4"/>
+  <text x="54" y="92" text-anchor="middle" font-family="Inter, ui-sans-serif, system-ui, sans-serif" font-size="16" font-weight="800" fill="#2563eb">S</text>
+  <circle cx="202" cy="86" r="20" fill="#ffffff" stroke="#0f766e" stroke-width="4"/>
+  <text x="202" y="92" text-anchor="middle" font-family="Inter, ui-sans-serif, system-ui, sans-serif" font-size="16" font-weight="800" fill="#0f766e">V</text>
+  <circle cx="54" cy="170" r="20" fill="#ffffff" stroke="#d97706" stroke-width="4"/>
+  <text x="54" y="176" text-anchor="middle" font-family="Inter, ui-sans-serif, system-ui, sans-serif" font-size="16" font-weight="800" fill="#d97706">D</text>
+  <circle cx="202" cy="170" r="20" fill="#ffffff" stroke="#0f172a" stroke-width="4"/>
+  <text x="202" y="176" text-anchor="middle" font-family="Inter, ui-sans-serif, system-ui, sans-serif" font-size="16" font-weight="800" fill="#0f172a">C</text>
+
+  <text x="128" y="224" text-anchor="middle" font-family="Inter, ui-sans-serif, system-ui, sans-serif" font-size="18" font-weight="800" fill="#0f172a">AI4SS</text>
+</svg>
