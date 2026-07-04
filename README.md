@@ -25,7 +25,7 @@ Install once. Works automatically. Survives context resets.
 | Date | Update |
 |------|--------|
 | 2026-07 | `did-expert` released — DID/panel causal inference guide covering modern estimators (CS, SA, BJS, fect, synthdid), diagnostics, and writing |
-| 2026-07 | AI4SS research-factory skillpack migrated into `.codex/skills`: 9 Codex/project skills around the unified `.aiss` DSL workflow |
+| 2026-07 | All skills unified under `skills/`, including the 9-skill AI4SS research-factory workflow around the `.aiss` DSL |
 | 2026-06 | `sjtu-hpc` released — sanitized SJTU HPC/Slurm workflow guide with job templates and transfer references |
 | 2026-05 | `cleaning-contract` and `cleaning-execute` released — full DDI 3-stage cleaning harness (declare → execute → audit) |
 | 2026-05 | `cleaning-contract` eval results: **100%** with-skill vs **53%** without-skill on 3 real PI datasets |
@@ -76,24 +76,36 @@ Think of them as tiny domain experts you install once and call automatically.
 
 ## 📦 Skills
 
-| Skill | What it does | Trigger |
-|-------|-------------|---------|
-| 📋 [`codebook-parse`](#-codebook-parse) | Parse `.dta`/`.sav`/PDF questionnaires → DDI-compliant YAML metadata | *"parse this codebook"* |
-| 🧾 [`cleaning-contract`](#-cleaning-contract) | Declare universe, missing, recode, derived-variable, weight, and harmonization decisions before touching data | *"write the cleaning contract"* |
-| 🧹 [`cleaning-execute`](#-cleaning-execute) | Execute the declared contract → clean CSV + reproducible R script + audit event | *"execute the cleaning contract"* |
-| 📊 [`latex-tables`](#-latex-tables) | Generate journal-ready LaTeX regression tables | *"make a LaTeX table"* |
-| 📝 [`analysis-explainer`](#-analysis-explainer) | Turn statistical output into clean technical documentation | *"explain these results"* |
-| ⚡ [`r-performance`](#-r-performance) | Profile and optimize slow R code for HPC clusters | *"this R code is too slow"* |
-| 🖥️ [`sjtu-hpc`](#-sjtu-hpc) | Run SJTU HPC/交我算 Slurm jobs with safer login, queue, storage, and transfer practices | *"run this on SJTU HPC"* |
-| 🎯 [`did-expert`](#-did-expert) | DID/panel causal inference guide — modern estimators, diagnostics, TWFE pitfalls, and writing up results | *"DID", "event study", "staggered treatment"* |
-| 🤖 [`codex`](#-codex) | Delegate tasks to OpenAI Codex CLI for a second opinion | `codex review this file` |
+Every installable skill in this repository lives in the same canonical tree:
+`skills/<skill-name>/SKILL.md`. `.codex/skills` and `.agents/skills` are
+compatibility symlinks to that tree, not separate sources.
 
-### AI4SS research-factory skills
+| Skill | Area | What it does | Trigger |
+|-------|------|-------------|---------|
+| 📋 [`codebook-parse`](#-codebook-parse) | Survey data | Parse `.dta`/`.sav`/PDF questionnaires → DDI-compliant YAML metadata | *"parse this codebook"* |
+| 🧾 [`cleaning-contract`](#-cleaning-contract) | Survey data | Declare universe, missing, recode, derived-variable, weight, and harmonization decisions before touching data | *"write the cleaning contract"* |
+| 🧹 [`cleaning-execute`](#-cleaning-execute) | Survey data | Execute the declared contract → clean CSV + reproducible R script + audit event | *"execute the cleaning contract"* |
+| 🎯 [`did-expert`](#-did-expert) | Methods | DID/panel causal inference guide covering modern estimators, diagnostics, and TWFE pitfalls | *"DID", "event study", "staggered treatment"* |
+| 📊 [`latex-tables`](#-latex-tables) | Reporting | Generate journal-ready LaTeX regression tables | *"make a LaTeX table"* |
+| 📝 [`analysis-explainer`](#-analysis-explainer) | Reporting | Turn statistical output into clean technical documentation | *"explain these results"* |
+| ⚡ [`r-performance`](#-r-performance) | Compute | Profile and optimize slow R code for HPC clusters | *"this R code is too slow"* |
+| 🖥️ [`sjtu-hpc`](#-sjtu-hpc) | Compute | Run SJTU HPC/交我算 Slurm jobs with safer login, queue, storage, and transfer practices | *"run this on SJTU HPC"* |
+| 🧭 `research-starter` | Research workflow | Turn a rough topic, source pile, dataset folder, or policy phenomenon into provisional `.aiss` route declarations | *"start a research project"* |
+| 🧱 `study-design-builder` | Research workflow | Select a route, declare `.aiss` MIDA rows, and create or update `research_model.aiss` | *"build the study design"* |
+| 🗃️ `research-data-builder` | Research workflow | Build auditable analysis samples, sample-flow tables, merge audits, and variable provenance | *"build the analysis sample"* |
+| 📚 `literature-matrix` | Research workflow | Build source-grounded literature matrices and deterministic literature evidence `.aiss` fragments | *"make a literature matrix"* |
+| 🧪 `research-analysis-runner` | Research workflow | Run first-pass analysis only after readiness checks pass or explicitly warn | *"run first-pass analysis"* |
+| 🔍 `methods-reviewer` | Research workflow | Diagnose methods, model/data/answer alignment, robustness, and claim-support gaps | *"review the methods"* |
+| ✍️ `academic-writing-scaffold` | Research workflow | Build claim ledgers and section scaffolds without writing final manuscript prose | *"scaffold the paper"* |
+| 🖼️ `research-slides-builder` | Research workflow | Convert verified research artifacts into slide maps and source maps | *"build research slides"* |
+| 💬 `reviewer-response` | Research workflow | Turn reviewer comments into revision matrices and author-fillable response scaffolds | *"plan the R&R response"* |
+| 🤖 [`codex`](#-codex) | Tooling | Delegate tasks to OpenAI Codex CLI for a second opinion | `codex review this file` |
+| 📌 `linear-issue` | Tooling | Turn planned work, bugs, and follow-ups into tracked Linear issues | *"file an issue"* |
 
-The repo now also contains a Codex/project skillpack under `.codex/skills`
-with `.agents/skills` symlinked to the same source. These skills are not
-manuscript-writing shortcuts. They form an autonomous research-factory workflow
-around the `.aiss` DSL and the MIDA spine:
+### Research workflow spine
+
+The research-workflow skills are not manuscript-writing shortcuts. They form an
+autonomous workflow around the `.aiss` DSL and the MIDA spine:
 
 ```text
 rough topic -> .aiss route declarations -> .aiss MIDA declarations ->
@@ -102,18 +114,6 @@ literature/data gates -> analysis readiness -> analysis manifest ->
 bounded claim handoff
 ```
 
-| Skill | Role |
-|-------|------|
-| `research-starter` | Turn a rough topic, source pile, dataset folder, or policy phenomenon into provisional `.aiss` route declarations, route-card mirrors, and a minimum viable study |
-| `study-design-builder` | Select a route, declare `.aiss` MIDA rows, and create or update `research_model.aiss` plus `aiss.py lint/run` output |
-| `research-data-builder` | Build auditable analysis samples, sample-flow tables, merge audits, and variable provenance |
-| `literature-matrix` | Build source-grounded literature matrices and deterministic literature evidence `.aiss` fragments |
-| `research-analysis-runner` | Run first-pass analysis only after `analysis_readiness_check.csv` passes or explicitly warns |
-| `methods-reviewer` | Diagnose methods, model/data/answer alignment, robustness, and claim-support gaps |
-| `academic-writing-scaffold` | Build claim ledgers and section scaffolds without writing final manuscript prose |
-| `research-slides-builder` | Convert verified research artifacts into slide maps and source maps |
-| `reviewer-response` | Turn reviewer comments into revision matrices and author-fillable response scaffolds |
-
 Validate the factory skillpack from the repo root:
 
 ```bash
@@ -121,8 +121,8 @@ python3 scripts/validate_skillpack_workflow.py
 python3 scripts/validate_methodology_foundations.py docs/methodology_source_matrix.csv
 python3 scripts/validate_ai_use_ledger.py docs/ai_use_ledger.csv
 python3 scripts/validate_ai4ss_model.py docs/examples/research_model.aiss
-python3 scripts/validate_literature_evidence_compile.py .codex/skills/literature-matrix/examples/valid_literature_matrix.csv
-python3 scripts/validate_analysis_readiness.py .codex/skills/research-analysis-runner/examples/valid_analysis_readiness_check.csv
+python3 scripts/validate_literature_evidence_compile.py skills/literature-matrix/examples/valid_literature_matrix.csv
+python3 scripts/validate_analysis_readiness.py skills/research-analysis-runner/examples/valid_analysis_readiness_check.csv
 python3 scripts/run_factory_level_eval.py --clean
 ```
 
@@ -249,24 +249,19 @@ Delegates tasks to [OpenAI Codex CLI](https://github.com/openai/codex) for a sec
 
 ## ⚡ Installation
 
-> **Skill format**: most `*.skill` files in this repo are **zip archives**
-> (`codex.skill` and `sjtu-hpc.skill` are directory-format skills). The install commands below
-> handle both — they unzip archives and copy directories. After install,
-> `~/.claude/skills/<skill-name>/SKILL.md` should exist.
+> **Skill format**: every skill is a directory under `skills/<skill-name>/`.
+> After install, `~/.claude/skills/<skill-name>/SKILL.md` should exist.
 
 ### One-liner (Claude Code)
 
 ```bash
 git clone https://github.com/SiyaoZheng/ai4ss-skills.git
 mkdir -p ~/.claude/skills
-for s in ai4ss-skills/*.skill; do
-  name=$(basename "$s" .skill)
-  if [ -d "$s" ]; then
-    cp -r "$s" ~/.claude/skills/"$name"          # directory-format skill
-  else
-    rm -rf ~/.claude/skills/"$name"
-    unzip -q "$s" -d ~/.claude/skills/            # zip-format skill (extracts as <name>/)
-  fi
+for s in ai4ss-skills/skills/*; do
+  [ -f "$s/SKILL.md" ] || continue
+  name=$(basename "$s")
+  rm -rf ~/.claude/skills/"$name"
+  cp -R "$s" ~/.claude/skills/"$name"
 done
 ```
 
@@ -277,30 +272,25 @@ Verify: open Claude Code, type `/` — skills appear in the autocomplete list.
 ```bash
 mkdir -p ~/.claude/skills
 
-# Zip-format skills (most of them):
-unzip -q ai4ss-skills/codebook-parse.skill    -d ~/.claude/skills/
-unzip -q ai4ss-skills/cleaning-contract.skill -d ~/.claude/skills/
-unzip -q ai4ss-skills/cleaning-execute.skill  -d ~/.claude/skills/
-unzip -q ai4ss-skills/latex-tables.skill      -d ~/.claude/skills/
-unzip -q ai4ss-skills/r-performance.skill     -d ~/.claude/skills/
-unzip -q ai4ss-skills/analysis-explainer.skill -d ~/.claude/skills/
-
-# Directory-format skill:
-cp -r ai4ss-skills/codex.skill ~/.claude/skills/codex
-cp -r ai4ss-skills/sjtu-hpc.skill ~/.claude/skills/sjtu-hpc
-
-# did-expert (zip format):
-unzip -q ai4ss-skills/did-expert.skill -d ~/.claude/skills/
+cp -R ai4ss-skills/skills/codebook-parse ~/.claude/skills/codebook-parse
+cp -R ai4ss-skills/skills/cleaning-contract ~/.claude/skills/cleaning-contract
+cp -R ai4ss-skills/skills/cleaning-execute ~/.claude/skills/cleaning-execute
+cp -R ai4ss-skills/skills/latex-tables ~/.claude/skills/latex-tables
+cp -R ai4ss-skills/skills/r-performance ~/.claude/skills/r-performance
+cp -R ai4ss-skills/skills/analysis-explainer ~/.claude/skills/analysis-explainer
+cp -R ai4ss-skills/skills/did-expert ~/.claude/skills/did-expert
+cp -R ai4ss-skills/skills/sjtu-hpc ~/.claude/skills/sjtu-hpc
+cp -R ai4ss-skills/skills/codex ~/.claude/skills/codex
 ```
 
 ### Cursor
 
-Cursor expects flat `.md` rules. Extract just the SKILL.md from each zip:
+Cursor expects flat `.md` rules. Copy just the `SKILL.md` files:
 
 ```bash
 mkdir -p .cursor/rules
 for s in latex-tables r-performance; do
-  unzip -p ai4ss-skills/${s}.skill ${s}/SKILL.md > .cursor/rules/${s}.md
+  cp ai4ss-skills/skills/${s}/SKILL.md .cursor/rules/${s}.md
 done
 ```
 
@@ -317,7 +307,7 @@ done
 ## 🛠️ Skill Format
 
 ```
-codebook-parse.skill/
+skills/codebook-parse/
 ├── SKILL.md          # YAML frontmatter + instructions
 └── references/       # optional supporting docs
     ├── ddi-ssot-schema.md
@@ -369,7 +359,7 @@ The `description` field controls auto-loading. Make it specific — the AI match
 Skills are just Markdown + YAML. If you work with CFPS, ANES, ESS, or any other survey series and have domain traps that LLMs routinely miss — a skill is the right place to encode that knowledge.
 
 1. Fork this repo
-2. Create `your-skill-name.skill/SKILL.md` following the format above
+2. Create `skills/your-skill-name/SKILL.md` following the format above
 3. Add eval evidence (even informal benchmarks help)
 4. Open a PR
 
@@ -410,7 +400,7 @@ If you use these skills in research, please cite:
 
 GPL-3.0. Derivative works must carry the same license.
 
-Exception: `codex.skill/` is based on [@davila7](https://github.com/davila7)'s work and retains its original MIT license (see `codex.skill/LICENSE`).
+Exception: `skills/codex/` is based on [@davila7](https://github.com/davila7)'s work and retains its original MIT license (see `skills/codex/LICENSE`).
 
 ---
 

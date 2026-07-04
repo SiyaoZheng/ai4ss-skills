@@ -178,7 +178,7 @@ def validate_skill(skill_dir: Path) -> list[str]:
 
 def main() -> int:
     parser = argparse.ArgumentParser()
-    parser.add_argument("--skills-dir", type=Path, default=Path(".codex/skills"))
+    parser.add_argument("--skills-dir", type=Path, default=Path("skills"))
     parser.add_argument("--docs-dir", type=Path, default=Path("docs"))
     args = parser.parse_args()
 

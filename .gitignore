@@ -1,4 +1,5 @@
 PLAN.md
+*.skill
 *.DS_Store
 __pycache__/
 *.pyc

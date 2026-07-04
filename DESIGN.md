@@ -245,9 +245,9 @@ Template is an f-string (or `string.Template`) — no Jinja2 dependency.
 
 ### File Locations
 ```
-codebook-parse.skill/scripts/codebook_html.py
-latex-tables.skill/scripts/table_html.py
-r-performance.skill/scripts/perf_html.py
+skills/codebook-parse/scripts/codebook_html.py
+skills/latex-tables/scripts/table_html.py
+skills/r-performance/scripts/perf_html.py
 ```
 
 ---

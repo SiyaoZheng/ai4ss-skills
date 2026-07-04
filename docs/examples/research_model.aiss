@@ -21,7 +21,7 @@ source demo.src_design {
 
 source demo.src_literature {
   kind: "literature_matrix_row"
-  uri: ".codex/skills/literature-matrix/examples/valid_literature_matrix.csv"
+  uri: "skills/literature-matrix/examples/valid_literature_matrix.csv"
   media_type: "text/csv"
   locator_scheme: "paper_id"
 }

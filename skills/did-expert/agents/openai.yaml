@@ -1,0 +1,4 @@
+interface:
+  display_name: "DID Expert"
+  short_description: "DID and panel causal inference guide"
+  default_prompt: "Use $did-expert to help with staggered DID estimation and diagnostics"

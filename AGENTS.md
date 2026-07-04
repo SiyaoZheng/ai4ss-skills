@@ -4,11 +4,12 @@ This repository is the development home for AI4SS skills.
 
 ## Skill Layout
 
-- Legacy released skills may live as top-level `*.skill` zip-package files or
-  directory-format skills such as `codex.skill/` and `sjtu-hpc.skill/`.
-- The AI4SS research-factory Codex skillpack lives in `.codex/skills/`.
-- `.agents/skills` should remain a symlink to `../.codex/skills`; edit the
-  `.codex/skills` source, not a duplicate copy.
+- All installable skills live as directory-format skills under
+  `skills/<skill-name>/`.
+- `skills/` is the only source tree. Do not add new top-level `*.skill`
+  archives or sibling `*.skill/` directories.
+- `.codex/skills` and `.agents/skills` should remain symlinks to `../skills`;
+  edit the `skills/` source, not a duplicate copy.
 - The research-factory skillpack uses `.aiss` as the local research-model
   extension. Upstream `aiss_*` names are script names only.
 
@@ -42,8 +43,8 @@ python3 scripts/validate_skillpack_workflow.py
 python3 scripts/validate_methodology_foundations.py docs/methodology_source_matrix.csv
 python3 scripts/validate_ai_use_ledger.py docs/ai_use_ledger.csv
 python3 scripts/validate_ai4ss_model.py docs/examples/research_model.aiss
-python3 scripts/validate_literature_evidence_compile.py .codex/skills/literature-matrix/examples/valid_literature_matrix.csv
-python3 scripts/validate_analysis_readiness.py .codex/skills/research-analysis-runner/examples/valid_analysis_readiness_check.csv
+python3 scripts/validate_literature_evidence_compile.py skills/literature-matrix/examples/valid_literature_matrix.csv
+python3 scripts/validate_analysis_readiness.py skills/research-analysis-runner/examples/valid_analysis_readiness_check.csv
 python3 scripts/run_factory_level_eval.py --clean
 ```
 

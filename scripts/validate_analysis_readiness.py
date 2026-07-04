@@ -10,7 +10,6 @@ from pathlib import Path
 
 VALIDATOR = (
     Path(__file__).resolve().parent.parent
-    / ".codex"
     / "skills"
     / "research-analysis-runner"
     / "scripts"

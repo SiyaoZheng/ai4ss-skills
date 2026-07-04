@@ -254,10 +254,10 @@ def factory_output() -> FactoryOutput:
         validator_refs=[
             "python3 scripts/validate_ai4ss_model.py docs/examples/research_model.aiss",
             "validate_ai4ss_model.py uses unified aiss.py compile/lint/run semantics",
-            "python3 scripts/validate_literature_evidence_compile.py .codex/skills/literature-matrix/examples/valid_literature_matrix.csv",
-            "python3 scripts/validate_analysis_readiness.py .codex/skills/research-analysis-runner/examples/valid_analysis_readiness_check.csv",
-            "python3 .codex/skills/research-analysis-runner/scripts/validate_analysis_manifest.py .codex/skills/research-analysis-runner/examples/valid_analysis_run_manifest.csv",
-            "python3 .codex/skills/literature-matrix/scripts/validate_literature_matrix.py .codex/skills/literature-matrix/examples/valid_literature_matrix.csv",
+            "python3 scripts/validate_literature_evidence_compile.py skills/literature-matrix/examples/valid_literature_matrix.csv",
+            "python3 scripts/validate_analysis_readiness.py skills/research-analysis-runner/examples/valid_analysis_readiness_check.csv",
+            "python3 skills/research-analysis-runner/scripts/validate_analysis_manifest.py skills/research-analysis-runner/examples/valid_analysis_run_manifest.csv",
+            "python3 skills/literature-matrix/scripts/validate_literature_matrix.py skills/literature-matrix/examples/valid_literature_matrix.csv",
             "python3 scripts/validate_ai_use_ledger.py docs/ai_use_ledger.csv",
         ],
         author_decisions=[
