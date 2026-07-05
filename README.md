@@ -16,7 +16,7 @@
   &nbsp;/&nbsp;
   <a href="#choose-the-artifact">Artifact</a>
   &nbsp;/&nbsp;
-  <a href="#heartbeat-loop">Loop</a>
+  <a href="#see-the-loop">Loop</a>
   &nbsp;/&nbsp;
   <a href="#configure-goaltoml">Config</a>
   &nbsp;/&nbsp;
@@ -113,7 +113,7 @@ must be rebuilt before any source repair gets credit.
 | "Do the numbers tie?" | Workbook, reconciliation export, financial report. |
 | "Does the chart move?" | Research report, chart pack, sector note, source-backed memo. |
 
-## Heartbeat Loop
+## See the Loop
 
 A heartbeat is a single-owner pass through the system. `tok` can edit sources,
 but it cannot declare victory. Only a later rebuilt artifact can pass.
