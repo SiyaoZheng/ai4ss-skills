@@ -12,7 +12,7 @@ subcommand.
 usage: goal-cli [-h] [-c CONFIG]
                 {init,validate,doctor,run,tik,state,reset,cleanup,render-prompts} ...
 
-Make coding agents keep proving the thing is getting better.
+Make agents finish THE THING.
 
 options:
   -h, --help            show this help message and exit
@@ -85,7 +85,7 @@ options:
 ```text
 usage: goal-cli tik [-h]
 
-Rebuild the artifact and run tik only. The command does not complete the goal
+Rebuild THE THING and run tik only. The command does not complete the goal
 or repair sources.
 
 options:

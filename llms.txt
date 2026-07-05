@@ -62,7 +62,7 @@ whether to schedule the heartbeat, and the next command.
 
 ## Optional
 
-- [Artifact-centered design notes](docs/artifact-goal-notes.md): Why the final
+- [Thing-first design notes](docs/artifact-goal-notes.md): Why the final
   output is the control point.
 - [Codex goal implementation report](docs/codex-goal-openai-implementation-report.md):
   Codex `/goal` integration details.

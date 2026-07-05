@@ -86,7 +86,7 @@ max_blocker_repeats = 3
 def main(argv: list[str] | None = None) -> int:
     parser = argparse.ArgumentParser(
         prog="goal-cli",
-        description="Make coding agents keep proving the thing is getting better.",
+        description="Make agents finish THE THING.",
         epilog="Omitting the command defaults to run. Use 'goal-cli <command> -h' for subcommand options.",
     )
     parser.add_argument("-c", "--config", default="goal.toml", help="Path to goal.toml (default: goal.toml)")
@@ -114,7 +114,7 @@ def main(argv: list[str] | None = None) -> int:
     subparsers.add_parser(
         "tik",
         help="Run producer plus tik review, but skip tok",
-        description="Rebuild the artifact and run tik only. The command does not complete the goal or repair sources.",
+        description="Rebuild THE THING and run tik only. The command does not complete the goal or repair sources.",
     )
     subparsers.add_parser("state", help="Print state JSON or the default initial state")
     subparsers.add_parser("reset", help="Remove state and stale lock while preserving run artifacts")
