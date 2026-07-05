@@ -110,7 +110,9 @@ After the producer, the runtime has exactly two sequential roles:
 - Tik: judges the canonical artifact and writes `tik.md`. Public tik modes are
   `oracle` for deterministic scripts, tests, metrics, or other machine
   evaluators; `agent` for Responses API file-upload evaluation; and
-  `codex_file` for Codex evaluation of a local artifact copy.
+  `codex_file` for Codex evaluation of a local artifact copy in an ephemeral
+  read-only workspace. If tik reports a stale artifact hash, the heartbeat
+  blocks before tok.
 - Tok: reads `tik.md` and performs the strongest source repair. The default
   mode is `codex_goal`.
 
@@ -118,13 +120,16 @@ After the producer, the runtime has exactly two sequential roles:
 
 1. Load curated state from files.
 2. Acquire the run lock and write heartbeat liveness.
-3. Run the producer command.
-4. Verify that the canonical artifact exists.
-5. Run tik against the artifact and write `tik.md`.
-6. If the tik passes, mark the goal complete.
-7. If the tik fails, launch one tok pass against validated source boundaries.
-8. Record the schema-checked tok report in files.
-9. Exit with file state ready for the next heartbeat.
+3. Prepare the no-mistakes Git gate when enabled.
+4. Run the producer command.
+5. Verify that the canonical artifact exists.
+6. Run tik against the artifact and write `tik.md`.
+7. Reject stale or unparseable tik output before tok.
+8. If the tik passes, run the completion gate and mark the goal complete.
+9. If the tik fails, launch one tok pass against validated source boundaries.
+10. Record the schema-checked tok report in files.
+11. Gate successful source repair, then exit with file state ready for the next
+    heartbeat.
 
 In short: `producer -> tik -> tok` when tik fails, or `producer -> tik` when tik
 passes. The tok's own report is never accepted as artifact success.
@@ -138,7 +143,7 @@ from file state.
 
 - Git Gate: `NoMistakesGate` is the only place that knows how to prepare a clean
   Git checkpoint, move off a default branch, choose no-mistakes skip presets,
-  and invoke `no-mistakes axi run`.
+  honor run budgets, and invoke `no-mistakes axi run`.
 - Heartbeat State: `HeartbeatRecorder` owns state/history/heartbeat writes
   and transition recording. The runner orchestrates producer, tik, and tok; it
   does not hand-edit heartbeat JSON.
@@ -177,8 +182,12 @@ Prefer terminal or blocked states such as:
 - `blocked_artifact_missing`
 - `blocked_tik_failed`
 - `blocked_unparseable_tik`
+- `blocked_stale_tik_review`
+- `blocked_tok_failed`
 - `blocked_repeated_same_objection`
 - `blocked_no_source_change_possible`
+- `blocked_no_mistakes_failed`
+- `budget_limited`
 
 Avoid state names that imply a user, author, maintainer, approver, or human
 decision is part of the runtime loop.

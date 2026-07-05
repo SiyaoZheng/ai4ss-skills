@@ -33,8 +33,10 @@ python3 -m pip install -e '.[openai]'
 Verify the command resolves:
 
 ```bash
-goal-cli --help
-goal-cli doctor --help
+goal-cli -h
+goal-cli run -h
+goal-cli doctor -h
+goal-cli cleanup -h
 ```
 
 ## User Install
@@ -167,6 +169,7 @@ Then edit `goal.toml` so:
 - `[tik]` either runs a deterministic oracle command, an OpenAI file-upload
   agent review, or a Codex local-file review.
 - `[tok].write_dirs` contains only source directories the tok may edit.
+- `[no_mistakes].intent`, when set, describes the non-interactive gate intent.
 - `[safety].generated_dirs` lists generated outputs the tok must not edit.
 
 For a PDF-first research project, start from:
@@ -190,6 +193,7 @@ continues.
 binary = "no-mistakes"
 mode = "lightspeed"
 branch_prefix = "goal-cli"
+intent = "Rebuild, review, repair source, and keep the Git worktree clean."
 skip_steps = []
 timeout_seconds = 0
 ```
@@ -200,7 +204,7 @@ When enabled, goal-cli always:
 2. ignores `.goal/` runtime files through `.git/info/exclude`;
 3. commits dirty project files as a checkpoint;
 4. runs `no-mistakes init`;
-5. runs `no-mistakes axi run --intent ... --yes`.
+5. runs `no-mistakes axi run --intent ... --yes [--skip ...]`.
 
 `mode = "lightspeed"` is the default. It still uses no-mistakes, but passes
 `--skip review,test,document,lint,push,pr,ci` so routine heartbeats do not pay
@@ -209,6 +213,10 @@ pipeline, or `mode = "fast"` to keep local quality steps but skip push/PR/CI.
 
 If Git, no-mistakes, or the gate fails, the run exits as
 `blocked_no_mistakes_failed`.
+
+If the heartbeat wall-clock budget expires during no-mistakes preparation or
+the gate, the run records `budget_limited` and can be continued by a later
+heartbeat.
 
 Use `enabled = false` only for isolated tests or diagnostics that intentionally
 do not run inside a Git repository.
@@ -235,6 +243,13 @@ Static validation:
 
 ```bash
 goal-cli validate
+```
+
+Use a non-default config path by placing the global option before the command:
+
+```bash
+goal-cli -c path/to/goal.toml validate
+goal-cli -c path/to/goal.toml run --max-minutes 30
 ```
 
 Setup readiness:

@@ -9,11 +9,17 @@
 name = "artifact-goal"
 state_dir = ".goal"
 runs_dir = ".goal/runs"
+
+[project]
+root = "."
 ```
 
 - `name`: stable goal name written to state and heartbeat files.
 - `state_dir`: directory for `state.json`, `heartbeat.json`, and the lock.
 - `runs_dir`: per-heartbeat logs, prompts, verdicts, schemas, and reports.
+- `[project].root`: optional project root. Relative paths in the rest of the
+  config resolve from this root; it defaults to the directory containing
+  `goal.toml`.
 
 ## Artifact
 
@@ -70,6 +76,7 @@ API as an `input_file`.
 ```toml
 [tik]
 provider = "codex_file"
+# model = "optional model override"
 timeout_seconds = 1800
 max_file_size_bytes = 25000000
 ```
@@ -77,7 +84,8 @@ max_file_size_bytes = 25000000
 Use `codex_file` for Codex-based artifact critique without Responses file
 upload. The configured artifact is copied into a temporary directory, Codex is
 launched with that directory as its workspace under a read-only sandbox, with no
-project source directories added to the session.
+project source directories added to the session, and with ephemeral session
+state.
 If the configured tik prompt starts with a slash skill such as `/apsr-review`,
 goal-cli keeps that slash command as the first stdin line.
 
@@ -98,9 +106,16 @@ The default verdict shape is:
   "artifact_ready": false,
   "central_bottleneck": "one sentence",
   "blocking_objections": [],
-  "required_next_artifact_changes": []
+  "required_next_artifact_changes": [],
+  "current_artifact_sha256": "optional current artifact sha256"
 }
 ```
+
+Freshness fields are optional but enforced when present. If a verdict says
+`review_matches_current_pdf = false`, or if `current_pdf_sha256`,
+`current_artifact_sha256`, `reviewed_pdf_sha256`, or
+`reviewed_artifact_sha256` does not match the runtime artifact hash, the run
+records `blocked_stale_tik_review` and asks for a fresh tik pass before tok.
 
 Each tik pass writes `tik.md` in the run directory. That Markdown ledger is the
 machine handoff to tok: it includes artifact metadata, the raw tik memo, and the
@@ -153,6 +168,7 @@ checkpoints.
 binary = "no-mistakes"
 mode = "lightspeed"
 branch_prefix = "goal-cli"
+intent = "Rebuild, review, repair source, and keep Git clean."
 skip_steps = []
 timeout_seconds = 0
 checkpoint_message = "goal-cli checkpoint: {goal_name} heartbeat {iteration} {phase}"
@@ -166,6 +182,8 @@ checkpoint_message = "goal-cli checkpoint: {goal_name} heartbeat {iteration} {ph
   `push,pr,ci`. `full` runs no-mistakes without preset skips.
 - `branch_prefix`: prefix for the feature branch created when the repo is on the
   default branch, because `no-mistakes axi run` refuses default branches.
+- `intent`: optional text passed to `no-mistakes axi run --intent`. If omitted,
+  goal-cli generates an artifact-loop intent from the goal name.
 - `skip_steps`: optional no-mistakes pipeline steps for `--skip`, such as
   `["test", "lint"]`. These are added to the selected `mode` preset.
 - `timeout_seconds`: process timeout for `no-mistakes` commands; `0` means no
@@ -184,6 +202,10 @@ no-mistakes axi run --intent "<configured or generated intent>" --yes [--skip ..
 
 Missing Git setup, a missing no-mistakes binary, or a failed gate records
 `blocked_no_mistakes_failed`.
+
+If the heartbeat wall-clock budget is exhausted during no-mistakes preparation
+or gating, the runtime records `budget_limited` with `next_action = "tik"` so a
+later heartbeat can continue from file state.
 
 ## Observability
 
@@ -266,6 +288,26 @@ max_history_items = 50
 - `max_blocker_repeats`: repeated identical tik objections block the run.
 - `lock_stale_seconds`: stale lock age.
 - `max_history_items`: retained state history entries.
+
+## Runtime States
+
+State is stored in `.goal/state.json`; each run also writes heartbeat and
+provider evidence under `.goal/runs/`.
+
+| Status | Meaning |
+| --- | --- |
+| `active` | The goal can continue on a later heartbeat. |
+| `complete` | The rebuilt artifact passed tik. |
+| `blocked_producer_failed` | The producer command failed. |
+| `blocked_artifact_missing` | The producer finished but `[artifact].path` was missing. |
+| `blocked_tik_failed` | The tik provider failed before producing a memo. |
+| `blocked_unparseable_tik` | Tik output did not contain the configured verdict JSON. |
+| `blocked_stale_tik_review` | Tik reviewed a stale artifact hash or declared the review stale. |
+| `blocked_tok_failed` | The tok provider failed or returned an invalid schema report. |
+| `blocked_no_source_change_possible` | Tok reported that no source repair is possible. |
+| `blocked_repeated_same_objection` | The configured blocker fingerprint repeated too many times. |
+| `blocked_no_mistakes_failed` | Git setup, checkpointing, or no-mistakes gating failed. |
+| `budget_limited` | The heartbeat wall-clock budget expired during no-mistakes work. |
 
 ## Setup Readiness
 

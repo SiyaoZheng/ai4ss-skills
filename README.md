@@ -1,3 +1,5 @@
+<!-- markdownlint-disable MD013 MD033 MD041 -->
+
 <p align="center">
   <img src=".github/assets/goal-cli-readme-cover.png" alt="goal-cli, control coding work without reading code" width="100%" />
 </p>
@@ -6,32 +8,40 @@
 
 <p align="center">
   <strong>Artifact-first control for coding agents.</strong><br />
-  Define the output, rebuild it, let <code>tik</code> reject weak artifacts before <code>tok</code> repairs source.
+  Define the artifact, rebuild it, let <code>tik</code> judge it, then let <code>tok</code> repair source inside bounded scopes.
 </p>
 
 <p align="center">
-  <a href="#quick-start"><strong>Quick start</strong></a>
+  <a href="#quick-start"><strong>Start</strong></a>
   &nbsp;/&nbsp;
-  <a href="#choose-the-artifact">Choose the artifact</a>
+  <a href="#choose-the-artifact">Artifact</a>
   &nbsp;/&nbsp;
-  <a href="#heartbeat-loop">Heartbeat loop</a>
+  <a href="#heartbeat-loop">Loop</a>
   &nbsp;/&nbsp;
-  <a href="#configure-goaltoml">Configure goal.toml</a>
+  <a href="#configure-goaltoml">Config</a>
   &nbsp;/&nbsp;
-  <a href="#command-deck">Command deck</a>
+  <a href="#command-deck">Commands</a>
 </p>
 
 <p align="center">
   <kbd>Python 3.11+</kbd>
-  <kbd>local-first</kbd>
   <kbd>artifact-first</kbd>
-  <kbd>for output judges</kbd>
+  <kbd>local-first</kbd>
+  <kbd>single heartbeat</kbd>
 </p>
 
 `goal-cli` is for people who can judge the finished product but do not want to
-audit every code diff. It runs one controlled heartbeat at a time: rebuild the
-canonical artifact, critique that artifact, repair only configured source
-surfaces, then require a later rebuild before success can count.
+audit every code diff. Each heartbeat rebuilds the canonical artifact,
+critiques that artifact, repairs only configured source surfaces, and records
+the next proof step.
+
+<p align="center">
+  <sub><strong>Project signals</strong></sub><br />
+  <img alt="Python 3.11+" src="https://img.shields.io/badge/python-3.11%2B-24443a?style=flat-square&amp;labelColor=111827" />
+  <img alt="Package version 0.1.0" src="https://img.shields.io/badge/version-0.1.0-315c4f?style=flat-square&amp;labelColor=111827" />
+  <img alt="Artifact-first runtime" src="https://img.shields.io/badge/runtime-artifact--first-315c4f?style=flat-square&amp;labelColor=111827" />
+  <img alt="Local-first execution" src="https://img.shields.io/badge/execution-local--first-315c4f?style=flat-square&amp;labelColor=111827" />
+</p>
 
 ## Quick Start
 
@@ -63,7 +73,7 @@ goal-cli state
 | Run | `goal-cli run` | One rebuild-review-repair heartbeat is recorded. |
 
 <details>
-  <summary><strong>Optional model-based critique</strong></summary>
+  <summary><strong>Optional critique</strong></summary>
 
 Install the OpenAI extra when `tik` should critique artifacts through the
 Responses API:
@@ -88,11 +98,14 @@ Use `--skip-openai-auth` only when auth is supplied outside the environment.
   <img src=".github/assets/goal-cli-personas.png" alt="Five goal-cli users holding artifacts: a paper, a poster, a small app, a report, and a chart pack" width="100%" />
 </p>
 
+The control point is always a product-shaped file or demo a domain expert can
+inspect directly.
+
 The right artifact is the thing you already know how to reject. `goal-cli`
 does not ask you to become a code reviewer. It asks you to name the output that
 must be rebuilt before any source repair gets credit.
 
-| Real question | Artifact to judge |
+| Question you can answer | Artifact to judge |
 | --- | --- |
 | "Show me the PDF." | Paper, appendix, slide deck, replication packet. |
 | "Show me the poster." | Poster, landing page, campaign visual, export folder. |
@@ -127,16 +140,15 @@ flowchart LR
 
 ## Why It Exists
 
-`goal-cli` replaces vague "the agent says it fixed it" confidence with an
-artifact standard you can inspect.
+`goal-cli` replaces chat-level confidence with artifact proof you can inspect.
 
-| AI coding failure mode | `goal-cli` handle |
+| Failure mode | Control handle |
 | --- | --- |
 | The chat claims the app is fixed. | The site, report, PDF, or build artifact is regenerated before success can pass. |
 | You cannot audit the diff. | Judge the artifact: paper, poster, report, dataset, or app. |
 | The chat got too long to trust. | State, prompts, reports, locks, and traces live under `.goal/`. |
 | The repair pass declares success. | `tok` only repairs source. Completion belongs to artifact review. |
-| You need a stronger final standard. | `tik` reviews the rebuilt artifact, not the agent explanation. |
+| Final proof is unclear. | `tik` reviews the rebuilt artifact, not the agent explanation. |
 
 You decide the artifact, the review standard, and the writable source surface.
 `goal-cli` enforces the heartbeat and records the evidence.
@@ -146,12 +158,14 @@ You decide the artifact, the review standard, and the writable source surface.
 `goal.toml` is the brief for the control loop. It says what output matters, how
 to rebuild it, who judges it, and where repairs are allowed.
 
-| Decision | Field |
+| Control decision | Config field |
 | --- | --- |
 | Artifact to inspect | `[artifact].path` |
 | Rebuild command | `[producer].command` |
 | Artifact critic | `[tik]` |
 | Source repair pass | `[tok]` |
+| Git checkpoint and quality gate | `[no_mistakes]` |
+| Telemetry export | `[observability]` |
 | Generated folders and write scopes | `[safety]` |
 
 ```toml
@@ -198,39 +212,52 @@ producer command for that repository.
 | Tik | Critique the artifact. | Sees the product and writes `tik.md`. |
 | Tok | Repair source files. | Edits only configured `write_dirs`. |
 | Heartbeat | Own liveness and state. | Runs once, records, exits. |
-| Git gate | Protect transitions. | Optional no-mistakes checkpoint and review. |
+| Git gate | Protect transitions. | Default no-mistakes checkpoint and review when enabled. |
 
 Public `tik` modes:
 
 - `oracle`: deterministic scripts, tests, metrics, or machine checks.
 - `agent`: OpenAI Responses API file-upload artifact critique.
 - `codex_file`: Codex critique of a local artifact copy in a read-only
-  single-file workspace.
+  single-file workspace with ephemeral session state.
 
 Production `tok` mode:
 
 - `codex_goal`: launches an internal Codex `/goal` with a JSON Schema-checked
   final report.
 
+Runtime state stays in `.goal/state.json`. Common terminal or blocked outcomes
+include `complete`, `blocked_producer_failed`, `blocked_artifact_missing`,
+`blocked_tik_failed`, `blocked_unparseable_tik`, `blocked_stale_tik_review`,
+`blocked_tok_failed`, `blocked_no_source_change_possible`,
+`blocked_repeated_same_objection`, `blocked_no_mistakes_failed`, and
+`budget_limited`.
+
 ## Command Deck
 
-| Command | What it does |
+| Command | Role in the loop |
 | --- | --- |
+| `goal-cli` | Defaults to `goal-cli run`. |
+| `goal-cli -c path/to/goal.toml ...` | Use a non-default config path. |
 | `goal-cli init` | Create a starter `goal.toml`. |
-| `goal-cli validate` | Check config, artifact paths, and writable scopes. |
-| `goal-cli doctor` | Check whether this goal can run end to end. |
-| `goal-cli run` | Execute one autonomous heartbeat. |
-| `goal-cli tik` | Run producer plus tik, but skip tok. |
+| `goal-cli validate` | Check config, prompt placeholders, artifact paths, and writable scopes. |
+| `goal-cli doctor` | Check setup readiness; add smoke flags to prove Codex tok and `codex_file` tik. |
+| `goal-cli run --max-minutes 30` | Execute one autonomous heartbeat with a wall-clock budget. |
+| `goal-cli run --dry-run` | Create a run directory and render prompts without provider calls. |
+| `goal-cli tik` | Run producer plus tik review, but skip completion and tok repair. |
 | `goal-cli render-prompts` | Write rendered tik and tok prompts into a run directory. |
 | `goal-cli state` | Print `.goal/state.json` or the default initial state. |
-| `goal-cli cleanup` | Remove dead heartbeat locks and mark interrupted runs. |
+| `goal-cli cleanup` | Remove dead heartbeat locks and mark interrupted running phases. |
+| `goal-cli cleanup --kill-orphans` | Also terminate orphan goal-cli/Codex processes for this project when no live lock exists. |
 | `goal-cli reset` | Remove state and stale locks while preserving run artifacts. |
+
+See [CLI reference](docs/cli-reference.md) for the current `-h` surfaces.
 
 <details>
   <summary><strong>Observability</strong></summary>
 
-OpenTelemetry tracing is enabled by default. Runtime spans cover the heartbeat,
-producer, artifact load, tik, tok, and no-mistakes gate.
+OpenTelemetry tracing records heartbeat liveness, artifact loading, critique,
+repair, and gate decisions.
 
 Default endpoint:
 
@@ -260,14 +287,16 @@ docker run --rm --name goal-cli-otel \
   otel/opentelemetry-collector-contrib:latest \
   --config=/etc/otelcol-contrib/config.yaml
 ```
+
 </details>
 
 <details>
   <summary><strong>Git gate</strong></summary>
 
-`goal-cli` can hand committed checkpoints to
+The Git gate ties repair transitions to explicit checkpoints through
 [`kunchenguid/no-mistakes`](https://github.com/kunchenguid/no-mistakes).
-The gate is enabled by default:
+
+Default gate config:
 
 ```toml
 [no_mistakes]
@@ -297,6 +326,7 @@ The implementation keeps four seams narrow:
 | Heartbeat State | `HeartbeatRecorder` owns state, history, heartbeat emission, transitions, and no-mistakes state recording. |
 | Tok Execution | `tok_execution` owns Codex `/goal` command construction, JSON Schema validation, prompt files, reports, and diagnostics. |
 | Readiness and Telemetry | `doctor` and runtime share tok execution and `TelemetryExportPlan`, so setup checks describe the real path. |
+
 </details>
 
 ## Development
@@ -312,6 +342,7 @@ goal-cli --help
 
 | Document | Purpose |
 | --- | --- |
+| [CLI reference](docs/cli-reference.md) | Current `goal-cli -h` and high-use subcommand help surfaces. |
 | [Installing goal-cli](docs/installation.md) | Setup path and environment expectations. |
 | [goal.toml schema](docs/config-schema.md) | Full configuration reference. |
 | [Artifact-centered design notes](docs/artifact-goal-notes.md) | Product model and runtime rationale. |

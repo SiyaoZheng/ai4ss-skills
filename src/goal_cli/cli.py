@@ -84,27 +84,47 @@ max_blocker_repeats = 3
 
 
 def main(argv: list[str] | None = None) -> int:
-    parser = argparse.ArgumentParser(prog="goal-cli")
-    parser.add_argument("-c", "--config", default="goal.toml", help="Path to goal.toml")
-    subparsers = parser.add_subparsers(dest="command")
+    parser = argparse.ArgumentParser(
+        prog="goal-cli",
+        description="Run artifact-centered heartbeats for coding agents.",
+        epilog="Omitting the command defaults to run. Use 'goal-cli <command> -h' for subcommand options.",
+    )
+    parser.add_argument("-c", "--config", default="goal.toml", help="Path to goal.toml (default: goal.toml)")
+    subparsers = parser.add_subparsers(dest="command", title="commands")
 
     subparsers.add_parser("init", help="Create a starter goal.toml")
-    subparsers.add_parser("validate", help="Validate config and writable scopes")
-    doctor_parser = subparsers.add_parser("doctor", help="Check artifact-loop setup readiness")
+    subparsers.add_parser("validate", help="Validate config, prompt placeholders, and writable scopes")
+    doctor_parser = subparsers.add_parser(
+        "doctor",
+        help="Check artifact-loop setup readiness",
+        description="Check whether the configured artifact loop can run before launching a heartbeat.",
+    )
     doctor_parser.add_argument("--smoke-codex-goal", action="store_true", help="Run a minimal Codex /goal schema-output smoke check in a temp directory")
     doctor_parser.add_argument("--smoke-codex-file-tik", action="store_true", help="Run a minimal Codex local-file tik smoke check in a temp directory")
     doctor_parser.add_argument("--skip-openai-auth", action="store_true", help="Skip OPENAI_API_KEY readiness check for agent tik configs")
-    doctor_parser.add_argument("--timeout-seconds", type=float, default=10.0, help="Timeout for setup probes except the optional Codex smoke check")
+    doctor_parser.add_argument("--timeout-seconds", type=float, default=10.0, help="Timeout for setup probes except optional Codex smoke checks")
     doctor_parser.add_argument("--smoke-timeout-seconds", type=float, default=180.0, help="Timeout for optional Codex smoke checks")
-    run_parser = subparsers.add_parser("run", help="Run one autonomous heartbeat")
-    run_parser.add_argument("--dry-run", action="store_true", help="Render prompts without running producer, tik, or tok")
-    run_parser.add_argument("--max-minutes", type=float, default=30.0, help="Maximum wall-clock minutes for this heartbeat")
-    subparsers.add_parser("tik", help="Run producer plus tik, but skip tok")
-    subparsers.add_parser("state", help="Print state JSON")
-    subparsers.add_parser("reset", help="Remove state and stale lock; keep run artifacts")
-    cleanup_parser = subparsers.add_parser("cleanup", help="Clean interrupted heartbeat locks and optional orphan provider processes")
+    run_parser = subparsers.add_parser(
+        "run",
+        help="Run one autonomous heartbeat",
+        description="Run one producer -> tik -> tok heartbeat. Tik decides artifact success; tok only repairs source.",
+    )
+    run_parser.add_argument("--dry-run", action="store_true", help="Create a run directory and render prompts without running producer, tik, or tok")
+    run_parser.add_argument("--max-minutes", type=float, default=30.0, help="Maximum wall-clock minutes for the heartbeat, including providers and no-mistakes")
+    subparsers.add_parser(
+        "tik",
+        help="Run producer plus tik review, but skip tok",
+        description="Rebuild the artifact and run tik only. The command does not complete the goal or repair sources.",
+    )
+    subparsers.add_parser("state", help="Print state JSON or the default initial state")
+    subparsers.add_parser("reset", help="Remove state and stale lock while preserving run artifacts")
+    cleanup_parser = subparsers.add_parser(
+        "cleanup",
+        help="Clean interrupted heartbeat locks and optional orphan provider processes",
+        description="Remove stale heartbeat locks, mark interrupted running phases, and optionally stop orphan provider processes for this project.",
+    )
     cleanup_parser.add_argument("--kill-orphans", action="store_true", help="Terminate orphan goal-cli/Codex processes for this project when no live heartbeat lock exists")
-    subparsers.add_parser("render-prompts", help="Render tik and tok prompts into a new run dir")
+    subparsers.add_parser("render-prompts", help="Render tik and tok prompts into a new run directory")
 
     args = parser.parse_args(argv)
     command = args.command or "run"
