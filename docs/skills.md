@@ -1,72 +1,99 @@
 # goal-cli Skills
 
-`goal-cli` ships two agent-facing skills. They are written for users who can
-judge the artifact but do not want to hand-configure the control loop.
+`goal-cli` ships two agent-facing skills. Use them when you want a coding agent
+to keep working toward the thing you will actually inspect, not just keep
+changing code.
 
 ## Which Skill to Use
 
-| Skill | Audience | Use it for |
-| --- | --- | --- |
-| [`goal-cli-project-setup`](../skills/goal-cli-project-setup/SKILL.md) | Non-expert users and their coding agents | Discover the artifact, synthesize the producer, write `goal.toml`, validate setup, and run safe checks. |
-| [`goal-cli-template-author`](../skills/goal-cli-template-author/SKILL.md) | Maintainers and advanced users | Add reusable templates, tik oracle scripts, project-family examples, and skill/docs updates. |
+| Skill | Use it when |
+| --- | --- |
+| [`goal-cli-project-setup`](../skills/goal-cli-project-setup/SKILL.md) | You want to connect an existing project to `goal-cli`. |
+| [`goal-cli-template-author`](../skills/goal-cli-template-author/SKILL.md) | You are improving reusable examples, checks, or docs in this repository. |
 
-Use `goal-cli-project-setup` first for real projects. Use
-`goal-cli-template-author` only when improving the reusable material in this
-repository.
+Most users should start with `goal-cli-project-setup`.
 
-## One-Click Agent Prompt
+## One Prompt
 
-Paste this into an agent with access to the target project:
+Paste this into the agent that has access to the project.
+
+Replace only `THE THING`.
 
 ```text
-You are configuring this repository for goal-cli.
+Set up this project for goal-cli.
 
-Read the goal-cli onboarding context from llms.txt if present. Then use the
-goal-cli-project-setup skill. Discover the canonical artifact, synthesize a
-stable producer command or wrapper, write or update goal.toml, protect generated
-outputs, keep tok write scopes narrow, and run validation.
+THE THING: <describe the one finished thing I care about>
 
-Required checks:
-- run the producer directly and prove the artifact exists;
-- run goal-cli validate;
-- run goal-cli doctor;
-- run goal-cli run --dry-run;
-- run Codex smoke checks only if the configured providers require them.
+I care about THE THING, not the code diff. Your job is to make future coding
+work keep proving THE THING is actually getting better.
 
-Do not edit raw data, generated artifacts, .git/, or .goal/. Ask me only if the
-canonical artifact cannot be inferred safely. Finish by reporting the artifact
-path, producer command, tik provider, tok write_dirs, generated_dirs, and the
-next exact command I should run.
+Use the goal-cli-project-setup skill from
+skills/goal-cli-project-setup/SKILL.md if it is available.
+
+Find the output file or runnable demo I can inspect directly. If the project
+needs a small script to rebuild it reliably, create it.
+
+Create or update goal.toml. Keep raw data, generated files, .git/, and .goal/
+off limits. Keep future write access as narrow as possible.
+
+Run these checks before any real repair run:
+
+goal-cli validate
+goal-cli doctor
+goal-cli run --dry-run
+
+Treat goal-cli as a timed heartbeat, not a one-off chat. After the dry run
+passes, recommend one heartbeat every 30 minutes. The usual command is:
+
+goal-cli run --max-minutes 30
+
+If this project uses an automation tool, tell me the exact way to schedule that
+command every 30 minutes.
+
+Only run goal-cli run if those checks pass and you are confident it will work
+inside the allowed source folders. Ask me one question if you cannot safely
+infer THE THING.
+
+Finish by reporting:
+- the output path I should inspect;
+- the command that rebuilds it;
+- the files or folders future repair runs may edit;
+- the files or folders future repair runs must not edit;
+- whether to schedule the heartbeat every 30 minutes;
+- the exact next command I should run.
 ```
 
-## Installing the Skills
+## Skill Install
 
-If your agent supports local skills, copy the relevant skill directory into the
-agent's skill folder. For Codex-style skills, this is commonly:
+If your agent supports local skills, copy the setup skill into the agent's
+skill folder. For Codex-style skills:
 
 ```bash
 mkdir -p "$HOME/.codex/skills"
 cp -R skills/goal-cli-project-setup "$HOME/.codex/skills/"
+```
+
+Install the template-author skill only when you are maintaining this repository:
+
+```bash
 cp -R skills/goal-cli-template-author "$HOME/.codex/skills/"
 ```
 
-If your agent does not support skill directories, paste the contents of the
-needed `SKILL.md` file into the agent's instruction context.
+## What Good Setup Produces
 
-## Expected Project Output
+After setup, the project should have:
 
-After `goal-cli-project-setup` runs in a target project, the project should
-have:
-
-- a canonical artifact path;
-- a stable producer command, often `scripts/goal_producer.sh`;
-- a `goal.toml` that names the artifact, producer, tik provider, tok write
-  scopes, and generated dirs;
+- one thing to inspect;
+- one command that rebuilds it;
+- a `goal.toml` file;
+- clear folders that future repair runs may edit;
+- clear folders that future repair runs must not edit;
 - passing `goal-cli validate`;
-- a clear `goal-cli doctor` status;
-- a dry-run prompt render from `goal-cli run --dry-run`.
+- a useful `goal-cli doctor` result;
+- a dry run from `goal-cli run --dry-run`.
+- a recommendation for a 30-minute heartbeat.
 
-Only after those checks should a user run a real heartbeat:
+Only after those checks should a real repair run start:
 
 ```bash
 goal-cli run --max-minutes 30

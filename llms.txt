@@ -1,64 +1,83 @@
 # goal-cli
 
-> Artifact-first control for coding agents. Configure one canonical artifact,
-> rebuild it with a producer command, let tik judge the artifact, then let tok
-> repair only bounded source scopes.
+`goal-cli` keeps the user's thing in the center.
 
-`goal-cli` is for users who can judge the finished output but do not want to
-audit every code diff. The most important setup task is creating a reliable
-producer command that rebuilds the canonical artifact from source.
+The user does not mainly care that an agent changed code. The user cares that
+the thing they asked for is actually better: a PDF, website, slide deck, report,
+chart pack, workbook, benchmark, app demo, or another result they can inspect.
+
+Set up `goal-cli` so future coding work keeps rebuilding and checking that
+thing instead of drifting through source files.
 
 Copy-paste prompt for an agent:
 
 ```text
-You are configuring this repository for goal-cli.
+Set up this project for goal-cli.
 
-Use the goal-cli-project-setup skill from skills/goal-cli-project-setup/SKILL.md.
-Discover the canonical artifact, synthesize a stable producer command or wrapper,
-write or update goal.toml, protect generated outputs, keep tok write scopes
-narrow, and run validation.
+THE THING: <describe the one finished thing I care about>
 
-Required checks:
-- run the producer directly and prove the artifact exists;
-- run goal-cli validate;
-- run goal-cli doctor;
-- run goal-cli run --dry-run;
-- run Codex smoke checks only if the configured providers require them.
+I care about THE THING, not the code diff. Your job is to make future coding
+work keep proving THE THING is actually getting better.
 
-Do not edit raw data, generated artifacts, .git/, or .goal/. Ask only if the
-canonical artifact cannot be inferred safely. Finish by reporting the artifact
-path, producer command, tik provider, tok write_dirs, generated_dirs, and the
-next exact command to run.
+Use the goal-cli-project-setup skill from
+skills/goal-cli-project-setup/SKILL.md if it is available.
+
+Find the output file or runnable demo I can inspect directly. If the project
+needs a small script to rebuild it reliably, create it.
+
+Create or update goal.toml. Keep raw data, generated files, .git/, and .goal/
+off limits. Keep future write access as narrow as possible.
+
+Run these checks before any real repair run:
+
+goal-cli validate
+goal-cli doctor
+goal-cli run --dry-run
+
+Treat goal-cli as a timed heartbeat, not a one-off chat. After the dry run
+passes, recommend one heartbeat every 30 minutes. The usual command is:
+
+goal-cli run --max-minutes 30
+
+If this project uses an automation tool, tell me the exact way to schedule that
+command every 30 minutes.
+
+Only run goal-cli run if those checks pass and you are confident it will work
+inside the allowed source folders. Ask me one question if you cannot safely
+infer THE THING.
+
+Finish by reporting:
+- the output path I should inspect;
+- the command that rebuilds it;
+- the files or folders future repair runs may edit;
+- the files or folders future repair runs must not edit;
+- whether to schedule the heartbeat every 30 minutes;
+- the exact next command I should run.
 ```
 
 ## Agent Entry Points
 
 - [Project setup skill](skills/goal-cli-project-setup/SKILL.md): Use this to
-  connect an existing project to goal-cli, including producer synthesis.
+  connect an existing project to `goal-cli`.
 - [Template author skill](skills/goal-cli-template-author/SKILL.md): Use this
-  to maintain reusable templates, oracle scripts, examples, and docs.
+  only when improving reusable examples, checks, or docs in this repository.
 
 ## Core Documentation
 
-- [README](README.md): Product overview, quick start, runtime loop, and
-  command deck.
-- [Installation](docs/installation.md): Local install, dependencies,
-  no-mistakes gate, observability, and first run.
-- [goal.toml schema](docs/config-schema.md): Full configuration reference for
-  artifact, producer, tik, tok, safety, and observability.
-- [CLI reference](docs/cli-reference.md): Current command help surfaces.
-- [Skills guide](docs/skills.md): How to choose, install, and use the goal-cli
-  skills.
+- [README](README.md): Product overview and one-prompt quick start.
+- [Installation](docs/installation.md): Install details and local setup checks.
+- [goal.toml schema](docs/config-schema.md): Full configuration reference.
+- [CLI reference](docs/cli-reference.md): Current command help.
+- [Skills guide](docs/skills.md): Agent-facing setup instructions.
 
 ## Examples
 
-- [PDF-first example goal](examples/scientificity/goal.toml):
-  Research-paper style goal using a PDF artifact, `codex_file` tik, and
-  `codex_goal` tok.
+- [PDF-first example](examples/scientificity/goal.toml): Research-paper setup
+  where the thing is the rebuilt PDF.
 
 ## Optional
 
-- [Artifact-centered design notes](docs/artifact-goal-notes.md): Rationale for
-  the producer -> tik -> tok heartbeat model.
+- [Artifact-centered design notes](docs/artifact-goal-notes.md): Why the final
+  output is the control point.
 - [Codex goal implementation report](docs/codex-goal-openai-implementation-report.md):
-  Implementation details for Codex `/goal` tok integration.
+  Codex `/goal` integration details.
