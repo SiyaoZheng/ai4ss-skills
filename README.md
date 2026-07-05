@@ -1,26 +1,26 @@
 <div align="center">
-  <img src=".github/assets/goal-cli-hero.svg" alt="goal-cli artifact loop: producer, tik, tok, heartbeat" width="100%" />
+  <img src=".github/assets/goal-cli-hero.svg" alt="goal-cli product banner" width="100%" />
 
   <h1>goal-cli</h1>
 
-  <p><strong>Artifact-centered autonomy for projects where the final output is the only truth.</strong></p>
+  <p><strong>Stop grading autonomous agents by chat logs. Grade the artifact.</strong></p>
 
   <p>
-    <a href="https://github.com/SiyaoZheng/goal-cli"><img alt="GitHub repository" src="https://img.shields.io/badge/GitHub-SiyaoZheng%2Fgoal--cli-181717?logo=github"></a>
-    <img alt="Python 3.11+" src="https://img.shields.io/badge/Python-3.11%2B-3776AB?logo=python&logoColor=white">
-    <img alt="Package version" src="https://img.shields.io/badge/version-0.1.0-0B7285">
-    <img alt="OpenTelemetry traces" src="https://img.shields.io/badge/traces-OpenTelemetry-000000?logo=opentelemetry&logoColor=white">
-    <img alt="Local first" src="https://img.shields.io/badge/runtime-local--first-2F9E44">
+    <a href="https://github.com/SiyaoZheng/goal-cli"><img alt="GitHub repository" src="https://img.shields.io/badge/GitHub-SiyaoZheng%2Fgoal--cli-111827?logo=github"></a>
+    <img alt="Python 3.11+" src="https://img.shields.io/badge/Python-3.11%2B-0F766E?logo=python&logoColor=white">
+    <img alt="Version 0.1.0" src="https://img.shields.io/badge/version-0.1.0-7C3AED">
+    <img alt="OpenTelemetry" src="https://img.shields.io/badge/traces-OpenTelemetry-1F2937?logo=opentelemetry&logoColor=white">
+    <img alt="Local first" src="https://img.shields.io/badge/local--first-runtime-166534">
   </p>
 
   <p>
     <a href="#quick-start">Quick Start</a>
     <span> . </span>
-    <a href="#the-loop">The Loop</a>
+    <a href="#why-this-is-different">Why Different</a>
     <span> . </span>
-    <a href="#configuration">Configuration</a>
+    <a href="#the-heartbeat">Heartbeat</a>
     <span> . </span>
-    <a href="#command-deck">Commands</a>
+    <a href="#configuration">Config</a>
     <span> . </span>
     <a href="#docs">Docs</a>
   </p>
@@ -28,32 +28,17 @@
 
 ---
 
-`goal-cli` turns a big project objective into a repeatable heartbeat:
-build the canonical artifact, critique only that artifact, make one bounded
-source repair if the artifact fails, then exit with state ready for the next
-heartbeat.
+Most agent runners celebrate activity: files edited, commands run, tokens
+spent, plans updated. `goal-cli` is built around a harder standard:
 
-It is built for work where "done" cannot mean "the agent edited files." Done
-means the product exists and passes its evaluator: a PDF, benchmark result,
-report, site, dataset, model checkpoint, package, or another artifact that can
-be rebuilt from source.
+> The goal is not complete until the canonical artifact is rebuilt and passes
+> its evaluator.
 
-## Why It Exists
-
-Autonomous project loops usually fail for boring reasons: the success target is
-vague, the agent grades its own work, state lives in chat, generated outputs get
-edited directly, or a long run loses track of the actual deliverable.
-
-`goal-cli` makes those failure modes explicit:
-
-| Problem | `goal-cli` answer |
-| --- | --- |
-| The target drifts | One canonical artifact is the success standard. |
-| The agent judges itself | `tik` reviews the rebuilt artifact before any source repair. |
-| The loop mutates random files | `tok.write_dirs` bounds what the repair pass may edit. |
-| Progress is conversational | State, heartbeats, prompts, reports, and traces are written to `.goal/`. |
-| A repair claims victory | Only a later producer plus passing `tik` can complete the goal. |
-| Local quality gates get skipped | The optional no-mistakes gate checkpoints and reviews transitions. |
+Give `goal-cli` one artifact, one producer command, one critic, and a bounded
+source surface. Each heartbeat rebuilds the artifact, lets `tik` judge only
+that artifact, and lets `tok` repair sources only when the artifact fails. The
+repair pass never gets to declare victory. Only a later rebuild and passing
+artifact review can finish the goal.
 
 ## Quick Start
 
@@ -66,7 +51,7 @@ python3 -m pip install --upgrade pip
 python3 -m pip install -e .
 ```
 
-Create and check a goal:
+Create a goal:
 
 ```bash
 goal-cli init
@@ -82,7 +67,7 @@ goal-cli run
 goal-cli state
 ```
 
-For model-based `tik` reviews:
+For model-based artifact critique:
 
 ```bash
 python3 -m pip install -e '.[openai]'
@@ -90,44 +75,65 @@ export OPENAI_API_KEY="..."
 goal-cli doctor
 ```
 
-Use `goal-cli doctor --skip-openai-auth` only when auth is intentionally supplied
+Use `goal-cli doctor --smoke-codex-goal` when setup should prove the internal
+Codex `/goal` tok path too. Use `--skip-openai-auth` only when auth is supplied
 outside the environment.
 
-Use `goal-cli doctor --smoke-codex-goal` when setup should prove the internal
-Codex `/goal` tok path too.
+## Why This Is Different
 
-## The Loop
+`goal-cli` is not a generic task runner, a chat wrapper, or a todo loop. It is
+an artifact runtime.
+
+| Ordinary agent loop | `goal-cli` |
+| --- | --- |
+| "The agent says it improved the paper." | The PDF is rebuilt, opened by `tik`, and judged as the submitted artifact. |
+| "The agent edited a benchmark script." | The benchmark result is regenerated and evaluated before the goal can pass. |
+| "The agent made website changes." | The site artifact is produced first; source repair follows only from artifact critique. |
+| "The run got long and state lived in chat." | State, prompts, ledgers, reports, locks, and traces live under `.goal/`. |
+| "The repair pass declared success." | `tok` can only change sources; completion belongs to the next artifact review. |
+
+This makes it useful for projects where the product is concrete:
+
+- publication PDFs
+- benchmark reports
+- generated websites
+- model checkpoints
+- datasets and codebooks
+- slide decks and long-form reports
+- packages that must build and pass checks
+
+## The Heartbeat
 
 ```mermaid
 flowchart LR
-    A["goal.toml"] --> B["producer command"]
+    A["goal.toml"] --> B["producer"]
     B --> C["canonical artifact"]
-    C --> D{"tik verdict"}
-    D -- "ready" --> E["complete"]
-    D -- "blockers" --> F["tik.md ledger"]
-    F --> G["tok: bounded source repair"]
-    G --> H["schema-checked tok report"]
+    C --> D{"tik"}
+    D -- "artifact passes" --> E["complete"]
+    D -- "artifact fails" --> F["tik.md"]
+    F --> G["tok"]
+    G --> H["source repair report"]
     H --> I["next heartbeat"]
     I --> B
 ```
 
-Each `goal-cli run` executes exactly one heartbeat:
+One `goal-cli run` executes one bounded heartbeat:
 
 1. Load file-backed state and acquire a lock.
-2. Run the configured producer command.
+2. Run the producer command.
 3. Verify the canonical artifact exists.
 4. Run `tik` against the artifact and write `tik.md`.
-5. If `tik` passes, mark the goal complete.
+5. If `tik` passes, mark the artifact-level goal complete.
 6. If `tik` fails, launch one bounded `tok` source-repair pass.
-7. Validate the tok JSON report, write state, and exit.
+7. Validate the tok JSON report, record state, and exit.
 
-The important constraint is asymmetric: `tok` can improve sources, but `tok`
-cannot complete the artifact-level goal. Completion belongs to a later rebuild
-and a passing `tik`.
+The design is intentionally asymmetric. `tok` is allowed to improve sources,
+but it is not allowed to complete the goal directly. A later heartbeat must
+rebuild the product and let `tik` judge the result.
 
 ## Configuration
 
-A goal is a single `goal.toml` file. The minimal shape is:
+A goal is one `goal.toml` file:
 
 ```toml
 name = "paper-ready"
@@ -156,23 +162,24 @@ generated_dirs = ["output", "build"]
 max_blocker_repeats = 3
 ```
 
-Start from the PDF-first example when the deliverable is a manuscript:
+For a PDF-first research workflow:
 
 ```bash
 cp examples/scientificity/goal.toml ./goal.toml
 ```
 
-Then edit the artifact path, producer command, writable scopes, and evaluator.
+Then edit artifact paths, write scopes, model names, and the producer command
+for that repository.
 
 ## Runtime Roles
 
-| Role | Owns | Rule |
+| Role | Job | Hard boundary |
 | --- | --- | --- |
-| Producer | Rebuilds the artifact from source | It must create the canonical artifact path. |
-| Tik | Artifact critique | It sees the artifact and writes `tik.md`. |
-| Tok | Source repair | It receives the whole `tik.md` ledger and edits only allowed source dirs. |
-| Heartbeat | Liveness and state | It performs one bounded cycle, records the result, and exits. |
-| Gate | Git quality boundary | no-mistakes can checkpoint and review source transitions. |
+| Producer | Rebuild the artifact from source | Must create `[artifact].path`. |
+| Tik | Critique the artifact | Sees the product, writes `tik.md`. |
+| Tok | Repair source files | Edits only configured `write_dirs`. |
+| Heartbeat | Own liveness and state | Runs once, records, exits. |
+| Git gate | Protect transitions | Optional no-mistakes checkpoint and review. |
 
 Public `tik` modes:
 
@@ -199,7 +206,7 @@ Production `tok` mode:
 
 ## Observability
 
-OpenTelemetry tracing is on by default. Runtime spans cover the heartbeat,
+OpenTelemetry tracing is enabled by default. Runtime spans cover the heartbeat,
 producer, artifact load, tik, tok, and no-mistakes gate.
 
 Default endpoint:
@@ -255,7 +262,7 @@ gates.
 
 ## Internal Shape
 
-The implementation keeps four module seams narrow:
+The implementation keeps four seams narrow:
 
 | Seam | Responsibility |
 | --- | --- |
@@ -268,15 +275,9 @@ The implementation keeps four module seams narrow:
 
 ```bash
 python3 -m pip install -e '.[openai]'
+python3 -m pip install pytest
 python3 -m pytest -q
 goal-cli --help
-```
-
-If `pytest` is not installed in your active environment, install it in the same
-virtualenv used for development:
-
-```bash
-python3 -m pip install pytest
 ```
 
 ## Docs
