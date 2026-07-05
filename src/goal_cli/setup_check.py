@@ -293,6 +293,8 @@ def _filesystem_checks(config: GoalConfig, policy: ConfigPolicyReport, probes: S
     checks.append(_path_parent_check("artifact.path", config.artifact.path, target_is_file=True))
     checks.append(_path_parent_check("state_dir", config.state_dir))
     checks.append(_path_parent_check("runs_dir", config.runs_dir))
+    run_cwd = config.tok.run_cwd or (config.tok.write_dirs[0] if config.tok.write_dirs else config.root)
+    checks.append(_path_parent_check("tok.run_cwd", run_cwd))
     for fact in policy.writable_scopes:
         ok = fact.valid and probes.path_writable(fact.resolved)
         checks.append(
@@ -301,6 +303,16 @@ def _filesystem_checks(config: GoalConfig, policy: ConfigPolicyReport, probes: S
                 ok,
                 f"writable source scope: {fact.path}",
                 f"source scope is not a valid writable directory: {fact.path}",
+            )
+        )
+    for fact in policy.runtime_writable_scopes:
+        ok = fact.valid and probes.path_writable(fact.resolved)
+        checks.append(
+            _check(
+                "tok.runtime_write_dir",
+                ok,
+                f"runtime writable scope: {fact.path}",
+                f"runtime scope is not a valid writable directory: {fact.path}",
             )
         )
     return checks

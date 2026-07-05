@@ -503,7 +503,9 @@ class HeartbeatRunner:
                 "goal.iteration": int(self.state.get("iteration", 0)),
                 "goal.run_dir": rel(self.config, run_dir),
                 "goal.tok.provider": self.config.tok.provider,
+                "goal.tok.run_cwd": rel(self.config, self.config.tok.run_cwd or (self.config.tok.write_dirs[0] if self.config.tok.write_dirs else self.config.root)),
                 "goal.tok.write_dirs": [rel(self.config, path) for path in self.config.tok.write_dirs],
+                "goal.tok.runtime_write_dirs": [rel(self.config, path) for path in self.config.tok.runtime_write_dirs],
                 "goal.tik.ledger_path": rel(self.config, tik_path),
                 "goal.artifact.sha256": artifact["sha256"],
             },
@@ -768,6 +770,8 @@ def render_tok_prompt(config: GoalConfig, artifact: dict[str, Any], tik_path: Pa
         "artifact_sha256": str(artifact.get("sha256", "")),
         "tik_review_path": str(tik_review_path),
         "writable_scopes": "\n".join(f"- {path}" for path in config.tok.write_dirs),
+        "runtime_writable_scopes": "\n".join(f"- {path}" for path in config.tok.runtime_write_dirs),
+        "tok_run_cwd": str(config.tok.run_cwd or (config.tok.write_dirs[0] if config.tok.write_dirs else config.root)),
         "run_dir": str(run_dir),
     }
     return render_template(config.tok.prompt_template, values)

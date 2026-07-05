@@ -100,11 +100,12 @@ def build_codex_goal_tok_plan(config: TokConfig, prompt: str, run_dir: Path) -> 
     final_prompt = _codex_goal_prompt(prompt)
     schema_path = run_dir / "tok_report.schema.json"
     output_path = run_dir / "tok_report.json"
+    run_cwd = config.run_cwd or config.write_dirs[0]
     command = [
         "codex",
         "exec",
         "-C",
-        str(config.write_dirs[0]),
+        str(run_cwd),
         "--skip-git-repo-check",
         "--sandbox",
         config.sandbox,
@@ -120,13 +121,13 @@ def build_codex_goal_tok_plan(config: TokConfig, prompt: str, run_dir: Path) -> 
         command.extend(["--enable", feature])
     if config.model:
         command.extend(["-m", config.model])
-    for write_dir in config.write_dirs[1:]:
+    for write_dir in _dedupe_paths((*config.write_dirs, *config.runtime_write_dirs), skip=(run_cwd,)):
         command.extend(["--add-dir", str(write_dir)])
     command.extend(["--add-dir", str(run_dir / "attachments")])
     command.append("-")
     return TokExecutionPlan(
         command=tuple(command),
-        cwd=config.write_dirs[0],
+        cwd=run_cwd,
         prompt=final_prompt,
         report_path=output_path,
         schema_path=schema_path,
@@ -135,6 +136,23 @@ def build_codex_goal_tok_plan(config: TokConfig, prompt: str, run_dir: Path) -> 
         log_path=run_dir / "tok_codex.log",
         validation_log_path=run_dir / "tok_report_validation.log",
     )
+
+
+def _dedupe_paths(paths: tuple[Path, ...], skip: tuple[Path, ...] = ()) -> tuple[Path, ...]:
+    skipped = {_path_key(path) for path in skip}
+    seen: set[str] = set()
+    result: list[Path] = []
+    for path in paths:
+        key = _path_key(path)
+        if key in skipped or key in seen:
+            continue
+        seen.add(key)
+        result.append(path)
+    return tuple(result)
+
+
+def _path_key(path: Path) -> str:
+    return str(path.resolve(strict=False))
 
 
 def read_tok_report(report_path: Path) -> dict[str, Any] | None:

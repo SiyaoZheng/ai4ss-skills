@@ -130,7 +130,9 @@ The production Tok mode is `codex_goal`.
 ```toml
 [tok]
 provider = "codex_goal"
-write_dirs = ["writing", "src"]
+write_dirs = ["src", "data"]
+run_cwd = "."
+runtime_write_dirs = ["output", "build", "logs"]
 sandbox = "workspace-write"
 codex_features = ["goals"]
 ```
@@ -141,6 +143,18 @@ report schema. Tok treats every pass as the last pass: read `tik.md`, edit only
 `write_dirs` must stay inside the project root and must not overlap `.git`,
 state directories, run directories, generated directories, or the canonical
 artifact.
+
+`run_cwd` controls the working directory passed to `codex exec -C`. It defaults
+to the first `write_dirs` entry for backward compatibility. Set it to `"."`
+when the producer or diagnostics must be launched from the project root.
+
+`runtime_write_dirs` is intentionally separate from `write_dirs`. It grants the
+tok process access to directories that may be updated by commands it runs, such
+as `output`, `build`, or `logs`, without declaring those directories as manual
+source-edit scopes. Runtime write dirs may overlap generated directories and
+the artifact output directory, but they must stay inside the project root and
+must not be the project root, `.git`, the goal config, or goal state/run
+directories.
 
 Tok reports must match this JSON shape:
 
@@ -266,6 +280,8 @@ Tok prompts may use:
 - `{artifact_sha256}`
 - `{tik_review_path}`
 - `{writable_scopes}`
+- `{runtime_writable_scopes}`
+- `{tok_run_cwd}`
 - `{run_dir}`
 
 Runtime prompts must stay closed-system. They may describe the artifact,

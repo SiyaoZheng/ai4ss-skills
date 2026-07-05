@@ -12,7 +12,7 @@ from pathlib import Path
 from goal_cli.adapters import run_tik
 from goal_cli.config import ConfigError, TikConfig, load_config, validate_config
 from goal_cli.runtime import HeartbeatLock, RuntimeOptions, cleanup_runtime, load_state, run_heartbeat, run_goal
-from goal_cli.tok_execution import execute_tok
+from goal_cli.tok_execution import build_codex_goal_tok_plan, execute_tok
 
 
 class GoalRuntimeTests(unittest.TestCase):
@@ -427,6 +427,44 @@ class GoalRuntimeTests(unittest.TestCase):
             self.assertIn("modified tik_review.md", result.detail)
             self.assertTrue((run_dir / "tok_attachment_integrity.log").exists())
 
+    def test_codex_goal_tok_separates_source_edits_from_runtime_write_dirs(self) -> None:
+        with tempfile.TemporaryDirectory() as temp_dir:
+            root = Path(temp_dir)
+            self._write_basic_project(root, write_dirs=["src", "data"])
+            for name in ("data", "build", "logs"):
+                (root / name).mkdir()
+            config_path = root / "goal.toml"
+            config_path.write_text(
+                config_path.read_text(encoding="utf-8").replace(
+                    'write_dirs = ["src", "data"]',
+                    'write_dirs = ["src", "data"]\nrun_cwd = "."\nruntime_write_dirs = ["output", "build", "logs"]',
+                ),
+                encoding="utf-8",
+            )
+            config = load_config(config_path)
+
+            plan = build_codex_goal_tok_plan(config.tok, "repair prompt", root / ".goal" / "runs" / "heartbeat-0001")
+
+            self.assertEqual(plan.cwd, root.resolve())
+            args = list(plan.command)
+            self.assertEqual(args[args.index("-C") + 1], str(root.resolve()))
+            add_dirs = [Path(args[index + 1]).resolve() for index, arg in enumerate(args) if arg == "--add-dir"]
+            self.assertEqual(
+                add_dirs[:-1],
+                [
+                    (root / "src").resolve(),
+                    (root / "data").resolve(),
+                    (root / "output").resolve(),
+                    (root / "build").resolve(),
+                    (root / "logs").resolve(),
+                ],
+            )
+            self.assertEqual(tuple(path.resolve() for path in config.tok.write_dirs), ((root / "src").resolve(), (root / "data").resolve()))
+            self.assertEqual(
+                tuple(path.resolve() for path in config.tok.runtime_write_dirs),
+                ((root / "output").resolve(), (root / "build").resolve(), (root / "logs").resolve()),
+            )
+
     def test_tik_review_is_attached_instead_of_inlined_into_tok_prompt(self) -> None:
         with tempfile.TemporaryDirectory() as temp_dir:
             root = Path(temp_dir)
@@ -632,7 +670,10 @@ class GoalRuntimeTests(unittest.TestCase):
         with tempfile.TemporaryDirectory() as temp_dir:
             root = Path(temp_dir)
             (root / "output").mkdir()
+            (root / "build").mkdir()
+            (root / "logs").mkdir()
             (root / "src").mkdir()
+            (root / "data").mkdir()
             (root / "writing").mkdir()
             config_path = root / "goal.toml"
             config_path.write_text(example_text, encoding="utf-8")
@@ -643,7 +684,12 @@ class GoalRuntimeTests(unittest.TestCase):
             self.assertEqual(config.tik.provider, "codex_file")
             self.assertEqual(
                 tuple(path.resolve() for path in config.tok.write_dirs),
-                ((root / "writing").resolve(), (root / "src").resolve()),
+                ((root / "src").resolve(), (root / "data").resolve()),
+            )
+            self.assertEqual(config.tok.run_cwd, root.resolve())
+            self.assertEqual(
+                tuple(path.resolve() for path in config.tok.runtime_write_dirs),
+                ((root / "output").resolve(), (root / "build").resolve(), (root / "logs").resolve()),
             )
 
     def test_validate_rejects_wrong_tok_provider_and_runtime_prompt_language(self) -> None:

@@ -60,6 +60,8 @@ TOK_PROMPT_PLACEHOLDERS = {
     "artifact_sha256",
     "tik_review_path",
     "writable_scopes",
+    "runtime_writable_scopes",
+    "tok_run_cwd",
     "run_dir",
 }
 
@@ -121,6 +123,8 @@ class TokConfig:
     prompt_template: str
     write_dirs: tuple[Path, ...]
     sandbox: str = "workspace-write"
+    run_cwd: Path | None = None
+    runtime_write_dirs: tuple[Path, ...] = ()
     model: str | None = None
     codex_features: tuple[str, ...] = ()
 
@@ -207,6 +211,7 @@ class ConfigPolicyReport:
     root: Path
     protected_paths: tuple[Path, ...]
     writable_scopes: tuple[WritableScopeFact, ...]
+    runtime_writable_scopes: tuple[WritableScopeFact, ...]
     issues: tuple[ConfigIssue, ...]
 
     def messages(self) -> list[str]:
@@ -273,11 +278,18 @@ def load_config(config_path: str | Path = "goal.toml") -> GoalConfig:
         raise ConfigError("unsupported tok field: command; tok provider must be 'codex_goal'")
     tok_prompt = _prompt_from(tok_raw, required_key="prompt_template")
     write_dirs = tuple(_path(item, root, root) for item in _string_list(tok_raw.get("write_dirs"), "tok.write_dirs"))
+    run_cwd = _path(tok_raw["run_cwd"], root, root) if "run_cwd" in tok_raw else (write_dirs[0] if write_dirs else root)
+    runtime_write_dirs = tuple(
+        _path(item, root, root)
+        for item in _string_list(tok_raw.get("runtime_write_dirs", []), "tok.runtime_write_dirs")
+    )
     tok = TokConfig(
         provider=_required_str(tok_raw, "provider"),
         prompt_template=tok_prompt,
         write_dirs=write_dirs,
         sandbox=str(tok_raw.get("sandbox", "workspace-write")),
+        run_cwd=run_cwd,
+        runtime_write_dirs=runtime_write_dirs,
         model=_optional_str(tok_raw, "model"),
         codex_features=tuple(_string_list(tok_raw.get("codex_features", []), "tok.codex_features")),
     )
@@ -396,10 +408,14 @@ def analyze_config_policy(config: GoalConfig) -> ConfigPolicyReport:
     protected_paths = config_protected_paths(config)
     writable_scopes, writable_issues = analyze_writable_scope_policy(config, protected_paths)
     issues.extend(writable_issues)
+    runtime_writable_scopes, runtime_writable_issues = analyze_runtime_writable_scope_policy(config)
+    issues.extend(runtime_writable_issues)
+    issues.extend(analyze_run_cwd_policy(config))
     return ConfigPolicyReport(
         root=_resolve(config.root),
         protected_paths=protected_paths,
         writable_scopes=writable_scopes,
+        runtime_writable_scopes=runtime_writable_scopes,
         issues=tuple(issues),
     )
 
@@ -419,6 +435,16 @@ def config_protected_paths(config: GoalConfig) -> tuple[Path, ...]:
     ]
     protected.extend(_resolve(path) for path in config.safety.generated_dirs)
     return tuple(protected)
+
+
+def config_runtime_protected_paths(config: GoalConfig) -> tuple[Path, ...]:
+    root = _resolve(config.root)
+    return (
+        _resolve(Path(".git"), root),
+        _resolve(config.path),
+        _resolve(config.state_dir),
+        _resolve(config.runs_dir),
+    )
 
 
 def analyze_writable_scope_policy(
@@ -464,6 +490,54 @@ def validate_writable_scopes(config: GoalConfig) -> list[str]:
     return [issue.message for issue in issues]
 
 
+def analyze_runtime_writable_scope_policy(config: GoalConfig) -> tuple[tuple[WritableScopeFact, ...], tuple[ConfigIssue, ...]]:
+    issues: list[ConfigIssue] = []
+    facts: list[WritableScopeFact] = []
+    root = _resolve(config.root)
+    protected_paths = config_runtime_protected_paths(config)
+
+    for write_dir in config.tok.runtime_write_dirs:
+        resolved = _resolve(write_dir)
+        protected_overlap = next((protected_path for protected_path in protected_paths if _paths_overlap(resolved, protected_path)), None)
+        fact = WritableScopeFact(
+            path=write_dir,
+            resolved=resolved,
+            inside_root=_inside(root, resolved),
+            is_project_root=resolved == root,
+            exists=resolved.exists(),
+            is_dir=resolved.is_dir(),
+            protected_overlap=protected_overlap,
+        )
+        facts.append(fact)
+        if fact.is_project_root:
+            issues.append(ConfigIssue("tok.runtime_write_dir.project_root", f"tok.runtime_write_dirs must not include the project root: {write_dir}"))
+        if not fact.inside_root:
+            issues.append(ConfigIssue("tok.runtime_write_dir.outside_root", f"tok.runtime_write_dirs must stay inside project root: {write_dir}"))
+        if not fact.exists:
+            issues.append(ConfigIssue("tok.runtime_write_dir.missing", f"tok.runtime_write_dirs entry does not exist: {write_dir}"))
+        elif not fact.is_dir:
+            issues.append(ConfigIssue("tok.runtime_write_dir.not_dir", f"tok.runtime_write_dirs entry is not a directory: {write_dir}"))
+        if fact.protected_overlap is not None:
+            issues.append(
+                ConfigIssue("tok.runtime_write_dir.protected_overlap", f"tok.runtime_write_dirs entry overlaps protected control path {fact.protected_overlap}: {write_dir}")
+            )
+    return tuple(facts), tuple(issues)
+
+
+def analyze_run_cwd_policy(config: GoalConfig) -> tuple[ConfigIssue, ...]:
+    run_cwd = config.tok.run_cwd or (config.tok.write_dirs[0] if config.tok.write_dirs else config.root)
+    root = _resolve(config.root)
+    resolved = _resolve(run_cwd)
+    issues: list[ConfigIssue] = []
+    if not _inside(root, resolved):
+        issues.append(ConfigIssue("tok.run_cwd.outside_root", f"tok.run_cwd must stay inside project root: {run_cwd}"))
+    if not resolved.exists():
+        issues.append(ConfigIssue("tok.run_cwd.missing", f"tok.run_cwd does not exist: {run_cwd}"))
+    elif not resolved.is_dir():
+        issues.append(ConfigIssue("tok.run_cwd.not_dir", f"tok.run_cwd is not a directory: {run_cwd}"))
+    return tuple(issues)
+
+
 def validate_prompt_templates(config: GoalConfig) -> list[str]:
     issues: list[str] = []
     tik_unknown = template_placeholders(config.tik.prompt) - TIK_PROMPT_PLACEHOLDERS
@@ -498,7 +572,9 @@ def dump_config_summary(config: GoalConfig) -> str:
         "producer": config.producer.command,
         "tik_provider": config.tik.provider,
         "tok_provider": config.tok.provider,
+        "tok_run_cwd": str(config.tok.run_cwd or (config.tok.write_dirs[0] if config.tok.write_dirs else config.root)),
         "write_dirs": [str(path) for path in config.tok.write_dirs],
+        "runtime_write_dirs": [str(path) for path in config.tok.runtime_write_dirs],
         "no_mistakes_enabled": config.no_mistakes.enabled,
         "no_mistakes_mode": config.no_mistakes.mode,
         "no_mistakes_skip_steps": list(config.no_mistakes.skip_steps),

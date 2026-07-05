@@ -97,6 +97,30 @@ class DeepModuleInterfaceTests(unittest.TestCase):
             self.assertTrue(any(issue.code == "tok.write_dir.protected_overlap" for issue in policy.issues), policy.issues)
             self.assertIn(config_path.resolve(), policy.protected_paths)
 
+    def test_runtime_write_dirs_are_not_treated_as_source_edit_scopes(self) -> None:
+        with tempfile.TemporaryDirectory() as temp_dir:
+            root = Path(temp_dir)
+            config = load_config(self._write_project(root, runtime_write_dirs=["output", "build"]))
+
+            policy = analyze_config_policy(config)
+
+            issue_codes = {issue.code for issue in policy.issues}
+            self.assertNotIn("tok.write_dir.protected_overlap", issue_codes)
+            self.assertNotIn("tok.runtime_write_dir.protected_overlap", issue_codes)
+            self.assertEqual(tuple(fact.resolved for fact in policy.writable_scopes), ((root / "src").resolve(),))
+            self.assertEqual(tuple(fact.resolved for fact in policy.runtime_writable_scopes), ((root / "output").resolve(), (root / "build").resolve()))
+
+    def test_runtime_write_dirs_still_reject_control_paths_and_project_root(self) -> None:
+        with tempfile.TemporaryDirectory() as temp_dir:
+            root = Path(temp_dir)
+            config = load_config(self._write_project(root, runtime_write_dirs=[".", ".git"]))
+
+            policy = analyze_config_policy(config)
+
+            issue_codes = {issue.code for issue in policy.issues}
+            self.assertIn("tok.runtime_write_dir.project_root", issue_codes)
+            self.assertIn("tok.runtime_write_dir.protected_overlap", issue_codes)
+
     def test_doctor_can_use_probe_adapter_without_path_or_environment_mutation(self) -> None:
         with tempfile.TemporaryDirectory() as temp_dir:
             root = Path(temp_dir)
@@ -109,10 +133,13 @@ class DeepModuleInterfaceTests(unittest.TestCase):
             self.assertEqual(probes.commands, [("codex", "exec", "--help"), ("codex", "exec", "--enable", "goals", "--help")])
             self.assertTrue(any(check.name == "codex_goal.smoke" and check.ok for check in checks))
 
-    def _write_project(self, root: Path, write_dirs: list[str] | None = None) -> Path:
+    def _write_project(self, root: Path, write_dirs: list[str] | None = None, runtime_write_dirs: list[str] | None = None) -> Path:
         (root / "src").mkdir()
         (root / "scripts").mkdir()
         (root / "output").mkdir()
+        (root / "build").mkdir()
+        (root / ".git").mkdir()
+        runtime_write_dirs_text = f"runtime_write_dirs = {json.dumps(runtime_write_dirs)}\n" if runtime_write_dirs is not None else ""
         config = f'''
 name = "deep-module-test"
 state_dir = ".goal"
@@ -134,6 +161,7 @@ text = "Evaluate {{artifact_path}}."
 [tok]
 provider = "codex_goal"
 write_dirs = {json.dumps(write_dirs or ["src"])}
+{runtime_write_dirs_text}run_cwd = "."
 sandbox = "workspace-write"
 
 [tok.prompt]
