@@ -229,6 +229,11 @@ generated_dirs = ["outputs", "build", "logs"]
 max_blocker_repeats = 3
 ```
 
+Swap `codex_file` for `claude_code_file` and `codex_goal` for
+`claude_code_goal` to run the same loop through Claude Code instead of Codex;
+[`examples/scientificity-claude/goal.toml`](examples/scientificity-claude/goal.toml)
+is the all-Claude version of this setup.
+
 The important boundary is simple: the fixing agent edits source, but the final
 result has to be rebuilt and checked before the work counts as done.
 

@@ -431,7 +431,12 @@ checks:
 - configured producer command availability where the shell command is statically
   knowable;
 - oracle tik command availability where applicable;
-- Codex CLI availability;
+- Codex CLI availability when `tok.provider = "codex_goal"` or
+  `tik.provider = "codex_file"`;
+- Claude Code CLI availability and `claude` flag support (`--print`,
+  `--output-format`, `--disallowedTools`, `--model`, plus `--json-schema`,
+  `--add-dir`, and `--permission-mode` when `tok.provider =
+  "claude_code_goal"`) when a Claude Code provider is configured;
 - OpenTelemetry package availability and the runtime telemetry export plan
   (OTLP when reachable or explicitly environment-configured, local JSONL
   fallback otherwise);
@@ -454,15 +459,24 @@ The smoke check starts a minimal internal Codex `/goal` in a temporary writable
 directory, asks it to create a temporary source file, and validates the
 schema-shaped tok report. It does not touch project sources.
 
-For `tik.provider = "codex_file"`, also run:
+For `tok.provider = "claude_code_goal"`, run the Claude Code tok smoke instead:
+
+```bash
+goal-cli doctor --smoke-claude-code-goal
+```
+
+For `tik.provider = "codex_file"`, also pass `--smoke-codex-file-tik`; for
+`tik.provider = "claude_code_file"`, pass `--smoke-claude-code-file-tik`.
+Combine the tok and tik smoke flags that match the configured providers:
 
 ```bash
 goal-cli doctor --smoke-codex-goal --smoke-codex-file-tik
+goal-cli doctor --smoke-claude-code-goal --smoke-claude-code-file-tik
 ```
 
-The second smoke check copies a tiny temporary artifact into a single-file
-Codex workspace, runs the same local-file tik adapter used at runtime, and
-validates the configured tik verdict fields. `one_click_artifact_loop` is only
+The tik smoke checks copy a tiny temporary artifact into a single-file
+workspace, run the same local-file tik adapter used at runtime, and
+validate the configured tik verdict fields. `one_click_artifact_loop` is only
 ready after all required smoke checks for the configured providers pass.
 
 Clean up an interrupted heartbeat:

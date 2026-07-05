@@ -31,6 +31,13 @@ mkdir -p "$HOME/.codex/skills"
 cp -R skills/goal-cli-project-setup "$HOME/.codex/skills/"
 ```
 
+For Claude Code:
+
+```bash
+mkdir -p "$HOME/.claude/skills"
+cp -R skills/goal-cli-project-setup "$HOME/.claude/skills/"
+```
+
 Install the template-author skill only when you are maintaining this repository:
 
 ```bash
