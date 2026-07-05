@@ -17,7 +17,7 @@ class CliTests(unittest.TestCase):
         self.assertEqual(raised.exception.code, 0)
         help_text = output.getvalue()
         self.assertNotIn("--max-cycles", help_text)
-        self.assertIn("Tik decides artifact success", help_text)
+        self.assertIn("The thing decides success", help_text)
         self.assertIn("Maximum wall-clock minutes for the heartbeat", help_text)
         self.assertIn("including providers and no-mistakes", help_text)
 

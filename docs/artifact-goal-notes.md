@@ -1,4 +1,4 @@
-# Artifact-Centered Goal Notes
+# Thing-Centered Goal Notes
 
 ## Sources Checked
 
@@ -83,14 +83,14 @@ controlled mutable surface, fixed budget, and machine-checkable evaluation.
 
 ## `goal-cli` Design Consequence
 
-A `goal-cli` goal must be centered on one canonical artifact. The artifact can
+A `goal-cli` goal must be centered on one finished thing. The thing can
 be a PDF, report, benchmark result, package, site, model checkpoint, dataset, or
 other project product. The runtime exists to improve that artifact until the
 tik says it satisfies the goal.
 
-This artifact-centered rule is the local sharpening of the FullMD protocol:
+This thing-centered rule is the local sharpening of the FullMD protocol:
 the state machine does not merely ask whether "work happened"; it asks whether
-the canonical artifact produced from source passes the configured tik.
+the finished thing produced from source passes the configured tik.
 
 This means a goal is not:
 
@@ -107,7 +107,7 @@ completes the artifact-level goal.
 
 After the producer, the runtime has exactly two sequential roles:
 
-- Tik: judges the canonical artifact and writes `tik.md`. Public tik modes are
+- Tik: judges the finished thing and writes `tik.md`. Public tik modes are
   `oracle` for deterministic scripts, tests, metrics, or other machine
   evaluators; `agent` for Responses API file-upload evaluation; and
   `codex_file` for Codex evaluation of a local artifact copy in an ephemeral
@@ -122,7 +122,7 @@ After the producer, the runtime has exactly two sequential roles:
 2. Acquire the run lock and write heartbeat liveness.
 3. Prepare the no-mistakes Git gate when enabled.
 4. Run the producer command.
-5. Verify that the canonical artifact exists.
+5. Verify that the finished thing exists.
 6. Run tik against the artifact and write `tik.md`.
 7. Reject stale or unparseable tik output before tok.
 8. If the tik passes, run the completion gate and mark the goal complete.
@@ -157,7 +157,7 @@ from file state.
 
 Runtime prompts are closed-system prompts. They may refer to:
 
-- The canonical artifact.
+- The finished thing.
 - The producer command.
 - The tik ledger.
 - The current state budget.

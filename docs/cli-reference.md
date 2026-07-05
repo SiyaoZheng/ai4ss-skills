@@ -12,7 +12,7 @@ subcommand.
 usage: goal-cli [-h] [-c CONFIG]
                 {init,validate,doctor,run,tik,state,reset,cleanup,render-prompts} ...
 
-Run artifact-centered heartbeats for coding agents.
+Make coding agents keep proving the thing is getting better.
 
 options:
   -h, --help            show this help message and exit
@@ -23,7 +23,7 @@ commands:
     init                Create a starter goal.toml
     validate            Validate config, prompt placeholders, and writable
                         scopes
-    doctor              Check artifact-loop setup readiness
+    doctor              Check whether the thing-centered setup is ready
     run                 Run one autonomous heartbeat
     tik                 Run producer plus tik review, but skip tok
     state               Print state JSON or the default initial state
@@ -42,8 +42,7 @@ subcommand options.
 ```text
 usage: goal-cli run [-h] [--dry-run] [--max-minutes MAX_MINUTES]
 
-Run one producer -> tik -> tok heartbeat. Tik decides artifact success; tok
-only repairs source.
+Run one heartbeat. The thing decides success; source repair is only a step.
 
 options:
   -h, --help            show this help message and exit
@@ -62,7 +61,7 @@ usage: goal-cli doctor [-h] [--smoke-codex-goal] [--smoke-codex-file-tik]
                        [--timeout-seconds TIMEOUT_SECONDS]
                        [--smoke-timeout-seconds SMOKE_TIMEOUT_SECONDS]
 
-Check whether the configured artifact loop can run before launching a
+Check whether goal-cli can rebuild and check the thing before launching a
 heartbeat.
 
 options:

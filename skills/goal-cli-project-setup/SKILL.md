@@ -1,20 +1,20 @@
 ---
 name: goal-cli-project-setup
-description: Use when connecting an existing project to goal-cli for a non-expert user. Discover the canonical artifact, synthesize a reliable producer command, write goal.toml, validate the setup, and run the first safe checks.
+description: Use when connecting an existing project to goal-cli for a non-expert user. Find the finished thing, create a reliable rebuild command, write goal.toml, validate the setup, and run the first safe checks.
 version: 1.0.0
 ---
 
 # goal-cli Project Setup
 
 Use this skill when a user wants an agent to make an existing project runnable
-under `goal-cli`, especially when the user can judge the finished artifact but
-does not want to configure the build loop by hand.
+under `goal-cli`, especially when the user can judge the finished thing but does
+not want to configure the build loop by hand.
 
 The deliverable is not just a `goal.toml`. The deliverable is a repeatable
-artifact loop:
+thing loop:
 
 ```text
-stable producer -> canonical artifact -> tik review -> bounded tok repair
+stable rebuild -> finished thing -> review -> bounded source repair
 ```
 
 ## When to Use
@@ -22,11 +22,11 @@ stable producer -> canonical artifact -> tik review -> bounded tok repair
 - A user asks to "set up goal-cli" for a project.
 - A user provides a repository and a desired output such as a PDF, site,
   workbook, report, model metric, or slide deck.
-- A user wants an agent to create the producer command and `goal.toml`.
-- A user has an artifact they can inspect but does not know the build system.
+- A user wants an agent to create the rebuild command and `goal.toml`.
+- A user has a finished thing they can inspect but does not know the build system.
 
 Do not use this skill for generic task planning, ordinary code review, or a
-project that has no inspectable artifact.
+project that has no inspectable thing.
 
 ## Operating Rules
 
@@ -34,12 +34,12 @@ project that has no inspectable artifact.
 - Prefer live project evidence over README claims.
 - Do not edit raw data, generated outputs, build products, `.git/`, or `.goal/`
   unless the user explicitly asked for that exact operation.
-- Ask the user only when the canonical artifact cannot be inferred safely.
+- Ask the user only when the finished thing cannot be inferred safely.
 - Keep the producer deterministic, idempotent, and easy to rerun.
-- Completion belongs to the rebuilt artifact and tik verdict, not to the tok
+- Completion belongs to the rebuilt thing and tik verdict, not to the tok
   agent's explanation.
 - Treat every tok pass as source repair only. Tok must not declare the
-  artifact-level goal complete.
+  thing-level goal complete.
 
 ## Workflow
 
@@ -88,7 +88,7 @@ documented as final, or the one downstream of the broadest build command.
 ### 3. Synthesize the Producer
 
 The producer is the command `goal-cli` will run on every heartbeat. It must
-rebuild the canonical artifact from source.
+rebuild the finished thing from source.
 
 Use an existing build command when it is already stable:
 
@@ -333,7 +333,7 @@ goal-cli state
 
 ## Definition of Done
 
-- The canonical artifact is named and exists after the producer runs.
+- The finished thing is named and exists after the producer runs.
 - The producer is a stable command or wrapper checked into the project.
 - `goal.toml` points at the producer and artifact.
 - `tok.write_dirs` are narrow source directories.

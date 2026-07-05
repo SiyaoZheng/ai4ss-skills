@@ -1,7 +1,7 @@
 # goal.toml Schema
 
-`goal.toml` defines one artifact-centered goal. The runtime state belongs under
-`.goal/`; the artifact is the only success standard.
+`goal.toml` defines one thing-centered goal. The runtime state belongs under
+`.goal/`; the finished thing is the only success standard.
 
 ## Top-Level Fields
 
@@ -29,7 +29,7 @@ path = "output/artifact.pdf"
 copy_as = "full_paper.pdf"
 ```
 
-- `path`: canonical product produced by the producer command.
+- `path`: finished thing produced by the rebuild command.
 - `copy_as`: optional filename used when passing the artifact to tik.
 
 ## Producer
@@ -39,8 +39,8 @@ copy_as = "full_paper.pdf"
 command = "make all"
 ```
 
-The producer must rebuild the canonical artifact from source. Completion is
-never accepted from source edits alone.
+The producer must rebuild the finished thing from source. Completion is never
+accepted from source edits alone.
 
 ## Tik
 
@@ -183,7 +183,7 @@ checkpoint_message = "goal-cli checkpoint: {goal_name} heartbeat {iteration} {ph
 - `branch_prefix`: prefix for the feature branch created when the repo is on the
   default branch, because `no-mistakes axi run` refuses default branches.
 - `intent`: optional text passed to `no-mistakes axi run --intent`. If omitted,
-  goal-cli generates an artifact-loop intent from the goal name.
+  goal-cli generates a thing-centered intent from the goal name.
 - `skip_steps`: optional no-mistakes pipeline steps for `--skip`, such as
   `["test", "lint"]`. These are added to the selected `mode` preset.
 - `timeout_seconds`: process timeout for `no-mistakes` commands; `0` means no
@@ -338,7 +338,7 @@ checks:
 
 The default summary reports `static_setup`. If it is ready, `goal-cli run` has
 the local setup required to start the producer/tik/tok loop for the
-canonical artifact.
+finished thing.
 
 For an opt-in tok smoke check:
 

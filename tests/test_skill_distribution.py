@@ -24,7 +24,7 @@ class SkillDistributionTests(unittest.TestCase):
 
         self.assertIn("skills/goal-cli-project-setup/SKILL.md", text)
         self.assertIn("skills/goal-cli-template-author/SKILL.md", text)
-        self.assertIn("synthesize a stable producer command", text)
+        self.assertIn("THE THING is the finished result", text)
 
     def test_readme_and_skill_docs_link_the_distribution_files(self) -> None:
         readme = (ROOT / "README.md").read_text(encoding="utf-8")

@@ -13,6 +13,8 @@
 <p align="center">
   <a href="#quick-start"><strong>Quick Start</strong></a>
   &nbsp;/&nbsp;
+  <a href="#name-the-thing">The Thing</a>
+  &nbsp;/&nbsp;
   <a href="#what-it-does">What It Does</a>
   &nbsp;/&nbsp;
   <a href="#the-science-behind-it">Science</a>
@@ -20,101 +22,112 @@
   <a href="#technical-details">Details</a>
 </p>
 
-Coding agents are good at coding. That is also the problem.
+<p align="center">
+  <img alt="One prompt" src="https://img.shields.io/badge/one%20prompt-THE%20THING-43d17a?style=for-the-badge&amp;labelColor=07110c" />
+  <img alt="Thirty minute heartbeat" src="https://img.shields.io/badge/heartbeat-every%2030%20min-f4c542?style=for-the-badge&amp;labelColor=171204" />
+  <img alt="PDFs sites reports apps" src="https://img.shields.io/badge/works%20for-PDFs%20%7C%20sites%20%7C%20reports%20%7C%20apps-6aa9ff?style=for-the-badge&amp;labelColor=07101f" />
+  <img alt="No code review required" src="https://img.shields.io/badge/no%20code%20review%20required-check%20the%20thing-f07a5f?style=for-the-badge&amp;labelColor=1b0905" />
+</p>
 
-They can spend a whole session changing files while drifting away from the
-thing you actually wanted: the PDF, the website, the report, the chart pack,
-the app demo, or whatever else you will judge at the end.
+<details open>
+<summary><strong>English</strong></summary>
 
-`goal-cli` keeps that thing in the center. It rebuilds the thing, checks the
-thing, and only lets the agent keep changing code when the thing is still not
-good enough. Chat confidence does not count. The thing does.
+Coding agents love code.
+
+You want the thing.
+
+Not a diff.
+
+Not a status update.
+
+Not "almost done."
+
+The thing.
+
+The PDF.
+
+The website.
+
+The report.
+
+The chart pack.
+
+The app demo.
+
+`goal-cli` keeps the thing in the center.
+
+It rebuilds the thing.
+
+It checks the thing.
+
+If the thing is not good enough, the agent gets another work pass.
+
+Chat confidence does not count.
+
+The thing does.
 
 ## Quick Start
 
-You do not need to learn `goal-cli` first. Paste this into the coding agent
-that already has access to your project.
-
-Replace only `THE THING` with the one thing you want finished.
+Paste one sentence into your coding agent.
 
 ```text
-Set up this project for goal-cli.
-
-THE THING: <describe the one finished thing I care about>
-
-I care about THE THING, not the code diff. Your job is to make future coding
-work keep proving THE THING is actually getting better.
-
-First, make sure goal-cli runs. Use Python 3.11 or newer. If goal-cli is not
-already installed, clone it from:
-
-https://github.com/SiyaoZheng/goal-cli
-
-Install it in a virtual environment outside my project unless this repository
-already has a preferred Python environment.
-
-Use commands like these, adjusted only for the actual folder you choose:
-
-git clone https://github.com/SiyaoZheng/goal-cli.git
-cd goal-cli
-python3 -m venv .venv
-source .venv/bin/activate
-python3 -m pip install --upgrade pip
-python3 -m pip install -e '.[openai]'
-goal-cli --help
-
-Then configure this project around THE THING. Find the output file or runnable
-demo I can inspect directly. If the project needs a small script to rebuild it
-reliably, create it.
-
-If the goal-cli checkout includes llms.txt, read it. If
-skills/goal-cli-project-setup/SKILL.md is available, use it as the setup guide.
-Keep THE THING from this prompt as the one source of truth.
-
-Create or update goal.toml. Keep raw data, generated files, .git/, and .goal/
-off limits. Keep future write access as narrow as possible.
-
-Run these checks before any real repair run:
-
-goal-cli validate
-goal-cli doctor
-goal-cli run --dry-run
-
-Treat goal-cli as a timed heartbeat, not a one-off chat. After the dry run
-passes, recommend one heartbeat every 30 minutes. The usual command is:
-
-goal-cli run --max-minutes 30
-
-If this project uses an automation tool, tell me the exact way to schedule that
-command every 30 minutes.
-
-Only run goal-cli run if those checks pass and you are confident it will work
-inside the allowed source folders. Ask me one question if you cannot safely
-infer the final output.
-
-Finish by reporting:
-- the output path I should inspect;
-- the command that rebuilds it;
-- the files or folders future repair runs may edit;
-- the files or folders future repair runs must not edit;
-- whether to schedule the heartbeat every 30 minutes;
-- the exact next command I should run.
+Hi, read https://github.com/SiyaoZheng/goal-cli/blob/master/llms.txt and do what it says.
 ```
 
-That is the intended first experience: name the thing once, give the prompt to
-your agent, and judge the finished output it names.
+That is it.
+
+The details live in [`llms.txt`](llms.txt).
+
+The agent reads them.
+
+You judge the thing.
+
+## Name The Thing
+
+<p align="center">
+  <img src=".github/assets/goal-cli-personas-human.png" alt="Scholars, designers, hobbyists, accountants, and analysts each holding the thing they need a coding agent to finish" width="100%" />
+</p>
+
+Different people.
+
+Different things.
+
+Same rule.
+
+Name it.
+
+Make the agent come back to it.
+
+| Who | What they say |
+| --- | --- |
+| <img alt="Scholar" src="https://img.shields.io/badge/scholar-34d399?style=flat-square&amp;labelColor=062014" /> | "Show me the PDF." |
+| <img alt="Designer" src="https://img.shields.io/badge/designer-f59e0b?style=flat-square&amp;labelColor=241504" /> | "Show me the poster." |
+| <img alt="Hobbyist" src="https://img.shields.io/badge/hobbyist-60a5fa?style=flat-square&amp;labelColor=071426" /> | "Does my app run?" |
+| <img alt="Accountant" src="https://img.shields.io/badge/accountant-a78bfa?style=flat-square&amp;labelColor=160d24" /> | "Do the numbers tie?" |
+| <img alt="Analyst" src="https://img.shields.io/badge/analyst-f87171?style=flat-square&amp;labelColor=240909" /> | "Does the chart move?" |
 
 ## What It Does
 
-`goal-cli` gives a coding agent a stricter job:
+One prompt.
 
-1. Rebuild the finished output.
-2. Check that output against your standard.
-3. If the output is not good enough, let the agent edit only the allowed source
-   files.
-4. Rebuild and check again on the next run.
+One thing.
 
-This is useful when the real question is not "did the agent change code?" but:
+One heartbeat every 30 minutes.
+
+| Step | What happens |
+| --- | --- |
+| <img alt="Rebuild" src="https://img.shields.io/badge/1-rebuild-22c55e?style=flat-square&amp;labelColor=052e16" /> | Rebuild the thing. |
+| <img alt="Check" src="https://img.shields.io/badge/2-check-eab308?style=flat-square&amp;labelColor=332600" /> | Check the thing. |
+| <img alt="Repair" src="https://img.shields.io/badge/3-repair-3b82f6?style=flat-square&amp;labelColor=082f49" /> | Repair only allowed source files. |
+| <img alt="Repeat" src="https://img.shields.io/badge/4-repeat-ef4444?style=flat-square&amp;labelColor=3b0909" /> | Try again on the next heartbeat. |
+
+The question is not:
+
+"Did the agent change code?"
+
+The question is:
+
+"Is the thing better?"
 
 | You care about | The agent must prove |
 | --- | --- |
@@ -126,30 +139,179 @@ This is useful when the real question is not "did the agent change code?" but:
 
 ## The Science Behind It
 
-People are starting to call this
-[loop engineering](https://addyosmani.com/blog/loop-engineering/): instead of
-writing one perfect prompt, you design a repeatable loop that keeps an agent
-working, checking, and trying again.
+People are calling this
+[loop engineering](https://addyosmani.com/blog/loop-engineering/).
 
-That is the trend. The useful part is simpler:
+The hype says:
 
-1. The agent should not decide success by reading its own code diff.
-2. The work should be checked against the thing you actually asked for.
-3. The loop should run on a timer, so progress does not depend on you typing
-   the next prompt.
+Do not write one perfect prompt.
 
-LangChain describes the basic agent pattern as a model calling tools until the
-job is done, then adds that stronger systems stack more loops around that
-basic loop. Industry coverage of loop engineering says the same thing in plainer
-terms: teams are moving from one-off prompts toward repeatable agent workflows
-that build, test, revise, and continue with less hand-holding.
+Build a loop.
 
-`goal-cli` is the boring, practical version of that idea. Every heartbeat asks:
-is the thing better yet? If not, the agent gets another bounded work pass.
+Make it run.
+
+Make it check.
+
+Make it try again.
+
+`goal-cli` is that idea for normal people.
+
+Every heartbeat asks:
+
+Did the thing get better?
+
+If yes, stop.
+
+If no, repair source and come back in 30 minutes.
 
 Sources: [Addy Osmani](https://addyosmani.com/blog/loop-engineering/),
 [LangChain](https://www.langchain.com/blog/the-art-of-loop-engineering/),
 [ADTMAG](https://adtmag.com/articles/2026/07/01/loop-engineering-emerges-as-developers-put-ai-coding-agents-on-repeat.aspx).
+
+</details>
+
+<details>
+<summary><strong>中文</strong></summary>
+
+Coding agent 很爱写代码。
+
+但你要的不是代码。
+
+你要的是那个东西。
+
+不是 diff。
+
+不是进度汇报。
+
+不是“快好了”。
+
+是那个东西。
+
+PDF。
+
+网站。
+
+报告。
+
+图表包。
+
+App demo。
+
+`goal-cli` 把那个东西放在中间。
+
+它重建那个东西。
+
+它检查那个东西。
+
+如果那个东西还不够好，agent 才继续改源码。
+
+聊天里的自信不算数。
+
+那个东西算数。
+
+## 快速开始
+
+只复制这一句话给你的 coding agent。
+
+```text
+Hi, read https://github.com/SiyaoZheng/goal-cli/blob/master/llms.txt and do what it says.
+```
+
+就这样。
+
+细节在 [`llms.txt`](llms.txt)。
+
+Agent 去读。
+
+你只看那个东西。
+
+## 先说那个东西
+
+<p align="center">
+  <img src=".github/assets/goal-cli-personas-human.png" alt="不同用户拿着自己要让 coding agent 做完的那个东西" width="100%" />
+</p>
+
+人不一样。
+
+东西不一样。
+
+规则一样。
+
+先说清楚那个东西。
+
+让 agent 一直回到它。
+
+| 谁 | 人话 |
+| --- | --- |
+| 学者 <img alt="Scholar" src="https://img.shields.io/badge/scholar-34d399?style=flat-square&amp;labelColor=062014" /> | “给我看 PDF。” |
+| 设计师 <img alt="Designer" src="https://img.shields.io/badge/designer-f59e0b?style=flat-square&amp;labelColor=241504" /> | “给我看海报。” |
+| 玩家 <img alt="Hobbyist" src="https://img.shields.io/badge/hobbyist-60a5fa?style=flat-square&amp;labelColor=071426" /> | “我的 app 跑起来了吗？” |
+| 会计 <img alt="Accountant" src="https://img.shields.io/badge/accountant-a78bfa?style=flat-square&amp;labelColor=160d24" /> | “数字对得上吗？” |
+| 分析师 <img alt="Analyst" src="https://img.shields.io/badge/analyst-f87171?style=flat-square&amp;labelColor=240909" /> | “图动了吗？” |
+
+## 它做什么
+
+一句 prompt。
+
+一个东西。
+
+每 30 分钟一次心跳。
+
+| 步骤 | 发生什么 |
+| --- | --- |
+| <img alt="Rebuild" src="https://img.shields.io/badge/1-rebuild-22c55e?style=flat-square&amp;labelColor=052e16" /> | 重建那个东西。 |
+| <img alt="Check" src="https://img.shields.io/badge/2-check-eab308?style=flat-square&amp;labelColor=332600" /> | 检查那个东西。 |
+| <img alt="Repair" src="https://img.shields.io/badge/3-repair-3b82f6?style=flat-square&amp;labelColor=082f49" /> | 只修允许改的源码。 |
+| <img alt="Repeat" src="https://img.shields.io/badge/4-repeat-ef4444?style=flat-square&amp;labelColor=3b0909" /> | 下一次心跳再看。 |
+
+问题不是：
+
+“它改代码了吗？”
+
+问题是：
+
+“那个东西变好了吗？”
+
+| 你在乎 | Agent 必须证明 |
+| --- | --- |
+| 论文 | PDF 重新生成了，而且值得读。 |
+| 网站 | 页面能打开，而且看起来对。 |
+| 报告 | 数字和叙事都能检查。 |
+| 图表包 | 导出的图是新的。 |
+| Demo app | App 跑在你要的状态。 |
+
+## 背后的科学
+
+现在大家叫它
+[loop engineering](https://addyosmani.com/blog/loop-engineering/)。
+
+热点说法是：
+
+别写一个神奇 prompt。
+
+设计一个循环。
+
+让它运行。
+
+让它检查。
+
+让它再来。
+
+`goal-cli` 是给普通人用的版本。
+
+每次心跳只问一句：
+
+那个东西变好了吗？
+
+好了，就停。
+
+没好，就修源码，30 分钟后再回来。
+
+来源：[Addy Osmani](https://addyosmani.com/blog/loop-engineering/)、
+[LangChain](https://www.langchain.com/blog/the-art-of-loop-engineering/)、
+[ADTMAG](https://adtmag.com/articles/2026/07/01/loop-engineering-emerges-as-developers-put-ai-coding-agents-on-repeat.aspx)。
+
+</details>
 
 <details id="technical-details">
 <summary><strong>Technical Details</strong></summary>

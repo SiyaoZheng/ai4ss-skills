@@ -17,50 +17,8 @@ Most users should start with `goal-cli-project-setup`.
 
 Paste this into the agent that has access to the project.
 
-Replace only `THE THING`.
-
 ```text
-Set up this project for goal-cli.
-
-THE THING: <describe the one finished thing I care about>
-
-I care about THE THING, not the code diff. Your job is to make future coding
-work keep proving THE THING is actually getting better.
-
-Use the goal-cli-project-setup skill from
-skills/goal-cli-project-setup/SKILL.md if it is available.
-
-Find the output file or runnable demo I can inspect directly. If the project
-needs a small script to rebuild it reliably, create it.
-
-Create or update goal.toml. Keep raw data, generated files, .git/, and .goal/
-off limits. Keep future write access as narrow as possible.
-
-Run these checks before any real repair run:
-
-goal-cli validate
-goal-cli doctor
-goal-cli run --dry-run
-
-Treat goal-cli as a timed heartbeat, not a one-off chat. After the dry run
-passes, recommend one heartbeat every 30 minutes. The usual command is:
-
-goal-cli run --max-minutes 30
-
-If this project uses an automation tool, tell me the exact way to schedule that
-command every 30 minutes.
-
-Only run goal-cli run if those checks pass and you are confident it will work
-inside the allowed source folders. Ask me one question if you cannot safely
-infer THE THING.
-
-Finish by reporting:
-- the output path I should inspect;
-- the command that rebuilds it;
-- the files or folders future repair runs may edit;
-- the files or folders future repair runs must not edit;
-- whether to schedule the heartbeat every 30 minutes;
-- the exact next command I should run.
+Hi, read https://github.com/SiyaoZheng/goal-cli/blob/master/llms.txt and do what it says.
 ```
 
 ## Skill Install

@@ -33,7 +33,7 @@ fingerprint_fields = ["blocking_objections", "central_bottleneck"]
 
 [tik.prompt]
 text = \"\"\"
-Review only the canonical artifact at {artifact_path}.
+Review only the finished thing at {artifact_path}.
 Write the critique plainly, then include a JSON object with this shape:
 {
   "artifact_ready": false,
@@ -51,8 +51,8 @@ codex_features = ["goals"]
 
 [tok.prompt]
 template = \"\"\"
-The goal is to keep working on the source so the canonical artifact produced
-by `{producer_command}` improves.
+The goal is to keep working on the source so the finished thing produced by
+`{producer_command}` improves.
 
 Use the attached tik review at {tik_review_path}.
 
@@ -86,7 +86,7 @@ max_blocker_repeats = 3
 def main(argv: list[str] | None = None) -> int:
     parser = argparse.ArgumentParser(
         prog="goal-cli",
-        description="Run artifact-centered heartbeats for coding agents.",
+        description="Make coding agents keep proving the thing is getting better.",
         epilog="Omitting the command defaults to run. Use 'goal-cli <command> -h' for subcommand options.",
     )
     parser.add_argument("-c", "--config", default="goal.toml", help="Path to goal.toml (default: goal.toml)")
@@ -96,8 +96,8 @@ def main(argv: list[str] | None = None) -> int:
     subparsers.add_parser("validate", help="Validate config, prompt placeholders, and writable scopes")
     doctor_parser = subparsers.add_parser(
         "doctor",
-        help="Check artifact-loop setup readiness",
-        description="Check whether the configured artifact loop can run before launching a heartbeat.",
+        help="Check whether the thing-centered setup is ready",
+        description="Check whether goal-cli can rebuild and check the thing before launching a heartbeat.",
     )
     doctor_parser.add_argument("--smoke-codex-goal", action="store_true", help="Run a minimal Codex /goal schema-output smoke check in a temp directory")
     doctor_parser.add_argument("--smoke-codex-file-tik", action="store_true", help="Run a minimal Codex local-file tik smoke check in a temp directory")
@@ -107,7 +107,7 @@ def main(argv: list[str] | None = None) -> int:
     run_parser = subparsers.add_parser(
         "run",
         help="Run one autonomous heartbeat",
-        description="Run one producer -> tik -> tok heartbeat. Tik decides artifact success; tok only repairs source.",
+        description="Run one heartbeat. The thing decides success; source repair is only a step.",
     )
     run_parser.add_argument("--dry-run", action="store_true", help="Create a run directory and render prompts without running producer, tik, or tok")
     run_parser.add_argument("--max-minutes", type=float, default=30.0, help="Maximum wall-clock minutes for the heartbeat, including providers and no-mistakes")

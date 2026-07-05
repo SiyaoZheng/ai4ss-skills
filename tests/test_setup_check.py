@@ -99,7 +99,7 @@ class SetupCheckTests(unittest.TestCase):
 
             self.assertEqual(doctor_exit_code(checks), 0, checks)
             self.assertIn("schema-valid tok report", self._detail(checks, "codex_goal.smoke"))
-            self.assertEqual(self._detail(checks, "one_click_artifact_loop"), "ready for one-click goal-cli run")
+            self.assertEqual(self._detail(checks, "one_click_artifact_loop"), "ready for one-prompt goal-cli run")
             self.assertEqual(project_source.read_text(encoding="utf-8"), before)
 
     def test_codex_file_tik_smoke_uses_temp_artifact_and_validates_verdict(self) -> None:
@@ -117,7 +117,7 @@ class SetupCheckTests(unittest.TestCase):
 
             self.assertEqual(doctor_exit_code(checks), 0, checks)
             self.assertIn("parseable current-artifact verdict", self._detail(checks, "codex_file_tik.smoke"))
-            self.assertEqual(self._detail(checks, "one_click_artifact_loop"), "ready for one-click goal-cli run")
+            self.assertEqual(self._detail(checks, "one_click_artifact_loop"), "ready for one-prompt goal-cli run")
             self.assertEqual(project_source.read_text(encoding="utf-8"), before)
 
     def test_doctor_resolves_relative_no_mistakes_binary_from_project_root(self) -> None:

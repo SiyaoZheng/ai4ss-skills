@@ -742,7 +742,7 @@ def render_prompts_to_run_dir(config: GoalConfig, run_dir: Path, tik_path: Path 
         tik_path = run_dir / "tik.md"
         tik_path.write_text(
             "# Referee Report\n\n"
-            "Dry run placeholder. A real heartbeat writes this file after the canonical artifact is reviewed.\n",
+            "Dry run placeholder. A real heartbeat writes this file after the finished thing is reviewed.\n",
             encoding="utf-8",
         )
     (run_dir / "tok_prompt.md").write_text(render_tok_prompt(config, artifact, tik_path, run_dir), encoding="utf-8")

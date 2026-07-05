@@ -458,7 +458,7 @@ def _one_click_summary(config: GoalConfig, checks: list[DoctorCheck]) -> DoctorC
     blocking = _blocking_checks(checks)
     if blocking:
         names = ", ".join(check.name for check in blocking)
-        return DoctorCheck("one_click_artifact_loop", False, f"not ready for one-click goal-cli run; blocking checks: {names}")
+        return DoctorCheck("one_click_artifact_loop", False, f"not ready for one-prompt goal-cli run; blocking checks: {names}")
     required_smokes = ["codex_goal.smoke"]
     if config.tik.provider == "codex_file":
         required_smokes.append("codex_file_tik.smoke")
@@ -470,10 +470,10 @@ def _one_click_summary(config: GoalConfig, checks: list[DoctorCheck]) -> DoctorC
         return DoctorCheck(
             "one_click_artifact_loop",
             False,
-            f"one-click path not proven; run goal-cli doctor {' '.join(flags)}",
+            f"one-prompt path not proven; run goal-cli doctor {' '.join(flags)}",
             "warning",
         )
-    return DoctorCheck("one_click_artifact_loop", True, "ready for one-click goal-cli run")
+    return DoctorCheck("one_click_artifact_loop", True, "ready for one-prompt goal-cli run")
 
 
 def _blocking_checks(checks: list[DoctorCheck]) -> list[DoctorCheck]:
