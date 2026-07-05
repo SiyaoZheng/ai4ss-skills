@@ -1,0 +1,40 @@
+name: Linear PR Linker
+
+on:
+  pull_request:
+    types:
+      - opened
+      - edited
+      - reopened
+      - ready_for_review
+      - synchronize
+  workflow_dispatch:
+    inputs:
+      pr_state:
+        description: Which existing pull requests to inspect
+        required: true
+        default: open
+        type: choice
+        options:
+          - open
+          - closed
+          - all
+      dry_run:
+        description: Preview changes without updating PR bodies
+        required: true
+        default: true
+        type: boolean
+
+permissions:
+  contents: read
+  pull-requests: write
+
+jobs:
+  link:
+    uses: SiyaoZheng/linear-pr-linker-action/.github/workflows/link.yml@main
+    with:
+      backfill_existing_prs: ${{ github.event_name == 'workflow_dispatch' }}
+      pr_state: ${{ github.event_name == 'workflow_dispatch' && inputs.pr_state || 'open' }}
+      dry_run: ${{ github.event_name == 'workflow_dispatch' && inputs.dry_run || false }}
+    secrets:
+      LINEAR_API_KEY: ${{ secrets.LINEAR_API_KEY }}

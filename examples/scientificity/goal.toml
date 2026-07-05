@@ -1,0 +1,111 @@
+name = "scientificity-publication-pdf"
+# Copy this file to the scientificity repository root before running goal-cli.
+state_dir = ".goal"
+runs_dir = ".goal/runs"
+
+[artifact]
+path = "output/scientificity-paper.pdf"
+copy_as = "full_paper.pdf"
+
+[producer]
+command = "make all"
+
+[tik]
+provider = "agent"
+model = "gpt-5.5-pro"
+timeout_seconds = 1800
+max_file_size_bytes = 25000000
+max_output_tokens = 4096
+store = false
+
+[tik.verdict]
+ready_field = "artifact_ready"
+blockers_field = "blocking_objections"
+required_fields = ["artifact_ready", "blocking_objections"]
+fingerprint_fields = ["blocking_objections", "central_bottleneck"]
+
+[tik.prompt]
+text = """
+You are tik, the blind PDF-only publication critic.
+
+You receive exactly one file: full_paper.pdf. Treat it as the submitted
+paper. Do not infer from source files, logs, project history, or filenames.
+The only success standard is whether this PDF is ready for serious academic
+peer review as a submitted paper.
+
+Return only valid JSON with this shape:
+{
+  "artifact_ready": false,
+  "central_bottleneck": "one sentence",
+  "blocking_objections": [
+    {
+      "severity": "blocking",
+      "objection": "reviewer objection grounded only in the PDF",
+      "artifact_evidence": "page, section, table, figure, or visible text from the PDF"
+    }
+  ],
+  "required_next_artifact_changes": ["visible change required in the next PDF"]
+}
+
+Set artifact_ready to true only if the PDF has no publication-blocking
+objections. If artifact_ready is true, blocking_objections must be [].
+"""
+
+[tok]
+provider = "codex_goal"
+sandbox = "workspace-write"
+write_dirs = ["writing", "src"]
+codex_features = ["goals"]
+
+[tok.prompt]
+template = """
+Artifact-level goal: {goal_name}
+
+The only success standard is the next canonical artifact produced by:
+{producer_command}
+
+Use the tik ledger below. Edit only real sources in the writable scopes.
+Do not edit generated output, build artifacts, or the current artifact. Do not
+fabricate evidence, citations, claims, or interpretations.
+
+This tok cycle ends after one bounded source revision. The artifact-level
+runtime will rebuild the canonical artifact and run tik again in a later cycle.
+
+Tik ledger:
+{tik_ledger}
+
+Writable scopes:
+{writable_scopes}
+
+Return concise JSON:
+{
+  "source_change_possible": true,
+  "revision_strategy": "one sentence",
+  "sources_changed": ["path"],
+  "expected_artifact_visible_improvement": ["visible change in next artifact"],
+  "remaining_artifact_bottleneck": "one sentence"
+}
+"""
+
+[no_mistakes]
+enabled = true
+binary = "no-mistakes"
+branch_prefix = "goal-cli"
+skip_steps = []
+intent = """
+Drive the scientificity publication PDF artifact loop automatically. Each cycle
+continues from the previous cycle, rebuilds the canonical PDF, evaluates only
+that PDF, and applies one bounded source revision when tik finds
+publication-blocking objections. Keep the Git worktree clean between cycles.
+"""
+
+[observability]
+service_name = "goal-cli"
+endpoint = "http://localhost:4318/v1/traces"
+timeout_seconds = 5
+
+[safety]
+generated_dirs = ["output", "build"]
+max_blocker_repeats = 3
+lock_stale_seconds = 21600
+max_history_items = 50
