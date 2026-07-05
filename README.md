@@ -1,7 +1,5 @@
 <div align="center">
-  <img src=".github/assets/goal-cli-hero.svg" alt="goal-cli product banner" width="100%" />
-
-  <h1>goal-cli</h1>
+  <img src=".github/assets/goal-cli-logo-generated.png" alt="goal-cli logo" width="360" />
 
   <p><strong>Stop grading autonomous agents by chat logs. Grade the artifact.</strong></p>
 
