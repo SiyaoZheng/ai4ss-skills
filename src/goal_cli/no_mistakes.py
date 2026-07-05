@@ -328,10 +328,7 @@ def _gate_intent(config: GoalConfig) -> str:
     if config.no_mistakes.intent:
         return config.no_mistakes.intent
     return (
-        f"Run the autonomous artifact loop for {config.name}. "
-        "Each heartbeat continues from the previous heartbeat, rebuilds the canonical artifact, "
-        "evaluates it, and applies one bounded source revision when needed. "
-        "The workspace must stay clean between heartbeats."
+        f"Run {config.name}: rebuild artifact, evaluate it, apply source revisions, keep Git clean."
     )
 
 

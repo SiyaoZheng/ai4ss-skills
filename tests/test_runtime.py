@@ -9,8 +9,9 @@ import time
 import unittest
 from pathlib import Path
 
-from goal_cli.config import ConfigError, load_config, validate_config
-from goal_cli.runtime import HeartbeatLock, RuntimeOptions, load_state, run_heartbeat, run_goal
+from goal_cli.adapters import run_tik
+from goal_cli.config import ConfigError, TikConfig, load_config, validate_config
+from goal_cli.runtime import HeartbeatLock, RuntimeOptions, cleanup_runtime, load_state, run_heartbeat, run_goal
 from goal_cli.tok_execution import execute_tok
 
 
@@ -54,6 +55,59 @@ class GoalRuntimeTests(unittest.TestCase):
             self.assertEqual(result.status, "locked")
             self.assertIn("heartbeat already running", result.message)
             self.assertEqual(config.heartbeat_path.read_text(encoding="utf-8"), heartbeat_text)
+
+    def test_cleanup_removes_dead_lock_and_marks_interrupted_heartbeat(self) -> None:
+        with tempfile.TemporaryDirectory() as temp_dir:
+            root = Path(temp_dir)
+            self._write_basic_project(root)
+            config = load_config(root / "goal.toml")
+            config.state_dir.mkdir(parents=True)
+            config.lock_path.write_text(
+                json.dumps({"pid": 999999999, "created_at": "2026-07-05T00:00:00+00:00", "token": "dead"}) + "\n",
+                encoding="utf-8",
+            )
+            config.heartbeat_path.write_text(
+                json.dumps(
+                    {
+                        "goal": config.name,
+                        "phase": "tok_running",
+                        "status": "active",
+                        "iteration": 1,
+                        "last_seen": "2026-07-05T00:00:00+00:00",
+                        "run_dir": ".goal/runs/heartbeat-0001",
+                    }
+                )
+                + "\n",
+                encoding="utf-8",
+            )
+
+            result = cleanup_runtime(config)
+
+            self.assertFalse(config.lock_path.exists())
+            self.assertTrue(any("removed stale heartbeat lock" in action for action in result.actions))
+            heartbeat = json.loads(config.heartbeat_path.read_text(encoding="utf-8"))
+            self.assertEqual(heartbeat["phase"], "interrupted")
+            self.assertEqual(heartbeat["previous_phase"], "tok_running")
+            state = load_state(config)
+            self.assertEqual(state["status"], "active")
+            self.assertEqual(state["next_action"], "tik")
+            self.assertEqual(state["history"][-1]["event"], "cleanup_interrupted")
+
+    def test_cleanup_leaves_live_lock_untouched(self) -> None:
+        with tempfile.TemporaryDirectory() as temp_dir:
+            root = Path(temp_dir)
+            self._write_basic_project(root)
+            config = load_config(root / "goal.toml")
+            config.state_dir.mkdir(parents=True)
+            config.lock_path.write_text(
+                json.dumps({"pid": os.getpid(), "created_at": "2026-07-05T00:00:00+00:00", "token": "live"}) + "\n",
+                encoding="utf-8",
+            )
+
+            result = cleanup_runtime(config)
+
+            self.assertTrue(config.lock_path.exists())
+            self.assertTrue(any("active" in warning for warning in result.warnings))
 
     def test_run_goal_advances_one_heartbeat_at_a_time(self) -> None:
         with tempfile.TemporaryDirectory() as temp_dir:
@@ -155,6 +209,41 @@ class GoalRuntimeTests(unittest.TestCase):
             self.assertEqual(result.exit_code, 1)
             self.assertEqual(result.status, "blocked_unparseable_tik")
             self.assertEqual((root / "src" / "source.txt").read_text(encoding="utf-8"), "draft\n")
+
+    def test_stale_tik_review_blocks_without_tok(self) -> None:
+        with tempfile.TemporaryDirectory() as temp_dir:
+            root = Path(temp_dir)
+            self._write_basic_project(root)
+            (root / "scripts" / "tik.py").write_text(
+                textwrap.dedent(
+                    """
+                    import json
+                    print(json.dumps({
+                        "artifact_ready": False,
+                        "central_bottleneck": "old review",
+                        "blocking_objections": [{"severity": "blocking", "objection": "old PDF objection"}],
+                        "required_next_artifact_changes": ["run a fresh review"],
+                        "review_matches_current_pdf": False,
+                        "current_pdf_sha256": "current-sha",
+                        "reviewed_pdf_sha256": "old-sha"
+                    }))
+                    """
+                ).strip()
+                + "\n",
+                encoding="utf-8",
+            )
+
+            config = load_config(root / "goal.toml")
+            result = run_goal(config, RuntimeOptions(max_minutes=0))
+
+            self.assertEqual(result.exit_code, 1)
+            self.assertEqual(result.status, "blocked_stale_tik_review")
+            state = load_state(config)
+            self.assertEqual(state["status"], "blocked_stale_tik_review")
+            self.assertEqual(state["next_action"], "tik")
+            self.assertIn("fresh artifact review", state["blocked_reason"])
+            self.assertEqual((root / "src" / "source.txt").read_text(encoding="utf-8"), "draft\n")
+            self.assertFalse((root / state["last_run_dir"] / "tok_report.json").exists())
 
     def test_review_only_does_not_advance_repeated_blocker_policy(self) -> None:
         with tempfile.TemporaryDirectory() as temp_dir:
@@ -269,7 +358,7 @@ class GoalRuntimeTests(unittest.TestCase):
             os.environ["PATH"] = f"{bin_dir}{os.pathsep}{old_path}"
             try:
                 config = load_config(self._write_codex_goal_project(root))
-                result = execute_tok(config.tok, "bounded prompt", run_dir)
+                result = execute_tok(config.tok, "repair prompt", run_dir)
             finally:
                 os.environ["PATH"] = old_path
 
@@ -279,8 +368,66 @@ class GoalRuntimeTests(unittest.TestCase):
             log_text = (run_dir / "tok_codex.log").read_text(encoding="utf-8")
             self.assertIn("--output-schema", log_text)
             self.assertIn("--enable goals", log_text)
+            self.assertIn("--add-dir", log_text)
+            self.assertIn(str(run_dir / "attachments"), log_text)
+            provider_prompt = (run_dir / "tok_codex_goal_prompt.md").read_text(encoding="utf-8")
+            self.assertTrue(provider_prompt.startswith("/goal\n"))
+            self.assertIn("Keep working according to the attached review", provider_prompt)
+            self.assertIn("Return the required report", provider_prompt)
+            self.assertNotIn("tik", provider_prompt.lower())
+            self.assertNotIn("tok", provider_prompt.lower())
+            self.assertNotIn("bounded", provider_prompt.lower())
+            self.assertNotIn("writable scopes", provider_prompt.lower())
 
-    def test_tik_ledger_is_passed_whole_into_tok_prompt(self) -> None:
+    def test_codex_goal_tok_fails_if_attachment_changes(self) -> None:
+        with tempfile.TemporaryDirectory() as temp_dir:
+            root = Path(temp_dir)
+            bin_dir = root / "bin"
+            src_dir = root / "src"
+            run_dir = root / ".goal" / "runs" / "heartbeat-0001"
+            bin_dir.mkdir()
+            src_dir.mkdir()
+            (run_dir / "attachments").mkdir(parents=True)
+            (run_dir / "attachments" / "tik_review.md").write_text("original review\n", encoding="utf-8")
+            fake_codex = bin_dir / "codex"
+            fake_codex.write_text(
+                textwrap.dedent(
+                    """
+                    #!/usr/bin/env python3
+                    import json
+                    import sys
+                    from pathlib import Path
+
+                    args = sys.argv[1:]
+                    output_path = Path(args[args.index("--output-last-message") + 1])
+                    add_dirs = [Path(args[index + 1]) for index, arg in enumerate(args) if arg == "--add-dir"]
+                    (add_dirs[-1] / "tik_review.md").write_text("mutated review\\n", encoding="utf-8")
+                    output_path.write_text(json.dumps({
+                        "source_change_possible": True,
+                        "revision_strategy": "edit source",
+                        "sources_changed": ["src/source.txt"],
+                        "expected_artifact_visible_improvement": ["artifact changes"],
+                        "remaining_artifact_bottleneck": "none known"
+                    }) + "\\n", encoding="utf-8")
+                    """
+                ).strip()
+                + "\n",
+                encoding="utf-8",
+            )
+            fake_codex.chmod(0o755)
+            old_path = os.environ.get("PATH", "")
+            os.environ["PATH"] = f"{bin_dir}{os.pathsep}{old_path}"
+            try:
+                config = load_config(self._write_codex_goal_project(root))
+                result = execute_tok(config.tok, "repair prompt", run_dir)
+            finally:
+                os.environ["PATH"] = old_path
+
+            self.assertFalse(result.ok)
+            self.assertIn("modified tik_review.md", result.detail)
+            self.assertTrue((run_dir / "tok_attachment_integrity.log").exists())
+
+    def test_tik_review_is_attached_instead_of_inlined_into_tok_prompt(self) -> None:
         with tempfile.TemporaryDirectory() as temp_dir:
             root = Path(temp_dir)
             self._write_basic_project(root)
@@ -291,15 +438,130 @@ class GoalRuntimeTests(unittest.TestCase):
             self.assertEqual(result.exit_code, 0)
             self.assertEqual(result.status, "active")
             tik_ledger = (result.run_dir / "tik.md").read_text(encoding="utf-8")
+            tik_review = result.run_dir / "attachments" / "tik_review.md"
             tok_prompt = (result.run_dir / "tok_prompt.md").read_text(encoding="utf-8")
-            self.assertIn("# Tik Ledger", tik_ledger)
+            self.assertIn("# Referee Report", tik_ledger)
             self.assertIn("draft artifact", tik_ledger)
-            self.assertIn("## Raw Tik Memo", tik_ledger)
-            self.assertIn("## Parsed Tik Verdict", tik_ledger)
-            self.assertIn(tik_ledger.strip(), tok_prompt)
+            self.assertIn("## Review Text", tik_ledger)
+            self.assertIn("## Parsed Verdict", tik_ledger)
+            self.assertEqual(tik_review.read_text(encoding="utf-8").strip(), tik_ledger.strip())
+            self.assertIn(str(tik_review), tok_prompt)
+            self.assertNotIn(tik_ledger.strip(), tok_prompt)
+            self.assertNotIn("tok", tok_prompt.lower())
+            self.assertNotIn("ledger", tok_prompt.lower())
+            self.assertNotIn("bounded", tok_prompt.lower())
+            self.assertNotIn("writable scopes", tok_prompt.lower())
             state = load_state(config)
             expected_ledger_path = result.run_dir.resolve().relative_to(root.resolve()) / "tik.md"
             self.assertEqual(state["last_tik"]["ledger_path"], str(expected_ledger_path))
+
+    def test_rich_tik_report_can_end_with_json_verdict_block(self) -> None:
+        with tempfile.TemporaryDirectory() as temp_dir:
+            root = Path(temp_dir)
+            self._write_basic_project(root)
+            (root / "scripts" / "tik.py").write_text(
+                textwrap.dedent(
+                    '''
+                    print("""Referee report
+
+                    This manuscript is not ready for publication because the measurement is not validated.
+
+                    ```json
+                    {
+                      "artifact_ready": false,
+                      "central_bottleneck": "measurement is not validated",
+                      "blocking_objections": [
+                        {"severity": "blocking", "objection": "no validation evidence"}
+                      ],
+                      "required_next_artifact_changes": ["add validation evidence"]
+                    }
+                    ```
+                    """)
+                    '''
+                ).strip()
+                + "\n",
+                encoding="utf-8",
+            )
+            config = load_config(root / "goal.toml")
+
+            result = run_heartbeat(config, RuntimeOptions(max_minutes=0))
+
+            self.assertEqual(result.exit_code, 0)
+            self.assertEqual(result.status, "active")
+            self.assertIn("Referee report", (result.run_dir / "tik_memo.md").read_text(encoding="utf-8"))
+            verdict = json.loads((result.run_dir / "tik_verdict.json").read_text(encoding="utf-8"))
+            self.assertFalse(verdict["_parse_error"])
+            self.assertEqual(verdict["central_bottleneck"], "measurement is not validated")
+            tok_prompt = (result.run_dir / "tok_prompt.md").read_text(encoding="utf-8")
+            tik_review = result.run_dir / "attachments" / "tik_review.md"
+            self.assertIn(str(tik_review), tok_prompt)
+            self.assertNotIn("This manuscript is not ready for publication", tok_prompt)
+            self.assertIn("This manuscript is not ready for publication", tik_review.read_text(encoding="utf-8"))
+
+    def test_codex_file_tik_uses_single_artifact_read_only_workspace(self) -> None:
+        with tempfile.TemporaryDirectory() as temp_dir:
+            root = Path(temp_dir)
+            run_dir = root / ".goal" / "runs" / "heartbeat-0001"
+            run_dir.mkdir(parents=True)
+            artifact = root / "output" / "artifact.pdf"
+            artifact.parent.mkdir()
+            artifact.write_text("fake pdf content\n", encoding="utf-8")
+            bin_dir = root / "bin"
+            bin_dir.mkdir()
+            fake_codex = bin_dir / "codex"
+            fake_codex.write_text(
+                textwrap.dedent(
+                    """
+                    #!/usr/bin/env python3
+                    import json
+                    import sys
+                    from pathlib import Path
+
+                    args = sys.argv[1:]
+                    output_path = Path(args[args.index("--output-last-message") + 1])
+                    workspace = Path(args[args.index("-C") + 1])
+                    assert args[0] == "exec"
+                    assert "--skip-git-repo-check" in args
+                    assert args[args.index("--sandbox") + 1] == "read-only"
+                    assert "--ephemeral" in args
+                    assert sorted(path.name for path in workspace.iterdir()) == ["full_paper.pdf"]
+                    prompt = sys.stdin.read()
+                    assert prompt.startswith("/apsr-review\\n")
+                    assert "Only inspect this local artifact file" not in prompt
+                    assert "temporary directory" not in prompt
+                    assert "configured review prompt" in prompt
+                    output_path.write_text(json.dumps({
+                        "artifact_ready": False,
+                        "central_bottleneck": "needs evidence",
+                        "blocking_objections": [{"severity": "blocking", "objection": "thin evidence"}],
+                        "required_next_artifact_changes": ["add evidence"]
+                    }) + "\\n", encoding="utf-8")
+                    """
+                ).strip()
+                + "\n",
+                encoding="utf-8",
+            )
+            fake_codex.chmod(0o755)
+            old_path = os.environ.get("PATH", "")
+            os.environ["PATH"] = f"{bin_dir}{os.pathsep}{old_path}"
+            try:
+                memo_path = run_tik(
+                    TikConfig(provider="codex_file", prompt=""),
+                    root,
+                    artifact,
+                    "/apsr-review\n\nconfigured review prompt",
+                    run_dir,
+                    "tik",
+                    "full_paper.pdf",
+                )
+            finally:
+                os.environ["PATH"] = old_path
+
+            self.assertEqual(memo_path, run_dir / "tik_memo.md")
+            self.assertIn("thin evidence", memo_path.read_text(encoding="utf-8"))
+            log_text = (run_dir / "tik_codex_file.log").read_text(encoding="utf-8")
+            self.assertIn("--sandbox read-only", log_text)
+            self.assertIn("--ephemeral", log_text)
 
     def test_missing_codex_blocks_without_uncaught_exception(self) -> None:
         with tempfile.TemporaryDirectory() as temp_dir:
@@ -350,16 +612,39 @@ class GoalRuntimeTests(unittest.TestCase):
             self.assertLess(elapsed, 2.0)
             self.assertIn("timed out", (result.run_dir / "producer.log").read_text(encoding="utf-8"))
 
-    def test_scientificity_example_uses_agent_tik_and_codex_goal_tok(self) -> None:
+    def test_scientificity_example_uses_codex_file_tik_and_codex_goal_tok(self) -> None:
         repo_root = Path(__file__).resolve().parents[1]
         config = load_config(repo_root / "examples" / "scientificity" / "goal.toml")
 
-        self.assertEqual(config.tik.provider, "agent")
+        self.assertEqual(config.tik.provider, "codex_file")
         self.assertEqual(config.tok.provider, "codex_goal")
         prompt_text = config.tik.prompt + "\n" + config.tok.prompt_template
-        banned = ["Adrian", "user", "human", "approval", "decision_required", "ask"]
+        banned = ["Adrian", "user", "human", "approval", "decision_required", "ask", "bounded", "Writable scopes", "{writable_scopes}", "{tik_ledger}"]
         for term in banned:
             self.assertNotIn(term, prompt_text)
+        self.assertIn("publication\nstandard of APSR", prompt_text)
+        self.assertIn("produced by `{producer_command}`", prompt_text)
+        self.assertIn("{tik_review_path}", prompt_text)
+
+    def test_scientificity_example_validates_after_copy_to_project_root(self) -> None:
+        repo_root = Path(__file__).resolve().parents[1]
+        example_text = (repo_root / "examples" / "scientificity" / "goal.toml").read_text(encoding="utf-8")
+        with tempfile.TemporaryDirectory() as temp_dir:
+            root = Path(temp_dir)
+            (root / "output").mkdir()
+            (root / "src").mkdir()
+            (root / "writing").mkdir()
+            config_path = root / "goal.toml"
+            config_path.write_text(example_text, encoding="utf-8")
+
+            config = load_config(config_path)
+
+            self.assertEqual(validate_config(config), [])
+            self.assertEqual(config.tik.provider, "codex_file")
+            self.assertEqual(
+                tuple(path.resolve() for path in config.tok.write_dirs),
+                ((root / "writing").resolve(), (root / "src").resolve()),
+            )
 
     def test_validate_rejects_wrong_tok_provider_and_runtime_prompt_language(self) -> None:
         with tempfile.TemporaryDirectory() as temp_dir:
@@ -368,7 +653,7 @@ class GoalRuntimeTests(unittest.TestCase):
             config_path = root / "goal.toml"
             text = config_path.read_text(encoding="utf-8")
             text = text.replace('provider = "codex_goal"', 'provider = "codex_exec"')
-            text = text.replace("Goal: {goal_name}", "Goal: {goal_name}\nAsk a human for approval before making one bounded source change.")
+            text = text.replace("Use {tik_review_path}.", "Use {tik_review_path}.\nAsk a human for approval before editing source files.")
             config_path.write_text(text, encoding="utf-8")
 
             issues = validate_config(load_config(config_path))
@@ -394,7 +679,7 @@ class GoalRuntimeTests(unittest.TestCase):
             self._write_basic_project(root)
             config_path = root / "goal.toml"
             config_path.write_text(
-                config_path.read_text(encoding="utf-8").replace("{tik_ledger}", "{missing_field}"),
+                config_path.read_text(encoding="utf-8").replace("{tik_review_path}", "{missing_field}"),
                 encoding="utf-8",
             )
 
@@ -474,12 +759,8 @@ write_dirs = {json.dumps(write_dirs or ["src"])}
 
 [tok.prompt]
 template = """
-Goal: {{goal_name}}
-Producer: {{producer_command}}
-Verdict:
-{{tik_ledger}}
-Writable scopes:
-{{writable_scopes}}
+The artifact is produced by {{producer_command}}.
+Use {{tik_review_path}}.
 """
 
 [no_mistakes]
@@ -522,7 +803,7 @@ max_blocker_repeats = 3
                 if behavior["mode"] == "no_source":
                     output_path.write_text(json.dumps({
                         "source_change_possible": False,
-                        "revision_strategy": "no bounded source change can address the verdict",
+                        "revision_strategy": "no source change can address the verdict",
                         "sources_changed": [],
                         "expected_artifact_visible_improvement": [],
                         "remaining_artifact_bottleneck": behavior["remaining_artifact_bottleneck"]
@@ -574,7 +855,7 @@ write_dirs = ["src"]
 sandbox = "workspace-write"
 
 [tok.prompt]
-template = "Goal {goal_name} verdict {tik_ledger}"
+template = "Goal {goal_name} review {tik_review_path}"
 
 [no_mistakes]
 enabled = false

@@ -156,6 +156,8 @@ def run_tik(
             if not model:
                 raise ValueError("tik provider agent requires tik.model")
             ok = _openai_review(config, tik_artifact, prompt, output_path, run_dir / f"{label}_openai.log", model, timeout_seconds)
+        elif config.provider == "codex_file":
+            ok = _codex_file_review(config, tik_artifact, prompt, output_path, run_dir / f"{label}_codex_file.log", timeout_seconds)
         else:
             raise ValueError(f"unsupported tik provider: {config.provider}")
 
@@ -163,6 +165,71 @@ def run_tik(
         (run_dir / f"{label}_FAILED.txt").write_text("tik provider failed\n", encoding="utf-8")
         return None
     return output_path
+
+
+def _codex_file_review(
+    config: TikConfig,
+    artifact_path: Path,
+    prompt: str,
+    output_path: Path,
+    log_path: Path,
+    timeout_seconds: float | None = None,
+) -> bool:
+    artifact_size = artifact_path.stat().st_size
+    if artifact_size > config.max_file_size_bytes:
+        log_path.parent.mkdir(parents=True, exist_ok=True)
+        log_path.write_text(
+            f"ERROR: artifact is {artifact_size} bytes, larger than max_file_size_bytes={config.max_file_size_bytes}.\n",
+            encoding="utf-8",
+        )
+        return False
+
+    command = [
+        "codex",
+        "exec",
+        "-C",
+        str(artifact_path.parent),
+        "--skip-git-repo-check",
+        "--sandbox",
+        "read-only",
+        "--ephemeral",
+        "--output-last-message",
+        str(output_path),
+    ]
+    if config.model:
+        command.extend(["-m", config.model])
+    command.append("-")
+
+    effective_timeout = min(config.timeout_seconds, timeout_seconds) if timeout_seconds is not None else config.timeout_seconds
+    ok = run_command_logged(command, artifact_path.parent, log_path, _codex_file_prompt(prompt), timeout_seconds=effective_timeout)
+    if not ok:
+        return False
+    if not output_path.exists():
+        _append_log(log_path, "ERROR: codex_file did not write tik memo.\n")
+        return False
+    if not output_path.read_text(encoding="utf-8").strip():
+        _append_log(log_path, "ERROR: codex_file wrote an empty tik memo.\n")
+        return False
+    return True
+
+
+def _codex_file_prompt(prompt: str) -> str:
+    slash_command, body = _split_leading_slash_command(prompt)
+    if slash_command:
+        return f"{slash_command}\n\n{body}"
+    return prompt
+
+
+def _split_leading_slash_command(prompt: str) -> tuple[str | None, str]:
+    lines = prompt.splitlines()
+    for index, line in enumerate(lines):
+        if not line.strip():
+            continue
+        stripped = line.strip()
+        if stripped.startswith("/") and " " not in stripped:
+            return stripped, "\n".join(lines[index + 1 :]).lstrip()
+        return None, prompt
+    return None, prompt
 
 
 def _openai_review(
@@ -234,6 +301,11 @@ def _openai_review(
                 except Exception:
                     log_file.write("\nWARNING: failed to delete uploaded artifact file.\n")
                     log_file.write(traceback.format_exc())
+
+
+def _append_log(log_path: Path, text: str) -> None:
+    with log_path.open("a", encoding="utf-8") as log_file:
+        log_file.write(text)
 
 
 def _extract_response_text(response: object) -> str:

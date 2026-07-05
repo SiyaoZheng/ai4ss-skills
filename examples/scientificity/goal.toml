@@ -11,44 +11,35 @@ copy_as = "full_paper.pdf"
 command = "make all"
 
 [tik]
-provider = "agent"
-model = "gpt-5.5-pro"
+provider = "codex_file"
 timeout_seconds = 1800
 max_file_size_bytes = 25000000
 max_output_tokens = 4096
-store = false
 
 [tik.verdict]
 ready_field = "artifact_ready"
 blockers_field = "blocking_objections"
 required_fields = ["artifact_ready", "blocking_objections"]
-fingerprint_fields = ["blocking_objections", "central_bottleneck"]
+fingerprint_fields = ["blocking_objections"]
 
 [tik.prompt]
 text = """
-You are tik, the blind PDF-only publication critic.
+/apsr-review
 
-You receive exactly one file: full_paper.pdf. Treat it as the submitted
-paper. Do not infer from source files, logs, project history, or filenames.
-The only success standard is whether this PDF is ready for serious academic
-peer review as a submitted paper.
+You are an APSR reviewer. Review only full_paper.pdf.
+Standard: ready for publication.
 
-Return only valid JSON with this shape:
+Write a referee report.
+
+End with one fenced JSON verdict block for goal-cli routing:
+```json
 {
   "artifact_ready": false,
-  "central_bottleneck": "one sentence",
-  "blocking_objections": [
-    {
-      "severity": "blocking",
-      "objection": "reviewer objection grounded only in the PDF",
-      "artifact_evidence": "page, section, table, figure, or visible text from the PDF"
-    }
-  ],
-  "required_next_artifact_changes": ["visible change required in the next PDF"]
+  "blocking_objections": ["short label for each fatal objection"]
 }
-
-Set artifact_ready to true only if the PDF has no publication-blocking
-objections. If artifact_ready is true, blocking_objections must be [].
+```
+Set artifact_ready=true only if the PDF is ready for publication; then
+blocking_objections=[].
 """
 
 [tok]
@@ -59,32 +50,12 @@ codex_features = ["goals"]
 
 [tok.prompt]
 template = """
-Artifact-level goal: {goal_name}
+The goal is to keep working on the paper so it reaches the publication
+standard of APSR. Note that the paper PDF is produced by `{producer_command}`,
+so you should work in writing/ and src/ rather than generated output, data,
+logs, or the PDF.
 
-The only success standard is the next canonical artifact produced by:
-{producer_command}
-
-Use the tik ledger below. Edit only real sources in the writable scopes.
-Do not edit generated output, build artifacts, or the current artifact. Do not
-fabricate evidence, citations, claims, or interpretations.
-
-This tok cycle ends after one bounded source revision. The artifact-level
-runtime will rebuild the canonical artifact and run tik again in a later cycle.
-
-Tik ledger:
-{tik_ledger}
-
-Writable scopes:
-{writable_scopes}
-
-Return concise JSON:
-{
-  "source_change_possible": true,
-  "revision_strategy": "one sentence",
-  "sources_changed": ["path"],
-  "expected_artifact_visible_improvement": ["visible change in next artifact"],
-  "remaining_artifact_bottleneck": "one sentence"
-}
+Use the attached referee report at {tik_review_path}.
 """
 
 [no_mistakes]
@@ -93,10 +64,10 @@ binary = "no-mistakes"
 branch_prefix = "goal-cli"
 skip_steps = []
 intent = """
-Drive the scientificity publication PDF artifact loop automatically. Each cycle
-continues from the previous cycle, rebuilds the canonical PDF, evaluates only
-that PDF, and applies one bounded source revision when tik finds
-publication-blocking objections. Keep the Git worktree clean between cycles.
+Drive one fully automatic scientificity publication-PDF heartbeat: rebuild the
+current PDF, run a fresh PDF-only referee review through goal-cli, apply source
+revisions in writing/ or src/, keep the Git worktree clean between heartbeats,
+and gate the checkpoint with no-mistakes.
 """
 
 [observability]

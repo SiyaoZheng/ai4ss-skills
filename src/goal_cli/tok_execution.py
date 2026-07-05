@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import hashlib
 import json
 from dataclasses import dataclass
 from pathlib import Path
@@ -67,12 +68,19 @@ def execute_tok(config: TokConfig, prompt: str, run_dir: Path, timeout_seconds: 
         failed_path.write_text("tok.write_dirs is empty\n", encoding="utf-8")
         return TokExecutionResult(False, None, None, ("tok.write_dirs is empty",))
 
+    attachment_dir = run_dir / "attachments"
+    attachment_dir.mkdir(parents=True, exist_ok=True)
+    attachment_snapshot = _snapshot_attachment_files(attachment_dir)
     plan = build_codex_goal_tok_plan(config, prompt, run_dir)
     plan.prompt_path.write_text(prompt, encoding="utf-8")
     plan.schema_path.write_text(json.dumps(TOK_REPORT_SCHEMA, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
     plan.provider_prompt_path.write_text(plan.prompt, encoding="utf-8")
 
     ok = run_command_logged(list(plan.command), plan.cwd, plan.log_path, plan.prompt, timeout_seconds=timeout_seconds)
+    attachment_errors = _attachment_integrity_errors(attachment_snapshot, _snapshot_attachment_files(attachment_dir))
+    if attachment_errors:
+        (run_dir / "tok_attachment_integrity.log").write_text("\n".join(attachment_errors) + "\n", encoding="utf-8")
+        return TokExecutionResult(False, None, None, tuple(attachment_errors), plan)
     if not ok:
         return TokExecutionResult(False, None, None, ("tok provider failed",), plan)
     if not plan.report_path.exists():
@@ -114,6 +122,7 @@ def build_codex_goal_tok_plan(config: TokConfig, prompt: str, run_dir: Path) -> 
         command.extend(["-m", config.model])
     for write_dir in config.write_dirs[1:]:
         command.extend(["--add-dir", str(write_dir)])
+    command.extend(["--add-dir", str(run_dir / "attachments")])
     command.append("-")
     return TokExecutionPlan(
         command=tuple(command),
@@ -159,13 +168,35 @@ def tok_report_errors(report: dict[str, Any] | None) -> list[str]:
 def _codex_goal_prompt(prompt: str) -> str:
     return (
         "/goal\n"
-        "Run this as an internal Codex goal. The goal is complete only when the next "
-        "canonical artifact produced by the configured producer can pass tik. "
-        "Within this session, make one bounded source revision inside the writable scopes, "
-        "record what changed as JSON matching the provided schema, and stop. Do not treat the tok report as completion; "
-        "completion is reserved for a later tik pass.\n\n"
+        "Keep working according to the attached review. "
+        "Return the required report. Do not claim the artifact is complete; the next review pass decides that.\n\n"
         f"{prompt}"
     )
+
+
+def _snapshot_attachment_files(attachment_dir: Path) -> dict[str, str]:
+    snapshot: dict[str, str] = {}
+    if not attachment_dir.exists():
+        return snapshot
+    for path in sorted(attachment_dir.rglob("*")):
+        if path.is_file():
+            digest = hashlib.sha256(path.read_bytes()).hexdigest()
+            snapshot[path.relative_to(attachment_dir).as_posix()] = digest
+    return snapshot
+
+
+def _attachment_integrity_errors(before: dict[str, str], after: dict[str, str]) -> list[str]:
+    errors: list[str] = []
+    before_paths = set(before)
+    after_paths = set(after)
+    for path in sorted(before_paths - after_paths):
+        errors.append(f"tok attachment changed during execution: removed {path}")
+    for path in sorted(after_paths - before_paths):
+        errors.append(f"tok attachment changed during execution: added {path}")
+    for path in sorted(before_paths & after_paths):
+        if before[path] != after[path]:
+            errors.append(f"tok attachment changed during execution: modified {path}")
+    return errors
 
 
 def _parse_json_object(text: str) -> dict[str, Any] | None:

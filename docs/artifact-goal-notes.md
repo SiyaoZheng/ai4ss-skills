@@ -19,7 +19,7 @@ The primary inspiration is `Deli_AutoResearch`'s full Markdown protocol. Codex
 - Codex `/goal` supplies the idea of a persistent objective with explicit
   completion criteria.
 - `karpathy/autoresearch` supplies a compact artifact-and-metric experiment
-  loop: modify a bounded source surface, run a fixed producer/tik, keep
+loop: modify a controlled source surface, run a fixed producer/tik, keep
   progress only when the metric improves.
 
 `goal-cli` should be a reusable implementation of the parts of this protocol
@@ -79,7 +79,7 @@ loop:
 
 The durable design lesson is not "research agents can edit code overnight"; it
 is that autonomy becomes tractable when the loop has a concrete product,
-bounded mutable surface, fixed budget, and machine-checkable evaluation.
+controlled mutable surface, fixed budget, and machine-checkable evaluation.
 
 ## `goal-cli` Design Consequence
 
@@ -100,24 +100,19 @@ This means a goal is not:
 - A request for approval.
 - A claim that the tok succeeded.
 
-The outer runtime goal is artifact-level. Each tok pass is also a real internal
-Codex `/goal`: a bounded source-revision goal whose completion criteria are
-scoped to making one source change that can improve the next canonical
-artifact. Tik writes `tik.md`, a Markdown ledger containing the artifact
-critique. Tok consumes that ledger as a whole; it does not require issue IDs,
-categories, or one-to-one bookkeeping. The tok writes a schema-checked JSON
-report; it never completes the artifact-level goal directly. A tok can only
-change allowed sources so that a later heartbeat can rebuild the artifact and
-the tik can judge it.
+The outer goal is artifact-level. Each tok pass is an internal Codex `/goal`.
+It treats itself as the last tok: read `tik.md`, edit only allowed sources, make
+the strongest source repair, write the schema report, and stop. Tok never
+completes the artifact-level goal.
 
 After the producer, the runtime has exactly two sequential roles:
 
-- Tik: judges the canonical artifact and writes `tik.md`. Public tik modes are only
+- Tik: judges the canonical artifact and writes `tik.md`. Public tik modes are
   `oracle` for deterministic scripts, tests, metrics, or other machine
-  evaluators; and `agent` for model-based evaluation.
-- Tok: performs the next bounded source change. The default tok mode
-  is `codex_goal`, an internal Codex `/goal` scoped to the tik ledger and
-  validated writable scopes.
+  evaluators; `agent` for Responses API file-upload evaluation; and
+  `codex_file` for Codex evaluation of a local artifact copy.
+- Tok: reads `tik.md` and performs the strongest source repair. The default
+  mode is `codex_goal`.
 
 ## Core Runtime Shape
 
@@ -127,8 +122,7 @@ After the producer, the runtime has exactly two sequential roles:
 4. Verify that the canonical artifact exists.
 5. Run tik against the artifact and write `tik.md`.
 6. If the tik passes, mark the goal complete.
-7. If the tik fails, launch one bounded Codex `/goal` tok pass against
-   validated writable scopes.
+7. If the tik fails, launch one tok pass against validated source boundaries.
 8. Record the schema-checked tok report in files.
 9. Exit with file state ready for the next heartbeat.
 
@@ -167,7 +161,7 @@ Runtime prompts are closed-system prompts. They may refer to:
   outputs, repeated identical blockers, or no source change possible.
 - Prior directions tried, when needed to enforce direction diversity.
 - The fact that the tok is an internal Codex `/goal` with completion limited
-  to a bounded source revision.
+  to source revisions.
 
 Runtime prompts must not mention a person who can decide, approve, rescue,
 clarify, or arbitrate the work. Human-facing concepts belong only in outer

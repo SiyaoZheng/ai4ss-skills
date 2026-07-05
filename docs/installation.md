@@ -7,7 +7,7 @@ repository, then pointed at a project-specific `goal.toml`.
 
 - Python 3.11 or newer.
 - Git.
-- Codex CLI on `PATH` for the production tok.
+- Codex CLI on `PATH` for the production tok and `codex_file` tik.
 - `OPENAI_API_KEY` when `tik.provider = "agent"`.
 - `no-mistakes`.
 - An OTLP-compatible OpenTelemetry receiver when you want external trace
@@ -164,7 +164,8 @@ Then edit `goal.toml` so:
 
 - `[artifact].path` is the one canonical product.
 - `[producer].command` rebuilds that artifact from sources.
-- `[tik]` either runs a deterministic oracle command or an agent review.
+- `[tik]` either runs a deterministic oracle command, an OpenAI file-upload
+  agent review, or a Codex local-file review.
 - `[tok].write_dirs` contains only source directories the tok may edit.
 - `[safety].generated_dirs` lists generated outputs the tok must not edit.
 
@@ -174,7 +175,8 @@ For a PDF-first research project, start from:
 cp /Users/siyaozheng/Documents/goal-cli/examples/scientificity/goal.toml ./goal.toml
 ```
 
-Then adjust artifact paths, write dirs, and model names for that repository.
+Then adjust artifact paths, write dirs, tik provider settings, and the producer
+command for that repository.
 
 ## no-mistakes Gate
 
@@ -252,6 +254,12 @@ Prove the Codex tok path in a temporary workspace:
 goal-cli doctor --smoke-codex-goal
 ```
 
+For `tik.provider = "codex_file"`, prove the local-file tik path too:
+
+```bash
+goal-cli doctor --smoke-codex-goal --smoke-codex-file-tik
+```
+
 Run one heartbeat:
 
 ```bash
@@ -268,6 +276,18 @@ Reset runtime state without deleting run artifacts:
 
 ```bash
 goal-cli reset
+```
+
+Clean up after an interrupted heartbeat:
+
+```bash
+goal-cli cleanup
+```
+
+If a Ctrl-C left orphan provider processes for this project, use:
+
+```bash
+goal-cli cleanup --kill-orphans
 ```
 
 ## Running From Source Without Installing

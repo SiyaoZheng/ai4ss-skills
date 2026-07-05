@@ -5,6 +5,8 @@ import hashlib
 import json
 import os
 import re
+import signal
+import subprocess
 import time
 import uuid
 from dataclasses import dataclass, field
@@ -38,6 +40,12 @@ class RunResult:
     status: str
     run_dir: Path | None
     message: str
+
+
+@dataclass(frozen=True)
+class CleanupResult:
+    actions: tuple[str, ...]
+    warnings: tuple[str, ...] = ()
 
 
 class HeartbeatLockError(RuntimeError):
@@ -430,6 +438,22 @@ class HeartbeatRunner:
                     next_action=None,
                     artifact=artifact,
                 )
+            freshness_error = tik_freshness_error(verdict, artifact)
+            if freshness_error is not None:
+                span.set_attribute("goal.tik.fresh", False)
+                span.set_attribute("goal.tik.freshness_error", freshness_error)
+                self.state["last_tik"] = tik_state(self.config, run_dir, memo_path, verdict_path, tik_path, artifact, False)
+                return self._finish(
+                    1,
+                    "blocked_stale_tik_review",
+                    "tik review does not match current artifact",
+                    phase="tik_stale",
+                    event="tik_stale",
+                    blocked_reason=freshness_error,
+                    next_action="tik",
+                    artifact=artifact,
+                )
+            span.set_attribute("goal.tik.fresh", True)
             return verdict, verdict_path, memo_path, tik_path
 
     def _record_blocker(self, verdict: dict[str, Any], artifact: dict[str, Any]) -> RunResult | None:
@@ -717,8 +741,8 @@ def render_prompts_to_run_dir(config: GoalConfig, run_dir: Path, tik_path: Path 
     if tik_path is None:
         tik_path = run_dir / "tik.md"
         tik_path.write_text(
-            "# Tik Ledger\n\n"
-            "Dry run placeholder. A real heartbeat writes this file after tik reviews the canonical artifact.\n",
+            "# Referee Report\n\n"
+            "Dry run placeholder. A real heartbeat writes this file after the canonical artifact is reviewed.\n",
             encoding="utf-8",
         )
     (run_dir / "tok_prompt.md").write_text(render_tok_prompt(config, artifact, tik_path, run_dir), encoding="utf-8")
@@ -736,17 +760,25 @@ def render_tik_prompt(config: GoalConfig, artifact: dict[str, Any]) -> str:
 
 def render_tok_prompt(config: GoalConfig, artifact: dict[str, Any], tik_path: Path, run_dir: Path) -> str:
     tik_ledger = tik_path.read_text(encoding="utf-8") if tik_path.exists() else ""
+    tik_review_path = write_tik_review_attachment(run_dir, tik_ledger)
     values = {
         "goal_name": config.name,
         "producer_command": config.producer.command,
         "artifact_path": str(artifact.get("path", rel(config, config.artifact.path))),
         "artifact_sha256": str(artifact.get("sha256", "")),
-        "tik_ledger": tik_ledger.strip(),
-        "tik_path": str(tik_path),
+        "tik_review_path": str(tik_review_path),
         "writable_scopes": "\n".join(f"- {path}" for path in config.tok.write_dirs),
         "run_dir": str(run_dir),
     }
     return render_template(config.tok.prompt_template, values)
+
+
+def write_tik_review_attachment(run_dir: Path, report_text: str) -> Path:
+    attachment_dir = run_dir / "attachments"
+    attachment_dir.mkdir(parents=True, exist_ok=True)
+    report_path = attachment_dir / "tik_review.md"
+    report_path.write_text(report_text.strip() + "\n", encoding="utf-8")
+    return report_path
 
 
 def write_tik_ledger(
@@ -762,7 +794,7 @@ def write_tik_ledger(
     tik_path = run_dir / "tik.md"
     body = "\n".join(
         [
-            "# Tik Ledger",
+            "# Referee Report",
             "",
             f"Goal: {config.name}",
             f"Run directory: {rel(config, run_dir)}",
@@ -774,16 +806,11 @@ def write_tik_ledger(
             f"- size_bytes: {artifact.get('size_bytes', '')}",
             f"- mtime: {artifact.get('mtime', '')}",
             "",
-            "## Tik Outputs",
-            "",
-            f"- memo_path: {rel(config, memo_path)}",
-            f"- verdict_path: {rel(config, verdict_path)}",
-            "",
-            "## Raw Tik Memo",
+            "## Review Text",
             "",
             memo.strip() or "(empty)",
             "",
-            "## Parsed Tik Verdict",
+            "## Parsed Verdict",
             "",
             "```json",
             parsed_tik_json,
@@ -837,6 +864,125 @@ def append_history(config: GoalConfig, state: dict[str, Any], event: dict[str, A
         state["history"] = history
     history.append({"at": now_iso(), **event})
     del history[:-config.safety.max_history_items]
+
+
+def cleanup_runtime(config: GoalConfig, kill_orphans: bool = False) -> CleanupResult:
+    actions: list[str] = []
+    warnings: list[str] = []
+    live_lock = False
+    removed_lock = False
+
+    if config.lock_path.exists():
+        payload = _read_lock_payload(config.lock_path)
+        if _lock_process_is_dead(config.lock_path):
+            config.lock_path.unlink()
+            removed_lock = True
+            pid = payload.get("pid") if isinstance(payload, dict) else None
+            actions.append(f"removed stale heartbeat lock for dead pid {pid}: {rel(config, config.lock_path)}")
+        elif payload is None:
+            warnings.append(f"heartbeat lock exists but is not parseable; left untouched: {rel(config, config.lock_path)}")
+        else:
+            live_lock = True
+            warnings.append(f"heartbeat lock is active for pid {payload.get('pid')}; left untouched")
+
+    if removed_lock or (not live_lock and _heartbeat_looks_interrupted(config)):
+        previous_phase = _mark_heartbeat_interrupted(config)
+        if previous_phase:
+            actions.append(f"marked heartbeat interrupted: {previous_phase} -> interrupted")
+
+    if kill_orphans:
+        if live_lock:
+            warnings.append("skipped orphan process cleanup because an active heartbeat lock exists")
+        else:
+            actions.extend(_terminate_orphan_goal_processes(config))
+
+    if not actions and not warnings:
+        actions.append("cleanup found nothing to do")
+    return CleanupResult(tuple(actions), tuple(warnings))
+
+
+def _heartbeat_looks_interrupted(config: GoalConfig) -> bool:
+    heartbeat = _read_heartbeat(config)
+    phase = heartbeat.get("phase") if isinstance(heartbeat, dict) else None
+    return isinstance(phase, str) and phase.endswith("_running")
+
+
+def _read_heartbeat(config: GoalConfig) -> dict[str, Any]:
+    if not config.heartbeat_path.exists():
+        return {}
+    try:
+        heartbeat = json.loads(config.heartbeat_path.read_text(encoding="utf-8"))
+    except (OSError, json.JSONDecodeError):
+        return {}
+    return heartbeat if isinstance(heartbeat, dict) else {}
+
+
+def _mark_heartbeat_interrupted(config: GoalConfig) -> str | None:
+    heartbeat = _read_heartbeat(config)
+    previous_phase = heartbeat.get("phase")
+    if not isinstance(previous_phase, str) or not previous_phase.endswith("_running"):
+        return None
+    heartbeat["phase"] = "interrupted"
+    heartbeat["previous_phase"] = previous_phase
+    heartbeat["last_seen"] = now_iso()
+    temp_path = config.heartbeat_path.with_suffix(".json.tmp")
+    temp_path.write_text(json.dumps(heartbeat, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
+    temp_path.replace(config.heartbeat_path)
+
+    state = load_state(config)
+    state["status"] = "active"
+    state["next_action"] = "tik"
+    append_history(
+        config,
+        state,
+        {
+            "event": "cleanup_interrupted",
+            "previous_phase": previous_phase,
+            "run_dir": heartbeat.get("run_dir"),
+        },
+    )
+    save_state(config, state)
+    return previous_phase
+
+
+def _terminate_orphan_goal_processes(config: GoalConfig) -> list[str]:
+    result = subprocess.run(
+        ["ps", "-axo", "pid=,ppid=,command="],
+        text=True,
+        stdout=subprocess.PIPE,
+        stderr=subprocess.PIPE,
+        check=False,
+    )
+    if result.returncode != 0:
+        return [f"could not list processes for orphan cleanup: {result.stderr.strip() or result.returncode}"]
+
+    actions: list[str] = []
+    current_pid = os.getpid()
+    for line in result.stdout.splitlines():
+        match = re.match(r"\s*(\d+)\s+(\d+)\s+(.*)", line)
+        if not match:
+            continue
+        pid = int(match.group(1))
+        command = match.group(3)
+        if pid == current_pid or str(config.root) not in command:
+            continue
+        if "codex exec" not in command and "goal_cli.cli" not in command and "-m goal_cli" not in command:
+            continue
+        try:
+            os.kill(pid, signal.SIGTERM)
+        except ProcessLookupError:
+            continue
+        except PermissionError:
+            actions.append(f"permission denied terminating orphan process {pid}")
+            continue
+        actions.append(f"terminated orphan process {pid}: {_clip(command, 160)}")
+    if not actions:
+        actions.append("no orphan goal-cli/Codex processes found for this project")
+    return actions
+
+
+def _clip(text: str, limit: int) -> str:
+    return text if len(text) <= limit else text[: limit - 3] + "..."
 
 
 def update_heartbeat(config: GoalConfig, state: dict[str, Any], phase: str, run_dir: Path | None) -> None:
@@ -896,6 +1042,41 @@ def extract_json_object(text: str) -> dict[str, Any] | None:
 def tik_is_ready(config: GoalConfig, verdict: dict[str, Any]) -> bool:
     blockers = verdict.get(config.tik.verdict.blockers_field)
     return verdict.get(config.tik.verdict.ready_field) is True and isinstance(blockers, list) and not blockers
+
+
+def tik_freshness_error(verdict: dict[str, Any], artifact: dict[str, Any]) -> str | None:
+    artifact_sha = str(artifact.get("sha256") or "")
+    if verdict.get("review_matches_current_pdf") is False:
+        reviewed_sha = _optional_str(verdict.get("reviewed_pdf_sha256") or verdict.get("reviewed_artifact_sha256") or verdict.get("reviewed_sha256"))
+        current_sha = _optional_str(verdict.get("current_pdf_sha256") or verdict.get("current_artifact_sha256") or verdict.get("current_sha256"))
+        return _freshness_message(artifact_sha, reviewed_sha, current_sha)
+
+    current_sha = _optional_str(verdict.get("current_pdf_sha256") or verdict.get("current_artifact_sha256") or verdict.get("current_sha256"))
+    if current_sha and artifact_sha and current_sha != artifact_sha:
+        return f"tik current artifact hash {current_sha} does not match runtime artifact hash {artifact_sha}"
+
+    reviewed_sha = _optional_str(verdict.get("reviewed_pdf_sha256") or verdict.get("reviewed_artifact_sha256") or verdict.get("reviewed_sha256"))
+    if reviewed_sha and artifact_sha and reviewed_sha != artifact_sha:
+        return _freshness_message(artifact_sha, reviewed_sha, current_sha)
+    return None
+
+
+def _optional_str(value: object) -> str | None:
+    if isinstance(value, str) and value.strip():
+        return value.strip()
+    return None
+
+
+def _freshness_message(artifact_sha: str, reviewed_sha: str | None, current_sha: str | None) -> str:
+    parts = ["tik review does not match the current artifact"]
+    if artifact_sha:
+        parts.append(f"runtime_artifact_sha256={artifact_sha}")
+    if current_sha:
+        parts.append(f"tik_current_sha256={current_sha}")
+    if reviewed_sha:
+        parts.append(f"reviewed_sha256={reviewed_sha}")
+    parts.append("run a fresh artifact review before tok")
+    return "; ".join(parts)
 
 
 def update_blocker_state(config: GoalConfig, state: dict[str, Any], verdict: dict[str, Any]) -> None:

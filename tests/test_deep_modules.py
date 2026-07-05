@@ -76,7 +76,7 @@ class DeepModuleInterfaceTests(unittest.TestCase):
                     sandbox = "workspace-write"
 
                     [tok.prompt]
-                    template = "Goal {goal_name} verdict {tik_ledger}"
+                    template = "Goal {goal_name} review {tik_review_path}"
 
                     [no_mistakes]
                     enabled = false
@@ -137,7 +137,7 @@ write_dirs = {json.dumps(write_dirs or ["src"])}
 sandbox = "workspace-write"
 
 [tok.prompt]
-template = "Goal {{goal_name}} verdict {{tik_ledger}}"
+template = "Goal {{goal_name}} review {{tik_review_path}}"
 
 [no_mistakes]
 enabled = false
@@ -196,7 +196,12 @@ class ReadyProbeAdapter:
 
     def run(self, command: list[str], cwd: Path, timeout_seconds: float) -> subprocess.CompletedProcess[str]:
         self.commands.append(tuple(command))
-        return subprocess.CompletedProcess(command, 0, "--output-schema --output-last-message --enable --add-dir --sandbox\n", "")
+        return subprocess.CompletedProcess(
+            command,
+            0,
+            "--output-schema --output-last-message --enable --add-dir --sandbox --skip-git-repo-check --ephemeral\n",
+            "",
+        )
 
     def package_available(self, package: str) -> bool:
         return True

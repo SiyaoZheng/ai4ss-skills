@@ -66,6 +66,27 @@ class SetupCheckTests(unittest.TestCase):
             self.assertIn("not installed", self._detail(checks, "openai.package"))
             self.assertIn("not set", self._detail(checks, "openai.auth"))
 
+    def test_doctor_requires_ephemeral_only_for_codex_file_tik(self) -> None:
+        with tempfile.TemporaryDirectory() as temp_dir:
+            root = Path(temp_dir)
+            self._write_project(root)
+            self._install_fake_codex(root, include_ephemeral=False)
+
+            checks = run_doctor(load_config(root / "goal.toml"))
+
+            self.assertEqual(doctor_exit_code(checks), 0, checks)
+
+        with tempfile.TemporaryDirectory() as temp_dir:
+            root = Path(temp_dir)
+            self._write_project(root, tik_provider="codex_file")
+            self._install_fake_codex(root, include_ephemeral=False)
+
+            checks = run_doctor(load_config(root / "goal.toml"))
+
+            self.assertEqual(doctor_exit_code(checks), 1)
+            self.assertIn("does not show --ephemeral", self._detail(checks, "codex.exec.--ephemeral"))
+            self.assertIn("codex.exec.--ephemeral", self._detail(checks, "one_click_artifact_loop"))
+
     def test_codex_goal_smoke_uses_temp_workspace_and_validates_report(self) -> None:
         with tempfile.TemporaryDirectory() as temp_dir:
             root = Path(temp_dir)
@@ -78,6 +99,24 @@ class SetupCheckTests(unittest.TestCase):
 
             self.assertEqual(doctor_exit_code(checks), 0, checks)
             self.assertIn("schema-valid tok report", self._detail(checks, "codex_goal.smoke"))
+            self.assertEqual(self._detail(checks, "one_click_artifact_loop"), "ready for one-click goal-cli run")
+            self.assertEqual(project_source.read_text(encoding="utf-8"), before)
+
+    def test_codex_file_tik_smoke_uses_temp_artifact_and_validates_verdict(self) -> None:
+        with tempfile.TemporaryDirectory() as temp_dir:
+            root = Path(temp_dir)
+            self._write_project(root, tik_provider="codex_file")
+            self._install_fake_codex(root)
+            project_source = root / "src" / "source.txt"
+            before = project_source.read_text(encoding="utf-8")
+
+            checks = run_doctor(
+                load_config(root / "goal.toml"),
+                DoctorOptions(smoke_codex_goal=True, smoke_codex_file_tik=True),
+            )
+
+            self.assertEqual(doctor_exit_code(checks), 0, checks)
+            self.assertIn("parseable current-artifact verdict", self._detail(checks, "codex_file_tik.smoke"))
             self.assertEqual(self._detail(checks, "one_click_artifact_loop"), "ready for one-click goal-cli run")
             self.assertEqual(project_source.read_text(encoding="utf-8"), before)
 
@@ -139,6 +178,13 @@ class SetupCheckTests(unittest.TestCase):
                 model = "gpt-5.5-pro"
                 """
             ).strip()
+        elif tik_provider == "codex_file":
+            tik_table = textwrap.dedent(
+                """
+                [tik]
+                provider = "codex_file"
+                """
+            ).strip()
         else:
             tik_table = textwrap.dedent(
                 """
@@ -169,7 +215,7 @@ write_dirs = ["src"]
 sandbox = "workspace-write"
 
 [tok.prompt]
-template = "Goal {{goal_name}} verdict {{tik_ledger}}"
+template = "Goal {{goal_name}} review {{tik_review_path}}"
 
 [no_mistakes]
 enabled = false
@@ -182,11 +228,16 @@ generated_dirs = ["output", "build"]
 '''
         (root / "goal.toml").write_text(config, encoding="utf-8")
 
-    def _install_fake_codex(self, root: Path, include_schema_flags: bool = True) -> None:
+    def _install_fake_codex(self, root: Path, include_schema_flags: bool = True, include_ephemeral: bool = True) -> None:
         bin_dir = root / "bin"
         bin_dir.mkdir()
         fake_codex = bin_dir / "codex"
-        help_flags = "--output-schema --output-last-message --enable --add-dir --sandbox" if include_schema_flags else "--enable --add-dir --sandbox"
+        help_flags = ["--enable", "--add-dir", "--sandbox", "--skip-git-repo-check"]
+        if include_schema_flags:
+            help_flags[:0] = ["--output-schema", "--output-last-message"]
+        if include_ephemeral:
+            help_flags.append("--ephemeral")
+        help_text = " ".join(help_flags)
         fake_codex.write_text(
             textwrap.dedent(
                 f"""
@@ -197,22 +248,42 @@ generated_dirs = ["output", "build"]
 
                 args = sys.argv[1:]
                 if args in (["exec", "--help"], ["exec", "--enable", "goals", "--help"]):
-                    print({help_flags!r})
+                    print({help_text!r})
                     raise SystemExit(0)
 
                 output_path = Path(args[args.index("--output-last-message") + 1])
-                schema_path = Path(args[args.index("--output-schema") + 1])
                 workspace = Path(args[args.index("-C") + 1])
                 assert args[0] == "exec"
-                assert "--enable" in args and "goals" in args
-                assert schema_path.exists()
-                (workspace / "doctor-smoke.txt").write_text("ok\\n", encoding="utf-8")
+                if "--output-schema" in args:
+                    schema_path = Path(args[args.index("--output-schema") + 1])
+                    assert "--enable" in args and "goals" in args
+                    assert schema_path.exists()
+                    (workspace / "doctor-smoke.txt").write_text("ok\\n", encoding="utf-8")
+                    output_path.write_text(json.dumps({{
+                        "source_change_possible": True,
+                        "revision_strategy": "write temporary smoke file",
+                        "sources_changed": ["doctor-smoke.txt"],
+                        "expected_artifact_visible_improvement": ["codex_goal can emit schema-shaped reports"],
+                        "remaining_artifact_bottleneck": "none for setup smoke"
+                    }}) + "\\n", encoding="utf-8")
+                    raise SystemExit(0)
+
+                assert "--skip-git-repo-check" in args
+                assert args[args.index("--sandbox") + 1] == "read-only"
+                assert "--ephemeral" in args
+                assert sorted(path.name for path in workspace.iterdir()) == ["doctor-artifact.txt"]
+                prompt = sys.stdin.read()
+                assert "Doctor smoke check for goal-cli codex_file tik readiness" in prompt
+                assert "doctor-artifact.txt" in prompt
                 output_path.write_text(json.dumps({{
-                    "source_change_possible": True,
-                    "revision_strategy": "write temporary smoke file",
-                    "sources_changed": ["doctor-smoke.txt"],
-                    "expected_artifact_visible_improvement": ["codex_goal can emit schema-shaped reports"],
-                    "remaining_artifact_bottleneck": "none for setup smoke"
+                    "artifact_ready": False,
+                    "central_bottleneck": "doctor smoke bottleneck",
+                    "blocking_objections": [{{
+                        "severity": "blocking",
+                        "objection": "doctor smoke objection",
+                        "artifact_evidence": "doctor-artifact.txt"
+                    }}],
+                    "required_next_artifact_changes": ["doctor smoke change"]
                 }}) + "\\n", encoding="utf-8")
                 """
             ).strip()

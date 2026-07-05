@@ -6,7 +6,7 @@ import sys
 from pathlib import Path
 
 from .config import ConfigError, dump_config_summary, load_config, validate_config
-from .runtime import RuntimeOptions, heartbeat_run_dir, load_state, render_prompts_to_run_dir, reset_state, run_heartbeat, run_goal
+from .runtime import RuntimeOptions, cleanup_runtime, heartbeat_run_dir, load_state, render_prompts_to_run_dir, reset_state, run_heartbeat, run_goal
 from .setup_check import DoctorOptions, doctor_exit_code, format_doctor_checks, run_doctor
 
 
@@ -33,7 +33,7 @@ fingerprint_fields = ["blocking_objections", "central_bottleneck"]
 
 [tik.prompt]
 text = \"\"\"
-Tik reviews only the canonical artifact at {artifact_path}.
+Review only the canonical artifact at {artifact_path}.
 Write the critique plainly, then include a JSON object with this shape:
 {
   "artifact_ready": false,
@@ -51,20 +51,12 @@ codex_features = ["goals"]
 
 [tok.prompt]
 template = \"\"\"
-Goal: {goal_name}
-Producer command: {producer_command}
-Canonical artifact: {artifact_path}
+The goal is to keep working on the source so the canonical artifact produced
+by `{producer_command}` improves.
 
-Tik ledger:
-{tik_ledger}
+Use the attached tik review at {tik_review_path}.
 
-Writable scopes:
-{writable_scopes}
-
-Consume the whole tik ledger. Make one bounded source change that can improve
-the next produced artifact. Do not turn tik into a ticket system; repair against
-the ledger as written.
-Return only JSON:
+Implement the review. Edit source files only. Return the schema report:
 {
   "source_change_possible": true,
   "revision_strategy": "one sentence",
@@ -100,15 +92,18 @@ def main(argv: list[str] | None = None) -> int:
     subparsers.add_parser("validate", help="Validate config and writable scopes")
     doctor_parser = subparsers.add_parser("doctor", help="Check artifact-loop setup readiness")
     doctor_parser.add_argument("--smoke-codex-goal", action="store_true", help="Run a minimal Codex /goal schema-output smoke check in a temp directory")
+    doctor_parser.add_argument("--smoke-codex-file-tik", action="store_true", help="Run a minimal Codex local-file tik smoke check in a temp directory")
     doctor_parser.add_argument("--skip-openai-auth", action="store_true", help="Skip OPENAI_API_KEY readiness check for agent tik configs")
     doctor_parser.add_argument("--timeout-seconds", type=float, default=10.0, help="Timeout for setup probes except the optional Codex smoke check")
-    doctor_parser.add_argument("--smoke-timeout-seconds", type=float, default=180.0, help="Timeout for the optional Codex /goal smoke check")
+    doctor_parser.add_argument("--smoke-timeout-seconds", type=float, default=180.0, help="Timeout for optional Codex smoke checks")
     run_parser = subparsers.add_parser("run", help="Run one autonomous heartbeat")
     run_parser.add_argument("--dry-run", action="store_true", help="Render prompts without running producer, tik, or tok")
     run_parser.add_argument("--max-minutes", type=float, default=30.0, help="Maximum wall-clock minutes for this heartbeat")
     subparsers.add_parser("tik", help="Run producer plus tik, but skip tok")
     subparsers.add_parser("state", help="Print state JSON")
     subparsers.add_parser("reset", help="Remove state and stale lock; keep run artifacts")
+    cleanup_parser = subparsers.add_parser("cleanup", help="Clean interrupted heartbeat locks and optional orphan provider processes")
+    cleanup_parser.add_argument("--kill-orphans", action="store_true", help="Terminate orphan goal-cli/Codex processes for this project when no live heartbeat lock exists")
     subparsers.add_parser("render-prompts", help="Render tik and tok prompts into a new run dir")
 
     args = parser.parse_args(argv)
@@ -130,6 +125,7 @@ def main(argv: list[str] | None = None) -> int:
             config,
             DoctorOptions(
                 smoke_codex_goal=getattr(args, "smoke_codex_goal", False),
+                smoke_codex_file_tik=getattr(args, "smoke_codex_file_tik", False),
                 skip_openai_auth=getattr(args, "skip_openai_auth", False),
                 timeout_seconds=getattr(args, "timeout_seconds", 10.0),
                 smoke_timeout_seconds=getattr(args, "smoke_timeout_seconds", 180.0),
@@ -141,6 +137,13 @@ def main(argv: list[str] | None = None) -> int:
     if command == "reset":
         reset_state(config)
         print(f"Reset state: {config.state_path}")
+        return 0
+    if command == "cleanup":
+        result = cleanup_runtime(config, kill_orphans=getattr(args, "kill_orphans", False))
+        for action in result.actions:
+            print(action)
+        for warning in result.warnings:
+            print(f"warning: {warning}", file=sys.stderr)
         return 0
     if command == "render-prompts":
         state = load_state(config)

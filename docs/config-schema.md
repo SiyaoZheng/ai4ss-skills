@@ -38,7 +38,7 @@ never accepted from source edits alone.
 
 ## Tik
 
-Tik has exactly two public modes.
+Tik has three public modes.
 
 ```toml
 [tik]
@@ -64,7 +64,22 @@ store = false
 ```
 
 Use `agent` for model-based artifact critique. The configured artifact is copied
-to a temporary directory before critique.
+to a temporary directory before critique, then uploaded to the OpenAI Responses
+API as an `input_file`.
+
+```toml
+[tik]
+provider = "codex_file"
+timeout_seconds = 1800
+max_file_size_bytes = 25000000
+```
+
+Use `codex_file` for Codex-based artifact critique without Responses file
+upload. The configured artifact is copied into a temporary directory, Codex is
+launched with that directory as its workspace under a read-only sandbox, with no
+project source directories added to the session.
+If the configured tik prompt starts with a slash skill such as `/apsr-review`,
+goal-cli keeps that slash command as the first stdin line.
 
 Tik output must contain a JSON object with the configured verdict fields:
 
@@ -89,8 +104,9 @@ The default verdict shape is:
 
 Each tik pass writes `tik.md` in the run directory. That Markdown ledger is the
 machine handoff to tok: it includes artifact metadata, the raw tik memo, and the
-parsed tik verdict JSON. Tok receives the whole ledger through `{tik_ledger}`;
-there are no separate verdict or memo prompt placeholders.
+parsed tik verdict JSON. Tok normally receives the review as a file attachment
+through `{tik_review_path}` rather than inline prompt text, so long reviews do
+not inflate the `/goal` prompt.
 
 ## Tok
 
@@ -104,8 +120,9 @@ sandbox = "workspace-write"
 codex_features = ["goals"]
 ```
 
-`codex_goal` launches `codex exec` with an internal `/goal` prompt, the local
-Codex `goals` feature enabled, and a JSON Schema for the final tok report.
+`codex_goal` launches `codex exec` with `/goal`, `--enable goals`, and the tok
+report schema. Tok treats every pass as the last pass: read `tik.md`, edit only
+`write_dirs`, make the strongest source repair, and stop.
 `write_dirs` must stay inside the project root and must not overlap `.git`,
 state directories, run directories, generated directories, or the canonical
 artifact.
@@ -122,7 +139,7 @@ Tok reports must match this JSON shape:
 }
 ```
 
-If no bounded source change is possible, tok reports
+If no source change is possible, tok reports
 `"source_change_possible": false`; the runtime records
 `blocked_no_source_change_possible`.
 
@@ -225,13 +242,12 @@ Tok prompts may use:
 - `{producer_command}`
 - `{artifact_path}`
 - `{artifact_sha256}`
-- `{tik_ledger}`
-- `{tik_path}`
+- `{tik_review_path}`
 - `{writable_scopes}`
 - `{run_dir}`
 
 Runtime prompts must stay closed-system. They may describe the artifact,
-producer, tik ledger, writable scopes, budgets, and operational
+producer, tik ledger, source boundaries, budgets, and operational
 impossibilities. They must not include a person-facing approval, clarification,
 or decision path.
 
@@ -273,7 +289,8 @@ checks:
   (OTLP when reachable or explicitly environment-configured, local JSONL
   fallback otherwise);
 - `codex exec` support for `--output-schema`, `--output-last-message`,
-  `--enable`, `--add-dir`, and `--sandbox`;
+  `--enable`, `--add-dir`, `--sandbox`, and `--ephemeral` when
+  `tik.provider = "codex_file"`;
 - agent tik `openai` package and `OPENAI_API_KEY` readiness when
   `tik.provider = "agent"`.
 
@@ -289,7 +306,32 @@ goal-cli doctor --smoke-codex-goal
 
 The smoke check starts a minimal internal Codex `/goal` in a temporary writable
 directory and validates the schema-shaped tok report. It does not touch
-project sources. `one_click_artifact_loop` is only ready after this check passes.
+project sources.
+
+For `tik.provider = "codex_file"`, also run:
+
+```bash
+goal-cli doctor --smoke-codex-goal --smoke-codex-file-tik
+```
+
+The second smoke check copies a tiny temporary artifact into a single-file
+Codex workspace, runs the same local-file tik adapter used at runtime, and
+validates the configured tik verdict fields. `one_click_artifact_loop` is only
+ready after all required smoke checks for the configured providers pass.
+
+Clean up an interrupted heartbeat:
+
+```bash
+goal-cli cleanup
+```
+
+The cleanup command removes a stale heartbeat lock whose process is already
+dead and marks a running heartbeat as interrupted. To also terminate orphan
+goal-cli/Codex processes that still reference the current project, use:
+
+```bash
+goal-cli cleanup --kill-orphans
+```
 
 ## Runtime Units
 

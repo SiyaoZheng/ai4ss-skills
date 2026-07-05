@@ -88,7 +88,7 @@ write_dirs = ["src"]
 sandbox = "workspace-write"
 
 [tok.prompt]
-template = "Goal {{goal_name}} verdict {{tik_ledger}}"
+template = "Goal {{goal_name}} review {{tik_review_path}}"
 
 [no_mistakes]
 enabled = false
