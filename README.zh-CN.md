@@ -13,9 +13,9 @@
 <p align="center">
   <a href="#快速开始"><strong>快速开始</strong></a>
   &nbsp;/&nbsp;
-  <a href="#先说那个东西">那个东西</a>
+  <a href="#先说清楚要什么">要什么</a>
   &nbsp;/&nbsp;
-  <a href="#它做什么">它做什么</a>
+  <a href="#怎么跑">怎么跑</a>
   &nbsp;/&nbsp;
   <a href="#背后的科学">科学</a>
   &nbsp;/&nbsp;
@@ -35,139 +35,133 @@
   <img alt="No code review required" src="https://img.shields.io/badge/no%20code%20review%20required-check%20the%20thing-f07a5f?style=for-the-badge&amp;labelColor=1b0905" />
 </p>
 
-Coding agent 很爱写代码。
+Coding agent 最爱干什么？
 
-但你要的不是代码。
+改代码。
 
-你要的是那个东西。
+但你真正要的，不是“我改了 12 个文件”。
 
-不是 diff。
+你要的是成品。
 
-不是进度汇报。
+能打开的 PDF。
 
-不是“快好了”。
+能看的网页。
 
-是那个东西。
+能交的报告。
 
-PDF。
+能刷新的图表。
 
-网站。
+能跑起来的 demo。
 
-报告。
+`goal-cli` 做一件事：
 
-图表包。
+把 agent 拉回 THE THING。
 
-App demo。
+先重建成品。
 
-`goal-cli` 把那个东西放在中间。
+再验收成品。
 
-它重建那个东西。
+不过关，再让它改源码。
 
-它检查那个东西。
+嘴上说“差不多了”不算。
 
-如果那个东西还不够好，agent 才继续改源码。
-
-聊天里的自信不算数。
-
-那个东西算数。
+成品真的变好，才算。
 
 ## 快速开始
 
-只复制这一句话给你的 coding agent。
+把这一句粘给你的 coding agent。
 
 ```text
 Hi, read https://github.com/SiyaoZheng/goal-cli/blob/master/llms.txt and do what it says.
 ```
 
-就这样。
+就这一句。
 
 细节在 [`llms.txt`](llms.txt)。
 
-Agent 去读。
+让 agent 自己读。
 
-你只看那个东西。
+你只看结果。
 
-## 先说那个东西
+## 先说清楚要什么
 
 <p align="center">
   <img src=".github/assets/goal-cli-personas-human.png" alt="不同用户拿着自己要让 coding agent 做完的那个东西" width="100%" />
 </p>
 
-人不一样。
+每个人要的都不一样。
 
-东西不一样。
+但规矩一样。
 
-规则一样。
+先把要交付的东西说清楚。
 
-先说清楚那个东西。
+然后让 agent 一直回到它。
 
-让 agent 一直回到它。
-
-| 谁 | 人话 |
+| 你是谁 | 直接这么说 |
 | --- | --- |
-| 学者 <img alt="Scholar" src="https://img.shields.io/badge/scholar-34d399?style=flat-square&amp;labelColor=062014" /> | “给我看 PDF。” |
-| 设计师 <img alt="Designer" src="https://img.shields.io/badge/designer-f59e0b?style=flat-square&amp;labelColor=241504" /> | “给我看海报。” |
-| 玩家 <img alt="Hobbyist" src="https://img.shields.io/badge/hobbyist-60a5fa?style=flat-square&amp;labelColor=071426" /> | “我的 app 跑起来了吗？” |
+| 学者 <img alt="Scholar" src="https://img.shields.io/badge/scholar-34d399?style=flat-square&amp;labelColor=062014" /> | “先别讲代码，给我看 PDF。” |
+| 设计师 <img alt="Designer" src="https://img.shields.io/badge/designer-f59e0b?style=flat-square&amp;labelColor=241504" /> | “给我看海报成品。” |
+| 玩家 <img alt="Hobbyist" src="https://img.shields.io/badge/hobbyist-60a5fa?style=flat-square&amp;labelColor=071426" /> | “这个 app 能点开跑吗？” |
 | 会计 <img alt="Accountant" src="https://img.shields.io/badge/accountant-a78bfa?style=flat-square&amp;labelColor=160d24" /> | “数字对得上吗？” |
-| 分析师 <img alt="Analyst" src="https://img.shields.io/badge/analyst-f87171?style=flat-square&amp;labelColor=240909" /> | “图动了吗？” |
+| 分析师 <img alt="Analyst" src="https://img.shields.io/badge/analyst-f87171?style=flat-square&amp;labelColor=240909" /> | “图是不是新的？” |
 
-## 它做什么
+## 怎么跑
 
 一句 prompt。
 
-一个东西。
+一个交付物。
 
 每 30 分钟一次心跳。
 
 | 动作 | 发生什么 |
 | --- | --- |
-| <img alt="Rebuild" src="https://img.shields.io/badge/rebuild-22c55e?style=flat-square&amp;labelColor=052e16" /> | 重建那个东西。 |
-| <img alt="Check" src="https://img.shields.io/badge/check-eab308?style=flat-square&amp;labelColor=332600" /> | 检查那个东西。 |
+| <img alt="Rebuild" src="https://img.shields.io/badge/rebuild-22c55e?style=flat-square&amp;labelColor=052e16" /> | 重建交付物。 |
+| <img alt="Check" src="https://img.shields.io/badge/check-eab308?style=flat-square&amp;labelColor=332600" /> | 验收交付物。 |
 | <img alt="Repair" src="https://img.shields.io/badge/repair-3b82f6?style=flat-square&amp;labelColor=082f49" /> | 只修允许改的源码。 |
-| <img alt="Repeat" src="https://img.shields.io/badge/repeat-ef4444?style=flat-square&amp;labelColor=3b0909" /> | 下一次心跳再看。 |
+| <img alt="Repeat" src="https://img.shields.io/badge/repeat-ef4444?style=flat-square&amp;labelColor=3b0909" /> | 半小时后再验一次。 |
 
-问题不是：
+别问：
 
 “它改代码了吗？”
 
-问题是：
+要问：
 
-“那个东西变好了吗？”
+“我要的东西，真的变好了吗？”
 
 | 你在乎 | Agent 必须证明 |
 | --- | --- |
-| 论文 | PDF 重新生成了，而且值得读。 |
-| 网站 | 页面能打开，而且看起来对。 |
-| 报告 | 数字和叙事都能检查。 |
-| 图表包 | 导出的图是新的。 |
-| Demo app | App 跑在你要的状态。 |
+| 论文 | PDF 重新生成了，读起来更像能交的稿子。 |
+| 网站 | 页面能打开，第一眼是对的。 |
+| 报告 | 数字、口径、叙事都能查。 |
+| 图表包 | 导出的图是新的，不是旧图冒充。 |
+| Demo app | App 在你要的状态里跑起来。 |
 
 ## 背后的科学
 
-现在大家叫它
+现在圈里把这事叫
 [loop engineering](https://addyosmani.com/blog/loop-engineering/)。
 
-热点说法是：
+说白了：
 
-别写一个神奇 prompt。
+别指望一个神 prompt 管到底。
 
-设计一个循环。
+你要设计一个循环。
 
-让它运行。
+跑一轮。
 
-让它检查。
+验一轮。
 
-让它再来。
+不过关，再来一轮。
 
-`goal-cli` 是给普通人用的版本。
+`goal-cli` 是这套思路的家用版。
 
-每次心跳只问一句：
+每半小时只问一个问题：
 
-那个东西变好了吗？
+东西变好了吗？
 
-好了，就停。
+好，停。
 
-没好，就修源码，30 分钟后再回来。
+不好，回去改源码，下一次心跳再验。
 
 来源：[Addy Osmani](https://addyosmani.com/blog/loop-engineering/)、
 [LangChain](https://www.langchain.com/blog/the-art-of-loop-engineering/)、
@@ -176,26 +170,26 @@ Agent 去读。
 <details id="technical-details">
 <summary><strong>技术细节</strong></summary>
 
-配置文件是 `goal.toml`。
+配置文件叫 `goal.toml`。
 
-它只回答四个问题：
+只写清楚四件事：
 
 | 问题 | 配置 |
 | --- | --- |
-| 我要检查哪个成品？ | `[artifact].path` |
+| 我要验收哪个成品？ | `[artifact].path` |
 | 怎么重建它？ | `[producer].command` |
-| 怎么检查它？ | `[tik]` |
-| Agent 允许改哪里？ | `[tok].write_dirs` |
+| 怎么验收它？ | `[tik]` |
+| Agent 可以改哪些目录？ | `[tok].write_dirs` |
 
 常用命令：
 
 | 命令 | 用途 |
 | --- | --- |
-| `goal-cli init` | 创建 starter `goal.toml`。 |
-| `goal-cli validate` | 检查配置。 |
-| `goal-cli doctor` | 检查本地环境能不能跑。 |
-| `goal-cli run --dry-run` | 先预演，不真的修。 |
-| `goal-cli run --max-minutes 30` | 跑一次 30 分钟心跳。 |
+| `goal-cli init` | 生成一份起步用的 `goal.toml`。 |
+| `goal-cli validate` | 检查配置有没有写歪。 |
+| `goal-cli doctor` | 检查本机能不能跑。 |
+| `goal-cli run --dry-run` | 预演一遍，不让 agent 真改。 |
+| `goal-cli run --max-minutes 30` | 跑一轮 30 分钟心跳。 |
 
 完整配置说明见 [docs/config-schema.md](docs/config-schema.md)。
 
