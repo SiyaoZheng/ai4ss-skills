@@ -1,49 +1,61 @@
-<br />
+<p align="center">
+  <img src=".github/assets/goal-cli-readme-cover.png" alt="goal-cli, Master coding agent for non-coders" width="100%" />
+</p>
+
+<p align="center">
+  <a href="#install"><strong>Run a heartbeat</strong></a>
+  &nbsp;/&nbsp;
+  <a href="#pick-your-artifact">Pick your artifact</a>
+  &nbsp;/&nbsp;
+  <a href="#the-loop">See the loop</a>
+  &nbsp;/&nbsp;
+  <a href="#configuration">Configure it</a>
+</p>
+
+<p align="center">
+  <kbd>Python 3.11+</kbd>
+  <kbd>for non-coders</kbd>
+  <kbd>artifact-first</kbd>
+  <kbd>local-first</kbd>
+</p>
+
+<h2 align="center">If you can judge the output, you can run the agent.</h2>
+
+<p align="center">
+  <code>goal-cli</code> turns coding-agent work into a rebuild, review, repair loop. The agent can edit code. You accept only the artifact: paper, poster, report, research note, or app.
+</p>
+
+## Pick Your Artifact
 
 <table>
   <tr>
-    <td width="62%" valign="middle">
-      <h1>Master Coding Agent for Non-Coders</h1>
-      <p><strong><code>goal-cli</code> is a master control layer for coding agents.</strong></p>
-      <p>Run coding agents through papers, posters, financial reports, sell-side research, and small apps you can inspect.</p>
-      <p>
-        <a href="#install"><strong>Run a heartbeat</strong></a>
-        &nbsp;|&nbsp;
-        <a href="#the-loop">See the control loop</a>
-        &nbsp;|&nbsp;
-        <a href="#configuration">Define the artifact</a>
-      </p>
-      <p>
-        <kbd>Python 3.11+</kbd>
-        <kbd>for non-coders</kbd>
-        <kbd>artifact-first</kbd>
-        <kbd>local-first</kbd>
-      </p>
+    <td width="20%" valign="top">
+      <strong>Scholar</strong><br />
+      Paper, appendix, replication packet.<br /><br />
+      The PDF rebuilds before the claim counts.
     </td>
-    <td width="38%" align="center" valign="middle">
-      <img src=".github/assets/goal-cli-logo-generated.png" alt="goal-cli logo" width="300" />
+    <td width="20%" valign="top">
+      <strong>Designer</strong><br />
+      Poster, landing page, campaign visual.<br /><br />
+      The exported work has to match the brief.
+    </td>
+    <td width="20%" valign="top">
+      <strong>Hobbyist</strong><br />
+      Your own small app.<br /><br />
+      The demo must run before the agent gets credit.
+    </td>
+    <td width="20%" valign="top">
+      <strong>Accountant</strong><br />
+      Report, workbook, reconciliation export.<br /><br />
+      Tables and numbers regenerate before review.
+    </td>
+    <td width="20%" valign="top">
+      <strong>Brokerage analyst</strong><br />
+      Research report, chart pack, sector note.<br /><br />
+      Charts, tables, wording, and sources update together.
     </td>
   </tr>
 </table>
-
----
-
-> You do not need to read every diff to demand proof.
-
-Coding agents are useful. Their transcripts are not proof. `goal-cli` gives
-non-coders a control loop above the coding agent: define the output, rebuild it
-every heartbeat, let a separate critic review the artifact, and only repair
-source when the artifact fails.
-
-## Who It Helps
-
-| You are | The artifact you can judge | What the agent must prove |
-| --- | --- | --- |
-| Scholar | Paper, appendix, replication packet | The PDF rebuilds and the critique points at the artifact, not the chat. |
-| Designer | Poster, landing page, campaign visual | The exported page or image matches the brief you can see. |
-| Hobbyist | Your own small app | The app runs, the demo changes, and the next heartbeat shows it. |
-| Accountant | Financial report, workbook, reconciliation export | Tables, numbers, and files regenerate before you review them. |
-| Brokerage analyst | Sell-side research report, chart pack, sector note | Charts, tables, wording, and sources update in the rebuilt report. |
 
 ## Install
 
