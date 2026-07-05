@@ -1,0 +1,4 @@
+interface:
+  display_name: "Public Data Sources"
+  short_description: "Route free social-science data API calls"
+  default_prompt: "Use $public-data-sources to find and safely call a free public social-science data source."

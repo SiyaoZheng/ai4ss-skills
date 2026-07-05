@@ -1,0 +1,4 @@
+inspect-ai
+inspect-swe
+openai
+PyYAML

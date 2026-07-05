@@ -11,22 +11,29 @@ Read these before changing files:
 - `docs/variable_dictionary.*`.
 - Existing scripts in execution order.
 - Existing logs and prior audit outputs.
+- `references/real-observed-data-contract.md` when outputs feed analysis,
+  tables, figures, claims, or a draft PDF.
 
 If the project has no clear file layout, propose one:
 
 ```
 data/raw/          # immutable source files
-data/interim/      # cleaned but not final
-data/analysis/     # model-ready samples
+data/intermediate/ # cleaned but not final
+data/processed/    # model-ready samples
 scripts/           # numbered, runnable steps
-output/audit/      # row loss, merge diagnostics, missingness, provenance
 output/tables/
 output/figures/
 output/logs/
-docs/changelog.md
+.ai4ss/research_model.aiss
 ```
 
 ## 2. Stage Pattern
+
+Before any stage writes analysis-facing rows, verify that each row or coded
+cell comes from a real observed public or authorized source. Do not generate
+empirical data from DGPs, random draws, parameter benchmarks, literature
+coefficients, or example cases. If the planned source is unavailable, change
+the observed source, unit, geography, period, measure, or route.
 
 For each stage, record:
 
@@ -78,4 +85,4 @@ When a script fails:
 2. Inspect the smallest failing input and relevant column names.
 3. Make the smallest code change that addresses the observed failure.
 4. Rerun the failing step.
-5. Append the cause, change, command, and validation result to `docs/changelog.md`.
+5. Append the cause, change, command, and validation result to `output/logs/pipeline_changelog.md`, and record durable decisions in `.ai4ss/research_model.aiss`.

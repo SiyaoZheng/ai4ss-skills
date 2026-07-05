@@ -49,9 +49,12 @@ Inputs:
 Requirements:
 1. write scripts under scripts/ with numbered filenames;
 2. never overwrite data/raw/;
-3. write the model-ready sample to data/analysis/;
-4. write .aiss row-loss checks, .aiss merge checks, .aiss variable-provenance observations, and a run log;
-5. stop and report if duplicate keys or ambiguous treatment timing appear.
+3. use only real observed public or authorized source records; do not create rows
+   from synthetic, simulated, hypothetical, illustrative, DGP, random-draw,
+   benchmark-calibrated, or literature-parameter-imputed data;
+4. write the model-ready sample to data/processed/;
+5. write .aiss row-loss checks, .aiss merge checks, .aiss variable-provenance observations, row-source provenance, and a run log;
+6. repair or explicitly encode duplicate keys or ambiguous treatment timing before analysis handoff.
 ```
 
 ## Merge Repair
@@ -75,7 +78,8 @@ Return a table with:
 - risk of each fix;
 - exact files that would change.
 
-Do not edit files until I approve the fix.
+Apply the best-supported fix when evidence is sufficient; otherwise write the
+review artifact and route to the next repair skill.
 ```
 
 ## Text-To-Structure Extraction
@@ -100,7 +104,9 @@ Rules:
 - do not invent values absent from the text;
 - keep low-confidence rows out of the primary analysis sample;
 - write a manual review file for ambiguous cases;
-- preserve enough source text for spot checks.
+- preserve enough source text for spot checks;
+- if a source cannot be parsed or acquired, switch to another observed source,
+  not generated substitute rows.
 ```
 
 ## Pipeline Debugging

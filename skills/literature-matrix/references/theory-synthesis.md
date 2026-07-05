@@ -5,8 +5,8 @@ AI-disclosed literature-review working prose, or theoretical contribution checks
 
 This is the literature-side entrypoint for the shared theory engine. It is not a
 new skill, a new DSL, or a theory chapter generator. It produces auditable
-theory workbench inputs that downstream skills can validate, review, and hand
-back to the author through checked `.aiss` declarations.
+theory workbench inputs that downstream skills can validate, review, and carry
+forward through checked `.aiss` declarations.
 
 ## Theory Workbench Package
 
@@ -16,7 +16,7 @@ exists. For a complete theory workbench handoff, add:
 - `.aiss rival-check declarations` for competing explanations and discriminating
   observations.
 - `.aiss scope-check declarations` for who/where/when scope, boundary failure modes, and
-  author decisions.
+  assumptions to disclose.
 - checked `.aiss` source, span, claim, relation, check, and decision
   declarations for model-affecting evidence.
 
@@ -46,8 +46,8 @@ Required columns:
 | `observable_implication` | What should be visible in data, sources, coding, or design diagnostics if the candidate matters |
 | `proposed_aiss_object` | Proposed `.aiss` object such as `concept:project.x`, `causal:project.y`, `bridge:project.z`, or `not_applicable:<reason>` |
 | `evidence_strength` | strong, mixed, thin, conflicting, or unverified |
-| `author_decision_needed` | Researcher decision before model or prose use |
-| `next_skill_route` | study-design-builder, academic-writing-scaffold, methods-reviewer, or ask_author |
+| `assumptions_to_disclose` | Assumption before model or prose use |
+| `next_skill_route` | study-design-builder, academic-writing-scaffold, or methods-reviewer |
 
 For `synthesis_type=mechanism`, write `theory_candidate` as four inspectable
 parts:
@@ -79,11 +79,11 @@ final theory prose or new schema. Required columns come from the shared
 | `explains_poorly` | What the rival cannot explain |
 | `discriminating_observation` | Observable implication that could distinguish candidate from rival |
 | `evidence_needed` | Source, data, diagnostic, or coding evidence needed |
-| `status` | ready_for_aiss, needs_author_decision, needs_methods_review, blocked, or not_applicable |
-| `next_skill_route` | methods-reviewer, study-design-builder, academic-writing-scaffold, or ask_author |
+| `status` | ready_for_aiss, needs_methods_review, needs_source_expansion, needs_design_repair, or not_applicable |
+| `next_skill_route` | methods-reviewer, study-design-builder, academic-writing-scaffold, or literature-matrix |
 
 Rival rows diagnose theory risk. They normally route to `methods-reviewer` or
-`ask_author`; they must not be treated as final theory claims.
+source/design repair; they must not be treated as final theory claims.
 
 ## Scope Check Declarations
 
@@ -104,9 +104,9 @@ contribution claim is marked direct-submission ready. Required columns come from
 | `boundary_failure_mode` | How the claim fails outside the scope |
 | `observable_implication` | What the scope implies for data, source, or review diagnostics |
 | `source_ids` | Semicolon-separated source ids or `not_applicable:<reason>` |
-| `author_decision_needed` | Researcher choice before prose or broad claim use |
-| `status` | ready_for_aiss, needs_author_decision, needs_methods_review, blocked, or not_applicable |
-| `next_skill_route` | methods-reviewer, study-design-builder, academic-writing-scaffold, or ask_author |
+| `assumptions_to_disclose` | Scope assumption before prose or broad claim use |
+| `status` | ready_for_aiss, needs_methods_review, needs_source_expansion, needs_design_repair, or not_applicable |
+| `next_skill_route` | methods-reviewer, study-design-builder, academic-writing-scaffold, or literature-matrix |
 
 ## Checked Evidence Declarations
 
@@ -117,13 +117,13 @@ and `decision` declarations directly into the research object.
 Only rows that pass `scripts/validate_ai4ss_model.py` and are suitable for
 `status=ready_for_aiss` may become model-layer declarations. Unresolved novelty,
 theoretical contribution, scope choice, rival choice, and mechanism strength
-must become `.aiss` `decision` declarations or author workbench questions.
+must become `.aiss` `decision` declarations or assumptions to disclose.
 
 ## Rules
 
 - Only `verified_primary` or `verified_local` literature rows may support
   `proposed_aiss_object`.
-- `evidence_strength=unverified` must route to `ask_author` and must set
+- `evidence_strength=unverified` must route to source expansion and must set
   `proposed_aiss_object=not_applicable:<reason>`.
 - Every row must preserve at least one `source_paper_ids` value from the
   `.aiss` literature evidence declarations.
@@ -133,26 +133,27 @@ must become `.aiss` `decision` declarations or author workbench questions.
   owns creation or update of `.aiss` `concept`, `claim`, `relation`, `causal`,
   `bridge`, and `model` declarations.
 - Rival explanations can route to `methods-reviewer` when they mainly diagnose
-  design risk, or to `ask_author` when the researcher must choose the framing.
+  design risk, or to `study-design-builder` when the framing changes the design.
 - Every nontrivial candidate needs a rival row or a concrete
   `not_applicable:<reason>`.
 - Every rival row needs a discriminating observable implication.
 - Every scope row needs who/where/when, boundary failure mode, observable
-  implication, and author decision.
-- Do not automatically resolve novelty, theoretical contribution, mechanism
-  strength, scope choice, or rival choice.
+  implication, and assumptions to disclose.
+- Resolve novelty, theoretical contribution, mechanism strength, scope choice,
+  and rival choice to the strongest defensible claim boundary; preserve the
+  uncertainty as evidence needs and draft-PDF limitations.
 
 ## Validation
 
 Run these checks before handoff:
 
 ```bash
-python3 scripts/validate_ai4ss_model.py docs/research_model.aiss
+python3 scripts/validate_ai4ss_model.py .ai4ss/research_model.aiss
 ```
 
 ## Boundary
 
 This `.aiss` projection should not be marked direct-submission ready by itself.
 It records candidate theoretical objects, visible support, rival or boundary
-concerns, observable implications, author decisions, and disclosure status for
+concerns, observable implications, assumptions to disclose, and disclosure status for
 any AI-assisted working prose.

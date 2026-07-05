@@ -31,7 +31,7 @@ The grading dimensions and weights are preregistered before unblinding:
 - traceability: 20 points
 - boundary: 20 points
 - validation: 15 points
-- author_decision: 15 points
+- assumption_register: 15 points
 
 ## Human Grading
 
@@ -42,13 +42,15 @@ Use `human_grading_sheet.csv` for independent grading. Recommended workflow:
 3. Use at least two graders and compute inter-rater agreement before unblinding.
 4. Unblind only after grades are frozen.
 
-## Rule-Based Scoring
+## LLM-As-Judge Scoring
 
-`rule_based_scores_blinded.csv` scores packets without condition labels. `unblinded_report.md` joins those scores to `private_mapping.csv` after scoring.
+`judge_prompts/` contains one bounded prompt per blinded packet.
+`llm_judge_scores.csv` is the only score sheet for this package.
+`unblinded_report.md` joins those scores to `private_mapping.csv` after scoring.
 
 ## Limits
 
 - Outputs are simulated templates, not live LLM generations.
 - The script author knows the hypothesis and generated both conditions.
-- Rule-based scoring is deterministic and not a substitute for independent human grading.
+- Deterministic packet construction is not an eval score.
 - A true double-blind evaluation would require independently generated outputs, condition concealment during generation, blinded human graders, preregistration, and inter-rater reliability.

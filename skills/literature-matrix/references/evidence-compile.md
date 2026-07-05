@@ -24,7 +24,7 @@ Write model-affecting source evidence directly into `.aiss` declarations:
 Then validate the updated research object:
 
 ```bash
-python3 scripts/validate_ai4ss_model.py docs/research_model.aiss
+python3 scripts/validate_ai4ss_model.py .ai4ss/research_model.aiss
 ```
 
 The validator checks the `.aiss` file through `aiss.py compile`, `aiss.py lint`,
@@ -39,7 +39,7 @@ For source evidence that affects model elements, preserve:
 - span ids and quote hashes when available;
 - target model, concept, causal, or bridge ids;
 - source-status checks;
-- author decision declarations when interpretation is unresolved.
+- assumption or claim-boundary declarations when interpretation is unresolved.
 
 Use `not_applicable:<reason>` only inside `.aiss` declaration fields when a
 source is bibliographic context, a negative screen, or not intended to affect the
@@ -49,4 +49,4 @@ research model.
 
 Compiled evidence is not a literature-review paragraph and not an identification
 certification. It is a stable research-model fragment that downstream skills can
-check, diagnose, merge, reject, or route back to the author.
+check, diagnose, merge, reject, or route to source/design repair.

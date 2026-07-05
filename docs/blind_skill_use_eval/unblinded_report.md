@@ -1,20 +1,18 @@
 # Unblinded Skill-Use Evaluation Report
 
-This report joins `rule_based_scores_blinded.csv` to `private_mapping.csv` after scoring.
+This report joins `llm_judge_scores.csv` to `private_mapping.csv` after scoring.
 
-| packet | case | condition | total |
-|---|---|---|---:|
-| P001 | `data_provenance` | `skill_guided` | 100.0 |
-| P002 | `data_provenance` | `no_skill` | 46.0 |
-| P003 | `literature_evidence` | `no_skill` | 48.0 |
-| P004 | `literature_evidence` | `skill_guided` | 95.0 |
-| P005 | `claim_discipline` | `skill_guided` | 95.0 |
-| P006 | `claim_discipline` | `no_skill` | 31.0 |
-| P007 | `revision_trace` | `skill_guided` | 95.0 |
-| P008 | `revision_trace` | `no_skill` | 31.0 |
+| packet | case | condition | LLM score | judge prompt |
+|---|---|---|---:|---|
+| P001 | `data_provenance` | `skill_guided` | - | `judge_prompts/P001.md` |
+| P002 | `data_provenance` | `no_skill` | - | `judge_prompts/P002.md` |
+| P003 | `literature_evidence` | `no_skill` | - | `judge_prompts/P003.md` |
+| P004 | `literature_evidence` | `skill_guided` | - | `judge_prompts/P004.md` |
+| P005 | `claim_discipline` | `skill_guided` | - | `judge_prompts/P005.md` |
+| P006 | `claim_discipline` | `no_skill` | - | `judge_prompts/P006.md` |
+| P007 | `revision_trace` | `skill_guided` | - | `judge_prompts/P007.md` |
+| P008 | `revision_trace` | `no_skill` | - | `judge_prompts/P008.md` |
 
-Average `no_skill`: **39.0 / 100**
-Average `skill_guided`: **96.2 / 100**
-Average gain: **+57.2 points**
+This package is ready for LLM-as-judge scoring. Do not report a skill-use gain until `llm_judge_scores.csv` has model judge scores.
 
-Interpretation: in this structural simulation, skill-guided packets score higher because they expose audit artifacts, validation gates, AI-use disclosure, and human-accountability decisions. This is not evidence that any particular LLM will behave this way in live use.
+Interpretation must remain narrow. This structural packet package can test whether outputs expose audit artifacts, validation gates, AI-use disclosure, and explicit assumption registers. It is not evidence that any particular live LLM will behave this way.

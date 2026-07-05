@@ -21,11 +21,38 @@ This skill answers: "文献证据是不是一手来源？" Its value is not prod
 
 Use primary or locally verified sources where possible. Never turn unverified search results or model memory into `.aiss` concepts, causal links, bridges, or reportable claims.
 
+## Full-Auto Harness Contract
+
+When invoked by an automatic research harness, this skill must not pause for
+human choice or return any terminal no-progress state. If the selected route is weakly supported, expand search, snowball from
+verified sources, inspect local PDFs, and revise the route/design evidence
+chain automatically. If source coverage remains imperfect, record exact search
+scope, unsuccessful searches, source-status limits, and bounded claims so they
+can appear in `paper/full_draft.pdf`; do not return a placeholder.
+
 ## AI4SS Runtime Gate
 
-Do not run this skill as a generic bibliography helper inside the research factory. Before producing evidence declarations or downstream handoffs, locate the governing `research_model.aiss` with a selected route and MIDA declarations, or create provisional route declarations through `research-starter` first.
+Do not run this skill as a generic bibliography helper inside the research factory. Before producing evidence declarations or downstream handoffs, locate the governing `.ai4ss/research_model.aiss` with a selected route and MIDA declarations, or create/select provisional route declarations using `research-starter` logic first.
 
 Literature evidence that affects the model must enter `.aiss` directly or through deterministic `.aiss` fragments. Candidate notes, source exports, PDFs, and search logs can exist as evidence artifacts, but they are not workflow state and cannot substitute for `.aiss` declarations.
+
+## Workspace Contract
+
+Follow `docs/research_workspace_contract.md`. Durable workflow state belongs in
+`.ai4ss/research_model.aiss`; generated data, output, logs, and PDFs must be
+produced through `make` targets, with `make all` as the final orchestration path.
+
+## .aiss State Machine
+
+When `.ai4ss/research_model.aiss` exists, run
+`python3 dsl/scripts/aiss.py state .ai4ss/research_model.aiss` before deciding
+the next route. When this skill starts, completes, fails, or observes a
+watchdog heartbeat in an automatic harness, record that runtime fact as an
+`.aiss` `event` declaration or return a deterministic
+`aiss.py transition --event ...` fragment for merge. Events do not replace
+semantic updates: if the skill resolves a repair/check status, update the
+relevant `route`, `mida`, `decision`, `check`, `artifact`, or claim-support
+declaration too.
 
 ## Runtime Failure Guardrails
 
@@ -38,16 +65,16 @@ Literature evidence that affects the model must enter `.aiss` directly or throug
 
 This skill realizes the literature side of the `Data strategy` and `Diagnose` parts of the MIDA spine. Literature is evidence data: it needs source scope, screening rules, extraction fields, verification status, and claim-support limits.
 
-The skill can propose model edits as source-grounded `.aiss` declarations, author `decision` declarations, or AI-disclosed literature-review working text. It does not mark theoretical novelty or direct-submission status ready without source support, disclosure, and human-accountability gates.
+The skill can propose model edits as source-grounded `.aiss` declarations, diagnostic `decision` declarations, or AI-disclosed literature-review working text. It writes source support, AI disclosure, and accountability language into the draft-facing evidence chain rather than stopping for an external gate.
 
-When verified literature changes a concept, causal implication, bridge, mechanism, rival explanation, or scope condition, the model change must preserve `ai4ss_model_path`, source spans, and author decision status.
+When verified literature changes a concept, causal implication, bridge, mechanism, rival explanation, or scope condition, the model change must preserve `ai4ss_model_path`, source spans, selection rationale, and claim-boundary status.
 
 ## Workflow Contract
 
-- Upstream inputs: `research_model.aiss`, route declarations, MIDA declarations, seed papers, Zotero/PDF sets, bibliographies, search questions, source-verification requests, or author-supplied scope rules.
-- Produces: verified source locators, search-strategy and source-status transparency evidence, screening and extraction evidence, evidence clusters, open source questions, and `.aiss` `paper`, `source`, `span`, `claim`, `relation`, `concept`, `causal`, `bridge`, `check`, or `decision` declarations.
-- Handoff fields: `route_id`, `design_source`, `target_inquiry`, `source_scope`, `search_strategy_status`, `source_status`, `paper_id`, `span_id`, `claim_id`, `concept_id`, `causal_id`, `bridge_id`, `evidence_strength`, `materials_transparency_status`, `author_decisions`, `ai4ss_model_path`, `ai4ss_check_status`, `validation_commands`, `next_skill_route`.
-- Downstream routes: `study-design-builder`, `methods-reviewer`, `academic-writing-scaffold`, `research-slides-builder`, `reviewer-response`, or `ask_author`.
+- Upstream inputs: `.ai4ss/research_model.aiss`, route declarations, MIDA declarations, seed papers, Zotero/PDF sets, bibliographies, search questions, source-verification requests, or author-supplied scope rules.
+- Produces: verified source locators, search-strategy and source-status transparency evidence, screening and extraction evidence, evidence clusters, source-gap logs, and `.aiss` `paper`, `source`, `span`, `claim`, `relation`, `concept`, `causal`, `bridge`, `check`, or `decision` declarations.
+- Handoff fields: `route_id`, `design_source`, `target_inquiry`, `source_scope`, `search_strategy_status`, `source_status`, `paper_id`, `span_id`, `claim_id`, `concept_id`, `causal_id`, `bridge_id`, `evidence_strength`, `materials_transparency_status`, `assumptions_to_disclose`, `ai4ss_model_path`, `ai4ss_check_status`, `validation_commands`, `next_skill_route`.
+- Downstream routes: `study-design-builder`, `methods-reviewer`, `academic-writing-scaffold`, `research-slides-builder`, or `reviewer-response`.
 
 ## Routing Boundaries
 
@@ -57,9 +84,9 @@ Use this skill for literature search, screening, extraction, verification, sourc
 
 ```text
 Step -1: Scope
--> Read AGENTS.md, research_model.aiss, route/MIDA declarations, and user-supplied source rules.
+-> Read AGENTS.md, `.ai4ss/research_model.aiss`, route/MIDA declarations, and user-supplied source rules.
 -> Identify what evidence question the literature must answer.
--> If no route exists, create or route to `.aiss` route declarations before production extraction.
+-> If no route exists, create route declarations, select the strongest route, and continue to production extraction.
 
 Step 0: Search plan
 -> Declare source scope, search strata, exact queries or seed sources, source types, and next verification actions.
@@ -80,22 +107,21 @@ Step 3: Update `.aiss`
 -> Encode rivals, scope limits, weak mechanisms, and unresolved novelty as `.aiss` `check` or `decision` declarations.
 
 Step 4: Hand off
--> Return evidence clusters, open source questions, touched `.aiss` ids, and validation commands.
--> If literature-review working prose is requested, mark it as AI-assisted,
-source-linked, and not direct-submission ready unless the disclosure gate passes.
+-> Return evidence clusters, source-gap notes, touched `.aiss` ids, validation commands, and draft-PDF claim boundaries.
+-> If literature-review working prose is requested or needed for the draft PDF, write AI-assisted, source-linked prose with disclosure and limits visible.
 ```
 
 ## Default Outputs
 
-- Updated `research_model.aiss` or deterministic `.aiss` fragment with source-grounded literature declarations.
+- Updated `.ai4ss/research_model.aiss` or deterministic `.aiss` fragment with source-grounded literature declarations.
 - Source locator inventory and extraction notes referenced from `.aiss` when useful.
-- Evidence clusters and open author/source questions in the chat response.
+- Evidence clusters and source-gap notes in the chat response.
 - Validation command output for `scripts/validate_ai4ss_model.py`.
-- Blocked handoff with `next_skill_route` when source status, route declarations, or MIDA declarations are insufficient.
+- Automatic route/design repair or expanded source search when source status, route declarations, or MIDA declarations are insufficient.
 
 ## Script Utilities
 
-- Run `scripts/validate_ai4ss_model.py <path-to-research_model.aiss>` after adding or changing literature declarations.
+- Run `scripts/validate_ai4ss_model.py .ai4ss/research_model.aiss` after adding or changing literature declarations.
 - Use `dsl/scripts/compile_evidence.py` only when converting deterministic source evidence into `.aiss`; do not use it to create a parallel handoff format.
 - Use source-specific tooling such as DOI pages, Zotero exports, PDF extraction, or live web search to verify source truth before model updates.
 
@@ -114,7 +140,7 @@ source-linked, and not direct-submission ready unless the disclosure gate passes
 | [search-and-screen.md](references/search-and-screen.md) | Query design, source hierarchy, screening, and verification rules | Starting a search or refreshing coverage |
 | [candidate-discovery.md](references/candidate-discovery.md) | Candidate-source discovery, seed audit, snowballing, and source-status vocabulary | Starting an open-ended literature base or when source coverage matters |
 | [matrix-schema.md](references/matrix-schema.md) | Legacy extraction vocabulary; translate useful fields into `.aiss` declarations | Maintaining older projects that already have extraction tables |
-| [theory-synthesis.md](references/theory-synthesis.md) | Theory-mapping vocabulary for concepts, mechanisms, rivals, scope, and author decisions | Turning verified sources into model candidates |
+| [theory-synthesis.md](references/theory-synthesis.md) | Theory-mapping vocabulary for concepts, mechanisms, rivals, scope, and automatic claim-boundary choices | Turning verified sources into model candidates |
 | [evidence-compile.md](references/evidence-compile.md) | Deterministic evidence-to-`.aiss` compilation contract | Turning verified source rows into model fragments |
 | [prompt-pack.md](references/prompt-pack.md) | Copy-ready prompts for search, screening, extraction, deduplication, and synthesis outlines | Turning a literature need into an agent task |
 | [source-verification.md](references/source-verification.md) | DOI, PDF, Zotero, publication-status, and claim-verification procedures | Checking whether sources and extracted claims are real |

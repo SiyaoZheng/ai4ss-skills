@@ -21,6 +21,23 @@ description: |
    (profvis)    (理解机制)    (决策树)      (代码修改)
 ```
 
+## Full-Auto Harness Contract
+
+在自动 harness 中，本 skill 不得暂停等待人工选择，也不得返回无进展的终止状态。必须自动定位瓶颈、选择不会改变结果的优化、
+修改代码、重跑验证，并保留 before/after 证据。若服务 research-factory，优化目标是让
+`make all` 更快且结果不变，最终支撑发表级 `paper/full_draft.pdf`。
+
+## .aiss State Machine
+
+当从 AI4SS research-factory workspace 调用时，先定位
+`.ai4ss/research_model.aiss` 并运行
+`python3 dsl/scripts/aiss.py state .ai4ss/research_model.aiss`，再决定或返回
+`next_skill_route`。启动、完成、失败和 watchdog heartbeat 观察应记录为
+`.aiss` `event` declaration，或返回可合并的
+`aiss.py transition --event ...` deterministic fragment。event 不能替代语义更新：
+性能优化、等价性检查和 rerun 证据仍要落到相应 `check`、`decision`、
+`artifact` 或日志声明。
+
 ## 正确性硬门槛
 
 - 先确认目标脚本可以从干净会话运行：优先用 `Rscript --vanilla <script.R>`，不要依赖交互式环境里残留的对象。

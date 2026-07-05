@@ -1,5 +1,0 @@
-packet_id,case_id,research_object,mida_design,ai4ss_model_check,evidence_data_chain,analysis_loop,boundary_author_decision,end_to_end_continuity,risk_penalty,total
-P001,city_platform_green_patents,7.5,3.8,4.3,0.0,0.0,3.0,0.0,13.0,5.5
-P002,city_platform_green_patents,15.0,15.0,10.7,5.3,10.7,12.0,10.0,0.0,78.7
-P003,platform_theory_mapping,15.0,15.0,10.7,5.3,10.7,12.0,10.0,0.0,78.7
-P004,platform_theory_mapping,7.5,3.8,4.3,0.0,0.0,3.0,0.0,13.0,5.5

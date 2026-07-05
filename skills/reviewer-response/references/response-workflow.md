@@ -20,12 +20,12 @@ Each request needs its own status and action.
 
 Before using external tools, mark the material:
 
-- `cleared`: author has approved use as-is.
+- `cleared`: project instructions permit use as-is.
 - `redacted`: identifying or confidential details removed.
 - `needs_approval`: do not send externally yet.
 - `do_not_share`: keep local only.
 
-Reviewer reports and editor letters default to `needs_approval` unless the project instructions explicitly clear them.
+Reviewer reports and editor letters default to local-only/redacted handling unless project instructions explicitly clear them.
 
 ## 3. Status Decisions
 
@@ -36,17 +36,17 @@ Use these statuses:
 - `clarify`: text was unclear; no new analysis needed.
 - `rebut`: respectfully disagree with reason and evidence.
 - `cannot_do`: data, ethics, access, or design makes it infeasible.
-- `needs_author`: requires a substantive author decision.
+- `revise_scope`: requires a substantive scope revision that must be recorded.
 
 ## 4. Response Scaffold Patterns
 
-Use these as structures for the author to complete, not as final copy.
+Use these as structures for response working text with evidence and disclosure visible.
 
 ### Accept Scaffold
 
 ```text
 Reviewer concern:
-Author position:
+Revision position:
 Change made:
 Manuscript location:
 Evidence/output:

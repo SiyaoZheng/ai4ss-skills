@@ -13,8 +13,9 @@ description: >
   "set missing values", or any time the user has `ddi-metadata.yaml` and
   wants to specify how to clean it before running `cleaning-execute`.
 
-  Precondition: `ddi-metadata.yaml` must exist in the working directory.
-  If it does not, tell the user to run `codebook-parse` first.
+  Precondition: `ddi-metadata.yaml` should exist in the working directory.
+  In full-auto harness mode, if it does not exist, infer and create it through
+  codebook-parse behavior before writing the contract.
 ---
 
 # cleaning-contract
@@ -33,6 +34,28 @@ contains `shared_missing_schemas`, per-variable `missing.codes`, and
 `missing.schema_ref` assignments written by `codebook-parse`. Start from
 that existing state — do not re-derive or overwrite it.
 
+## Full-Auto Harness Contract
+
+When invoked by an automatic research harness, this skill must not pause for
+human choice or return any terminal no-progress state. It must create a complete `cleaning_contract` from DDI metadata, source
+labels, codebook text, variable roles, and analysis-plan context. Ambiguous
+missing codes, universe filters, weights, derived variables, harmonization, and
+analysis variables receive the strongest defensible automatic choice plus an
+audit note; they do not wait for external confirmation. The contract must be
+ready for `cleaning-execute` and ultimately for a publication-level
+`paper/full_draft.pdf`.
+
+## .aiss State Machine
+
+When this DDI harness is invoked from an AI4SS research-factory workspace, locate
+`.ai4ss/research_model.aiss` and run
+`python3 dsl/scripts/aiss.py state .ai4ss/research_model.aiss` before choosing
+or returning `next_skill_route`. Starts, completions, failures, and watchdog
+heartbeat observations should be recorded as `.aiss` `event` declarations or
+returned as deterministic `aiss.py transition --event ...` fragments. Events
+do not replace the DDI SSOT: cleaning rules and inferred choices still belong
+in the `cleaning_contract` block.
+
 ## Reference files — read before acting
 
 | File | When to read |
@@ -43,11 +66,9 @@ that existing state — do not re-derive or overwrite it.
 
 ### 1 · Verify precondition
 
-Check that `ddi-metadata.yaml` exists in the working directory. If it does
-not, stop and tell the user:
-
-> "Please run `codebook-parse` first to generate `ddi-metadata.yaml`.
-> `cleaning-contract` requires that file as input."
+Check that `ddi-metadata.yaml` exists in the working directory. If it does not,
+locate the likely survey/codebook input, generate the DDI metadata using
+`codebook-parse` behavior, and then continue.
 
 Read `references/contract-schema.md` now before proceeding.
 
@@ -83,7 +104,7 @@ scale_vars = [v for v in vars if v["representation"]["type"] == "scale"]
 weight_vars = [v for v in vars if v.get("is_weight")]
 ```
 
-Report to the researcher:
+Record an audit summary:
 
 ```
 === ddi-metadata.yaml audit ===
@@ -94,10 +115,10 @@ Shared missing schemas defined by codebook-parse: {len(shared_schemas)} schemas,
 
 Already handled by codebook-parse:
   {len(with_schema_ref)} variables — schema_ref assigned (no action needed)
-  {len(with_explicit_codes)} variables — explicit missing.codes defined (confirm if correct)
+  {len(with_explicit_codes)} variables — explicit missing.codes defined (audit against source labels)
 
-Needs decisions:
-  {len(with_missing_codes_inferred)} variables — missing_codes_inferred flag (MUST confirm)
+Needs audited defaults:
+  {len(with_missing_codes_inferred)} variables — missing_codes_inferred flag
   {len(no_missing_treatment)} variables — no missing treatment of any kind
 
 Other:
@@ -106,14 +127,15 @@ Other:
 ```
 
 If `missing_codes_inferred` count is 0 and `no_missing_treatment` is small,
-tell the researcher most missing treatment is already resolved.
+record that most missing treatment is already resolved.
 
-### 3 · Confirm flagged variables (CRITICAL)
+### 3 · Resolve flagged variables automatically (CRITICAL)
 
 **This is the most dangerous step.** Variables with
 `_parse_flags: [missing_codes_inferred]` had their missing codes guessed
-by `codebook-parse` without codebook confirmation. The researcher must
-confirm or override each one.
+by `codebook-parse` without codebook confirmation. Resolve each one using
+source labels, response-category language, observed values, and the positive
+missing-code trap rules below.
 
 ⚠️ **Positive missing code trap**: in Chinese surveys, the same value (e.g.
 9) can be missing on one item (9=无回答) and valid data on another
@@ -121,7 +143,7 @@ confirm or override each one.
 variable before confirming any code as missing. A code is missing ONLY
 if its label explicitly signals non-response.
 
-For each `missing_codes_inferred` variable, show:
+For each `missing_codes_inferred` variable, inspect:
 
 ```
 var_id: {var_id}   name: {name}
@@ -131,11 +153,9 @@ All value labels: {representation.codes}   ← CHECK THESE FIRST
 Inferred missing codes: {missing.codes}
 ```
 
-Ask: "Are these missing codes correct? (yes / no, specify correct codes)"
-
-Record the researcher's decisions. Variables where the inferred codes are
-WRONG need an explicit `variable_contracts` entry with corrected
-`missing_treatment`.
+Automatically classify the inferred codes. Variables where the inferred codes
+are wrong need an explicit `variable_contracts` entry with corrected
+`missing_treatment` and an audit note explaining the source-label basis.
 
 Variables where the inferred codes are RIGHT need NO `variable_contracts`
 entry — the existing `missing.codes` in the YAML will be used by
@@ -143,23 +163,21 @@ entry — the existing `missing.codes` in the YAML will be used by
 
 ### 4 · Check unhandled variables
 
-Show the `no_missing_treatment` list. Most will be:
+Inspect the `no_missing_treatment` list. Most will be:
 - ID variables, year/wave variables, string variables → no missing codes needed
 - Structural skip variables already handled by `schema_ref` in a different run
 - Genuinely missing-treatment-free (e.g. weights, panel IDs)
 
-Ask: "Do any of these need missing value treatment?"
+For any that need missing value treatment, infer the codes and types from labels
+and observed values, and add to `variable_contracts`.
 
-For any that do, collect the codes and types, and add to
-`variable_contracts`.
-
-Skip this step if all `no_missing_treatment` variables are IDs, dates, or
-weights. Do not ask the researcher to review variables that obviously don't
-need recoding.
+Skip contract entries if all `no_missing_treatment` variables are IDs, dates, or
+weights. Do not create review-only work.
 
 ### 5 · Recode maps and scale reversals
 
-Collect from the researcher:
+Infer from source labels, variable names, codebook sections, and analysis-plan
+context:
 
 **5a · Binary and categorical recodes** — use `recode_map` when categories
 must be collapsed or recoded for analysis:
@@ -216,7 +234,7 @@ if you need to add `recode_map`, `reverse`, or `rename_to`.
 
 ### 6 · Universe filter
 
-Ask the researcher (or infer from context):
+Infer from context:
 
 > "Who should be included in the analysis? Provide an R expression
 > evaluated on the raw data frame, or 'all' to include everyone."
@@ -239,7 +257,9 @@ cleaning_contract:
 
 ### 7 · Derived variables
 
-Collect derived variable definitions from the researcher.
+Infer derived variable definitions from the route/design/analysis plan. If no
+derived variable is required for the declared inquiry, set `derived_variables:
+[]`.
 
 **Required information for each derived variable**:
 - Output name (`name`)
@@ -288,10 +308,9 @@ Common patterns:
 ### 8 · Weight assignment
 
 The audit in Step 2 already identified weight variables (`is_weight: true`).
-Propose the detected weight variable. Ask:
-
-> "Should I use `{weight_var_name}` as the survey weight? Should it be
-> normalized (divided by mean)? (yes/no/normalize)"
+Use the detected weight variable when exactly one plausible weight exists. Use
+the analysis-plan or survey documentation to decide normalization; otherwise set
+`normalize: false` and record the assumption.
 
 ```yaml
 weight_assignment:
@@ -300,15 +319,14 @@ weight_assignment:
   note: null
 ```
 
-If `is_weight: true` is not set on any variable, ask the researcher which
-variable (if any) is the weight.
+If `is_weight: true` is not set on any variable, infer likely weights from names
+and labels (`weight`, `wt`, `wgt`, `pweight`, `sample weight`). If none are
+credible, set `weight_var_id: null`.
 
 ### 9 · Analysis variable selection
 
-Ask (or infer from a `regression_spec.yaml` if the researcher provides one):
-
-> "Which variables should be forwarded to the analysis dataset?
-> List by output name (post-rename), or 'all' to keep everything."
+Infer from `regression_spec.yaml`, `.aiss` design declarations, analysis-plan
+files, variable roles, and derived-variable dependencies:
 
 ```yaml
 analysis_vars:
@@ -322,13 +340,14 @@ analysis_vars:
   - ...
 ```
 
-If the researcher says 'all', set `analysis_vars: null`.
+If no narrower analysis set is defensible, set `analysis_vars: null` to keep all
+variables.
 
 ### 9a · Harmonization declaration (cross-study alignment)
 
-If the researcher plans to pool this dataset with another survey wave or
-cross-validate against an external dataset, collect SSSOM-informed variable
-alignment declarations. Skip this step if the analysis is single-study.
+If the design implies pooling, cross-wave comparison, or external validation,
+create SSSOM-informed variable alignment declarations. Skip this step if the
+analysis is single-study.
 
 **When to offer this step:**
 - Researcher mentions comparing results with a previous wave (e.g., "compare
@@ -336,13 +355,7 @@ alignment declarations. Skip this step if the analysis is single-study.
 - Researcher mentions harmonizing variables across datasets
 - Researcher uses words like "pool", "combine", "cross-walk", "align", "map"
 
-Ask:
-
-> "Do you need to align any variables with another study or survey wave?
-> This creates machine-readable mapping metadata (SSSOM) so the alignment
-> is reproducible."
-
-If yes, for each variable that needs alignment, collect **variable-level fields** (REQUIRED):
+For each variable that needs alignment, infer **variable-level fields** (REQUIRED):
 
 1. **Target study** — name of the dataset to align with
 2. **Target variable** — variable name in the target study
@@ -503,7 +516,7 @@ Run `cleaning-execute` to produce:
 
 Before declaring done:
 - [ ] Did NOT re-declare missing treatment for variables with `schema_ref` already set (unless overriding)
-- [ ] Every `_parse_flags: [missing_codes_inferred]` variable has been confirmed or corrected
+- [ ] Every `_parse_flags: [missing_codes_inferred]` variable has been automatically resolved or carried with an audit note
 - [ ] No code marked as missing without checking `representation.codes` for that specific variable
 - [ ] Positive missing trap: variables like A3A (9=doctorate) and K6 (9=professional) have 9 NOT in `missing_treatment`
 - [ ] Every `reverse: true` variable is actually a scale item (`representation.type: scale`)

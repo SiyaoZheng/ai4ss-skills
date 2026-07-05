@@ -21,7 +21,7 @@ Return findings first as:
 severity | issue | evidence | why_it_matters | next_action | status
 
 Do not edit files.
-Separate confirmed bugs from risks and author decisions.
+Separate confirmed bugs from risks, repairs, and assumptions to disclose.
 ```
 
 ## Classroom Trace
@@ -38,7 +38,7 @@ direct-submission ready.
 
 Expected behavior:
 Read design and output -> trace table notes to scripts -> identify confirmed bugs,
-risks, and author decisions -> route DID-specific details to /did-expert if central
+risks, and assumptions to disclose -> route DID-specific details to /did-expert if central
 -> run validate_ai4ss_model.py on the .aiss declaration set.
 ```
 
@@ -79,7 +79,7 @@ For each claim, classify:
 - wrong estimand;
 - missing uncertainty;
 - missing evidence;
-- needs author judgment.
+- needs claim narrowing or evidence expansion.
 
 Provide issue notes and, when useful, AI-assisted working revision targets.
 Do not present rewritten text as no-AI or direct-submission ready.

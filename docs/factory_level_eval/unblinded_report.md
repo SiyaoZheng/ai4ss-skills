@@ -1,30 +1,20 @@
 # Unblinded Factory-Level AI4SS Workflow Evaluation Report
 
-This report joins `rule_based_scores_blinded.csv` to `_private/private_mapping.csv` after scoring.
+This report joins `llm_judge_scores.csv` to `_private/private_mapping.csv` after LLM-as-judge scoring.
 
 Randomization seed: `20260701`
 
-## Result Summary
+## Packet Judge Prompts
 
-- Average `generic_agent`: **5.5 / 100**
-- Average `ai4ss_factory`: **78.7 / 100**
-- Average gain: **73.2 points**
-
-## Packet Scores
-
-| packet | case | condition | research object | MIDA | .aiss | evidence/data | analysis | boundary | continuity | penalty | total |
-|---|---|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|
-| P001 | `city_platform_green_patents` | `generic_agent` | 7.5 | 3.8 | 4.3 | 0.0 | 0.0 | 3.0 | 0.0 | 13.0 | 5.5 |
-| P002 | `city_platform_green_patents` | `ai4ss_factory` | 15.0 | 15.0 | 10.7 | 5.3 | 10.7 | 12.0 | 10.0 | 0.0 | 78.7 |
-| P003 | `platform_theory_mapping` | `ai4ss_factory` | 15.0 | 15.0 | 10.7 | 5.3 | 10.7 | 12.0 | 10.0 | 0.0 | 78.7 |
-| P004 | `platform_theory_mapping` | `generic_agent` | 7.5 | 3.8 | 4.3 | 0.0 | 0.0 | 3.0 | 0.0 | 13.0 | 5.5 |
+| packet | case | condition | judge prompt | LLM score |
+|---|---|---|---|---:|
+| P001 | `city_platform_green_patents` | `generic_agent` | `judge_prompts/P001.md` | - |
+| P002 | `city_platform_green_patents` | `ai4ss_factory` | `judge_prompts/P002.md` | - |
+| P003 | `platform_theory_mapping` | `ai4ss_factory` | `judge_prompts/P003.md` | - |
+| P004 | `platform_theory_mapping` | `generic_agent` | `judge_prompts/P004.md` | - |
 
 ## Interpretation
 
-The structural comparison exposes the specific gap that the local `.aiss` factory is meant to close: a careful generic agent can outline a credible study, but the handoff remains prose-heavy and weakly replayable. The factory packet scores higher because it carries the same route, design source, model IDs, bridge IDs, evidence gates, data contracts, readiness checks, analysis artifacts, transparency package, replication-package status, and bounded claim handoff through the whole chain.
+This package is ready for LLM-as-judge scoring. Do not report a factory gain until `llm_judge_scores.csv` has been filled by a model judge.
 
 The appropriate claim is narrow. This package verifies that the local workflow now has an evaluable factory-level contract and a reproducible scoring harness. It does not prove that live agents will always use the factory correctly, that empirical claims are true, or that `.aiss` checker success establishes identification validity.
-
-## Remaining Evaluation Need
-
-The next stronger evaluation should replace these deterministic packets with independently generated live outputs, use independent human expert graders, and report inter-rater reliability before unblinding.

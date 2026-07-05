@@ -532,7 +532,7 @@ mamba install conflicting_package
 # 创建新环境避免冲突 | Create new environment to avoid conflicts
 conda create -n fresh_env python=3.10 package1 package2 -c conda-forge
 
-# 使用 pip 作为后备 | Use pip as fallback
+# 使用 pip 作为备选 | Use pip as alternative
 pip install package_name --no-deps  # 不安装依赖 | Without dependencies
 ```
 

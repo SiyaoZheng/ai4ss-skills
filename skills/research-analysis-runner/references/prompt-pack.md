@@ -8,7 +8,7 @@ Use $research-analysis-runner.
 Inputs:
 <study_design_brief.md>
 <.aiss MIDA declarations>
-<research_model.aiss if present>
+<.ai4ss/research_model.aiss if present>
 <.aiss analysis-plan declarations or analysis plan source>
 <analysis-ready data or source output>
 <.aiss row-loss checks / .aiss merge checks / .aiss variable-provenance observations if data were transformed>
@@ -17,7 +17,7 @@ Inputs:
 First requested output:
 <descriptive table / baseline model / figure shell / coding summary>
 
-First, create or validate .aiss readiness checks. If design source, data source, unit, required variables, sample/audit paths, .aiss bridge alignment, or output path are missing, stop and route back.
+First, create or validate .aiss readiness checks. If design source, data source, unit, required variables, sample/audit paths, .aiss bridge alignment, or output path are missing, repair the missing piece or route to the skill that can repair it, then return to execution.
 ```
 
 ## First Analysis Loop

@@ -5,7 +5,7 @@ prose only when disclosure status and direct-submission status remain visible.
 
 ## Introduction Scaffold
 
-| paragraph | purpose | evidence needed | author decision |
+| paragraph | purpose | evidence needed | assumption or claim-boundary choice |
 |---|---|---|---|
 | 1 | Define the empirical problem | Institutional fact or motivating descriptive statistic | How broad should the opening scope be? |
 | 2 | State unresolved gap | Checked source-evidence cluster and missing comparison | Which literature debate is primary? |

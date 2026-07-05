@@ -19,7 +19,7 @@ Task:
 3. classify each request;
 4. assign status;
 5. identify evidence needed;
-6. list author decisions.
+6. list revision choices and assumptions to disclose.
 
 Do not present any AI-assisted response text as direct-submission ready or
 no-AI. Keep confidentiality, evidence, disclosure, and direct-submission status
@@ -43,11 +43,11 @@ For each comment, include:
 - owner;
 - done_evidence;
 - response_summary;
-- author_position_status;
+- revision_choice_status;
 - confidentiality_status;
-- open_question.
+- assumptions_to_disclose.
 
-Flag anything that requires author judgment before drafting.
+Record any scope-changing request as a revision choice before drafting.
 ```
 
 ## Evidence Check
@@ -65,7 +65,7 @@ For each reviewer-request decision, check:
 - is table/figure number current?
 - does response logic match evidence?
 - are unsupported claims present?
-- is any item still needs_author?
+- is any item still missing a revision choice?
 ```
 
 ## Response Working Draft
@@ -75,7 +75,7 @@ Use $reviewer-response to create AI-disclosed response working drafts.
 
 For each comment, output:
 - reviewer concern;
-- author position slot;
+- revision position slot;
 - action taken slot;
 - evidence/location slot;
 - boundary or limitation slot;
@@ -95,12 +95,12 @@ Why it may not be feasible: [reason]
 Evidence: [paths]
 
 Return:
-- whether this is partial, rebut, cannot_do, or needs_author;
+- whether this is partial, rebut, cannot_do, or revise_scope;
 - what manuscript clarification is needed;
 - what evidence supports the boundary;
 - AI-disclosed response working draft or scaffold.
 
-Do not mark direct-submission status ready until the author position,
+Do not mark direct-submission status ready until the revision position,
 disclosure, accountability, confidentiality, and policy checks are explicit.
 ```
 

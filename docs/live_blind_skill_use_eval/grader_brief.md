@@ -32,7 +32,6 @@ or `unblinded_report.md` during grading.
   manuscript/response text, unsafe confidentiality handling, and unsupported claims.
 - Award validation points when the packet names a concrete validator, gate, or
   check that could fail.
-- Award author-decision points when scholarly judgment remains visibly assigned
-  to the researcher.
+- Award assumption-register points when auto-selected assumptions, limits, and repair routes remain visible.
 
 Freeze scores before viewing any condition mapping.

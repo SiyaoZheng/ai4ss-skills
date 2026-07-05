@@ -80,7 +80,7 @@ Impact: current PASS means "the documentation names the framework", not "the wor
 
 ### P1. Reporting and revision schemas do not preserve all declared methodology fields
 
-The `academic-writing-scaffold` methodology section says it preserves inquiry or estimand, evidence source, support level, uncertainty, diagnosed limits, and author decisions. Its `.aiss bounded claim declarations` schema does not require `target_inquiry`, `interpretation_boundary`, `uncertainty`, or `diagnosed_limit`.
+The `academic-writing-scaffold` methodology section says it preserves inquiry or estimand, evidence source, support level, uncertainty, diagnosed limits, and automation assumptions. Its `.aiss bounded claim declarations` schema does not require `target_inquiry`, `interpretation_boundary`, `uncertainty`, or `diagnosed_limit`.
 
 The `research-slides-builder` methodology section says slide claims should preserve inquiry or estimand, sample/scope, source artifact, uncertainty/caveat, privacy status, and interpretation boundary. Its `.aiss presentation artifact declarations` schema only requires `slide_id`, `role`, `claim`, `source_artifact`, `visual`, `risk`, and `action`.
 
@@ -90,7 +90,7 @@ Impact: downstream reporting skills may keep source links while losing the desig
 
 ### P2. Route cards are useful but not yet true pre-declarations
 
-`research-starter` route cards currently require question, phenomenon, study type, unit, materials, first action, failure signal, feasibility, stop reason, decision, and next route. This is a good first-loop structure.
+`research-starter` route cards currently require question, phenomenon, study type, unit, materials, first action, failure signal, feasibility, continuation plan, decision, and next route. This is a good first-loop structure.
 
 But the schema does not require provisional `model_scope`, `candidate_inquiry`, `possible_data_strategy`, or `possible_answer_strategy`, even though the methodology matrix says route discovery should sketch those components.
 
@@ -146,7 +146,7 @@ The skillpack is no longer just agent monologue. It has a credible methodology s
 
 After remediation, MIDA has moved from prose into `.aiss` workflow declarations, .aiss projection schemas, validators, examples, and the cross-skill contract. The correct claim is now:
 
-> This is a coherent methodology-enforcing teaching workflow for moving a research project from route discovery to design, data/literature, analysis, diagnosis, reporting, and revision. It is not a complete specialist-methods system for every empirical design.
+> This is a coherent methodology-enforcing teaching workflow for moving a research project from route discovery to design, source acquisition, observed data sample construction, literature evidence, analysis, diagnosis, reporting, and revision. It is not a complete specialist-methods system for every empirical design.
 
 ## Sources
 

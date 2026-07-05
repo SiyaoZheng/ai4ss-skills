@@ -1,0 +1,61 @@
+{
+  "schema": "ai4ss.factory_e2e_apsr_pdf_inspect_summary.v2",
+  "model": "openai-api/deepseek/deepseek-v4-pro",
+  "judge_model": "openai-api/deepseek/deepseek-v4-pro",
+  "scoring_evidence": "paper/full_draft.pdf only; data provenance and analysis must be visible in the PDF",
+  "conditions": [
+    "full_research_factory_skills"
+  ],
+  "results": [
+    {
+      "condition": "full_research_factory_skills",
+      "returncode": 0,
+      "status": "success",
+      "model": "openai-api/deepseek/deepseek-v4-pro",
+      "task": "factory_e2e_apsr_pdf",
+      "dataset": {
+        "samples": 1,
+        "sample_ids": [
+          "service_center_trust_apsr_pdf__full_research_factory_skills"
+        ],
+        "shuffled": false
+      },
+      "total_samples": 1,
+      "completed_samples": 1,
+      "score": 55.0,
+      "samples": [
+        {
+          "id": "service_center_trust_apsr_pdf__full_research_factory_skills",
+          "score": 55.0,
+          "explanation": "SCORE: 55\nREASON: The manuscript addresses a clear, well-motivated research question and provides a well-structured theoretical framework, analysis design, and transparent limitations. However, all empirical results are based on synthetic data constructed from published parameter benchmarks; no real acquired or observational data are used. Under the evaluation rubric, a PDF that reports only synthetic, hypothetical, or illustrative data is capped at 55, regardless of other qualities. The draft does not overclaim and is otherwise well-organized, so it receives the maximum within the cap.",
+          "metadata": {
+            "pdf_path": "paper/full_draft.pdf",
+            "pdf_bytes": 255979,
+            "exported_pdf": "/Users/siyaozheng/Documents/ai4ss-skills/docs/evals/factory-e2e-apsr-pdf/generated-pdfs/service_center_trust_apsr_pdf__full_research_factory_skills.pdf",
+            "pdfinfo_returncode": 0,
+            "pdftotext_returncode": 0,
+            "pdf_text_chars": 36485,
+            "score_100": 55,
+            "judge_completion": "SCORE: 55\nREASON: The manuscript addresses a clear, well-motivated research question and provides a well-structured theoretical framework, analysis design, and transparent limitations. However, all empirical results are based on synthetic data constructed from published parameter benchmarks; no real acquired or observational data are used. Under the evaluation rubric, a PDF that reports only synthetic, hypothetical, or illustrative data is capped at 55, regardless of other qualities. The draft does not overclaim and is otherwise well-organized, so it receives the maximum within the cap.",
+            "pdf_text_truncated": false
+          }
+        }
+      ],
+      "model_usage": {
+        "openai-api/deepseek/deepseek-v4-pro": {
+          "input_tokens": 42958,
+          "output_tokens": 41499,
+          "total_tokens": 2122729,
+          "input_tokens_cache_read": 2038272,
+          "reasoning_tokens": 6134
+        }
+      },
+      "log": "/tmp/ai4ss-apsr-pdf-logs/2026-07-05T06-39-29-00-00_factory-e2e-apsr-pdf_52UvYjwpD7k8s9pFnKTdmo.eval"
+    }
+  ],
+  "marginal_gain": {
+    "full_vs_no_skills": null,
+    "full_research_factory_skills_score": 55.0,
+    "no_skills_score": null
+  }
+}

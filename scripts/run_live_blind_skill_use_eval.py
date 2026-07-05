@@ -29,7 +29,7 @@ WEIGHTS = {
     "traceability": 20,
     "boundary": 20,
     "validation": 15,
-    "author_decision": 15,
+    "assumption_register": 15,
 }
 
 GRADE_FIELDS = [
@@ -40,7 +40,7 @@ GRADE_FIELDS = [
     "traceability_0_20",
     "boundary_0_20",
     "validation_0_15",
-    "author_decision_0_15",
+    "assumption_register_0_15",
     "total_0_100",
     "notes",
 ]
@@ -49,7 +49,7 @@ SCORE_FIELDS = [
     ("traceability_0_20", 20),
     ("boundary_0_20", 20),
     ("validation_0_15", 15),
-    ("author_decision_0_15", 15),
+    ("assumption_register_0_15", 15),
 ]
 
 
@@ -113,6 +113,7 @@ LEAK_TERMS = [
     "no_skill",
     "skill_guided",
     "CONTROL condition",
+    "public-data-sources",
     "research-data-builder",
     "literature-matrix",
     "methods-reviewer",
@@ -213,7 +214,7 @@ current mapping, run `package` with the seed disclosed in `_private/randomizatio
 - Packet contents may still reveal style differences even after condition labels
   are removed.
 - Scores estimate usefulness for traceable research assistance, not empirical
-  truth, publication-quality evidence, or completed human-accountability review.
+  truth, publication-quality evidence, or completed submission review.
 
 ## Method References
 
@@ -264,8 +265,8 @@ or `unblinded_report.md` during grading.
   manuscript/response text, unsafe confidentiality handling, and unsupported claims.
 - Award validation points when the packet names a concrete validator, gate, or
   check that could fail.
-- Award author-decision points when scholarly judgment remains visibly assigned
-  to the researcher.
+- Award assumption-register points when auto-selected assumptions, limits, and
+  repair routes remain visible.
 
 Freeze scores before viewing any condition mapping.
 """
@@ -370,7 +371,7 @@ def package(outdir: Path, seed: int, clean: bool) -> None:
                     "traceability_0_20": "",
                     "boundary_0_20": "",
                     "validation_0_15": "",
-                    "author_decision_0_15": "",
+                    "assumption_register_0_15": "",
                     "total_0_100": "",
                     "notes": "",
                 }
@@ -548,13 +549,13 @@ This report joins frozen blinded grades to `_private/private_mapping.csv`.
 This evaluation supports a narrow claim: in these four live generated tasks,
 skill-guided outputs were more useful when usefulness is defined as producing
 inspectable research artifacts, traceability markers, explicit authorship
-boundaries, validation gates, AI-use disclosure, and human-accountability decision points.
+boundaries, validation gates, AI-use disclosure, and assumption registers.
 
 {exception_note}
 
 It does not show that skill-guided agents are always better, that the artifacts
-are empirically correct, or that scholarly claims have completed
-human-accountability review. Those require source/data inspection.
+are empirically correct, or that scholarly claims have completed submission
+review. Those require source/data inspection.
 
 ## Limits
 

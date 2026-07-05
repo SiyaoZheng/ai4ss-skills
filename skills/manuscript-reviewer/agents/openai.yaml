@@ -1,0 +1,4 @@
+interface:
+  display_name: "Manuscript Reviewer"
+  short_description: "Run stateless AutoChecklist manuscript reviews"
+  default_prompt: "Use $manuscript-reviewer to run a context-sealed checklist review on my manuscript and route the first failures."

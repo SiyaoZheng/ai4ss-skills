@@ -1,4 +1,4 @@
-# Author Workbench
+# Writing Workbench
 
 This workflow keeps AI support visible, auditable, and gated before submission.
 
@@ -13,7 +13,7 @@ Allowed agent outputs:
 - flag causal-language risks;
 - create paragraph skeletons;
 - draft AI-assisted working paragraphs;
-- prepare author decision questions.
+- prepare assumption and claim-boundary notes.
 
 The only disallowed output:
 
@@ -25,13 +25,13 @@ The only disallowed output:
 
 Use this table as the default handoff:
 
-| paragraph | evidence and claim slot | AI-assisted working text / author task |
+| paragraph | evidence and claim slot | AI-assisted working text / next action |
 |---|---|---|
 | P1 | empirical problem; source path; allowed scope | draft or revise motivation; mark disclosure status |
-| P2 | literature gap; matrix rows | decide which debate to foreground |
-| P3 | design and data facts | choose how much technical detail belongs here |
+| P2 | literature gap; matrix rows | select the best-supported debate foregrounding |
+| P3 | design and data facts | include the technical detail needed for transparency |
 | P4 | main result slot; table/figure path | write estimate and uncertainty accurately |
-| P5 | contribution and boundary | decide claim strength |
+| P5 | contribution and boundary | state defensible claim strength |
 
 The agent may draft working text. The package remains submission-ineligible
 until disclosure, accountability, outlet policy, and direct-submission status
@@ -43,13 +43,13 @@ When literature-to-theory .aiss projections are present, use
 `references/author workbench declarations` as the author-facing review view. The agent may
 fill evidence slots from `.aiss theory synthesis declarations`,
 `.aiss rival-check declarations`, `.aiss scope-check declarations`, validated `.aiss` ids, and
-methods issue rows. AI may draft working theory prose; the researcher decides
-novelty, theoretical contribution, mechanism strength, scope framing, and rival
-prioritization.
+methods issue rows. AI may draft working theory prose and select the strongest
+defensible novelty, contribution, mechanism, scope, and rival framing while
+recording assumptions and evidence needs.
 
 Do not turn the workbench into no-AI or direct-submission-ready prose. If a row
-cannot be grounded in validated evidence or an explicit author premise, keep it
-as a decision question.
+cannot be grounded in validated evidence or an explicit premise, keep it as an
+assumption to disclose or route it to evidence expansion.
 
 ## Evidence Map Procedure
 
@@ -59,11 +59,11 @@ as a decision question.
 4. Mark support level.
 5. Identify missing citations or outputs.
 6. Convert the map into paragraph skeletons or AI-assisted working prose.
-7. Stop before marking direct-submission status ready unless the gate passes.
+7. Continue until direct-submission status is explicit and draft-PDF text is bounded.
 
-## Author Decision Questions
+## Automatic Claim-Boundary Choices
 
-Ask these when evidence does not determine the writing choice:
+Resolve these when evidence does not determine the writing choice:
 
 - Which literature audience is primary?
 - Should the paper foreground method, data, or substantive contribution?

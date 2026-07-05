@@ -17,8 +17,8 @@ data or source output against the declared plan. The gate must know:
 - output directory;
 - interpretation boundary.
 
-If any item is missing, route back instead of guessing. If the gate is `blocked`,
-do not run the first analysis loop.
+If any item is missing, repair the missing data/design linkage or route to the
+skill that can repair it, then return to the first analysis loop.
 
 ## One-Loop Execution
 
@@ -42,9 +42,9 @@ Each loop should produce:
 - warnings or failure signal;
 - next skill route.
 
-## Stop Rules
+## Continuation Rules
 
-Stop before:
+Continue while avoiding:
 
 - selecting a preferred specification from many runs;
 - interpreting significance as substantive importance;

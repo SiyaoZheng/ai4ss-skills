@@ -129,7 +129,7 @@ Output:
 3. what each cluster can support;
 4. what each cluster cannot support;
 5. citation gaps;
-6. author decisions needed before writing.
+6. assumptions and source gaps to disclose before writing.
 ```
 
 ## Compile Evidence To AI4SS
@@ -140,15 +140,15 @@ Use $literature-matrix to compile verified source evidence into a `.aiss` fragme
 Inputs:
 - .aiss literature evidence declarations: [path]
 - source row ids: [paper_id list]
-- research_model.aiss if present: [path]
+- .ai4ss/research_model.aiss if present: [path]
 
 Do not present review prose as no-AI or direct-submission ready.
 For each model-affecting source row:
 1. update `paper`, `source`, `span`, `claim`, `relation`, `concept`, `causal`, `bridge`, `check`, or `decision` declarations in `.aiss`;
-2. preserve source locators and unresolved author decisions;
-3. run `python3 scripts/validate_ai4ss_model.py <research_model.aiss>`.
+2. preserve source locators and unresolved assumptions;
+3. run `python3 scripts/validate_ai4ss_model.py .ai4ss/research_model.aiss`.
 
-If the source is verified but not enough to update a model fragment, set `evidence_compile_status=needs_review` inside `.aiss` metadata and state the author decision needed.
+If the source is verified but not enough to update a model fragment, set `evidence_compile_status=needs_source_expansion` inside `.aiss` metadata and state the source gap or assumption to disclose.
 ```
 
 ## Refresh Existing Evidence Declarations
@@ -157,7 +157,7 @@ If the source is verified but not enough to update a model fragment, set `eviden
 Use $literature-matrix to refresh these existing `.aiss` source-evidence declarations.
 
 Inputs:
-- existing research_model.aiss: [path]
+- existing .ai4ss/research_model.aiss: [path]
 - search window: [date range or recent years]
 - target journals/working paper series: [list]
 
@@ -181,5 +181,5 @@ claim_source_locator, access_date, version_used, and included_in_synthesis.
 Expected behavior:
 Plan search strata -> verify primary or local sources -> extract rows -> mark secondary_only
 as not synthesis-ready -> run validate_ai4ss_model.py -> return evidence clusters,
-author decisions, and AI-disclosure/direct-submission status for any working text.
+assumptions to disclose, and AI-disclosure/direct-submission status for any working text.
 ```

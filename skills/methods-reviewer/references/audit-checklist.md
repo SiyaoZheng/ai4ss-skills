@@ -62,12 +62,12 @@ Use this checklist to review social-science empirical work.
 - Rival rows in `.aiss rival-check declarations` state what the rival explains well,
   what it explains poorly, and a discriminating observable implication.
 - Scope rows in `.aiss scope-check declarations` name who/where/when, scope logic,
-  boundary failure mode, observable implication, and author decision.
+  boundary failure mode, observable implication, and assumption to disclose.
 - Observable implications can distinguish the proposed mechanism from the
   rival, rather than restating the main outcome.
 - Mechanism weakness, rival choice, novelty, theoretical contribution, scope
-  choice, and claim strength remain author decisions when evidence is thin,
-  mixed, conflicting, or unverified.
+  choice, and claim strength are narrowed to the strongest defensible boundary
+  when evidence is thin, mixed, conflicting, or unverified.
 - Theory overclaim is reported in the existing issue table with
   `mida_component=Model` or `mida_component=Report`; do not create a separate
   theory-review issue schema.

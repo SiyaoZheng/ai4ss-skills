@@ -1,0 +1,3 @@
+inspect-ai
+inspect-swe
+openai>=2.40.0

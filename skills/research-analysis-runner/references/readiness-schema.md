@@ -37,26 +37,25 @@ whether the available evidence object can answer the declared inquiry.
 | `missingness_status` | `pass`, `warn`, `fail`, or `not_applicable` |
 | `variation_status` | `pass`, `warn`, `fail`, or `not_applicable` |
 | `bridge_alignment_status` | `strong`, `weak`, `mixed`, `unchecked`, `fail`, or `not_applicable` |
-| `readiness_status` | `ready`, `warn`, or `blocked` |
-| `blocking_issue` | `none`, or concrete issue preventing analysis execution |
+| `readiness_status` | `ready`, `warn`, or `repair_needed` |
+| `repair_issue` | `none`, or concrete issue that must be repaired before or during execution |
 | `validation_command` | Command run or `not_run_reason:<reason>` |
-| `next_skill_route` | `research-analysis-runner`, `research-data-builder`, `study-design-builder`, `methods-reviewer`, or `ask_author` |
+| `next_skill_route` | `research-analysis-runner`, `public-data-sources`, `research-data-builder`, `study-design-builder`, or `methods-reviewer` |
 
 ## Rules
 
 - `ready` means the analysis runner may execute the declared first-pass analysis.
 - `warn` means execution may proceed only if the warning is explicit and routed
   to review; it cannot silently become a final result.
-- `blocked` means do not execute analysis; route back to data, design, methods,
-  or author decision.
+- `repair_needed` means repair data, design, or methods linkage before treating outputs as reviewable.
 - If `ai4ss_model_path` is not `not_applicable:<reason>`, it must end with
   `.aiss`.
 - If a `.aiss` model is present, `bridge_alignment_status=unchecked` is not a
   ready handoff.
 - `missing_variables` must be `none` for `ready` or `warn` handoffs.
-- Any `fail` gate status blocks analysis.
+- Any `fail` gate status triggers repair before analysis output is treated as reviewable.
 - `ready` rows must route to `research-analysis-runner`.
-- `blocked` rows must not route to `research-analysis-runner`.
+- `repair_needed` rows route to the skill that can repair the failed gate, then return to `research-analysis-runner`.
 - When `data_source` is a readable CSV, the validator checks the real header and
   row count against `required_variables`, `available_variables`,
   `missing_variables`, and `row_count`.

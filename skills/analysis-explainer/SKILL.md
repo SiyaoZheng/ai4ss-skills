@@ -17,6 +17,34 @@ description: |
 
 This skill generates detailed technical documentation of statistical analysis results. The output is designed for **methodologist collaborators** who need to understand the analysis thoroughly.
 
+## Full-Auto Harness Contract
+
+When invoked by an automatic research harness, this skill must not pause for
+human choice or return any terminal no-progress state. It must gather all available outputs, explain them in precise
+social-science language, and produce Markdown/PDF material that can feed a
+publication-level `paper/full_draft.pdf`. Missing figures, tables, or logs
+trigger automatic search/rerun requests to upstream analysis skills rather than
+a conservative summary.
+
+Only explain empirical outputs that trace to real observed public or authorized
+data. If tables, figures, estimates, or model inputs are synthetic, simulated,
+hypothetical, illustrative, generated, DGP-created, random-draw,
+benchmark-calibrated, or literature-parameter-imputed, do not summarize them as
+findings. Route to `public-data-sources`, `research-data-builder`,
+`research-analysis-runner`, or `methods-reviewer` for repair.
+
+## .aiss State Machine
+
+When invoked from an AI4SS research-factory workspace, locate
+`.ai4ss/research_model.aiss` and run
+`python3 dsl/scripts/aiss.py state .ai4ss/research_model.aiss` before choosing
+or returning `next_skill_route`. Starts, completions, failures, and watchdog
+heartbeat observations should be recorded as `.aiss` `event` declarations or
+returned as deterministic `aiss.py transition --event ...` fragments. Events
+do not replace semantic updates: result explanations that change claims or
+limits must still update the relevant `claim`, `check`, `decision`, or
+`artifact` declarations.
+
 ## Core Principle: Complete Results First
 
 **The documentation must contain ALL results from the analysis—every figure, every table, every key statistic.**
@@ -41,6 +69,8 @@ Gather every output file:
 2. **Tables**: Read all generated tables (CSV, DOCX) — reproduce them in full
 3. **Code**: Read the analysis script to understand method specifications
 4. **Logs**: Check for any logged statistics or diagnostics
+5. **Source status**: Confirm data provenance and observed-data-only status when
+   the outputs will feed a manuscript or PDF.
 
 ### Step 2: Embed Results
 

@@ -11,8 +11,8 @@ Inputs:
 Selected route:
 <route_id or "choose the most feasible route and explain why">
 
-Produce a study design brief, optional AI-assisted working text, and, if there
-are unresolved choices, `.aiss` decision declarations. Do not certify
+Produce a study design brief, AI-assisted working text when useful, and, if there
+are unresolved choices, `.aiss` assumption/decision declarations. Do not certify
 identification validity or treat the output as direct-submission ready without
 AI-use disclosure and policy checks.
 ```
@@ -22,9 +22,9 @@ AI-use disclosure and policy checks.
 ```text
 Compare these candidate routes as study designs.
 
-For each route, identify unit of analysis, outcome, exposure/treatment, comparison, data needs, literature needs, first analysis, failure signal, and author decision needed.
+For each route, identify unit of analysis, outcome, exposure/treatment, comparison, data needs, literature needs, first analysis, failure signal, and assumptions to disclose.
 
-Recommend the smallest route to try next, not the most ambitious paper.
+Recommend the smallest route that can still support a publication-level draft PDF.
 ```
 
 ## Analysis Plan Scaffold
@@ -34,7 +34,7 @@ Build the first analysis plan for this selected route.
 
 Specify inputs, required columns/sources, table or figure shell, validation checks, interpretation boundary, and the next skill route.
 
-Stop before running analysis unless the data path and design source are ready.
+Create the analysis-plan handoff and run only small feasibility checks unless the data path and design source are ready.
 ```
 
 ## Handoff To Analysis

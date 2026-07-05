@@ -31,11 +31,11 @@ Use this schema for empirical social-science literature.
 | `claim_source_locator` | Page, table, figure, section, paragraph, or local note locator |
 | `limitations` | Stated or visible limitations |
 | `relevance_to_project` | Why it matters for the user's project |
-| `open_questions` | What requires human judgment |
+| `source_gap_notes` | What remains uncertain after automated source work |
 | `verified_from` | PDF path, DOI page, journal page, or user-provided source |
 | `access_date` | YYYY-MM-DD date for web or database access |
 | `version_used` | Published version, working-paper version, preprint version, or local PDF date |
-| `included_in_synthesis` | true, false, or needs_author |
+| `included_in_synthesis` | true, false, or needs_source_expansion |
 | `ai4ss_model_path` | Path to `.aiss` model, or `not_applicable:<reason>` |
 | `model_id` | DSL model id supported or challenged by this source row, or `not_applicable:<reason>` |
 | `concept_id` | DSL concept id supported or challenged by this source row, or `not_applicable:<reason>` |
@@ -43,7 +43,7 @@ Use this schema for empirical social-science literature.
 | `bridge_id` | DSL empirical bridge id supported or challenged by this source row, or `not_applicable:<reason>` |
 | `ai4ss_check_status` | `pass`, `warn`, `not_run`, or `not_applicable` |
 | `source_artifact_path` | PDF, DOI page, repository page, source note, table, figure, or log referenced by the `.aiss` declaration |
-| `evidence_compile_status` | `declared`, `needs_review`, `blocked`, or `not_applicable` |
+| `evidence_compile_status` | `declared`, `needs_review`, `needs_source_expansion`, or `not_applicable` |
 | `evidence_validation_command` | Exact `.aiss` validation command, or `not_run_reason:<reason>` |
 
 ## Extraction Rules
@@ -54,13 +54,13 @@ Use this schema for empirical social-science literature.
 - If a claim comes from an abstract only, set `claim_source_section` to `abstract_only`.
 - Do not infer fixed effects or clustering from method labels.
 - Do not set `included_in_synthesis` to `true` unless `verification_level` is `verified_primary` or `verified_local`.
-- Use `needs_author` when a row is verified but its relevance or version choice requires researcher judgment.
+- Use `needs_source_expansion` when a row is verified but its relevance or version choice needs more source evidence before synthesis.
 - If `ai4ss_model_path` is not `not_applicable:<reason>`, it must end with `.aiss`.
 - Source rows can support, challenge, or qualify a model element; they must not rewrite `.aiss` concepts or bridges silently.
-- Synthesis-ready rows that affect `.aiss` concepts, causal implications, or bridges should update checked `.aiss` declarations or state a concrete review/blocking reason.
-- Model-affecting source evidence must validate through `scripts/validate_ai4ss_model.py <research_model.aiss>`.
+- Synthesis-ready rows that affect `.aiss` concepts, causal implications, or bridges should update checked `.aiss` declarations or state a concrete source/design repair reason.
+- Model-affecting source evidence must validate through `scripts/validate_ai4ss_model.py .ai4ss/research_model.aiss`.
 
-## Evidence To Author Hand-Off
+## Evidence To Writing Hand-Off
 
 Only after source-evidence review, group papers by:
 

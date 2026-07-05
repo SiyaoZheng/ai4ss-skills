@@ -4,7 +4,7 @@ This note records the multi-round reassessment of the local AI4SS skillpack.
 
 ## Round 1: Consistency Problem
 
-Finding: the skills had strong local boundaries but weak shared interfaces. Each skill knew its own artifact, but the pack did not have a shared contract for route ids, upstream inputs, downstream routes, stop reasons, author decisions, or interpretation boundaries.
+Finding: the skills had strong local boundaries but weak shared interfaces. Each skill knew its own artifact, but the pack did not have a shared contract for route ids, upstream inputs, downstream routes, continuation plans, automation assumptions, or interpretation boundaries.
 
 Change:
 
@@ -19,6 +19,7 @@ Finding: after `research-starter`, the first-order production layer still had tw
 | gap | why it matters | added skill |
 |---|---|---|
 | Route to design | Ordinary scholars need help turning a possible route into unit, constructs, comparison, evidence needs, and first analysis plan | `study-design-builder` |
+| Source acquisition to sample | Data need a separate real observed source access gate before analysis-sample construction | `public-data-sources` |
 | Design/data to outputs | Existing skills could build data and audit methods, but none owned first-pass tables, figures, logs, and result artifacts | `research-analysis-runner` |
 
 ## Round 3: Methodology Spine Gap
@@ -77,9 +78,9 @@ Closed in the hardening pass:
 Factory-level evaluation closure:
 
 - Added `scripts/run_factory_level_eval.py`.
-- Added `docs/factory_level_eval/` with protocol, grader brief, blinded packets, private mapping, gate matrix, human grading sheet, rule-based scores, and unblinded report.
-- The package now tests the rough-topic -> `.aiss` route declarations -> `.aiss` MIDA declarations -> `.aiss` model/check -> literature/data gates -> `.aiss` analysis readiness -> `.aiss` analysis artifacts -> bounded-claim handoff chain as a first-order autonomous research factory task.
-- Limit: this closes the deterministic structural-evaluation gap, not the stronger live independent field-evaluation gap.
+- Added `docs/factory_level_eval/` with protocol, grader brief, blinded packets, private mapping, gate matrix, human grading sheet, LLM-as-judge prompts, judge-score sheet, and unblinded report.
+- The package now tests the rough-topic -> `.aiss` route declarations -> `.aiss` MIDA declarations -> `.aiss` model/check -> observed public-source acquisition -> observed-data sample construction/check -> literature evidence gates -> `.aiss` analysis readiness -> `.aiss` analysis artifacts -> bounded-claim handoff chain as a first-order autonomous research factory task.
+- Limit: this closes the structural packet-and-judge-rubric gap, not the stronger live independent field-evaluation gap.
 
 ## Round 6: Workflow DSL Fusion
 
@@ -102,9 +103,11 @@ Decision:
 |---|---|---|---|
 | Production | `research-starter` | `.aiss` route declarations and minimum viable study | validity claims or no-AI submission status |
 | Production | `study-design-builder` | selected `.aiss` route, MIDA declarations, design decisions, and checks | final identification judgment |
-| Production | `research-data-builder` | data pipeline, provenance, and `.aiss` data declarations | research design choice |
+| Production | `public-data-sources` | real observed source acquisition, access status, official docs, request templates, and provenance | analysis-sample cleaning or estimation |
+| Production | `research-data-builder` | observed-data sample pipeline, row provenance, and `.aiss` data declarations | source acquisition or research design choice |
 | Production | `literature-matrix` | source discovery, extraction, and `.aiss` evidence declarations | undisclosed no-AI literature-review status |
 | Production | `research-analysis-runner` | first-pass outputs and `.aiss` analysis artifacts | interpretation or result selection |
+| Production | `top-journal-figures` | final ggplot2 paper figures, shared style profile, helper-tool transparency, vector exports, and visual-integrity checks | estimation, source acquisition, or manuscript prose |
 | Audit | `methods-reviewer` | diagnostic checks and redesign decisions | first execution as default |
 | Scaffold | `academic-writing-scaffold` | bounded claim slots, AI-disclosed working prose, and manuscript package gate | hidden-AI submission-ready prose |
 | Scaffold | `research-slides-builder` | presentation artifacts and evidence-source mapping | new research findings |
@@ -146,6 +149,6 @@ Decision:
 
 - Ethics/confidentiality may eventually need its own skill if workshop materials include interviews, private reviewer reports, or restricted administrative data.
 - Qualitative/interview analysis may eventually need its own skill if examples move beyond source matrices and coding schemas.
-- A stronger live factory evaluation should replace deterministic packets with independently generated live outputs, independent human expert graders, and inter-rater reliability before unblinding.
+- A stronger live factory evaluation should replace generated packets with independently generated live outputs, independent LLM/human expert graders, and inter-rater reliability before unblinding.
 - Full design simulation is not yet built into the local skills. DeclareDesign-style Monte Carlo diagnosis remains an advanced option rather than the default classroom path.
 - Specialist methods beyond DID, including IV, RD, RCT, survey, network, spatial, and ML evaluation, should become specialist skills only when workshop cases require them.

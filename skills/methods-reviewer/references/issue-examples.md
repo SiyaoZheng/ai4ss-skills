@@ -6,7 +6,7 @@ Use these examples to calibrate severity and avoid vague reviews.
 
 | severity | meaning | action |
 |---|---|---|
-| P0 | result likely invalid or unreproducible | stop and fix before using output |
+| P0 | result likely invalid or unreproducible | fix before using output |
 | P1 | serious risk affecting interpretation | address before submission |
 | P2 | reporting or robustness gap | fix or disclose |
 | P3 | clarity, labeling, or style issue | improve if time allows |
@@ -82,7 +82,7 @@ Lead with issues, not compliments. For each issue include:
 - observed evidence;
 - why the issue matters;
 - minimal next action;
-- whether it is confirmed, likely, or needs author decision.
+- whether it is confirmed, likely, or needs claim narrowing/evidence expansion.
 
 Validator-ready issue tables use:
 

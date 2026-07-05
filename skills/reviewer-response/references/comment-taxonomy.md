@@ -15,8 +15,8 @@ Use this taxonomy to decompose reviewer reports into atomic requests.
 | robustness | add checks, placebo, sensitivity, alternative samples | robustness plan/output |
 | heterogeneity | subgroup or mechanism requests | design and power assessment |
 | literature | cite or engage missing literature | checked source-evidence declarations |
-| writing | clarify, reorganize, shorten, tone down | author draft |
-| scope | requests beyond study design | author decision |
+| writing | clarify, reorganize, shorten, tone down | manuscript draft |
+| scope | requests beyond study design | recorded revision choice |
 | formatting | tables, figures, appendix, journal style | manuscript files |
 
 ## Hidden Requests
@@ -45,11 +45,11 @@ Use:
 - `clarify`: manuscript already did the work but text was unclear.
 - `rebut`: request would be misleading or change the estimand.
 - `cannot_do`: data/design/access prevents it.
-- `needs_author`: strategic or substantive decision.
+- `revise_scope`: strategic or substantive scope revision.
 
 ## Scope Boundary Tests
 
-Mark `needs_author` when:
+Mark `revise_scope` when:
 
 - request changes the paper's main estimand;
 - request requires new data collection;
@@ -66,7 +66,7 @@ Mark `needs_author` when:
 | model | script path, output table, model notes |
 | inference | clustering/SE code, sensitivity output |
 | literature | checked source-evidence declaration or source |
-| writing | revised section location and author decision |
+| writing | revised section location and revision choice |
 | formatting | updated file/page/table number |
 
 ## Red Flags
@@ -75,4 +75,4 @@ Mark `needs_author` when:
 - Response promises a table that does not exist.
 - "We agree" concedes a point that changes the design.
 - A rebuttal lacks manuscript clarification.
-- The author decision is hidden as an agent decision.
+- The revision choice is hidden instead of recorded.

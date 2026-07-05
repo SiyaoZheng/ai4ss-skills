@@ -94,7 +94,7 @@ Red flags:
 Decision route:
 
 - If first-stage evidence is missing, output `status=reporting_gap`, `severity=P1`, and `next_action=add first-stage table and weak-IV diagnostic`.
-- If exclusion restriction is only asserted, output `status=needs_author`, `severity=P1`, and ask the author to state the substantive exclusion argument and threats.
+- If exclusion restriction is only asserted, output `status=claim_boundary_needed`, `severity=P1`, and write the strongest evidence-backed exclusion argument plus threats to disclose.
 - If the manuscript claims ATE from a local instrument, output `status=overclaim`, `severity=P1`, and route the claim to `academic-writing-scaffold` as an estimand wording risk.
 
 ## RD
@@ -203,7 +203,7 @@ Decision route:
 
 - If randomization unit and analysis clustering differ, output `status=serious_risk`, `severity=P1`, and request cluster-appropriate inference.
 - If attrition is arm-specific and unreported, output `status=confirmed_bug` when visible in data, otherwise `status=serious_risk`.
-- If outcome switching is suspected, output `status=needs_author` and ask for pre-analysis-plan or registration evidence before any claim wording.
+- If outcome switching is suspected, output `status=claim_boundary_needed`, locate or create pre-analysis-plan or registration evidence, and narrow claim wording until the evidence is visible.
 
 ## Survey / Weights
 

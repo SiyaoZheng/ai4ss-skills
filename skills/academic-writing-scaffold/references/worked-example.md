@@ -7,7 +7,7 @@ and direct-submission gates visible.
 
 - `output/tables/table1_baseline.csv`
 - `output/figures/event_study.svg`
-- `output/audit/.aiss row-loss checks`
+- `.ai4ss/research_model.aiss` row-loss checks
 - `docs/research_design.md`
 
 ## Evidence Inventory
@@ -16,7 +16,7 @@ and direct-submission gates visible.
 |---|---|---|
 | `table1_baseline.csv` | estimate | main DID result |
 | `event_study.svg` | diagnostic | pre-trend and dynamic pattern |
-| `.aiss row-loss checks` | design fact | final sample and restrictions |
+| `.ai4ss/research_model.aiss` row-loss checks | design fact | final sample and restrictions |
 | `research_design.md` | design fact | unit, treatment, FE, clustering |
 
 ## Claim Ledger
@@ -25,7 +25,7 @@ and direct-submission gates visible.
 |---|---|---|---|---|---|---|---|---|
 | C1 | preferred specification estimates post-treatment difference | estimate | table column 4 | strong | scale ambiguity | cite | scaffold_only | scaffold_only |
 | C2 | design compares treated and untreated city-years | design_fact | research_design.md | strong | causal language | soften | scaffold_only | scaffold_only |
-| C3 | pre-trends are visually flat | diagnostic | event_study.svg | partial | missing citation | add_evidence | needs_author_decision | decision_prompt |
+| C3 | pre-trends are visually flat | diagnostic | event_study.svg | partial | missing citation | add_evidence | assumption_disclosed | source_gap_note |
 | C4 | policy improves innovation capacity | interpretation | table + figure | weak | overclaim | revise_target | scaffold_only | scaffold_only |
 | C5 | missing controls do not affect results | diagnostic | robustness needed | missing | unsupported mechanism | delete | scaffold_only | scaffold_only |
 
@@ -36,7 +36,7 @@ and direct-submission gates visible.
 | 1 | orient reader to table | table title, model column, sample | AI-assisted working text; not direct-submission ready |
 | 2 | state preferred estimate | coefficient, SE/CI, N, FE, clustering | AI-assisted working text; not direct-submission ready |
 | 3 | connect event-study diagnostic | baseline period, pre-treatment coefficients, bands | AI-assisted working text; not direct-submission ready |
-| 4 | state boundary | `.aiss` row-loss checks, missingness, design assumption | AI-assisted working text; not direct-submission ready |
+| 4 | state boundary | `.ai4ss/research_model.aiss` row-loss checks, missingness, design assumption | AI-assisted working text; not direct-submission ready |
 
 ## Disallowed Presentation
 
@@ -56,7 +56,7 @@ Why:
 ## Disclosure Gate
 
 - `ai_contribution_disclosure`: required
-- `human_accountability_status`: needs_author_review
+- `human_accountability_status`: accountability_statement_drafted
 - `submission_policy_check_status`: not_checked
 - `direct_submission_status`: not_ready
 

@@ -1,22 +1,24 @@
-# Factory-Level Blinded Packet Grader Brief
+# Factory-Level Blinded Packet LLM Judge Brief
 
-Score each packet as a full-chain research-assistance deliverable. Do not try to
-guess the production condition. No condition labels are provided.
+Score each packet as a full-chain research-assistance deliverable. Use
+LLM-as-judge scoring as the eval result. Do not try to guess the production
+condition. No condition labels are provided.
 
 ## Rubric
 
-- `research_object`: 15 points
-- `mida_design`: 15 points
-- `ai4ss_model_check`: 15 points
-- `evidence_data_chain`: 15 points
-- `analysis_loop`: 15 points
-- `boundary_author_decision`: 15 points
+- `research_object`: 13 points
+- `mida_design`: 13 points
+- `ai4ss_model_check`: 13 points
+- `evidence_data_chain`: 14 points
+- `analysis_loop`: 13 points
+- `figure_package`: 10 points
+- `claim_boundary_automation`: 14 points
 - `end_to_end_continuity`: 10 points
 
 ## Scoring Guidance
 
 - Award research-object points when a rough topic becomes `.aiss` route
-  declarations, mirrored route cards, a minimum viable study, stop reason, and
+  declarations, mirrored route cards, a minimum viable study, continuation plan, and
   failure signal.
 - Award MIDA points when `.aiss` `mida` declarations cover Model, Inquiry, Data
   strategy, Answer strategy, diagnosands, redesign, and reporting boundary.
@@ -28,6 +30,9 @@ guess the production condition. No condition labels are provided.
   source-status, and model-update declarations.
 - Award analysis-loop points only when readiness is checked before execution and
   first-pass outputs link back to the declared design.
+- Award figure-package points only when final paper figures are reproducible
+  R/ggplot2 artifacts with a shared style profile, source notes, helper-tool
+  transparency, visual-integrity checks, and vector export status.
 - Award boundary points when manuscript or theory-section working text remains
   AI-disclosed and direct-submission gated, declares transparency and
   replication-package status, and leaves novelty, theoretical contribution,

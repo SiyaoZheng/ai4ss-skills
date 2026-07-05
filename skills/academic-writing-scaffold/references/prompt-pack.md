@@ -18,14 +18,14 @@ Inputs:
 
 Single boundary:
 - any drafted prose is AI-assisted working text;
-- do not mark it direct-submission ready or no-AI until disclosure, human
+- do not mark it direct-submission ready or no-AI until disclosure,
   accountability, outlet-policy, and direct-submission status are explicit.
 
 Output:
 1. evidence inventory;
 2. `.aiss` bounded claim declarations;
 3. which claims are supported, partial, weak, or missing;
-4. author decisions needed before writing or submission-gate review.
+4. assumptions and claim-boundary choices needed before draft-PDF assembly.
 ```
 
 ## Section Scaffold
@@ -44,7 +44,7 @@ Return a table with:
 - evidence to use;
 - citation or source path;
 - risks to avoid;
-- author decision.
+- assumption or claim-boundary choice.
 
 Optionally include AI-assisted working text for each paragraph and mark
 direct_submission_status as not_ready until the gate is complete.
@@ -85,7 +85,7 @@ Please flag:
 - mechanism claims without evidence;
 - estimand drift;
 - vague or promotional phrasing;
-- places where the researcher must decide.
+- places where assumptions must be disclosed or claims narrowed.
 
 You may provide replacement working wording when useful. Mark it as AI-assisted
 working text and list the disclosure/submission gate still required.
@@ -126,7 +126,7 @@ Return:
 - evidence path for each slot;
 - units and uncertainty to report;
 - diagnostics to mention;
-- boundaries the researcher must state;
+- boundaries the draft must state;
 - claims to avoid.
 
 Optional result prose must be labeled AI-assisted working text and tied to
@@ -142,11 +142,11 @@ Bad prompt:
 Improved prompt:
 Use $academic-writing-scaffold to build a results workbench and AI-assisted
 working paragraph draft. Return claim slots, evidence paths, risk labels,
-revision targets, author decision questions, and disclosure/direct-submission
+revision targets, assumptions to disclose, and disclosure/direct-submission
 status.
 
 Expected behavior:
 Inventory tables and figures -> create bounded claim declarations -> validate the .aiss declaration set ->
 flag unsupported mechanism claims -> draft only AI-disclosed working text ->
-stop before direct-submission status is ready unless the gate passes.
+continue until draft-PDF text has explicit disclosure and direct-submission status.
 ```

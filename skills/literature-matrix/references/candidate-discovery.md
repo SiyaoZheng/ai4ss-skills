@@ -23,7 +23,7 @@ Required columns:
 | `source_url_or_path` | URL, DOI, local path, or database record |
 | `source_status` | ready_for_extraction, needs_primary_source, needs_pdf, needs_version_check, background_only, duplicate_candidate, excluded, unverified |
 | `reason` | Why the item is in or out |
-| `next_action` | retrieve_pdf, open_primary_page, check_doi, deduplicate, extract_matrix_row, exclude, ask_author |
+| `next_action` | retrieve_pdf, open_primary_page, check_doi, deduplicate, extract_matrix_row, exclude, expand_search |
 | `relevance_axis` | Project-specific axis or generic axis: concept, mechanism, boundary_condition, rival_explanation, observable_implication, method_anchor, measurement, other |
 | `found_from` | Search engine, database, seed paper, Zotero, local ref, or citation chasing source |
 | `access_date` | YYYY-MM-DD |
@@ -58,7 +58,7 @@ For each seed source, record:
 - whether it is primary, local, or secondary;
 - which evidence axis it covers;
 - what citation chasing it enables;
-- what author decision it forces.
+- what assumption or source gap it exposes.
 
 Good seed sources cover different roles: main empirical design, adjacent outcome, mechanism, method warning, measurement/background.
 

@@ -20,24 +20,51 @@ This skill answers: "已验证证据怎样讲给听众？" Its value is not maki
 
 Only present claims that can be traced to checked evidence. Do not invent results, simplify away uncertainty, or turn slide rhetoric into manuscript claims.
 
+## Full-Auto Harness Contract
+
+When invoked by an automatic research harness, this skill must not pause for
+human choice or return any terminal no-progress state. It must create the strongest source-linked deck or slide plan possible
+from current evidence, and when evidence is thin it must narrow the slide claim,
+add uncertainty/source notes, or trigger upstream evidence work. It must not
+produce a generic placeholder; presentation artifacts should remain consistent
+with the publication-level `paper/full_draft.pdf`.
+
 ## AI4SS Runtime Gate
 
-Do not build research slides from disconnected tables, figures, or memory when the project is inside the research factory. Locate `research_model.aiss`, selected route, MIDA declarations, evidence artifacts, methods diagnostics, and report-boundary declarations before planning slides.
+Do not build research slides from disconnected tables, figures, or memory when the project is inside the research factory. Locate `.ai4ss/research_model.aiss`, selected route, MIDA declarations, evidence artifacts, methods diagnostics, and report-boundary declarations before planning slides.
 
 Slide claims and deck artifacts must be represented or referenced by `.aiss` presentation `artifact`, bounded `claim`, source-link, privacy `check`, or author `decision` declarations. A deck file can be an output artifact, but it is not the workflow state.
 
+## Workspace Contract
+
+Follow `docs/research_workspace_contract.md`. Durable workflow state belongs in
+`.ai4ss/research_model.aiss`; generated data, output, logs, and PDFs must be
+produced through `make` targets, with `make all` as the final orchestration path.
+
+## .aiss State Machine
+
+When `.ai4ss/research_model.aiss` exists, run
+`python3 dsl/scripts/aiss.py state .ai4ss/research_model.aiss` before deciding
+the next route. When this skill starts, completes, fails, or observes a
+watchdog heartbeat in an automatic harness, record that runtime fact as an
+`.aiss` `event` declaration or return a deterministic
+`aiss.py transition --event ...` fragment for merge. Events do not replace
+semantic updates: if the skill resolves a repair/check status, update the
+relevant `route`, `mida`, `decision`, `check`, `artifact`, or claim-support
+declaration too.
+
 ## Methodology Foundation
 
-This skill sits in the `Report` layer of the MIDA spine. It preserves target inquiry, source artifact, sample or scope, uncertainty, privacy status, interpretation boundary, and author decision points.
+This skill sits in the `Report` layer of the MIDA spine. It preserves target inquiry, source artifact, sample or scope, uncertainty, privacy status, interpretation boundary, and automatic presentation choices.
 
 When a slide references a concept, causal implication, bridge, estimate, figure, or literature fact, it must preserve relevant `.aiss` ids and `ai4ss_check_status`.
 
 ## Workflow Contract
 
-- Upstream inputs: `research_model.aiss`, checked `.aiss` claims, tables, figures, data artifacts, literature evidence, methods-review findings, author draft notes, venue/audience constraints, or existing deck files.
+- Upstream inputs: `.ai4ss/research_model.aiss`, checked `.aiss` claims, tables, figures, data artifacts, literature evidence, methods-review findings, author draft notes, venue/audience constraints, or existing deck files.
 - Produces: slide structure, source-linked claim slots, visual object instructions, privacy checks, reporting-transparency reminders, deck artifacts when requested, and `.aiss` presentation `artifact`, bounded `claim`, source-link, `check`, or `decision` declarations.
-- Handoff fields: `route_id`, `target_inquiry`, `claim_id`, `source_artifact`, `sample_or_scope`, `uncertainty_or_caveat`, `privacy_status`, `reporting_transparency_status`, `visual_object`, `interpretation_boundary`, `author_decisions`, `ai4ss_model_path`, `model_id`, `concept_id`, `causal_id`, `bridge_id`, `ai4ss_check_status`, `next_skill_route`.
-- Downstream routes: `methods-reviewer`, `academic-writing-scaffold`, `reviewer-response`, `ask_author`, or `none`.
+- Handoff fields: `route_id`, `target_inquiry`, `claim_id`, `source_artifact`, `sample_or_scope`, `uncertainty_or_caveat`, `privacy_status`, `reporting_transparency_status`, `visual_object`, `interpretation_boundary`, `assumptions_to_disclose`, `ai4ss_model_path`, `model_id`, `concept_id`, `causal_id`, `bridge_id`, `ai4ss_check_status`, `next_skill_route`.
+- Downstream routes: `methods-reviewer`, `academic-writing-scaffold`, `reviewer-response`, or `none`.
 
 ## Routing Boundaries
 
@@ -46,18 +73,18 @@ Use this skill for source-linked presentation planning and deck artifact creatio
 ## Workflow
 
 ```text
-Step -1: Confirm scope
--> Identify audience, venue, time limit, deck format, confidentiality limits, and source files.
--> Locate research_model.aiss and checked evidence when this is a research-factory project.
+Step -1: Infer scope
+-> Identify or infer audience, venue, time limit, deck format, confidentiality limits, and source files.
+-> Locate `.ai4ss/research_model.aiss` and checked evidence when this is a research-factory project.
 
 Step 0: Evidence map
 -> Map each proposed slide claim to a checked source artifact, sample/scope note, uncertainty, and interpretation boundary.
--> Block or route back when a claim lacks evidence.
+-> Narrow, source, or route back automatically when a claim lacks evidence.
 
 Step 1: Plan deck
 -> Build a slide sequence with one claim slot per slide.
 -> Pair each claim slot with visual material, source link, and caveat.
--> Keep author decisions visible for sensitive or speculative claims.
+-> Keep disclosure and uncertainty visible for sensitive or speculative claims.
 
 Step 2: Produce artifact if requested
 -> Create or edit the deck file.
@@ -69,14 +96,14 @@ Step 3: Hand off
 
 ## Default Outputs
 
-- Updated `research_model.aiss` or deterministic `.aiss` fragment with presentation artifacts, bounded slide claims, privacy checks, and author decisions.
+- Updated `.ai4ss/research_model.aiss` or deterministic `.aiss` fragment with presentation artifacts, bounded slide claims, privacy checks, and automatic presentation choices.
 - Slide sequence or deck artifact when requested.
 - Source-linked claim list, visual object list, and caveat list in the chat response.
-- Blocked handoff with `next_skill_route` when evidence or privacy status is insufficient.
+- Automatic evidence narrowing, privacy redaction, or upstream handoff when evidence or privacy status is insufficient.
 
 ## Script Utilities
 
-- Run `scripts/validate_ai4ss_model.py <path-to-research_model.aiss>` when presentation declarations are added or changed.
+- Run `scripts/validate_ai4ss_model.py .ai4ss/research_model.aiss` when presentation declarations are added or changed.
 - Use project-specific render or export commands to verify deck artifacts when a deck file is produced.
 
 ## Reference Files

@@ -7,8 +7,9 @@ It creates:
 - anonymized output packets for graders;
 - a private condition mapping;
 - a blank human grading sheet;
-- rule-based packet scores without condition labels;
-- an unblinded report after scoring.
+- LLM-as-judge prompt files;
+- a blank LLM judge score sheet;
+- an unblinded report template after scoring.
 
 The generated evaluation is condition-blinded, not a true double-blind field
 experiment. See the generated protocol for limits.
@@ -23,7 +24,7 @@ import shutil
 from dataclasses import replace
 from pathlib import Path
 
-from simulate_skill_use_eval import CASES, WEIGHTS, EvalCase, SimulatedOutput, fmt_score, score_output
+from simulate_skill_use_eval import CASES, WEIGHTS, EvalCase, SimulatedOutput
 
 
 DEFAULT_OUTDIR = Path("docs/blind_skill_use_eval")
@@ -37,7 +38,7 @@ def write_text(path: Path, text: str) -> None:
 def write_csv(path: Path, rows: list[dict[str, str]], fieldnames: list[str]) -> None:
     path.parent.mkdir(parents=True, exist_ok=True)
     with path.open("w", newline="", encoding="utf-8") as f:
-        writer = csv.DictWriter(f, fieldnames=fieldnames)
+        writer = csv.DictWriter(f, fieldnames=fieldnames, lineterminator="\n")
         writer.writeheader()
         writer.writerows(rows)
 
@@ -46,7 +47,7 @@ def packet_body(packet_id: str, case: EvalCase, output: SimulatedOutput) -> str:
     artifacts = "\n".join(f"- {item}" for item in output.artifacts) or "- none"
     traces = "\n".join(f"- {item}" for item in output.trace_markers) or "- none"
     validators = "\n".join(f"- {item}" for item in output.validator_refs) or "- none"
-    decisions = "\n".join(f"- {item}" for item in output.author_decisions) or "- none"
+    decisions = "\n".join(f"- {item}" for item in output.assumption_register) or "- none"
     concern_signals = "\n".join(f"- {item}" for item in output.risky_moves) or "- none"
     return f"""# Blinded Packet {packet_id}
 
@@ -72,7 +73,7 @@ Task: {case.task}
 
 {validators}
 
-## Human-Accountability Decisions Surfaced
+## Automation Assumptions Surfaced
 
 {decisions}
 
@@ -124,15 +125,17 @@ Use `human_grading_sheet.csv` for independent grading. Recommended workflow:
 3. Use at least two graders and compute inter-rater agreement before unblinding.
 4. Unblind only after grades are frozen.
 
-## Rule-Based Scoring
+## LLM-As-Judge Scoring
 
-`rule_based_scores_blinded.csv` scores packets without condition labels. `unblinded_report.md` joins those scores to `private_mapping.csv` after scoring.
+`judge_prompts/` contains one bounded prompt per blinded packet.
+`llm_judge_scores.csv` is the only score sheet for this package.
+`unblinded_report.md` joins those scores to `private_mapping.csv` after scoring.
 
 ## Limits
 
 - Outputs are simulated templates, not live LLM generations.
 - The script author knows the hypothesis and generated both conditions.
-- Rule-based scoring is deterministic and not a substitute for independent human grading.
+- Deterministic packet construction is not an eval score.
 - A true double-blind evaluation would require independently generated outputs, condition concealment during generation, blinded human graders, preregistration, and inter-rater reliability.
 """
 
@@ -165,9 +168,32 @@ Assign points using the preregistered dimensions:
 - Award traceability points when rows, claims, comments, or findings can be traced to source files, logs, locators, or model objects.
 - Award boundary points when the packet avoids hidden-AI or direct-submission-ready manuscript/response text, unsafe confidentiality handling, and unsupported scholarly claims.
 - Award validation points when the packet identifies a concrete validator, gate, or check.
-- Award author-decision points when the packet leaves scholarly judgment to the researcher and states what must be decided.
+- Award assumption-register points when the packet states auto-selected assumptions, limits, and repair routes.
 
 Freeze scores before seeing any condition mapping.
+"""
+
+
+def judge_prompt(packet_id: str, packet_text: str) -> str:
+    weights = "\n".join(f"- `{name}`: {weight} points" for name, weight in WEIGHTS.items())
+    return f"""You are the LLM-as-judge for a condition-blinded AI4SS skill-use packet.
+
+Judge only the blinded packet below. Do not use the hidden condition mapping,
+repository state, or any transcript outside the packet.
+
+Score the packet on a 0-100 scale using this rubric:
+
+{weights}
+
+Return exactly:
+SCORE: <integer from 0 to 100>
+REASON: <brief explanation grounded in the packet>
+
+Blinded packet `{packet_id}`:
+
+```markdown
+{packet_text}
+```
 """
 
 
@@ -181,7 +207,7 @@ def condition_outputs(case: EvalCase) -> list[SimulatedOutput]:
 def make_packets(outdir: Path, seed: int) -> tuple[list[dict[str, str]], list[dict[str, str]]]:
     rng = random.Random(seed)
     mapping_rows: list[dict[str, str]] = []
-    score_rows: list[dict[str, str]] = []
+    judge_rows: list[dict[str, str]] = []
     packet_counter = 1
 
     for case in CASES:
@@ -192,7 +218,10 @@ def make_packets(outdir: Path, seed: int) -> tuple[list[dict[str, str]], list[di
             packet_counter += 1
 
             blinded_output = replace(output, condition="blinded")
-            write_text(outdir / "packets" / f"{packet_id}.md", packet_body(packet_id, case, blinded_output))
+            packet_text = packet_body(packet_id, case, blinded_output)
+            write_text(outdir / "packets" / f"{packet_id}.md", packet_text)
+            prompt_path = outdir / "judge_prompts" / f"{packet_id}.md"
+            write_text(prompt_path, judge_prompt(packet_id, packet_text))
 
             mapping_rows.append(
                 {
@@ -203,21 +232,18 @@ def make_packets(outdir: Path, seed: int) -> tuple[list[dict[str, str]], list[di
                 }
             )
 
-            scores = score_output(case, blinded_output)
-            score_rows.append(
+            judge_rows.append(
                 {
                     "packet_id": packet_id,
                     "case_id": case.case_id,
-                    "artifacts": fmt_score(scores["artifacts"]),
-                    "traceability": fmt_score(scores["traceability"]),
-                    "boundary": fmt_score(scores["boundary"]),
-                    "validation": fmt_score(scores["validation"]),
-                    "author_decision": fmt_score(scores["author_decision"]),
-                    "total": fmt_score(scores["total"]),
+                    "judge_prompt": str(prompt_path.relative_to(outdir)),
+                    "llm_score_0_100": "",
+                    "judge_reason": "",
+                    "judge_model": "",
                 }
             )
 
-    return mapping_rows, score_rows
+    return mapping_rows, judge_rows
 
 
 def make_human_sheet(mapping_rows: list[dict[str, str]]) -> list[dict[str, str]]:
@@ -230,7 +256,7 @@ def make_human_sheet(mapping_rows: list[dict[str, str]]) -> list[dict[str, str]]
             "traceability_0_20": "",
             "boundary_0_20": "",
             "validation_0_15": "",
-            "author_decision_0_15": "",
+            "assumption_register_0_15": "",
             "total_0_100": "",
             "notes": "",
         }
@@ -238,39 +264,47 @@ def make_human_sheet(mapping_rows: list[dict[str, str]]) -> list[dict[str, str]]
     ]
 
 
-def unblinded_report(mapping_rows: list[dict[str, str]], score_rows: list[dict[str, str]]) -> str:
+def unblinded_report(mapping_rows: list[dict[str, str]], judge_rows: list[dict[str, str]]) -> str:
     mapping_by_packet = {row["packet_id"]: row for row in mapping_rows}
     rows = []
-    for score in score_rows:
+    for score in judge_rows:
         mapped = mapping_by_packet[score["packet_id"]]
         rows.append({**score, **{"condition": mapped["condition"], "scholar_question": mapped["scholar_question"]}})
 
     by_condition = {"no_skill": [], "skill_guided": []}
     for row in rows:
-        by_condition[row["condition"]].append(float(row["total"]))
-
-    avg_no = sum(by_condition["no_skill"]) / len(by_condition["no_skill"])
-    avg_skill = sum(by_condition["skill_guided"]) / len(by_condition["skill_guided"])
+        if row.get("llm_score_0_100"):
+            by_condition[row["condition"]].append(float(row["llm_score_0_100"]))
 
     lines = [
         "# Unblinded Skill-Use Evaluation Report",
         "",
-        "This report joins `rule_based_scores_blinded.csv` to `private_mapping.csv` after scoring.",
+        "This report joins `llm_judge_scores.csv` to `private_mapping.csv` after scoring.",
         "",
-        "| packet | case | condition | total |",
-        "|---|---|---|---:|",
+        "| packet | case | condition | LLM score | judge prompt |",
+        "|---|---|---|---:|---|",
     ]
     for row in rows:
-        lines.append(f"| {row['packet_id']} | `{row['case_id']}` | `{row['condition']}` | {row['total']} |")
+        score = row.get("llm_score_0_100") or "-"
+        lines.append(f"| {row['packet_id']} | `{row['case_id']}` | `{row['condition']}` | {score} | `{row['judge_prompt']}` |")
 
+    lines.append("")
+    if by_condition["no_skill"] and by_condition["skill_guided"]:
+        avg_no = sum(by_condition["no_skill"]) / len(by_condition["no_skill"])
+        avg_skill = sum(by_condition["skill_guided"]) / len(by_condition["skill_guided"])
+        lines.extend(
+            [
+                f"Average `no_skill`: **{avg_no:.1f} / 100**",
+                f"Average `skill_guided`: **{avg_skill:.1f} / 100**",
+                f"Average gain: **+{avg_skill - avg_no:.1f} points**",
+            ]
+        )
+    else:
+        lines.append("This package is ready for LLM-as-judge scoring. Do not report a skill-use gain until `llm_judge_scores.csv` has model judge scores.")
     lines.extend(
         [
             "",
-            f"Average `no_skill`: **{fmt_score(avg_no)} / 100**",
-            f"Average `skill_guided`: **{fmt_score(avg_skill)} / 100**",
-            f"Average gain: **+{fmt_score(avg_skill - avg_no)} points**",
-            "",
-            "Interpretation: in this structural simulation, skill-guided packets score higher because they expose audit artifacts, validation gates, AI-use disclosure, and human-accountability decisions. This is not evidence that any particular LLM will behave this way in live use.",
+            "Interpretation must remain narrow. This structural packet package can test whether outputs expose audit artifacts, validation gates, AI-use disclosure, and explicit assumption registers. It is not evidence that any particular live LLM will behave this way.",
         ]
     )
     return "\n".join(lines) + "\n"
@@ -290,16 +324,16 @@ def main() -> int:
     write_text(args.outdir / "protocol.md", protocol(args.seed))
     write_text(args.outdir / "grader_brief.md", grader_brief())
 
-    mapping_rows, score_rows = make_packets(args.outdir, args.seed)
+    mapping_rows, judge_rows = make_packets(args.outdir, args.seed)
     write_csv(
         args.outdir / "private_mapping.csv",
         mapping_rows,
         ["packet_id", "case_id", "condition", "scholar_question"],
     )
     write_csv(
-        args.outdir / "rule_based_scores_blinded.csv",
-        score_rows,
-        ["packet_id", "case_id", "artifacts", "traceability", "boundary", "validation", "author_decision", "total"],
+        args.outdir / "llm_judge_scores.csv",
+        judge_rows,
+        ["packet_id", "case_id", "judge_prompt", "llm_score_0_100", "judge_reason", "judge_model"],
     )
     write_csv(
         args.outdir / "human_grading_sheet.csv",
@@ -312,12 +346,12 @@ def main() -> int:
             "traceability_0_20",
             "boundary_0_20",
             "validation_0_15",
-            "author_decision_0_15",
+            "assumption_register_0_15",
             "total_0_100",
             "notes",
         ],
     )
-    write_text(args.outdir / "unblinded_report.md", unblinded_report(mapping_rows, score_rows))
+    write_text(args.outdir / "unblinded_report.md", unblinded_report(mapping_rows, judge_rows))
     print(f"wrote blinded evaluation package to {args.outdir}")
     return 0
 

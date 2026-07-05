@@ -7,7 +7,7 @@ This example shows how to turn verified artifacts into slides without inventing 
 | artifact | role |
 |---|---|
 | `docs/research_design.md` | design and estimand |
-| `output/audit/.aiss row-loss checks` | sample and restrictions |
+| `.ai4ss/research_model.aiss` row-loss checks | sample and restrictions |
 | `output/tables/table1_baseline.csv` | main estimate |
 | `output/figures/event_study.svg` | diagnostic and dynamics |
 | `output/tables/robustness.csv` | sensitivity |
@@ -42,7 +42,7 @@ The agent should flag:
 
 - no mechanism table;
 - no external validity evidence;
-- no author-approved policy implication;
+- no source-backed policy implication;
 - pre-trend uncertainty needs visible labels;
 - sample-flow row loss needs explanation.
 

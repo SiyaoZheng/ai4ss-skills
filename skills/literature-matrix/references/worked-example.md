@@ -28,7 +28,7 @@ Before extraction, create `.aiss source-discovery declarations`.
 |---|---|---|---|---|---|
 | `anchor_place_policy` | `anchor_author` | `journal_page` | `ready_for_extraction` | `extract_matrix_row` | verified seed for place-based policy design |
 | `pilot_policy_query_01` | `concept` | `citation_index` | `needs_primary_source` | `open_primary_page` | keyword hit; not evidence yet |
-| `innovation_measurement_report` | `outcome` | `policy_report` | `background_only` | `ask_author` | measurement context, not causal evidence |
+| `innovation_measurement_report` | `outcome` | `policy_report` | `background_only` | `expand_search` | measurement context, not causal evidence |
 | `anchor_forward_01` | `forward_chase` | `citation_index` | `needs_primary_source` | `open_primary_page` | citation-chasing target from verified seed |
 
 ## Screening Decisions

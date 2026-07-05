@@ -1,0 +1,65 @@
+{
+  "mcpServers": {
+    "IQSWebSearch": {
+      "type": "http",
+      "url": "https://iqs-mcp.aliyuncs.com/mcp-servers/iqs-mcp-server-search",
+      "env_http_headers": {
+        "X-API-Key": "ALIYUN_IQS_API_KEY"
+      },
+      "note": "Official Alibaba Cloud IQS search MCP. Exposes common_search. Requires an IQS API key in ALIYUN_IQS_API_KEY; do not store the key in this repository."
+    },
+    "IQSLiteSearch": {
+      "type": "http",
+      "url": "https://iqs-mcp.aliyuncs.com/mcp-servers/iqs-mcp-server-litesearch",
+      "env_http_headers": {
+        "X-API-Key": "ALIYUN_IQS_API_KEY"
+      },
+      "note": "Official Alibaba Cloud IQS lite search MCP. Exposes web_search. Requires ALIYUN_IQS_API_KEY."
+    },
+    "IQSReadPage": {
+      "type": "http",
+      "url": "https://iqs-mcp.aliyuncs.com/mcp-servers/iqs-mcp-server-readpage",
+      "env_http_headers": {
+        "X-API-Key": "ALIYUN_IQS_API_KEY"
+      },
+      "note": "Official Alibaba Cloud IQS readpage MCP. Exposes readpage_basic and readpage_scrape. Requires ALIYUN_IQS_API_KEY."
+    },
+    "WebSearch": {
+      "type": "stdio",
+      "command": "sh",
+      "args": [
+        "-lc",
+        "export PATH=\"/opt/homebrew/bin:/usr/local/bin:$HOME/.local/bin:$PATH\"; for p in \"${PLUGIN_ROOT:-}/scripts/bailian_mcp_bridge.py\" \"$PWD/scripts/bailian_mcp_bridge.py\" \"$PWD/evals/factory_e2e_apsr_pdf/scaffold/scripts/bailian_mcp_bridge.py\"; do if [ -f \"$p\" ]; then exec \"${PYTHON:-python3}\" \"$p\"; fi; done; echo 'bailian_mcp_bridge.py not found' >&2; exit 127"
+      ],
+      "env_vars": [
+        "DASHSCOPE_API_KEY",
+        "DASHSCOPE_RESPONSES_BASE_URL",
+        "DASHSCOPE_WEBSEARCH_MODEL",
+        "DASHSCOPE_WEBPARSER_MODEL",
+        "DASHSCOPE_WEBPARSER_MCP_URL"
+      ],
+      "note": "Local stdio bridge for Alibaba Cloud Bailian web search and WebParser. It exposes MCP tools while routing calls through the verified DashScope Responses API, avoiding the currently failing remote WebSearch Streamable HTTP endpoint."
+    },
+    "browser-use": {
+      "type": "stdio",
+      "command": "sh",
+      "args": [
+        "-lc",
+        "if [ -n \"$DASHSCOPE_API_KEY\" ]; then export OPENAI_API_KEY=\"$DASHSCOPE_API_KEY\"; export OPENAI_BASE_URL=\"https://dashscope.aliyuncs.com/compatible-mode/v1\"; export BROWSER_USE_LLM_MODEL=\"qwen-plus\"; elif [ -n \"$DEEPSEEK_API_KEY\" ]; then export OPENAI_API_KEY=\"$DEEPSEEK_API_KEY\"; export OPENAI_BASE_URL=\"${DEEPSEEK_BASE_URL:-https://api.deepseek.com/v1}\"; export BROWSER_USE_LLM_MODEL=\"deepseek-chat\"; fi; export BROWSER_USE_HEADLESS=\"${BROWSER_USE_HEADLESS:-true}\"; exec uvx --from \"browser-use[cli]\" browser-use --mcp"
+      ],
+      "env_vars": [
+        "DASHSCOPE_API_KEY",
+        "OPENAI_API_KEY",
+        "OPENAI_BASE_URL",
+        "DEEPSEEK_API_KEY",
+        "DEEPSEEK_BASE_URL",
+        "BROWSER_USE_LLM_MODEL",
+        "ANTHROPIC_API_KEY",
+        "BROWSER_USE_API_KEY",
+        "BROWSER_USE_HEADLESS",
+        "BROWSER_USE_DISABLE_SECURITY"
+      ],
+      "note": "Free open-source browser-use MCP server. The bootstrap maps DASHSCOPE_API_KEY to OpenAI-compatible DashScope/Qwen settings for browser-use agent mode, then launches the official browser-use MCP server."
+    }
+  }
+}

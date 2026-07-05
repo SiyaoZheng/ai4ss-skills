@@ -70,10 +70,10 @@ route demo.route_r1 {
   study_type: causal
   unit_of_analysis: "firm-year / city-year"
   inquiry: "average effect of platform exposure on high innovation within linked units and declared time window"
-  data_strategy: "source-verified rollout records linked to firm innovation outcomes"
+  data_strategy: "real observed source acquisition before source-verified rollout records are linked to firm innovation outcomes"
   answer_strategy: "first pass design declaration and readiness checks before any estimation"
-  stop_reason: "teaching fixture; researcher must approve identification and claim strength"
-  next_skill_route: research-data-builder
+  continuation_plan: "auto-select the strongest feasible causal route, run source acquisition and linkage repairs, then continue to observed data construction"
+  next_skill_route: public-data-sources
   candidate_concepts: [demo.exposed_unit, demo.high_innovation]
   spans: [demo.span_route_r1]
 }
@@ -142,10 +142,10 @@ mida demo.mida_r1_report_boundary {
 decision demo.decision_r1_identification {
   route: demo.route_r1
   component: inquiry
-  decision: "Researcher must decide whether the causal route is substantively worth pursuing after source and data checks."
-  status: needs_author_decision
-  owner: author
-  next_skill_route: ask_author
+  decision: "Harness records a bounded causal route assumption and routes source risks to public source acquisition before data construction."
+  status: auto_resolved
+  owner: harness
+  next_skill_route: public-data-sources
   causal: [demo.exposure_to_innovation]
   spans: [demo.span_decision_r1]
 }

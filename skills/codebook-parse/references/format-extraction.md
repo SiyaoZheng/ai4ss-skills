@@ -255,12 +255,12 @@ After extraction, set flags on variables where automated inference is uncertain:
 
 ```yaml
 _parse_flags:
-  - missing_codes_inferred   # Negative values assumed missing — researcher must verify
+  - missing_codes_inferred   # Negative values assumed missing — audited default
   - type_uncertain           # Could be ordinal or nominal — check classification_level
   - codes_incomplete         # Some observed values have no label
   - label_truncated          # Source label was longer than 255 chars
   - no_concept               # Could not map to a ConceptualVariable — fill manually
 ```
 
-These flags are **not errors** — they are prompts for the researcher to review. The
-`audit-verify` skill will check that no flags remain before signing off.
+These flags are **not errors** — they are audit signals that downstream skills
+must carry into the contract and draft-facing metadata.
