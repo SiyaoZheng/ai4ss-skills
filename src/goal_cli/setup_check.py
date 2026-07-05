@@ -14,7 +14,7 @@ from pathlib import Path
 from typing import Protocol
 
 from .adapters import run_tik
-from .config import ConfigPolicyReport, GoalConfig, TikConfig, TokConfig, analyze_config_policy
+from .config import API_TIK_KEY_ENV_VARS, ConfigPolicyReport, GoalConfig, TikConfig, TokConfig, analyze_config_policy, api_tik_value_source
 from .no_mistakes import no_mistakes_axi_run_help_command, no_mistakes_help_supports_required_flags, resolve_no_mistakes_binary
 from .observability import plan_observability_export
 from .tok_execution import execute_tok
@@ -63,6 +63,7 @@ _SHELL_BUILTINS = {
 @dataclass(frozen=True)
 class DoctorOptions:
     smoke_codex_goal: bool = False
+    smoke_claude_code_goal: bool = False
     smoke_codex_file_tik: bool = False
     smoke_claude_code_file_tik: bool = False
     skip_openai_auth: bool = False
@@ -110,6 +111,9 @@ class SetupProbeAdapter(Protocol):
     def codex_goal_smoke(self, config: GoalConfig, options: DoctorOptions) -> ProbeResult:
         pass
 
+    def claude_code_goal_smoke(self, config: GoalConfig, options: DoctorOptions) -> ProbeResult:
+        pass
+
     def codex_file_tik_smoke(self, config: GoalConfig, options: DoctorOptions) -> ProbeResult:
         pass
 
@@ -150,41 +154,48 @@ class LocalSetupProbeAdapter:
             return False
 
     def codex_goal_smoke(self, config: GoalConfig, options: DoctorOptions) -> ProbeResult:
-        with tempfile.TemporaryDirectory(prefix="goal-cli-doctor-") as temp_dir:
-            root = Path(temp_dir)
-            write_dir = root / "src"
-            run_dir = root / ".goal" / "doctor-smoke"
-            write_dir.mkdir(parents=True)
-            run_dir.mkdir(parents=True)
-            smoke_config = TokConfig(
-                provider="codex_goal",
-                prompt_template="",
-                write_dirs=(write_dir,),
-                sandbox=config.tok.sandbox,
-                model=config.tok.model,
-                codex_features=config.tok.codex_features,
-            )
-            prompt = (
-                "Doctor smoke check for goal-cli setup readiness.\n"
-                "Create doctor-smoke.txt in the current temporary writable directory, then return a JSON tok report with "
-                "source_change_possible true and a concise remaining_artifact_bottleneck.\n"
-            )
-            result = execute_tok(smoke_config, prompt, run_dir, timeout_seconds=options.smoke_timeout_seconds)
-            if not result.ok:
-                detail = f"codex_goal smoke failed: {result.detail}"
-                if result.plan and result.plan.log_path.exists():
-                    detail += f"; see {result.plan.log_path}"
-                return ProbeResult(False, detail)
-            created_file = write_dir / "doctor-smoke.txt"
-            if not created_file.exists():
-                return ProbeResult(False, "codex_goal smoke returned a valid tok report but did not create the temporary smoke artifact")
-            return ProbeResult(True, "codex_goal smoke produced a schema-valid tok report and temporary source change")
+        return _tok_goal_smoke(config, options, "codex_goal")
+
+    def claude_code_goal_smoke(self, config: GoalConfig, options: DoctorOptions) -> ProbeResult:
+        return _tok_goal_smoke(config, options, "claude_code_goal")
 
     def codex_file_tik_smoke(self, config: GoalConfig, options: DoctorOptions) -> ProbeResult:
         return _local_file_tik_smoke(config, options, "codex_file")
 
     def claude_code_file_tik_smoke(self, config: GoalConfig, options: DoctorOptions) -> ProbeResult:
         return _local_file_tik_smoke(config, options, "claude_code_file")
+
+
+def _tok_goal_smoke(config: GoalConfig, options: DoctorOptions, provider: str) -> ProbeResult:
+    with tempfile.TemporaryDirectory(prefix="goal-cli-doctor-") as temp_dir:
+        root = Path(temp_dir)
+        write_dir = root / "src"
+        run_dir = root / ".goal" / "doctor-smoke"
+        write_dir.mkdir(parents=True)
+        run_dir.mkdir(parents=True)
+        smoke_config = TokConfig(
+            provider=provider,
+            prompt_template="",
+            write_dirs=(write_dir,),
+            sandbox=config.tok.sandbox,
+            model=config.tok.model,
+            codex_features=config.tok.codex_features,
+        )
+        prompt = (
+            "Doctor smoke check for goal-cli setup readiness.\n"
+            "Create doctor-smoke.txt in the current temporary writable directory, then return a JSON tok report with "
+            "source_change_possible true and a concise remaining_artifact_bottleneck.\n"
+        )
+        result = execute_tok(smoke_config, prompt, run_dir, timeout_seconds=options.smoke_timeout_seconds)
+        if not result.ok:
+            detail = f"{provider} smoke failed: {result.detail}"
+            if result.plan and result.plan.log_path.exists():
+                detail += f"; see {result.plan.log_path}"
+            return ProbeResult(False, detail)
+        created_file = write_dir / "doctor-smoke.txt"
+        if not created_file.exists():
+            return ProbeResult(False, f"{provider} smoke returned a valid tok report but did not create the temporary smoke artifact")
+        return ProbeResult(True, f"{provider} smoke produced a schema-valid tok report and temporary source change")
 
 
 def _local_file_tik_smoke(config: GoalConfig, options: DoctorOptions, provider: str) -> ProbeResult:
@@ -246,17 +257,19 @@ def run_doctor(config: GoalConfig, options: DoctorOptions | None = None, probes:
     checks.extend(_no_mistakes_checks(config, options, probes))
     checks.extend(_observability_checks(config, options, probes))
 
-    codex_path = probes.which("codex")
-    codex_available = codex_path is not None
-    checks.append(_check("codex.binary", codex_available, f"codex found at {codex_path}", "codex executable not found on PATH"))
-    if codex_available:
-        checks.extend(_codex_capability_checks(config, options, probes))
+    codex_available = False
+    if config.tok.provider == "codex_goal" or config.tik.provider == "codex_file":
+        codex_path = probes.which("codex")
+        codex_available = codex_path is not None
+        checks.append(_check("codex.binary", codex_available, f"codex found at {codex_path}", "codex executable not found on PATH"))
+        if codex_available:
+            checks.extend(_codex_capability_checks(config, options, probes))
 
-    if config.tik.provider == "agent":
-        checks.extend(_openai_agent_checks(options, probes))
+    if config.tik.provider == "api":
+        checks.extend(_api_tik_checks(options, probes))
 
     claude_available = False
-    if config.tik.provider == "claude_code_file":
+    if config.tik.provider == "claude_code_file" or config.tok.provider == "claude_code_goal":
         claude_path = probes.which("claude")
         claude_available = claude_path is not None
         checks.append(_check("claude.binary", claude_available, f"claude found at {claude_path}", "claude executable not found on PATH"))
@@ -274,8 +287,32 @@ def run_doctor(config: GoalConfig, options: DoctorOptions | None = None, probes:
         )
 
     if options.smoke_codex_goal and codex_available:
-        smoke_result = probes.codex_goal_smoke(config, options)
-        checks.append(DoctorCheck("codex_goal.smoke", smoke_result.ok, smoke_result.detail))
+        if config.tok.provider == "codex_goal":
+            smoke_result = probes.codex_goal_smoke(config, options)
+            checks.append(DoctorCheck("codex_goal.smoke", smoke_result.ok, smoke_result.detail))
+        else:
+            checks.append(
+                DoctorCheck(
+                    "codex_goal.smoke",
+                    True,
+                    f"codex_goal smoke skipped because tok.provider is {config.tok.provider}",
+                    "warning",
+                )
+            )
+
+    if options.smoke_claude_code_goal and claude_available:
+        if config.tok.provider == "claude_code_goal":
+            smoke_result = probes.claude_code_goal_smoke(config, options)
+            checks.append(DoctorCheck("claude_code_goal.smoke", smoke_result.ok, smoke_result.detail))
+        else:
+            checks.append(
+                DoctorCheck(
+                    "claude_code_goal.smoke",
+                    True,
+                    f"claude_code_goal smoke skipped because tok.provider is {config.tok.provider}",
+                    "warning",
+                )
+            )
 
     if options.smoke_codex_file_tik and codex_available:
         if config.tik.provider == "codex_file":
@@ -446,11 +483,17 @@ def _codex_capability_checks(config: GoalConfig, options: DoctorOptions, probes:
 
     help_text = (help_result.stdout or "") + (help_result.stderr or "")
     checks = [_check("codex.exec.help", help_result.returncode == 0, "codex exec --help succeeded", "codex exec --help failed")]
-    required_flags = ["--output-schema", "--output-last-message", "--enable", "--add-dir", "--sandbox", "--skip-git-repo-check"]
+    required_flags: list[str] = []
+    if config.tok.provider == "codex_goal":
+        required_flags.extend(["--output-schema", "--output-last-message", "--enable", "--add-dir", "--sandbox", "--skip-git-repo-check"])
     if config.tik.provider == "codex_file":
-        required_flags.append("--ephemeral")
+        for flag in ("--output-last-message", "--sandbox", "--skip-git-repo-check", "--ephemeral"):
+            if flag not in required_flags:
+                required_flags.append(flag)
     for flag in required_flags:
         checks.append(_check(f"codex.exec.{flag}", flag in help_text, f"codex exec supports {flag}", f"codex exec help does not show {flag}"))
+    if config.tok.provider != "codex_goal":
+        return checks
     if "--enable" in help_text:
         try:
             goals_result = probes.run(["codex", "exec", "--enable", "goals", "--help"], config.root, options.timeout_seconds)
@@ -481,12 +524,15 @@ def _claude_code_capability_checks(config: GoalConfig, options: DoctorOptions, p
 
     help_text = (help_result.stdout or "") + (help_result.stderr or "")
     checks = [_check("claude.help", help_result.returncode == 0, "claude --help succeeded", "claude --help failed")]
-    for flag in ["--print", "--output-format", "--disallowedTools", "--model"]:
+    required_flags = ["--print", "--output-format", "--disallowedTools", "--model"]
+    if config.tok.provider == "claude_code_goal":
+        required_flags.extend(["--json-schema", "--add-dir", "--permission-mode"])
+    for flag in required_flags:
         checks.append(_check(f"claude.{flag}", flag in help_text, f"claude supports {flag}", f"claude help does not show {flag}"))
     return checks
 
 
-def _openai_agent_checks(options: DoctorOptions, probes: SetupProbeAdapter) -> list[DoctorCheck]:
+def _api_tik_checks(options: DoctorOptions, probes: SetupProbeAdapter) -> list[DoctorCheck]:
     checks = [
         _check(
             "openai.package",
@@ -496,10 +542,18 @@ def _openai_agent_checks(options: DoctorOptions, probes: SetupProbeAdapter) -> l
         )
     ]
     if options.skip_openai_auth:
-        checks.append(DoctorCheck("openai.auth", True, "OpenAI auth check skipped"))
+        checks.append(DoctorCheck("openai.auth", True, "API auth check skipped"))
     else:
-        has_api_key = probes.env_has_value("OPENAI_API_KEY")
-        checks.append(_check("openai.auth", has_api_key, "OPENAI_API_KEY is set", "OPENAI_API_KEY is not set for the agent tik provider"))
+        key_source, _ = api_tik_value_source(API_TIK_KEY_ENV_VARS)
+        accepted = ", ".join(API_TIK_KEY_ENV_VARS)
+        checks.append(
+            _check(
+                "openai.auth",
+                key_source is not None,
+                f"{key_source} is set",
+                f"no API key is set for the api tik provider; set one of {accepted} or write ~/.config/goal-cli/api.env",
+            )
+        )
     return checks
 
 
@@ -520,14 +574,22 @@ def _one_click_summary(config: GoalConfig, checks: list[DoctorCheck]) -> DoctorC
     if blocking:
         names = ", ".join(check.name for check in blocking)
         return DoctorCheck("one_click_artifact_loop", False, f"not ready for one-prompt goal-cli run; blocking checks: {names}")
-    required_smokes = ["codex_goal.smoke"]
+    required_smokes = []
+    if config.tok.provider == "codex_goal":
+        required_smokes.append("codex_goal.smoke")
+    if config.tok.provider == "claude_code_goal":
+        required_smokes.append("claude_code_goal.smoke")
     if config.tik.provider == "codex_file":
         required_smokes.append("codex_file_tik.smoke")
     if config.tik.provider == "claude_code_file":
         required_smokes.append("claude_code_file_tik.smoke")
     missing_smokes = [name for name in required_smokes if not any(check.name == name for check in checks)]
     if missing_smokes:
-        flags = ["--smoke-codex-goal"]
+        flags = []
+        if config.tok.provider == "codex_goal":
+            flags.append("--smoke-codex-goal")
+        if config.tok.provider == "claude_code_goal":
+            flags.append("--smoke-claude-code-goal")
         if config.tik.provider == "codex_file":
             flags.append("--smoke-codex-file-tik")
         if config.tik.provider == "claude_code_file":

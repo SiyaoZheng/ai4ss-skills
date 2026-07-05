@@ -87,9 +87,12 @@ For `codex_file` and `claude_code_file` templates, write a concise
 artifact-only prompt. If a slash skill is required, it must be the first line
 of the prompt.
 
-For `agent` templates, state the OpenAI package and `OPENAI_API_KEY`
-requirements and keep `store = false` unless the template explicitly requires
-stored API responses.
+For `api` templates, state the OpenAI package plus Packy/OpenAI-compatible API
+key requirements. The default model is `claude-fable-5` through PackyAPI, and
+credentials may come from `PACKYAPI_API_KEY`, `PACKYCODE_CODEX_KEY`,
+`OPENAI_API_KEY`, or `~/.config/goal-cli/api.env`. Keep `store = false` unless
+the template explicitly requires stored API responses. If a local skill is
+required, set `tik.skill` instead of putting a slash command in the prompt.
 
 ### 4. Specify Tok Boundaries
 

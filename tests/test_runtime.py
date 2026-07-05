@@ -8,11 +8,12 @@ import textwrap
 import time
 import unittest
 from pathlib import Path
+from unittest import mock
 
-from goal_cli.adapters import run_tik
-from goal_cli.config import ConfigError, TikConfig, load_config, validate_config
+from goal_cli.adapters import api_tik_client_options, build_api_tik_prompt, effective_api_tik_model, run_tik
+from goal_cli.config import DEFAULT_API_TIK_BASE_URL, DEFAULT_API_TIK_MODEL, ConfigError, TikConfig, TokConfig, load_config, validate_config
 from goal_cli.runtime import HeartbeatLock, RuntimeOptions, cleanup_runtime, load_state, run_heartbeat, run_goal
-from goal_cli.tok_execution import build_codex_goal_tok_plan, execute_tok
+from goal_cli.tok_execution import TOK_REPORT_SCHEMA, build_claude_code_goal_tok_plan, build_codex_goal_tok_plan, execute_tok
 
 
 class GoalRuntimeTests(unittest.TestCase):
@@ -433,6 +434,106 @@ class GoalRuntimeTests(unittest.TestCase):
             self.assertNotIn("bounded", provider_prompt.lower())
             self.assertNotIn("writable scopes", provider_prompt.lower())
 
+    def test_claude_code_goal_tok_writes_schema_report_from_structured_output(self) -> None:
+        with tempfile.TemporaryDirectory() as temp_dir:
+            root = Path(temp_dir)
+            bin_dir = root / "bin"
+            src_dir = root / "src"
+            run_dir = root / ".goal" / "runs" / "heartbeat-0001"
+            bin_dir.mkdir()
+            src_dir.mkdir()
+            run_dir.mkdir(parents=True)
+            fake_claude = bin_dir / "claude"
+            fake_claude.write_text(
+                textwrap.dedent(
+                    """
+                    #!/usr/bin/env python3
+                    import json
+                    import sys
+
+                    args = sys.argv[1:]
+                    assert "--print" in args
+                    assert args[args.index("--output-format") + 1] == "json"
+                    schema = json.loads(args[args.index("--json-schema") + 1])
+                    assert "source_change_possible" in schema["properties"]
+                    assert args[args.index("--permission-mode") + 1] == "acceptEdits"
+                    assert args[args.index("--allowedTools") + 1] == "Bash"
+                    add_dirs = [args[index + 1] for index, arg in enumerate(args) if arg == "--add-dir"]
+                    assert any(path.endswith("attachments") for path in add_dirs)
+                    prompt = sys.stdin.read()
+                    assert prompt.startswith("Keep working according to the attached review")
+                    assert "/goal" not in prompt
+                    assert "repair prompt" in prompt
+                    report = {
+                        "source_change_possible": True,
+                        "revision_strategy": "edit source",
+                        "expected_artifact_visible_improvement": ["artifact changes"],
+                        "remaining_artifact_bottleneck": "none known"
+                    }
+                    print(json.dumps({"type": "result", "subtype": "success", "is_error": False, "result": "done", "structured_output": report}))
+                    """
+                ).strip()
+                + "\n",
+                encoding="utf-8",
+            )
+            fake_claude.chmod(0o755)
+            old_path = os.environ.get("PATH", "")
+            os.environ["PATH"] = f"{bin_dir}{os.pathsep}{old_path}"
+            try:
+                config = load_config(self._write_codex_goal_project(root, tok_provider="claude_code_goal"))
+                result = execute_tok(config.tok, "repair prompt", run_dir)
+            finally:
+                os.environ["PATH"] = old_path
+
+            self.assertTrue(result.ok, result.detail)
+            self.assertEqual(result.report_path, run_dir / "tok_report.json")
+            report = json.loads((run_dir / "tok_report.json").read_text(encoding="utf-8"))
+            self.assertTrue(report["source_change_possible"])
+            self.assertTrue((run_dir / "tok_report.schema.json").exists())
+            log_text = (run_dir / "tok_claude_code.log").read_text(encoding="utf-8")
+            self.assertIn("--json-schema", log_text)
+            self.assertIn("--permission-mode acceptEdits", log_text)
+            provider_prompt = (run_dir / "tok_claude_code_goal_prompt.md").read_text(encoding="utf-8")
+            self.assertTrue(provider_prompt.startswith("Keep working according to the attached review"))
+            self.assertNotIn("/goal", provider_prompt)
+            self.assertNotIn("tik", provider_prompt.lower())
+            self.assertNotIn("bounded", provider_prompt.lower())
+
+    def test_claude_code_goal_plan_maps_sandbox_modes(self) -> None:
+        with tempfile.TemporaryDirectory() as temp_dir:
+            root = Path(temp_dir)
+            run_dir = root / ".goal" / "runs" / "heartbeat-0001"
+            base = dict(
+                provider="claude_code_goal",
+                prompt_template="",
+                write_dirs=(root / "src", root / "data"),
+                run_cwd=root,
+                runtime_write_dirs=(root / "output",),
+            )
+
+            plan = build_claude_code_goal_tok_plan(TokConfig(sandbox="workspace-write", **base), "repair prompt", run_dir)
+            args = list(plan.command)
+            self.assertEqual(args[args.index("--permission-mode") + 1], "acceptEdits")
+            self.assertEqual(args[args.index("--allowedTools") + 1], "Bash")
+            self.assertIn(f"Write({run_dir / 'attachments'}/**)", args[args.index("--disallowedTools") + 1])
+            self.assertEqual(json.loads(args[args.index("--json-schema") + 1]), TOK_REPORT_SCHEMA)
+            add_dirs = [Path(args[index + 1]) for index, arg in enumerate(args) if arg == "--add-dir"]
+            self.assertEqual(
+                add_dirs,
+                [root / "src", root / "data", root / "output", run_dir / "attachments"],
+            )
+            self.assertEqual(plan.cwd, root)
+
+            danger_plan = build_claude_code_goal_tok_plan(TokConfig(sandbox="danger-full-access", **base), "repair prompt", run_dir)
+            self.assertIn("--dangerously-skip-permissions", danger_plan.command)
+            self.assertNotIn("--permission-mode", danger_plan.command)
+
+            read_only_plan = build_claude_code_goal_tok_plan(TokConfig(sandbox="read-only", **base), "repair prompt", run_dir)
+            read_only_args = list(read_only_plan.command)
+            disallowed = read_only_args[read_only_args.index("--disallowedTools") + 1]
+            for tool in ("Write", "Edit", "NotebookEdit", "Bash"):
+                self.assertIn(tool, disallowed)
+
     def test_codex_goal_tok_fails_if_attachment_changes(self) -> None:
         with tempfile.TemporaryDirectory() as temp_dir:
             root = Path(temp_dir)
@@ -718,6 +819,117 @@ class GoalRuntimeTests(unittest.TestCase):
             self.assertIn("--output-format json", log_text)
             self.assertIn("--disallowedTools", log_text)
 
+    def test_api_tik_expands_named_skill_into_provider_prompt(self) -> None:
+        with tempfile.TemporaryDirectory() as temp_dir:
+            root = Path(temp_dir)
+            skill_dir = root / "skills" / "apsr-review"
+            skill_dir.mkdir(parents=True)
+            skill_path = skill_dir / "SKILL.md"
+            skill_path.write_text(
+                textwrap.dedent(
+                    """
+                    ---
+                    name: apsr-review
+                    ---
+
+                    Judge the artifact as an APSR referee.
+                    """
+                ).strip()
+                + "\n",
+                encoding="utf-8",
+            )
+
+            prompt = build_api_tik_prompt(
+                TikConfig(provider="api", prompt="", skill="apsr-review"),
+                root,
+                "Review the attached PDF.",
+            )
+
+            self.assertIn('<goal-cli-tik-skill name="apsr-review">', prompt)
+            self.assertIn(f"Source: {skill_path.resolve(strict=False)}", prompt)
+            self.assertIn("Judge the artifact as an APSR referee.", prompt)
+            self.assertIn("<goal-cli-tik-task>", prompt)
+            self.assertIn("Review the attached PDF.", prompt)
+
+    def test_api_tik_defaults_to_packy_fable5(self) -> None:
+        config = TikConfig(provider="api", prompt="")
+
+        self.assertEqual(effective_api_tik_model(config), DEFAULT_API_TIK_MODEL)
+
+        with tempfile.TemporaryDirectory() as temp_dir:
+            missing_env_file = str(Path(temp_dir) / "missing.env")
+            with mock.patch.dict(os.environ, {"GOAL_CLI_API_ENV_FILE": missing_env_file}, clear=True):
+                options, base_url, api_key_env = api_tik_client_options(config, 30)
+
+        self.assertEqual(base_url, DEFAULT_API_TIK_BASE_URL)
+        self.assertEqual(options["base_url"], DEFAULT_API_TIK_BASE_URL)
+        self.assertEqual(options["timeout"], 30)
+        self.assertNotIn("api_key", options)
+        self.assertIsNone(api_key_env)
+
+    def test_api_tik_prefers_packy_key_env(self) -> None:
+        config = TikConfig(provider="api", prompt="")
+
+        with mock.patch.dict(
+            os.environ,
+            {
+                "PACKYCODE_CODEX_KEY": "test-packy-key",
+                "OPENAI_API_KEY": "test-openai-key",
+            },
+            clear=True,
+        ):
+            options, base_url, api_key_env = api_tik_client_options(config, 30)
+
+        self.assertEqual(base_url, DEFAULT_API_TIK_BASE_URL)
+        self.assertEqual(options["api_key"], "test-packy-key")
+        self.assertEqual(api_key_env, "PACKYCODE_CODEX_KEY")
+
+    def test_api_tik_reads_packy_key_from_user_env_file(self) -> None:
+        config = TikConfig(provider="api", prompt="")
+        with tempfile.TemporaryDirectory() as temp_dir:
+            env_file = Path(temp_dir) / "api.env"
+            env_file.write_text("PACKYAPI_API_KEY=file-packy-key\n", encoding="utf-8")
+
+            with mock.patch.dict(os.environ, {"GOAL_CLI_API_ENV_FILE": str(env_file)}, clear=True):
+                options, base_url, api_key_source = api_tik_client_options(config, 30)
+
+        self.assertEqual(base_url, DEFAULT_API_TIK_BASE_URL)
+        self.assertEqual(options["api_key"], "file-packy-key")
+        self.assertEqual(api_key_source, f"{env_file}:PACKYAPI_API_KEY")
+
+    def test_api_tik_rejects_slash_skill_prompt(self) -> None:
+        with tempfile.TemporaryDirectory() as temp_dir:
+            root = Path(temp_dir)
+            self._write_basic_project(root)
+            config_path = root / "goal.toml"
+            text = config_path.read_text(encoding="utf-8")
+            text = text.replace(
+                'provider = "oracle"\ncommand = "python3 scripts/tik.py"',
+                'provider = "api"',
+            )
+            text = text.replace("Evaluate {artifact_path}.", "/apsr-review\n\nEvaluate {artifact_path}.")
+            config_path.write_text(text, encoding="utf-8")
+
+            issues = validate_config(load_config(config_path))
+
+            self.assertTrue(any("cannot execute slash skill commands" in issue for issue in issues), issues)
+
+    def test_api_tik_validates_missing_skill_reference(self) -> None:
+        with tempfile.TemporaryDirectory() as temp_dir:
+            root = Path(temp_dir)
+            self._write_basic_project(root)
+            config_path = root / "goal.toml"
+            text = config_path.read_text(encoding="utf-8")
+            text = text.replace(
+                'provider = "oracle"\ncommand = "python3 scripts/tik.py"',
+                'provider = "api"\nskill = "missing-skill"',
+            )
+            config_path.write_text(text, encoding="utf-8")
+
+            issues = validate_config(load_config(config_path))
+
+            self.assertTrue(any("tik.skill could not be resolved" in issue for issue in issues), issues)
+
     def test_missing_codex_blocks_without_uncaught_exception(self) -> None:
         with tempfile.TemporaryDirectory() as temp_dir:
             root = Path(temp_dir)
@@ -839,17 +1051,18 @@ class GoalRuntimeTests(unittest.TestCase):
                 ((root / "output").resolve(), (root / "build").resolve(), (root / "logs").resolve()),
             )
 
-    def test_scientificity_claude_tik_example_matches_codex_example_with_claude_code_file(self) -> None:
+    def test_scientificity_claude_example_matches_codex_example_with_claude_providers(self) -> None:
         repo_root = Path(__file__).resolve().parents[1]
         codex_config = load_config(repo_root / "examples" / "scientificity" / "goal.toml")
-        claude_config = load_config(repo_root / "examples" / "scientificity-claude-tik" / "goal.toml")
+        claude_config = load_config(repo_root / "examples" / "scientificity-claude" / "goal.toml")
 
         self.assertEqual(claude_config.tik.provider, "claude_code_file")
-        self.assertEqual(claude_config.tok.provider, "codex_goal")
+        self.assertEqual(claude_config.tok.provider, "claude_code_goal")
         self.assertTrue(claude_config.tik.prompt.startswith("/apsr-review\n"))
         self.assertEqual(claude_config.tik.prompt, codex_config.tik.prompt)
         self.assertEqual(claude_config.tik.verdict, codex_config.tik.verdict)
         self.assertEqual(claude_config.tok.prompt_template, codex_config.tok.prompt_template)
+        self.assertEqual(claude_config.tok.sandbox, codex_config.tok.sandbox)
         self.assertEqual(claude_config.artifact.copy_as, codex_config.artifact.copy_as)
         self.assertEqual(
             [path.name for path in claude_config.tok.write_dirs],
@@ -860,9 +1073,9 @@ class GoalRuntimeTests(unittest.TestCase):
             [path.name for path in codex_config.tok.runtime_write_dirs],
         )
 
-    def test_scientificity_claude_tik_example_validates_after_copy_to_project_root(self) -> None:
+    def test_scientificity_claude_example_validates_after_copy_to_project_root(self) -> None:
         repo_root = Path(__file__).resolve().parents[1]
-        example_text = (repo_root / "examples" / "scientificity-claude-tik" / "goal.toml").read_text(encoding="utf-8")
+        example_text = (repo_root / "examples" / "scientificity-claude" / "goal.toml").read_text(encoding="utf-8")
         with tempfile.TemporaryDirectory() as temp_dir:
             root = Path(temp_dir)
             (root / "output").mkdir()
@@ -878,6 +1091,7 @@ class GoalRuntimeTests(unittest.TestCase):
 
             self.assertEqual(validate_config(config), [])
             self.assertEqual(config.tik.provider, "claude_code_file")
+            self.assertEqual(config.tok.provider, "claude_code_goal")
 
     def test_validate_rejects_wrong_tok_provider_and_runtime_prompt_language(self) -> None:
         with tempfile.TemporaryDirectory() as temp_dir:
@@ -1071,7 +1285,7 @@ max_blocker_repeats = 3
     def _write_tok_behavior(self, root: Path, behavior: dict[str, object]) -> None:
         (root / "scripts" / "tok_behavior.json").write_text(json.dumps(behavior), encoding="utf-8")
 
-    def _write_codex_goal_project(self, root: Path) -> Path:
+    def _write_codex_goal_project(self, root: Path, tok_provider: str = "codex_goal") -> Path:
         config = '''
 name = "codex-goal-test"
 state_dir = ".goal"
@@ -1103,7 +1317,7 @@ enabled = false
 
 [observability]
 enabled = false
-'''
+'''.replace('provider = "codex_goal"', f'provider = "{tok_provider}"')
         config_path = root / "goal.toml"
         config_path.write_text(config, encoding="utf-8")
         return config_path

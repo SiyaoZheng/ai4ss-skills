@@ -1026,7 +1026,7 @@ def _terminate_orphan_goal_processes(config: GoalConfig) -> list[str]:
         command = match.group(3)
         if pid == current_pid or str(config.root) not in command:
             continue
-        if "codex exec" not in command and "goal_cli.cli" not in command and "-m goal_cli" not in command:
+        if "codex exec" not in command and "claude --print" not in command and "goal_cli.cli" not in command and "-m goal_cli" not in command:
             continue
         try:
             os.kill(pid, signal.SIGTERM)

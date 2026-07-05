@@ -114,9 +114,10 @@ def main(argv: list[str] | None = None) -> int:
         description="Check config, commands, providers, and smoke prerequisites before a real heartbeat.",
     )
     doctor_parser.add_argument("--smoke-codex-goal", action="store_true", help="Run a minimal Codex /goal schema-output smoke check in a temp directory")
+    doctor_parser.add_argument("--smoke-claude-code-goal", action="store_true", help="Run a minimal Claude Code structured-output tok smoke check in a temp directory")
     doctor_parser.add_argument("--smoke-codex-file-tik", action="store_true", help="Run a minimal Codex local-file tik smoke check in a temp directory")
     doctor_parser.add_argument("--smoke-claude-code-file-tik", action="store_true", help="Run a minimal Claude Code local-file tik smoke check in a temp directory")
-    doctor_parser.add_argument("--skip-openai-auth", action="store_true", help="Skip OPENAI_API_KEY readiness check for agent tik configs")
+    doctor_parser.add_argument("--skip-openai-auth", action="store_true", help="Skip API key readiness check for API tik configs")
     doctor_parser.add_argument("--timeout-seconds", type=float, default=10.0, help="Timeout for setup probes except optional Codex smoke checks")
     doctor_parser.add_argument("--smoke-timeout-seconds", type=float, default=180.0, help="Timeout for optional Codex smoke checks")
     run_parser = subparsers.add_parser(
@@ -190,6 +191,7 @@ def main(argv: list[str] | None = None) -> int:
             config,
             DoctorOptions(
                 smoke_codex_goal=getattr(args, "smoke_codex_goal", False),
+                smoke_claude_code_goal=getattr(args, "smoke_claude_code_goal", False),
                 smoke_codex_file_tik=getattr(args, "smoke_codex_file_tik", False),
                 smoke_claude_code_file_tik=getattr(args, "smoke_claude_code_file_tik", False),
                 skip_openai_auth=getattr(args, "skip_openai_auth", False),

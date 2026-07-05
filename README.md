@@ -291,7 +291,7 @@ you are improving reusable examples or docs in this repository.
 | [Thing-first notes](docs/artifact-goal-notes.md) | You want the design rationale. |
 | [Codex implementation report](docs/codex-goal-openai-implementation-report.md) | You want the Codex `/goal` integration details. |
 | [PDF-first example](examples/scientificity/goal.toml) | You want a research-paper example. |
-| [PDF-first example, Claude Code tik](examples/scientificity-claude-tik/goal.toml) | You want the same example with the referee pass run by Claude Code. |
+| [PDF-first example, Claude Code](examples/scientificity-claude/goal.toml) | You want the same example with both passes run by Claude Code. |
 
 ### Status
 

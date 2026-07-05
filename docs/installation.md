@@ -7,9 +7,10 @@ repository, then pointed at a project-specific `goal.toml`.
 
 - Python 3.11 or newer.
 - Git.
-- Codex CLI on `PATH` for the production tok and `codex_file` tik.
-- Claude Code CLI (`claude`) on `PATH` when `tik.provider = "claude_code_file"`.
-- `OPENAI_API_KEY` when `tik.provider = "agent"`.
+- Codex CLI on `PATH` when `tok.provider = "codex_goal"` or `tik.provider = "codex_file"`.
+- Claude Code CLI (`claude`) on `PATH` when `tok.provider = "claude_code_goal"` or `tik.provider = "claude_code_file"`.
+- `PACKYAPI_API_KEY`, `PACKYCODE_CODEX_KEY`, `OPENAI_API_KEY`, or
+  `~/.config/goal-cli/api.env` when `tik.provider = "api"`.
 - `no-mistakes`.
 - An OTLP-compatible OpenTelemetry receiver when you want external trace
   storage. Without one, the default runtime writes local JSONL traces.
@@ -25,10 +26,19 @@ python3 -m pip install --upgrade pip
 python3 -m pip install -e .
 ```
 
-For agent tik providers:
+For API tik:
 
 ```bash
 python3 -m pip install -e '.[openai]'
+```
+
+The API tik provider defaults to `claude-fable-5` at
+`https://www.packyapi.com/v1`. Put the key in the shell environment or in a
+private user file:
+
+```text
+~/.config/goal-cli/api.env
+PACKYAPI_API_KEY=...
 ```
 
 Verify the command resolves:
@@ -174,8 +184,8 @@ Then edit `goal.toml` so:
 
 - `[artifact].path` is the one canonical product.
 - `[producer].command` rebuilds that artifact from sources.
-- `[tik]` either runs a deterministic oracle command, an OpenAI file-upload
-  agent review, or a Codex local-file review.
+- `[tik]` either runs a deterministic oracle command, an API-backed file-upload
+  review, or a Codex local-file review.
 - `[tok].write_dirs` contains the source directories that count as valid tok edits.
 - `[tok].run_cwd`, when set, is where the tok process starts commands.
 - `[tok].runtime_write_dirs` contains generated directories that commands may
@@ -189,15 +199,17 @@ For a PDF-first research project, start from:
 cp /Users/siyaozheng/Documents/goal-cli/examples/scientificity/goal.toml ./goal.toml
 ```
 
-For the same project with the referee pass run by Claude Code instead of Codex:
+For the same project with both tik and tok run by Claude Code instead of Codex:
 
 ```bash
-cp /Users/siyaozheng/Documents/goal-cli/examples/scientificity-claude-tik/goal.toml ./goal.toml
+cp /Users/siyaozheng/Documents/goal-cli/examples/scientificity-claude/goal.toml ./goal.toml
 ```
 
 Both examples invoke the `/apsr-review` slash skill on the first prompt line;
 the skill must be installed in the reviewing CLI (Codex skill config for
-`codex_file`, `~/.claude/skills/apsr-review/` for `claude_code_file`).
+`codex_file`, `~/.claude/skills/apsr-review/` for `claude_code_file`). For
+`provider = "api"`, do not use a slash prompt; set `skill = "apsr-review"` in
+`[tik]` so goal-cli can inline the local `SKILL.md` before the API call.
 
 Then adjust artifact paths, write dirs, tik provider settings, and the producer
 command for that repository.
@@ -325,6 +337,12 @@ Prove the Codex tok path in a temporary workspace:
 
 ```bash
 goal-cli doctor --smoke-codex-goal
+```
+
+For `tok.provider = "claude_code_goal"`, prove the Claude Code tok path instead:
+
+```bash
+goal-cli doctor --smoke-claude-code-goal
 ```
 
 For `tik.provider = "codex_file"`, prove the local-file tik path too:

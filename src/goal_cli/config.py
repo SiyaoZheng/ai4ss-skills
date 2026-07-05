@@ -4,6 +4,7 @@ from dataclasses import dataclass, field
 from pathlib import Path
 from typing import Any
 import json
+import os
 import re
 import tomllib
 
@@ -46,6 +47,11 @@ OBSERVABILITY_FIELDS = {
     "endpoint",
     "timeout_seconds",
 }
+DEFAULT_API_TIK_MODEL = "claude-fable-5"
+DEFAULT_API_TIK_BASE_URL = "https://www.packyapi.com/v1"
+API_TIK_KEY_ENV_VARS = ("PACKYAPI_API_KEY", "PACKYCODE_CODEX_KEY", "OPENAI_API_KEY")
+API_TIK_BASE_URL_ENV_VARS = ("PACKYAPI_BASE_URL", "OPENAI_BASE_URL")
+API_TIK_ENV_FILE_ENV_VAR = "GOAL_CLI_API_ENV_FILE"
 
 TIK_PROMPT_PLACEHOLDERS = {
     "goal_name",
@@ -108,6 +114,8 @@ class TikConfig:
     prompt: str
     model: str | None = None
     command: str | None = None
+    skill: str | None = None
+    base_url: str | None = None
     binary: str = "oracle"
     engine: str = "browser"
     timeout: str = "auto"
@@ -259,11 +267,17 @@ def load_config(config_path: str | Path = "goal.toml") -> GoalConfig:
         required_fields=tuple(_string_list(verdict_raw.get("required_fields", ["artifact_ready", "blocking_objections"]), "tik.verdict.required_fields")),
         fingerprint_fields=tuple(_string_list(verdict_raw.get("fingerprint_fields", ["blocking_objections", "central_bottleneck"]), "tik.verdict.fingerprint_fields")),
     )
+    tik_provider = _required_str(tik_raw, "provider")
+    tik_model = _optional_str(tik_raw, "model")
+    if tik_provider == "api" and tik_model is None:
+        tik_model = DEFAULT_API_TIK_MODEL
     tik = TikConfig(
-        provider=_required_str(tik_raw, "provider"),
+        provider=tik_provider,
         prompt=tik_prompt,
-        model=_optional_str(tik_raw, "model"),
+        model=tik_model,
         command=_optional_str(tik_raw, "command"),
+        skill=_optional_str(tik_raw, "skill"),
+        base_url=_optional_str(tik_raw, "base_url"),
         binary=str(tik_raw.get("binary", "oracle")),
         engine=str(tik_raw.get("engine", "browser")),
         timeout=str(tik_raw.get("timeout", "auto")),
@@ -276,7 +290,7 @@ def load_config(config_path: str | Path = "goal.toml") -> GoalConfig:
 
     tok_raw = _required_table(raw, "tok")
     if "command" in tok_raw:
-        raise ConfigError("unsupported tok field: command; tok provider must be 'codex_goal'")
+        raise ConfigError("unsupported tok field: command; tok provider must be 'codex_goal' or 'claude_code_goal'")
     tok_prompt = _prompt_from(tok_raw, required_key="prompt_template")
     write_dirs = tuple(_path(item, root, root) for item in _string_list(tok_raw.get("write_dirs"), "tok.write_dirs"))
     run_cwd = _path(tok_raw["run_cwd"], root, root) if "run_cwd" in tok_raw else (write_dirs[0] if write_dirs else root)
@@ -372,15 +386,25 @@ def analyze_config_policy(config: GoalConfig) -> ConfigPolicyReport:
     issues: list[ConfigIssue] = []
     if not _inside(config.root, config.path):
         issues.append(ConfigIssue("config.outside_root", f"config file must be inside project root: {config.path}"))
-    if config.tik.provider not in {"oracle", "agent", "codex_file", "claude_code_file"}:
+    if config.tik.provider not in {"oracle", "api", "codex_file", "claude_code_file"}:
         issues.append(ConfigIssue("tik.provider.unsupported", f"unsupported tik provider: {config.tik.provider}"))
-    if config.tok.provider != "codex_goal":
+    if config.tok.provider not in {"codex_goal", "claude_code_goal"}:
         issues.append(ConfigIssue("tok.provider.unsupported", f"unsupported tok provider: {config.tok.provider}"))
     if config.tik.provider == "oracle" and not config.tik.command:
         issues.append(ConfigIssue("tik.command.required", "tik provider 'oracle' requires tik.command"))
-    if config.tik.provider == "agent" and not config.tik.model:
-        issues.append(ConfigIssue("tik.model.required", "tik provider 'agent' requires tik.model"))
-    if config.tok.provider == "codex_goal" and config.tok.sandbox not in {"read-only", "workspace-write", "danger-full-access"}:
+    if config.tik.provider == "api" and tik_prompt_starts_with_slash_command(config.tik.prompt):
+        issues.append(
+            ConfigIssue(
+                "tik.prompt.slash_unsupported",
+                "tik provider 'api' cannot execute slash skill commands; set tik.skill and remove the leading slash command",
+            )
+        )
+    if config.tik.skill:
+        if config.tik.provider != "api":
+            issues.append(ConfigIssue("tik.skill.unsupported", "tik.skill is only supported for tik provider 'api'"))
+        elif resolve_tik_skill_path(config.tik.skill, config.root) is None:
+            issues.append(ConfigIssue("tik.skill.missing", f"tik.skill could not be resolved to a SKILL.md file: {config.tik.skill}"))
+    if config.tok.provider in {"codex_goal", "claude_code_goal"} and config.tok.sandbox not in {"read-only", "workspace-write", "danger-full-access"}:
         issues.append(ConfigIssue("tok.sandbox.unsupported", f"unsupported tok sandbox: {config.tok.sandbox}"))
     if config.no_mistakes.enabled:
         if not config.no_mistakes.binary:
@@ -548,6 +572,43 @@ def validate_prompt_templates(config: GoalConfig) -> list[str]:
     return issues
 
 
+def tik_prompt_starts_with_slash_command(prompt: str) -> bool:
+    for line in prompt.splitlines():
+        stripped = line.strip()
+        if not stripped:
+            continue
+        return stripped.startswith("/") and " " not in stripped
+    return False
+
+
+def resolve_tik_skill_path(reference: str, root: Path) -> Path | None:
+    candidates = tik_skill_candidate_paths(reference, root)
+    for candidate in candidates:
+        if candidate.exists() and candidate.is_file():
+            return candidate
+    return None
+
+
+def tik_skill_candidate_paths(reference: str, root: Path) -> tuple[Path, ...]:
+    path = Path(reference)
+    if path.is_absolute() or "/" in reference or "\\" in reference or reference.endswith(".md"):
+        candidate = path if path.is_absolute() else root / path
+        if candidate.name == "SKILL.md":
+            return (candidate.resolve(strict=False),)
+        return ((candidate / "SKILL.md") if candidate.suffix == "" else candidate).resolve(strict=False),
+
+    home = Path.home()
+    return tuple(
+        candidate.resolve(strict=False)
+        for candidate in (
+            root / "skills" / reference / "SKILL.md",
+            home / ".codex" / "skills" / reference / "SKILL.md",
+            home / ".agents" / "skills" / reference / "SKILL.md",
+            home / ".claude" / "skills" / reference / "SKILL.md",
+        )
+    )
+
+
 def validate_runtime_prompt_language(config: GoalConfig) -> list[str]:
     issues: list[str] = []
     prompt_sources = {
@@ -570,6 +631,9 @@ def dump_config_summary(config: GoalConfig) -> str:
         "artifact": str(config.artifact.path),
         "producer": config.producer.command,
         "tik_provider": config.tik.provider,
+        "tik_model": config.tik.model,
+        "tik_skill": config.tik.skill,
+        "tik_base_url": config.tik.base_url,
         "tok_provider": config.tok.provider,
         "tok_run_cwd": str(config.tok.run_cwd or (config.tok.write_dirs[0] if config.tok.write_dirs else config.root)),
         "write_dirs": [str(path) for path in config.tok.write_dirs],
@@ -581,6 +645,55 @@ def dump_config_summary(config: GoalConfig) -> str:
         "observability_endpoint": config.observability.endpoint,
     }
     return json.dumps(summary, ensure_ascii=False, indent=2) + "\n"
+
+
+def api_tik_value_source(names: tuple[str, ...]) -> tuple[str | None, str | None]:
+    for name in names:
+        value = os.environ.get(name)
+        if value:
+            return name, value
+    for env_file in api_tik_env_file_paths():
+        source, value = _env_file_value(env_file, names)
+        if value:
+            return source, value
+    return None, None
+
+
+def api_tik_env_file_paths() -> tuple[Path, ...]:
+    explicit_path = os.environ.get(API_TIK_ENV_FILE_ENV_VAR)
+    if explicit_path:
+        return (Path(explicit_path).expanduser(),)
+    config_home = Path(os.environ.get("XDG_CONFIG_HOME", Path.home() / ".config")).expanduser()
+    return (config_home / "goal-cli" / "api.env",)
+
+
+def _env_file_value(path: Path, names: tuple[str, ...]) -> tuple[str | None, str | None]:
+    try:
+        text = path.read_text(encoding="utf-8")
+    except FileNotFoundError:
+        return None, None
+    except OSError:
+        return None, None
+
+    for raw_line in text.splitlines():
+        line = raw_line.strip()
+        if not line or line.startswith("#") or "=" not in line:
+            continue
+        key, raw_value = line.split("=", 1)
+        key = key.strip()
+        if key not in names:
+            continue
+        value = _parse_env_file_value(raw_value)
+        if value:
+            return f"{path}:{key}", value
+    return None, None
+
+
+def _parse_env_file_value(raw_value: str) -> str:
+    value = raw_value.strip()
+    if len(value) >= 2 and value[0] == value[-1] and value[0] in {"'", '"'}:
+        return value[1:-1]
+    return value
 
 
 def _required_table(raw: dict[str, Any], key: str) -> dict[str, Any]:

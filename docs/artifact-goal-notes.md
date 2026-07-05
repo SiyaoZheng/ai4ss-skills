@@ -110,13 +110,15 @@ After the producer, the runtime has exactly two sequential roles:
 
 - Tik: judges the finished thing and writes `tik.md`. Public tik modes are
   `oracle` for deterministic scripts, tests, metrics, or other machine
-  evaluators; `agent` for Responses API file-upload evaluation; `codex_file`
-  for Codex evaluation of a local artifact copy in an ephemeral read-only
-  workspace; and `claude_code_file` for Claude Code evaluation of a local
-  artifact copy with write tools disallowed. If tik reports a stale artifact
+  evaluators; `api` for API-backed file-upload evaluation with optional
+  `tik.skill` expansion; `codex_file` for Codex evaluation of a local artifact
+  copy in an ephemeral read-only workspace; and `claude_code_file` for Claude
+  Code evaluation of a local artifact copy with write tools disallowed. If tik
+  reports a stale artifact
   hash, the heartbeat blocks before tok.
 - Tok: reads `tik.md` and changes allowed source so the next artifact can
-  answer the blocking objections. The default mode is `codex_goal`.
+  answer the blocking objections. The default mode is `codex_goal`;
+  `claude_code_goal` is the Claude Code equivalent.
 
 ## Core Runtime Shape
 
@@ -151,7 +153,8 @@ from file state.
 - Heartbeat State: `HeartbeatRecorder` owns state/history/heartbeat writes
   and transition recording. The runner orchestrates producer, tik, and tok; it
   does not hand-edit heartbeat JSON.
-- Tok Execution: `tok_execution` owns the Codex `/goal` command, schema, prompt
+- Tok Execution: `tok_execution` owns the Codex `/goal` and Claude Code
+  structured-output commands, schema, prompt
   files, report parsing, validation log, and structured `TokExecutionResult`.
 - Setup Readiness and Telemetry: doctor uses the same tok smoke path and
   `TelemetryExportPlan` that runtime uses, so readiness checks do not describe

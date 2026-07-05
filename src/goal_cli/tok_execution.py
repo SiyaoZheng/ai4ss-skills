@@ -6,7 +6,7 @@ from dataclasses import dataclass
 from pathlib import Path
 from typing import Any
 
-from .adapters import run_command_logged
+from .adapters import CLAUDE_CODE_DISALLOWED_TOOLS, claude_print_envelope, run_claude_print_logged, run_command_logged
 from .config import TokConfig
 
 
@@ -57,7 +57,7 @@ class TokExecutionResult:
 
 
 def execute_tok(config: TokConfig, prompt: str, run_dir: Path, timeout_seconds: float | None = None) -> TokExecutionResult:
-    if config.provider != "codex_goal":
+    if config.provider not in {"codex_goal", "claude_code_goal"}:
         raise ValueError(f"unsupported tok provider: {config.provider}")
 
     run_dir.mkdir(parents=True, exist_ok=True)
@@ -69,12 +69,18 @@ def execute_tok(config: TokConfig, prompt: str, run_dir: Path, timeout_seconds: 
     attachment_dir = run_dir / "attachments"
     attachment_dir.mkdir(parents=True, exist_ok=True)
     attachment_snapshot = _snapshot_attachment_files(attachment_dir)
-    plan = build_codex_goal_tok_plan(config, prompt, run_dir)
+    if config.provider == "claude_code_goal":
+        plan = build_claude_code_goal_tok_plan(config, prompt, run_dir)
+    else:
+        plan = build_codex_goal_tok_plan(config, prompt, run_dir)
     plan.prompt_path.write_text(prompt, encoding="utf-8")
     plan.schema_path.write_text(json.dumps(TOK_REPORT_SCHEMA, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
     plan.provider_prompt_path.write_text(plan.prompt, encoding="utf-8")
 
-    ok = run_command_logged(list(plan.command), plan.cwd, plan.log_path, plan.prompt, timeout_seconds=timeout_seconds)
+    if config.provider == "claude_code_goal":
+        ok = _run_claude_code_goal(plan, timeout_seconds)
+    else:
+        ok = run_command_logged(list(plan.command), plan.cwd, plan.log_path, plan.prompt, timeout_seconds=timeout_seconds)
     attachment_errors = _attachment_integrity_errors(attachment_snapshot, _snapshot_attachment_files(attachment_dir))
     if attachment_errors:
         (run_dir / "tok_attachment_integrity.log").write_text("\n".join(attachment_errors) + "\n", encoding="utf-8")
@@ -136,6 +142,71 @@ def build_codex_goal_tok_plan(config: TokConfig, prompt: str, run_dir: Path) -> 
     )
 
 
+def build_claude_code_goal_tok_plan(config: TokConfig, prompt: str, run_dir: Path) -> TokExecutionPlan:
+    attachments_dir = run_dir / "attachments"
+    final_prompt = _claude_code_goal_prompt(prompt)
+    schema_path = run_dir / "tok_report.schema.json"
+    output_path = run_dir / "tok_report.json"
+    run_cwd = config.run_cwd or config.write_dirs[0]
+    command = [
+        "claude",
+        "--print",
+        "--output-format",
+        "json",
+        "--json-schema",
+        json.dumps(TOK_REPORT_SCHEMA, ensure_ascii=False),
+    ]
+    command.extend(_claude_code_sandbox_args(config.sandbox, attachments_dir))
+    if config.model:
+        command.extend(["--model", config.model])
+    for write_dir in _dedupe_paths((*config.write_dirs, *config.runtime_write_dirs), skip=(run_cwd,)):
+        command.extend(["--add-dir", str(write_dir)])
+    command.extend(["--add-dir", str(attachments_dir)])
+    return TokExecutionPlan(
+        command=tuple(command),
+        cwd=run_cwd,
+        prompt=final_prompt,
+        report_path=output_path,
+        schema_path=schema_path,
+        prompt_path=run_dir / "tok_prompt.md",
+        provider_prompt_path=run_dir / "tok_claude_code_goal_prompt.md",
+        log_path=run_dir / "tok_claude_code.log",
+        validation_log_path=run_dir / "tok_report_validation.log",
+    )
+
+
+def _claude_code_sandbox_args(sandbox: str, attachments_dir: Path) -> list[str]:
+    if sandbox == "read-only":
+        return ["--disallowedTools", CLAUDE_CODE_DISALLOWED_TOOLS]
+    protect_attachments = f"Write({attachments_dir}/**),Edit({attachments_dir}/**)"
+    if sandbox == "danger-full-access":
+        return ["--dangerously-skip-permissions"]
+    return ["--permission-mode", "acceptEdits", "--allowedTools", "Bash", "--disallowedTools", protect_attachments]
+
+
+def _run_claude_code_goal(plan: TokExecutionPlan, timeout_seconds: float | None) -> bool:
+    stdout = run_claude_print_logged(list(plan.command), plan.cwd, plan.log_path, plan.prompt, timeout_seconds=timeout_seconds)
+    if stdout is None:
+        return False
+    envelope = claude_print_envelope(stdout)
+    if envelope is None:
+        with plan.log_path.open("a", encoding="utf-8") as log_file:
+            log_file.write("\nERROR: claude_code_goal returned no parseable JSON envelope.\n")
+        return False
+    report = envelope.get("structured_output")
+    if not isinstance(report, dict):
+        result_text = envelope.get("result")
+        report = _parse_json_object(result_text) if isinstance(result_text, str) else None
+        if not isinstance(report, dict):
+            with plan.log_path.open("a", encoding="utf-8") as log_file:
+                log_file.write("\nERROR: claude_code_goal returned neither structured output nor a parseable report.\n")
+            return False
+        with plan.log_path.open("a", encoding="utf-8") as log_file:
+            log_file.write("\nWARNING: structured_output missing; recovered the report from the result text.\n")
+    plan.report_path.write_text(json.dumps(report, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
+    return True
+
+
 def _dedupe_paths(paths: tuple[Path, ...], skip: tuple[Path, ...] = ()) -> tuple[Path, ...]:
     skipped = {_path_key(path) for path in skip}
     seen: set[str] = set()
@@ -183,6 +254,18 @@ def _codex_goal_prompt(prompt: str) -> str:
         "/goal\n"
         "Keep working according to the attached review. "
         "Return the required report. Do not claim the artifact is complete; the next review pass decides that.\n\n"
+        f"{prompt}"
+    )
+
+
+def _claude_code_goal_prompt(prompt: str) -> str:
+    return (
+        "Keep working according to the attached review. "
+        "Return the required report as structured output with exactly these fields: "
+        "source_change_possible (boolean), revision_strategy (string), "
+        "expected_artifact_visible_improvement (list of strings), remaining_artifact_bottleneck (string). "
+        "Do not claim the artifact is complete; the next review pass decides that. "
+        "The attachments directory is read-only reference material; never create or modify files there.\n\n"
         f"{prompt}"
     )
 

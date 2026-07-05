@@ -58,8 +58,9 @@ options:
 ## Doctor
 
 ```text
-usage: goal-cli doctor [-h] [--smoke-codex-goal] [--smoke-codex-file-tik]
-                       [--smoke-claude-code-file-tik] [--skip-openai-auth]
+usage: goal-cli doctor [-h] [--smoke-codex-goal] [--smoke-claude-code-goal]
+                       [--smoke-codex-file-tik] [--smoke-claude-code-file-tik]
+                       [--skip-openai-auth]
                        [--timeout-seconds TIMEOUT_SECONDS]
                        [--smoke-timeout-seconds SMOKE_TIMEOUT_SECONDS]
 
@@ -70,14 +71,16 @@ options:
   -h, --help            show this help message and exit
   --smoke-codex-goal    Run a minimal Codex /goal schema-output smoke check in
                         a temp directory
+  --smoke-claude-code-goal
+                        Run a minimal Claude Code structured-output tok smoke
+                        check in a temp directory
   --smoke-codex-file-tik
                         Run a minimal Codex local-file tik smoke check in a
                         temp directory
   --smoke-claude-code-file-tik
                         Run a minimal Claude Code local-file tik smoke check
                         in a temp directory
-  --skip-openai-auth    Skip OPENAI_API_KEY readiness check for agent tik
-                        configs
+  --skip-openai-auth    Skip API key readiness check for API tik configs
   --timeout-seconds TIMEOUT_SECONDS
                         Timeout for setup probes except optional Codex smoke
                         checks

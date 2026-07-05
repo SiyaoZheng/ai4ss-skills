@@ -84,7 +84,7 @@ python3 -m pip install --upgrade pip
 python3 -m pip install "goal-cli @ git+https://github.com/SiyaoZheng/goal-cli.git"
 ```
 
-If `tik.provider = "agent"` will be used, install the OpenAI extra:
+If `tik.provider = "api"` will be used, install the OpenAI extra:
 
 ```bash
 python3 -m pip install "goal-cli[openai] @ git+https://github.com/SiyaoZheng/goal-cli.git"
@@ -259,16 +259,20 @@ timeout_seconds = 1800
 max_file_size_bytes = 25000000
 ```
 
-Use `agent` only when OpenAI Responses API file upload is intended and
-`OPENAI_API_KEY` is available:
+Use `api` when OpenAI-compatible Responses API file upload is intended and a
+Packy/OpenAI-compatible key is available through `PACKYAPI_API_KEY`,
+`PACKYCODE_CODEX_KEY`, `OPENAI_API_KEY`, or `~/.config/goal-cli/api.env`.
+This defaults to PackyAPI `claude-fable-5`:
 
 ```toml
 [tik]
-provider = "agent"
-model = "gpt-5.5-pro"
+provider = "api"
 timeout_seconds = 1800
 store = false
 ```
+
+If this API tik review needs a local skill, set `skill = "skill-name"` under
+`[tik]`; do not put `/skill-name` as the first prompt line for `api`.
 
 Tik prompts must review the artifact, not the source diff. They must end with a
 JSON verdict that includes at least:
@@ -295,6 +299,16 @@ provider = "codex_goal"
 sandbox = "workspace-write"
 write_dirs = ["src", "writing"]
 codex_features = ["goals"]
+```
+
+Use `claude_code_goal` for the same pass through Claude Code; it needs the
+`claude` CLI on `PATH` and ignores `codex_features`:
+
+```toml
+[tok]
+provider = "claude_code_goal"
+sandbox = "workspace-write"
+write_dirs = ["src", "writing"]
 ```
 
 Tok prompt template should say:
@@ -393,8 +407,17 @@ goal-cli doctor --smoke-codex-goal --smoke-codex-file-tik
 If using `tik.provider = "claude_code_file"`:
 
 ```bash
-goal-cli doctor --smoke-codex-goal --smoke-claude-code-file-tik
+goal-cli doctor --smoke-claude-code-file-tik
 ```
+
+If using `tok.provider = "claude_code_goal"`:
+
+```bash
+goal-cli doctor --smoke-claude-code-goal
+```
+
+Combine the smoke flags that match the configured providers; the all-Claude
+stack is `--smoke-claude-code-goal --smoke-claude-code-file-tik`.
 
 Run the producer directly once and prove the artifact exists:
 

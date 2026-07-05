@@ -61,17 +61,43 @@ checks. The command receives:
 
 ```toml
 [tik]
-provider = "agent"
-model = "gpt-5.5-pro"
+provider = "api"
+# Defaults to claude-fable-5 on PackyAPI.
+# model = "claude-fable-5"
+# base_url = "https://www.packyapi.com/v1"
+# Optional: inline a local SKILL.md before calling the API.
+skill = "apsr-review"
 timeout_seconds = 1800
 max_file_size_bytes = 25000000
 max_output_tokens = 4096
 store = false
 ```
 
-Use `agent` for model-based artifact critique. The configured artifact is copied
-to a temporary directory before critique, then uploaded to the OpenAI Responses
-API as an `input_file`.
+Use `api` for API-based artifact critique. By default, this calls the
+OpenAI-compatible PackyAPI endpoint with `claude-fable-5`. The current
+implementation copies the configured artifact to a temporary directory before
+critique, then uploads it through the Responses API as an `input_file`.
+
+API credentials are resolved in this order:
+
+- `PACKYAPI_API_KEY`, `PACKYCODE_CODEX_KEY`, then `OPENAI_API_KEY`;
+- `~/.config/goal-cli/api.env` with one of those names;
+- an explicit `GOAL_CLI_API_ENV_FILE` path, which replaces the default file.
+
+`base_url` is optional. If omitted, goal-cli uses `PACKYAPI_BASE_URL`,
+`OPENAI_BASE_URL`, or `https://www.packyapi.com/v1`.
+
+When `skill` is set, goal-cli resolves it as either a direct path to a
+`SKILL.md` file/directory or as a skill name under:
+
+- `skills/<name>/SKILL.md` in the project root;
+- `~/.codex/skills/<name>/SKILL.md`;
+- `~/.agents/skills/<name>/SKILL.md`;
+- `~/.claude/skills/<name>/SKILL.md`.
+
+The resolved `SKILL.md` is inlined into the API text prompt. The API provider
+does not execute slash commands, so prompts for `provider = "api"` must not
+start with `/apsr-review` or any other slash skill.
 
 ```toml
 [tik]
@@ -102,9 +128,9 @@ directories in the workspace, and with `Write`, `Edit`, `NotebookEdit`, and
 `Bash` explicitly disallowed so the pass is read-only. The memo is extracted
 from the `result` field of the `--output-format json` envelope.
 
-For both `codex_file` and `claude_code_file`, if the configured tik prompt
-starts with a slash skill such as `/apsr-review`, goal-cli keeps that slash
-command as the first stdin line.
+For `codex_file` and `claude_code_file`, if the configured tik prompt starts
+with a slash skill such as `/apsr-review`, goal-cli keeps that slash command as
+the first stdin line for the reviewing CLI. For `api`, use `tik.skill` instead.
 
 Tik output must contain a JSON object with the configured verdict fields:
 
@@ -142,7 +168,7 @@ not inflate the `/goal` prompt.
 
 ## Tok
 
-The production Tok mode is `codex_goal`.
+Tok has two public modes: `codex_goal` and `claude_code_goal`.
 
 ```toml
 [tok]
@@ -169,6 +195,36 @@ canonical artifact.
 `run_cwd` controls the working directory passed to `codex exec -C`. It defaults
 to the first `write_dirs` entry for backward compatibility. Set it to `"."`
 when the producer or diagnostics must be launched from the project root.
+
+```toml
+[tok]
+provider = "claude_code_goal"
+write_dirs = ["src", "data"]
+run_cwd = "."
+runtime_write_dirs = ["output", "build", "logs"]
+sandbox = "workspace-write"
+```
+
+`claude_code_goal` launches `claude --print` with the tok report schema passed
+through `--json-schema`; the runtime reads the validated report from the
+`structured_output` field of the JSON envelope and writes it to
+`tok_report.json`. The same `write_dirs`, `run_cwd`, and `runtime_write_dirs`
+semantics apply: the working directory is `run_cwd`, and every other write
+scope plus the run attachments directory is granted through `--add-dir`.
+`codex_features` is Codex-specific and ignored for this provider.
+
+The `sandbox` field maps onto Claude Code permissions:
+
+| `sandbox` | Claude Code flags |
+| --- | --- |
+| `read-only` | `--disallowedTools Write,Edit,MultiEdit,NotebookEdit,Bash` |
+| `workspace-write` | `--permission-mode acceptEdits --allowedTools Bash` |
+| `danger-full-access` | `--dangerously-skip-permissions` |
+
+Like Codex `workspace-write`, the mapping is a protocol boundary, not a hard OS
+sandbox: `acceptEdits` auto-accepts file edits in the granted directories and
+`Bash` runs unsandboxed commands. The runtime's source-diff audit and the
+no-mistakes Git gate remain the enforcement layer.
 
 `runtime_write_dirs` is intentionally separate from `write_dirs`. It grants the
 tok process access to directories that may be updated by commands it runs, such
@@ -382,8 +438,7 @@ checks:
 - `codex exec` support for `--output-schema`, `--output-last-message`,
   `--enable`, `--add-dir`, `--sandbox`, and `--ephemeral` when
   `tik.provider = "codex_file"`;
-- agent tik `openai` package and `OPENAI_API_KEY` readiness when
-  `tik.provider = "agent"`.
+- API tik `openai` package and API key readiness when `tik.provider = "api"`.
 
 The default summary reports `static_setup`. If it is ready, `goal-cli run` has
 the local setup required to start the producer/tik/tok loop for the

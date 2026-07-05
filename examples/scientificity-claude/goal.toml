@@ -1,8 +1,9 @@
 name = "scientificity-publication-pdf"
 # Copy this file to the scientificity repository root before running goal-cli.
-# Same setup as examples/scientificity/goal.toml, but the tik referee pass runs
-# through Claude Code (`claude`) instead of Codex; the /apsr-review slash skill
-# must be installed in Claude Code.
+# Same setup as examples/scientificity/goal.toml, but both passes run through
+# Claude Code (`claude`) instead of Codex: tik reviews via claude_code_file and
+# tok repairs via claude_code_goal. The /apsr-review slash skill must be
+# installed in Claude Code.
 state_dir = ".goal"
 runs_dir = ".goal/runs"
 
@@ -50,12 +51,11 @@ blocking_objections=[].
 """
 
 [tok]
-provider = "codex_goal"
+provider = "claude_code_goal"
 sandbox = "danger-full-access"
 write_dirs = ["writing", "src"]
 run_cwd = "."
 runtime_write_dirs = ["output", "build", "logs"]
-codex_features = ["goals"]
 
 [tok.prompt]
 template = """
