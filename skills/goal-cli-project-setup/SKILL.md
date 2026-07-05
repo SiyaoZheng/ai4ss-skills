@@ -14,7 +14,7 @@ The deliverable is not just a `goal.toml`. The deliverable is a repeatable
 thing loop:
 
 ```text
-stable rebuild -> finished thing -> review -> bounded source repair
+stable rebuild -> finished thing -> review -> bounded source work
 ```
 
 ## When to Use
@@ -38,7 +38,7 @@ project that has no inspectable thing.
 - Keep the producer deterministic, idempotent, and easy to rerun.
 - Completion belongs to the rebuilt thing and tik verdict, not to the tok
   agent's explanation.
-- Treat every tok pass as source repair only. Tok must not declare the
+- Treat every tok pass as source changes only. Tok must not declare the
   thing-level goal complete.
 
 ## Workflow
@@ -193,7 +193,7 @@ JSON verdict that includes at least:
 
 ### 5. Configure Tok
 
-Tok repairs source only. Keep `write_dirs` narrow and exclude generated output:
+Tok changes source only. Keep `write_dirs` narrow and exclude generated output:
 
 ```toml
 [tok]
@@ -207,7 +207,9 @@ Tok prompt template should say:
 
 - what standard the artifact must meet;
 - that the artifact is produced by `{producer_command}`;
-- that the tok must use `{tik_review_path}`;
+- that `{tik_review_path}` is the standard to meet;
+- that tok must make source changes so the next rebuilt artifact answers the
+  tik review's blocking objections;
 - which source directories are writable;
 - which outputs, data, logs, and generated files are off limits.
 
@@ -255,7 +257,6 @@ codex_features = ["goals"]
 enabled = true
 binary = "no-mistakes"
 mode = "lightspeed"
-branch_prefix = "goal-cli"
 
 [safety]
 generated_dirs = ["output", "build", "dist"]
@@ -303,6 +304,14 @@ goal-cli run --max-minutes 30
 goal-cli state
 ```
 
+For unattended progress, install the system-level heartbeat instead of leaving
+a foreground loop running:
+
+```bash
+goal-cli heartbeat install --every-minutes 30 --max-minutes 30
+goal-cli heartbeat status
+```
+
 ## Common Recipes
 
 ### Research PDF
@@ -343,4 +352,6 @@ goal-cli state
   remaining blocker is documented with exact output.
 - Optional Codex smoke checks pass when their providers are configured.
 - The final response to the user names the artifact, producer command,
-  verifier used, writable scopes, and exact next command.
+  verifier used, writable scopes, and exact next command. If unattended progress
+  is appropriate, the next command should be `goal-cli heartbeat install ...`;
+  otherwise it should be one manual `goal-cli run ...`.

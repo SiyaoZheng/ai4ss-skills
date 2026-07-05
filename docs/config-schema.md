@@ -138,8 +138,9 @@ codex_features = ["goals"]
 ```
 
 `codex_goal` launches `codex exec` with `/goal`, `--enable goals`, and the tok
-report schema. Tok treats every pass as the last pass: read `tik.md`, edit only
-`write_dirs`, make the strongest source repair, and stop.
+report schema. Tok treats every pass as the last pass: read `tik.md`, use the
+tik review as the standard to meet, edit only `write_dirs`, and leave source
+ready for the next artifact to answer the review's blocking objections.
 `write_dirs` must stay inside the project root and must not overlap `.git`,
 state directories, run directories, generated directories, or the canonical
 artifact.
@@ -181,8 +182,7 @@ checkpoints.
 [no_mistakes]
 binary = "no-mistakes"
 mode = "lightspeed"
-branch_prefix = "goal-cli"
-intent = "Rebuild, review, repair source, and keep Git clean."
+intent = "Rebuild, review, update source, and keep Git clean."
 skip_steps = []
 timeout_seconds = 0
 checkpoint_message = "goal-cli checkpoint: {goal_name} heartbeat {iteration} {phase}"
@@ -194,8 +194,8 @@ checkpoint_message = "goal-cli checkpoint: {goal_name} heartbeat {iteration} {ph
 - `mode`: no-mistakes pipeline preset. Defaults to `lightspeed`, which passes
   `--skip review,test,document,lint,push,pr,ci`. `fast` skips only
   `push,pr,ci`. `full` runs no-mistakes without preset skips.
-- `branch_prefix`: prefix for the feature branch created when the repo is on the
-  default branch, because `no-mistakes axi run` refuses default branches.
+- `branch_prefix`: accepted for older configs but ignored. goal-cli is a
+  single-person mainline workflow and does not create feature branches.
 - `intent`: optional text passed to `no-mistakes axi run --intent`. If omitted,
   goal-cli generates a thing-centered intent from the goal name.
 - `skip_steps`: optional no-mistakes pipeline steps for `--skip`, such as
@@ -206,8 +206,8 @@ checkpoint_message = "goal-cli checkpoint: {goal_name} heartbeat {iteration} {ph
   `{goal_name}`, `{iteration}`, and `{phase}`.
 
 When enabled, goal-cli prepares the repo before a non-dry-run heartbeat by ignoring
-`.goal/` in `.git/info/exclude`, auto-branching if needed, and checkpointing
-dirty project changes. After successful tok and completion heartbeats, it
+`.goal/` in `.git/info/exclude` and checkpointing dirty project changes on the
+current branch. After successful tok and completion heartbeats, it
 checkpoints again, runs `no-mistakes init`, and then runs:
 
 ```bash
@@ -320,7 +320,7 @@ provider evidence under `.goal/runs/`.
 | `blocked_unparseable_tik` | Tik output did not contain the configured verdict JSON. |
 | `blocked_stale_tik_review` | Tik reviewed a stale artifact hash or declared the review stale. |
 | `blocked_tok_failed` | The tok provider failed or returned an invalid schema report. |
-| `blocked_no_source_change_possible` | Tok reported that no source repair is possible. |
+| `blocked_no_source_change_possible` | Tok reported that no source change is possible. |
 | `blocked_repeated_same_objection` | The configured blocker fingerprint repeated too many times. |
 | `blocked_no_mistakes_failed` | Git setup, checkpointing, or no-mistakes gating failed. |
 | `budget_limited` | The heartbeat wall-clock budget expired during no-mistakes work. |
@@ -391,7 +391,24 @@ goal-cli/Codex processes that still reference the current project, use:
 goal-cli cleanup --kill-orphans
 ```
 
+Install an OS-level timed heartbeat:
+
+```bash
+goal-cli heartbeat install --every-minutes 30 --max-minutes 30
+goal-cli heartbeat status
+```
+
+The system-level timer does not change the config schema and does not create a
+multi-cycle runtime mode. It writes per-user scheduler files for the current
+project and each OS tick invokes one hardened `heartbeat tick`, which cleans
+stale runtime state and then executes the same one-heartbeat runtime as
+`goal-cli run`.
+
 ## Runtime Units
 
 - `heartbeat`: one autonomous producer/tik/tok pass.
 - `run`: one CLI invocation that executes exactly one heartbeat.
+- `heartbeat tick`: one scheduler-safe invocation that cleans stale runtime
+  state, runs one heartbeat, and exits successfully if another heartbeat is
+  already active.
+- `heartbeat install`: OS scheduler setup for repeated one-heartbeat ticks.

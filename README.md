@@ -121,7 +121,7 @@ One heartbeat every 30 minutes.
 | --- | --- |
 | <img alt="Rebuild" src="https://img.shields.io/badge/rebuild-22c55e?style=flat-square&amp;labelColor=052e16" /> | Rebuild the thing. |
 | <img alt="Check" src="https://img.shields.io/badge/check-eab308?style=flat-square&amp;labelColor=332600" /> | Check the thing. |
-| <img alt="Repair" src="https://img.shields.io/badge/repair-3b82f6?style=flat-square&amp;labelColor=082f49" /> | Repair only allowed source files. |
+| <img alt="Source" src="https://img.shields.io/badge/source-3b82f6?style=flat-square&amp;labelColor=082f49" /> | Change only allowed source files. |
 | <img alt="Repeat" src="https://img.shields.io/badge/repeat-ef4444?style=flat-square&amp;labelColor=3b0909" /> | Try again on the next heartbeat. |
 
 The question is not:
@@ -165,7 +165,7 @@ Did the thing get better?
 
 If yes, stop.
 
-If no, repair source and come back in 30 minutes.
+If no, change source and come back in 30 minutes.
 
 Sources: [Addy Osmani](https://addyosmani.com/blog/loop-engineering/),
 [LangChain](https://www.langchain.com/blog/the-art-of-loop-engineering/),
@@ -193,7 +193,7 @@ You may see these short names in the config and deeper docs:
 | `artifact` | The finished output you can inspect. |
 | `producer` | The command that rebuilds that output. |
 | `tik` | The reviewer that rejects weak output. |
-| `tok` | The coding agent that repairs source files. |
+| `tok` | The coding agent that changes allowed source files. |
 | `.goal/` | The folder where runs, reviews, and state are recorded. |
 
 Example:
@@ -259,6 +259,8 @@ python3 -m pip install -e .
 | `goal-cli doctor` | Check whether the local setup is ready to run. |
 | `goal-cli run --dry-run` | Render the prompts and run folder without calling repair agents. |
 | `goal-cli run --max-minutes 30` | Run one bounded work pass. |
+| `goal-cli heartbeat install --every-minutes 60 --max-minutes 30` | Install a per-user OS timer that triggers one heartbeat per tick. |
+| `goal-cli heartbeat status` | Show the OS timer status and managed paths. |
 | `goal-cli tik` | Rebuild and review the output without running a repair pass. |
 | `goal-cli state` | Show the current saved state. |
 | `goal-cli cleanup` | Clear stale locks after an interrupted run. |

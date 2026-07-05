@@ -87,7 +87,10 @@ Every template must include:
 - recommended `write_dirs`;
 - generated dirs to protect;
 - source dirs that look tempting but should stay read-only;
-- a tok prompt template that references `{tik_review_path}`;
+- a tok prompt template that references `{tik_review_path}` as the standard to
+  meet;
+- explicit language requiring tok to make source changes so the next rebuilt
+  artifact answers tik's blocking objections;
 - a note that tok cannot declare the artifact complete.
 
 ### 5. Provide Validation Commands
@@ -109,6 +112,14 @@ goal-cli doctor --smoke-codex-goal --smoke-codex-file-tik
 
 If a template includes a tik oracle script, include a direct oracle command and
 the expected verdict shape.
+
+If a template recommends unattended progress, include the system-level
+heartbeat command and state that each tick still runs exactly one heartbeat:
+
+```bash
+goal-cli heartbeat install --every-minutes 30 --max-minutes 30
+goal-cli heartbeat status
+```
 
 ## File Locations
 

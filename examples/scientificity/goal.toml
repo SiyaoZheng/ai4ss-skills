@@ -26,8 +26,13 @@ fingerprint_fields = ["blocking_objections"]
 text = """
 /apsr-review
 
-You are an APSR reviewer. Review only full_paper.pdf.
-Standard: ready for publication.
+Review full_paper.pdf. Judge it by the standard for a publication-ready APSR
+manuscript.
+
+IMPORTANT: Do not assume the artifact already has the form or completeness of
+an academic paper. It may be an automatic pipeline output: incomplete,
+audit-like, AI-flavored, mechanically stitched, or plainly unlike a journal
+article. If you see those defects, state them sharply and treat them as blocking publication problems.
 
 Write a referee report.
 
@@ -45,40 +50,38 @@ blocking_objections=[].
 [tok]
 provider = "codex_goal"
 sandbox = "danger-full-access"
-write_dirs = ["src", "data"]
+write_dirs = ["writing", "src"]
 run_cwd = "."
 runtime_write_dirs = ["output", "build", "logs"]
 codex_features = ["goals"]
 
 [tok.prompt]
 template = """
-The goal is to keep working on the paper so it reaches the publication
-standard of APSR. Note that the paper PDF is produced by `{producer_command}`,
-and you may run the full workflow from {tok_run_cwd} whenever needed.
+Make the editable source yield, via `{producer_command}`, a manuscript PDF that
+meets the APSR standard defined by the referee report at {tik_review_path};
+success means that PDF answers every blocking objection in that report.
 
-Keep manual source edits inside these source-entry directories:
+Manual edits are limited to:
 {writable_scopes}
 
-Runtime commands may update these generated side-effect directories:
+Commands may run from {tok_run_cwd}; generated side effects may update:
 {runtime_writable_scopes}
 
-Do not hand-edit generated output, logs, or the PDF as a shortcut. Regenerate
-the artifact with `{producer_command}`.
-
-Use the attached referee report at {tik_review_path}.
+Do not hand-edit data/, scripts/, generated outputs, .goal/, or the manuscript
+PDF.
 """
 
 [no_mistakes]
 enabled = true
 binary = "no-mistakes"
-branch_prefix = "goal-cli"
 skip_steps = []
 intent = """
 Drive one fully automatic scientificity publication-PDF heartbeat: rebuild the
 current PDF, run a fresh PDF-only referee review through goal-cli, apply source
-revisions through the code entry src/ and data entry data/, allow runtime
-commands to refresh generated artifacts, keep the Git worktree clean between
-heartbeats, and gate the checkpoint with no-mistakes.
+changes through the manuscript/code entries writing/ and src/, use data/ as
+read-only project input unless a narrower safe data subdirectory is explicitly
+configured, run the workflow freely so generated artifacts can refresh, keep the
+Git worktree clean between heartbeats, and gate the checkpoint with no-mistakes.
 """
 
 [observability]

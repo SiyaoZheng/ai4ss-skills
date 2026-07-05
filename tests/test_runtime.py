@@ -660,9 +660,35 @@ class GoalRuntimeTests(unittest.TestCase):
         banned = ["Adrian", "user", "human", "approval", "decision_required", "ask", "bounded", "Writable scopes", "{tik_ledger}"]
         for term in banned:
             self.assertNotIn(term, prompt_text)
-        self.assertIn("publication\nstandard of APSR", prompt_text)
-        self.assertIn("produced by `{producer_command}`", prompt_text)
+        self.assertTrue(config.tik.prompt.startswith("/apsr-review\n"))
+        self.assertIn("Review full_paper.pdf", config.tik.prompt)
+        self.assertIn("IMPORTANT: Do not assume", config.tik.prompt)
+        self.assertIn("automatic pipeline output", config.tik.prompt)
+        self.assertIn("blocking publication problems", config.tik.prompt)
+        self.assertIn("Make the editable source yield", prompt_text)
+        self.assertIn("via `{producer_command}`", prompt_text)
+        self.assertIn("manuscript PDF", prompt_text)
+        self.assertIn("APSR standard defined by the referee report at {tik_review_path}", prompt_text)
+        self.assertIn("success means that PDF answers every blocking objection", prompt_text)
         self.assertIn("{tik_review_path}", prompt_text)
+        self.assertIn("Manual edits are limited to:", config.tok.prompt_template)
+        self.assertIn("Commands may run from {tok_run_cwd}", config.tok.prompt_template)
+        self.assertIn("generated side effects may update", config.tok.prompt_template)
+        self.assertIn("Do not hand-edit data/, scripts/, generated outputs, .goal/, or the manuscript", config.tok.prompt_template)
+        rejected_tok_terms = [
+            "keep working",
+            "repair",
+            "revise",
+            "revision",
+            "heartbeat",
+            "strongest",
+            "paper itself",
+            "produce manuscript",
+            "rebuilt PDF",
+        ]
+        lower_tok_prompt = config.tok.prompt_template.lower()
+        for term in rejected_tok_terms:
+            self.assertNotIn(term.lower(), lower_tok_prompt)
         self.assertIn("{writable_scopes}", prompt_text)
         self.assertIn("{runtime_writable_scopes}", prompt_text)
         self.assertIn("{tok_run_cwd}", prompt_text)
@@ -687,8 +713,9 @@ class GoalRuntimeTests(unittest.TestCase):
             self.assertEqual(config.tik.provider, "codex_file")
             self.assertEqual(
                 tuple(path.resolve() for path in config.tok.write_dirs),
-                ((root / "src").resolve(), (root / "data").resolve()),
+                ((root / "writing").resolve(), (root / "src").resolve()),
             )
+            self.assertNotIn((root / "data").resolve(), tuple(path.resolve() for path in config.tok.write_dirs))
             self.assertEqual(config.tok.run_cwd, root.resolve())
             self.assertEqual(
                 tuple(path.resolve() for path in config.tok.runtime_write_dirs),

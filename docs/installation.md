@@ -37,6 +37,7 @@ goal-cli -h
 goal-cli run -h
 goal-cli doctor -h
 goal-cli cleanup -h
+goal-cli heartbeat install -h
 ```
 
 ## User Install
@@ -194,22 +195,21 @@ command for that repository.
 
 The no-mistakes integration has no interactive mode. It is enabled by default;
 every non-dry-run heartbeat starts from a checkpointed clean Git worktree, and
-successful source-repair or completion transitions are gated before the runtime
+successful source-change or completion transitions are gated before the runtime
 continues.
 
 ```toml
 [no_mistakes]
 binary = "no-mistakes"
 mode = "lightspeed"
-branch_prefix = "goal-cli"
-intent = "Rebuild, review, repair source, and keep the Git worktree clean."
+intent = "Rebuild, review, update source, and keep the Git worktree clean."
 skip_steps = []
 timeout_seconds = 0
 ```
 
 When enabled, goal-cli always:
 
-1. creates a feature branch when the repo is on the default branch;
+1. stays on the current branch and treats it as the single-person mainline;
 2. ignores `.goal/` runtime files through `.git/info/exclude`;
 3. commits dirty project files as a checkpoint;
 4. runs `no-mistakes init`;
@@ -229,6 +229,38 @@ heartbeat.
 
 Use `enabled = false` only for isolated tests or diagnostics that intentionally
 do not run inside a Git repository.
+
+## System-Level Heartbeat
+
+For unattended progress, install a per-user OS timer:
+
+```bash
+goal-cli heartbeat install --every-minutes 60 --max-minutes 30
+```
+
+On macOS this writes a LaunchAgent under `~/Library/LaunchAgents/`. On Linux it
+writes a systemd user service and timer under
+`${XDG_CONFIG_HOME:-~/.config}/systemd/user/`. The generated service uses the
+absolute `goal.toml` path, starts in the project root, and writes scheduler logs
+under `.goal/system-heartbeat/`.
+
+The timer does not create a multi-cycle CLI mode. Each OS tick invokes:
+
+```bash
+goal-cli -c /absolute/path/to/goal.toml heartbeat tick --max-minutes 30
+```
+
+`heartbeat tick` cleans stale interrupted runtime state, runs one heartbeat, and
+exits successfully when it finds an already-active heartbeat lock. That keeps
+normal timer overlap from becoming a system-service failure.
+
+Useful management commands:
+
+```bash
+goal-cli heartbeat paths
+goal-cli heartbeat status
+goal-cli heartbeat uninstall
+```
 
 ## Observability Defaults
 

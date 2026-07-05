@@ -386,8 +386,6 @@ def analyze_config_policy(config: GoalConfig) -> ConfigPolicyReport:
             issues.append(ConfigIssue("no_mistakes.binary.empty", "no_mistakes.binary must be non-empty when no_mistakes is enabled"))
         if config.no_mistakes.mode not in NO_MISTAKES_MODES:
             issues.append(ConfigIssue("no_mistakes.mode.unsupported", f"unsupported no_mistakes mode: {config.no_mistakes.mode}"))
-        if not config.no_mistakes.branch_prefix:
-            issues.append(ConfigIssue("no_mistakes.branch_prefix.empty", "no_mistakes.branch_prefix must be non-empty when no_mistakes is enabled"))
         if not config.no_mistakes.checkpoint_message:
             issues.append(ConfigIssue("no_mistakes.checkpoint_message.empty", "no_mistakes.checkpoint_message must be non-empty when no_mistakes is enabled"))
         for step in config.no_mistakes.skip_steps:

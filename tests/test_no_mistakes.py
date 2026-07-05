@@ -33,20 +33,21 @@ class NoMistakesIntegrationTests(unittest.TestCase):
             with self.assertRaises(ConfigError):
                 load_config(config_path)
 
-    def test_heartbeat_auto_checkpoints_and_runs_no_mistakes_on_clean_feature_branch(self) -> None:
+    def test_heartbeat_auto_checkpoints_and_runs_no_mistakes_on_current_branch(self) -> None:
         with tempfile.TemporaryDirectory() as temp_dir:
             root = Path(temp_dir)
             fake_log = root / ".goal" / "fake-no-mistakes.jsonl"
             self._install_fake_no_mistakes(root, fake_log)
             config = load_config(self._write_project(root, disable_observability=True))
             self._git(root, "init")
+            starting_branch = self._git(root, "branch", "--show-current").stdout.strip()
 
             result = run_heartbeat(config, RuntimeOptions(max_minutes=0), adapters=RevisionAdapters())
 
             self.assertEqual(result.exit_code, 0)
             self.assertEqual(result.status, "active")
             branch = self._git(root, "branch", "--show-current").stdout.strip()
-            self.assertTrue(branch.startswith("goal-cli/test-artifact-goal-"), branch)
+            self.assertEqual(branch, starting_branch)
             self.assertEqual(self._git(root, "status", "--porcelain=v1", "--untracked-files=all").stdout.strip(), "")
             state = load_state(config)
             self.assertEqual(state["last_no_mistakes"]["status"], "no_mistakes_passed")

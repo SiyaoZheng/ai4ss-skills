@@ -1,8 +1,6 @@
 from __future__ import annotations
 
-import datetime as dt
 import os
-import re
 import signal
 import shutil
 import subprocess
@@ -14,7 +12,6 @@ from pathlib import Path
 from .config import GoalConfig
 
 
-DEFAULT_BRANCH_NAMES = {"main", "master", "trunk", "develop"}
 PIPELINE_STEP_ORDER = ("intent", "rebase", "review", "test", "document", "lint", "push", "pr", "ci")
 REQUIRED_AXI_RUN_FLAGS = ("--intent", "--yes", "--skip")
 NO_MISTAKES_BUDGET_EXHAUSTED = "no_mistakes_budget_exhausted"
@@ -58,13 +55,13 @@ class NoMistakesGate:
             return NoMistakesResult(True, "no_mistakes_off", "no-mistakes disabled", skipped=True)
         if resolve_no_mistakes_binary(self.config) is None:
             return _unavailable("no_mistakes_binary_missing", f"no-mistakes binary not found: {self.config.no_mistakes.binary}")
-        return _prepare_committed_feature_branch(self.config, run_dir, iteration, phase, deadline)
+        return _prepare_committed_worktree(self.config, run_dir, iteration, phase, deadline)
 
     def gate(self, run_dir: Path, iteration: int, phase: str, *, deadline: float | None = None) -> NoMistakesResult:
         if not self.enabled:
             return NoMistakesResult(True, "no_mistakes_off", "no-mistakes disabled", skipped=True)
 
-        prepared = _prepare_committed_feature_branch(self.config, run_dir, iteration, phase, deadline)
+        prepared = _prepare_committed_worktree(self.config, run_dir, iteration, phase, deadline)
         if not prepared.ok:
             return prepared
 
@@ -132,7 +129,7 @@ def no_mistakes_help_supports_required_flags(help_text: str) -> bool:
     return all(flag in help_text for flag in REQUIRED_AXI_RUN_FLAGS)
 
 
-def _prepare_committed_feature_branch(config: GoalConfig, run_dir: Path, iteration: int, phase: str, deadline: float | None) -> NoMistakesResult:
+def _prepare_committed_worktree(config: GoalConfig, run_dir: Path, iteration: int, phase: str, deadline: float | None) -> NoMistakesResult:
     repo: Path | None = None
     branch: str | None = None
     log_path = run_dir / f"no_mistakes_{phase}.log"
@@ -145,13 +142,7 @@ def _prepare_committed_feature_branch(config: GoalConfig, run_dir: Path, iterati
         _ensure_runtime_paths_ignored(config, repo, deadline)
         branch = _current_branch(config, repo, deadline)
         if branch is None:
-            return NoMistakesResult(False, "blocked_no_mistakes_failed", "Git worktree is detached; cannot create a no-mistakes feature branch", repo)
-
-        if _is_default_branch(config, repo, branch, deadline):
-            branch_result = _switch_to_feature_branch(config, repo, deadline)
-            if not branch_result.ok:
-                return branch_result
-            branch = branch_result.branch or branch
+            return NoMistakesResult(False, "blocked_no_mistakes_failed", "Git worktree is detached; cannot checkpoint no-mistakes on a detached HEAD", repo)
 
         return _checkpoint_dirty_worktree(config, repo, run_dir, iteration, phase, branch, deadline)
     except _NoMistakesBudgetExhausted as exc:
@@ -240,35 +231,6 @@ def _short_head(config: GoalConfig, repo: Path, deadline: float | None) -> str |
     return result.stdout.strip() if result.returncode == 0 and result.stdout.strip() else None
 
 
-def _is_default_branch(config: GoalConfig, repo: Path, branch: str, deadline: float | None) -> bool:
-    remote_default = _remote_default_branch(config, repo, deadline)
-    if remote_default:
-        return branch == remote_default
-    return branch in DEFAULT_BRANCH_NAMES
-
-
-def _remote_default_branch(config: GoalConfig, repo: Path, deadline: float | None) -> str | None:
-    result = _run_git(repo, ["symbolic-ref", "--quiet", "--short", "refs/remotes/origin/HEAD"], timeout_seconds=_effective_no_mistakes_timeout(config, deadline))
-    _raise_if_git_timed_out(result, deadline, "git remote default branch discovery before no-mistakes")
-    if result.returncode != 0:
-        return None
-    ref = result.stdout.strip()
-    if not ref:
-        return None
-    return ref.split("/", 1)[1] if "/" in ref else ref
-
-
-def _switch_to_feature_branch(config: GoalConfig, repo: Path, deadline: float | None) -> NoMistakesResult:
-    base = f"{config.no_mistakes.branch_prefix}/{_slug(config.name)}-{_timestamp()}"
-    for suffix in ["", "-2", "-3", "-4", "-5"]:
-        branch = base + suffix
-        _raise_if_deadline_exhausted(deadline, "git switch before no-mistakes")
-        result = _run_git(repo, ["switch", "-c", branch], read_only=False)
-        if result.returncode == 0:
-            return NoMistakesResult(True, "no_mistakes_feature_branch", f"created feature branch {branch}", repo, branch)
-    return _failed("blocked_no_mistakes_failed", "failed to create no-mistakes feature branch", repo, None, None, None, result)
-
-
 def _git_dirty_entries(config: GoalConfig, repo: Path, deadline: float | None) -> tuple[str, ...]:
     result = _run_git(repo, ["status", "--porcelain=v1", "--untracked-files=all"], timeout_seconds=_effective_no_mistakes_timeout(config, deadline))
     _raise_if_git_timed_out(result, deadline, "git status before no-mistakes")
@@ -328,7 +290,7 @@ def _gate_intent(config: GoalConfig) -> str:
     if config.no_mistakes.intent:
         return config.no_mistakes.intent
     return (
-        f"Run {config.name}: rebuild artifact, evaluate it, apply source revisions, keep Git clean."
+        f"Run {config.name}: rebuild artifact, evaluate it, apply source changes, keep Git clean."
     )
 
 
@@ -501,12 +463,3 @@ def _failed(
 def _combined_output(result: subprocess.CompletedProcess[str]) -> str:
     text = "\n".join(part.strip() for part in (result.stdout, result.stderr) if part and part.strip())
     return text or f"exit code {result.returncode}"
-
-
-def _slug(value: str) -> str:
-    slug = re.sub(r"[^A-Za-z0-9]+", "-", value).strip("-").lower()
-    return slug or "goal"
-
-
-def _timestamp() -> str:
-    return dt.datetime.now().strftime("%Y%m%d-%H%M%S")

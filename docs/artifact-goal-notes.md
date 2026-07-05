@@ -101,9 +101,9 @@ This means a goal is not:
 - A claim that the tok succeeded.
 
 The outer goal is artifact-level. Each tok pass is an internal Codex `/goal`.
-It treats itself as the last tok: read `tik.md`, edit only allowed sources, make
-the strongest source repair, write the schema report, and stop. Tok never
-completes the artifact-level goal.
+It treats itself as the last tok: read `tik.md`, edit only allowed sources,
+leave source ready for the next artifact to answer tik's blocking objections,
+write the schema report, and stop. Tok never completes the artifact-level goal.
 
 After the producer, the runtime has exactly two sequential roles:
 
@@ -113,8 +113,8 @@ After the producer, the runtime has exactly two sequential roles:
   `codex_file` for Codex evaluation of a local artifact copy in an ephemeral
   read-only workspace. If tik reports a stale artifact hash, the heartbeat
   blocks before tok.
-- Tok: reads `tik.md` and performs the strongest source repair. The default
-  mode is `codex_goal`.
+- Tok: reads `tik.md` and changes allowed source so the next artifact can
+  answer the blocking objections. The default mode is `codex_goal`.
 
 ## Core Runtime Shape
 
@@ -128,8 +128,8 @@ After the producer, the runtime has exactly two sequential roles:
 8. If the tik passes, run the completion gate and mark the goal complete.
 9. If the tik fails, launch one tok pass against validated source boundaries.
 10. Record the schema-checked tok report in files.
-11. Gate successful source repair, then exit with file state ready for the next
-    heartbeat.
+11. Gate successful source changes, then exit with file state ready for the
+    next heartbeat.
 
 In short: `producer -> tik -> tok` when tik fails, or `producer -> tik` when tik
 passes. The tok's own report is never accepted as artifact success.
@@ -166,7 +166,7 @@ Runtime prompts are closed-system prompts. They may refer to:
   outputs, repeated identical blockers, or no source change possible.
 - Prior directions tried, when needed to enforce direction diversity.
 - The fact that the tok is an internal Codex `/goal` with completion limited
-  to source revisions.
+  to source changes.
 
 Runtime prompts must not mention a person who can decide, approve, rescue,
 clarify, or arbitrate the work. Human-facing concepts belong only in outer

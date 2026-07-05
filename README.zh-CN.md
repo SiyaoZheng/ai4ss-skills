@@ -117,7 +117,7 @@ Hi, read https://github.com/SiyaoZheng/goal-cli/blob/master/llms.txt and do what
 | --- | --- |
 | <img alt="Rebuild" src="https://img.shields.io/badge/rebuild-22c55e?style=flat-square&amp;labelColor=052e16" /> | 重建交付物。 |
 | <img alt="Check" src="https://img.shields.io/badge/check-eab308?style=flat-square&amp;labelColor=332600" /> | 验收交付物。 |
-| <img alt="Repair" src="https://img.shields.io/badge/repair-3b82f6?style=flat-square&amp;labelColor=082f49" /> | 只修允许改的源码。 |
+| <img alt="Source" src="https://img.shields.io/badge/source-3b82f6?style=flat-square&amp;labelColor=082f49" /> | 只改允许改的源码。 |
 | <img alt="Repeat" src="https://img.shields.io/badge/repeat-ef4444?style=flat-square&amp;labelColor=3b0909" /> | 半小时后再验一次。 |
 
 别问：
@@ -190,6 +190,7 @@ Hi, read https://github.com/SiyaoZheng/goal-cli/blob/master/llms.txt and do what
 | `goal-cli doctor` | 检查本机能不能跑。 |
 | `goal-cli run --dry-run` | 预演一遍，不让 agent 真改。 |
 | `goal-cli run --max-minutes 30` | 跑一轮 30 分钟心跳。 |
+| `goal-cli heartbeat install --every-minutes 60 --max-minutes 30` | 安装系统级定时心跳；每次 tick 仍然只跑一轮。 |
 
 完整配置说明见 [docs/config-schema.md](docs/config-schema.md)。
 

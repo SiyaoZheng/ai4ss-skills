@@ -35,7 +35,7 @@ goal-cli run --dry-run
 
 After checks pass, recommend one timed heartbeat every 30 minutes:
 
-goal-cli run --max-minutes 30
+goal-cli heartbeat install --every-minutes 30 --max-minutes 30
 
 Report the output path, rebuild command, editable folders, protected folders,
 whether to schedule the heartbeat, and the next command.

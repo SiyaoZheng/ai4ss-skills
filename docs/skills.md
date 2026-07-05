@@ -49,10 +49,18 @@ After setup, the project should have:
 - passing `goal-cli validate`;
 - a useful `goal-cli doctor` result;
 - a dry run from `goal-cli run --dry-run`.
-- a recommendation for a 30-minute heartbeat.
+- a recommendation for either a manual heartbeat or a system-level timed
+  heartbeat.
 
 Only after those checks should a real repair run start:
 
 ```bash
 goal-cli run --max-minutes 30
+```
+
+For unattended progress, install the per-user OS timer instead of leaving a
+foreground loop running:
+
+```bash
+goal-cli heartbeat install --every-minutes 30 --max-minutes 30
 ```
