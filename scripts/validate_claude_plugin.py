@@ -15,6 +15,7 @@ from pathlib import Path
 FRONTMATTER_RE = re.compile(r"^---\n(?P<body>.*?)\n---", re.DOTALL)
 PLUGIN_NAME_RE = re.compile(r"^[a-z][a-z0-9]*(-[a-z0-9]+)*$")
 SEMVER_RE = re.compile(r"^\d+\.\d+\.\d+(?:-[0-9A-Za-z.-]+)?(?:\+[0-9A-Za-z.-]+)?$")
+EXPECTED_SKILL_COUNT = 22
 
 
 def load_json(path: Path) -> dict:
@@ -96,8 +97,8 @@ def validate_plugin(root: Path) -> list[str]:
     skill_files: list[Path] = []
     for skill_root in skill_roots:
         skill_files.extend(sorted(skill_root.glob("*/SKILL.md")))
-    if len(skill_files) != 19:
-        errors.append(f"{root / 'skills'}: expected 19 SKILL.md files, found {len(skill_files)}")
+    if len(skill_files) != EXPECTED_SKILL_COUNT:
+        errors.append(f"{root / 'skills'}: expected {EXPECTED_SKILL_COUNT} SKILL.md files, found {len(skill_files)}")
     for skill_md in skill_files:
         expected_name = skill_md.parent.name
         actual_name = frontmatter_name(skill_md)

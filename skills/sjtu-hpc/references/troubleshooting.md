@@ -102,7 +102,7 @@ ssh_exchange_identification: Connection closed by remote host
 2. **Contact admin / 联系管理员**
    ```
    Email: hpc@sjtu.edu.cn
-   Subject: Account blocked - request unblock / 账号封禁解除申请
+   Subject: Account lockout - request unlock / 账号封禁解除申请
    Content: Include your username and IP address / 包含用户名和IP地址
    ```
 
@@ -117,11 +117,11 @@ ssh_exchange_identification: Connection closed by remote host
 
 ---
 
-### Blocked for Running Computation on Login Node / 登录节点运行计算被封
+### Account Lockout for Running Computation on Login Node / 登录节点运行计算被封
 
 **Symptoms / 症状:**
 ```
-Your account has been temporarily blocked due to resource abuse on login node.
+Your account has been temporarily locked due to resource abuse on login node.
 Connection closed by remote host.
 ```
 
@@ -742,7 +742,7 @@ PackagesNotFoundError:
    conda install package_name
    ```
 
-5. **Use pip as fallback / 使用pip作为备选:**
+5. **Use pip as alternative / 使用pip作为备选:**
    ```bash
    pip install --no-cache-dir package_name
    ```

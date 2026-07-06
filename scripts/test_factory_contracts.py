@@ -3,60 +3,71 @@
 
 from __future__ import annotations
 
-import csv
-import tempfile
-from pathlib import Path
+import os
 
-from ai4ss_factory_contracts.sidecars import (
-    ai4ss_model_path_error,
-    blank_required_cells,
-    duplicate_values,
-    exact_field_error,
-    load_rows,
-    sidecar_field_group,
-    sidecar_fields,
+from ai4ss_factory_contracts.latex_plugin import (
+    DISABLE_ENV,
+    LATEX_PLUGIN_SCRIPT_NAMES,
+    LATEX_PLUGIN_SKILL_NAMES,
+    bundled_latex_plugin_root,
+    bundled_latex_plugin_skills,
 )
 from ai4ss_factory_contracts.workflow import (
     CORE_HANDOFF_FIELDS,
+    MODEL_LINK_FIELDS,
     allowed_routes,
     status_route_errors,
 )
 
 
 def main() -> None:
-    fields = sidecar_fields("research_routes")
-    assert fields[0] == "route_id"
-    assert fields[-1] == "next_skill_route"
-    assert "ai4ss_model_path" in sidecar_fields("analysis_manifest")
-    assert sidecar_field_group("model_link")[-1] == "ai4ss_check_status"
     assert "target_inquiry" in CORE_HANDOFF_FIELDS
+    assert "replication_package_status" in CORE_HANDOFF_FIELDS
+    assert "ai_contribution_disclosure" in CORE_HANDOFF_FIELDS
+    assert "direct_submission_status" in CORE_HANDOFF_FIELDS
+    assert "assumption_register" in CORE_HANDOFF_FIELDS
+    assert "ai4ss_model_path" in MODEL_LINK_FIELDS
+    assert MODEL_LINK_FIELDS[-1] == "ai4ss_check_status"
 
-    with tempfile.TemporaryDirectory() as tmp:
-        path = Path(tmp) / "routes.csv"
-        with path.open("w", newline="", encoding="utf-8") as f:
-            writer = csv.writer(f)
-            writer.writerow(fields)
-            writer.writerow(["R1"] + ["x"] * (len(fields) - 1))
-        loaded_fields, rows = load_rows(path)
-        assert exact_field_error(path, loaded_fields, fields) is None
-        assert rows[0]["route_id"] == "R1"
-        assert not blank_required_cells(rows, fields, lambda row, i: row["route_id"])
-        assert not duplicate_values(rows, "route_id")
-
-    assert ai4ss_model_path_error("docs/research_model.aiss", "R1") is None
-    assert ai4ss_model_path_error("not_applicable:no model", "R1") is None
-    assert ai4ss_model_path_error("docs/research_model.json", "R1") == "R1: ai4ss_model_path must end with .aiss"
-
-    assert "study-design-builder" in allowed_routes("research_routes")
-    assert status_route_errors("research_routes", "handoff_ready", "none", "R1") == [
+    assert "study-design-builder" in allowed_routes("route")
+    assert "public-data-sources" in allowed_routes("route")
+    assert "top-journal-figures" in allowed_routes("analysis_artifact")
+    assert status_route_errors("route", "handoff_ready", "none", "R1") == [
         "R1: handoff_ready requires a downstream next_skill_route"
     ]
-    assert status_route_errors("study_design_declaration", "needs_data_check", "literature-matrix", "D1") == [
-        "D1: needs_data_check should route to research-data-builder"
+    assert status_route_errors("mida", "needs_data_check", "literature-matrix", "D1") == [
+        "D1: needs_data_check should route to one of ['public-data-sources', 'research-data-builder']"
     ]
-    assert status_route_errors("analysis_readiness", "ready", "methods-reviewer", "C1") == [
+    assert status_route_errors("analysis_check", "ready", "methods-reviewer", "C1") == [
         "C1: ready rows must route to research-analysis-runner"
     ]
+    assert "research-analysis-runner" in allowed_routes("transparency_package")
+    assert status_route_errors("transparency_package", "needs_code_statement", "research-data-builder", "T1") == [
+        "T1: needs_code_statement should route to research-analysis-runner"
+    ]
+    assert status_route_errors("revision_package", "needs_new_analysis", "reviewer-response", "R2") == [
+        "R2: needs_new_analysis should route to research-analysis-runner"
+    ]
+    assert status_route_errors("reporting_package", "submission_gate_incomplete", "research-slides-builder", "P1") == [
+        "P1: submission_gate_incomplete should route to academic-writing-scaffold or methods-reviewer"
+    ]
+    assert status_route_errors("reporting_package", "needs_figure_package", "academic-writing-scaffold", "P2") == [
+        "P2: needs_figure_package should route to top-journal-figures"
+    ]
+    assert status_route_errors("revision_package", "ready_for_ai_disclosed_response", "academic-writing-scaffold", "R3") == [
+        "R3: ready_for_ai_disclosed_response should route to reviewer-response"
+    ]
+
+    latex_disabled = os.environ.get(DISABLE_ENV, "").strip().lower() in {"1", "true", "yes", "on"}
+    latex_root = None if latex_disabled else bundled_latex_plugin_root()
+    latex_skills = bundled_latex_plugin_skills()
+    if latex_root is None or latex_disabled:
+        assert latex_skills == []
+    else:
+        assert [skill.name for skill in latex_skills] == list(LATEX_PLUGIN_SKILL_NAMES)
+        for skill in latex_skills:
+            assert "AI4SS Harness Packaging Note" in skill.instructions
+            assert set(LATEX_PLUGIN_SCRIPT_NAMES).issubset(skill.scripts)
 
 
 if __name__ == "__main__":

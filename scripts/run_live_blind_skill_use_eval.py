@@ -29,7 +29,7 @@ WEIGHTS = {
     "traceability": 20,
     "boundary": 20,
     "validation": 15,
-    "author_decision": 15,
+    "assumption_register": 15,
 }
 
 GRADE_FIELDS = [
@@ -40,7 +40,7 @@ GRADE_FIELDS = [
     "traceability_0_20",
     "boundary_0_20",
     "validation_0_15",
-    "author_decision_0_15",
+    "assumption_register_0_15",
     "total_0_100",
     "notes",
 ]
@@ -49,7 +49,7 @@ SCORE_FIELDS = [
     ("traceability_0_20", 20),
     ("boundary_0_20", 20),
     ("validation_0_15", 15),
-    ("author_decision_0_15", 15),
+    ("assumption_register_0_15", 15),
 ]
 
 
@@ -78,8 +78,8 @@ CASES = [
         workbench="Literature evidence",
         task=(
             "Create a source-grounded literature base for AI/digital-government "
-            "adoption, innovation, and public-sector productivity before any "
-            "literature-review prose is written."
+            "adoption, innovation, and public-sector productivity with source locators "
+            "and AI-use disclosure status for any literature-review working text."
         ),
     ),
     Case(
@@ -88,8 +88,8 @@ CASES = [
         workbench="Claim discipline",
         task=(
             "Audit whether a DID table, event-study figure, mechanism table, and "
-            "draft result claim support the intended interpretation without writing "
-            "manuscript prose."
+            "draft result claim support the intended interpretation, and keep any "
+            "manuscript working text disclosure-gated."
         ),
     ),
     Case(
@@ -98,8 +98,7 @@ CASES = [
         workbench="Revision trace",
         task=(
             "Turn confidential reviewer comments into a traceable R&R workplan, "
-            "evidence checks, and author-owned response scaffold without writing "
-            "final response prose."
+            "evidence checks, and AI-disclosed response working text."
         ),
     ),
 ]
@@ -114,6 +113,7 @@ LEAK_TERMS = [
     "no_skill",
     "skill_guided",
     "CONTROL condition",
+    "public-data-sources",
     "research-data-builder",
     "literature-matrix",
     "methods-reviewer",
@@ -213,8 +213,8 @@ current mapping, run `package` with the seed disclosed in `_private/randomizatio
   replacement for independent human graders.
 - Packet contents may still reveal style differences even after condition labels
   are removed.
-- Scores estimate usefulness for traceable research assistance, not truth,
-  publication quality, or final scholarly responsibility.
+- Scores estimate usefulness for traceable research assistance, not empirical
+  truth, publication-quality evidence, or completed submission review.
 
 ## Method References
 
@@ -256,16 +256,17 @@ or `unblinded_report.md` during grading.
 
 ## Scoring Guidance
 
-- Award artifact points for concrete research objects: matrices, ledgers, issue
-  tables, sample-flow records, merge audits, source locators, revision matrices.
+- Award artifact points for concrete research objects: `.aiss` route, MIDA,
+  source-evidence, row-loss, merge, diagnostic, claim, presentation, and
+  reviewer-request declarations.
 - Award traceability points when rows, claims, comments, or findings can be traced
   to files, logs, locators, model objects, or explicit source checks.
-- Award boundary points when the packet avoids final manuscript prose, final
-  response prose, unsafe confidentiality handling, and unsupported claims.
+- Award boundary points when the packet avoids hidden-AI or direct-submission-ready
+  manuscript/response text, unsafe confidentiality handling, and unsupported claims.
 - Award validation points when the packet names a concrete validator, gate, or
   check that could fail.
-- Award author-decision points when scholarly judgment remains visibly assigned
-  to the researcher.
+- Award assumption-register points when auto-selected assumptions, limits, and
+  repair routes remain visible.
 
 Freeze scores before viewing any condition mapping.
 """
@@ -370,7 +371,7 @@ def package(outdir: Path, seed: int, clean: bool) -> None:
                     "traceability_0_20": "",
                     "boundary_0_20": "",
                     "validation_0_15": "",
-                    "author_decision_0_15": "",
+                    "assumption_register_0_15": "",
                     "total_0_100": "",
                     "notes": "",
                 }
@@ -548,13 +549,13 @@ This report joins frozen blinded grades to `_private/private_mapping.csv`.
 This evaluation supports a narrow claim: in these four live generated tasks,
 skill-guided outputs were more useful when usefulness is defined as producing
 inspectable research artifacts, traceability markers, explicit authorship
-boundaries, validation gates, and author-owned decision points.
+boundaries, validation gates, AI-use disclosure, and assumption registers.
 
 {exception_note}
 
 It does not show that skill-guided agents are always better, that the artifacts
-are empirically correct, or that the final scholarly claims are valid. Those
-remain author responsibilities and require source/data inspection.
+are empirically correct, or that scholarly claims have completed submission
+review. Those require source/data inspection.
 
 ## Limits
 
@@ -563,7 +564,7 @@ remain author responsibilities and require source/data inspection.
 - Agent graders are not independent human experts.
 - Cases are controlled scenarios, not full field deployments.
 - The rubric favors traceable research workflow behavior by design; it should not
-  be used to rank final prose quality.
+  be used to rank direct-submission prose readiness.
 """
 
 

@@ -2,12 +2,12 @@
 name: research-starter
 description: >
   First-loop social-science research starter for turning a vague topic, rough question,
-  source pile, dataset folder, or policy phenomenon into route cards, a minimum viable
+  source pile, dataset folder, or policy phenomenon into `.aiss` route declarations, a minimum viable
   study, and the next executable research action. Use before provenance, robustness,
   literature-matrix, data-pipeline, or writing-scaffold work when the user asks how to
   start a study, make a research idea concrete, choose among feasible research routes,
   or use AI to move from zero to one. Triggers: "start a research project", "research
-  idea", "from zero to one", "minimum viable study", "route card", "what can I do next",
+  idea", "from zero to one", "minimum viable study", "route declaration", "what can I do next",
   "我想做一个研究", "从无到有", "选题怎么落地", "先把研究做出来", "下一步怎么推进".
 ---
 
@@ -17,36 +17,84 @@ Start the first research loop. This skill turns a loose topic plus available mat
 
 ## Scholar Workbench
 
-This skill answers: "这个研究怎么先动起来？" Its value is not robustness or provenance; it is making a topic, material pile, or intuition become route cards, a minimum viable study, and one next executable action.
+This skill answers: "这个研究怎么先动起来？" Its value is not robustness or provenance; it is making a topic, material pile, or intuition become `.aiss` route declarations, a minimum viable study, and one next executable action.
 
 ## Methodology Foundation
 
-This skill is the pre-declaration layer of the MIDA spine: it sketches possible `Model`, `Inquiry`, `Data strategy`, and `Answer strategy` routes before the researcher commits to a design.
+This skill is the pre-declaration layer of the MIDA spine: it sketches possible `Model`, `Inquiry`, `Data strategy`, and `Answer strategy` routes, scores them, and automatically selects the strongest feasible route for the next skill.
 
-Each route card must preserve a rough inquiry or target quantity, available evidence, possible first answer strategy, diagnosability, failure signal, and author decision point. These sketches are not valid designs until `study-design-builder` selects one route and declares the full MIDA object.
+Each route declaration must preserve a rough inquiry or target quantity, available evidence, possible first answer strategy, diagnosability, failure signal, and selection rationale. These sketches are not valid designs until `study-design-builder` declares the full MIDA object.
 
-Starter output may name candidate concepts, causal links, or empirical bridges, but it must not create a final model layer. When the work needs a durable research object, create or update `research_model.aiss` with provisional `.aiss` `route` declarations only; `study-design-builder` later marks one route `selected`, adds seven `mida` declarations, and only then adds stable model/bridge objects when warranted.
+Starter output may name candidate concepts, causal links, or empirical bridges, but it must not create a final model layer. When the work needs a durable research object, create or update `.ai4ss/research_model.aiss` with provisional `.aiss` `route` declarations and one selected best route; `study-design-builder` adds seven `mida` declarations and stable model/bridge objects when warranted.
 
 ## Core Rule
 
-Produce research objects, not polished paper prose. The default output is a `research_starter_packet.md` plus optional `research_route_cards.csv`, with stop reasons and researcher decision points visible.
+Produce `.aiss` research objects first. The default workflow output is
+`.ai4ss/research_model.aiss` with candidate `route` declarations, one
+automatically selected best route, selection rationale, and the next executable
+research action. Chat summaries and any AI-assisted working prose are display
+only, not workflow state.
+
+## Full-Auto Harness Contract
+
+When invoked by an automatic research harness, this skill must not pause for
+human choice or return any terminal no-progress state. Missing information becomes an explicit assumption, source-search task,
+data-inspection task, or downstream skill handoff. The skill must choose the
+best route itself using publication-level draft potential, source/data
+availability from real observed public or authorized sources, credible answer
+strategy, diagnosability, and time-to-first analysis as ranking criteria. The
+target artifact is a publication-level
+`paper/full_draft.pdf`; route selection must optimize for getting that PDF to a
+defensible scholarly draft, not for producing a non-draft placeholder.
+
+## Workspace Contract
+
+Follow `docs/research_workspace_contract.md`. Durable workflow state belongs in
+`.ai4ss/research_model.aiss`; generated data, output, logs, and PDFs must be
+produced through `make` targets, with `make all` as the final orchestration path.
+
+## .aiss State Machine
+
+When `.ai4ss/research_model.aiss` exists, run
+`python3 dsl/scripts/aiss.py state .ai4ss/research_model.aiss` before deciding
+the next route. When this skill starts, completes, fails, or observes a
+watchdog heartbeat in an automatic harness, record that runtime fact as an
+`.aiss` `event` declaration or return a deterministic
+`aiss.py transition --event ...` fragment for merge. Events do not replace
+semantic updates: if the skill resolves a repair/check status, update the
+relevant `route`, `mida`, `decision`, `check`, `artifact`, or claim-support
+declaration too.
+
+## AI4SS Runtime Gate
+
+This is the only research-factory skill allowed to start from a rough topic
+without an existing AI4SS object. It must not leave the workflow as prose-only:
+when the work will continue beyond intake, create or update
+`.ai4ss/research_model.aiss` with provisional `.aiss` `route` declarations and
+one selected route. If an `.aiss` file is absent, create the smallest valid
+route-only file, run validation, repair schema issues, and continue with the
+selected route.
 
 ## Workflow Contract
 
 - Upstream inputs: rough topic, source pile, dataset folder, policy phenomenon, author notes, or a request for "what can I do next?"
-- Produces: `docs/research_starter_packet.md`, optionally `docs/research_route_cards.csv`, and when persistence is useful a route-only `docs/research_model.aiss`.
-- Handoff fields: `route_id`, `route_decl_id`, `ai4ss_model_path`, `research_question`, `model_scope`, `candidate_inquiry`, `candidate_concepts`, `candidate_causal_links`, `candidate_empirical_bridges`, `possible_data_strategy`, `possible_answer_strategy`, `study_type`, `unit_of_analysis`, `materials_available`, `materials_gap`, `first_action`, `failure_signal`, `stop_reason`, `researcher_decision_needed`, `aiss_check_status`, `next_skill_route`.
-- Downstream routes: `study-design-builder`, `research-data-builder`, `literature-matrix`, `methods-reviewer`, `academic-writing-scaffold`, `research-slides-builder`, `did-expert`, or `ask_author`.
+- Produces: route-only `.ai4ss/research_model.aiss` with candidate `.aiss` `route` declarations, one selected best route, route-ranking rationale, inferred assumptions, and a first-pass transparency target; optional chat-facing notes may be displayed from it.
+- Handoff fields: `route_id`, `route_decl_id`, `selected_route_rank`, `selection_rationale`, `ai4ss_model_path`, `research_question`, `model_scope`, `candidate_inquiry`, `candidate_concepts`, `candidate_causal_links`, `candidate_empirical_bridges`, `possible_data_strategy`, `possible_answer_strategy`, `study_type`, `unit_of_analysis`, `materials_available`, `materials_gap`, `registration_relevance`, `transparency_level_target`, `first_action`, `failure_signal`, `assumptions_to_disclose`, `aiss_check_status`, `next_skill_route`.
+- Downstream routes: `study-design-builder`, `public-data-sources`, `research-data-builder`, `literature-matrix`, `methods-reviewer`, `academic-writing-scaffold`, `research-slides-builder`, `did-expert`, or `research-analysis-runner` when the selected route already has analysis-ready real observed data.
 
-## Hard Boundary
+## Single Manuscript-Facing Boundary
 
-Do not draft final manuscript prose, abstracts, introductions, literature review prose, results prose, conclusions, final reviewer responses, or authorial claims for direct submission. AI can propose routes, evidence affordances, analysis skeletons, and decision questions; the researcher owns novelty, theory, identification judgment, final claims, and final wording.
+AI may draft, revise, or sketch working text when AI contribution disclosure,
+outlet-policy status, and accountability language are made explicit in the
+artifact. The harness target is a publication-level draft PDF with those
+statements present, not a hidden-AI or unsupported submission claim.
 
 ## Routing Boundaries
 
 Use this skill before the project has a chosen route, dataset pipeline, verified literature base, model table, or writing scaffold. After a route is selected, hand off:
 
-- Data construction or extraction to `research-data-builder`.
+- Source acquisition and access verification to `public-data-sources`.
+- Analysis-sample construction from acquired real observed sources to `research-data-builder`.
 - Literature search, screening, or extraction to `literature-matrix`.
 - Study design concretization to `study-design-builder`.
 - First-pass analysis execution to `research-analysis-runner` only after a design source and analysis-ready data exist.
@@ -59,64 +107,66 @@ Do not duplicate downstream validators. This skill makes the first object exist;
 ## Workflow
 
 ```
-Step -1: Intake only what is needed
+Step -1: Intake only what is available
 -> Capture four fields: one-sentence question or phenomenon, available materials, hard boundaries, and the one action the researcher hopes AI can do next.
--> If information is missing, state what can be done now and what must be asked from the researcher.
+-> If information is missing, infer the strongest defensible default from files, sources, and disciplinary practice; record the assumption and keep moving.
 
 Step 0: Inventory materials
 -> Inspect the file tree, notes, variable dictionaries, seed papers, data previews, or source links provided.
 -> Separate usable materials, uncertain materials, unavailable materials, and confidential or off-limits materials.
 
-Step 1: Build route cards
--> For open-ended topics, produce 2-4 route cards before choosing.
--> Each route card must name the question, phenomenon, unit, material path, first action, expected first output, feasibility status, stop reason, researcher decision, and next skill route.
--> When a persistent workflow artifact is requested or needed, mirror each route card as a `.aiss` `route` declaration with `status: candidate`, not as a final model.
--> If the user already picked one route, still record rejected alternatives briefly.
+Step 1: Build candidate route declarations
+-> For open-ended topics, produce 2-4 `.aiss` `route` declarations, score them, and mark exactly one as the selected route in the same run.
+-> Each route declaration must name the question, phenomenon, unit, real observed source acquisition path, first action, expected first output, feasibility status, failure signal, selection score, selection rationale, and next skill route.
+-> Mark whether the route is registration-relevant and what transparency target it implies for materials, data, code, and reporting.
+-> When the work will continue in the research-factory workflow, write each candidate directly as a `.aiss` `route` declaration and preserve the selected route identity.
+-> Do not send data, literature, analysis, review, writing, slide, or revision work downstream unless `route_decl_id` and `ai4ss_model_path` are present in `.aiss`; repair the `.aiss` object if those fields are missing.
+-> If the user already picked one route, still record alternatives and confirm the selected route unless another route is clearly stronger for a publication-level draft PDF.
 
 Step 2: Define a minimum viable study
 -> Choose the smallest study that can produce one checkable observation, table shell, figure shell, source matrix seed, or data feasibility result.
 -> Do not jump to a full model battery, systematic review, or polished argument.
 
-Step 3: Run or specify one next action
--> Execute the next action only when inputs are present and the action is safe.
--> Otherwise write the exact handoff prompt the researcher can use next.
--> Keep the action material-to-action: inspect, sample, retrieve, sketch, or scaffold. Do not write the paper.
+Step 3: Run or prepare one next action
+-> Execute the next action when inputs are present and permitted.
+-> Otherwise create the concrete downstream handoff object, command, search query, or file scaffold needed for the next skill to continue automatically.
+-> Keep the action material-to-action: inspect, sample, retrieve, sketch, scaffold, or draft AI-disclosed working text through the proper downstream skill.
 
-Step 4: Stop deliberately
--> End with `stop_reason`, `researcher_decision_needed`, `handoff_prompt`, and `next_skill_route`.
--> If the route is not feasible, say so and propose a smaller route or abandon path.
+Step 4: Continue the relay
+-> End with the selected `route_id`, `selection_rationale`, assumptions to disclose, validation status, and `next_skill_route`.
+-> If the initially strongest route is infeasible, automatically select the next strongest route that can still support a publication-level draft PDF.
 ```
 
 ## Default Outputs
 
-- `docs/research_starter_packet.md` for the one-page workbench.
-- `docs/research_route_cards.csv` when there are multiple candidate routes or the packet will be reused.
-- Optional route-only `docs/research_model.aiss` containing `.aiss` `route` declarations when the workflow should continue as a durable DSL object.
-- Optional `docs/first_loop_log.md` when the skill actually inspects files, queries sources, or runs code.
+- `.ai4ss/research_model.aiss` with candidate `route` declarations, one selected route, and assumption/disclosure declarations.
+- Optional author-facing chat note generated from `.aiss`, clearly marked as non-canonical.
+- Runtime logs only when referenced as `.aiss` evidence artifacts.
 
 ## Script Utilities
 
-- Run `scripts/validate_research_routes.py <path>` to check the route-card sidecar when one is produced.
-- Run `python3 dsl/scripts/aiss.py compile <path-to-research_model.aiss>` and `python3 dsl/scripts/aiss.py lint <path-to-research_model.aiss>` when a route-only `.aiss` artifact is produced.
+- Run `python3 dsl/scripts/aiss.py compile .ai4ss/research_model.aiss` and `python3 dsl/scripts/aiss.py lint .ai4ss/research_model.aiss` when a route-only `.aiss` artifact is produced.
 - Treat validator failures as starter artifacts, not terminal noise: record the failed command, the exact schema or import error, the fix, and the rerun result before handing off.
 - If an installed validator cannot import `ai4ss_factory_contracts`, set `AI4SS_SKILLS_ROOT` to the `ai4ss-skills` source checkout and rerun; do not ignore the validation gate.
 
 ## Quality Bar
 
-- Start from feasibility, not compliance.
-- Prefer concrete route cards over general advice.
-- Keep at least one route small enough to attempt within a day.
+- Start from publication-level feasibility, not compliance.
+- Prefer concrete `.aiss` route declarations over general advice.
+- Keep the selected route small enough to start within a day while still capable of supporting a publication-level draft PDF.
 - Treat data availability, source access, and variable existence as first-class findings.
+- Do not select a route whose empirical chain depends on synthetic, simulated,
+  hypothetical, illustrative, generated, DGP-created, random-draw,
+  benchmark-calibrated, or literature-parameter-imputed data.
 - Include a failure signal for every next action.
-- Preserve academic authorship boundaries and AI-use disclosure needs.
+- Preserve AI-use disclosure needs in the draft PDF without making them a harness stop condition.
 - Use downstream skills only after a research object exists.
 
 ## Reference Files
 
 | File | Content | Read when |
 |---|---|---|
-| [starter-workflow.md](references/starter-workflow.md) | First-loop workflow, packet shape, and stop rules | Starting any zero-to-one research task |
-| [route-card-schema.md](references/route-card-schema.md) | CSV sidecar schema, allowed statuses, and handoff routes | Producing or validating route cards |
+| [starter-workflow.md](references/starter-workflow.md) | First-loop workflow, route-declaration shape, and stop rules | Starting any zero-to-one research task |
 | [minimum-viable-study.md](references/minimum-viable-study.md) | Minimum viable study patterns across descriptive, causal, text, qualitative, and mixed-method projects | Choosing the smallest credible first study |
-| [prompt-pack.md](references/prompt-pack.md) | Copy-ready prompts for intake, route cards, MVS selection, first action, and handoff | Turning a loose request into an agent task |
-| [worked-example.md](references/worked-example.md) | Digital-government and firm-innovation starter packet example | Teaching or demonstrating the skill |
+| [prompt-pack.md](references/prompt-pack.md) | Copy-ready prompts for intake, route declarations, MVS selection, first action, and handoff | Turning a loose request into an agent task |
+| [worked-example.md](references/worked-example.md) | Digital-government and firm-innovation route-declaration example | Teaching or demonstrating the skill |

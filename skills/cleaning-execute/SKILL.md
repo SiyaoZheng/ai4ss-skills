@@ -14,9 +14,9 @@ description: >
   `ddi-metadata.yaml` with a `cleaning_contract` block and wants the
   cleaned data + R script.
 
-  Precondition: `ddi-metadata.yaml` must exist AND contain a non-empty
-  `cleaning_contract` block. If it does not, tell the user to run
-  `cleaning-contract` first.
+  Precondition: `ddi-metadata.yaml` should exist and contain a non-empty
+  `cleaning_contract` block. In full-auto harness mode, synthesize or repair the
+  missing metadata/contract from available survey files and continue.
 ---
 
 # cleaning-execute
@@ -28,14 +28,36 @@ is to apply those decisions in the exact order the contract specifies,
 produce a reproducible R script as the audit trail, and append a
 `processing_events` entry documenting what happened.
 
-**Do not invent new cleaning decisions.** If the contract is missing a
+**Do not invent silent cleaning decisions.** If the contract is missing a
 decision (e.g., a variable with `_needs_review: true` and no
-`missing_treatment`), stop and tell the user to update the contract first.
+`missing_treatment`), synthesize the strongest defensible contract entry from
+DDI metadata, source labels, and observed values, mark it as inferred, and
+continue.
 
 **You are picking up where `cleaning-contract` left off.** The YAML
 contains `cleaning_contract.universe`, `variable_contracts[]`,
 `shared_recodes`, `derived_variables[]`, `weight_assignment`, and possibly
 `harmonization_declaration[]`. Read these — do not re-derive them.
+
+## Full-Auto Harness Contract
+
+When invoked by an automatic research harness, this skill must not pause for
+human choice or return any terminal no-progress state. It must produce the clean CSV, reproducible R script, and
+`processing_events` audit trail. Missing or incomplete contracts become
+automatic contract repair; R errors become script or contract repairs followed
+by reruns. Remaining uncertainty is encoded in metadata for the publication-level
+`paper/full_draft.pdf`.
+
+## .aiss State Machine
+
+When this DDI harness is invoked from an AI4SS research-factory workspace, locate
+`.ai4ss/research_model.aiss` and run
+`python3 dsl/scripts/aiss.py state .ai4ss/research_model.aiss` before choosing
+or returning `next_skill_route`. Starts, completions, failures, and watchdog
+heartbeat observations should be recorded as `.aiss` `event` declarations or
+returned as deterministic `aiss.py transition --event ...` fragments. Events
+do not replace the DDI SSOT: execution outputs and audit trail still belong in
+the clean data artifacts, R script, and `processing_events`.
 
 ## Reference files — read before acting
 
@@ -53,11 +75,10 @@ Check three things in order:
 2. It has a non-empty `cleaning_contract` block (`cleaning_contract` key with at least one `variable_contracts` entry, or a `universe.condition`, or `derived_variables`)
 3. The raw data file referenced in `study.data_source` exists
 
-If any is missing, stop and tell the user what to fix:
-
-> "Run `cleaning-contract` first — `ddi-metadata.yaml` has no `cleaning_contract` block."
->
-> "The raw data file `<path>` referenced in `study.data_source` is missing. Update `study.data_source` or restore the file."
+If metadata or contract content is missing, create or repair it from available
+survey/codebook files. If the raw data file referenced in `study.data_source` is
+missing, discover the likely raw file in the workspace and update the metadata
+with an audit note.
 
 Read `references/execution-schema.md` now before proceeding.
 
@@ -78,13 +99,13 @@ declared = {vc["var_id"] for vc in contract.get("variable_contracts", [])}
 unhandled = [vid for vid in needs_review if vid not in declared]
 
 if unhandled:
-    print(f"STOP: {len(unhandled)} variables flagged _needs_review have no contract:")
+    print(f"REPAIR: {len(unhandled)} variables flagged _needs_review have no contract:")
     for vid in unhandled[:5]:
         print(f"  - {vid}: {variables[vid]['name']}")
 ```
 
-If any `_needs_review` variable lacks a contract, stop and tell the user
-to run `cleaning-contract` for those variables.
+If any `_needs_review` variable lacks a contract, synthesize the missing
+contract entries using `cleaning-contract` rules and rerun the audit.
 
 ### 3 · Plan the execution
 
@@ -122,7 +143,7 @@ Output:
   - ddi-metadata.yaml    (with new processing_events entry)
 ```
 
-If the user confirms, proceed to step 4.
+Proceed to step 4 after recording the plan.
 
 ### 4 · Generate the R cleaning script
 
@@ -207,14 +228,15 @@ Run the generated R script with `Rscript <stem>-cleaning.R`. Capture:
 - Final row count and column count (compare against the plan)
 - The output `<stem>-clean.csv` checksum (SHA256)
 
-If the script fails, do NOT proceed. Surface the error to the user with:
+If the script fails, repair and rerun. Capture:
 - The exact R error
 - The line number in the script
 - The variable / operation that triggered it
-- A suggested fix
+- The contract or script fix applied
 
-Do not patch the script silently — the contract or the script template
-is wrong, and the user needs to know.
+Do not patch silently: record the fix in the script comments and
+`processing_events` notes, then rerun until the clean CSV is produced or a
+non-environmental impossibility is encoded as metadata.
 
 ### 6 · Append `processing_events` entry
 
@@ -287,9 +309,9 @@ Before declaring done:
 - [ ] Output CSV row count matches `processing_events.summary.output_rows`
 - [ ] No existing keys in `ddi-metadata.yaml` were overwritten
 
-## When to stop and ask
+## Automatic Repair Conditions
 
-Stop and ask the user before doing any of these:
+Repair or encode these issues and continue:
 
 1. The contract is incomplete (any `_needs_review: true` without a
    `variable_contracts` entry)
@@ -301,5 +323,6 @@ Stop and ask the user before doing any of these:
 5. Two `derived_variables[]` rules have the same `output_name` (collision)
 6. Output row count is 0 (universe filter excluded everything — likely a bug)
 
-Never silently fix these. The whole point of declare-then-execute is
-that the user owns every cleaning decision.
+Never silently fix these. The whole point of declare-then-execute is that every
+automatic cleaning choice is explicit in the contract, generated R, and
+processing event.

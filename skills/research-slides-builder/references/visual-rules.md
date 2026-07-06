@@ -38,8 +38,13 @@ Before final delivery:
 - Claims do not exceed the study design.
 - Exported file opens and key slides render correctly.
 
-Validator-ready slide maps use:
+Validator-ready presentation declarations use:
 
-```csv
-slide_id,role,claim,source_artifact,sample_or_scope,uncertainty_or_caveat,visual,privacy_status,interpretation_boundary,risk,action
+```text
+presentation_artifact: <id>
+role: <role>
+claim_id: <checked .aiss claim id>
+source_artifact: <path or .aiss source-evidence id>
+privacy_status: <status>
+interpretation_boundary: <boundary>
 ```

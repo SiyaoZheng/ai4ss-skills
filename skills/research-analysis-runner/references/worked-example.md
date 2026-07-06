@@ -3,7 +3,7 @@
 ## Input
 
 - `docs/study_design_brief.md`: Route R1, firm-year digital-government rollout route.
-- `data/analysis/firm_city_patent_panel.csv`.
+- `data/processed/firm_city_patent_panel.csv`.
 - Variable dictionary with firm, city, year, green patent count, and rollout year.
 
 ## First Loop

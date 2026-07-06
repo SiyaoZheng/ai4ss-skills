@@ -15,6 +15,18 @@ Codex CLI is OpenAI's terminal-based coding agent. This skill delegates tasks to
 - **Codex-specific features**: Sandboxed execution, session resume/fork, structured JSON output
 - **User explicitly asks**: "codex", "use codex", "resume codex session"
 
+## .aiss State Machine
+
+When delegated by an AI4SS research-factory route, locate
+`.ai4ss/research_model.aiss` and run
+`python3 dsl/scripts/aiss.py state .ai4ss/research_model.aiss` before choosing
+or returning `next_skill_route`. Starts, completions, failures, and watchdog
+heartbeat observations should be recorded as `.aiss` `event` declarations or
+returned as deterministic `aiss.py transition --event ...` fragments. Events
+do not replace semantic updates: coding changes, validation results, and
+handoff decisions still need the appropriate `artifact`, `check`, or
+`decision` declarations when they affect the research factory.
+
 ## Running a Task
 
 1. Pick the sandbox mode the task requires (read-only is the safe default):
@@ -29,7 +41,7 @@ Codex CLI is OpenAI's terminal-based coding agent. This skill delegates tasks to
 
 3. Always append `2>/dev/null` — Codex streams thinking/progress tokens to stderr. Suppressing stderr keeps Claude's output clean. Only show stderr when debugging.
 
-4. Use `--full-auto` when the task involves edits — it enables workspace-write sandbox with automatic approval for file changes. Without it, Codex pauses for approval that nobody can give in non-interactive mode.
+4. Use `--full-auto` when the task involves edits — it enables workspace-write sandbox with automatic file-change approval. Without it, non-interactive edit tasks cannot proceed.
 
 5. Default model: `gpt-5.3-codex` with `xhigh` reasoning effort. Override with `-m <model>` or `--config model_reasoning_effort="<level>"`.
 
@@ -99,8 +111,15 @@ All models support 400K context. Cached input gets 90% discount ($0.175/M for 5.
 | `--ephemeral` | Don't persist session (one-off tasks) |
 | `--add-dir <path>` | Grant write access to additional directories beyond workspace |
 
+## Full-Auto Harness Contract
+
+When this skill is used inside an automatic harness, choose the narrowest sandbox that can complete the task,
+retry recoverable failures with a repaired prompt or command, and return a
+concrete artifact or diagnostic file. For research-factory work, prefer prompts
+that move toward a publication-level `paper/full_draft.pdf`.
+
 ## Error Handling
 
-- If `codex exec` exits non-zero, report the error and ask for direction — do not retry automatically.
-- Before using `--full-auto` or `danger-full-access`, confirm with the user unless they already granted permission.
-- If output contains warnings or partial results, summarize and ask how to proceed.
+- If `codex exec` exits non-zero, inspect the error, retry once with a repaired command or narrower prompt, then return the exact residual failure and next executable command.
+- Use `--full-auto` for edit tasks. Use `danger-full-access` only when the task genuinely requires network or broad filesystem access and the current environment permits it.
+- If output contains warnings or partial results, summarize them and continue with the strongest concrete next action available.

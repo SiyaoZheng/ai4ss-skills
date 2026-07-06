@@ -29,6 +29,15 @@ Do not create a second source tree under `.codex/skills`, `.agents/skills`, or
 top-level `*.skill` archives. If a skill needs to be packaged for a specific
 runtime, generate that package from this directory.
 
+Current count: 22 installable skills.
+
+Research-factory skills share one runtime contract: durable semantic state lives
+in `.aiss` declarations, runtime facts are appended as `.aiss` `event`
+declarations, and `python3 dsl/scripts/aiss.py state <file>` projects the
+current state-machine view. `goal-cli` remains the external watchdog, timer,
+lock owner, and heartbeat executor; skills should record observations and
+handoffs, not take over process supervision.
+
 ## Skill Index
 
 | Skill | Area |
@@ -40,10 +49,11 @@ runtime, generate that package from this directory.
 | `codebook-parse` | Survey data |
 | `codex` | Tooling |
 | `did-expert` | Methods |
+| `inspect-agent-eval` | Evaluation |
 | `latex-tables` | Reporting |
-| `linear-issue` | Tooling |
 | `literature-matrix` | Research workflow |
 | `methods-reviewer` | Research workflow |
+| `public-data-sources` | Research workflow |
 | `r-performance` | Compute |
 | `research-analysis-runner` | Research workflow |
 | `research-data-builder` | Research workflow |
@@ -52,3 +62,4 @@ runtime, generate that package from this directory.
 | `reviewer-response` | Research workflow |
 | `sjtu-hpc` | Compute |
 | `study-design-builder` | Research workflow |
+| `top-journal-figures` | Research workflow |

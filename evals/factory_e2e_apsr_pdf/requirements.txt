@@ -1,0 +1,4 @@
+inspect-ai
+inspect-swe
+mcp
+openai>=2.40.0

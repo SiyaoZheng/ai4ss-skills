@@ -118,7 +118,7 @@ def parse_evidence_table(text: str) -> dict[str, Any]:
                 current_entity = {"id": _extract_id(entity_name), "question": "", "status": "candidate",
                                   "study_type": "theory_mapping", "unit_of_analysis": "",
                                   "inquiry": "", "data_strategy": "", "answer_strategy": "",
-                                  "stop_reason": "", "next_skill_route": "ask_author",
+                                  "continuation_plan": "", "next_skill_route": "study-design-builder",
                                   "candidate_concepts": []}
                 result["routes"].append(current_entity)
             elif current_section == "MIDA":
@@ -128,8 +128,8 @@ def parse_evidence_table(text: str) -> dict[str, Any]:
                 result["mida"].append(current_entity)
             elif current_section == "Decisions":
                 current_entity = {"id": _extract_id(entity_name), "route": "", "component": "",
-                                  "decision": "", "status": "needs_author_decision",
-                                  "owner": "author", "next_skill_route": "ask_author",
+                                  "decision": "", "status": "auto_resolved",
+                                  "owner": "harness", "next_skill_route": "methods-reviewer",
                                   "causal": []}
                 result["decisions"].append(current_entity)
             collecting_table = False
@@ -312,8 +312,8 @@ def compile_to_aiss(evidence: dict) -> str:
             _emit(f"  inquiry: {_quote(route.get('inquiry', ''))}")
             _emit(f"  data_strategy: {_quote(route.get('data_strategy', ''))}")
             _emit(f"  answer_strategy: {_quote(route.get('answer_strategy', ''))}")
-            _emit(f"  stop_reason: {_quote(route.get('stop_reason', ''))}")
-            _emit(f"  next_skill_route: {route.get('next_skill_route', 'ask_author')}")
+            _emit(f"  continuation_plan: {_quote(route.get('continuation_plan', 'auto-select the strongest route and continue to the next factory skill'))}")
+            _emit(f"  next_skill_route: {route.get('next_skill_route', 'study-design-builder')}")
             candidate_concepts = route.get("candidate_concepts", [])
             if candidate_concepts:
                 _emit(f"  candidate_concepts: {json.dumps(candidate_concepts)}")
@@ -342,9 +342,9 @@ def compile_to_aiss(evidence: dict) -> str:
             _emit(f"  route: {decision.get('route', '')}")
             _emit(f"  component: {decision.get('component', '')}")
             _emit(f"  decision: {_quote(decision.get('decision', ''))}")
-            _emit(f"  status: {decision.get('status', 'needs_author_decision')}")
-            _emit(f"  owner: {decision.get('owner', 'author')}")
-            _emit(f"  next_skill_route: {decision.get('next_skill_route', 'ask_author')}")
+            _emit(f"  status: {decision.get('status', 'auto_resolved')}")
+            _emit(f"  owner: {decision.get('owner', 'harness')}")
+            _emit(f"  next_skill_route: {decision.get('next_skill_route', 'methods-reviewer')}")
             causal = decision.get("causal", [])
             if causal:
                 _emit(f"  causal: {json.dumps(causal)}")
@@ -670,14 +670,14 @@ EVIDENCE_TEMPLATE = """## Paper Metadata
 ## Routes
 ### {author}.route_r1
 - **question**: ...
-- **status**: candidate | selected | rejected | blocked
+- **status**: candidate | selected | rejected | repair_and_continue
 - **study_type**: theory_mapping
 - **unit_of_analysis**: ...
 - **inquiry**: ...
 - **data_strategy**: ...
 - **answer_strategy**: ...
-- **stop_reason**: ...
-- **next_skill_route**: ask_author
+- **continuation_plan**: ...
+- **next_skill_route**: study-design-builder
 - **candidate_concepts**: {author}.c1, {author}.c2
 
 ## MIDA
@@ -696,9 +696,9 @@ EVIDENCE_TEMPLATE = """## Paper Metadata
 - **route**: {author}.route_r1
 - **component**: model
 - **decision**: ...
-- **status**: needs_author_decision
-- **owner**: author
-- **next_skill_route**: ask_author
+- **status**: auto_resolved
+- **owner**: harness
+- **next_skill_route**: methods-reviewer
 - **causal**: {author}.causal1
 """
 

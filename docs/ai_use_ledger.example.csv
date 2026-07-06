@@ -1,2 +1,2 @@
 tool_model,task,inputs,outputs,human_review,disclosure_location,confidentiality_approval_status
-academic-writing-scaffold,prepared claim ledger for result section,output/tables/table1.csv; docs/research_design.md,docs/results_workbench.csv,researcher checked every claim slot against table and rewrote final prose,manuscript_note,redacted
+academic-writing-scaffold,prepared bounded claim declarations for result section,output/tables/table1.csv; docs/research_design.md,docs/research_model.aiss,researcher checked every claim slot against table and marked AI-assisted working text disclosure status,manuscript_note,redacted

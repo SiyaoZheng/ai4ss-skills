@@ -2,7 +2,7 @@
 
 Use these schemas to make data-building work reviewable.
 
-## `sample_flow.csv`
+## `.aiss row-loss checks`
 
 One row per sample-changing step.
 
@@ -30,7 +30,7 @@ One row per sample-changing step.
 | `bridge_id` | DSL empirical bridge id served by this step, or `not_applicable:<reason>` |
 | `ai4ss_check_status` | `pass`, `warn`, `not_run`, or `not_applicable` |
 
-## `merge_audit.csv`
+## `.aiss merge checks`
 
 One row per merge key group or per source pair.
 
@@ -58,7 +58,7 @@ One row per merge key group or per source pair.
 | `bridge_id` | DSL empirical bridge id served by this merge, or `not_applicable:<reason>` |
 | `ai4ss_check_status` | `pass`, `warn`, `not_run`, or `not_applicable` |
 
-## `variable_provenance.csv`
+## `.aiss variable-provenance observations`
 
 One row per constructed variable.
 
@@ -72,7 +72,7 @@ One row per constructed variable.
 | `rule` | Construction rule in plain language |
 | `script_path` | Script implementing it |
 | `validation` | Cross-tab, range check, spot check, or source check |
-| `status` | `ready`, `needs_review`, or `blocked` |
+| `status` | `ready`, `needs_review`, or `repair_needed` |
 | `ai4ss_model_path` | Path to `.aiss` model, or `not_applicable:<reason>` |
 | `model_id` | DSL model id served by this variable, or `not_applicable:<reason>` |
 | `concept_id` | DSL concept id operationalized by this variable, or `not_applicable:<reason>` |
@@ -89,9 +89,9 @@ One row per constructed variable.
 - `ai4ss_model_path` must end with `.aiss` unless it is `not_applicable:<reason>`.
 - `ai4ss_check_status` accepts `pass`, `warn`, `not_run`, or `not_applicable`; `fail` is not a valid final handoff.
 - If `left_only_rows`, `right_only_rows`, or `duplicate_key_rows` is greater than zero, `review_path` must point to a review artifact and `action` cannot be `keep`.
-- Final validator-ready artifacts cannot contain `check_status=fail` or `status=blocked`; those states mean the pipeline is not ready.
+- Final validator-ready artifacts cannot contain `check_status=fail` or `status=repair_needed`; those states trigger automatic repair before analysis handoff.
 
-## `docs/changelog.md`
+## `output/logs/pipeline_changelog.md`
 
 Append entries in this compact form:
 
@@ -102,5 +102,5 @@ Append entries in this compact form:
 - Reason: merge key `city_id` had duplicate city-year rows.
 - Change: aggregated patent records to city-year before merge.
 - Command: `Rscript scripts/30_merge_panel.R`
-- Check: matched 3,420/3,450 rows; 30 unmatched rows written to `output/audit/unmatched_patents.csv`.
+- Check: matched 3,420/3,450 rows; 30 unmatched rows written to `output/logs/unmatched_patents.csv`.
 ```

@@ -1,124 +1,145 @@
 ---
 name: academic-writing-scaffold
 description: >
-  Academic writing support skill that does not directly write manuscript prose.
-  Use for evidence maps, argument outlines, claim ledgers, section plans, table-to-claim audits,
-  citation-gap checks, causal-language risk checks, paragraph skeletons, and author-facing revision
-  notes for social-science papers. Triggers: "writing scaffold", "argument outline", "claim audit",
-  "evidence map", "citation gaps", "table to claim", "do not write the paper", "academic writing boundary",
-  "论文写作边界", "写作支架", "不要代写", "作者自己写".
+  Academic writing support skill for AI-disclosed social-science manuscript work.
+  Use for evidence maps, argument outlines, bounded claim checks, citation-gap checks,
+  causal-language risk checks, section planning, AI-assisted working manuscript drafts,
+  revision notes, and submission-gate checks. Triggers: "writing scaffold",
+  "argument outline", "claim audit", "evidence map", "citation gaps", "table to claim",
+  "draft manuscript section", "academic writing boundary", "论文写作边界", "写作支架",
+  "AI披露", "投稿前检查".
 ---
 
 # Academic Writing Scaffold
 
-Support academic writing without directly writing the manuscript. The skill produces structures, checks, and evidence maps that help the researcher write their own prose.
+Support academic writing with explicit AI disclosure and draft-PDF assembly. The
+skill produces bounded claim structures, checks, AI-assisted prose, and
+manuscript-source updates that move toward `paper/full_draft.pdf`.
 
 ## Scholar Workbench
 
-This skill answers: "结果解释有没有说过头？" Its value is not writing scholarly prose; it is turning evidence into claim slots, risk labels, and author decision questions before the researcher writes.
+This skill answers: "作者怎样写得更稳、披露得更清楚？" Its value is turning
+evidence into bounded claim slots, risk labels, AI-assisted working text, and
+submission-gate checks.
+
+## Single Manuscript-Facing Boundary
+
+AI may draft, revise, and assemble manuscript working text. The only disallowed
+manuscript-facing output is presenting AI-assisted output as direct-submission
+ready or as having no AI involvement. A manuscript package is
+submission-ineligible until it records AI
+contribution disclosure, human accountability status, outlet-policy-check
+status, and direct-submission status.
+
+Allowed outputs include evidence inventories, bounded claim slots, section-level
+scaffolds, AI-assisted working paragraphs, table-to-claim audits, citation-gap
+checks, causal-language risk labels, issue labels, revision targets, disclosure
+language, and manuscript-source edits.
+
+## Full-Auto Harness Contract
+
+When invoked by an automatic research harness, this skill must not pause for
+human choice or return any terminal no-progress state. It must assemble or update manuscript source files and drive toward a
+publication-level `paper/full_draft.pdf`. Evidence gaps become citation search
+tasks, bounded claims, limitation text, or upstream skill handoffs. Do not
+produce a placeholder; write the strongest source-supported draft
+the current evidence can defend.
+
+## AI4SS Runtime Gate
+
+Do not build writing scaffolds from disconnected tables or memory when the project is inside the research factory. Locate `.ai4ss/research_model.aiss`, selected route, MIDA declarations, checked evidence artifacts, and methods-review diagnostics before creating report-boundary work.
+
+Writing support must preserve `.aiss` bounded `claim`, report-boundary `mida`, citation-gap `decision`, and author `decision` declarations. Any visible outline or table in the chat is a projection from those declarations, not workflow state.
+
+## Workspace Contract
+
+Follow `docs/research_workspace_contract.md`. Durable workflow state belongs in
+`.ai4ss/research_model.aiss`; generated data, output, logs, and PDFs must be
+produced through `make` targets, with `make all` as the final orchestration path.
+
+## .aiss State Machine
+
+When `.ai4ss/research_model.aiss` exists, run
+`python3 dsl/scripts/aiss.py state .ai4ss/research_model.aiss` before deciding
+the next route. When this skill starts, completes, fails, or observes a
+watchdog heartbeat in an automatic harness, record that runtime fact as an
+`.aiss` `event` declaration or return a deterministic
+`aiss.py transition --event ...` fragment for merge. Events do not replace
+semantic updates: if the skill resolves a repair/check status, update the
+relevant `route`, `mida`, `decision`, `check`, `artifact`, or claim-support
+declaration too.
 
 ## Methodology Foundation
 
-This skill sits in the `Report` layer of the MIDA spine. It preserves the declared inquiry or estimand, evidence source, support level, uncertainty, diagnosed limits, and author decision point while refusing to write final manuscript prose.
+This skill sits in the `Report` layer of the MIDA spine. It preserves the
+declared `Model`, `Inquiry`, `Data strategy`, `Answer strategy`, evidence
+source, support level, uncertainty, diagnosed limits, AI-use disclosure, and
+claim-boundary choice while drafting AI-disclosed working text.
 
-The core check is whether a proposed claim still matches the declared `Model`, `Inquiry`, `Data strategy`, and `Answer strategy`, or whether it silently turns an output into a stronger scholarly claim.
-
-When a `.aiss` model is present, claim rows must preserve the relevant model, concept, causal, or bridge ids and the model check status. A checked model element can support a claim slot; it still cannot become AI-written manuscript prose. When a theory workbench is present, use it as an author review surface for evidence slots, rival/scope questions, and claim boundaries; do not convert it into final literature-review or theory prose.
-
-## Hard Boundary
-
-Do not draft final manuscript paragraphs, introductions, literature review prose, result prose, abstracts, conclusions, polished response text, or replacement wording for insertion into a paper. Direct AI writing is outside this skill.
-
-Allowed outputs:
-
-- Evidence maps.
-- Claim ledgers.
-- Section outlines.
-- Paragraph skeletons with claim slots, not finished prose.
-- Table-to-claim audits.
-- Citation-gap lists.
-- Causal-language risk checks.
-- Theory workbench tables with evidence and decision slots.
-- Issue labels, revision targets, and author decision questions.
+The core check is whether a proposed claim still matches the declared research object, or whether it silently turns an output into a stronger scholarly claim. `commensurability_status` and `ai4ss_check_status` must remain visible when they are available.
 
 ## Workflow Contract
 
-- Upstream inputs: study design brief, `study_design_declaration.csv`, `research_model.aiss`, literature matrix, `literature_theory_synthesis.csv`, `theory_rival_map.csv`, `theory_scope_map.csv`, `theory_evidence.md`, analysis run manifest, methods issue table, data audit outputs, author draft, table/figure captions, or reviewer-response evidence.
-- Produces: evidence inventory, claim ledger, section outline, paragraph skeletons with slots, citation gaps, causal-language risk notes, and author decision points.
-- Handoff fields: `route_id`, `target_inquiry`, `evidence_sources`, `claim_ledger`, `interpretation_boundary`, `diagnosed_limit`, `unsupported_claims`, `citation_gaps`, `author_decisions`, `ai4ss_model_path`, `model_id`, `concept_id`, `causal_id`, `bridge_id`, `ai4ss_check_status`, `commensurability_status`, `ai_writing_boundary`, `next_skill_route`.
-- Downstream routes: `methods-reviewer`, `literature-matrix`, `research-slides-builder`, `reviewer-response`, `ask_author`, or `none`.
+- Upstream inputs: `.ai4ss/research_model.aiss`, checked `.aiss` evidence declarations, methods-review diagnostics, real observed data artifacts, analysis artifacts, literature source declarations, author draft, table/figure captions, or reviewer-response evidence.
+- Produces: evidence inventory, bounded claim slots, section scaffold, AI-assisted working prose, manuscript-source updates, unsupported-claim and citation-gap checks, causal-language risk notes, TOP disclosure matrix, AI-disclosed manuscript assembly checklist, and `.aiss` bounded `claim`, report-boundary `mida`, or `decision` declarations.
+- Handoff fields: `route_id`, `target_inquiry`, `evidence_sources`, `claim_id`, `source_access_status`, `observed_data_only_status`, `row_source_provenance`, `interpretation_boundary`, `diagnosed_limit`, `unsupported_claims`, `citation_gaps`, `reporting_transparency_status`, `top_disclosure_matrix`, `manuscript_assembly_status`, `replication_package_status`, `ai_contribution_disclosure`, `human_accountability_status`, `submission_policy_check_status`, `direct_submission_status`, `assumptions_to_disclose`, `ai4ss_model_path`, `model_id`, `concept_id`, `causal_id`, `bridge_id`, `ai4ss_check_status`, `commensurability_status`, `next_skill_route`.
+- Downstream routes: `public-data-sources`, `research-data-builder`, `research-analysis-runner`, `methods-reviewer`, `literature-matrix`, `research-slides-builder`, `reviewer-response`, or `none`.
 
 ## Routing Boundaries
 
-Do not use this skill for source search or bibliographic verification; use `literature-matrix`.
-Do not use it to decide empirical validity; use `methods-reviewer`.
-Do not use it for final reviewer letters; use `reviewer-response` for scaffolds only.
+Do not use this skill for source search or bibliographic verification; use `literature-matrix`. Do not use it to acquire empirical sources; use `public-data-sources`. Do not use it to decide empirical validity; use `methods-reviewer`. Use `reviewer-response` for reviewer-letter workflows, including AI-disclosed response working text.
 
 ## Workflow
 
-```
-Step -1: Clarify the writing task
--> Identify the target section, evidence files, language, audience, and what the user wants to decide.
--> State that final prose must be authored by the researcher.
+```text
+Step -1: Infer the writing task
+-> Identify or infer the target section, evidence files, language, audience, and draft-PDF role.
+-> State that AI-assisted prose is working text until disclosure, accountability, policy, and direct-submission status are explicit.
+-> Locate `.ai4ss/research_model.aiss` and checked evidence when this is a research-factory project.
 
 Step 0: Inventory evidence
--> Read tables, figures, captions, model notes, literature matrices, and research design notes.
+-> Read tables, figures, captions, `.aiss` declarations, model notes, literature evidence, and design notes.
 -> Separate design facts, estimates, diagnostics, literature facts, interpretations, and speculative mechanisms.
--> If theory workbench sidecars are present, separate model-ready objects from rival, scope, novelty, contribution, and mechanism-strength decisions.
+-> Reject empirical evidence that is synthetic, simulated, hypothetical,
+   illustrative, generated, DGP-created, random-draw, benchmark-calibrated, or
+   literature-parameter-imputed. Route to `public-data-sources`,
+   `research-data-builder`, or `study-design-builder` before drafting claims.
 
 Step 1: Build scaffold
--> Use references/section-scaffolds.md for section-specific outlines.
+-> Use references/section-scaffolds.md for section-specific structure.
 -> Use references/claim-audit.md to map claims to evidence and flag unsupported language.
--> Use references/theory_workbench.md when literature-to-theory objects need author review before prose.
--> If `.aiss` model ids are available, attach each claim slot to the relevant concept, causal implication, or bridge.
+-> Attach each claim slot to relevant `.aiss` concept, causal implication, bridge, claim, or check ids.
 
-Step 2: Return author-facing materials
--> Provide a claim ledger and outline.
--> For each paragraph, provide purpose, evidence to use, required citation, and risk note.
--> Do not fill in the final sentences.
+Step 2: Produce draft-facing materials
+-> Provide evidence inventory, bounded claim slots, section structure, citation gaps, assumptions to disclose, and AI-assisted working text.
+-> For each paragraph slot or draft paragraph, provide purpose, evidence to use, required citation, risk note, and disclosure status.
+-> Provide a reporting-transparency checklist that links registration, protocol, analysis plan, materials, data, code, and replication-package status to the sections where the researcher must disclose them.
 
 Step 3: Audit author draft if provided
 -> Check whether the user's prose overclaims, lacks citations, changes the estimand, or hides limitations.
--> Suggest issue labels, revision targets, and author decision questions only; do not provide replacement wording for manuscript prose.
+-> Provide issue labels, revision targets, and replacement working wording; mark replacements as AI-assisted working text.
 
 Step 4: Record AI-use boundary when relevant
--> If the scaffold will support a manuscript, response package, or shared teaching artifact, update an AI-use ledger with `tool_model`, `task`, `inputs`, `outputs`, `human_review`, `disclosure_location`, and `confidentiality_approval_status`.
+-> If the scaffold will support a manuscript, response package, or shared teaching artifact, update the project AI-use ledger according to local policy.
 ```
 
 ## Output Shape
 
-For most tasks, return:
+For most tasks, return evidence inventory, bounded claim slots, section or paragraph scaffold, AI-assisted working text or manuscript-source edits, unsupported-claim and citation-gap checklist, `top_disclosure_matrix`, manuscript assembly status, `ai_contribution_disclosure`, `human_accountability_status`, `submission_policy_check_status`, `direct_submission_status`, assumptions to disclose, and any `.aiss` ids touched.
 
-1. Evidence inventory.
-2. Claim ledger.
-3. Section or paragraph scaffold.
-4. Unsupported-claim and citation-gap checklist.
-5. Author decision points.
-
-If any table is returned in Markdown, also write or request a CSV sidecar with the canonical snake_case schema before validation.
+For research-factory work, durable report-boundary state belongs in `.ai4ss/research_model.aiss`; chat-visible tables or outlines are temporary projections.
 
 ## Script Utilities
 
-- Run `scripts/validate_claim_ledger.py <path>` to check claim-ledger columns and authorship-boundary markers.
-- Run `scripts/validate_ai4ss_model.py <path-to-research_model.aiss>` before using model-linked claims as evidence-ready slots.
-- Run `scripts/validate_theory_workbench.py <workbench-dir>` before treating theory workbench inputs as bounded claim slots.
-
-## Standards
-
-- Do not upgrade "association" to "effect" unless the design supports causal language.
-- Do not smooth conflicting evidence into a single story.
-- Do not invent transitions that conceal missing evidence.
-- Keep mechanism claims separate from tested mechanism evidence.
-- Use exact table, figure, and source paths where possible.
-- Do not treat AI-generated scaffold text as author-approved prose.
+- Run `scripts/validate_ai4ss_model.py .ai4ss/research_model.aiss` when claim slots or report-boundary declarations are added or changed.
+- Use `scripts/validate_ai_use_ledger.py` when local policy requires updating the AI-use ledger.
 
 ## Reference Files
 
 | File | Content | Read when |
 |---|---|---|
-| [section-scaffolds.md](references/section-scaffolds.md) | Author-facing outlines for paper sections without final prose | Planning a section |
-| [claim-audit.md](references/claim-audit.md) | Claim types, evidence mapping, and wording-risk checks | Auditing evidence or a user draft |
-| [prompt-pack.md](references/prompt-pack.md) | Copy-ready prompts for evidence maps, claim ledgers, paragraph skeletons, and draft audits | Turning writing support into bounded agent tasks |
-| [author-workbench.md](references/author-workbench.md) | Author-only workflow that separates AI-produced scaffold from human-authored prose | Keeping the academic writing boundary operational |
-| [theory_workbench.md](references/theory_workbench.md) | Theory workbench template for evidence slots, rival/scope checks, and author decisions | Reviewing literature-to-theory handoffs before prose |
-| [worked-example.md](references/worked-example.md) | Example result-section scaffold and claim audit without final prose | Teaching or demonstrating the skill |
+| [claim-audit.md](references/claim-audit.md) | Claim strength, evidence fit, causal language, and disclosure/submission gate checks | Mapping outputs to claim slots |
+| [section-scaffolds.md](references/section-scaffolds.md) | Section-specific scaffold patterns and AI-disclosed working text slots | Structuring a manuscript section |
+| [author-workbench.md](references/author-workbench.md) | Assumption register surface for theory, evidence slots, and claim boundaries | Preparing draft assembly |
+| [prompt-pack.md](references/prompt-pack.md) | Copy-ready prompts for claim audits, section scaffolds, and citation-gap checks | Turning a writing need into an agent task |
+| [worked-example.md](references/worked-example.md) | Example scaffold with evidence boundaries | Teaching or demonstrating the skill |

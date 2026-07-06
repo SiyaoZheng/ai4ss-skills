@@ -31,7 +31,7 @@ Bias, precision, power, measurement risk, source-status risk, row loss, reproduc
 Smaller first loop, revised measure, added source, changed comparison, changed estimator, or abandon condition.
 
 ## Report Boundary
-What the first output can and cannot support, and which claims remain author decisions.
+What the first output can and cannot support, and which claims require assumptions or limits in the draft PDF.
 
 ## First Analysis Plan
 The smallest table, figure, model, coding exercise, or source matrix needed next.
@@ -40,25 +40,25 @@ The smallest table, figure, model, coding exercise, or source matrix needed next
 next_skill_route, inputs, outputs expected, validation command if available.
 ```
 
-Mirror the brief in `study_design_declaration.csv` whenever the design will be reused by downstream skills. The CSV mirrors `.aiss` `mida` declarations and must preserve `mida_id`; it is not a second canonical design language. Mirror unresolved author choices in `design_decision_register.csv` with `decision_decl_id` values from `.aiss` `decision` declarations.
+Mirror the brief in `.aiss MIDA declarations` whenever the design will be reused by downstream skills. The CSV mirrors `.aiss` `mida` declarations and must preserve `mida_id`; it is not a second canonical design language. Mirror unresolved assumptions in `.aiss decision declarations` with `decision_decl_id` values from `.aiss` `decision` declarations.
 
 ## Theory Mapping From Literature
 
-When the input includes `literature_theory_synthesis.csv`, consume it as a
+When the input includes `.aiss theory synthesis declarations`, consume it as a
 theory-mapping handoff rather than as prose. If the handoff also includes
-`theory_rival_map.csv`, `theory_scope_map.csv`, and `theory_evidence.md`, treat
+`.aiss rival-check declarations`, `.aiss scope-check declarations`, and `.aiss evidence fragment`, treat
 the directory as a full theory workbench and run or require:
 
 ```bash
-python3 scripts/validate_theory_workbench.py <workbench-dir>
+python3 scripts/validate_ai4ss_model.py <workbench-dir>
 ```
 
-Use `literature_theory_synthesis.csv` for candidate concepts, mechanisms,
+Use `.aiss theory synthesis declarations` for candidate concepts, mechanisms,
 observable implications, measurement links, and `proposed_aiss_object` values. Use
-`theory_rival_map.csv` to diagnose rival explanations, missing discriminating
-observations, and design risks. Use `theory_scope_map.csv` to preserve
-who/where/when scope, boundary failure modes, and author decisions. Use
-`theory_evidence.md` only through the existing `dsl/scripts/compile_evidence.py`
+`.aiss rival-check declarations` to diagnose rival explanations, missing discriminating
+observations, and design risks. Use `.aiss scope-check declarations` to preserve
+who/where/when scope, boundary failure modes, and assumptions to disclose. Use
+`.aiss evidence fragment` only through the existing `dsl/scripts/compile_evidence.py`
 path; do not create a new compiler or declaration kind.
 
 Only validated objects with `status=ready_for_aiss` may update or propose
@@ -66,33 +66,33 @@ existing `.aiss` model-layer declarations: `concept`, `claim`, `relation`,
 `causal`, `bridge`, and `model`. `evidence_strength=unverified`, unresolved
 rival choice, unresolved scope choice, novelty, theoretical contribution, and
 mechanism strength must stay out of model facts. Record those items in
-`design_decision_register.csv` and mirror them as author-owned `.aiss`
+`.aiss decision declarations` and mirror them as accountable `.aiss`
 `decision` declarations.
 
-Record the sidecar path in the affected `study_design_declaration.csv`
+Record the .aiss projection path in the affected `.aiss MIDA declarations`
 `evidence_source` cells. Do not add new declaration columns and do not create a
 new DSL declaration kind. Rows with unresolved novelty, mechanism strength,
 scope conditions, or rival-explanation choices should create or preserve
-author-owned `decision` declarations instead of becoming final theory claims.
+accountable `decision` declarations instead of becoming submission-ready theory claims.
 
 Recommended sequence:
 
-1. Validate `literature_theory_synthesis.csv` against the source matrix.
+1. Validate `.aiss theory synthesis declarations` against the source matrix.
 2. Validate the full workbench when rival/scope/evidence files are present.
-3. Compile `theory_evidence.md` through `dsl/scripts/compile_evidence.py`.
+3. Compile `.aiss evidence fragment` through `dsl/scripts/compile_evidence.py`.
 4. Run `scripts/validate_ai4ss_model.py` on the resulting `.aiss`.
-5. Update `study_design_declaration.csv` `evidence_source` values and
-   `design_decision_register.csv` decision rows.
+5. Update `.aiss MIDA declarations` `evidence_source` values and
+   `.aiss decision declarations` decision rows.
 
-## Stop Rules
+## Continuation Rules
 
-Stop before:
+Continue while avoiding:
 
 - claiming novelty;
 - declaring identification credible;
-- choosing a final estimand when the author has not approved it;
+- choosing a final estimand without a source-backed rationale;
 - running models without an analysis-ready dataset and a design source;
-- writing final prose.
+- presenting AI-assisted prose as no-AI or direct-submission ready.
 
 ## Design Types
 

@@ -28,8 +28,8 @@ JSON-RPC controller and reconstructed final messages from
 
 | skill | thread id | turn status | tool/file events | observed behavior |
 |---|---|---|---|---|
-| `research-starter` | `019f2084-51b7-72d3-86cc-71f2e356ce9f` | completed | none | Good blank-slate fit. Produces route cards, a minimum viable study, stop reason, researcher decision, and next skill route. `.aiss` is optional at this stage; if durable state is useful, it should be route-only candidate declarations, not a final model layer. |
-| `study-design-builder` | `019f2084-b08a-7381-8aa1-0f5acbd86fe4` | completed | none | Poor first entry point for a blank-slate user. It expects a selected route, starter packet, route cards, route-only `.aiss`, data affordances, or author decisions. Normal behavior is to promote one route to selected, add exactly seven MIDA declarations, record decisions, and then add model-layer declarations when warranted. |
+| `research-starter` | `019f2084-51b7-72d3-86cc-71f2e356ce9f` | completed | none | Good blank-slate fit. Produces route cards, a minimum viable study, continuation plan, automation assumptions, and next skill route. `.aiss` is optional at this stage; if durable state is useful, it should be route-only candidate declarations, not a final model layer. |
+| `study-design-builder` | `019f2084-b08a-7381-8aa1-0f5acbd86fe4` | completed | none | Poor first entry point for a blank-slate user. It expects a selected route, starter packet, route cards, route-only `.aiss`, data affordances, or automation assumptions. Normal behavior is to promote one route to selected, add exactly seven MIDA declarations, record decisions, and then add model-layer declarations when warranted. |
 
 ## Boundary Confirmed
 
@@ -39,7 +39,8 @@ objects.
 
 `study-design-builder` is the route-to-design skill. It should not pretend that
 a vague topic is already a selected route. Its correct blank-slate behavior is
-to stop or route back to `research-starter` / `ask_author`.
+to auto-create or recover a route, then continue to `research-starter` or the
+next owning factory skill.
 
 ## Implication For The Unified DSL
 
@@ -52,6 +53,6 @@ selected .aiss route + seven mida declarations + decisions ->
 model/check declarations when design structure warrants them
 ```
 
-CSV and Markdown sidecars remain useful projections, but they must preserve
-`route_decl_id`, `mida_id`, or `decision_decl_id` when they mirror workflow
-state.
+CSV files and derived Markdown notes are source artifacts only. They must not
+mirror or replace workflow state; handoff state belongs in checked `.aiss`
+declarations with `route_decl_id`, `mida_id`, or `decision_decl_id` when needed.

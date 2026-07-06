@@ -17,6 +17,8 @@
     "aiss"
   ],
   "skills": "./skills/",
+  "mcpServers": "./.mcp.json",
+  "hooks": "./hooks/hooks.json",
   "interface": {
     "displayName": "AI4SS Skills",
     "shortDescription": "Agent-assisted social-science research workflows.",
@@ -24,6 +26,7 @@
     "developerName": "Siyao Zheng",
     "category": "Productivity",
     "capabilities": [
+      "MCP",
       "Read",
       "Write"
     ],

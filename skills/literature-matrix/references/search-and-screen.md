@@ -12,7 +12,7 @@ Create separate searches for:
 - Geography or institutional context.
 - Known author or seminal-paper anchors.
 
-For open-ended topics, create `literature_candidate_discovery.csv` using `candidate-discovery.md` before extracting the matrix.
+For open-ended topics, create `.aiss source-discovery declarations` using `candidate-discovery.md` before extracting the matrix.
 
 Example:
 

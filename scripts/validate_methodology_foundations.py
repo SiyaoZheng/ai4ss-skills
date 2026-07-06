@@ -24,9 +24,11 @@ EXPECTED_FIELDS = [
 REQUIRED_SKILLS = {
     "research-starter",
     "study-design-builder",
+    "public-data-sources",
     "research-data-builder",
     "literature-matrix",
     "research-analysis-runner",
+    "top-journal-figures",
     "methods-reviewer",
     "academic-writing-scaffold",
     "research-slides-builder",
@@ -46,329 +48,181 @@ ALLOWED_COMPONENTS = {
 
 REQUIRED_SPINE_TERMS = {
     "research-starter": ("inquiry", "data_strategy", "answer_strategy", "failure_signal"),
-    "study-design-builder": ("inquiry", "data_strategy", "answer_strategy", "diagnosands_or_gates"),
-    "research-data-builder": ("measurement", "linkage", "provenance"),
-    "literature-matrix": ("source_scope", "screening", "synthesis"),
-    "research-analysis-runner": ("design_source", "data_source", "interpretation_boundary"),
-    "methods-reviewer": ("inquiry", "data_strategy", "answer_strategy", "overclaim"),
-    "academic-writing-scaffold": ("support level", "interpretation_boundary", "author_decision"),
+    "study-design-builder": ("inquiry", "data_strategy", "answer_strategy", "analysis_plan_path", "diagnosands_or_gates"),
+    "public-data-sources": (
+        "source_access_status",
+        "access_class",
+        "official_docs_url",
+        "request_template",
+        "observed_data_only_status",
+        "row_source_provenance",
+    ),
+    "research-data-builder": (
+        "measurement",
+        "linkage",
+        "provenance",
+        "observed_data_only_status",
+        "row_source_provenance",
+        "data_transparency_status",
+    ),
+    "literature-matrix": ("source_scope", "search_strategy_status", "screening", "synthesis"),
+    "research-analysis-runner": ("design_source", "data_source", "interpretation_boundary", "computational_reproducibility_status"),
+    "top-journal-figures": (
+        "figure_spec",
+        "figure_path",
+        "source_note",
+        "helper_tool_transparency_status",
+        "style_profile_id",
+        "style_source_path",
+        "style_consistency_status",
+        "ggplot_object",
+        "ggsave_call",
+        "visual_integrity_status",
+        "vector_export_status",
+        "black_white_status",
+        "interpretation_boundary",
+    ),
+    "methods-reviewer": ("inquiry", "data_strategy", "answer_strategy", "deviation_log_status", "overclaim"),
+    "academic-writing-scaffold": (
+        "support level",
+        "interpretation_boundary",
+        "top_disclosure_matrix",
+        "ai_contribution_disclosure",
+        "direct_submission_status",
+        "assumption_register",
+    ),
     "research-slides-builder": ("source artifact", "privacy", "interpretation_boundary"),
-    "reviewer-response": ("MIDA element", "confidentiality", "author decision"),
-}
-
-EXPECTED_ARTIFACTS = {
-    "research-starter": ("research_route_cards.csv", "research_model.aiss"),
-    "study-design-builder": ("study_design_declaration.csv", "design_decision_register.csv", "research_model.aiss"),
-    "research-data-builder": ("sample_flow.csv", "merge_audit.csv", "variable_provenance.csv"),
-    "literature-matrix": ("literature_candidate_discovery.csv", "literature_matrix.csv", "literature_theory_synthesis.csv"),
-    "research-analysis-runner": ("analysis_readiness_check.csv", "analysis_run_manifest.csv"),
-    "methods-reviewer": ("issue_table.csv",),
-    "academic-writing-scaffold": ("claim_ledger.csv",),
-    "research-slides-builder": ("slide_map.csv",),
-    "reviewer-response": ("revision_matrix.csv",),
-}
-
-SCHEMA_REQUIREMENTS = {
-    "research-starter": {
-        "references/route-card-schema.md": (
-            "route_decl_id",
-            "model_scope",
-            "candidate_inquiry",
-            "possible_data_strategy",
-            "possible_answer_strategy",
-        ),
-        "scripts/validate_research_routes.py": (
-            "route_decl_id",
-            "model_scope",
-            "candidate_inquiry",
-            "possible_data_strategy",
-            "possible_answer_strategy",
-        ),
-        "examples/valid_research_route_cards.csv": (
-            "route_decl_id",
-            "model_scope",
-            "candidate_inquiry",
-            "possible_data_strategy",
-            "possible_answer_strategy",
-        ),
-    },
-    "study-design-builder": {
-        "references/design-workflow.md": (
-            "theory_mapping",
-            "literature_theory_synthesis.csv",
-            "theory_rival_map.csv",
-            "theory_scope_map.csv",
-            "theory_evidence.md",
-            "validate_theory_workbench.py",
-            "ready_for_aiss",
-            "proposed_aiss_object",
-            "design_decision_register.csv",
-            "decision",
-            "concept",
-            "causal",
-            "bridge",
-        ),
-        "references/declaration-schema.md": (
-            "study_design_declaration.csv",
-            "mida_id",
-            "mida_component",
-            "declaration_text",
-            "diagnosand_or_gate",
-            "redesign_option",
-            "interpretation_boundary",
-            "ai4ss_model_path",
-            "ai4ss_check_status",
-        ),
-        "scripts/validate_study_design_declaration.py": (
-            "mida_id",
-            "mida_component",
-            "inquiry",
-            "data_strategy",
-            "answer_strategy",
-            "diagnose",
-            "redesign",
-            "report_boundary",
-            "ai4ss_model_path",
-            "ai4ss_check_status",
-        ),
-        "examples/valid_study_design_declaration.csv": (
-            "mida_id",
-            "mida_component",
-            "declaration_text",
-            "diagnosand_or_gate",
-            "redesign_option",
-            "interpretation_boundary",
-            "research_model.aiss",
-        ),
-        "references/decision-register-schema.md": (
-            "decision_decl_id",
-            "mida_component",
-            "downstream_skill_route",
-        ),
-        "scripts/validate_design_decisions.py": (
-            "decision_decl_id",
-            "mida_component",
-            "downstream_skill_route",
-        ),
-        "examples/valid_design_decision_register.csv": (
-            "decision_decl_id",
-            "mida_component",
-            "downstream_skill_route",
-        ),
-    },
-    "research-data-builder": {
-        "references/audit-schema.md": ("route_id", "design_source", "target_inquiry", "ai4ss_model_path"),
-        "scripts/validate_data_audits.py": ("route_id", "design_source", "target_inquiry", "ai4ss_model_path"),
-        "examples/valid_sample_flow.csv": ("route_id", "design_source", "target_inquiry", "research_model.aiss"),
-        "examples/valid_merge_audit.csv": ("route_id", "design_source", "target_inquiry", "research_model.aiss"),
-        "examples/valid_variable_provenance.csv": ("route_id", "design_source", "target_inquiry", "research_model.aiss"),
-    },
-    "literature-matrix": {
-        "references/candidate-discovery.md": ("route_id", "design_source", "target_inquiry"),
-        "references/matrix-schema.md": (
-            "route_id",
-            "design_source",
-            "target_inquiry",
-            "evidence_table_path",
-            "compiled_ai4ss_path",
-            "evidence_compile_status",
-        ),
-        "references/evidence-compile.md": (
-            "compile_evidence.py",
-            "evidence_table_path",
-            "compiled_ai4ss_path",
-            "evidence_compile_status",
-        ),
-        "references/theory-synthesis.md": (
-            "literature_theory_synthesis.csv",
-            "theory_rival_map.csv",
-            "theory_scope_map.csv",
-            "theory_evidence.md",
-            "compile_evidence.py",
-            "synthesis_type",
-            "source_paper_ids",
-            "proposed_aiss_object",
-            "author_decision_needed",
-            "actor:",
-            "discriminating_observation",
-        ),
-        "scripts/validate_literature_discovery.py": ("route_id", "design_source", "target_inquiry"),
-        "scripts/validate_literature_matrix.py": (
-            "route_id",
-            "design_source",
-            "target_inquiry",
-            "ai4ss_model_path",
-            "evidence_table_path",
-            "compiled_ai4ss_path",
-            "evidence_compile_status",
-        ),
-        "scripts/validate_literature_evidence_compile.py": (
-            "compile_evidence.py",
-            "evidence_table_path",
-            "compiled_ai4ss_path",
-        ),
-        "scripts/validate_literature_theory_synthesis.py": (
-            "literature_theory_synthesis",
-            "synthesis_type",
-            "source_paper_ids",
-            "proposed_aiss_object",
-            "author_decision_needed",
-        ),
-        "examples/valid_literature_candidate_discovery.csv": ("route_id", "design_source", "target_inquiry"),
-        "examples/valid_literature_matrix.csv": (
-            "route_id",
-            "design_source",
-            "target_inquiry",
-            "research_model.aiss",
-            "evidence_table_path",
-            "compiled_ai4ss_path",
-            "evidence_compile_status",
-        ),
-        "examples/valid_literature_theory_synthesis.csv": (
-            "route_id",
-            "design_source",
-            "target_inquiry",
-            "synthesis_type",
-            "source_paper_ids",
-            "proposed_aiss_object",
-            "author_decision_needed",
-        ),
-    },
-    "research-analysis-runner": {
-        "references/readiness-schema.md": (
-            "analysis_readiness_check.csv",
-            "analysis_plan_path",
-            "required_variables",
-            "available_variables",
-            "readiness_status",
-            "bridge_alignment_status",
-            "ai4ss_model_path",
-        ),
-        "scripts/validate_analysis_readiness.py": (
-            "analysis_plan_path",
-            "required_variables",
-            "available_variables",
-            "missing_variables",
-            "readiness_status",
-            "bridge_alignment_status",
-            "ai4ss_model_path",
-        ),
-        "examples/valid_analysis_readiness_check.csv": (
-            "analysis_plan_path",
-            "required_variables",
-            "available_variables",
-            "readiness_status",
-            "research_model.aiss",
-        ),
-        "references/manifest-schema.md": (
-            "design_source",
-            "target_inquiry",
-            "readiness_check_path",
-            "readiness_status",
-            "interpretation_boundary",
-            "ai4ss_model_path",
-        ),
-        "scripts/validate_analysis_manifest.py": (
-            "design_source",
-            "target_inquiry",
-            "readiness_check_path",
-            "readiness_status",
-            "interpretation_boundary",
-            "ai4ss_model_path",
-        ),
-        "examples/valid_analysis_run_manifest.csv": (
-            "design_source",
-            "target_inquiry",
-            "readiness_check_path",
-            "readiness_status",
-            "interpretation_boundary",
-            "research_model.aiss",
-        ),
-    },
-    "methods-reviewer": {
-        "references/audit-checklist.md": (
-            "literature_theory_synthesis.csv",
-            "theory_rival_map.csv",
-            "theory_scope_map.csv",
-            "mechanisms",
-            "rival explanation",
-            "scope rows",
-            "discriminating observable implication",
-            "source status",
-            "issue table",
-        ),
-        "references/issue-examples.md": ("route_id", "design_source", "target_inquiry", "mida_component"),
-        "scripts/validate_issue_table.py": ("route_id", "design_source", "target_inquiry", "mida_component", "ai4ss_model_path"),
-        "examples/valid_issue_table.csv": ("route_id", "design_source", "target_inquiry", "mida_component", "research_model.aiss"),
-    },
-    "academic-writing-scaffold": {
-        "references/author-workbench.md": (
-            "theory_workbench.md",
-            "literature_theory_synthesis.csv",
-            "theory_rival_map.csv",
-            "theory_scope_map.csv",
-            "final theory prose",
-            "author writes",
-        ),
-        "references/theory_workbench.md": (
-            "literature_theory_synthesis.csv",
-            "theory_rival_map.csv",
-            "theory_scope_map.csv",
-            "compile_evidence.py",
-            "validate_theory_workbench.py",
-            "author must write final prose",
-        ),
-        "references/claim-audit.md": ("target_inquiry", "interpretation_boundary", "diagnosed_limit"),
-        "scripts/validate_claim_ledger.py": ("target_inquiry", "interpretation_boundary", "diagnosed_limit", "ai4ss_model_path"),
-        "examples/valid_claim_ledger.csv": ("target_inquiry", "interpretation_boundary", "diagnosed_limit", "research_model.aiss"),
-    },
-    "research-slides-builder": {
-        "references/visual-rules.md": (
-            "sample_or_scope",
-            "uncertainty_or_caveat",
-            "privacy_status",
-            "interpretation_boundary",
-        ),
-        "scripts/validate_slide_map.py": (
-            "sample_or_scope",
-            "uncertainty_or_caveat",
-            "privacy_status",
-            "interpretation_boundary",
-        ),
-        "examples/valid_slide_map.csv": (
-            "sample_or_scope",
-            "uncertainty_or_caveat",
-            "privacy_status",
-            "interpretation_boundary",
-        ),
-    },
-    "reviewer-response": {
-        "references/revision-matrix.md": ("mida_element_affected",),
-        "scripts/validate_revision_matrix.py": ("mida_element_affected",),
-        "examples/valid_revision_matrix.csv": ("mida_element_affected",),
-    },
-}
-
-REPO_REQUIREMENTS = {
-    "scripts/validate_theory_workbench.py": (
-        "literature_theory_synthesis.csv",
-        "theory_rival_map.csv",
-        "theory_scope_map.csv",
-        "compile_evidence.py",
-        "ai4ss_factory_contracts.sidecars",
-        "ai4ss_factory_contracts.workflow",
-        "ready_for_aiss",
-        "author-owned",
-    ),
-    "dsl/scripts/compile_evidence.py": (
-        "Routes",
-        "MIDA",
-        "Decisions",
-        "route",
-        "mida",
-        "decision",
+    "reviewer-response": (
+        "MIDA element",
+        "confidentiality",
+        "revision_transparency_status",
+        "deviation_log_status",
+        "ai_contribution_disclosure",
+        "human_accountability_status",
+        "submission_policy_check_status",
+        "direct_submission_status",
+        "automation decision",
     ),
 }
+
+EXPECTED_AISS_DECLARATIONS = {
+    "research-starter": ("research_model.aiss", "route declarations", "decision declarations"),
+    "study-design-builder": (
+        "research_model.aiss",
+        "selected route",
+        "seven mida declarations",
+        "decision declarations",
+        "model declarations",
+        "check declarations",
+        "protocol and analysis plan status",
+    ),
+    "public-data-sources": (
+        "research_model.aiss",
+        "source declarations",
+        "artifact declarations",
+        "source-access checks",
+        "observed-data-only checks",
+        "decision declarations",
+    ),
+    "research-data-builder": (
+        "research_model.aiss",
+        "data source declarations",
+        "artifact declarations",
+        "empirical declarations",
+        "observation declarations",
+        "coupling declarations",
+        "bridge declarations",
+        "data checks",
+        "FAIR metadata checks",
+    ),
+    "literature-matrix": (
+        "research_model.aiss",
+        "paper declarations",
+        "source declarations",
+        "span declarations",
+        "claim declarations",
+        "relation declarations",
+        "concept declarations",
+        "causal declarations",
+        "bridge declarations",
+        "source-status checks",
+        "search-strategy transparency checks",
+    ),
+    "research-analysis-runner": (
+        "research_model.aiss",
+        "readiness check declarations",
+        "analysis artifact declarations",
+        "adapter declarations",
+        "derive declarations",
+        "observation declarations",
+        "bounded claim declarations",
+        "computational reproducibility checks",
+    ),
+    "top-journal-figures": (
+        "research_model.aiss",
+        "figure artifact declarations",
+        "derive declarations",
+        "observation declarations",
+        "visual-integrity checks",
+        "helper-tool transparency checks",
+        "style-consistency checks",
+        "author decision declarations",
+    ),
+    "methods-reviewer": (
+        "research_model.aiss",
+        "diagnostic check declarations",
+        "redesign decision declarations",
+        "claim-support declarations",
+        "deviation-log decisions",
+    ),
+    "academic-writing-scaffold": (
+        "research_model.aiss",
+        "bounded claim declarations",
+        "report-boundary declarations",
+        "citation-gap decisions",
+        "assumption-register declarations",
+        "TOP disclosure matrix",
+    ),
+    "research-slides-builder": (
+        "research_model.aiss",
+        "presentation artifact declarations",
+        "bounded claim declarations",
+        "source-link declarations",
+        "privacy check declarations",
+    ),
+    "reviewer-response": (
+        "research_model.aiss",
+        "reviewer-request decision declarations",
+        "affected MIDA links",
+        "evidence artifact declarations",
+        "response-boundary declarations",
+        "deviation-log decisions",
+        "AI contribution disclosure",
+        "direct-submission status",
+    ),
+}
+
+FORBIDDEN_CANONICAL_ARTIFACTS = (
+    "sidecar",
+    "research_route_cards.csv",
+    "study_design_declaration.csv",
+    "design_decision_register.csv",
+    "sample_flow.csv",
+    "merge_audit.csv",
+    "variable_provenance.csv",
+    "literature_candidate_discovery.csv",
+    "literature_matrix.csv",
+    "literature_theory_synthesis.csv",
+    "theory_rival_map.csv",
+    "theory_scope_map.csv",
+    "theory_evidence.md",
+    "analysis_readiness_check.csv",
+    "analysis_run_manifest.csv",
+    "issue_table.csv",
+    "claim_ledger.csv",
+    "slide_map.csv",
+    "revision_matrix.csv",
+)
 
 
 def fail(message: str) -> int:
@@ -393,18 +247,6 @@ def load_rows(path: Path) -> tuple[list[str], list[dict[str, str]]]:
         if not rows:
             raise ValueError("no data rows")
         return fields, rows
-
-
-def read_schema_enforcement_text(path: Path, repo_root: Path) -> str:
-    text = path.read_text(encoding="utf-8-sig").lower()
-    contract_paths: list[Path] = []
-    if "ai4ss_factory_contracts.sidecars" in text or "sidecar_fields(" in text:
-        contract_paths.append(repo_root / "scripts" / "ai4ss_factory_contracts" / "sidecars.py")
-    if "ai4ss_factory_contracts.workflow" in text or "route_enum_error" in text or "status_route_errors" in text:
-        contract_paths.append(repo_root / "scripts" / "ai4ss_factory_contracts" / "workflow.py")
-    for contract_path in contract_paths:
-        text += "\n" + contract_path.read_text(encoding="utf-8-sig").lower()
-    return text
 
 
 def main() -> int:
@@ -445,54 +287,43 @@ def main() -> int:
         unknown_components = sorted(components - ALLOWED_COMPONENTS)
         if unknown_components:
             errors.append(f"{skill}: unknown mida_component values: {', '.join(unknown_components)}")
-        if row["foundation_status"] == "grounded" and len(components) < 1:
+        if row["foundation_status"] == "grounded" and not components:
             errors.append(f"{skill}: grounded rows need at least one framework component")
         if row["foundation_status"] in {"partial", "watchlist"} and row["remaining_gap"].lower() in {"none", "n/a"}:
             errors.append(f"{skill}: partial/watchlist rows need a concrete remaining_gap")
+
         searchable = " ".join(row[field] for field in EXPECTED_FIELDS).lower()
         for term in REQUIRED_SPINE_TERMS[skill]:
             if term.lower() not in searchable:
                 errors.append(f"{skill}: missing required design-spine term `{term}`")
-        for artifact in EXPECTED_ARTIFACTS[skill]:
-            if artifact not in row["canonical_artifacts"]:
-                errors.append(f"{skill}: canonical_artifacts missing `{artifact}`")
+        for term in EXPECTED_AISS_DECLARATIONS[skill]:
+            if term.lower() not in searchable:
+                errors.append(f"{skill}: canonical_artifacts missing `{term}`")
+        for forbidden in FORBIDDEN_CANONICAL_ARTIFACTS:
+            if forbidden.lower() in row["canonical_artifacts"].lower():
+                errors.append(f"{skill}: canonical_artifacts uses forbidden legacy workflow artifact `{forbidden}`")
 
     repo_root = args.csv_path.resolve().parent.parent if args.csv_path.parent.name == "docs" else Path.cwd()
-    for skill, required_files in SCHEMA_REQUIREMENTS.items():
-        skill_dir = repo_root / ".codex" / "skills" / skill
-        for relative_path, required_terms in required_files.items():
-            path = skill_dir / relative_path
-            if not path.exists():
-                errors.append(f"{skill}: missing schema enforcement file {relative_path}")
-                continue
-            try:
-                text = read_schema_enforcement_text(path, repo_root)
-            except UnicodeDecodeError as exc:
-                errors.append(f"{skill}: cannot read {relative_path}: {exc}")
-                continue
-            except OSError as exc:
-                errors.append(f"{skill}: cannot read schema contract for {relative_path}: {exc}")
-                continue
-            for term in required_terms:
-                if term.lower() not in text:
-                    errors.append(f"{skill}: {relative_path} missing `{term}`")
-
-    for relative_path, required_terms in REPO_REQUIREMENTS.items():
-        path = repo_root / relative_path
+    required_repo_files = (
+        repo_root / "scripts" / "validate_ai4ss_model.py",
+        repo_root / "dsl" / "scripts" / "aiss.py",
+        repo_root / "docs" / "examples" / "research_model.aiss",
+    )
+    for path in required_repo_files:
         if not path.exists():
-            errors.append(f"repo: missing theory engine contract file {relative_path}")
+            errors.append(f"repo: missing required AI4SS file {path.relative_to(repo_root)}")
+
+    for skill in REQUIRED_SKILLS:
+        skill_md = repo_root / "skills" / skill / "SKILL.md"
+        if not skill_md.exists():
+            errors.append(f"{skill}: missing SKILL.md")
             continue
-        try:
-            text = read_schema_enforcement_text(path, repo_root)
-        except UnicodeDecodeError as exc:
-            errors.append(f"repo: cannot read {relative_path}: {exc}")
-            continue
-        except OSError as exc:
-            errors.append(f"repo: cannot read theory engine contract for {relative_path}: {exc}")
-            continue
-        for term in required_terms:
-            if term.lower() not in text:
-                errors.append(f"repo: {relative_path} missing `{term}`")
+        text = skill_md.read_text(encoding="utf-8").lower()
+        if "research_model.aiss" not in text:
+            errors.append(f"{skill}: SKILL.md must reference research_model.aiss")
+        for forbidden in FORBIDDEN_CANONICAL_ARTIFACTS:
+            if forbidden.lower() in text:
+                errors.append(f"{skill}: SKILL.md uses forbidden legacy workflow artifact `{forbidden}`")
 
     if errors:
         return fail(f"{args.csv_path}: {'; '.join(errors)}")

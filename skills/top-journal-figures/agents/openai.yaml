@@ -1,0 +1,4 @@
+interface:
+  display_name: "Top Journal Figures"
+  short_description: "Produce and audit top social-science journal figures"
+  default_prompt: "Use $top-journal-figures to turn verified social-science analysis outputs into publication-grade paper figures with vector exports, captions, source notes, and visual-integrity checks."

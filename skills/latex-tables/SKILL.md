@@ -12,6 +12,34 @@ description: |
 
 This skill creates clean, publication-ready tables in LaTeX for regression results and summary statistics, using standard academic formatting.
 
+## Full-Auto Harness Contract
+
+When invoked by an automatic research harness, infer table type, software, and
+journal style from model outputs,
+filenames, manuscript source, `.aiss` declarations, and target journal context.
+Produce publication-ready `.tex` tables, previews, and draft-PDF-compatible
+captions/notes. If metadata is missing, choose the standard social-science
+booktabs style with transparent assumptions and continue.
+
+Only format empirical tables whose rows, model inputs, and estimates trace to
+real observed public or authorized data. If output provenance shows synthetic,
+simulated, hypothetical, illustrative, generated, DGP-created, random-draw,
+benchmark-calibrated, or literature-parameter-imputed empirical data, do not
+create publication-ready tables. Route to `public-data-sources`,
+`research-data-builder`, `research-analysis-runner`, or `methods-reviewer`.
+
+## .aiss State Machine
+
+When invoked from an AI4SS research-factory workspace, locate
+`.ai4ss/research_model.aiss` and run
+`python3 dsl/scripts/aiss.py state .ai4ss/research_model.aiss` before choosing
+or returning `next_skill_route`. Starts, completions, failures, and watchdog
+heartbeat observations should be recorded as `.aiss` `event` declarations or
+returned as deterministic `aiss.py transition --event ...` fragments. Events
+do not replace semantic updates: tables, notes, output paths, and formatting
+repairs must still update the relevant `artifact`, `check`, `decision`, or
+bounded `claim` declarations.
+
 ## When to Use
 
 - Converting model output into LaTeX tables
@@ -22,13 +50,14 @@ This skill creates clean, publication-ready tables in LaTeX for regression resul
 
 Follow these steps to complete the task:
 
-### Step 1: Understand the Context
+### Step 1: Infer the Context
 
-Before generating any code, ask the user:
+Before generating any code, infer:
 
 - What type of table is needed (regression, summary stats, balance)?
 - What software produced the results (Stata, R, Python)?
 - Which formatting style is required (journal-specific, AEA, etc.)?
+- Do the table values trace to real observed data and declared analysis outputs?
 
 ### Step 2: Generate the Output
 
@@ -45,7 +74,7 @@ After generating output:
 
 - Explain how to compile the table
 - Highlight any assumptions in the formatting
-- Suggest refinements for journal submission
+- Apply refinements needed for a publication-level draft PDF
 
 ### Step 4: Generate HTML preview
 

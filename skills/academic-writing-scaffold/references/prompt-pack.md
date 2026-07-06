@@ -1,6 +1,6 @@
 # Prompt Pack
 
-Use these prompts to support writing without outsourcing authorship.
+Use these prompts to support AI-disclosed manuscript work.
 
 ## Evidence Map
 
@@ -13,18 +13,19 @@ Inputs:
 - research design: [path]
 - tables: [paths]
 - figures: [paths]
-- literature matrix: [path]
+- `.aiss` literature evidence declarations: [path]
 - author notes: [path]
 
-Hard boundary:
-- do not write final manuscript prose;
-- do not write paragraphs for insertion into the paper.
+Single boundary:
+- any drafted prose is AI-assisted working text;
+- do not mark it direct-submission ready or no-AI until disclosure,
+  accountability, outlet-policy, and direct-submission status are explicit.
 
 Output:
 1. evidence inventory;
-2. claim ledger;
+2. `.aiss` bounded claim declarations;
 3. which claims are supported, partial, weak, or missing;
-4. author decisions needed before writing.
+4. assumptions and claim-boundary choices needed before draft-PDF assembly.
 ```
 
 ## Section Scaffold
@@ -43,9 +44,10 @@ Return a table with:
 - evidence to use;
 - citation or source path;
 - risks to avoid;
-- author decision.
+- assumption or claim-boundary choice.
 
-Do not fill the paragraph with final prose.
+Optionally include AI-assisted working text for each paragraph and mark
+direct_submission_status as not_ready until the gate is complete.
 ```
 
 ## Table-To-Claim Audit
@@ -83,19 +85,21 @@ Please flag:
 - mechanism claims without evidence;
 - estimand drift;
 - vague or promotional phrasing;
-- places where the author must decide.
+- places where assumptions must be disclosed or claims narrowed.
 
-Do not rewrite the section. Provide issue-by-issue notes and optional micro-level wording warnings only.
+You may provide replacement working wording when useful. Mark it as AI-assisted
+working text and list the disclosure/submission gate still required.
 ```
 
 ## Literature Review Scaffold
 
 ```text
-Use $academic-writing-scaffold with this literature matrix.
+Use $academic-writing-scaffold with these checked `.aiss` literature evidence declarations.
 
 Goal: prepare an author-facing literature review structure.
 
-Do not write review prose.
+If you draft review prose, keep source locators visible and mark it as
+AI-assisted working text, not direct-submission ready.
 
 Output:
 1. clusters of papers;
@@ -122,24 +126,27 @@ Return:
 - evidence path for each slot;
 - units and uncertainty to report;
 - diagnostics to mention;
-- boundaries the author must state;
+- boundaries the draft must state;
 - claims to avoid.
 
-No final result prose.
+Optional result prose must be labeled AI-assisted working text and tied to
+claim slots, uncertainty, and disclosure status.
 ```
 
 ## Classroom Trace
 
 ```text
 Bad prompt:
-请直接写一版结果段落，语气像顶刊论文。
+请直接写一版可以不加说明就投稿的结果段落，语气像顶刊论文。
 
 Improved prompt:
-Use $academic-writing-scaffold to build a results workbench only. Return claim slots,
-evidence paths, risk labels, revision targets, and author decision questions.
-Do not provide replacement wording or final manuscript prose.
+Use $academic-writing-scaffold to build a results workbench and AI-assisted
+working paragraph draft. Return claim slots, evidence paths, risk labels,
+revision targets, assumptions to disclose, and disclosure/direct-submission
+status.
 
 Expected behavior:
-Inventory tables and figures -> create claim ledger -> validate the CSV sidecar ->
-flag unsupported mechanism claims -> stop at author-facing scaffold.
+Inventory tables and figures -> create bounded claim declarations -> validate the .aiss declaration set ->
+flag unsupported mechanism claims -> draft only AI-disclosed working text ->
+continue until draft-PDF text has explicit disclosure and direct-submission status.
 ```

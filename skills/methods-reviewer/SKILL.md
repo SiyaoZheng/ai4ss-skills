@@ -1,76 +1,102 @@
 ---
 name: methods-reviewer
 description: >
-  Empirical methods review skill for auditing social-science research designs, scripts, model outputs,
-  tables, figures, robustness checks, and reproducibility evidence. Use before submission, presentation,
-  replication release, or reviewer response when the task is to find design, data, code, inference,
-  reporting, or overclaiming issues. It reviews and structures problems; it does not decide substantive
-  identification validity for the author. Triggers: "methods review", "audit empirical design",
-  "review regression output", "check fixed effects", "cluster standard errors", "robustness audit",
-  "reproducibility review", "submission checklist", "计量审查", "方法审查", "结果审查", "稳健性检查".
+  Empirical methods review skill for auditing social-science research designs, data work,
+  analysis outputs, and claim boundaries. Use when reviewing identification, inference,
+  robustness, diagnostics, reproducibility, overclaiming, or method-risk issues before
+  writing or presentation. Triggers: "methods review", "audit results", "overclaim",
+  "identification risk", "robustness", "inference check", "方法审查", "结果解释", "因果识别".
 ---
 
 # Methods Reviewer
 
-Audit empirical work before it becomes a paper, talk, or response. The default output is an issue table with evidence, severity, and concrete next actions.
+Review evidence for methodological risk before anyone treats results as scholarly claims.
 
 ## Scholar Workbench
 
-This skill answers: "结果解释有没有说过头？" Its value is not replacing methodological judgment; it is exposing whether the script, model object, table, figure, and written claim actually support the same interpretation.
+This skill answers: "结果解释有没有说过头？" Its value is turning evidence, scripts, outputs, and declared design elements into actionable diagnostic checks, repairs, and bounded draft-PDF claims.
 
 ## Core Rule
 
-Review first, edit second. User permission may authorize focused code, table, or figure fixes after the review, but manuscript claims must remain claim-ledger rows, risk labels, and author revision targets. Do not provide replacement manuscript wording.
+Find bugs, risks, missing evidence, and claim-boundary problems first. Do not invent robustness results or rewrite the design silently; when implementation is possible, repair or trigger the concrete next analysis/design/data/writing step.
 
-## Failure Audit First
+## Full-Auto Harness Contract
 
-- Inspect recent nonzero command exits, runtime errors, missing files, missing columns, stale outputs, and validation failures before substantive methods judgments.
-- Treat a failed script that still leaves old tables or figures on disk as a blocker: the audit must distinguish current successful outputs from stale artifacts.
-- Issue tables should include runtime failures when they affect reproducibility, sample construction, model specification, or output trustworthiness.
-- Do not review a coefficient, figure, or table as evidence unless its generating command has a successful rerun or an explicit stale-output warning.
+When invoked by an automatic research harness, this skill must not pause for
+human choice or return any terminal no-progress state. A finding must map to an automatic next action: repair code, rerun a
+diagnostic, narrow a claim, expand evidence, redesign the analysis, or update
+draft-PDF text. The target artifact is a publication-level `paper/full_draft.pdf`
+whose methods limits are visible, not a standalone critique.
+
+## AI4SS Runtime Gate
+
+Do not review research-factory outputs as disconnected files. Locate `.ai4ss/research_model.aiss`, selected route, MIDA declarations, and recent `scripts/validate_ai4ss_model.py` output before judging claims. If the AI4SS object is missing or invalid, create or repair the first valid route/design/data/analysis linkage before judging claims.
+
+Methods findings must become `.aiss` diagnostic `check`, redesign `decision`, or bounded claim-support declarations. A prose table in the chat is only a display surface; it is not workflow state.
+
+## Workspace Contract
+
+Follow `docs/research_workspace_contract.md`. Durable workflow state belongs in
+`.ai4ss/research_model.aiss`; generated data, output, logs, and PDFs must be
+produced through `make` targets, with `make all` as the final orchestration path.
+
+## .aiss State Machine
+
+When `.ai4ss/research_model.aiss` exists, run
+`python3 dsl/scripts/aiss.py state .ai4ss/research_model.aiss` before deciding
+the next route. When this skill starts, completes, fails, or observes a
+watchdog heartbeat in an automatic harness, record that runtime fact as an
+`.aiss` `event` declaration or return a deterministic
+`aiss.py transition --event ...` fragment for merge. Events do not replace
+semantic updates: if the skill resolves a repair/check status, update the
+relevant `route`, `mida`, `decision`, `check`, `artifact`, or claim-support
+declaration too.
 
 ## Methodology Foundation
 
-This skill is the `Diagnose` and `Redesign` layer of the MIDA spine. It checks whether declared `Model`, `Inquiry`, `Data strategy`, `Answer strategy`, executed outputs, and public claims still refer to the same research design.
+This skill owns `Diagnose` and `Redesign` in the MIDA spine. It compares declared `Model`, `Inquiry`, `Data strategy`, and `Answer strategy` against the actual data pipeline, scripts, outputs, tables, figures, and proposed claims.
 
-The review must name diagnosands or gates such as wrong estimand, weak comparison, measurement mismatch, inference mismatch, reproducibility failure, source-status risk, or overclaiming. Redesign recommendations remain author decisions unless the user explicitly asks for implementation.
-
-When a `.aiss` model is present, reviewing the model is part of the methods audit: `aiss.py compile/lint/run` errors, missing bridges, unchecked commensurability, and model-to-output mismatch are reportable issues. When a theory workbench is present, rival explanations, scope drift, vague mechanisms, non-discriminating observable implications, weak source status, and theory overclaim are issue-table rows, not a separate theory-review schema.
+The review must preserve `ai4ss_model_path`, model ids, concept ids, causal ids, bridge ids, `ai4ss_check_status`, and `commensurability_status` when they exist. It can recommend or execute redesign actions when they are needed for the draft PDF.
 
 ## Workflow Contract
 
-- Upstream inputs: `study_design_brief.md`, `study_design_declaration.csv`, `research_model.aiss`, `ai4ss_check_report.txt`, `analysis_run_manifest.csv`, scripts, logs, tables, figures, data audit outputs, literature matrices, `literature_theory_synthesis.csv`, `theory_rival_map.csv`, `theory_scope_map.csv`, manuscript snippets, or reviewer comments.
-- Produces: issue table, method-risk notes, recommended checks, open author decisions, and validation commands run.
-- Handoff fields: `route_id`, `design_source`, `target_inquiry`, `mida_component`, `analysis_outputs`, `issue_table`, `severity`, `evidence`, `next_action`, `author_decisions`, `ai4ss_model_path`, `model_id`, `concept_id`, `causal_id`, `bridge_id`, `ai4ss_check_status`, `commensurability_status`, `next_skill_route`.
-- Downstream routes: `research-data-builder`, `research-analysis-runner`, `study-design-builder`, `academic-writing-scaffold`, `reviewer-response`, `research-slides-builder`, `did-expert`, or `ask_author`.
+- Upstream inputs: `.ai4ss/research_model.aiss`, selected route and MIDA declarations, AI4SS check output, scripts, logs, tables, figures, data artifacts, literature evidence, manuscript snippets, slide claims, or reviewer comments.
+- Produces: diagnostic findings, method-risk notes, executed or queued checks, automatic next actions, validation commands run, reproducibility and deviation-log findings, and `.aiss` `check`, `decision`, or bounded claim-support declarations.
+- Handoff fields: `route_id`, `design_source`, `target_inquiry`, `mida_component`, `source_access_status`, `observed_data_only_status`, `row_source_provenance`, `analysis_outputs`, `severity`, `evidence`, `next_action`, `computational_reproducibility_status`, `deviation_log_status`, `assumptions_to_disclose`, `ai4ss_model_path`, `model_id`, `concept_id`, `causal_id`, `bridge_id`, `ai4ss_check_status`, `commensurability_status`, `next_skill_route`.
+- Downstream routes: `public-data-sources`, `research-data-builder`, `research-analysis-runner`, `study-design-builder`, `academic-writing-scaffold`, `reviewer-response`, `research-slides-builder`, or `did-expert`.
 
 ## Routing Boundaries
 
-Use this skill to audit evidence for identification validity, result-claim fit, robustness, inference, and reproducibility. Final scholarly judgment remains with the author. Do not use it to build data pipelines; hand data construction to `research-data-builder`. Do not use it as the first executor of an analysis plan; hand execution to `research-analysis-runner`. Do not use it to write manuscript prose or response letters; hand evidence-ready scaffolds to `academic-writing-scaffold` or `reviewer-response`.
+Use this skill to audit evidence for identification validity, result-claim fit, robustness, inference, transparency-standard fit, preregistration or analysis-plan deviations, source authenticity, observed-data-only compliance, and reproducibility. Do not use it to acquire sources or build data pipelines; hand source acquisition to `public-data-sources` and sample construction to `research-data-builder`. Do not use it as the first executor of an analysis plan; hand execution to `research-analysis-runner`. For AI-disclosed manuscript or response working text, hand evidence-ready material to `academic-writing-scaffold` or `reviewer-response`.
 
 ## Workflow
 
-```
+```text
 Step -1: Orient
--> Read AGENTS.md, research design notes, scripts, logs, tables, figures, and manuscript/output text.
+-> Read AGENTS.md, `.ai4ss/research_model.aiss`, research design notes, scripts, logs, tables, figures, and output text.
 -> Identify the design family: descriptive, OLS, DID, IV, RD, RCT, synthetic control, panel, qualitative, mixed methods.
--> For DID/event-study as the central task, invoke $did-expert first when available; use this skill to wrap its findings into the general issue table.
--> If `research_model.aiss` is present, run or inspect `scripts/validate_ai4ss_model.py` output before judging claims.
+-> For DID/event-study as the central task, invoke $did-expert first when available; use this skill to wrap its findings into `.aiss` diagnostics.
 
 Step 0: Build audit scope
--> Data construction, model specification, inference, diagnostics, robustness, reporting, reproducibility, writing claims.
+-> Real observed source acquisition, data construction, model specification, preregistration or protocol deviations, inference, diagnostics, robustness, reporting, reproducibility, and claims.
 
 Step 1: Inspect evidence
 -> Compare stated design against actual scripts and outputs.
+-> Verify empirical rows, tables, figures, and estimates trace to real observed
+   public or authorized sources. Synthetic, simulated, hypothetical,
+   illustrative, generated, DGP-created, random-draw, benchmark-calibrated, or
+   literature-parameter-imputed empirical evidence is a fatal methods finding
+   routed to `public-data-sources` or design redesign.
 -> Check whether tables/figures expose sample, variables, FE, clustering, and uncertainty.
 -> Trace suspicious numbers back to scripts or logs.
--> Compare `.aiss` concepts, causal implications, and bridges against design declarations, data audits, and analysis manifests.
--> If a theory workbench is present, audit rival explanations, scope rows, mechanism parts, source-status support, and observable implications against the declared design.
+-> Compare `.aiss` concepts, causal implications, and bridges against design declarations, data artifacts, and analysis artifacts.
+-> Audit rival explanations, scope rows, mechanism parts, source-status support, and observable implications against the declared design.
 
-Step 2: Produce issue table
+Step 2: Produce findings
 -> Use severity and confidence.
--> Separate confirmed bugs from risks, missing evidence, and author decisions.
+-> Separate confirmed bugs from risks, missing evidence, and assumptions to disclose.
 -> Give exact file paths and lines where possible.
+-> Record durable findings as `.aiss` checks or decisions when the project is in the research factory.
 
 Step 3: Recommend next actions
 -> Suggest minimal checks or analyses.
@@ -78,35 +104,17 @@ Step 3: Recommend next actions
 -> If implementation is requested, make focused changes and rerun relevant commands.
 ```
 
-## Issue Categories
-
-- Data: sample construction, merges, duplicates, missingness, unit mismatch.
-- Design: estimand, treatment timing, control group, identification assumption.
-- Specification: fixed effects, controls, transformations, weights, clustering.
-- Inference: few clusters, multiple testing, serial correlation, uncertainty display.
-- Diagnostics: balance, pre-trends, placebo, sensitivity, robustness.
-- Reporting: table labels, figure axes, omitted periods, N, sample notes.
-- Reproducibility: runnable scripts, paths, logs, seeds, package versions.
-- Claims: causal language, mechanism claims, external validity, policy implications.
-- Theory: vague mechanisms, missing rival explanation, scope drift, non-discriminating observable implication, weak source status, theory overclaim.
-
 ## Output Shape
 
-Return findings first:
+Return findings first with severity, issue, evidence, why it matters, next action, and status. Then include assumptions to disclose, `.aiss` ids touched, and test commands run.
 
-| severity | issue | evidence | why_it_matters | next_action | status |
-|---|---|---|---|---|---|
-
-Then include open author decisions and any test commands run. If a `.aiss`
-model is in scope, include model identifiers and check status in the CSV sidecar.
-
-If a Markdown issue table is shown to the user, keep a CSV sidecar with these exact snake_case columns for validation.
+For research-factory work, durable diagnostic state belongs in `.ai4ss/research_model.aiss` as `check`, `decision`, or bounded claim-support declarations.
 
 ## Script Utilities
 
 - When output freshness, missing dependencies, missing columns, or duplicate keys are in scope, run `research-analysis-runner/scripts/check_runtime_contract.py --cwd <project> ...` or inspect its JSON report before reviewing result claims.
-- Run `scripts/validate_issue_table.py <path>` to check the issue-table schema and severity labels.
-- Run `scripts/validate_ai4ss_model.py <path-to-research_model.aiss>` when a model-linked issue is in scope.
+- Run `scripts/validate_ai4ss_model.py .ai4ss/research_model.aiss` when a model-linked issue is in scope.
+- Use method-specialist skills such as `did-expert` for central designs that need specialist diagnostics.
 
 ## Reference Files
 

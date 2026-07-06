@@ -1,0 +1,5 @@
+packet_id,case_id,judge_prompt,llm_score_0_100,judge_reason,judge_model
+P001,city_platform_green_patents,judge_prompts/P001.md,,,
+P002,city_platform_green_patents,judge_prompts/P002.md,,,
+P003,platform_theory_mapping,judge_prompts/P003.md,,,
+P004,platform_theory_mapping,judge_prompts/P004.md,,,

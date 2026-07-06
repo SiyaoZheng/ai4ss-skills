@@ -26,7 +26,8 @@ from compile_evidence import compile_to_aiss, parse_evidence_table
 ROOT = Path(__file__).resolve().parent
 REPO = ROOT.parent.parent
 FUSED_MODEL = REPO / "docs" / "examples" / "research_model.aiss"
-LITERATURE_EVIDENCE = REPO / ".codex" / "skills" / "literature-matrix" / "examples" / "valid_literature_evidence.md"
+LITERATURE_EVIDENCE_MD = REPO / "skills" / "literature-matrix" / "examples" / "valid_literature_evidence.md"
+LITERATURE_EVIDENCE_AISS = REPO / "skills" / "literature-matrix" / "examples" / "valid_literature_evidence.aiss"
 LEGACY_SOURCE = 'aiss version "0.3"\n\npaper legacy.paper { title: "Legacy" kind: "article" sources: [] }\n'
 CLI = ROOT / "aiss.py"
 
@@ -85,13 +86,17 @@ def main() -> None:
     assert run_report["workflow_diagnostics"]["selected_routes"] == ["demo.route_r1"]
     assert run_report["workflow_diagnostics"]["route_profiles"][0]["readiness"] == "mida_declared"
     assert run_report["model_diagnostics"]["ibe_profiles"][0]["model_id"] == "demo.platform_innovation"
-    assert run_report["coupling_assessments"][0]["status"] == "not_assessable"
+    assert run_report["coupling_assessments"][0]["status"] == "assessable_via_adapter"
+    assert run_report["coupling_assessments"][0]["rule"] == "demo.adapter_design_route_support"
 
     manifest = emit_code_manifest(ast_1, target="python")
     assert manifest["schema"] == "aiss.code_manifest.v0.4"
 
-    evidence = parse_evidence_table(LITERATURE_EVIDENCE.read_text(encoding="utf-8"))
-    generated_source = compile_to_aiss(evidence)
+    if LITERATURE_EVIDENCE_MD.exists():
+        evidence = parse_evidence_table(LITERATURE_EVIDENCE_MD.read_text(encoding="utf-8"))
+        generated_source = compile_to_aiss(evidence)
+    else:
+        generated_source = LITERATURE_EVIDENCE_AISS.read_text(encoding="utf-8")
     generated_ast = compile_file_from_text(generated_source)
     generated_lint = lint_ast(generated_ast)
     assert generated_ast["schema"] == "aiss.unified_ast.v0.4"

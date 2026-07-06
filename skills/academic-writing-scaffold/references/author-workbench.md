@@ -1,6 +1,6 @@
-# Author Workbench
+# Writing Workbench
 
-This workflow keeps AI support on the safe side of academic authorship.
+This workflow keeps AI support visible, auditable, and gated before submission.
 
 ## Boundary Model
 
@@ -12,43 +12,44 @@ Allowed agent outputs:
 - audit claims;
 - flag causal-language risks;
 - create paragraph skeletons;
-- prepare author decision questions.
+- draft AI-assisted working paragraphs;
+- prepare assumption and claim-boundary notes.
 
-Disallowed agent outputs:
+The only disallowed output:
 
-- final manuscript paragraphs;
-- polished introduction or literature review prose;
-- abstract or conclusion text for submission;
-- final reviewer-response prose;
+- text presented as direct-submission ready or as having no AI involvement when
+  AI contributed to it.
 - claims not grounded in provided evidence.
 
 ## Three-Column Writing Workbench
 
-Use this table as the default handoff to the author:
+Use this table as the default handoff:
 
-| paragraph | evidence and claim slot | author task |
+| paragraph | evidence and claim slot | AI-assisted working text / next action |
 |---|---|---|
-| P1 | empirical problem; source path; allowed scope | write motivation in own voice |
-| P2 | literature gap; matrix rows | decide which debate to foreground |
-| P3 | design and data facts | choose how much technical detail belongs here |
+| P1 | empirical problem; source path; allowed scope | draft or revise motivation; mark disclosure status |
+| P2 | literature gap; matrix rows | select the best-supported debate foregrounding |
+| P3 | design and data facts | include the technical detail needed for transparency |
 | P4 | main result slot; table/figure path | write estimate and uncertainty accurately |
-| P5 | contribution and boundary | decide claim strength |
+| P5 | contribution and boundary | state defensible claim strength |
 
-The agent may fill the middle column; the author writes the final text.
+The agent may draft working text. The package remains submission-ineligible
+until disclosure, accountability, outlet policy, and direct-submission status
+are explicit.
 
 ## Theory Workbench
 
-When literature-to-theory sidecars are present, use
-`references/theory_workbench.md` as the author-facing review view. The agent may
-fill evidence slots from `literature_theory_synthesis.csv`,
-`theory_rival_map.csv`, `theory_scope_map.csv`, validated `.aiss` ids, and
-methods issue rows. The author writes final theory prose and decides novelty,
-theoretical contribution, mechanism strength, scope framing, and rival
-prioritization.
+When literature-to-theory .aiss projections are present, use
+`references/author workbench declarations` as the author-facing review view. The agent may
+fill evidence slots from `.aiss theory synthesis declarations`,
+`.aiss rival-check declarations`, `.aiss scope-check declarations`, validated `.aiss` ids, and
+methods issue rows. AI may draft working theory prose and select the strongest
+defensible novelty, contribution, mechanism, scope, and rival framing while
+recording assumptions and evidence needs.
 
-Do not turn the workbench into final literature review, final theory prose, or
-polished contribution language. If a row cannot be grounded in validated
-evidence or an explicit author premise, keep it as a decision question.
+Do not turn the workbench into no-AI or direct-submission-ready prose. If a row
+cannot be grounded in validated evidence or an explicit premise, keep it as an
+assumption to disclose or route it to evidence expansion.
 
 ## Evidence Map Procedure
 
@@ -57,12 +58,12 @@ evidence or an explicit author premise, keep it as a decision question.
 3. Link each claim to exact evidence.
 4. Mark support level.
 5. Identify missing citations or outputs.
-6. Convert the map into paragraph skeletons.
-7. Stop before final prose.
+6. Convert the map into paragraph skeletons or AI-assisted working prose.
+7. Continue until direct-submission status is explicit and draft-PDF text is bounded.
 
-## Author Decision Questions
+## Automatic Claim-Boundary Choices
 
-Ask these when evidence does not determine the writing choice:
+Resolve these when evidence does not determine the writing choice:
 
 - Which literature audience is primary?
 - Should the paper foreground method, data, or substantive contribution?
@@ -84,13 +85,14 @@ When the user provides their own draft:
 2. Flag issues by sentence or claim.
 3. Explain why the issue matters.
 4. Point to evidence or missing evidence.
-5. Suggest a revision strategy, not a replacement paragraph.
+5. Suggest a revision strategy or replacement working paragraph with AI-use
+   disclosure status.
 
 ## Risk Scale
 
 | risk | meaning | action |
 |---|---|---|
-| P0 | academic-integrity boundary crossed | refuse direct drafting; provide scaffold instead |
+| P0 | hidden-AI or direct-submission gate crossed | refuse submission-ready/no-AI presentation; provide AI-disclosed working text and gate checklist |
 | P1 | unsupported or false claim | flag and require evidence or deletion |
 | P2 | overclaim or causal drift | soften by claim type or add diagnostics |
 | P3 | unclear wording | suggest author revision target |
@@ -99,7 +101,8 @@ When the user provides their own draft:
 
 End with:
 
-- "Author must write final prose."
+- AI-assisted working-text status;
+- direct-submission status;
 - evidence gaps;
 - decision points;
 - safe next action;

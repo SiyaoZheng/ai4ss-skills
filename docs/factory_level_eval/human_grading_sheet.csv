@@ -1,5 +1,5 @@
-grader_id,packet_id,case_id,research_object_0_15,mida_design_0_15,ai4ss_model_check_0_15,evidence_data_chain_0_15,analysis_loop_0_15,boundary_author_decision_0_15,end_to_end_continuity_0_10,risk_penalty_0_plus,total_0_100,notes
-,P001,city_platform_green_patents,,,,,,,,,,
-,P002,city_platform_green_patents,,,,,,,,,,
-,P003,platform_theory_mapping,,,,,,,,,,
-,P004,platform_theory_mapping,,,,,,,,,,
+grader_id,packet_id,case_id,research_object_0_13,mida_design_0_13,ai4ss_model_check_0_13,evidence_data_chain_0_14,analysis_loop_0_13,figure_package_0_10,claim_boundary_automation_0_14,end_to_end_continuity_0_10,risk_penalty_0_plus,total_0_100,notes
+,P001,city_platform_green_patents,,,,,,,,,,,
+,P002,city_platform_green_patents,,,,,,,,,,,
+,P003,platform_theory_mapping,,,,,,,,,,,
+,P004,platform_theory_mapping,,,,,,,,,,,

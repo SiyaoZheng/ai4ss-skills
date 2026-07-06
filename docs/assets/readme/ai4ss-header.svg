@@ -88,7 +88,7 @@
       <text class="small" x="0" y="48">research IR</text>
     </g>
     <g transform="translate(548 18)">
-      <text x="0" y="21" font-size="30" font-weight="950" fill="#f8fafc">9</text>
+      <text x="0" y="21" font-size="30" font-weight="950" fill="#f8fafc">12</text>
       <text class="small" x="0" y="48">workflow gates</text>
     </g>
     <g transform="translate(800 18)">
@@ -96,7 +96,7 @@
       <text class="small" x="0" y="48">eval tracks</text>
     </g>
     <g transform="translate(1034 18)">
-      <text x="0" y="21" font-size="30" font-weight="950" fill="#f8fafc">92.4 / 100</text>
+      <text x="0" y="21" font-size="30" font-weight="950" fill="#f8fafc">78.7 / 100</text>
       <text class="small" x="0" y="48">structural factory score</text>
     </g>
   </g>

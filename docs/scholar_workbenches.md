@@ -8,12 +8,12 @@ The skill universe has two layers.
 
 | layer | scholar problem | local skill | minimum artifact | success criterion |
 |---|---|---|---|---|
-| First-order production | 这个研究怎么先动起来？ | `research-starter` | `.aiss` candidate `route` declarations, `research_starter_packet.md`, route cards, minimum viable study, handoff prompt | A feasible first research loop exists, with a stop reason and researcher decision point |
-| First-order production | 这个路线怎样落成可执行设计？ | `study-design-builder` | selected `.aiss` `route`, seven `mida` declarations, `decision` declarations, design sidecars | Unit, constructs, comparison, evidence needs, and first analysis plan are explicit |
-| First-order production | 第一批可检查结果怎么跑出来？ | `research-analysis-runner` | `analysis_readiness_check.csv`, scripts, logs, tables/figures, `analysis_run_manifest.csv` | Outputs pass a readiness gate and keep sample notes and interpretation boundaries |
-| Second-order audit | 这个研究对象是否站得住、说得清、可追溯？ | Evidence and review skills | Validated ledgers, matrices, audit tables, revision traces | The generated evidence chain can be inspected, corrected, and approved |
+| First-order production | 这个研究怎么先动起来？ | `research-starter` | `.aiss` candidate `route` declarations, minimum viable study, handoff decision | A feasible first research loop exists, with a continuation plan and auto-selected assumption register |
+| First-order production | 这个路线怎样落成可执行设计？ | `study-design-builder` | selected `.aiss` `route`, seven `mida` declarations, `decision` declarations | Unit, constructs, comparison, evidence needs, and first analysis plan are explicit |
+| First-order production | 第一批可检查结果怎么跑出来？ | `research-analysis-runner` | `.aiss` readiness checks, scripts, logs, tables/figures, analysis artifacts | Outputs pass a readiness gate and keep sample notes and interpretation boundaries |
+| Second-order audit | 这个研究对象是否站得住、说得清、可追溯？ | Evidence and review skills | `.aiss` source, artifact, check, decision, and bounded claim declarations | The generated evidence chain can be inspected, corrected, and approved |
 
-The first layer is not a shortcut to paper writing. It is a way to turn a loose idea, source pile, dataset folder, or policy phenomenon into a route that can be tried. The second layer should not be forced before there is something to audit.
+The first layer is not a shortcut to hidden-AI submission. It is a way to turn a loose idea, source pile, dataset folder, or policy phenomenon into a route that can be tried. The second layer should not be forced before there is something to audit.
 
 ## Computable Research Object
 
@@ -23,13 +23,25 @@ projections:
 
 | representation | purpose |
 |---|---|
-| `.aiss` research object | Machine-checkable route, MIDA declaration, author decisions, source spans, attributes, concepts, theta rules, causal implications, empirical bridges, and diagnostics |
-| Sidecar projections | Human-readable route cards, design declarations, decision registers, data/literature audits, analysis manifests, and claim ledgers |
+| `.aiss` research object | Machine-checkable route, MIDA declaration, automation assumptions, source spans, attributes, concepts, theta rules, causal implications, empirical bridges, diagnostics, and runtime `event` declarations |
+| Referenced artifacts | Human-readable notes, logs, data files, tables, figures, decks, and assumption-register materials referenced by `.aiss`; these are evidence objects, not workflow state |
 
 This is the difference between asking Codex to analyze and building an
 autonomous research factory. Codex can reason in prose. A factory needs stable
 objects that survive context reset, can be checked, compiled, audited, and
 handed to the next skill without semantic drift.
+
+`.aiss` is also the local state-machine engine. Scholars and agents can inspect
+the projected state with:
+
+```bash
+python3 dsl/scripts/aiss.py state path/to/research_model.aiss
+```
+
+Skills append runtime facts as `event` declarations and preview transitions with
+`aiss.py transition`, while `goal-cli` remains the watchdog, timer, lock owner,
+heartbeat executor, and recovery process. This keeps research semantics in the
+research object and process supervision in the external runtime.
 
 ## Methodology Spine
 
@@ -39,31 +51,33 @@ The workbenches share one research-design spine:
 Declare MIDA -> Diagnose -> Redesign -> Report with bounded claims
 ```
 
-`MIDA` means `Model`, `Inquiry`, `Data strategy`, and `Answer strategy`. `Estimand` is one possible form of `Inquiry`, not the whole design. This matters for ordinary scholars because the agent should not merely say "estimate X on Y"; it must help make unit, construct, source, measurement, answer procedure, failure signal, and author decision visible.
+`MIDA` means `Model`, `Inquiry`, `Data strategy`, and `Answer strategy`. `Estimand` is one possible form of `Inquiry`, not the whole design. This matters for ordinary scholars because the agent should not merely say "estimate X on Y"; it must help make unit, construct, source, measurement, answer procedure, failure signal, and automation assumption visible.
 
 | spine element | where it appears in the local workflow |
 |---|---|
-| Pre-declare possible routes | `research-starter` `.aiss` route declarations, mirrored as route cards |
+| Pre-declare possible routes | `research-starter` `.aiss` route declarations |
 | Declare MIDA | `study-design-builder` selected `.aiss` route plus seven `mida` declarations |
-| Realize Data strategy | `research-data-builder`, `literature-matrix`, deterministic literature evidence compilation when sources update `.aiss` |
+| Realize Data strategy | `research-data-builder`, `literature-matrix`, deterministic evidence declarations when sources update `.aiss` |
 | Execute Answer strategy | `research-analysis-runner` |
+| Package publication figures | `top-journal-figures` with ggplot2 final artifacts, one shared style profile, and helper-tool transparency |
 | Diagnose and redesign | `methods-reviewer`, `reviewer-response` |
-| Report bounded claims | `academic-writing-scaffold`, `research-slides-builder`, `reviewer-response` |
+| Report bounded claims and transparency package | `academic-writing-scaffold`, `research-slides-builder`, `reviewer-response` |
 
 ## First-Order Workbench
 
-| scholar question | workbench | local skill | minimum artifact | stop gate |
+| scholar question | workbench | local skill | minimum artifact | continuation route |
 |---|---|---|---|---|
-| 这个研究怎么先动起来？ | Research starter workbench | `research-starter` | candidate `.aiss` route declarations, `research_starter_packet.md`, `research_route_cards.csv` when useful | `stop_reason`, `researcher_decision_needed`, `next_skill_route` |
-| 这个路线怎样落成可执行设计？ | Study design workbench | `study-design-builder` | selected `.aiss` route, seven `mida` declarations, `study_design_brief.md`, `design_decision_register.csv` | unresolved author decisions and downstream route |
-| 第一批可检查结果怎么跑出来？ | Analysis runner workbench | `research-analysis-runner` | `analysis_readiness_check.csv`, scripts, outputs, logs, `analysis_run_manifest.csv` | readiness status, interpretation boundary, and methods-review route |
+| 这个研究怎么先动起来？ | Research starter workbench | `research-starter` | candidate `.aiss` route declarations | `continuation_plan`, `assumption_register`, `next_skill_route` |
+| 这个路线怎样落成可执行设计？ | Study design workbench | `study-design-builder` | selected `.aiss` route, seven `mida` declarations, harness-owned `decision` declarations | auto-resolved assumptions and downstream route |
+| 第一批可检查结果怎么跑出来？ | Analysis runner workbench | `research-analysis-runner` | `.aiss` readiness checks, scripts, outputs, logs, analysis `artifact` declarations | readiness status, interpretation boundary, and methods-review route |
+| 论文主图够不够顶刊？ | Top-journal figure workbench | `top-journal-figures` | R/ggplot2 scripts, shared style profile, helper-tool transparency, vector figure artifacts, captions, source notes, visual-integrity checks | methods-review or writing route |
 
 The starter workbench should answer practical questions:
 
 - What are 2-4 feasible research routes from this rough topic?
 - What materials already exist, and what is missing?
 - What is the smallest study that can teach us whether to continue?
-- What one action can an agent do next without crossing authorship or confidentiality boundaries?
+- What one action can an agent do next while keeping AI disclosure and confidentiality status visible?
 - Which downstream skill should take over after that action?
 - What design choice or first analysis should be attempted only after researcher confirmation?
 
@@ -71,10 +85,10 @@ The starter workbench should answer practical questions:
 
 | scholar question | workbench | local skills | minimum artifact | validation gate |
 |---|---|---|---|---|
-| 数据怎么来的，样本怎么变的？ | Data provenance workbench | `research-data-builder` | `sample_flow.csv`, `merge_audit.csv`, `variable_provenance.csv`, logs | `validate_data_audits.py` |
-| 文献证据是不是一手来源？ | Literature evidence workbench | `literature-matrix` | `literature_matrix.csv`, `literature_candidate_discovery.csv`, compiled evidence `.aiss` when model elements are affected, screening log, source locators | `validate_literature_matrix.py`, `validate_literature_discovery.py`, `validate_literature_evidence_compile.py` |
-| 结果解释有没有说过头？ | Claim discipline workbench | `methods-reviewer`, `academic-writing-scaffold` | issue table, claim ledger, author decision questions | `validate_issue_table.py`, `validate_claim_ledger.py` |
-| 返修有没有证据链？ | Revision trace workbench | `reviewer-response`, plus upstream evidence skills | `revision_matrix.csv`, `revision_trace/`, open decisions | `validate_revision_matrix.py` |
+| 数据怎么来的，样本怎么变的？ | Data provenance workbench | `research-data-builder` | `.aiss` data `source`, `artifact`, `empirical`, `observation`, `coupling`, `check`, and `decision` declarations plus logs | `validate_ai4ss_model.py` |
+| 文献证据是不是一手来源？ | Literature evidence workbench | `literature-matrix` | `.aiss` `paper`, `source`, `span`, `claim`, `relation`, `concept`, `causal`, `bridge`, `check`, and `decision` declarations plus source locators | `validate_ai4ss_model.py` |
+| 结果解释有没有说过头？ | Claim discipline workbench | `methods-reviewer`, `academic-writing-scaffold` | `.aiss` diagnostic `check`, bounded `claim`, and author `decision` declarations | `validate_ai4ss_model.py` |
+| 返修有没有证据链？ | Revision trace workbench | `reviewer-response`, plus upstream evidence skills | `.aiss` reviewer-request `decision`, evidence `artifact`, and report-boundary declarations | `validate_ai4ss_model.py` |
 
 ## Why This Matters
 
@@ -83,26 +97,29 @@ The first-order layer is useful only if it creates a usable research object:
 - It turns a rough theme into `.aiss` route declarations with data, source, method, and failure signals.
 - It makes feasibility visible before the researcher spends weeks on an impossible topic.
 - It gives ordinary scholars a first executable action instead of a methodology lecture.
-- It stops at author decision points instead of writing the paper.
+- It records auto-selected assumptions and keeps writing toward the paper.
 
 The second-order layer is useful only when it reduces scholarly risk:
 
 - It makes row loss, merge ambiguity, and variable construction visible before a result is interpreted.
 - It keeps literature synthesis tied to verified primary or local sources rather than model memory.
-- It can turn verified source rows into deterministic `.aiss` evidence fragments when a model element is affected.
+- It can turn verified sources into deterministic `.aiss` evidence fragments when a model element is affected.
 - It separates evidence-supported claims from interpretation, mechanism speculation, and author judgment.
-- It turns reviewer comments into auditable actions before the author writes final response prose.
+- It turns reviewer comments into auditable actions and AI-disclosed response working text before direct-submission status is marked ready.
+- It preserves registration, protocol, analysis-plan, materials, data, code, reporting, deviation-log, AI-use disclosure, direct-submission status, and replication-package status before a paper package is assembled.
 
 ## Teaching Rule
 
 Teach the sequence before the tool names:
 
-1. First, make one research loop exist: `.aiss` route, material, first action, stop reason.
+1. First, make one research loop exist: `.aiss` route, material, first action, continuation plan.
 2. Turn the selected `.aiss` route into a design brief and seven `mida` declarations: unit, constructs, comparison, evidence needs, and first analysis plan.
-3. Execute one analysis loop only after `analysis_readiness_check.csv` validates the design source, data source, required variables, sample/audit paths, and `.aiss` bridge alignment where applicable.
-4. Then, when the route produces evidence, use the second-order workbenches to inspect it.
+3. Execute one analysis loop only after `.aiss` readiness checks validate the design source, data source, required variables, sample/audit paths, and bridge alignment where applicable.
+4. Package publication-facing figures with `top-journal-figures`; helper packages can estimate, tidy, label, compose, and export, but final paper figures must be named R/ggplot2 objects exported from R under one shared style profile.
+5. Then, when the route produces evidence, use the second-order workbenches to inspect it.
+6. Before paper submission or R&R handoff, assemble a bounded transparency package: disclosure matrix, replication-package status, deviation log, AI contribution disclosure, human accountability status, outlet-policy check, direct-submission status, and working-text slots.
 
-Do not present AI as a writing shortcut. Present the agent as a research workbench that creates intermediate objects the researcher can inspect, revise, reject, and approve.
+Do not present AI-assisted text as no-AI or direct-submission ready. Present the agent as a research workbench that creates intermediate objects and working text the researcher can inspect, revise, reject, approve, and disclose.
 
 ## Factory-Level Evaluation
 
@@ -114,14 +131,17 @@ python3 scripts/run_factory_level_eval.py --clean
 ```
 
 The package in `docs/factory_level_eval/` contains a protocol, blinded packets,
-a gate matrix, a hidden condition mapping, a human grading sheet, deterministic
-rule-based scores, and an unblinded report. It scores the full chain:
+a gate matrix, a hidden condition mapping, a human grading sheet, LLM-as-judge
+prompts, optional LLM judge scores, and an unblinded report. Deterministic gate
+checks are judge evidence, not eval scores. It judges the full chain:
 
 ```text
 rough topic -> .aiss route declarations -> .aiss MIDA declarations ->
-.aiss model/check ->
-literature/data gates -> analysis readiness -> analysis manifest ->
-bounded claim handoff
+.aiss model/check -> observed public-source acquisition ->
+observed-data sample construction/check -> literature evidence gates ->
+.aiss analysis readiness -> .aiss analysis artifacts ->
+top-journal ggplot2 figure package -> transparency package ->
+bounded claim handoff -> AI-disclosed manuscript package
 ```
 
 This is the right classroom artifact for explaining why the workbench is more
@@ -161,12 +181,12 @@ The older non-blinded demonstration can still be regenerated with:
 python3 scripts/simulate_skill_use_eval.py --output docs/skill_use_eval.simulated_report.md
 ```
 
-Both simulations check output structure, not model intelligence. Their teaching claim is narrow: skills are useful only when they make canonical artifacts, validation gates, and author-owned decisions appear in the workflow. A true double-blind evaluation would still require independently generated live outputs, concealed condition assignment, independent human graders, and inter-rater reliability checks.
+Both simulations check output structure, not model intelligence. Their teaching claim is narrow: skills are useful only when they make `.aiss` declarations, validation gates, AI-use disclosure, and human accountability decisions appear in the workflow. A stronger blinded evaluation would still require independently generated live outputs, concealed condition assignment, independent LLM judges, expert audit of the judge rubric, and inter-rater reliability checks.
 
-The live package is condition-blinded for scoring, not fully double-blind. Generators know their assigned condition, and packet style can still reveal clues. Its appropriate claim is narrower: in these controlled tasks, skill-guided agents can be compared against careful generic agents on traceability, boundary discipline, validation gates, and author decision visibility.
+The live package is condition-blinded for scoring, not fully double-blind. Generators know their assigned condition, and packet style can still reveal clues. Its appropriate claim is narrower: in these controlled tasks, skill-guided agents can be compared against careful generic agents on traceability, boundary discipline, validation gates, and assumption-register visibility.
 
 ## Improvement From Live Evaluation
 
 The live evaluation found that `literature_evidence` did not improve under the first skill-guided run. The gap was not source grounding in principle; it was search richness. The generic packet offered more seed sources and a clearer source-status ledger, while the skill-guided packet leaned too heavily on schema discipline.
 
-The `literature-matrix` skill now requires an open-ended literature task to start with `literature_candidate_discovery.csv` before extraction. That discovery ledger records search strata, exact queries or seed sources, source type, source status, next verification action, relevance axis, and snowballing targets. The validator `validate_literature_discovery.py` checks this stage separately from `validate_literature_matrix.py`.
+The `literature-matrix` skill now requires an open-ended literature task to start by declaring source scope, search strata, exact queries or seed sources, source type, source status, next verification action, relevance axis, and snowballing targets in `.aiss` before extraction. `validate_ai4ss_model.py` checks that the resulting research object remains parseable, lintable, and runnable.

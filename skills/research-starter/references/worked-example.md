@@ -11,9 +11,9 @@ Available materials:
 - Three seed papers on digital government and innovation.
 - Notes from a policy report.
 
-Hard boundaries:
+Boundaries:
 
-- No final manuscript prose.
+- No hidden-AI or direct-submission-ready prose.
 - Do not claim causality before identification review.
 - Do not use confidential firm documents.
 
@@ -23,8 +23,8 @@ Desired next action: decide what can be tried first.
 
 | route | question | study type | first action | next skill |
 |---|---|---|---|---|
-| R1 | Did platform rollout coincide with changes in firm green patenting? | causal | Check city-year rollout timing, firm-city linkage, and pre/post coverage | `research-data-builder` |
-| R2 | What mechanisms do policy documents claim for digital-government effects on firms? | text_analysis | Build a 20-document extraction schema for mechanism sentences | `literature-matrix` or `research-data-builder` |
+| R1 | Did platform rollout coincide with changes in firm green patenting? | causal | Check city-year rollout timing, firm-city linkage, and pre/post coverage | `public-data-sources` |
+| R2 | What mechanisms do policy documents claim for digital-government effects on firms? | text_analysis | Build a 20-document extraction schema for mechanism sentences | `literature-matrix` or `public-data-sources` |
 | R3 | How does the literature measure digital government in firm outcomes research? | theory_mapping | Build a candidate source ledger from seed papers and snowballing targets | `literature-matrix` |
 
 ## Minimum Viable Study
@@ -44,7 +44,7 @@ Do not estimate the DID yet. The researcher must confirm whether platform rollou
 ## Handoff Prompt
 
 ```text
-Use $research-data-builder on route R1.
+Use $public-data-sources on route R1 before $research-data-builder.
 
 Inputs: policy rollout list, firm patent panel, firm-city linkage.
 Goal: build a feasibility table only. Report city-year coverage, missing linkage, rollout-year distribution, and whether comparison units exist.

@@ -1,0 +1,57 @@
+{
+  "status": "success",
+  "model": "openai-api/deepseek/deepseek-v4-pro",
+  "task": "ddi_harness",
+  "inspect_task_file": "evals/ddi_harness/task.py",
+  "solver": "inspect_swe/codex_cli",
+  "solver_model_config": "gpt-5.3-codex",
+  "skills": [
+    "skills/codebook-parse",
+    "skills/cleaning-contract",
+    "skills/cleaning-execute"
+  ],
+  "sandbox": {
+    "type": "docker",
+    "config": "Dockerfile"
+  },
+  "scorer": "ddi_harness_oracle",
+  "log": "/tmp/ai4ss-inspect-logs/official-round1c/2026-07-04T16-36-19-00-00_ddi-harness_RwMPE7TRQD5ZKYKFcEn7fa.eval",
+  "source_retry_log": "/tmp/ai4ss-inspect-logs/official-round1b/2026-07-04T16-16-09-00-00_ddi-harness_RwMPE7TRQD5ZKYKFcEn7fa.eval",
+  "started_at": "2026-07-04T16:36:19+00:00",
+  "completed_at": "2026-07-04T16:41:02+00:00",
+  "total_samples": 3,
+  "completed_samples": 3,
+  "samples_scored": 3,
+  "samples_unscored": 0,
+  "accuracy": 1.0,
+  "samples": [
+    {
+      "id": "positive_missing_and_execution_order",
+      "score": 1.0,
+      "rows": 3,
+      "sha256": "b264008ea8b65ab3a453795c7d4fdf76adfc11c217cd0580f6efe7a730d8a98a",
+      "explanation": "passed deterministic DDI harness oracle"
+    },
+    {
+      "id": "range_missing_and_valid_sentinel",
+      "score": 1.0,
+      "rows": 3,
+      "sha256": "2dccd6ea2116094301ad6f3a1522435af2f81f5394a1acbeb3b1a421d1a9ecdc",
+      "explanation": "passed deterministic DDI harness oracle"
+    },
+    {
+      "id": "derive_after_rename_and_drop",
+      "score": 1.0,
+      "rows": 2,
+      "sha256": "8ab4010bca0c1afaa4bc08a9cbfa7edd8baa09bf270c3f8c19a0a042cdcc77c2",
+      "explanation": "passed deterministic DDI harness oracle"
+    }
+  ],
+  "model_usage": {
+    "input_tokens": 126192,
+    "output_tokens": 50557,
+    "total_tokens": 2653165,
+    "input_tokens_cache_read": 2476416,
+    "reasoning_tokens": 23665
+  }
+}

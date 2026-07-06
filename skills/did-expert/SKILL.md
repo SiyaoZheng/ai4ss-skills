@@ -13,9 +13,36 @@ description: >
 
 Guide for applying Difference-in-Differences methods in applied research, grounded in Baker, Callaway, Cunningham, Goodman-Bacon & Sant'Anna (2025, JEL) and the Callaway & Sant'Anna (2021) R `did` package.
 
+## Full-Auto Harness Contract
+
+When invoked by an automatic research harness, this skill must not pause for
+human choice or return any terminal no-progress state. It must inspect panel structure, choose the strongest defensible DID or
+panel estimator automatically, implement diagnostics, rerun code, and write
+bounded identification language for a publication-level `paper/full_draft.pdf`.
+If DID is not credible, select the nearest defensible panel/descriptive design
+and state the limitation in the draft-facing claim boundary.
+
+Synthetic-control-family estimators are methods, not permission to create
+synthetic empirical rows. The panel, treatment timing, outcomes, covariates, and
+analysis inputs must come from real observed public or authorized data. If the
+panel cannot be acquired or verified, route to `public-data-sources` or
+`study-design-builder` rather than fabricating a panel.
+
+## .aiss State Machine
+
+When invoked from an AI4SS research-factory workspace, locate
+`.ai4ss/research_model.aiss` and run
+`python3 dsl/scripts/aiss.py state .ai4ss/research_model.aiss` before choosing
+or returning `next_skill_route`. Starts, completions, failures, and watchdog
+heartbeat observations should be recorded as `.aiss` `event` declarations or
+returned as deterministic `aiss.py transition --event ...` fragments. Events
+do not replace semantic updates: DID diagnostics, estimator choices, repairs,
+and bounded-identification language must still update the relevant `mida`,
+`check`, `decision`, `artifact`, or `claim` declarations.
+
 ## Implementation Gate
 
-Before diagnosing DID results, make the analysis script rerunnable from a clean process. Use `Rscript --vanilla`, load every required package explicitly, create output directories in code, and define every plot/table object before use. Errors such as `object '<plot>' not found`, missing package functions, or stale figure files are implementation blockers, not DID diagnostics.
+Before diagnosing DID results, make the analysis script rerunnable from a clean process. Use `Rscript --vanilla`, load every required package explicitly, create output directories in code, and define every plot/table object before use. Errors such as `object '<plot>' not found`, missing package functions, or stale figure files are implementation repairs to complete before DID diagnostics.
 
 After editing DID plotting or estimation code, rerun the full script and assert that every declared diagnostic table and figure exists. If the script fails, fix that failure before interpreting pre-trends, placebo tests, or estimator differences.
 

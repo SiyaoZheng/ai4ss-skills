@@ -1,0 +1,9 @@
+packet_id,case_id,judge_prompt,llm_score_0_100,judge_reason,judge_model
+P001,data_provenance,judge_prompts/P001.md,,,
+P002,data_provenance,judge_prompts/P002.md,,,
+P003,literature_evidence,judge_prompts/P003.md,,,
+P004,literature_evidence,judge_prompts/P004.md,,,
+P005,claim_discipline,judge_prompts/P005.md,,,
+P006,claim_discipline,judge_prompts/P006.md,,,
+P007,revision_trace,judge_prompts/P007.md,,,
+P008,revision_trace,judge_prompts/P008.md,,,

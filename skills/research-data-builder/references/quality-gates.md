@@ -8,7 +8,7 @@ Use these gates to decide whether a data pipeline can proceed.
 - Gate 1: Unit Of Observation
 - Gate 2: Merge Integrity
 - Gate 3: Variable Construction
-- Gate 4: Text Extraction And Human Review
+- Gate 4: Text Extraction And Audit Review
 - Gate 5: Sample Flow
 - Gate 6: Reproducibility
 - Gate 7: Handoff Readiness
@@ -20,15 +20,21 @@ PASS when:
 - Raw data directories are identified and protected.
 - Output directories are identified.
 - Credentials, private folders, and sensitive files are excluded.
-- The user request is compatible with project instructions.
+- The task is compatible with project instructions.
+- Manuscript-facing analysis rows are real observed public or authorized data
+  with source provenance.
 
 FAIL when:
 
 - The task requires editing `data/raw/`.
 - A script reads `.env`, credentials, or private folders without explicit need.
 - The project has conflicting instructions about source of truth.
+- A script creates empirical rows, outcomes, treatments, covariates, tables, or
+  estimates from synthetic, simulated, hypothetical, illustrative, DGP,
+  random-draw, benchmark-calibrated, or literature-parameter-imputed data.
 
-Action on FAIL: stop and ask for a boundary decision.
+Action on FAIL: choose the permitted boundary, narrow the data action, or route
+to design repair; record the boundary in `.aiss`.
 
 ## Gate 1: Unit Of Observation
 
@@ -71,12 +77,12 @@ WARN when:
 FAIL when:
 
 - A many-to-many merge increases rows unexpectedly.
-- Matching uses names without a manual review stage.
+- Matching uses names without an audit review artifact.
 - Unmatched treated units are dropped without explanation.
 
 Minimum evidence:
 
-- `merge_audit.csv`;
+- `.aiss merge checks`;
 - unmatched files;
 - duplicate-key diagnostics.
 
@@ -101,7 +107,7 @@ FAIL when:
 
 Minimum evidence:
 
-- `variable_provenance.csv`;
+- `.aiss variable-provenance observations`;
 - cross-tab for treatment and timing;
 - range and missingness checks.
 
@@ -125,7 +131,7 @@ FAIL when:
 
 Minimum evidence:
 
-- `sample_flow.csv`;
+- `.aiss row-loss checks`;
 - missingness report;
 - restriction flags retained at least in interim data.
 
@@ -161,7 +167,8 @@ Minimum evidence:
 |---|---|---|---|
 | silent row explosion | N increases after merge | duplicate keys or many-to-many join | stop, create duplicate audit, aggregate or disambiguate |
 | fake balanced panel | rows missing but filled by expand grid | accidental zero-fill | keep missing explicit, never zero-fill unless substantively justified |
+| synthetic fallback | no source file but a generated analysis sample appears | failed acquisition treated as permission to simulate | discard generated rows and switch to another real observed data route |
 | treatment leakage | treatment uses post-outcome information | constructing policy from outcome data | rebuild treatment from source list |
-| lost raw provenance | final data has no source columns | over-cleaned pipeline | add source ids and variable provenance |
+| lost raw provenance | final data has no source columns | over-cleaned pipeline | add source ids and `.aiss` provenance observations |
 | ambiguous IDs | `city_id` and `city_code` mixed | inconsistent naming | harmonize once and document mapping |
 | text hallucination | extracted values not in source snippets | LLM free extraction | require snippets and manual review flags |

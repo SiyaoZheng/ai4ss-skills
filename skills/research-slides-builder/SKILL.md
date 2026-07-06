@@ -1,102 +1,115 @@
 ---
 name: research-slides-builder
 description: >
-  Research presentation skill for converting verified social-science results into slide maps,
-  source maps, layout plans, reveal.js decks, PPT outlines, teaching demos, and visual result narratives. Use when
-  making or auditing slides from existing tables, figures, logs, literature matrices, or author
-  notes. It may organize and visualize verified evidence but must not invent findings, write
-  manuscript prose, or produce final academic talk prose without author-supplied wording. Triggers: "research slides", "conference presentation", "reveal.js research deck", "PPT from results",
-  "slides from results", "research result slides", "学术汇报", "研究结果汇报", "证据型幻灯片", "result narrative",
-  "one claim per slide", "presentation audit".
+  Research presentation skill for converting verified social-science evidence into bounded
+  presentation plans or deck artifacts. Use for presentation structure, evidence-to-presentation mapping,
+  visual claim checks, privacy checks, and source-linked figures without inventing claims.
+  Triggers: "research slides", "conference deck", "presentation from results", "slide claims",
+  "研究汇报", "学术汇报", "做slides", "结果展示".
 ---
 
 # Research Slides Builder
 
-Turn verified research artifacts into presentation materials. The deck should help an audience inspect the argument, evidence, and limits of the study.
+Turn verified research evidence into presentation artifacts without overstating what the evidence can support.
 
 ## Scholar Workbench
 
-This skill supports the same claim-discipline question in presentation form: "结果解释有没有说过头？" Its value is not slide polish; it is keeping every slide claim tied to a source artifact, visual object, and stated boundary.
+This skill answers: "已验证证据怎样讲给听众？" Its value is not making a prettier deck; it is making each slide claim source-linked, scoped, and bounded.
 
 ## Core Rule
 
-Slides may repackage verified evidence; they may not create new academic claims. If a conclusion is not in the tables, figures, literature matrix, or author notes, mark it as a gap.
+Only present claims that can be traced to checked evidence. Do not invent results, simplify away uncertainty, or turn slide rhetoric into manuscript claims.
 
-For academic talks, conference decks, seminar slides, and manuscript-derived presentations, produce slide maps, evidence/source maps, layout plans, and author-fillable title/body slots. Do not write final academic presentation prose unless the source text is explicitly authored and supplied by the researcher. Non-academic teaching/demo decks may use explanatory slide text, but still must not invent research findings.
+## Full-Auto Harness Contract
+
+When invoked by an automatic research harness, this skill must not pause for
+human choice or return any terminal no-progress state. It must create the strongest source-linked deck or slide plan possible
+from current evidence, and when evidence is thin it must narrow the slide claim,
+add uncertainty/source notes, or trigger upstream evidence work. It must not
+produce a generic placeholder; presentation artifacts should remain consistent
+with the publication-level `paper/full_draft.pdf`.
+
+## AI4SS Runtime Gate
+
+Do not build research slides from disconnected tables, figures, or memory when the project is inside the research factory. Locate `.ai4ss/research_model.aiss`, selected route, MIDA declarations, evidence artifacts, methods diagnostics, and report-boundary declarations before planning slides.
+
+Slide claims and deck artifacts must be represented or referenced by `.aiss` presentation `artifact`, bounded `claim`, source-link, privacy `check`, or author `decision` declarations. A deck file can be an output artifact, but it is not the workflow state.
+
+## Workspace Contract
+
+Follow `docs/research_workspace_contract.md`. Durable workflow state belongs in
+`.ai4ss/research_model.aiss`; generated data, output, logs, and PDFs must be
+produced through `make` targets, with `make all` as the final orchestration path.
+
+## .aiss State Machine
+
+When `.ai4ss/research_model.aiss` exists, run
+`python3 dsl/scripts/aiss.py state .ai4ss/research_model.aiss` before deciding
+the next route. When this skill starts, completes, fails, or observes a
+watchdog heartbeat in an automatic harness, record that runtime fact as an
+`.aiss` `event` declaration or return a deterministic
+`aiss.py transition --event ...` fragment for merge. Events do not replace
+semantic updates: if the skill resolves a repair/check status, update the
+relevant `route`, `mida`, `decision`, `check`, `artifact`, or claim-support
+declaration too.
 
 ## Methodology Foundation
 
-This skill sits in the `Report` layer of the MIDA spine. It turns declared evidence into public-facing slide claims while preserving inquiry or estimand, sample or scope, source artifact, uncertainty or caveat, privacy status, and interpretation boundary.
+This skill sits in the `Report` layer of the MIDA spine. It preserves target inquiry, source artifact, sample or scope, uncertainty, privacy status, interpretation boundary, and automatic presentation choices.
 
-Its methodology status is partial: it supports transparent communication, but it does not itself diagnose empirical validity or supply a full visual-evidence methodology.
-
-When a `.aiss` model is present, slide maps should preserve model identifiers for any claim slot that depends on a declared concept, causal implication, or empirical bridge.
+When a slide references a concept, causal implication, bridge, estimate, figure, or literature fact, it must preserve relevant `.aiss` ids and `ai4ss_check_status`.
 
 ## Workflow Contract
 
-- Upstream inputs: verified tables, figures, `research_model.aiss`, analysis run manifest, methods issue table, literature matrix, data audit outputs, author notes, venue, audience, and time limit.
-- Produces: slide map, source map, deck outline or edited deck, visual audit notes, privacy review, and evidence gaps.
-- Handoff fields: `route_id`, `slide_id`, `claim_slot`, `source_artifact`, `sample_or_scope`, `uncertainty_or_caveat`, `evidence_status`, `visual_object`, `interpretation_boundary`, `privacy_status`, `ai4ss_model_path`, `model_id`, `concept_id`, `causal_id`, `bridge_id`, `ai4ss_check_status`, `next_skill_route`.
-- Downstream routes: `methods-reviewer`, `academic-writing-scaffold`, `reviewer-response`, `ask_author`, or `none`.
+- Upstream inputs: `.ai4ss/research_model.aiss`, checked `.aiss` claims, tables, figures, data artifacts, literature evidence, methods-review findings, author draft notes, venue/audience constraints, or existing deck files.
+- Produces: slide structure, source-linked claim slots, visual object instructions, privacy checks, reporting-transparency reminders, deck artifacts when requested, and `.aiss` presentation `artifact`, bounded `claim`, source-link, `check`, or `decision` declarations.
+- Handoff fields: `route_id`, `target_inquiry`, `claim_id`, `source_artifact`, `sample_or_scope`, `uncertainty_or_caveat`, `privacy_status`, `reporting_transparency_status`, `visual_object`, `interpretation_boundary`, `assumptions_to_disclose`, `ai4ss_model_path`, `model_id`, `concept_id`, `causal_id`, `bridge_id`, `ai4ss_check_status`, `next_skill_route`.
+- Downstream routes: `methods-reviewer`, `academic-writing-scaffold`, `reviewer-response`, or `none`.
 
 ## Routing Boundaries
 
-Use this skill for deck structure, readability, slide-map validation, and privacy review. Do not use it for ordinary deck editing without research evidence. Do not use it to validate empirical claims; delegate result-claim and identification checks to `methods-reviewer`. Do not use it to write manuscript prose, final academic talk prose, or replacement wording for author-authored research slides.
+Use this skill for source-linked presentation planning and deck artifact creation. Use `methods-reviewer` when evidence validity is uncertain. Use `academic-writing-scaffold` for paper-oriented writing support and reporting disclosures. Do not use this skill to create no-AI/direct-submission scholarly claims, hide data/code limits, or fabricate visual evidence.
 
 ## Workflow
 
-```
-Step -1: Inventory inputs
--> Tables, figures, model logs, data audit outputs, literature matrix, author notes, venue, audience, time limit.
+```text
+Step -1: Infer scope
+-> Identify or infer audience, venue, time limit, deck format, confidentiality limits, and source files.
+-> Locate `.ai4ss/research_model.aiss` and checked evidence when this is a research-factory project.
 
-Step 0: Build slide map
--> One slide = one claim or one task.
--> Map every claim to a source artifact.
--> Identify which slides are evidence, method, context, limitation, or discussion.
+Step 0: Evidence map
+-> Map each proposed slide claim to a checked source artifact, sample/scope note, uncertainty, and interpretation boundary.
+-> Narrow, source, or route back automatically when a claim lacks evidence.
 
-Step 1: Choose format
--> For reveal.js/HTML, inspect existing design system before editing.
--> For PPT outlines, specify author-fillable title slot, evidence object, visual layout, and speaker intent.
--> For teaching decks, show process and checkpoints, not only final results.
+Step 1: Plan deck
+-> Build a slide sequence with one claim slot per slide.
+-> Pair each claim slot with visual material, source link, and caveat.
+-> Keep disclosure and uncertainty visible for sensitive or speculative claims.
 
-Step 2: Build or audit
--> Use references/deck-structure.md for narrative order.
--> Use references/visual-rules.md for figure/table treatment and layout checks.
--> Keep dense research content readable; avoid marketing-style claims.
+Step 2: Produce artifact if requested
+-> Create or edit the deck file.
+-> Verify that figures, captions, labels, and source notes match the underlying evidence.
 
-Step 3: Verify
--> Open or inspect the final artifact when possible.
--> Check for unsupported claims, broken paths/assets, overflow, inconsistent terminology, and privacy leaks.
--> Update an AI-use ledger when the deck is shared outside the classroom or draws on confidential materials.
+Step 3: Hand off
+-> Return deck path or slide plan, touched `.aiss` ids, privacy status, and next route.
 ```
 
 ## Default Outputs
 
-- Slide map with claim-source links.
-- Deck outline, slide-map CSV, or edited teaching/demo slide file. For academic research decks, use author-fillable title/body slots unless author text is supplied.
-- Evidence-gap list.
-- Visual and privacy audit checklist.
-
-For any slide map shown as Markdown, keep a CSV sidecar for `scripts/validate_slide_map.py`.
+- Updated `.ai4ss/research_model.aiss` or deterministic `.aiss` fragment with presentation artifacts, bounded slide claims, privacy checks, and automatic presentation choices.
+- Slide sequence or deck artifact when requested.
+- Source-linked claim list, visual object list, and caveat list in the chat response.
+- Automatic evidence narrowing, privacy redaction, or upstream handoff when evidence or privacy status is insufficient.
 
 ## Script Utilities
 
-- Run `scripts/validate_slide_map.py <path>` to check slide-map columns and source-artifact coverage.
-
-## Standards
-
-- Use source labels or notes where the audience needs to verify a claim.
-- Preserve estimand, sample, and uncertainty when reporting results.
-- Keep methods slides specific: sample, variables, fixed effects, clustering, diagnostics.
-- Use large visuals for tables and figures; do not paste unreadable regression tables.
-- Do not include author personal info, contact details, or affiliations unless explicitly requested.
+- Run `scripts/validate_ai4ss_model.py .ai4ss/research_model.aiss` when presentation declarations are added or changed.
+- Use project-specific render or export commands to verify deck artifacts when a deck file is produced.
 
 ## Reference Files
 
 | File | Content | Read when |
 |---|---|---|
-| [deck-structure.md](references/deck-structure.md) | Research talk narrative patterns and slide map schema | Planning or reorganizing a deck |
-| [visual-rules.md](references/visual-rules.md) | Rules for converting tables/figures into readable slides and auditing output | Building or reviewing slides |
-| [prompt-pack.md](references/prompt-pack.md) | Copy-ready prompts for slide maps, result-deck conversion, reveal.js editing, and deck audits | Turning presentation needs into agent tasks |
-| [revealjs-patterns.md](references/revealjs-patterns.md) | Single-file reveal.js structure, section discipline, CSS constraints, and local preview checks | Editing HTML slide artifacts |
-| [worked-example.md](references/worked-example.md) | Example DID result deck map with slide claims, evidence paths, and audit notes | Teaching or demonstrating the skill |
+| [visual-rules.md](references/visual-rules.md) | Evidence-to-slide rules, uncertainty display, privacy checks, and source-link standards | Planning or auditing slides |
+| [prompt-pack.md](references/prompt-pack.md) | Copy-ready prompts for slide planning and claim checks | Turning evidence into a presentation task |
+| [worked-example.md](references/worked-example.md) | Example bounded slide sequence | Teaching or demonstrating the skill |

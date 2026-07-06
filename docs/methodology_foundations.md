@@ -26,52 +26,55 @@ The common language is adapted from the MIDA and declare-diagnose-redesign frame
 | Answer strategy | Estimator, coding procedure, synthesis rule, diagnostic comparison, table/figure shell, or qualitative inference procedure | How will the evidence be converted into an answer? |
 | Diagnose | Bias, precision, power, coverage, measurement risk, source-screening risk, linkage loss, reproducibility status, and claim-support mismatch | What can go wrong, and how would we know before overclaiming? |
 | Redesign | Neighboring feasible designs, smaller first loops, added data, revised measures, changed estimators, or abandoned routes | What should change when the current design is too weak? |
-| Report | Claim ledger, source map, AI-use ledger, author decision points, and public communication boundaries | What can be said, by whom, and with what evidence? |
+| Report | Bounded claim declarations, source map, AI-use ledger, automation assumption register, and public communication boundaries | What can be said, by whom, and with what evidence? |
 
 `Estimand` is important, but it is not the whole framework. In this pack it lives inside `Inquiry`. A causal project should name the target comparison, population, outcome, exposure/treatment, time window, and scale. A descriptive, text, qualitative, or literature-synthesis project should name its target quantity, construct, classification, sequence, or synthesis claim with the same precision.
 
 ## Theory Workbench Boundary
 
 The shared theory engine is a workflow layer across existing skills, not a new
-top-level skill. Literature evidence enters through `literature_matrix.csv` and
-`literature_theory_synthesis.csv`; rival explanations and scope conditions are
-kept in `theory_rival_map.csv` and `theory_scope_map.csv`; model-ready objects
-are compiled from `theory_evidence.md` through the existing
-`dsl/scripts/compile_evidence.py` path.
+top-level skill. Literature evidence enters through `.aiss` `paper`, `source`,
+`span`, `claim`, `relation`, `concept`, `causal`, `bridge`, `check`, and
+`decision` declarations. Rival explanations, scope conditions, model-ready
+objects, and human-accountable theory choices live in `.aiss`; external notes are
+only evidence artifacts referenced by that object.
 
 The methodology role is narrow: make candidate concepts, mechanisms, observable
-implications, rivals, and scope conditions inspectable before the author writes.
+implications, rivals, scope conditions, and disclosure status inspectable before
+working text is marked direct-submission ready.
 Validated `ready_for_aiss` objects can support `.aiss` `concept`, `claim`,
 `relation`, `causal`, `bridge`, and `model` declarations. Novelty, theoretical
 contribution, mechanism strength, scope framing, and rival prioritization
-remain author-owned `decision` declarations or Author Workbench questions.
+remain human-accountable `decision` declarations or Author Workbench questions.
 
 ## Skill Assignment
 
 | workflow stage | skill | methodology role | must declare or preserve |
 |---|---|---|---|
 | Route discovery | `research-starter` | Pre-declaration: write candidate `.aiss` `route` declarations before committing | rough Model, candidate Inquiry, possible Data strategy, possible Answer strategy, diagnosability, failure signal |
-| Design | `study-design-builder` | Primary declaration: turn a selected `.aiss` `route` into seven `mida` declarations and author `decision` declarations | Model, Inquiry, Data strategy, Answer strategy, diagnosands, author decisions |
-| Data | `research-data-builder` | Data strategy realization and audit | sample/source rule, measurement, extraction, linkage, transformations, row loss, missingness, provenance |
+| Design | `study-design-builder` | Primary declaration: turn a selected `.aiss` `route` into seven `mida` declarations and harness-owned `decision` declarations | Model, Inquiry, Data strategy, Answer strategy, diagnosands, automation assumptions |
+| Source acquisition | `public-data-sources` | Real observed source acquisition and access gate | source access status, access class, official docs, request template, observed-data-only status, row source provenance |
+| Data | `research-data-builder` | Observed data strategy realization and audit | verified source artifact, measurement, extraction, linkage, transformations, row loss, missingness, provenance |
 | Literature | `literature-matrix` | Evidence-as-data strategy for literature claims | source scope, search strata, screening rule, source status, extraction fields, synthesis eligibility, optional theory workbench handoff |
 | Analysis | `research-analysis-runner` | Answer strategy execution | design source, data source, code path, output path, sample note, uncertainty/diagnostic output, interpretation boundary |
+| Figures | `top-journal-figures` | Visual answer-strategy packaging and report-boundary audit | ggplot2 figure spec, shared style profile, plotted data, source note, uncertainty display, vector export, black-and-white readability, interpretation boundary |
 | Methods review | `methods-reviewer` | Diagnose and redesign | design-output-claim alignment, diagnosands, rival/scope/mechanism risks, method-specific risks, recommended redesigns |
-| Writing scaffold | `academic-writing-scaffold` | Reporting discipline | target inquiry, evidence source, support level, citation/source gap, theory workbench questions, author decision, AI-writing boundary |
+| Writing scaffold | `academic-writing-scaffold` | AI-disclosed reporting discipline | target inquiry, evidence source, support level, citation/source gap, theory workbench questions, assumption register, AI contribution disclosure, direct-submission status |
 | Slides | `research-slides-builder` | Public communication from declared evidence | claim slot, source artifact, sample/scope, uncertainty or caveat, privacy status |
-| Revision | `reviewer-response` | Redesign and reconciliation under peer review | reviewer request, MIDA element affected, evidence action, manuscript location, confidentiality, author decision |
+| Revision | `reviewer-response` | Redesign and reconciliation under peer review | reviewer request, MIDA element affected, evidence action, manuscript location, confidentiality, automation decision |
 
 ## Required Declaration Fields
 
 These fields are the minimum cross-skill vocabulary. A skill does not need to fill every field, but it must preserve fields supplied upstream and mark missing fields explicitly when they matter.
 
-The hard design object is `research_model.aiss`: a selected `.aiss` `route`, seven `mida` declarations, and author-owned `decision` declarations. `study_design_brief.md`, `research_route_cards.csv`, `study_design_declaration.csv`, and `design_decision_register.csv` are readable projections of that object for humans and validators.
+The hard design object is `research_model.aiss`: a selected `.aiss` `route`, seven `mida` declarations, and harness-owned `decision` declarations. Chat summaries and external notes are readable projections only; they are not handoff contracts.
 
 | field | why it matters |
 |---|---|
 | `route_id` | Keeps alternative designs from collapsing into one vague project |
-| `route_decl_id` | Points route sidecars to the matching `.aiss` `route` declaration |
-| `mida_id` | Points design-declaration rows to the matching `.aiss` `mida` declaration |
-| `decision_decl_id` | Points decision-register rows to the matching `.aiss` `decision` declaration |
+| `route_decl_id` | Points downstream work to the matching `.aiss` `route` declaration |
+| `mida_id` | Points downstream work to the matching `.aiss` `mida` declaration |
+| `decision_decl_id` | Points downstream work to the matching `.aiss` `decision` declaration |
 | `model_scope` | Names population, unit, place/time, construct, mechanism, and assumptions |
 | `inquiry` | Names the target estimand, descriptive quantity, measurement target, classification target, or synthesis question |
 | `data_strategy` | Names source selection, sampling, measurement, extraction, linkage, and missingness rules |
@@ -79,7 +82,7 @@ The hard design object is `research_model.aiss`: a selected `.aiss` `route`, sev
 | `diagnosands_or_gates` | Names what will be checked: bias, precision, power, source status, row loss, reproducibility, claim support |
 | `redesign_options` | Names feasible changes if the current design fails |
 | `interpretation_boundary` | States what the artifact can and cannot support |
-| `author_decisions` | Makes researcher judgment explicit instead of laundering it through the agent |
+| `assumption_register` | Makes auto-selected assumptions explicit instead of hiding them in prose |
 
 ## Computable DSL Layer
 
@@ -90,7 +93,7 @@ and deterministic diagnostics in one language.
 
 Use `.aiss` for:
 
-- route status, route handoff, selected route, MIDA declarations, and author
+- route status, route handoff, selected route, MIDA declarations, and automation
   decisions
 - source, span, claim, relation, empirical, observation, coupling, artifact, and
   adapter records
@@ -105,9 +108,10 @@ Use `.aiss` for:
 Do not use `.aiss` as a replacement for:
 
 - full data strategy, including sampling, cleaning, linkage, extraction, and
-  missingness sidecars
+  missingness evidence artifacts
 - full answer strategy, including estimator/coding/synthesis scripts
-- ethics/confidentiality checks, AI-use disclosure, and final manuscript prose
+- ethics/confidentiality checks, AI-use disclosure, submission-policy checks, and
+  direct-submission status
 
 In factory terms: MIDA tells the scholar what kind of research object they are
 building. `.aiss` makes the workflow, evidence, and model portions of that
@@ -118,10 +122,10 @@ object durable and checkable.
 - A skill cannot claim methodology grounding by citing methods papers alone. It must state which part of the research-design spine it operates.
 - `study-design-builder` becomes the central declaration skill. It selects a `.aiss` route, declares MIDA, and records decisions; estimand or target quantity belongs there only alongside Model, Data strategy, Answer strategy, and diagnosands.
 - `research-starter` may propose routes, but those `.aiss` routes are provisional MIDA sketches, not valid designs.
-- `research-data-builder`, `literature-matrix`, and `research-analysis-runner` are not generic productivity skills. They realize the Data strategy and Answer strategy in auditable artifacts.
+- `public-data-sources`, `research-data-builder`, `literature-matrix`, and `research-analysis-runner` are not generic productivity skills. They realize the Data strategy and Answer strategy in auditable artifacts.
 - Theory mapping is not a prose generator. It is a validated handoff from
   verified literature rows to existing `.aiss` model declarations and bounded
-  author decisions.
+  automation assumptions.
 - `methods-reviewer` is the diagnostic layer. It should ask whether the declared design, executed outputs, and claims line up.
 - Writing, slides, and reviewer response are reporting/redesign layers. They must preserve the declared inquiry and diagnosed limits rather than create new scholarly claims.
 

@@ -18,12 +18,15 @@ The formal chain is deterministic:
 aiss.py compile(.aiss) -> canonical unified AST
 aiss.py lint(AST) -> deterministic diagnostics
 aiss.py run(AST) -> deterministic coupling and model diagnostics
+aiss.py state(AST) -> deterministic research-factory state projection
+aiss.py transition(AST, event) -> deterministic state-machine reducer report
 aiss.py diff(AST_A, AST_B) -> deterministic structural diff
 aiss.py write(AST, template) -> deterministic text artifact
 ```
 
 No formal operation may call an LLM, depend on random ordering, use wall-clock
-time, or silently consult network resources.
+time, or silently consult network resources. Heartbeat freshness checks are only
+performed when the caller supplies an explicit `--now` timestamp.
 
 ## File Model
 
@@ -64,7 +67,7 @@ program =
 
 declaration =
   paper | source | span |
-  route | mida | decision |
+  route | mida | decision | event |
   concept | claim | relation | empirical | observation | coupling |
   artifact | adapter |
   attribute | causal | bridge | edge | model | check | derive
@@ -81,7 +84,7 @@ STRING, NUMBER, true, false, null, [VALUE, ...], { key: VALUE, ... }, bare_id
 | region | declarations | purpose |
 |---|---|---|
 | Provenance | `paper`, `source`, `span` | Grounds the research object in stable source locators |
-| Workflow | `route`, `mida`, `decision` | Represents candidate/selected routes, declared MIDA components, handoff decisions, and author-owned stops |
+| Workflow | `route`, `mida`, `decision`, `event` | Represents candidate/selected routes, declared MIDA components, handoff decisions, event-sourced runtime facts, and author-owned stops |
 | Theory/discourse | `concept`, `claim`, `relation` | Represents constructs, asserted claims, and theoretical relations |
 | Empirical | `empirical`, `observation`, `artifact`, `adapter` | Represents data, cases, observations, code, tables, figures, and deterministic adapters |
 | Coupling | `coupling`, `bridge` | Links theory/model objects to empirical material |
@@ -108,9 +111,10 @@ declaration rows must preserve `mida_id`, and decision registers must preserve
 | `paper` | `title`, `kind`, `sources` |
 | `source` | `kind`, `uri`, `media_type`, `locator_scheme` |
 | `span` | `source`, `locator` |
-| `route` | `question`, `status`, `study_type`, `unit_of_analysis`, `inquiry`, `data_strategy`, `answer_strategy`, `stop_reason`, `next_skill_route` |
+| `route` | `question`, `status`, `study_type`, `unit_of_analysis`, `inquiry`, `data_strategy`, `answer_strategy`, `continuation_plan`, `next_skill_route` |
 | `mida` | `route`, `component`, `text`, `status` |
 | `decision` | `route`, `component`, `decision`, `status`, `owner`, `next_skill_route` |
+| `event` | `type`, `at` |
 | `concept` | `term`, `spans` |
 | `claim` | `kind`, `text`, `spans` |
 | `relation` | `type`, `from`, `to`, `spans` |
@@ -163,7 +167,7 @@ route demo.route_r1 {
   inquiry: "average effect of platform exposure on high innovation"
   data_strategy: "source-verified rollout records linked to firm outcomes"
   answer_strategy: "readiness checks before estimation"
-  stop_reason: "author must approve identification and claim strength"
+  continuation_plan: "auto-run source, data, and methods checks before draft claims"
   next_skill_route: research-data-builder
   spans: [demo.span_route_r1]
 }
@@ -180,10 +184,19 @@ decision demo.decision_r1_identification {
   route: demo.route_r1
   component: inquiry
   decision: "Author must decide whether the causal route is worth pursuing."
-  status: needs_author_decision
-  owner: author
-  next_skill_route: ask_author
+  status: auto_resolved
+  owner: harness
+  next_skill_route: research-data-builder
   spans: [demo.span_route_r1]
+}
+
+event demo.event_source_heartbeat {
+  type: "heartbeat_seen"
+  at: "2026-07-05T00:00:00Z"
+  route: "demo.route_r1"
+  skill: "research-data-builder"
+  phase: "research-data-builder_running"
+  source: "goal-cli"
 }
 
 attribute demo.platform_exposure {
@@ -215,6 +228,42 @@ check demo.check_reference_integrity {
 }
 ```
 
+## State-Machine Semantics
+
+The `.aiss` state-machine engine is event-sourced and deterministic.
+
+- `route`, `mida`, and `decision` declarations define the durable research
+  semantic state.
+- `event` declarations record runtime facts such as skill starts/completions,
+  check failures, repair requirements, and goal-cli heartbeat observations.
+- `aiss.py state` projects the current machine state without mutating the file.
+- `aiss.py transition --event EVENT_JSON` previews the reducer result without
+  mutating the file.
+- `aiss.py transition --event EVENT_JSON --write` appends the normalized `event`
+  declaration to the `.aiss` source and reports the before/after machine state.
+
+Recognized event types are:
+
+```text
+skill_started
+skill_completed
+skill_failed
+check_passed
+check_failed
+repair_required
+heartbeat_seen
+heartbeat_interrupted
+goal_blocked
+goal_completed
+```
+
+`next_skill_route` values in `route`, `mida`, `decision`, and `event`
+declarations must remain inside the shared research-factory route table. The
+engine may recommend a `dispatch_skill` action, but it does not execute skills.
+Execution and process-level watchdog behavior remain outside `.aiss`; goal-cli
+or an equivalent runner is responsible for timed ticks, process locks, and
+runtime cleanup.
+
 ## Forbidden Source Primitives
 
 Analyzer outputs are not source declarations. The parser rejects:
@@ -233,7 +282,7 @@ lint_result
 ```
 
 These belong in lint/run reports, methods-review issue tables, claim ledgers, or
-author decision registers.
+automation decision registers.
 
 ## Deterministic Outputs
 
@@ -259,7 +308,7 @@ are not linked to artifacts or observations.
 
 - deterministic adapter skip records when no adapter is registered
 - coupling assessments with `not_assessable` instead of guessed support
-- workflow diagnostics, including selected routes, MIDA coverage, and open author decisions
+- workflow diagnostics, including selected routes, MIDA coverage, and open automation decisions
 - model diagnostics, including bridge coverage and commensurability signals
 
 `diff` compares canonical AST structures by path. `write` renders deterministic

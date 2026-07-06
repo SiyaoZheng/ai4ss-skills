@@ -2,7 +2,7 @@
 
 Use these prompts for research presentations and teaching decks.
 
-## Slide Map First
+## Presentation Declarations First
 
 ```text
 Use $research-slides-builder.
@@ -15,10 +15,10 @@ Inputs:
 - research design: [path]
 - tables: [paths]
 - figures: [paths]
-- literature matrix or notes: [paths]
+- checked `.aiss` literature evidence declarations or source notes: [paths]
 - existing deck: [path if any]
 
-Output a slide map:
+Output `.aiss` presentation artifact declarations:
 - slide_id;
 - role;
 - one claim or task;
@@ -33,14 +33,15 @@ Do not edit files yet.
 ## Convert Results To Slides
 
 ```text
-Use $research-slides-builder to convert verified results into a slide_map.csv and author-fillable slide outline.
+Use $research-slides-builder to convert verified results into `.aiss`
+presentation artifact declarations and AI-disclosed slide working text.
 
 Requirements:
 - one main claim slot per slide;
 - every result claim points to a table, figure, log, or author note;
 - preserve sample, FE, clustering, uncertainty, and limits;
 - do not invent findings or policy implications;
-- do not write final academic slide prose unless it is supplied by the author;
+- any AI-written slide prose must remain source-linked and AI-disclosed;
 - include an evidence-gap list.
 ```
 
@@ -58,7 +59,8 @@ Please:
 3. use existing classes when possible;
 4. preserve Chinese style rules;
 5. do not add personal info;
-6. for academic research slides, preserve author-supplied wording or use author-fillable claim slots;
+6. for academic research slides, preserve author-supplied wording or mark
+   AI-written wording as disclosed working text;
 7. preview or inspect final HTML if feasible.
 ```
 
@@ -99,13 +101,13 @@ Show process, not only final outputs:
 ## Result Figure Slide
 
 ```text
-Use $research-slides-builder to create a slide-map row and author-fillable slide outline around one figure.
+Use $research-slides-builder to create a `.aiss` presentation artifact declaration and AI-disclosed slide working text around one figure.
 
 Figure: [path]
 Supporting table/log: [path]
 
 Return:
-- title claim slot, not final academic wording;
+- source-linked title claim or AI-disclosed working wording;
 - figure treatment;
 - source/limit line;
 - notes on axes, units, baseline period, uncertainty;
@@ -119,12 +121,12 @@ Bad prompt:
 帮我做一个很有冲击力的研究汇报，结论写得强一点。
 
 Improved prompt:
-Use $research-slides-builder to create a slide_map.csv first. Every result slide must
-point to a table, figure, log, literature matrix row, or author note. Route empirical
+Use $research-slides-builder to create a .aiss presentation artifact declarations first. Every result slide must
+point to a table, figure, log, `.aiss` source-evidence id, or author note. Route empirical
 validity doubts to $methods-reviewer before editing the deck.
 
 Expected behavior:
-Inventory sources -> build slide map -> mark unsupported claims as gaps -> validate
-slide_map.csv -> edit only verified slide claims -> inspect the final deck for overflow
+Inventory sources -> build presentation declarations -> mark unsupported claims as gaps -> validate
+.aiss presentation artifact declarations -> edit only verified slide claims -> inspect the final deck for overflow
 and privacy leaks.
 ```

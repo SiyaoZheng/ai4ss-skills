@@ -7,17 +7,17 @@ This example shows how to turn verified artifacts into slides without inventing 
 | artifact | role |
 |---|---|
 | `docs/research_design.md` | design and estimand |
-| `output/audit/sample_flow.csv` | sample and restrictions |
+| `.ai4ss/research_model.aiss` row-loss checks | sample and restrictions |
 | `output/tables/table1_baseline.csv` | main estimate |
 | `output/figures/event_study.svg` | diagnostic and dynamics |
 | `output/tables/robustness.csv` | sensitivity |
 
-## Slide Map
+## Presentation Declarations
 
 | slide | role | claim/task | source | visual | risk |
 |---|---|---|---|---|---|
 | 1 | question | Ask whether policy pilot affected city innovation output | author note | title + setting | too broad if outcome hidden |
-| 2 | data | Analysis sample is city-year panel for 2012-2023 | sample_flow.csv | sample flow table | missing row-loss explanation |
+| 2 | data | Analysis sample is city-year panel for 2012-2023 | .aiss row-loss checks | row-loss table | missing row-loss explanation |
 | 3 | design | Identification relies on treated vs untreated city-year comparison | research_design.md | design diagram | causal assumption must be explicit |
 | 4 | result | Preferred specification reports positive post-adoption difference | table1_baseline.csv | coefficient card + mini table | needs units and uncertainty |
 | 5 | diagnostic | Event-study plot checks pre-treatment pattern and dynamics | event_study.svg | figure | omitted period must be visible |
@@ -42,7 +42,7 @@ The agent should flag:
 
 - no mechanism table;
 - no external validity evidence;
-- no author-approved policy implication;
+- no source-backed policy implication;
 - pre-trend uncertainty needs visible labels;
 - sample-flow row loss needs explanation.
 

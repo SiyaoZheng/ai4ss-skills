@@ -1,0 +1,17 @@
+{
+  "hooks": {
+    "PreToolUse": [
+      {
+        "matcher": "Bash|apply_patch|Edit|Write",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "python3 ${PLUGIN_ROOT}/hooks/guard_generated_outputs.py",
+            "timeout": 5,
+            "statusMessage": "Checking AI4SS generated-output policy"
+          }
+        ]
+      }
+    ]
+  }
+}

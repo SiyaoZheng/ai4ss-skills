@@ -11,7 +11,7 @@ description: >
   PDF", "read the codebook Word file", or any time a user provides a survey file and
   wants to begin cleaning, labelling, or reproducible analysis. Supported inputs:
   Stata .dta, SPSS .sav, SAS .sas7bdat, CFPS YAML wrapper, DDI Codebook 2.5 XML,
-  CSV with a data dictionary sidecar, PDF questionnaire or codebook, Word .docx
+  CSV with a companion data dictionary, PDF questionnaire or codebook, Word .docx
   variable documentation.
 ---
 
@@ -26,6 +26,27 @@ before any data is touched. Your job is to produce that declaration.
 Flag uncertainty liberally with `_parse_flags` rather than guessing quietly —
 mistakes here propagate silently into every downstream step.
 
+## Full-Auto Harness Contract
+
+When invoked by an automatic research harness, this skill must not pause for
+human choice or return any terminal no-progress state. Infer the input format, study metadata, missing-code status, and
+low-confidence flags from the provided files. `_needs_review` and `_parse_flags`
+are audit signals for the draft PDF and downstream contracts; they do not stop
+`cleaning-contract` or `cleaning-execute` from running. The target relay is a
+publication-level `paper/full_draft.pdf`, so every parse uncertainty must become
+machine-readable metadata, not a request for external review.
+
+## .aiss State Machine
+
+When this DDI harness is invoked from an AI4SS research-factory workspace, locate
+`.ai4ss/research_model.aiss` and run
+`python3 dsl/scripts/aiss.py state .ai4ss/research_model.aiss` before choosing
+or returning `next_skill_route`. Starts, completions, failures, and watchdog
+heartbeat observations should be recorded as `.aiss` `event` declarations or
+returned as deterministic `aiss.py transition --event ...` fragments. Events
+do not replace the DDI SSOT: survey metadata and parse uncertainty still belong
+in `ddi-metadata.yaml`.
+
 ## Reference files — read before acting
 
 | File | When to read |
@@ -37,7 +58,7 @@ mistakes here propagate silently into every downstream step.
 
 ### 1 · Identify the input format
 
-Infer from file extension or ask the user:
+Infer from file extension, file signatures, nearby dictionaries, or source text:
 
 | Extension / content | Format | Extraction mode |
 |---|---|---|
@@ -46,7 +67,7 @@ Infer from file extension or ask the user:
 | `.sas7bdat` | SAS | Structured (R) |
 | `.yaml` with `content_base64` | CFPS YAML wrapper | Structured (R, decode first) |
 | `.xml` with DDI namespace | DDI Codebook 2.5 XML | Structured (R `xml2`) |
-| `.csv` + sidecar `.csv` / `.xlsx` | CSV + data dictionary | Structured (R `readr`/`readxl`) |
+| `.csv` + dictionary `.csv` / `.xlsx` | CSV + data dictionary | Structured (R `readr`/`readxl`) |
 | `.pdf` | Questionnaire or codebook PDF | **LLM-assisted** (extract text, parse yourself) |
 | `.docx` | Word codebook | **LLM-assisted** (R `officer`, then parse) |
 
@@ -180,8 +201,9 @@ Be generous — flags are prompts for the researcher, not errors:
 
 **`_needs_review` flag:** Set `_needs_review: true` when the AI confidence in
 one or more fields is below threshold. Unlike `_parse_flags` (which categorizes
-*what* is uncertain), `_needs_review: true` signals *that a human must verify this
-variable before proceeding*. Common triggers:
+*what* is uncertain), `_needs_review: true` signals that downstream skills must
+use the audited default and disclose the uncertainty rather than silently
+treating the field as verified. Common triggers:
 - `variable.universe` inferred from ambiguous skip logic
 - `concept` mapping is a best-guess match
 - Multiple `_parse_flags` on the same variable (compound uncertainty)
@@ -189,7 +211,8 @@ variable before proceeding*. Common triggers:
 
 ### 6 · Fill study-level metadata
 
-Populate from the filename, documentation the user provides, or ask:
+Populate from the filename, documentation, embedded metadata, nearby files, or
+the most defensible convention:
 - `study.name` — dataset name / wave (e.g., "CGSS 2021")
 - `study.analysis_unit` — `Person | Household | Organization | Other`
 - `study.data_source` — original file path
@@ -258,7 +281,7 @@ This produces `<stem>-codebook.pdf` in the same directory. The PDF contains:
 - Study metadata section (analysis unit, weight var, observations)
 - Full variable reference table (name · label · type · codes · missing · flags)
 - Shared category schemes and missing schemas appendix
-- Parse flags summary (which variables need manual review)
+- Parse flags summary (which variables carry audited defaults)
 - Processing events log
 
 Tell the user the PDF path so they can open it directly. The PDF is designed for
@@ -289,8 +312,7 @@ scrolling a static PDF. The HTML includes:
 - Shared schemes and processing events accordions
 
 Tell the user both paths (PDF for sharing, HTML for interactive review).
-If only one is needed, ask which they prefer — but generating both costs
-~1 second and gives the researcher a choice.
+Generate both by default because they are downstream evidence artifacts.
 
 ## Output quality checklist
 
@@ -299,7 +321,7 @@ Before declaring done:
 - [ ] Every coded variable has `codes` populated (or `category_scheme_ref` set)
 - [ ] Every missing code entry has a `type` from the CV (`refused | dont_know | inapplicable | missing_data | other_missing`)
 - [ ] `_parse_flags` set wherever inference was uncertain
-- [ ] `_needs_review: true` set on variables with low-confidence inferences
+- [ ] `_needs_review: true` set on variables with low-confidence inferences without blocking downstream execution
 - [ ] `variable.universe` populated for PDF/Word inputs where skip logic is clear
 - [ ] Shared missing schemas defined where the same pattern repeats across variables
 - [ ] `processing_events` entry appended
@@ -310,11 +332,11 @@ Before declaring done:
 
 After writing the file, give a short summary:
 - Total variables parsed; how many are fully labelled vs. flagged
-- How many have `_needs_review: true` (require manual verification)
+- How many have `_needs_review: true` (audited defaults requiring disclosure)
 - How many have `variable.universe` inferred vs. left null
 - Most common flag and what it means
-- What to fill in manually before running `cleaning-contract` (concept, unit_type,
-  study.universe, any `_needs_review: true` variables)
+- What assumptions `cleaning-contract` will carry forward automatically (concept,
+  unit_type, study.universe, any `_needs_review: true` variables)
 
-Then say: "Review flagged variables in `ddi-metadata.yaml`, fill the `null` fields you
-know, then run `cleaning-contract` to declare your recoding decisions."
+Then say: "Next run `cleaning-contract`; it will use the audited defaults in
+`ddi-metadata.yaml` and preserve unresolved fields as disclosure metadata."

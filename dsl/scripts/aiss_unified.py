@@ -9,6 +9,7 @@ does not call LLMs or consult network resources.
 from __future__ import annotations
 
 from dataclasses import dataclass
+from datetime import datetime, timezone
 from pathlib import Path
 from typing import Any
 import argparse
@@ -16,6 +17,76 @@ import hashlib
 import json
 import re
 import sys
+
+try:
+    _CONTRACTS_ROOT = Path(__file__).resolve().parents[2] / "scripts"
+    if str(_CONTRACTS_ROOT) not in sys.path:
+        sys.path.insert(0, str(_CONTRACTS_ROOT))
+    from ai4ss_factory_contracts.workflow import (  # type: ignore
+        ALLOWED_NEXT_ROUTES as FACTORY_ALLOWED_NEXT_ROUTES,
+        MIDA_COMPONENTS as FACTORY_MIDA_COMPONENTS,
+        RESEARCH_FACTORY_SKILLS as FACTORY_RESEARCH_SKILLS,
+    )
+except Exception:  # pragma: no cover - fallback for standalone script copies.
+    FACTORY_RESEARCH_SKILLS = (
+        "research-starter",
+        "study-design-builder",
+        "public-data-sources",
+        "research-data-builder",
+        "literature-matrix",
+        "research-analysis-runner",
+        "top-journal-figures",
+        "methods-reviewer",
+        "academic-writing-scaffold",
+        "research-slides-builder",
+        "reviewer-response",
+    )
+    FACTORY_MIDA_COMPONENTS = {
+        "model",
+        "inquiry",
+        "data_strategy",
+        "answer_strategy",
+        "diagnose",
+        "redesign",
+        "report_boundary",
+    }
+    FACTORY_ALLOWED_NEXT_ROUTES = {
+        "route": set(FACTORY_RESEARCH_SKILLS) | {"did-expert", "none"},
+        "mida": {
+            "public-data-sources",
+            "research-data-builder",
+            "literature-matrix",
+            "research-analysis-runner",
+            "top-journal-figures",
+            "methods-reviewer",
+            "did-expert",
+            "none",
+        },
+        "decision": {
+            "public-data-sources",
+            "research-data-builder",
+            "literature-matrix",
+            "research-analysis-runner",
+            "top-journal-figures",
+            "methods-reviewer",
+            "did-expert",
+            "none",
+        },
+        "event": set(FACTORY_RESEARCH_SKILLS)
+        | {
+            "analysis-explainer",
+            "did-expert",
+            "latex-tables",
+            "manuscript-reviewer",
+            "codebook-parse",
+            "cleaning-contract",
+            "cleaning-execute",
+            "codex",
+            "r-performance",
+            "sjtu-hpc",
+            "none",
+        },
+    }
 
 
 SCHEMA_VERSION = "0.4"
@@ -51,6 +122,7 @@ WORKFLOW_DECLARATIONS = {
     "route",
     "mida",
     "decision",
+    "event",
 }
 
 ALL_DECLARATIONS = SOURCE_DECLARATIONS | MODEL_DECLARATIONS | WORKFLOW_DECLARATIONS
@@ -73,16 +145,30 @@ EMPIRICAL_KINDS = {"empirical", "observation", "artifact"}
 COUPLING_KINDS = {"coupling"}
 MODEL_KINDS = {"attribute", "bridge", "edge", "model", "check", "derive"}
 WORKFLOW_KINDS = {"route", "mida", "decision"}
-MIDA_COMPONENTS = {
-    "model",
-    "inquiry",
-    "data_strategy",
-    "answer_strategy",
-    "diagnose",
-    "redesign",
-    "report_boundary",
+MIDA_COMPONENTS = set(FACTORY_MIDA_COMPONENTS)
+ROUTE_STATUSES = {"candidate", "selected", "rejected", "repair_and_continue"}
+ALLOWED_NEXT_SKILL_ROUTES = set().union(*FACTORY_ALLOWED_NEXT_ROUTES.values())
+ALLOWED_NEXT_SKILL_ROUTES.update(FACTORY_RESEARCH_SKILLS)
+ALLOWED_NEXT_SKILL_ROUTES.update({"did-expert", "none"})
+REPAIR_STATUS_DEFAULT_ROUTE = {
+    "needs_data_check": "public-data-sources",
+    "needs_literature_check": "literature-matrix",
+    "needs_methods_review": "methods-reviewer",
+    "repair_required": "methods-reviewer",
 }
-ROUTE_STATUSES = {"candidate", "selected", "rejected", "blocked"}
+MACHINE_EVENT_TYPES = {
+    "skill_started",
+    "skill_completed",
+    "skill_failed",
+    "check_passed",
+    "check_failed",
+    "repair_required",
+    "heartbeat_seen",
+    "heartbeat_interrupted",
+    "goal_blocked",
+    "goal_completed",
+}
+DEFAULT_HEARTBEAT_STALE_SECONDS = 3600
 
 REQUIRED_FIELDS: dict[str, tuple[str, ...]] = {
     "paper": ("title", "kind", "sources"),
@@ -111,11 +197,12 @@ REQUIRED_FIELDS: dict[str, tuple[str, ...]] = {
         "inquiry",
         "data_strategy",
         "answer_strategy",
-        "stop_reason",
+        "continuation_plan",
         "next_skill_route",
     ),
     "mida": ("route", "component", "text", "status"),
     "decision": ("route", "component", "decision", "status", "owner", "next_skill_route"),
+    "event": ("type", "at"),
 }
 
 REFERENCE_FIELDS: dict[str, dict[str, str]] = {
@@ -171,6 +258,14 @@ REFERENCE_FIELDS: dict[str, dict[str, str]] = {
         "concepts": "concept",
         "causal": "causal",
         "bridges": "bridge",
+        "model": "model",
+    },
+    "event": {
+        "route": "route",
+        "mida": "mida",
+        "decision": "decision",
+        "artifact": "artifact",
+        "check": "check",
         "model": "model",
     },
 }
@@ -355,6 +450,13 @@ class DecisionDecl(BaseDecl):
         return "decision"
 
 
+@dataclass(frozen=True)
+class EventDecl(BaseDecl):
+    @property
+    def kind(self) -> str:
+        return "event"
+
+
 DECL_CLASSES = {
     "paper": PaperDecl,
     "source": SourceDecl,
@@ -377,6 +479,7 @@ DECL_CLASSES = {
     "route": RouteDecl,
     "mida": MidaDecl,
     "decision": DecisionDecl,
+    "event": EventDecl,
 }
 
 
@@ -682,6 +785,7 @@ def compile_program(program: AissProgram, *, strict: bool = False) -> dict[str, 
     routes = [record_from_decl(d) for d in program.declarations if d.kind == "route"]
     mida = [record_from_decl(d) for d in program.declarations if d.kind == "mida"]
     decisions = [record_from_decl(d) for d in program.declarations if d.kind == "decision"]
+    events = [record_from_decl(d) for d in program.declarations if d.kind == "event"]
 
     ast: dict[str, Any] = {
         "schema": UNIFIED_AST_SCHEMA,
@@ -702,6 +806,7 @@ def compile_program(program: AissProgram, *, strict: bool = False) -> dict[str, 
             "routes": sorted_records(routes),
             "mida": sorted_records(mida),
             "decisions": sorted_records(decisions),
+            "events": sorted_records(events),
         },
         "models": sorted_records(models),
         "checks": sorted_records(checks),
@@ -946,8 +1051,8 @@ def lint_ast(ast: dict[str, Any], *, strict: bool | None = None) -> dict[str, An
         status = str(route.get("status", ""))
         if status not in ROUTE_STATUSES:
             diag("AISS-WF-001", "warning", route["id"], f"route status should be one of {sorted(ROUTE_STATUSES)}, got {status!r}")
-        if status == "selected" and route.get("next_skill_route") == "ask_author":
-            diag("AISS-WF-002", "warning", route["id"], "selected route still routes to ask_author")
+        if status == "selected" and str(route.get("next_skill_route", "")).strip() in {"", "none"}:
+            diag("AISS-WF-002", "warning", route["id"], "selected route lacks a downstream automation route")
 
     mida_by_route: dict[str, set[str]] = {}
     for row in [r for r in records if record_decl_type(r) == "mida"]:
@@ -970,6 +1075,20 @@ def lint_ast(ast: dict[str, Any], *, strict: bool | None = None) -> dict[str, An
                 route["id"],
                 f"selected route lacks MIDA components: {', '.join(missing)}",
             )
+
+    for event in [r for r in records if record_decl_type(r) == "event"]:
+        event_type = str(event.get("type", "")).strip()
+        if event_type not in MACHINE_EVENT_TYPES:
+            diag("AISS-WF-010", "warning", event["id"], f"unknown state-machine event type {event_type!r}")
+        event_at = str(event.get("at", "")).strip()
+        if event_at and parse_iso_datetime(event_at) is None:
+            diag("AISS-WF-011", "warning", event["id"], f"event has non-ISO timestamp {event_at!r}")
+        next_route = str(event.get("next_skill_route", "")).strip()
+        if next_route and next_route not in ALLOWED_NEXT_SKILL_ROUTES:
+            diag("AISS-WF-012", "error", event["id"], f"event next_skill_route is not in the research-factory route table: {next_route!r}")
+        skill = str(event.get("skill", "")).strip()
+        if skill and skill not in ALLOWED_NEXT_SKILL_ROUTES:
+            diag("AISS-WF-013", "warning", event["id"], f"event skill is not in the research-factory route table: {skill!r}")
 
     diagnostics = sorted(
         diagnostics,
@@ -1163,13 +1282,521 @@ def compute_workflow_diagnostics(ast: dict[str, Any]) -> dict[str, Any]:
         "selected_routes": selected_routes,
         "route_profiles": sorted(route_profiles, key=lambda item: item["route_id"]),
         "decision_counts": canonicalize(decision_counts),
-        "author_decisions_open": sum(
+        "automation_decisions_open": sum(
             1
             for decision in decisions
-            if str(decision.get("owner", "")).casefold() == "author"
-            and str(decision.get("status", "")).casefold() not in {"resolved", "rejected"}
+            if str(decision.get("status", "")).casefold() not in {"auto_resolved", "resolved", "rejected"}
         ),
     }
+
+
+def compute_machine_state(
+    ast: dict[str, Any],
+    *,
+    now: str | None = None,
+    heartbeat_stale_seconds: int = DEFAULT_HEARTBEAT_STALE_SECONDS,
+) -> dict[str, Any]:
+    """Project a deterministic research-factory state machine from a compiled AST."""
+    now_dt = parse_iso_datetime(now) if now else None
+    workflow = ast.get("workflow", {}) if isinstance(ast.get("workflow", {}), dict) else {}
+    routes = workflow.get("routes", []) if isinstance(workflow.get("routes", []), list) else []
+    mida = workflow.get("mida", []) if isinstance(workflow.get("mida", []), list) else []
+    decisions = workflow.get("decisions", []) if isinstance(workflow.get("decisions", []), list) else []
+    events = workflow.get("events", []) if isinstance(workflow.get("events", []), list) else []
+    workflow_diagnostics = compute_workflow_diagnostics(ast)
+
+    selected_routes = [route for route in routes if route.get("status") == "selected"]
+    selected_route = selected_routes[0] if len(selected_routes) == 1 else None
+    selected_route_id = str(selected_route.get("id", "")) if selected_route else None
+    route_profile = next(
+        (
+            profile
+            for profile in workflow_diagnostics.get("route_profiles", [])
+            if selected_route_id and profile.get("route_id") == selected_route_id
+        ),
+        None,
+    )
+
+    initial_next_route = "research-starter"
+    initial_phase = "route_selection_required"
+    initial_status = "active"
+    blockers: list[dict[str, Any]] = []
+    if not selected_route:
+        initial_status = "blocked"
+        if selected_routes:
+            blockers.append({
+                "code": "multiple_selected_routes",
+                "message": "Exactly one selected route is required before the state machine can dispatch skills.",
+            })
+        else:
+            blockers.append({
+                "code": "missing_selected_route",
+                "message": "No selected route is available; route through research-starter or study-design-builder.",
+            })
+    else:
+        initial_next_route = str(selected_route.get("next_skill_route", "none") or "none")
+        initial_phase = str((route_profile or {}).get("readiness") or "route_selected")
+
+    state: dict[str, Any] = {
+        "schema": "aiss.machine_state.v0.4",
+        "ast_hash": ast_hash(ast),
+        "status": initial_status,
+        "phase": initial_phase,
+        "terminal": False,
+        "selected_route": selected_route_id,
+        "current_skill": None,
+        "next_skill_route": initial_next_route,
+        "readiness": (route_profile or {}).get("readiness"),
+        "route_profile": route_profile,
+        "completed_skills": [],
+        "attempts": {},
+        "blockers": blockers,
+        "open_repair_routes": [],
+        "open_decisions": workflow_diagnostics.get("automation_decisions_open", 0),
+        "event_history_count": len(events),
+        "skipped_event_count": 0,
+        "last_event": None,
+        "watchdog": {
+            "status": "not_seen",
+            "last_seen": None,
+            "phase": None,
+            "run_dir": None,
+            "stale_seconds": heartbeat_stale_seconds,
+            "age_seconds": None,
+            "owner": "goal-cli",
+        },
+    }
+
+    if selected_route_id:
+        repair_rows = initial_repair_rows(selected_route_id, mida, decisions)
+        if repair_rows:
+            state["open_repair_routes"] = repair_rows
+            first_route = repair_rows[0].get("next_skill_route")
+            if first_route:
+                state["next_skill_route"] = first_route
+            state["phase"] = "repair_required"
+
+    for event in sorted_machine_events(events):
+        route_ref = str(event.get("route", "") or "")
+        if selected_route_id and route_ref and route_ref != selected_route_id:
+            state["skipped_event_count"] = int(state.get("skipped_event_count", 0)) + 1
+            continue
+        apply_machine_event(state, event)
+
+    finalize_watchdog_state(state, now_dt=now_dt, heartbeat_stale_seconds=heartbeat_stale_seconds)
+    state["enabled_events"] = enabled_machine_events(state)
+    state["actions"] = machine_actions(state)
+    return canonicalize(state)
+
+
+def initial_repair_rows(
+    selected_route_id: str,
+    mida: list[dict[str, Any]],
+    decisions: list[dict[str, Any]],
+) -> list[dict[str, Any]]:
+    rows: list[dict[str, Any]] = []
+    for record in [*mida, *decisions]:
+        if str(record.get("route", "")) != selected_route_id:
+            continue
+        status = str(record.get("status", "")).strip()
+        if status not in REPAIR_STATUS_DEFAULT_ROUTE:
+            continue
+        next_route = str(record.get("next_skill_route", "") or "").strip() or REPAIR_STATUS_DEFAULT_ROUTE[status]
+        rows.append({
+            "id": record.get("id"),
+            "kind": record_decl_type(record),
+            "component": record.get("component"),
+            "status": status,
+            "next_skill_route": next_route,
+        })
+    return sorted(rows, key=lambda row: (str(row.get("kind")), str(row.get("id"))))
+
+
+def sorted_machine_events(events: list[dict[str, Any]]) -> list[dict[str, Any]]:
+    return sorted(events, key=machine_event_sort_key)
+
+
+def machine_event_sort_key(event: dict[str, Any]) -> tuple[str, int, str]:
+    at = str(event.get("at", "") or "")
+    parsed = parse_iso_datetime(at)
+    normalized_at = format_iso_datetime(parsed) if parsed else at
+    sequence = event.get("sequence", 0)
+    sequence_int = sequence if isinstance(sequence, int) else 0
+    return (normalized_at, sequence_int, str(event.get("id", "")))
+
+
+def apply_machine_event(state: dict[str, Any], event: dict[str, Any]) -> None:
+    event_type = str(event.get("type", ""))
+    skill = str(event.get("skill", "") or state.get("next_skill_route") or "")
+    next_route = str(event.get("next_skill_route", "") or "")
+    state["last_event"] = compact_event(event)
+
+    if event_type == "heartbeat_seen":
+        update_watchdog_from_event(state, event)
+        phase = str(event.get("phase", "") or "")
+        if phase.endswith("_running") and skill:
+            state["status"] = "active"
+            state["phase"] = "skill_running"
+            state["current_skill"] = skill
+        return
+
+    if event_type == "heartbeat_interrupted":
+        update_watchdog_from_event(state, {**event, "phase": "interrupted"})
+        state["status"] = "active"
+        state["phase"] = "watchdog_interrupted"
+        state["current_skill"] = None
+        add_blocker(state, "heartbeat_interrupted", event.get("message") or "goal-cli heartbeat was interrupted")
+        return
+
+    if event_type == "skill_started":
+        state["status"] = "active"
+        state["phase"] = "skill_running"
+        state["current_skill"] = skill or None
+        if skill:
+            attempts = dict(state.get("attempts", {}))
+            attempts[skill] = int(attempts.get(skill, 0)) + 1
+            state["attempts"] = attempts
+        return
+
+    if event_type == "skill_completed":
+        completed = list(state.get("completed_skills", []))
+        if skill and skill not in completed:
+            completed.append(skill)
+        state["completed_skills"] = completed
+        state["current_skill"] = None
+        if next_route and next_route != "none":
+            state["status"] = "active"
+            state["phase"] = "ready_for_skill"
+            state["next_skill_route"] = next_route
+        elif next_route == "none" or str(event.get("status", "")).strip() in {"completed", "done"}:
+            state["status"] = "completed"
+            state["phase"] = "completed"
+            state["next_skill_route"] = "none"
+            state["terminal"] = True
+        else:
+            state["status"] = "blocked"
+            state["phase"] = "next_route_required"
+            state["next_skill_route"] = "none"
+            add_blocker(state, "missing_next_skill_route", "skill_completed event must declare next_skill_route or status completed")
+        return
+
+    if event_type in {"skill_failed", "check_failed", "repair_required"}:
+        state["status"] = "active"
+        state["phase"] = "repair_required"
+        state["current_skill"] = None
+        repair_route = next_route or repair_route_for_event(event)
+        state["next_skill_route"] = repair_route
+        repair_rows = list(state.get("open_repair_routes", []))
+        repair_rows.append({
+            "id": event.get("id"),
+            "kind": "event",
+            "status": str(event.get("status", "") or event_type),
+            "next_skill_route": repair_route,
+            "message": event.get("message"),
+        })
+        state["open_repair_routes"] = repair_rows
+        add_blocker(state, event_type, event.get("message") or f"{event_type} requires repair")
+        return
+
+    if event_type == "check_passed":
+        state["phase"] = "ready_for_skill" if state.get("next_skill_route") not in {"", "none"} else state.get("phase")
+        return
+
+    if event_type == "goal_blocked":
+        state["status"] = "blocked"
+        state["phase"] = "blocked"
+        state["current_skill"] = None
+        state["next_skill_route"] = "none"
+        state["terminal"] = True
+        add_blocker(state, "goal_blocked", event.get("message") or "goal marked blocked")
+        return
+
+    if event_type == "goal_completed":
+        state["status"] = "completed"
+        state["phase"] = "completed"
+        state["current_skill"] = None
+        state["next_skill_route"] = "none"
+        state["terminal"] = True
+
+
+def update_watchdog_from_event(state: dict[str, Any], event: dict[str, Any]) -> None:
+    watchdog = dict(state.get("watchdog", {}))
+    watchdog["last_seen"] = event.get("last_seen") or event.get("at")
+    watchdog["phase"] = event.get("phase")
+    watchdog["run_dir"] = event.get("run_dir")
+    watchdog["status"] = "observed"
+    watchdog["owner"] = event.get("source") or "goal-cli"
+    state["watchdog"] = watchdog
+
+
+def finalize_watchdog_state(
+    state: dict[str, Any],
+    *,
+    now_dt: datetime | None,
+    heartbeat_stale_seconds: int,
+) -> None:
+    watchdog = dict(state.get("watchdog", {}))
+    last_seen = str(watchdog.get("last_seen") or "")
+    last_seen_dt = parse_iso_datetime(last_seen) if last_seen else None
+    watchdog["stale_seconds"] = heartbeat_stale_seconds
+    if not last_seen_dt:
+        if watchdog.get("status") != "not_seen":
+            watchdog["status"] = "freshness_unknown"
+        watchdog["age_seconds"] = None
+        state["watchdog"] = watchdog
+        return
+    if str(watchdog.get("phase")) == "interrupted":
+        watchdog["status"] = "interrupted"
+        watchdog["age_seconds"] = None
+        state["watchdog"] = watchdog
+        return
+    if now_dt is None:
+        watchdog["status"] = "observed"
+        watchdog["age_seconds"] = None
+        state["watchdog"] = watchdog
+        return
+    age_seconds = max(0, int((now_dt - last_seen_dt).total_seconds()))
+    watchdog["age_seconds"] = age_seconds
+    watchdog["status"] = "stale" if age_seconds > heartbeat_stale_seconds else "fresh"
+    state["watchdog"] = watchdog
+
+
+def add_blocker(state: dict[str, Any], code: str, message: Any) -> None:
+    blockers = list(state.get("blockers", []))
+    blockers.append({
+        "code": code,
+        "message": str(message or code),
+    })
+    state["blockers"] = blockers
+
+
+def repair_route_for_event(event: dict[str, Any]) -> str:
+    status = str(event.get("status", "") or "")
+    if status in REPAIR_STATUS_DEFAULT_ROUTE:
+        return REPAIR_STATUS_DEFAULT_ROUTE[status]
+    event_type = str(event.get("type", "") or "")
+    if event_type == "check_failed":
+        return "methods-reviewer"
+    if event_type == "skill_failed":
+        return "methods-reviewer"
+    return "methods-reviewer"
+
+
+def compact_event(event: dict[str, Any]) -> dict[str, Any]:
+    keys = ("id", "type", "at", "route", "skill", "status", "phase", "next_skill_route", "message")
+    return {key: event[key] for key in keys if key in event}
+
+
+def enabled_machine_events(state: dict[str, Any]) -> list[str]:
+    if state.get("terminal"):
+        return []
+    phase = str(state.get("phase") or "")
+    if phase == "skill_running":
+        return ["heartbeat_seen", "heartbeat_interrupted", "skill_completed", "skill_failed"]
+    if phase in {"blocked", "next_route_required"}:
+        return ["repair_required", "goal_blocked"]
+    return ["heartbeat_seen", "skill_started", "check_failed", "repair_required", "goal_blocked", "goal_completed"]
+
+
+def machine_actions(state: dict[str, Any]) -> list[dict[str, Any]]:
+    actions: list[dict[str, Any]] = []
+    watchdog_status = str(state.get("watchdog", {}).get("status") or "")
+    if watchdog_status in {"stale", "interrupted"} and not state.get("terminal"):
+        actions.append({
+            "type": "watchdog_recover",
+            "owner": "goal-cli",
+            "reason": f"heartbeat is {watchdog_status}",
+        })
+    next_route = str(state.get("next_skill_route") or "")
+    if (
+        state.get("status") == "active"
+        and not state.get("current_skill")
+        and next_route
+        and next_route != "none"
+    ):
+        actions.append({
+            "type": "dispatch_skill",
+            "skill": next_route,
+            "route": state.get("selected_route"),
+        })
+    if state.get("phase") == "next_route_required":
+        actions.append({
+            "type": "declare_decision",
+            "owner": "research-factory",
+            "reason": "last completion event did not declare a downstream skill",
+        })
+    return actions
+
+
+def transition_machine(
+    ast: dict[str, Any],
+    event: dict[str, Any],
+    *,
+    now: str | None = None,
+    heartbeat_stale_seconds: int = DEFAULT_HEARTBEAT_STALE_SECONDS,
+) -> dict[str, Any]:
+    before = compute_machine_state(ast, now=now, heartbeat_stale_seconds=heartbeat_stale_seconds)
+    normalized_event = normalize_machine_event(event, before=before, now=now)
+    virtual_ast = ast_with_event(ast, normalized_event)
+    after = compute_machine_state(virtual_ast, now=now, heartbeat_stale_seconds=heartbeat_stale_seconds)
+    return canonicalize({
+        "schema": "aiss.transition_report.v0.4",
+        "ast_hash": ast_hash(ast),
+        "event": normalized_event,
+        "before": before,
+        "after": after,
+        "actions": after.get("actions", []),
+    })
+
+
+def normalize_machine_event(
+    event: dict[str, Any],
+    *,
+    before: dict[str, Any],
+    now: str | None = None,
+) -> dict[str, Any]:
+    if not isinstance(event, dict):
+        raise AissError("state-machine event must be a JSON object")
+    normalized = dict(event)
+    event_type = str(normalized.get("type", "")).strip()
+    if not event_type:
+        raise AissError("state-machine event missing required field 'type'")
+    if event_type not in MACHINE_EVENT_TYPES:
+        raise AissError(f"unknown state-machine event type {event_type!r}")
+    event_at = str(normalized.get("at", "") or now or "").strip()
+    if not event_at:
+        raise AissError("state-machine event missing required field 'at'; pass it in --event or --now")
+    event_dt = parse_iso_datetime(event_at)
+    if event_dt is None:
+        raise AissError(f"state-machine event has invalid ISO timestamp {event_at!r}")
+    normalized["type"] = event_type
+    normalized["at"] = format_iso_datetime(event_dt)
+    if "route" not in normalized and before.get("selected_route"):
+        normalized["route"] = before["selected_route"]
+    if "skill" not in normalized and event_type.startswith("skill_"):
+        next_route = str(before.get("next_skill_route") or "")
+        if next_route and next_route != "none":
+            normalized["skill"] = next_route
+    if "id" not in normalized or not str(normalized.get("id", "")).strip():
+        normalized["id"] = make_event_id(normalized, before=before)
+    next_route = str(normalized.get("next_skill_route", "") or "")
+    if next_route and next_route not in ALLOWED_NEXT_SKILL_ROUTES:
+        raise AissError(f"event next_skill_route {next_route!r} is not in the research-factory route table")
+    return canonicalize(normalized)
+
+
+def make_event_id(event: dict[str, Any], *, before: dict[str, Any]) -> str:
+    namespace_source = str(before.get("selected_route") or "aiss.machine")
+    namespace = namespace_source.split(".", 1)[0] if "." in namespace_source else "aiss"
+    timestamp = re.sub(r"[^0-9A-Za-z]+", "_", str(event.get("at", ""))).strip("_").lower()
+    event_type = re.sub(r"[^0-9A-Za-z_]+", "_", str(event.get("type", "event"))).strip("_").lower()
+    digest = hashlib.sha256(canonical_json({k: v for k, v in event.items() if k != "id"}).encode("utf-8")).hexdigest()[:10]
+    return f"{namespace}.event_{timestamp}_{event_type}_{digest}"
+
+
+def ast_with_event(ast: dict[str, Any], event: dict[str, Any]) -> dict[str, Any]:
+    virtual_ast = json.loads(json.dumps(ast, ensure_ascii=False))
+    workflow = virtual_ast.setdefault("workflow", {})
+    if not isinstance(workflow, dict):
+        workflow = {}
+        virtual_ast["workflow"] = workflow
+    events = workflow.setdefault("events", [])
+    if not isinstance(events, list):
+        events = []
+        workflow["events"] = events
+    events.append(event)
+    virtual_ast.pop("hashes", None)
+    return canonicalize(virtual_ast)
+
+
+def load_event_payload(value: str) -> dict[str, Any]:
+    stripped = value.strip()
+    if stripped.startswith("{"):
+        text = stripped
+    else:
+        candidate = Path(value)
+        text = candidate.read_text(encoding="utf-8") if candidate.exists() else value
+    try:
+        payload = json.loads(text)
+    except json.JSONDecodeError as exc:
+        raise AissError(f"could not parse event JSON: {exc}") from exc
+    if not isinstance(payload, dict):
+        raise AissError("event JSON must be an object")
+    return payload
+
+
+def append_event_to_source(path: Path, event: dict[str, Any], ast: dict[str, Any]) -> None:
+    event_id = str(event.get("id", "") or "")
+    if not event_id:
+        raise AissError("cannot append event without id")
+    existing_ids = {str(record.get("id")) for record in all_records(ast) if record.get("id")}
+    if event_id in existing_ids:
+        raise AissError(f"event id already exists in {path}: {event_id}")
+    text = path.read_text(encoding="utf-8")
+    path.write_text(text.rstrip() + "\n\n" + format_event_decl(event), encoding="utf-8")
+
+
+def format_event_decl(event: dict[str, Any]) -> str:
+    event_id = str(event["id"])
+    ordered_keys = [
+        "type",
+        "at",
+        "route",
+        "skill",
+        "status",
+        "phase",
+        "next_skill_route",
+        "source",
+        "message",
+        "last_seen",
+        "run_dir",
+        "iteration",
+        "mida",
+        "decision",
+        "artifact",
+        "check",
+        "model",
+    ]
+    keys = [key for key in ordered_keys if key in event]
+    keys.extend(sorted(key for key in event if key not in set(keys) | {"id"}))
+    lines = [f"event {event_id} {{"]
+    for key in keys:
+        lines.append(f"  {key}: {format_aiss_value(event[key])}")
+    lines.append("}")
+    return "\n".join(lines) + "\n"
+
+
+def format_aiss_value(value: Any) -> str:
+    if isinstance(value, bool):
+        return "true" if value else "false"
+    if value is None:
+        return "null"
+    if isinstance(value, (int, float)):
+        return str(value)
+    if isinstance(value, (list, dict)):
+        return json.dumps(canonicalize(value), ensure_ascii=False, sort_keys=True)
+    return json.dumps(str(value), ensure_ascii=False)
+
+
+def parse_iso_datetime(value: str | None) -> datetime | None:
+    if not value:
+        return None
+    text = str(value).strip()
+    if not text:
+        return None
+    if text.endswith("Z"):
+        text = text[:-1] + "+00:00"
+    try:
+        parsed = datetime.fromisoformat(text)
+    except ValueError:
+        return None
+    if parsed.tzinfo is None:
+        parsed = parsed.replace(tzinfo=timezone.utc)
+    return parsed.astimezone(timezone.utc)
+
+
+def format_iso_datetime(value: datetime) -> str:
+    return value.astimezone(timezone.utc).isoformat().replace("+00:00", "Z")
 
 
 def run_ast(ast: dict[str, Any], *, adapter_lock_path: str | Path | None = None) -> dict[str, Any]:
@@ -1180,28 +1807,51 @@ def run_ast(ast: dict[str, Any], *, adapter_lock_path: str | Path | None = None)
         adapter_lock_hash = sha256_bytes(b"")
 
     declared_adapters = [r for r in ast.get("objects", []) if record_decl_type(r) == "adapter"]
+
+    def adapter_for_coupling(coupling: dict[str, Any]) -> dict[str, Any] | None:
+        coupling_type = str(coupling.get("type", ""))
+        coupling_targets = {coupling["id"], record_decl_type(coupling), coupling_type}
+        for adapter in sorted(declared_adapters, key=lambda item: item["id"]):
+            consumes = {str(item) for item in coerce_list(adapter.get("consumes"))}
+            produces = {str(item) for item in coerce_list(adapter.get("produces"))}
+            can_consume = bool(consumes & coupling_targets)
+            can_produce = bool(produces & {"assessment", "coupling_assessment", f"{coupling_type}_assessment"})
+            if can_consume and can_produce:
+                return adapter
+        return None
+
     units = [
         {
             "adapter": adapter["id"],
             "version": adapter.get("version"),
-            "status": "skipped_no_adapter",
+            "status": "registered",
             "inputs": [],
             "outputs": [],
         }
         for adapter in declared_adapters
     ]
 
-    coupling_assessments = [
-        {
-            "coupling_id": coupling["id"],
-            "status": "not_assessable",
-            "rule": None,
-            "basis": [],
-            "message": "No deterministic adapter is available for this coupling type.",
-        }
-        for coupling in ast.get("relations", [])
-        if record_decl_type(coupling) == "coupling"
-    ]
+    coupling_assessments = []
+    for coupling in ast.get("relations", []):
+        if record_decl_type(coupling) != "coupling":
+            continue
+        adapter = adapter_for_coupling(coupling)
+        if adapter:
+            coupling_assessments.append({
+                "coupling_id": coupling["id"],
+                "status": "assessable_via_adapter",
+                "rule": adapter["id"],
+                "basis": sorted_ids(coerce_list(coupling.get("spans", []))),
+                "message": "Declared adapter covers this coupling type.",
+            })
+        else:
+            coupling_assessments.append({
+                "coupling_id": coupling["id"],
+                "status": "not_assessable",
+                "rule": None,
+                "basis": [],
+                "message": "No deterministic adapter is available for this coupling type.",
+            })
 
     return canonicalize({
         "schema": "aiss.run_report.v0.4",
@@ -1210,6 +1860,7 @@ def run_ast(ast: dict[str, Any], *, adapter_lock_path: str | Path | None = None)
         "units": sorted(units, key=lambda unit: unit["adapter"]),
         "coupling_assessments": sorted(coupling_assessments, key=lambda item: item["coupling_id"]),
         "workflow_diagnostics": compute_workflow_diagnostics(ast),
+        "machine_state": compute_machine_state(ast),
         "model_diagnostics": compute_model_diagnostics(ast),
     })
 
@@ -1310,6 +1961,7 @@ def all_records(ast: dict[str, Any]) -> list[dict[str, Any]]:
         records.extend(workflow.get("routes", []))
         records.extend(workflow.get("mida", []))
         records.extend(workflow.get("decisions", []))
+        records.extend(workflow.get("events", []))
     records.extend(ast.get("models", []))
     records.extend(ast.get("checks", []))
     records.extend(ast.get("derives", []))
@@ -1610,6 +2262,18 @@ def main(argv: list[str] | None = None) -> int:
     run_p.add_argument("input")
     run_p.add_argument("--adapters")
 
+    state_p = sub.add_parser("state")
+    state_p.add_argument("input")
+    state_p.add_argument("--now", help="ISO timestamp used only for heartbeat freshness calculations.")
+    state_p.add_argument("--heartbeat-stale-seconds", type=int, default=DEFAULT_HEARTBEAT_STALE_SECONDS)
+
+    transition_p = sub.add_parser("transition")
+    transition_p.add_argument("input")
+    transition_p.add_argument("--event", required=True, help="Event JSON object or path to a JSON file.")
+    transition_p.add_argument("--now", help="ISO timestamp used when the event omits `at` and for heartbeat freshness.")
+    transition_p.add_argument("--heartbeat-stale-seconds", type=int, default=DEFAULT_HEARTBEAT_STALE_SECONDS)
+    transition_p.add_argument("--write", action="store_true", help="Append the normalized event declaration to the .aiss source.")
+
     code_p = sub.add_parser("emit-code")
     code_p.add_argument("input")
     code_p.add_argument("--target", default="python")
@@ -1634,6 +2298,36 @@ def main(argv: list[str] | None = None) -> int:
         elif args.command == "run":
             ast = load_ast_or_compile(args.input)
             print(canonical_json(run_ast(ast, adapter_lock_path=args.adapters)), end="")
+        elif args.command == "state":
+            ast = load_ast_or_compile(args.input)
+            print(canonical_json(compute_machine_state(
+                ast,
+                now=args.now,
+                heartbeat_stale_seconds=args.heartbeat_stale_seconds,
+            )), end="")
+        elif args.command == "transition":
+            ast = load_ast_or_compile(args.input)
+            event_payload = load_event_payload(args.event)
+            report = transition_machine(
+                ast,
+                event_payload,
+                now=args.now,
+                heartbeat_stale_seconds=args.heartbeat_stale_seconds,
+            )
+            if args.write:
+                input_path = Path(args.input)
+                if input_path.suffix != ".aiss":
+                    raise AissError("--write requires a .aiss source file, not a compiled JSON AST")
+                append_event_to_source(input_path, report["event"], ast)
+                report = {
+                    **report,
+                    "write": {
+                        "path": str(input_path),
+                        "event_id": report["event"]["id"],
+                        "status": "appended",
+                    },
+                }
+            print(canonical_json(report), end="")
         elif args.command == "emit-code":
             ast = load_ast_or_compile(args.input)
             manifest = emit_code_manifest(ast, target=args.target)

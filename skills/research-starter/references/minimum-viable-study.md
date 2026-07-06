@@ -31,7 +31,9 @@ Prefer the route that can answer these questions fastest:
 
 Move to downstream skills only after the minimum viable study exposes a concrete need:
 
-- Need to build or merge data: `research-data-builder`.
+- Need to find or verify empirical data sources: `public-data-sources`.
+- Need to build or merge an analysis sample from acquired observed sources:
+  `research-data-builder`.
 - Need to discover and verify sources: `literature-matrix`.
 - Need to audit identification or result claims: `methods-reviewer` or `$did-expert`.
 - Need to organize paper sections without drafting prose: `academic-writing-scaffold`.

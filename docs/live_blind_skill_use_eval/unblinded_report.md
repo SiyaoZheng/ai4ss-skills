@@ -41,15 +41,15 @@ This report joins frozen blinded grades to `_private/private_mapping.csv`.
 This evaluation supports a narrow claim: in these four live generated tasks,
 skill-guided outputs were more useful when usefulness is defined as producing
 inspectable research artifacts, traceability markers, explicit authorship
-boundaries, validation gates, and author-owned decision points.
+boundaries, validation gates, AI-use disclosure, and human-accountability decision points.
 
 The aggregate advantage is not uniform. Skill-guided output scored lower in `literature_evidence`; inspect the paired packets before treating the skill as generally better for that workbench.
 
 Follow-up improvement: `literature-matrix` now requires a candidate-discovery ledger for open-ended search tasks, plus a validator for search strata, source-status labels, next verification actions, and snowballing coverage. This targets the observed weakness in the literature case: schema discipline alone did not beat a generic agent that produced richer seed-source discovery.
 
 It does not show that skill-guided agents are always better, that the artifacts
-are empirically correct, or that the final scholarly claims are valid. Those
-remain author responsibilities and require source/data inspection.
+are empirically correct, or that scholarly claims have completed
+human-accountability review. Those require source/data inspection.
 
 ## Limits
 
@@ -58,4 +58,4 @@ remain author responsibilities and require source/data inspection.
 - Agent graders are not independent human experts.
 - Cases are controlled scenarios, not full field deployments.
 - The rubric favors traceable research workflow behavior by design; it should not
-  be used to rank final prose quality.
+  be used to rank direct-submission prose readiness.

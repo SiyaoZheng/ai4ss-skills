@@ -6,7 +6,7 @@ Use these examples to calibrate severity and avoid vague reviews.
 
 | severity | meaning | action |
 |---|---|---|
-| P0 | result likely invalid or unreproducible | stop and fix before using output |
+| P0 | result likely invalid or unreproducible | fix before using output |
 | P1 | serious risk affecting interpretation | address before submission |
 | P2 | reporting or robustness gap | fix or disclose |
 | P3 | clarity, labeling, or style issue | improve if time allows |
@@ -20,7 +20,7 @@ Use these examples to calibrate severity and avoid vague reviews.
 | issue | `scripts/30_merge.R` joins city controls to firm-year data by `city_id` only, causing row multiplication |
 | evidence | N increases from 120,000 to 1,440,000 after merge; controls have 12 years per city |
 | why_it_matters | estimates use duplicated firm rows and invalid standard errors |
-| next_action | merge by `city_id, year`; regenerate sample flow |
+| next_action | merge by `city_id, year`; regenerate `.aiss` row-loss checks |
 | status | confirmed_bug |
 
 ### P1: Wrong Clustering Level
@@ -82,7 +82,7 @@ Lead with issues, not compliments. For each issue include:
 - observed evidence;
 - why the issue matters;
 - minimal next action;
-- whether it is confirmed, likely, or needs author decision.
+- whether it is confirmed, likely, or needs claim narrowing/evidence expansion.
 
 Validator-ready issue tables use:
 

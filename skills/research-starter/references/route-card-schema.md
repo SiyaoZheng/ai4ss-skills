@@ -1,6 +1,6 @@
 # Route Card Schema
 
-Use `research_route_cards.csv` when comparing multiple ways to make a rough idea researchable. In the unified workflow this CSV is a human-readable mirror of `.aiss` `route` declarations, not a separate route language.
+Use `.aiss route declarations` when comparing multiple ways to make a rough idea researchable. In the unified workflow this CSV is a human-readable mirror of `.aiss` `route` declarations, not a separate route language.
 
 ## Required Columns
 
@@ -21,20 +21,21 @@ Use `research_route_cards.csv` when comparing multiple ways to make a rough idea
 | `materials_gap` | Missing source, variable, permission, sample boundary, or theory input |
 | `first_action` | One safe action the agent can do next |
 | `expected_first_output` | The concrete output of that one action |
-| `failure_signal` | What would show this route should pause, shrink, or stop |
-| `feasibility_status` | `try_now`, `needs_material`, `needs_author_decision`, `needs_external_search`, `not_feasible`, or `handoff_ready` |
-| `stop_reason` | Why the agent should stop before doing more |
-| `researcher_decision_needed` | Decision that cannot be delegated to AI |
-| `next_skill_route` | `research-data-builder`, `literature-matrix`, `methods-reviewer`, `academic-writing-scaffold`, `research-slides-builder`, `reviewer-response`, `did-expert`, `ask_author`, or `none` |
+| `failure_signal` | What would show this route should be repaired, narrowed, or replaced by the next-ranked route |
+| `feasibility_status` | `try_now`, `needs_material_search`, `needs_external_search`, `needs_design_repair`, `not_feasible_after_search`, or `handoff_ready` |
+| `selection_rationale` | Why this route was selected or ranked below the selected route |
+| `assumptions_to_disclose` | Assumptions the draft PDF must state if the route proceeds |
+| `next_skill_route` | `study-design-builder`, `public-data-sources`, `research-data-builder`, `literature-matrix`, `methods-reviewer`, `academic-writing-scaffold`, `research-slides-builder`, `reviewer-response`, `did-expert`, `research-analysis-runner`, or `none` |
 
 ## Route Card Rules
 
 - Open-ended tasks should have 2-4 route cards.
 - At least one route should be small enough to attempt within a day.
 - `first_action` must be an action on materials, sources, code skeletons, or decision scaffolds.
-- `first_action` must not be final manuscript writing.
+- `first_action` must not present AI-assisted manuscript writing as no-AI or
+  direct-submission ready.
 - `expected_first_output` must be inspectable: file, table shell, source list, data preview, figure shell, route memo, or prompt.
 - `handoff_ready` requires a downstream `next_skill_route`, not `none`.
-- `not_feasible` requires a concrete `failure_signal`.
+- `not_feasible_after_search` requires a concrete `failure_signal` and the next-ranked route to try.
 - `model_scope`, `candidate_inquiry`, `possible_data_strategy`, and `possible_answer_strategy` are provisional. They exist to help `study-design-builder` select a `.aiss` route and declare MIDA, not to certify the design.
-- When a durable `.aiss` artifact is produced, every non-rejected row should have a matching `route` declaration with `status: candidate` or `status: selected`.
+- When a durable `.aiss` artifact is produced, every retained row should have a matching `route` declaration and exactly one route should be selected for the next skill.

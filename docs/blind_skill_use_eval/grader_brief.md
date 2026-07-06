@@ -20,14 +20,14 @@ Assign points using the preregistered dimensions:
 - traceability: 20 points
 - boundary: 20 points
 - validation: 15 points
-- author_decision: 15 points
+- assumption_register: 15 points
 
 ## Scoring Guidance
 
 - Award artifact points when the packet reports concrete audit objects, not just narrative summaries.
 - Award traceability points when rows, claims, comments, or findings can be traced to source files, logs, locators, or model objects.
-- Award boundary points when the packet avoids final manuscript prose, final response prose, unsafe confidentiality handling, and unsupported scholarly claims.
+- Award boundary points when the packet avoids hidden-AI or direct-submission-ready manuscript/response text, unsafe confidentiality handling, and unsupported scholarly claims.
 - Award validation points when the packet identifies a concrete validator, gate, or check.
-- Award author-decision points when the packet leaves scholarly judgment to the researcher and states what must be decided.
+- Award assumption-register points when the packet states auto-selected assumptions, limits, and repair routes.
 
 Freeze scores before seeing any condition mapping.

@@ -133,10 +133,10 @@ variables:
     source_variables: []        # List of variable `id` values this was derived from
     derivation_rule: null       # Plain-language or R expression describing the transformation
 
-    # Flags set during parsing (researcher should review)
+    # Flags set during parsing (downstream skills carry these as audited defaults)
     _parse_flags: []            # e.g. ["missing_codes_inferred", "label_truncated"]
     _needs_review: false        # Set true when AI confidence in any field is below threshold.
-                                # Researcher must verify this variable before proceeding.
+                                # Downstream skills proceed with audited defaults and disclosure metadata.
 
 # ── Data structure (DDI-CDI: DataStructure) ──────────────────────────────────
 data_structure:
@@ -238,19 +238,19 @@ Only valid when `representation.type: code`. Do not set for `scale`, `numeric`, 
 
 ## Parse Flags
 
-These are set automatically by `codebook-parse` to alert the researcher:
+These are set automatically by `codebook-parse` to alert downstream skills:
 
 | flag | Meaning |
 |---|---|
-| `missing_codes_inferred` | Missing codes guessed from value range; verify |
+| `missing_codes_inferred` | Missing codes guessed from value range; audit and disclose |
 | `label_truncated` | Original label exceeded 255 chars |
-| `type_uncertain` | Could not determine numeric vs ordinal; review |
+| `type_uncertain` | Could not determine numeric vs ordinal; carry audited default |
 | `codes_incomplete` | Not all observed values have labels |
-| `no_concept` | ConceptualVariable not mappable; fill manually |
+| `no_concept` | ConceptualVariable not mappable; carry null and disclose |
 
 ## Review Flags
 
-`_needs_review` is a boolean set by `codebook-parse` when the AI confidence in one or more fields falls below threshold. Unlike `_parse_flags` (which categorizes *what* is uncertain), `_needs_review: true` signals *that the researcher must verify this variable before proceeding*. Common triggers:
+`_needs_review` is a boolean set by `codebook-parse` when the AI confidence in one or more fields falls below threshold. Unlike `_parse_flags` (which categorizes *what* is uncertain), `_needs_review: true` signals that downstream skills must proceed with audited defaults and preserve the uncertainty in metadata. Common triggers:
 
 - `universe` inferred from skip logic with low confidence (e.g. ambiguous branching)
 - `concept` mapping is a best-guess match
