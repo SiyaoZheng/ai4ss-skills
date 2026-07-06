@@ -199,7 +199,6 @@ In practice:
 | Analysis | Is this ready to run? | `research-analysis-runner` | `.aiss` readiness checks, scripts, outputs, analysis artifacts |
 | Figures | Are the paper figures top-journal ready and stylistically coherent? | `top-journal-figures` | R/ggplot2 code, shared style profile, helper-tool transparency, vector figure exports, captions, source notes, visual-integrity checks |
 | Review | Are method and claim aligned? | `methods-reviewer` | Issues, redesign options, automation decisions |
-| Manuscript review | Does the draft pass fixed writing tests? | `manuscript-reviewer` | Context-sealed manifest, AutoChecklist observations, fail-first routes, reader-test queue |
 | Report/package | How does the author communicate and submit safely? | `academic-writing-scaffold`, `research-slides-builder`, `reviewer-response` | Bounded claims, source map, TOP disclosure matrix, replication-package status, presentation artifacts, reviewer decisions |
 
 The workflow is a relay, not a chain of prose requests. Each stage should
@@ -280,7 +279,6 @@ source tree.
 | [`research-analysis-runner`](skills/research-analysis-runner/SKILL.md) | Run first-pass outputs after readiness checks | `.aiss` readiness checks, scripts, tables, figures, logs, analysis artifacts |
 | [`top-journal-figures`](skills/top-journal-figures/SKILL.md) | Produce and audit AER/APSR-style paper figures with ggplot2 | R/ggplot2 scripts, shared style profile, helper-tool transparency, vector figures, captions, source notes, visual-integrity checks |
 | [`methods-reviewer`](skills/methods-reviewer/SKILL.md) | Audit design, data, answer, and claim alignment | Methods issues, redesign routes, automation decisions |
-| [`manuscript-reviewer`](skills/manuscript-reviewer/SKILL.md) | Run stateless AutoChecklist TDD reviews on manuscript drafts | Manifest hashes, AutoChecklist observations, fail-first routes, reader-test queue |
 | [`academic-writing-scaffold`](skills/academic-writing-scaffold/SKILL.md) | Prepare AI-disclosed manuscript work | Claim ledger, argument map, paragraph slots, working drafts, citation gaps, submission gate |
 | [`research-slides-builder`](skills/research-slides-builder/SKILL.md) | Convert verified evidence into presentation structure | Slide map, source map, visual result narrative |
 | [`reviewer-response`](skills/reviewer-response/SKILL.md) | Convert reviews into a traceable revision plan | Revision matrix, manuscript locations, response scaffold |

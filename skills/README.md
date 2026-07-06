@@ -52,7 +52,6 @@ handoffs, not take over process supervision.
 | `inspect-agent-eval` | Evaluation |
 | `latex-tables` | Reporting |
 | `literature-matrix` | Research workflow |
-| `manuscript-reviewer` | Research workflow |
 | `methods-reviewer` | Research workflow |
 | `public-data-sources` | Research workflow |
 | `r-performance` | Compute |

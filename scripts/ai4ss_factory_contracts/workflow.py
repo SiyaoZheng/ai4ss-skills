@@ -115,7 +115,6 @@ ALLOWED_NEXT_ROUTES: dict[str, set[str]] = {
         "analysis-explainer",
         "did-expert",
         "latex-tables",
-        "manuscript-reviewer",
         "codebook-parse",
         "cleaning-contract",
         "cleaning-execute",
