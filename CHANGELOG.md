@@ -9,8 +9,8 @@ while the public interface remains unstable.
 
 ### Added
 
-- Runtime tok mutation audit that records and blocks direct artifact mutation.
-- Runtime tok mutation audit that blocks changes outside declared source,
+- Runtime tok mutation audit that records direct artifact mutation.
+- Runtime tok mutation audit that records changes outside declared source,
   runtime, and goal state scopes.
 - Focused regression coverage for tok artifact and generated-output boundary
   enforcement.
@@ -19,8 +19,10 @@ while the public interface remains unstable.
 
 ### Changed
 
-- `tok` passes must now leave the configured artifact untouched; the producer is
-  responsible for rebuilding the artifact on the next heartbeat.
+- `tok` passes are expected to leave the configured artifact untouched; the
+  producer remains responsible for rebuilding the artifact on the next
+  heartbeat, and goal-cli records violations as audit evidence instead of
+  treating them as terminal runtime gates.
 
 ## 0.1.0 - 2026-07-05
 

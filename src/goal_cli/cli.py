@@ -108,9 +108,9 @@ def main(argv: list[str] | None = None) -> int:
         help="Check setup readiness before a heartbeat",
         description="Check config, commands, providers, and smoke prerequisites before a real heartbeat.",
     )
-    doctor_parser.add_argument("--smoke-codex-goal", action="store_true", help="Run a minimal Codex /goal schema-output smoke check in a temp directory")
+    doctor_parser.add_argument("--smoke-codex-goal", action="store_true", help="Run a minimal Codex /goal source-change smoke check in a temp directory")
     doctor_parser.add_argument("--smoke-codex-app-server", action="store_true", help="Run a minimal Codex app-server stdio tok smoke check in a temp directory")
-    doctor_parser.add_argument("--smoke-claude-code-goal", action="store_true", help="Run a minimal Claude Code structured-output tok smoke check in a temp directory")
+    doctor_parser.add_argument("--smoke-claude-code-goal", action="store_true", help="Run a minimal Claude Code source-change tok smoke check in a temp directory")
     doctor_parser.add_argument("--smoke-codex-file-tik", action="store_true", help="Run a minimal Codex local-file tik smoke check in a temp directory")
     doctor_parser.add_argument("--smoke-claude-code-file-tik", action="store_true", help="Run a minimal Claude Code local-file tik smoke check in a temp directory")
     doctor_parser.add_argument("--skip-openai-auth", action="store_true", help="Skip API key readiness check for API tik configs")

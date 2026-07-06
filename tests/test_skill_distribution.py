@@ -35,6 +35,20 @@ class SkillDistributionTests(unittest.TestCase):
             self.assertIn("goal-cli-template-author", text)
             self.assertIn("llms.txt", text)
 
+    def test_agent_docs_use_current_heartbeat_budget_examples(self) -> None:
+        paths = (
+            ROOT / "llms.txt",
+            ROOT / "skills" / "goal-cli-project-setup" / "SKILL.md",
+            ROOT / "docs" / "skills.md",
+        )
+
+        for path in paths:
+            text = path.read_text(encoding="utf-8")
+            self.assertIn("goal-cli run --max-minutes 600", text, path)
+            self.assertIn("goal-cli heartbeat install --every-minutes 30 --max-minutes 600", text, path)
+            self.assertNotIn("goal-cli run --max-minutes 30", text, path)
+            self.assertNotIn("goal-cli heartbeat install --every-minutes 30 --max-minutes 30", text, path)
+
 
 if __name__ == "__main__":
     unittest.main()

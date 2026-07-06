@@ -165,13 +165,13 @@ goal-cli run --dry-run
 Only after those checks pass, recommend one manual heartbeat:
 
 ```bash
-goal-cli run --max-minutes 30
+goal-cli run --max-minutes 600
 ```
 
 For unattended progress, recommend a timed heartbeat instead:
 
 ```bash
-goal-cli heartbeat install --every-minutes 30 --max-minutes 30
+goal-cli heartbeat install --every-minutes 30 --max-minutes 600
 goal-cli heartbeat status
 ```
 

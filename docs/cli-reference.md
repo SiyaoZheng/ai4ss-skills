@@ -71,13 +71,13 @@ heartbeat.
 
 options:
   -h, --help            show this help message and exit
-  --smoke-codex-goal    Run a minimal Codex /goal schema-output smoke check in
+  --smoke-codex-goal    Run a minimal Codex /goal source-change smoke check in
                         a temp directory
   --smoke-codex-app-server
                         Run a minimal Codex app-server stdio tok smoke check
                         in a temp directory
   --smoke-claude-code-goal
-                        Run a minimal Claude Code structured-output tok smoke
+                        Run a minimal Claude Code source-change tok smoke
                         check in a temp directory
   --smoke-codex-file-tik
                         Run a minimal Codex local-file tik smoke check in a

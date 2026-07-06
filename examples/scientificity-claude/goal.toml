@@ -21,9 +21,7 @@ max_file_size_bytes = 25000000
 
 [tik.verdict]
 ready_field = "artifact_ready"
-blockers_field = "blocking_objections"
 required_fields = ["artifact_ready", "blocking_objections"]
-fingerprint_fields = ["blocking_objections"]
 
 [tik.prompt]
 text = """
@@ -60,7 +58,7 @@ runtime_write_dirs = ["output", "build", "logs"]
 [tok.prompt]
 template = """
 Make the editable source yield, via `{producer_command}`, a manuscript PDF that
-meets the APSR standards. Your work should adress the concerns raised in {tik_review_path}.
+meets the APSR standards. Your work should address the concerns raised in {tik_review_path}.
 """
 
 [no_mistakes]

@@ -90,6 +90,9 @@ class CliTests(unittest.TestCase):
 
         self.assertEqual(raised.exception.code, 0)
         help_text = output.getvalue()
+        self.assertIn("source-change smoke check", help_text)
+        self.assertNotIn("schema-output", help_text)
+        self.assertNotIn("structured-output", help_text)
         self.assertIn("--timeout-seconds", help_text)
         self.assertIn("--smoke-timeout-seconds", help_text)
         self.assertIn("except optional provider", help_text)

@@ -464,7 +464,7 @@ goal-cli run --dry-run
 Only run a real heartbeat when setup checks pass:
 
 ```bash
-goal-cli run --max-minutes 30
+goal-cli run --max-minutes 600
 goal-cli state
 ```
 
@@ -472,7 +472,7 @@ For unattended progress, install the system-level heartbeat instead of leaving
 a foreground loop running:
 
 ```bash
-goal-cli heartbeat install --every-minutes 30 --max-minutes 30
+goal-cli heartbeat install --every-minutes 30 --max-minutes 600
 goal-cli heartbeat status
 ```
 

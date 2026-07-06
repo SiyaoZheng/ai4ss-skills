@@ -1298,7 +1298,7 @@ class GoalRuntimeTests(unittest.TestCase):
         self.assertIn("Make the editable source yield", prompt_text)
         self.assertIn("via `{producer_command}`", prompt_text)
         self.assertIn("manuscript PDF", prompt_text)
-        self.assertIn("meets the APSR standards. Your work should adress the concerns raised in {tik_review_path}.", prompt_text)
+        self.assertIn("meets the APSR standards. Your work should address the concerns raised in {tik_review_path}.", prompt_text)
         self.assertNotIn("success means", prompt_text)
         self.assertNotIn("publication standards defined by the report", prompt_text)
         self.assertIn("{tik_review_path}", prompt_text)

@@ -180,7 +180,8 @@ Hi, read https://github.com/SiyaoZheng/goal-cli/blob/master/llms.txt and do what
 | 我要验收哪个成品？ | `[artifact].path` |
 | 怎么重建它？ | `[producer].command` |
 | 怎么验收它？ | `[tik]` |
-| Agent 可以改哪些目录？ | `[tok].write_dirs` |
+| Agent 可以改哪些源码目录？ | `[tok].write_dirs` |
+| 运行时命令可以刷新哪些生成目录？ | `[tok].runtime_write_dirs` |
 
 `tik` 可以配置多个 provider 并行验收；每一路结果会合并成一份 `tik.md`
 交给 `tok`：
@@ -217,8 +218,8 @@ command = "python3 scripts/checklist_review.py"
 | `goal-cli validate` | 检查配置有没有写歪。 |
 | `goal-cli doctor` | 检查本机能不能跑。 |
 | `goal-cli run --dry-run` | 预演一遍，不让 agent 真改。 |
-| `goal-cli run --max-minutes 30` | 跑一轮 30 分钟心跳。 |
-| `goal-cli heartbeat install --every-minutes 60 --max-minutes 30` | 安装系统级定时心跳；每次 tick 仍然只跑一轮。 |
+| `goal-cli run --max-minutes 600` | 跑一轮预算上限为 600 分钟的心跳。 |
+| `goal-cli heartbeat install --every-minutes 30 --max-minutes 600` | 安装系统级定时心跳；每 30 分钟触发一次 tick，每次 tick 仍然只跑一轮。 |
 
 完整配置说明见 [docs/config-schema.md](docs/config-schema.md)。
 

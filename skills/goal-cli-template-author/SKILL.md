@@ -138,7 +138,7 @@ If a template recommends unattended progress, include the system-level
 heartbeat command and state that each tick still runs exactly one heartbeat:
 
 ```bash
-goal-cli heartbeat install --every-minutes 30 --max-minutes 30
+goal-cli heartbeat install --every-minutes 30 --max-minutes 600
 goal-cli heartbeat status
 ```
 
