@@ -194,7 +194,7 @@ Then edit `goal.toml` so:
 - `[tok].run_cwd`, when set, is where the tok process starts commands.
 - `[tok].runtime_write_dirs` contains generated directories that commands may
   refresh without making them source-edit scopes.
-- `[no_mistakes].intent`, when set, describes the non-interactive gate intent.
+- `[no_mistakes].intent`, when set, describes the non-interactive checkpoint intent.
 - `[safety].generated_dirs` lists generated outputs the tok must not edit.
 
 For a PDF-first research project, start from:

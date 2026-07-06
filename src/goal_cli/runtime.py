@@ -16,7 +16,7 @@ from typing import Any
 
 from .adapters import GoalProviderAdapters, ProductionGoalProviderAdapters
 from .config import GoalConfig, TERMINAL_STATUSES, TikConfig, tik_providers, validate_config
-from .no_mistakes import NoMistakesGate, NoMistakesResult
+from .no_mistakes import NoMistakesCheckpoint, NoMistakesResult
 from .observability import (
     GoalTelemetry,
     configure_observability,
@@ -252,8 +252,8 @@ class HeartbeatRunner:
         with HeartbeatLock(self.config.lock_path, self.config.safety.lock_stale_seconds):
             self.state = load_state(self.config)
             normalize_retired_status(self.config, self.state)
-            git_gate = self._git_gate()
-            defer_heartbeat_start = git_gate.enabled and not self.options.dry_run
+            checkpoint = self._no_mistakes_checkpoint()
+            defer_heartbeat_start = checkpoint.enabled and not self.options.dry_run
             if not defer_heartbeat_start:
                 self._heartbeat("heartbeat_start", None)
             if self.state.get("status") in TERMINAL_STATUSES:
@@ -318,8 +318,8 @@ class HeartbeatRunner:
             self._heartbeat("heartbeat_ready", run_dir)
 
     def _prepare_no_mistakes(self) -> RunResult | None:
-        git_gate = self._git_gate()
-        if not git_gate.enabled:
+        checkpoint = self._no_mistakes_checkpoint()
+        if not checkpoint.enabled:
             return None
         with self.telemetry.span(
             "goal_cli.no_mistakes.prepare",
@@ -329,7 +329,7 @@ class HeartbeatRunner:
                 "goal.run_dir": rel(self.config, self._run_dir()),
             },
         ) as span:
-            result = git_gate.prepare(
+            result = checkpoint.prepare(
                 self._run_dir(),
                 int(self.state.get("iteration", 0)),
                 "heartbeat_start",
@@ -740,8 +740,8 @@ class HeartbeatRunner:
         return RunResult(exit_code, status, self._run_dir(), message)
 
     def _checkpoint_no_mistakes(self, exit_code: int, status: str) -> RunResult | None:
-        git_gate = self._git_gate()
-        if not git_gate.enabled:
+        checkpoint = self._no_mistakes_checkpoint()
+        if not checkpoint.enabled:
             return None
         if self.options.review_only or status not in {"active", "complete"}:
             return None
@@ -756,7 +756,7 @@ class HeartbeatRunner:
                 "goal.status.before_checkpoint": status,
             },
         ) as span:
-            result = git_gate.gate(
+            result = checkpoint.checkpoint(
                 self._run_dir(),
                 int(self.state.get("iteration", 0)),
                 status,
@@ -813,8 +813,8 @@ class HeartbeatRunner:
     def _recorder(self) -> HeartbeatRecorder:
         return HeartbeatRecorder(self.config, self.state, self.telemetry)
 
-    def _git_gate(self) -> NoMistakesGate:
-        return NoMistakesGate(self.config)
+    def _no_mistakes_checkpoint(self) -> NoMistakesCheckpoint:
+        return NoMistakesCheckpoint(self.config)
 
 
 def run_heartbeat(
@@ -840,7 +840,7 @@ def run_heartbeat(
             "goal.dry_run": options.dry_run,
             "goal.review_only": options.review_only,
             "goal.deadline_set": deadline is not None,
-            "goal.no_mistakes.enabled": NoMistakesGate(config).enabled,
+            "goal.no_mistakes.enabled": NoMistakesCheckpoint(config).enabled,
         },
     ) as span:
         runner = HeartbeatRunner(config, options, adapters or ProductionGoalProviderAdapters(), deadline, telemetry)

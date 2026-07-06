@@ -43,7 +43,7 @@ class NoMistakesResult:
 
 
 @dataclass(frozen=True)
-class NoMistakesGate:
+class NoMistakesCheckpoint:
     config: GoalConfig
 
     @property
@@ -57,7 +57,7 @@ class NoMistakesGate:
             return _unavailable("no_mistakes_binary_missing", f"no-mistakes binary not found: {self.config.no_mistakes.binary}")
         return _prepare_committed_worktree(self.config, run_dir, iteration, phase, deadline)
 
-    def gate(self, run_dir: Path, iteration: int, phase: str, *, deadline: float | None = None) -> NoMistakesResult:
+    def checkpoint(self, run_dir: Path, iteration: int, phase: str, *, deadline: float | None = None) -> NoMistakesResult:
         if not self.enabled:
             return NoMistakesResult(True, "no_mistakes_off", "no-mistakes disabled", skipped=True)
 
@@ -97,13 +97,13 @@ class NoMistakesGate:
             )
 
         if _deadline_exhausted(deadline):
-            return _budget_exhausted("run budget exhausted before no-mistakes gate", repo, prepared.branch, prepared.commit, log_path)
+            return _budget_exhausted("run budget exhausted before no-mistakes checkpoint", repo, prepared.branch, prepared.commit, log_path)
         init_timeout = _effective_no_mistakes_timeout(self.config, deadline)
         init_result = _run_logged([binary, "init"], repo, log_path, init_timeout)
         if init_result.returncode != 0:
             if _timed_out_on_run_budget(init_result, deadline):
                 return _budget_exhausted("run budget exhausted during no-mistakes init", repo, prepared.branch, prepared.commit, log_path)
-            return _failed("blocked_no_mistakes_failed", "no-mistakes init failed", repo, prepared.branch, prepared.commit, log_path, init_result)
+            return _failed("no_mistakes_failed", "no-mistakes init failed", repo, prepared.branch, prepared.commit, log_path, init_result)
 
         command = self.axi_run_command(binary)
         if _deadline_exhausted(deadline):
@@ -113,11 +113,11 @@ class NoMistakesGate:
         if result.returncode != 0:
             if _timed_out_on_run_budget(result, deadline):
                 return _budget_exhausted("run budget exhausted during no-mistakes axi run", repo, prepared.branch, prepared.commit, log_path)
-            return _failed("blocked_no_mistakes_failed", "no-mistakes axi run failed", repo, prepared.branch, prepared.commit, log_path, result)
+            return _failed("no_mistakes_failed", "no-mistakes axi run failed", repo, prepared.branch, prepared.commit, log_path, result)
         return NoMistakesResult(
             True,
             "no_mistakes_passed",
-            "no-mistakes gate passed",
+            "no-mistakes checkpoint passed",
             repo,
             prepared.branch,
             prepared.commit,
@@ -130,7 +130,7 @@ class NoMistakesGate:
             "axi",
             "run",
             "--intent",
-            _gate_intent(self.config),
+            _checkpoint_intent(self.config),
             "--yes",
         ]
         skip_steps = _effective_skip_steps(self.config)
@@ -164,13 +164,13 @@ def _prepare_committed_worktree(config: GoalConfig, run_dir: Path, iteration: in
         _ensure_runtime_paths_ignored(config, repo, deadline)
         branch = _current_branch(config, repo, deadline)
         if branch is None:
-            return NoMistakesResult(False, "blocked_no_mistakes_failed", "Git worktree is detached; cannot checkpoint no-mistakes on a detached HEAD", repo)
+            return NoMistakesResult(False, "no_mistakes_failed", "Git worktree is detached; cannot checkpoint no-mistakes on a detached HEAD", repo)
 
         return _checkpoint_dirty_worktree(config, repo, run_dir, iteration, phase, branch, deadline)
     except _NoMistakesBudgetExhausted as exc:
         return _budget_exhausted(str(exc), repo, branch, None, log_path)
     except _NoMistakesGitTimedOut as exc:
-        return NoMistakesResult(False, "blocked_no_mistakes_failed", str(exc), repo, branch, None, log_path)
+        return NoMistakesResult(False, "no_mistakes_failed", str(exc), repo, branch, None, log_path)
 
 
 def _checkpoint_dirty_worktree(
@@ -191,13 +191,13 @@ def _checkpoint_dirty_worktree(
     _raise_if_deadline_exhausted(deadline, "git add before no-mistakes")
     add_result = _run_git(repo, ["add", "-A", "--", pathspec], read_only=False)
     if add_result.returncode != 0:
-        return _failed("blocked_no_mistakes_failed", "git add failed before no-mistakes", repo, branch, None, run_dir / f"no_mistakes_{phase}.log", add_result)
+        return _failed("no_mistakes_failed", "git add failed before no-mistakes", repo, branch, None, run_dir / f"no_mistakes_{phase}.log", add_result)
 
     staged_result = _run_git(repo, ["diff", "--cached", "--quiet", "--exit-code"], timeout_seconds=_effective_no_mistakes_timeout(config, deadline))
     _raise_if_git_timed_out(staged_result, deadline, "git diff --cached before no-mistakes")
     has_staged_changes = staged_result.returncode == 1
     if staged_result.returncode not in (0, 1):
-        return _failed("blocked_no_mistakes_failed", "git diff --cached failed before no-mistakes", repo, branch, None, run_dir / f"no_mistakes_{phase}.log", staged_result)
+        return _failed("no_mistakes_failed", "git diff --cached failed before no-mistakes", repo, branch, None, run_dir / f"no_mistakes_{phase}.log", staged_result)
 
     if has_staged_changes or not head_exists:
         _raise_if_deadline_exhausted(deadline, "git commit before no-mistakes")
@@ -213,12 +213,12 @@ def _checkpoint_dirty_worktree(
             read_only=False,
         )
         if commit_result.returncode != 0:
-            return _failed("blocked_no_mistakes_failed", "git commit failed before no-mistakes", repo, branch, None, run_dir / f"no_mistakes_{phase}.log", commit_result)
+            return _failed("no_mistakes_failed", "git commit failed before no-mistakes", repo, branch, None, run_dir / f"no_mistakes_{phase}.log", commit_result)
 
     dirty_after = _git_dirty_entries(config, repo, deadline)
     if dirty_after:
         detail = "Git worktree is still dirty after checkpoint; refusing to run no-mistakes on a dirty tree: " + "; ".join(dirty_after[:20])
-        return NoMistakesResult(False, "blocked_no_mistakes_failed", detail, repo, branch, _short_head(config, repo, deadline), run_dir / f"no_mistakes_{phase}.log")
+        return NoMistakesResult(False, "no_mistakes_failed", detail, repo, branch, _short_head(config, repo, deadline), run_dir / f"no_mistakes_{phase}.log")
 
     commit = _short_head(config, repo, deadline)
     detail = f"created Git checkpoint {commit}" if has_staged_changes or not head_exists else "Git worktree already clean"
@@ -333,7 +333,7 @@ def _resolve_binary(binary: str, root: Path, which: Callable[[str], str | None])
     return which(binary)
 
 
-def _gate_intent(config: GoalConfig) -> str:
+def _checkpoint_intent(config: GoalConfig) -> str:
     if config.no_mistakes.intent:
         return config.no_mistakes.intent
     return (

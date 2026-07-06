@@ -149,7 +149,7 @@ from file state.
 
 ## Current Module Boundaries
 
-- Git Gate: `NoMistakesGate` is the only place that knows how to prepare a clean
+- Git Checkpoint: `NoMistakesCheckpoint` is the only place that knows how to prepare a clean
   Git checkpoint, preserve the current mainline branch, choose no-mistakes skip
   presets, honor run budgets, and invoke or skip `no-mistakes axi run` according
   to branch constraints.
