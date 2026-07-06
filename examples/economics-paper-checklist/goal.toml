@@ -1,6 +1,8 @@
 name = "economics-paper-dp16276-checklist"
 # Copy this example directory's files into an economics paper repository root.
-# The checklist tik runs Plamen Nikolov's IZA DP 16276 economics writing tests.
+# This example uses two tik providers and one tok provider:
+# - referee: an LLM file review of the manuscript artifact;
+# - checklist: Plamen Nikolov's IZA DP 16276 economics writing tests.
 state_dir = ".goal"
 runs_dir = ".goal/runs"
 
@@ -12,6 +14,16 @@ copy_as = "manuscript.pdf"
 command = "make manuscript"
 
 [tik]
+timeout_seconds = 1800
+max_file_size_bytes = 25000000
+max_output_tokens = 4096
+
+[[tik.providers]]
+label = "referee"
+provider = "codex_file"
+
+[[tik.providers]]
+label = "checklist"
 provider = "checklist"
 command = "python3 scripts/checklist_review.py"
 timeout_seconds = 300
@@ -26,8 +38,25 @@ required_fields = [
 
 [tik.prompt]
 text = """
-Run the DP16276 economics-paper TDD checklist against {artifact_path}.
+Review {artifact_path} as an economics research-paper artifact.
+
 The current artifact hash is {artifact_sha256}.
+
+Apply the DP16276 economics-paper TDD checklist as the concrete acceptance
+standard, but also state any manuscript-level publication blockers that the
+checklist framing misses.
+
+End with one fenced JSON verdict block for goal-cli routing:
+```json
+{
+  "artifact_ready": false,
+  "review_matches_current_artifact": true,
+  "current_artifact_sha256": "{artifact_sha256}",
+  "blocking_objections": ["short label for each blocking problem"]
+}
+```
+Set artifact_ready=true only if the manuscript is ready by both economics-paper
+writing standards and the DP16276 checklist standard; then blocking_objections=[].
 """
 
 [tok]
@@ -41,10 +70,10 @@ codex_features = ["goals"]
 [tok.prompt]
 template = """
 Make the editable manuscript source yield, via `{producer_command}`, an
-economics research paper artifact that passes the DP16276 checklist report at
+economics research paper artifact that passes the aggregated tik report at
 {tik_review_path}.
 
-Success means every blocking checklist item in that report is resolved in the
+Success means every blocking item from both tik providers is resolved in the
 rebuilt artifact at {artifact_path}; keep results-driven text honest and do not
 invent evidence.
 
@@ -63,10 +92,10 @@ binary = "no-mistakes"
 skip_steps = []
 intent = """
 Drive one automatic economics-paper checklist heartbeat: rebuild the manuscript
-artifact, run the DP16276 checklist tik, edit only configured source scopes to
-resolve checklist blockers, refresh generated outputs only through the producer
-workflow, keep the worktree coherent between heartbeats, and gate checkpoints
-with no-mistakes.
+artifact, run both the referee tik and the DP16276 checklist tik, edit only
+configured source scopes to resolve blockers, refresh generated outputs only
+through the producer workflow, keep the worktree coherent between heartbeats,
+and gate checkpoints with no-mistakes.
 """
 
 [observability]
