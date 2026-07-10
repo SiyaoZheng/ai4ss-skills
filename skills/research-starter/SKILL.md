@@ -1,122 +1,111 @@
 ---
 name: research-starter
 description: >
-  First-loop social-science research starter for turning a vague topic, rough question,
-  source pile, dataset folder, or policy phenomenon into route cards, a minimum viable
-  study, and the next executable research action. Use before provenance, robustness,
-  literature-matrix, data-pipeline, or writing-scaffold work when the user asks how to
-  start a study, make a research idea concrete, choose among feasible research routes,
-  or use AI to move from zero to one. Triggers: "start a research project", "research
-  idea", "from zero to one", "minimum viable study", "route card", "what can I do next",
-  "我想做一个研究", "从无到有", "选题怎么落地", "先把研究做出来", "下一步怎么推进".
+  Develop a vague political or social topic, empirical pattern, policy change, source pile,
+  or dataset into a defensible research problem and initial research concept. Use when a
+  political scientist needs to move from a topic to a consequential question, clarify concepts,
+  identify mechanisms and rival explanations, derive initial expectations, or assess whether
+  available evidence can sustain a worthwhile study. Triggers include "research idea",
+  "start a project", "develop this question", "find the puzzle", "what is the contribution",
+  "研究选题", "研究问题", "理论机制", "如何开始这个研究".
 ---
 
 # Research Starter
 
-Start the first research loop. This skill turns a loose topic plus available materials into a concrete research object that later skills can inspect.
+Develop a promising topic into a consequential, theoretically situated, and empirically tractable
+research problem. Begin with the political phenomenon, the relevant scholarly disagreement, and what
+remains unexplained. Method follows from the question and the evidence required to answer it.
 
-## Scholar Workbench
+## Concept memo
 
-This skill answers: "这个研究怎么先动起来？" Its value is not robustness or provenance; it is making a topic, material pile, or intuition become route cards, a minimum viable study, and one next executable action.
+Develop a **Research Concept Memo** that states:
 
-## Methodology Foundation
+1. the phenomenon and its political setting;
+2. the research problem and why it matters;
+3. the prior expectation, accepted account, or unresolved debate;
+4. the empirical or theoretical tension that makes the question worth asking;
+5. the central concepts and distinctions;
+6. candidate mechanisms and serious rival explanations;
+7. observable implications or initial hypotheses;
+8. the likely contribution to political-science knowledge;
+9. the evidence that could discriminate among explanations; and
+10. the most important feasibility risk and the next research move.
 
-This skill is the pre-declaration layer of the MIDA spine: it sketches possible `Model`, `Inquiry`, `Data strategy`, and `Answer strategy` routes before the researcher commits to a design.
+A puzzle is useful but not mandatory. A strong problem may instead arise from a theoretical
+tension, unresolved debate, measurement failure, overlooked case, new evidence, or empirical
+opportunity.
 
-Each route card must preserve a rough inquiry or target quantity, available evidence, possible first answer strategy, diagnosability, failure signal, and author decision point. These sketches are not valid designs until `study-design-builder` selects one route and declares the full MIDA object.
+## Developing the problem
 
-Starter output may name candidate concepts, causal links, or empirical bridges, but it must not create a final model layer. When the work needs a durable research object, create or update `research_model.aiss` with provisional `.aiss` `route` declarations only; `study-design-builder` later marks one route `selected`, adds seven `mida` declarations, and only then adds stable model/bridge objects when warranted.
+### 1. Inspect the materials
 
-## Core Rule
+Read the user's notes, seed papers, data descriptions, policy documents, institutional context,
+and existing analyses. Distinguish observed facts from impressions, inherited claims, and unknowns.
+Any claim to novelty should follow a check of the nearest literature.
 
-Produce research objects, not polished paper prose. The default output is a `research_starter_packet.md` plus optional `research_route_cards.csv`, with stop reasons and researcher decision points visible.
+### 2. Formulate the problem
 
-## Workflow Contract
+Move from a topic label to a question with stakes. Ask:
 
-- Upstream inputs: rough topic, source pile, dataset folder, policy phenomenon, author notes, or a request for "what can I do next?"
-- Produces: `docs/research_starter_packet.md`, optionally `docs/research_route_cards.csv`, and when persistence is useful a route-only `docs/research_model.aiss`.
-- Handoff fields: `route_id`, `route_decl_id`, `ai4ss_model_path`, `research_question`, `model_scope`, `candidate_inquiry`, `candidate_concepts`, `candidate_causal_links`, `candidate_empirical_bridges`, `possible_data_strategy`, `possible_answer_strategy`, `study_type`, `unit_of_analysis`, `materials_available`, `materials_gap`, `first_action`, `failure_signal`, `stop_reason`, `researcher_decision_needed`, `aiss_check_status`, `next_skill_route`.
-- Downstream routes: `study-design-builder`, `research-data-builder`, `literature-matrix`, `methods-reviewer`, `academic-writing-scaffold`, `research-slides-builder`, `did-expert`, or `ask_author`.
+- What political phenomenon needs explanation or description?
+- What would informed scholars currently expect?
+- What observation, contradiction, or omission makes that expectation incomplete?
+- Whose understanding could change, and about what?
 
-## Hard Boundary
+Draft several formulations when useful, assess their intellectual and empirical consequences, and
+select the strongest for the memo.
 
-Do not draft final manuscript prose, abstracts, introductions, literature review prose, results prose, conclusions, final reviewer responses, or authorial claims for direct submission. AI can propose routes, evidence affordances, analysis skeletons, and decision questions; the researcher owns novelty, theory, identification judgment, final claims, and final wording.
+### 3. Develop concepts and explanations
 
-## Routing Boundaries
+Define the central concepts at the level needed to reason about them. Identify the actors,
+institutions, incentives, information, resources, sequences, or interactions that could generate
+the phenomenon. Develop at least one serious rival explanation rather than a token alternative.
 
-Use this skill before the project has a chosen route, dataset pipeline, verified literature base, model table, or writing scaffold. After a route is selected, hand off:
+Derive observable implications that would differ across explanations. Avoid relabeling the outcome
+as a mechanism.
 
-- Data construction or extraction to `research-data-builder`.
-- Literature search, screening, or extraction to `literature-matrix`.
-- Study design concretization to `study-design-builder`.
-- First-pass analysis execution to `research-analysis-runner` only after a design source and analysis-ready data exist.
-- Identification and result-claim validity to `methods-reviewer`, or `$did-expert` when DID/event-study is central.
-- Section planning and claim slots to `academic-writing-scaffold`.
-- Research decks to `research-slides-builder`.
+### 4. Check contribution and tractability
 
-Do not duplicate downstream validators. This skill makes the first object exist; downstream skills audit and deepen it.
+Use nearby scholarship and the available evidence to judge whether the proposed study could make
+a defensible improvement. A contribution may revise an explanation, reveal a scope condition,
+resolve conflicting findings, improve measurement, open a new comparison, or establish an
+important descriptive fact. Novel data or a modern estimator alone is not a contribution.
 
-## Workflow
+Assess feasibility softly: relevant cases, variation, time structure, measurement possibilities,
+comparison opportunities, access constraints, and the likelihood that evidence can distinguish the
+main explanations.
 
-```
-Step -1: Intake only what is needed
--> Capture four fields: one-sentence question or phenomenon, available materials, hard boundaries, and the one action the researcher hopes AI can do next.
--> If information is missing, state what can be done now and what must be asked from the researcher.
+### 5. Revise the concept
 
-Step 0: Inventory materials
--> Inspect the file tree, notes, variable dictionaries, seed papers, data previews, or source links provided.
--> Separate usable materials, uncertain materials, unavailable materials, and confidential or off-limits materials.
+Use the findings above to narrow, reframe, or abandon weak formulations. The final memo should
+represent the best current judgment, explain why it is stronger than the alternatives, and name
+what evidence could overturn it.
 
-Step 1: Build route cards
--> For open-ended topics, produce 2-4 route cards before choosing.
--> Each route card must name the question, phenomenon, unit, material path, first action, expected first output, feasibility status, stop reason, researcher decision, and next skill route.
--> When a persistent workflow artifact is requested or needed, mirror each route card as a `.aiss` `route` declaration with `status: candidate`, not as a final model.
--> If the user already picked one route, still record rejected alternatives briefly.
+## Lessons from practice
 
-Step 2: Define a minimum viable study
--> Choose the smallest study that can produce one checkable observation, table shell, figure shell, source matrix seed, or data feasibility result.
--> Do not jump to a full model battery, systematic review, or polished argument.
+- A replication-first project begins from an inspectable published result and asks what one
+  theoretically meaningful improvement—new population, measure, comparison, or explanation—could
+  change whose mind about what.
+- A method-first idea should be rewritten around the political phenomenon and rival explanations
+  before any design is chosen.
+- A promising question with inaccessible data, uncontrolled implementation risk, or no feasible exit
+  should be narrowed or abandoned early; sunk effort is not evidence of scholarly importance.
 
-Step 3: Run or specify one next action
--> Execute the next action only when inputs are present and the action is safe.
--> Otherwise write the exact handoff prompt the researcher can use next.
--> Keep the action material-to-action: inspect, sample, retrieve, sketch, or scaffold. Do not write the paper.
+Sources on research practice:
 
-Step 4: Stop deliberately
--> End with `stop_reason`, `researcher_decision_needed`, `handoff_prompt`, and `next_skill_route`.
--> If the route is not feasible, say so and propose a smaller route or abandon path.
-```
+- Gary King, “Publication, Publication”: https://gking.harvard.edu/files/abs/paperspub-abs.shtml
+- Chris Blattman, “How to Pick a Dissertation Project”:
+  https://chrisblattman.com/blog/2013/02/12/how-to-pick-a-dissertation-project-and-why-it-should-not-be-a-field-experiment/
 
-## Default Outputs
+## Criteria for judgment
 
-- `docs/research_starter_packet.md` for the one-page workbench.
-- `docs/research_route_cards.csv` when there are multiple candidate routes or the packet will be reused.
-- Optional route-only `docs/research_model.aiss` containing `.aiss` `route` declarations when the workflow should continue as a durable DSL object.
-- Optional `docs/first_loop_log.md` when the skill actually inspects files, queries sources, or runs code.
+A defensible memo:
 
-## Script Utilities
-
-- Run `scripts/validate_research_routes.py <path>` to check the route-card sidecar when one is produced.
-- Run `python3 dsl/scripts/aiss.py compile <path-to-research_model.aiss>` and `python3 dsl/scripts/aiss.py lint <path-to-research_model.aiss>` when a route-only `.aiss` artifact is produced.
-- Treat validator failures as starter artifacts, not terminal noise: record the failed command, the exact schema or import error, the fix, and the rerun result before handing off.
-- If an installed validator cannot import `ai4ss_factory_contracts`, set `AI4SS_SKILLS_ROOT` to the `ai4ss-skills` source checkout and rerun; do not ignore the validation gate.
-
-## Quality Bar
-
-- Start from feasibility, not compliance.
-- Prefer concrete route cards over general advice.
-- Keep at least one route small enough to attempt within a day.
-- Treat data availability, source access, and variable existence as first-class findings.
-- Include a failure signal for every next action.
-- Preserve academic authorship boundaries and AI-use disclosure needs.
-- Use downstream skills only after a research object exists.
-
-## Reference Files
-
-| File | Content | Read when |
-|---|---|---|
-| [starter-workflow.md](references/starter-workflow.md) | First-loop workflow, packet shape, and stop rules | Starting any zero-to-one research task |
-| [route-card-schema.md](references/route-card-schema.md) | CSV sidecar schema, allowed statuses, and handoff routes | Producing or validating route cards |
-| [minimum-viable-study.md](references/minimum-viable-study.md) | Minimum viable study patterns across descriptive, causal, text, qualitative, and mixed-method projects | Choosing the smallest credible first study |
-| [prompt-pack.md](references/prompt-pack.md) | Copy-ready prompts for intake, route cards, MVS selection, first action, and handoff | Turning a loose request into an agent task |
-| [worked-example.md](references/worked-example.md) | Digital-government and firm-innovation starter packet example | Teaching or demonstrating the skill |
+- is about a politically meaningful phenomenon rather than a method looking for an application;
+- makes the source of uncertainty or disagreement explicit;
+- connects the question to real political-science scholarship;
+- distinguishes concepts, mechanisms, hypotheses, and measures;
+- treats rival explanations fairly;
+- proposes evidence capable of changing the argument;
+- is ambitious enough to matter and bounded enough to investigate; and
+- changes the researcher's next move.

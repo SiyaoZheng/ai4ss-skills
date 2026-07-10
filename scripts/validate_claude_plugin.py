@@ -96,8 +96,8 @@ def validate_plugin(root: Path) -> list[str]:
     skill_files: list[Path] = []
     for skill_root in skill_roots:
         skill_files.extend(sorted(skill_root.glob("*/SKILL.md")))
-    if len(skill_files) != 19:
-        errors.append(f"{root / 'skills'}: expected 19 SKILL.md files, found {len(skill_files)}")
+    if len(skill_files) != 21:
+        errors.append(f"{root / 'skills'}: expected 21 SKILL.md files, found {len(skill_files)}")
     for skill_md in skill_files:
         expected_name = skill_md.parent.name
         actual_name = frontmatter_name(skill_md)

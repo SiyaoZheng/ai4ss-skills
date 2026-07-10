@@ -1,2 +1,0 @@
-comment_id,reviewer_text,request_type,mida_element_affected,severity,status,planned_action,evidence_needed,file_or_section,owner,done_evidence,response_summary,author_position_status,confidentiality_status,open_question
-R2.3a,add robustness table,robustness,diagnose,high,accept,run robustness,output/tables/robustness.csv,appendix table A3,agent,pending,author will report robustness,author_decided,redacted,none

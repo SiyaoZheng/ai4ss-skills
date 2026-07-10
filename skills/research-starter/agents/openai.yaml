@@ -1,4 +1,4 @@
 interface:
   display_name: "Research Starter"
-  short_description: "Turn a vague social-science idea into a first research loop"
-  default_prompt: "Use $research-starter to turn this rough research idea and available materials into route cards, a minimum viable study, and the next executable action."
+  short_description: "Develop a topic into a political-science research problem"
+  default_prompt: "Use $research-starter to clarify the political problem, theoretical stakes, rival explanations, and empirical possibilities in this topic."

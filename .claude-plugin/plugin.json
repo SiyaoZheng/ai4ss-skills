@@ -2,7 +2,7 @@
   "$schema": "https://anthropic.com/claude-code/plugin.schema.json",
   "name": "ai4ss-skills",
   "version": "0.1.0",
-  "description": "Research infrastructure for agent-assisted social science with reusable skills, .aiss research objects, validation gates, and bounded handoff workflows.",
+  "description": "Research skills for empirical social science centered on political-science judgment, evidence, analysis, and revision.",
   "author": {
     "name": "Siyao Zheng",
     "url": "https://github.com/SiyaoZheng"
@@ -15,7 +15,7 @@
     "research",
     "methodology",
     "skills",
-    "aiss"
+    "political-science"
   ],
   "skills": [
     "./skills"

@@ -1,50 +1,44 @@
 # Deck Structure
 
-Use this reference when planning a research presentation.
+Use this reference when planning a research presentation. Start from the political question and the
+argument the audience must be able to reconstruct, not from a fixed slide inventory.
 
-## Slide Map Schema
+## Build the listening argument
 
-| column | meaning |
-|---|---|
-| `slide_id` | Stable slide number or id |
-| `role` | title, agenda, motivation, question, data, design, result, mechanism, robustness, limitation, discussion, boundary |
-| `claim` | One claim or task for the slide |
-| `source_artifact` | Table, figure, matrix row, audit output, or author note |
-| `visual` | Chart, table, diagram, quote, workflow, or blank |
-| `risk` | unsupported claim, overclaim, overload, privacy, unclear unit |
-| `action` | create, revise, split, delete, verify |
+A useful empirical talk often needs to establish:
 
-Use `not_applicable` rather than blank `source_artifact` for title, agenda, and discussion slides. All other slide roles need a concrete table, figure, log, matrix row, or author note.
+- the political phenomenon or puzzle;
+- what the paper claims and why that changes how we understand the phenomenon;
+- the setting and institutional facts needed to evaluate the claim;
+- what makes the comparison informative;
+- the decisive descriptive and causal evidence;
+- the strongest live alternative explanation;
+- what the evidence does not establish; and
+- why the result matters beyond the case.
 
-## Research Talk Pattern
+These are intellectual tasks, not mandatory sections. Reorder, combine, or omit them to fit the actual
+study, audience, and time. Put the point early enough that listeners know why each later piece of
+evidence matters.
 
-1. Title and question.
-2. Why the question matters in one concrete setting.
-3. What is hard to identify or measure.
-4. Data and sample.
-5. Design or workflow.
-6. Main result visual.
-7. Diagnostics and robustness.
-8. Mechanism or interpretation boundary.
-9. Contribution.
-10. Limitations and next step.
+## Allocate scarce time
 
-## Teaching Demo Pattern
+Budget the talk in minutes before polishing slides. Protect time for the research question, design
+logic, decisive evidence, and interpretation. Compress literature name-checking, procedural detail,
+and robustness inventories unless they are the source of the contribution. Keep technical evidence
+needed for likely questions in backup slides.
 
-1. Problem researchers recognize.
-2. Agent/task setup or research workflow.
-3. Input prompt or data artifact.
-4. Tool/action trace.
-5. Output artifact.
-6. Error or uncertainty.
-7. Verification checkpoint.
-8. What students should reuse.
+## One intellectual task per slide
 
-## One-Claim Rule
+Each slide should help the audience perform one main task: understand a fact, compare quantities,
+evaluate a design choice, see a result, or confront an alternative explanation. Split a slide when its
+claims compete for attention.
 
-Each slide should have one main claim. If a slide needs two claims, split it or make one a footnote.
+Use titles that advance the working argument. For example, “Policy adoption follows fiscal stress” is
+more useful than “Background,” but the title should remain accurate about whether the slide shows a
+description, an estimate, or an interpretation.
 
-Examples:
+## Revise through rehearsal
 
-- Good: "The analysis sample retains 285 cities after policy-list matching."
-- Too broad: "The data are clean and support the analysis."
+After a timed rehearsal, identify the first moment the argument becomes hard to follow, questions that
+recur, evidence that takes too long to explain, and slides the talk can survive without. These are often
+signals about the research itself. Revise the point, analysis, or ordering—not only the slide design.

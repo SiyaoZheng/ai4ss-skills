@@ -1,126 +1,119 @@
 ---
 name: study-design-builder
 description: >
-  Social-science study design builder for turning a selected research route, starter packet,
-  literature clues, or data affordances into a design brief, estimand map, variable/source needs,
-  analysis plan, and author decision register. Use after research-starter and before data
-  construction, literature extraction, analysis execution, or methods audit when the user asks to
-  make a selected research route concrete, define unit/outcome/treatment, compare design routes,
-  build an analysis plan, or prepare a preregistration-style scaffold. Triggers: "study
-  design", "research design brief", "estimand", "analysis plan", "turn route into design",
-  "研究设计", "把选题落成设计", "变量和识别怎么定", "分析计划", "预分析计划".
+  Build and revise executable study designs for quantitative empirical political science. Use when
+  translating a research problem and theory into a descriptive, associational, predictive, or causal
+  design; defining population and sample; operationalizing constructs; choosing an estimand or target;
+  developing a comparison and identification strategy; planning estimation, diagnostics, robustness,
+  and scope; or assessing whether a proposed design is feasible. Triggers include "study design",
+  "research design", "identification strategy", "pre-analysis plan", "研究设计", "识别策略",
+  "变量测量", "实证策略".
 ---
 
 # Study Design Builder
 
-Turn a selected research route into a design object that data, literature, analysis, and audit skills can use.
+Turn a political-science question and theoretical argument into an executable empirical design. The
+design should specify what will be learned, from which population and comparison, with which measures,
+and under which assumptions. Contemporary causal inference is appropriate when the question and
+evidence support it; many important studies remain descriptive, associational, predictive, or
+measurement-oriented.
 
-## Scholar Workbench
+## Design memo
 
-This skill answers: "这个研究路线怎样落成可执行设计？" Its value is not auditing finished methods; it is making question, unit, measures, comparisons, evidence needs, and author decisions explicit before data or model work expands.
+Set out the proposed study in a **Research Design Memo** or **Pre-Analysis Memo** that specifies:
 
-## Core Rule
+1. research question, theoretical argument, mechanisms, rivals, and testable expectations;
+2. inferential purpose: description, association, prediction, measurement, or causation;
+3. target population, sampling frame, sample, unit of analysis, time, and setting;
+4. constructs, operational measures, and evidence for measurement validity;
+5. estimand or other target quantity;
+6. treatment, exposure, outcome, comparison, and assignment or selection process when relevant;
+7. identification assumptions and the institutional facts that make them plausible or doubtful;
+8. data sources, linkage needs, missingness risks, and design feasibility;
+9. estimator or analytic strategy, uncertainty, clustering or dependence, and weighting;
+10. planned descriptive evidence and diagnostics;
+11. heterogeneity, mechanisms, multiple outcomes, and exploratory analyses;
+12. falsification, placebo, robustness, and sensitivity analyses;
+13. principal threats, rival interpretations, scope conditions, and bounded claims; and
+14. the design revisions made during the assessment.
 
-Build a design brief, not a final identification judgment. The researcher owns novelty, theoretical contribution, causal credibility, and final claim strength.
+## Developing the design
 
-## Methodology Foundation
+### 1. Reconstruct the inquiry
 
-This skill is the primary MIDA declaration layer. It turns a selected route into explicit `Model`, `Inquiry`, `Data strategy`, `Answer strategy`, and `Diagnose` fields before data construction or analysis expands.
+Read the concept memo, literature, institutional material, data descriptions, and prior analysis.
+Clarify what the study wants to learn before discussing estimators. If the proposed outcome or
+treatment does not match the theoretical construct, repair the question or measurement first.
 
-`Estimand` belongs inside `Inquiry`, not in place of the whole design. For non-causal work, the same slot must name the target descriptive quantity, construct, classification target, process-tracing claim, or synthesis question.
+### 2. Choose the inferential purpose
 
-This skill owns the `.aiss` workflow upgrade from provisional route to design. It marks one `.aiss` `route` as `selected`, writes seven `mida` declarations, records author-owned `decision` declarations, and then adds the model layer when conceptual, construct, causal, or bridge structure matters. When a theory workbench handoff exists, it may use validated `literature_theory_synthesis.csv`, `theory_rival_map.csv`, `theory_scope_map.csv`, and `theory_evidence.md` as evidence for existing `.aiss` `concept`, `claim`, `relation`, `causal`, `bridge`, or `model` declarations, while leaving novelty, rival choice, scope choice, and mechanism strength as author decisions.
+Decide whether the study's actual contribution is descriptive, associational, predictive,
+measurement-oriented, or causal. Do not force every worthwhile political-science study into a causal
+design. When the question is causal, define the relevant potential-outcome estimand and comparison;
+a DAG is not required.
 
-## Hard Boundary
+### 3. Build the design from political institutions and data generation
 
-Do not write manuscript prose, final preregistration prose, final causal claims, or polished theory sections. Do not certify that an identification strategy is valid. Provide structured choices, evidence needs, risks, and author decision points.
+Describe how cases enter the sample, how exposure occurs, how outcomes are observed, and which
+political processes could confound, mediate, anticipate, or spill over. Use institutional knowledge
+to judge the comparison rather than choosing a design from its label.
 
-## Workflow Contract
+### 4. Make measurement choices
 
-- Upstream inputs: `research_starter_packet.md`, `research_route_cards.csv`, route-only `research_model.aiss`, `literature_theory_synthesis.csv`, optional `theory_rival_map.csv`, optional `theory_scope_map.csv`, optional `theory_evidence.md`, seed literature notes, variable dictionaries, data previews, policy timelines, author notes, or an existing design-level `research_model.aiss`.
-- Produces: `docs/study_design_brief.md`, `docs/study_design_declaration.csv`, optionally `docs/design_decision_register.csv`, `docs/research_model.aiss`, and `docs/ai4ss_check_report.txt`.
-- Handoff fields: `route_id`, `route_decl_id`, `mida_id`, `decision_decl_id`, `model_scope`, `inquiry`, `study_type`, `unit_of_analysis`, `outcome`, `exposure_or_treatment`, `comparison`, `data_strategy`, `answer_strategy`, `diagnosands_or_gates`, `redesign_options`, `interpretation_boundary`, `author_decisions`, `ai4ss_model_path`, `model_id`, `concept_id`, `causal_id`, `bridge_id`, `ai4ss_check_status`, `commensurability_status`, `next_skill_route`.
-- Downstream routes: `research-data-builder`, `literature-matrix`, `research-analysis-runner`, `methods-reviewer`, `did-expert`, or `ask_author`.
+Connect each construct to observable indicators. Examine content, construct, convergent,
+discriminant, and predictive validity as appropriate. Discuss coding decisions, aggregation,
+measurement error, differential reporting, and whether the measure behaves differently across
+groups or time.
 
-## Routing Boundaries
+### 5. Specify analysis and learning strategy
 
-Use this skill after a route exists but before the project has a stable analysis plan. Hand data construction to `research-data-builder`, source discovery to `literature-matrix`, first analysis execution to `research-analysis-runner`, and identification audit to `methods-reviewer` or `$did-expert`.
+Choose analyses that answer the stated target. Begin with sample and measurement descriptions, raw
+patterns, and design diagnostics. Then specify estimation, uncertainty, heterogeneity, mechanisms,
+and falsification or sensitivity checks. Separate prespecified tests from exploratory learning.
 
-If the user only has a vague topic or policy phenomenon and no selected route,
-stop and route to `research-starter` or `ask_author`; do not synthesize a full
-MIDA declaration from a blank slate.
+When a design family has substantial specialist knowledge, such as DID, state which design-specific
+assumptions, comparisons, diagnostics, and sensitivity questions require deeper treatment instead of
+compressing those questions into a general design memo.
 
-## Workflow
+### 6. Assess feasibility softly
 
-```
-Step -1: Orient to the selected route
--> Read starter packet, route cards, author notes, data previews, and seed sources.
--> Confirm route_id, study type, unit, material status, and hard boundaries.
--> If no route_id or provisional `.aiss` `route` exists, stop with a handoff to `research-starter` or `ask_author`.
+For most observational research, judge feasibility from data coverage, relevant variation,
+measurement quality, comparison support, timing, dependence, attrition, plausible precision, and the
+number of informative cases or clusters. Formal power calculations or simulations are optional and
+should be used only when their assumptions and design make them defensible.
 
-Step 0: Declare MIDA
--> Build the design brief with explicit Model, Inquiry, Data Strategy, Answer Strategy, Diagnose, Redesign, and Report Boundary sections.
--> Update `research_model.aiss`: mark the selected `.aiss` `route` as `selected` and add exactly seven `mida` declarations for Model, Inquiry, Data Strategy, Answer Strategy, Diagnose, Redesign, and Report Boundary.
--> Mirror the `.aiss` declaration in `study_design_declaration.csv`.
--> Mark each element as author supplied, inferred from material or literature, agent proposed, or unresolved.
+### 7. Diagnose and revise
 
-Step 0.5: Compile or update the `.aiss` model layer
--> When concepts, measurement bridges, causal implications, or theory-to-evidence links matter, add or update `concept`, `claim`, `attribute`, `causal`, `bridge`, and `model` declarations in the same `research_model.aiss`.
--> If `literature_theory_synthesis.csv` is present, use its `proposed_aiss_object`, `source_paper_ids`, `rival_or_boundary`, `observable_implication`, `evidence_strength`, and `author_decision_needed` fields to decide which model-layer objects are proposed, diagnosed, blocked, or left for the author.
--> If the full theory workbench is present, run or require `scripts/validate_theory_workbench.py <workbench-dir>` before using it.
--> Only workbench objects that pass validation and are marked `ready_for_aiss` may be compiled into or used to update `.aiss` model-layer declarations.
--> Route rival explanations, scope drift, unresolved theoretical contribution, and mechanism-strength choices into `design_decision_register.csv` and `.aiss` `decision` declarations instead of model facts.
--> In `study_design_declaration.csv`, cite `literature_theory_synthesis.csv` in `evidence_source` for affected MIDA rows; do not add new columns.
--> Preserve stable `route_decl_id`, `mida_id`, `decision_decl_id`, `model_id`, `concept_id`, `causal_id`, and `bridge_id` values in the declaration sidecars.
--> Run `scripts/validate_ai4ss_model.py docs/research_model.aiss` when the toolchain is available, and save the output to `docs/ai4ss_check_report.txt`.
--> Treat `aiss.py lint` errors as a design artifact failure, not as a cosmetic warning.
+Identify the assumptions and threats most likely to change the answer. Redesign the sample,
+measurement, comparison, outcome, time window, or claim when the evidence cannot sustain the initial
+plan. State the chosen design and rejected alternatives with reasons.
 
-Step 1: Map design choices
--> List candidate descriptive, causal, text, qualitative, or mixed-method designs that fit the route.
--> For each choice, name data needs, literature needs, risks, and what would make the choice infeasible.
+## Lessons from practice
 
-Step 2: Create analysis plan scaffold
--> Define the first table/figure/model/coding output that would test feasibility.
--> Specify required inputs and validation checks.
--> Do not run analysis unless the user explicitly asks and inputs are ready; hand execution to `research-analysis-runner`.
+- Pilot the link most capable of killing the study—such as treatment timing, comparison support, or a
+  disputed measure—before building the full analysis.
+- When the available comparison cannot identify the original causal target, narrow the target,
+  population, or claim before adding controls and complexity.
+- Treat a failed diagnostic as information about the design. Revise the comparison, timing, measure,
+  or question rather than accumulating nominal robustness checks.
 
-Step 3: Register decisions
--> Produce a design decision register with status, evidence needed, author decision, and downstream route.
--> Stop when novelty, theory, causal credibility, or public claim strength requires author judgment.
-```
+Sources on research practice:
 
-## Default Outputs
+- Chris Blattman, “How to Pick a Dissertation Project”:
+  https://chrisblattman.com/blog/2013/02/12/how-to-pick-a-dissertation-project-and-why-it-should-not-be-a-field-experiment/
+- Andrew Gelman et al., “Bayesian Workflow”:
+  https://sites.stat.columbia.edu/gelman/research/unpublished/Bayesian_Workflow_article.pdf
 
-- `docs/study_design_brief.md`.
-- `docs/study_design_declaration.csv`.
-- `docs/design_decision_register.csv` when multiple design choices or unresolved decisions exist.
-- `docs/research_model.aiss` with selected `route`, seven `mida` declarations, `decision` declarations, and model-layer declarations when conceptual, causal, measurement, or bridge structure matters.
-- `docs/ai4ss_check_report.txt`.
-- Optional `docs/analysis_plan_scaffold.md` for the first analysis runner handoff.
+## Criteria for judgment
 
-## Script Utilities
+A defensible design:
 
-- Run `scripts/validate_study_design_declaration.py <path>` to check the MIDA declaration sidecar.
-- Run `scripts/validate_design_decisions.py <path>` to check the design decision register.
-- Run `scripts/validate_theory_workbench.py <workbench-dir>` before consuming full theory workbench sidecars.
-- Run `scripts/validate_ai4ss_model.py docs/research_model.aiss` to check the DSL model through `aiss.py compile`, `aiss.py lint`, and `aiss.py run`.
-
-## Quality Bar
-
-- Keep design choices traceable to route cards or supplied materials.
-- Keep theory-mapping choices traceable to verified literature synthesis sidecars when they come from literature.
-- Consume only validated `ready_for_aiss` theory workbench objects as `.aiss` model-layer input.
-- Separate feasible first analysis from full-paper ambition.
-- Do not default every project to causal panel regression.
-- Record unresolved author decisions instead of smoothing them into a fake design.
-- Make downstream handoff explicit.
-
-## Reference Files
-
-| File | Content | Read when |
-|---|---|---|
-| [design-workflow.md](references/design-workflow.md) | Design brief shape, design components, and stop rules | Building a study design brief |
-| [declaration-schema.md](references/declaration-schema.md) | MIDA declaration CSV schema and validator rules | Creating or validating `study_design_declaration.csv` |
-| [decision-register-schema.md](references/decision-register-schema.md) | CSV schema and allowed design statuses/routes | Creating or validating decision registers |
-| [prompt-pack.md](references/prompt-pack.md) | Copy-ready prompts for design intake, route comparison, analysis plan scaffolds, and handoff | Turning a selected route into a design task |
-| [worked-example.md](references/worked-example.md) | Digital-government route to design brief example | Teaching or demonstrating the skill |
+- begins from a political question and theory rather than a fashionable estimator;
+- aligns population, unit, measures, target, comparison, and claims;
+- makes identifying assumptions concrete and institutionally interpretable;
+- plans evidence capable of distinguishing mechanisms and rivals;
+- treats descriptive evidence and measurement as part of inference;
+- distinguishes prespecified and exploratory analyses;
+- takes uncertainty, dependence, attrition, and multiple testing seriously;
+- uses robustness and sensitivity to learn, not to accumulate check marks; and
+- narrows the claim when the design cannot support the original ambition.

@@ -1,7 +1,7 @@
 {
   "name": "ai4ss-skills",
   "version": "0.1.0",
-  "description": "Research infrastructure for agent-assisted social science: reusable skills, .aiss research objects, validation gates, and bounded handoff workflows.",
+  "description": "Research skills for empirical social science, centered on political-science judgment, evidence, analysis, and revision.",
   "author": {
     "name": "Siyao Zheng",
     "url": "https://github.com/SiyaoZheng"
@@ -14,13 +14,13 @@
     "research",
     "methodology",
     "skills",
-    "aiss"
+    "political-science"
   ],
   "skills": "./skills/",
   "interface": {
     "displayName": "AI4SS Skills",
-    "shortDescription": "Agent-assisted social-science research workflows.",
-    "longDescription": "Bundle AI4SS skills for inspectable social-science work: research routing, MIDA study design, literature and data gates, analysis readiness, methods review, writing scaffolds, slides, reviewer-response matrices, and specialist support.",
+    "shortDescription": "Empirical political-science research skills.",
+    "longDescription": "Support the substantive work of empirical political science: formulating questions, reading literatures, developing designs, finding and constructing data, analyzing evidence, reviewing methods, writing, revising, and presenting research.",
     "developerName": "Siyao Zheng",
     "category": "Productivity",
     "capabilities": [
@@ -29,9 +29,9 @@
     ],
     "websiteURL": "https://github.com/SiyaoZheng/ai4ss-skills",
     "defaultPrompt": [
-      "Use AI4SS Skills to turn this rough research topic into candidate routes and the next executable action.",
-      "Use AI4SS Skills to check whether this analysis is ready to run and produce an analysis manifest.",
-      "Use AI4SS Skills to audit this social-science design with bounded claims."
+      "Develop this political-science topic into a consequential and empirically tractable research problem.",
+      "Review current Chinese- and English-language scholarship and reconsider this study in light of it.",
+      "Assess this empirical design and analysis, then revise its claims to match the evidence."
     ],
     "brandColor": "#2457A7"
   }

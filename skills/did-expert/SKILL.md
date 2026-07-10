@@ -1,113 +1,116 @@
 ---
 name: did-expert
 description: >
-  DID and panel causal inference guide. Covers modern estimators (CS, SA, BJS, fect, synthdid, augsynth),
-  TWFE pitfalls, parallel trends, event study, HonestDiD, wild cluster bootstrap, multiple testing,
-  placebo tests, and writing up results.
-  Triggers: "DID", "event study", "staggered treatment", "parallel trends", "TWFE", "HonestDiD",
-  "synthdid", "fect", "panel data", "wild cluster bootstrap", "placebo test", "DDD",
-  "Romano-Wolf", "writing up DID".
+  Provide deep, study-specific expertise for difference-in-differences and related panel causal
+  designs. Use when treatment timing, comparison groups, staggered adoption, heterogeneous effects,
+  event studies, treatment reversals, continuous exposure, anticipation, spillovers, parallel trends,
+  estimator choice, inference, or sensitivity are central. Triggers include "DID", "difference in
+  differences", "event study", "staggered treatment", "parallel trends", "TWFE", "HonestDiD",
+  "双重差分", "事件研究", "平行趋势", "分期处理".
 ---
 
 # DID Expert
 
-Guide for applying Difference-in-Differences methods in applied research, grounded in Baker, Callaway, Cunningham, Goodman-Bacon & Sant'Anna (2025, JEL) and the Callaway & Sant'Anna (2021) R `did` package.
+Evaluate the DID-specific methodological questions raised by a concrete proposed or implemented study.
+The analysis begins with the intervention, exposure process, estimand, and identifying comparisons;
+estimator choice follows from those features.
 
-## Implementation Gate
+## DID assessment
 
-Before diagnosing DID results, make the analysis script rerunnable from a clean process. Use `Rscript --vanilla`, load every required package explicitly, create output directories in code, and define every plot/table object before use. Errors such as `object '<plot>' not found`, missing package functions, or stale figure files are implementation blockers, not DID diagnostics.
+Set out the assessment in a **DID Methods Memo** covering:
 
-After editing DID plotting or estimation code, rerun the full script and assert that every declared diagnostic table and figure exists. If the script fails, fix that failure before interpreting pre-trends, placebo tests, or estimator differences.
+1. the political intervention, exposure process, institutional setting, and treatment timing;
+2. the causal estimand and population to which it refers;
+3. admissible 2x2 comparisons and the units or periods actually identifying the effect;
+4. the relevant parallel-trends and no-anticipation assumptions;
+5. spillovers, interference, concurrent policies, attrition, and treatment reversals;
+6. treatment-effect heterogeneity and event-time composition;
+7. estimator and aggregation choices tied to the estimand;
+8. uncertainty and dependence;
+9. raw-pattern, diagnostic, falsification, and sensitivity evidence;
+10. disagreements across estimators or samples and what causes them; and
+11. required design, analysis, or interpretation revisions.
 
-## Core Principle: 2x2 Building Blocks
+## Evaluating the design
 
-All DID designs are aggregations of 2x2 comparisons. Each building block has:
-1. A **target parameter** (ATT)
-2. A **parallel trends assumption** for identification
-3. An **estimation approach** (sample means, regression, DR, IPW)
+### 1. Begin with the intervention, not the package
 
-## Unified Decision Tree
+Reconstruct who becomes treated, when, why, with what intensity, whether treatment is absorbing, and
+which political or administrative process generates timing. Inspect policy text, implementation rules,
+institutional history, and contemporaneous events. A treatment indicator is not a design.
 
-```
-Step -1: Understand your data (see pre-analysis.md)
-→ Panel structure, treatment variable, raw trends, covariates, missingness
-→ This is 90% of the work. Do NOT skip to estimator selection.
+### 2. Define the estimand and comparisons
 
-Step 0: Is your panel balanced?
-├── YES → Step 1
-├── NO — Mild imbalance, PT plausible
-│   ├── Primary: cdid (est_method = "2-step")
-│   ├── Alternative: did (allow_unbalanced_panel = TRUE)
-│   └── Then proceed to Step 1 for estimator choice
-├── NO — Severe imbalance / rotating panel
-│   ├── Primary: cdid (est_method = "Identity")
-│   ├── Alternative: did (panel = FALSE, treat as RCS)
-│   └── fect (mc) handles sparse data natively
-├── NO — PT questionable + imbalance
-│   └── fect (ife or mc) — relaxes PT + handles gaps
-├── NO — Endogenous attrition (missingness correlated with treatment)
-│   └── Bounds: Rathnayake et al. (2024); fect balance.period sensitivity
-└── Repeated cross-sections (no unit tracking)
-    └── did (panel = FALSE)
+State the potential-outcome contrast of interest: group-time ATT, event-time effect, policy-relevant
+aggregate, dose response, switch-on/off effect, or another justified quantity. Identify which cohorts,
+periods, and control units contribute. Decide whether never-treated, not-yet-treated, or another group
+can plausibly supply the counterfactual.
 
-Step 1: Choose estimator (see estimators.md)
-├── Binary absorbing treatment, staggered?
-│   ├── PT plausible → did (DR), sunab, didimputation
-│   ├── PT questionable → fect (ife/mc), augsynth, synthdid
-│   └── Not staggered → Classical TWFE or did (single group)
-│
-├── Need within-unit placebo group? → DDD (triplediff if staggered)
-├── Treatment continuous / multi-valued? → contdid or did_multiplegt_stat
-├── Treatment switches on and off? → DIDmultiplegtDYN or fect
-│
-├── Control group:
-│   ├── Never-treated available → Use as default
-│   └── All eventually treated → "not yet treated"
-│
-└── Aggregation:
-    ├── Event study → aggte(type = "dynamic")
-    ├── Overall ATT → aggte(type = "group") [recommended]
-    └── Calendar time → aggte(type = "calendar")
+### 3. Inspect data support
 
-Step 2: Validate (see diagnostics.md)
-├── Sensitivity: HonestDiD, fect equivalence test, Bacon decomposition
-├── Inference: few clusters → WCB; multiple outcomes → Romano-Wolf
-├── Falsification: placebo outcomes, placebo timing, randomization inference
-└── Pre-submission checklist
-```
+Plot raw outcomes and treatment timing; examine cohort sizes, observation windows, gaps, attrition,
+support for covariates, and composition at each event time. Diagnose whether long-run effects are
+identified only by early cohorts or a changing sample.
 
-## Critical Pitfalls
+### 4. Assess identifying assumptions substantively
 
-**1. Naive TWFE with staggered timing**: Can produce wrong sign. Always use modern estimators or verify with Bacon decomposition first.
+Parallel trends is a claim about untreated potential outcomes, not a passing pre-trend test. Use theory,
+institutional facts, raw patterns, covariate behavior, alternative outcomes, and policy timing to assess
+its plausibility. Examine anticipation, spillovers, endogenous timing, simultaneous reforms, and
+differential measurement.
 
-**2. Confusing "no pre-trends" with "parallel trends holds"**: Pre-trend tests have low power (Roth 2022). Use HonestDiD to assess what the pre-trends actually tell you.
+### 5. Choose estimators by target and design
 
-**3. Bad controls in TWFE with covariates**: Time-varying covariates in TWFE drop out due to unit FE. Must use baseline covariate values or `X_baseline x Post` interactions.
+Use simple DID or TWFE when their assumptions and comparison structure fit. With staggered adoption and
+heterogeneous effects, prefer methods that identify transparent group-time or cohort-specific effects
+and aggregate them deliberately. For non-absorbing, continuous, repeated-cross-section, imbalanced, or
+synthetic-comparison settings, choose methods whose estimands and assumptions match those features.
 
-**4. Weighted != unweighted**: These target different parameters. Population-weighted ATT = "effect on average person"; unweighted ATT = "effect on average unit."
+Do not select an estimator because its package is fashionable. Explain how each choice changes the
+target, comparison weights, covariate adjustment, or sample.
 
-**5. Simple aggregation overweights early-treated**: Use `aggte(type="group")` for overall ATT.
+### 6. Diagnose and stress-test
 
-**6. Event study composition changes**: At longer horizons, only early-treated groups contribute. Use `balance_e` or report group-specific event studies.
+Use event studies as descriptive and diagnostic evidence, not proof of parallel trends. Consider
+pre-treatment equivalence or sensitivity approaches, placebo outcomes and dates, alternative control
+groups or windows, leave-one-cohort or leave-one-cluster checks, treatment-timing falsification,
+randomization inference when assignment supports it, and design-appropriate sensitivity bounds.
 
-**7. synthdid requires balanced panel**: Will fail or produce wrong results with gaps. Use `fect(mc)` or `cdid` for unbalanced data.
+Match uncertainty to the assignment and dependence structure. Examine the number, size, and leverage of
+clusters rather than relying on a mechanical threshold. Address multiple outcomes or subgroup searches
+when they affect interpretation.
 
-**8. Few-clusters inference ignored**: With G < 50 clusters, standard CR1 over-rejects at 10-25%. Must use wild cluster bootstrap (`fwildclusterboot`).
+### 7. Interpret estimator disagreement
 
-**9. No multiple testing correction**: Testing 10 outcomes and reporting the 2 that are significant is p-hacking. Use Romano-Wolf or Anderson ICW index.
+When estimates differ, trace the difference to target parameters, comparison sets, weights, cohorts,
+time horizons, samples, nuisance models, or assumptions. Do not label agreement as robustness or
+disagreement as failure without explaining what each estimator learns.
 
-**10. No placebo/falsification tests**: A DID paper without placebo outcomes or randomization inference will be asked for them in R1. Plan these ex ante.
+### 8. Revise the study
 
-**11. Binarizing continuous treatment**: Discarding dose variation throws away power. Use `contdid` or `did_multiplegt_stat`.
+Recommend a concrete change to treatment definition, sample, event window, control group, aggregation,
+estimator, diagnostic plan, or causal claim. State what remains unidentified.
 
-**12. TWFE DDD under staggering**: Contaminated by double-differences (Strezhnev 2023). Use `triplediff` instead.
+## Computational practice
 
-## Reference Files
+Keep implementation subordinate to the estimand, comparisons, and assumptions. Follow the project's
+existing R practice and consult current documentation for the selected estimator; software choice
+cannot resolve an unidentified or poorly supported comparison.
 
-| File | Content | Read when |
-|------|---------|-----------|
-| [pre-analysis.md](references/pre-analysis.md) | Panel structure, treatment construction, outcome EDA, transformation, raw trends, covariates, missingness, spot checks | Starting a DID analysis, exploring data |
-| [estimators.md](references/estimators.md) | Estimator comparison, TWFE failure, synthetic methods, fect, cdid, DDD, continuous treatment, non-absorbing treatment | Choosing a method |
-| [implementation.md](references/implementation.md) | R code: did, fixest, synthdid, augsynth, fect, cdid, HonestDiD, Bacon, plots, tables | Writing or debugging R code |
-| [diagnostics.md](references/diagnostics.md) | Assumptions, PT testing, HonestDiD, covariate balance, anticipation, SUTVA, power, few-clusters inference, multiple testing, placebo tests, checklist | Validating results or preparing for submission |
-| [writing.md](references/writing.md) | Identification strategy structure, discussing PT, event study plot standards, reviewer response templates, reporting checklist | Writing up results |
+## Criteria for judgment
+
+- Institutional context justifies treatment and comparison choices.
+- The estimand is explicit and matches aggregation.
+- Staggered timing and heterogeneous effects are handled transparently.
+- Pre-treatment evidence is interpreted with appropriate humility.
+- Event-time composition, anticipation, spillovers, and concurrent policies are assessed.
+- Inference reflects the actual dependence and effective information.
+- Sensitivity analyses target plausible violations.
+- The memo changes the design, analysis, or claim rather than merely naming packages.
+
+## Methodological notes
+
+- `references/pre-analysis.md` — DID-specific data and treatment inspection.
+- `references/estimators.md` — estimator families and their assumptions.
+- `references/diagnostics.md` — diagnostics, falsification, sensitivity, and inference.
+- `references/implementation.md` — R implementation patterns after the design is chosen.

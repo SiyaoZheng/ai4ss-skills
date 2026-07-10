@@ -1,2 +1,0 @@
-route_id,design_source,target_inquiry,mida_component,severity,issue,evidence,why_it_matters,next_action,status,ai4ss_model_path,model_id,concept_id,causal_id,bridge_id,ai4ss_check_status,commensurability_status
-R1,docs/study_design_declaration.csv,effect of city platform exposure on firm green patent count,answer_strategy,medium,table looks odd,not checked,unclear,maybe fix later,serious risk,docs/examples/research_model.aiss,demo.platform_innovation,demo.exposed_unit,demo.exposure_to_innovation,demo.causal_bridge_exposure,pass,weak

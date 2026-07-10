@@ -1,129 +1,89 @@
 ---
 name: latex-tables
-description: |
-  Generate publication-ready regression tables in LaTeX using booktabs style.
-  Use when: (1) converting regression output to LaTeX, (2) formatting summary statistics,
-  (3) standardizing table style for journal submission (AEA, APSR, etc.).
+description: >
+  Design and produce honest, readable LaTeX tables for empirical political-science research. Use for
+  descriptive, balance, measurement, regression, causal-estimate, heterogeneity, mechanism, robustness,
+  and model-comparison tables; converting verified outputs to LaTeX; repairing misleading or unreadable
+  tables; and integrating tables into a paper. Triggers include "LaTeX table", "regression table",
+  "summary statistics", "publication table", "回归表", "描述性统计表", "论文表格".
 ---
 
 # LaTeX Tables
 
-## Purpose
+Construct tables as compact empirical arguments. Selection and ordering of quantities should make the
+relevant comparison, estimand, sample, and uncertainty available for scrutiny.
 
-This skill creates clean, publication-ready tables in LaTeX for regression results and summary statistics, using standard academic formatting.
+## Tables and interpretive record
 
-## When to Use
+The work should leave:
 
-- Converting model output into LaTeX tables
-- Standardizing table style across a paper
-- Adding notes, significance stars, and labels
+1. a verified `.tex` table tied to the actual statistical output;
+2. reproducible table-generation code when the project supports it;
+3. a compiled or HTML-rendered preview; and
+4. a short **Table Interpretation Note** explaining the table's evidentiary job, important comparisons,
+   sample or estimand changes, and interpretation limits.
 
-## Instructions
+## Constructing the table
 
-Follow these steps to complete the task:
+### 1. Establish the table's job
 
-### Step 1: Understand the Context
+Determine whether the table describes the sample, validates a measure, assesses balance, presents a
+primary estimand, compares theoretically meaningful heterogeneity, investigates mechanisms, or examines
+a specific vulnerability. Prefer one coherent job over a kitchen-sink table.
 
-Before generating any code, ask the user:
+### 2. Trace every displayed quantity
 
-- What type of table is needed (regression, summary stats, balance)?
-- What software produced the results (Stata, R, Python)?
-- Which formatting style is required (journal-specific, AEA, etc.)?
+Read the code and model output. Verify coefficients or quantities, uncertainty, outcome scale, sample,
+weights, fixed effects, clustering, reference categories, omitted periods, transformations, and model
+fit. Do not transcribe numbers from screenshots or invent absent statistics.
 
-### Step 2: Generate the Output
+### 3. Choose rows and columns substantively
 
-Based on the context, generate LaTeX code that:
+Order specifications to show a reasoned comparison. Make changes in sample, estimand, treatment,
+outcome, controls, fixed effects, weights, or uncertainty visible. Do not imply that columns estimate the
+same quantity when they do not. Do not select models by significance or hide inconvenient estimates.
 
-1. **Uses `booktabs`** for clean horizontal rules
-2. **Includes labels and captions** for referencing in the paper
-3. **Adds notes** for standard errors and significance
-4. **Aligns numeric columns** for readability
+### 4. Design for reading
 
-### Step 3: Verify and Explain
+Use `booktabs`, clear grouping, meaningful labels, aligned numbers, whitespace, and concise notes. Put
+units in labels or headings. Prefer confidence intervals or standard errors appropriate to the field and
+design; significance stars may be included when expected, but they must not carry the argument.
 
-After generating output:
+Avoid vertical rules, decorative complexity, tiny type, unexplained abbreviations, and excessively wide
+tables. Split a table when different panels serve different questions.
 
-- Explain how to compile the table
-- Highlight any assumptions in the formatting
-- Suggest refinements for journal submission
+### 5. Write an informative caption and notes
 
-### Step 4: Generate HTML preview
+State what is estimated, for whom, and over what period. Notes should disclose uncertainty, clustering,
+weights, fixed effects, sample restrictions, transformations, reference categories, and multiple-testing
+adjustments when these matter. Do not use notes to bury a changed sample or estimand.
 
-After writing the `.tex` file, run the bundled HTML preview generator so the
-researcher can sanity-check the table without compiling LaTeX:
+### 6. Render and verify
+
+Compile the containing document when possible. The bundled preview can provide a fast first check:
 
 ```bash
-python3 <skill-dir>/scripts/table_html.py <stem>.tex
+python3 <skill-dir>/scripts/table_html.py <table>.tex
 ```
 
-This produces `<stem>-table-preview.html` in the same directory — a
-single-file rendering of the table (HTML + booktabs-style CSS, no external
-deps). The preview surfaces formatting bugs that are invisible in raw .tex
-(e.g., missing column alignment, broken header rows, misaligned significance
-stars) before you spend time on a full LaTeX compile.
+Inspect alignment, headers, notes, width, symbols, escaping, and legibility. Compare rendered values with
+the source output and, when requested, verify that the manuscript references the correct table.
 
-Tell the user the preview path. If the table looks wrong in the preview,
-fix the .tex source before sharing or compiling.
+### 7. Interpret and revise
 
-## Example Prompts
+Write the table interpretation note. If the layout reveals incomparable models, unstable samples,
+opaque estimands, selective reporting, or an argument that depends only on stars, revise the table or
+analysis rather than polishing around the problem.
 
-- "Create a regression table with three models in LaTeX"
-- "Format summary statistics with mean and sd columns"
-- "Add significance stars and standard error notes"
+## Criteria for judgment
 
-## Example Output
+- Every value is traceable to verified output.
+- Rows and columns express a substantive comparison.
+- The estimand, sample, scale, and uncertainty are visible.
+- Model changes are transparent.
+- The table remains readable at manuscript size.
+- Captions and notes support scrutiny without overclaiming.
+- Rendering is verified, not assumed from raw LaTeX.
 
-```latex
-% ============================================
-% Regression Table
-% ============================================
-\begin{table}[htbp]\centering
-\caption{Effect of Treatment on Outcome}
-\label{tab:main_results}
-\begin{tabular}{lccc}
-\toprule
- & (1) & (2) & (3) \\
-\midrule
-Treatment & 0.125*** & 0.118*** & 0.102** \\
- & (0.041) & (0.039) & (0.046) \\
-Controls & No & Yes & Yes \\
-Fixed Effects & No & Yes & Yes \\
-\midrule
-Observations & 2,145 & 2,145 & 2,145 \\
-R-squared & 0.18 & 0.24 & 0.31 \\
-\bottomrule
-\end{tabular}
-\begin{tablenotes}
-\small
-\item Notes: Standard errors in parentheses. * p<0.10, ** p<0.05, *** p<0.01.
-\end{tablenotes}
-\end{table}
-```
-
-## Requirements
-
-### Software
-
-- LaTeX distribution (TeX Live or MikTeX)
-
-### Packages
-
-- `booktabs`
-- `threeparttable` (optional for notes)
-
-## Best Practices
-
-1. **Keep tables compact** and readable
-2. **Use consistent notation** for standard errors and stars
-3. **Provide clear captions and labels**
-
-## Common Pitfalls
-
-- Overly wide tables that do not fit the page
-- Missing notes for standard errors
-- Inconsistent labeling across tables
-
-## References
-
-- [LaTeX booktabs documentation](https://ctan.org/pkg/booktabs)
-- [AEA Author Guidelines](https://www.aeaweb.org/journals/policies/author-instructions)
+Follow the project's existing R, Python, Stata, and LaTeX practice. Discuss software only when it affects
+the reported quantities or the integrity of the table.

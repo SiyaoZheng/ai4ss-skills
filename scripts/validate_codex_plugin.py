@@ -80,8 +80,8 @@ def validate_plugin(root: Path) -> list[str]:
         errors.append(f"{plugin_path}: skills path does not exist: {skills_dir}")
     else:
         skill_files = sorted(skills_dir.glob("*/SKILL.md"))
-        if len(skill_files) != 19:
-            errors.append(f"{skills_dir}: expected 19 SKILL.md files, found {len(skill_files)}")
+        if len(skill_files) != 21:
+            errors.append(f"{skills_dir}: expected 21 SKILL.md files, found {len(skill_files)}")
         for skill_md in skill_files:
             expected_name = skill_md.parent.name
             actual_name = frontmatter_name(skill_md)

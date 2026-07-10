@@ -1,85 +1,48 @@
-# Source Verification
+# Verifying Scholarly Sources
 
-Use this reference before treating any paper as evidence.
+Use this reference before a paper changes the synthesis, theory, design, or contribution claim.
 
-## Verification Levels
+## Establish the source's identity
 
-| level | standard | allowed use |
-|---|---|---|
-| verified_primary | journal page, DOI page, official working-paper page, author PDF, repository record | matrix and evidence clusters |
-| verified_local | user-supplied PDF or Zotero item with visible metadata | matrix with local path |
-| secondary_only | blog, news, syllabus, search snippet, citation index without source page | pointer only |
-| unverified | no stable source or metadata conflict | exclude from evidence table |
+Open the journal, publisher, DOI, official working-paper series, repository, author, or institutional
+page. Confirm the title, authors, year, venue or series, and version. If records disagree, investigate
+the publication history rather than silently combining them.
 
-## DOI And URL Checks
+A user-supplied PDF can be read as evidence when its identity is visible. A search snippet, citation
+index, blog, news article, syllabus, or generated summary is only a pointer to the underlying work.
 
-For each source:
+## Retrieve the best lawful text
 
-- Open DOI or publisher page when possible.
-- Confirm title, authors, year, and version.
-- Preserve DOI in canonical form without inventing prefixes.
-- If DOI is absent, preserve stable URL and source type.
-- Record access date for web-only sources.
+Prefer the most recent complete version appropriate to the question, while distinguishing a working
+paper, accepted manuscript, online-first article, and version of record. When only an abstract or
+metadata is available, say so and limit the claim accordingly. Do not call a working paper peer
+reviewed unless the source establishes that status.
 
-## Publication Status
+## Verify claims where they are made
 
-Use conservative labels:
+Read the relevant theory, data, methods, results, figures, tables, appendices, and limitations. Preserve
+page, section, table, figure, or appendix locators for consequential claims. Separate what authors say
+their paper shows from what the design and reported evidence establish.
 
-- `journal_article`
-- `accepted`
-- `working_paper`
-- `preprint`
-- `conference_paper`
-- `book_chapter`
-- `report`
-- `unverified`
+For an empirical design, reconstruct:
 
-Do not call a working paper peer-reviewed unless the source proves it.
+- what creates the relevant variation;
+- which units, cases, or periods provide the comparison;
+- the population and quantity being estimated or described;
+- the assumptions connecting the comparison to the claim;
+- measurement, uncertainty, and dependence choices; and
+- diagnostics, sensitivity analyses, and contrary evidence.
 
-## Claim Verification
+Do not infer a method from keywords. If the accessible text says only “we use DID,” for example, state
+that the design details could not be verified.
 
-For each extracted claim, identify where it came from:
+## Follow version and evidence changes
 
-- abstract;
-- introduction;
-- data section;
-- methods section;
-- table/figure;
-- conclusion;
-- appendix;
-- secondary summary.
+Later versions may change the sample, measure, design, result, or interpretation. When that matters,
+compare versions and record which one supports the synthesis. Link replication materials when they
+clarify construction or analysis, but do not assume the deposited code reproduces the published claim
+without checking.
 
-Claims from abstract only must set `claim_source_section` to `abstract_only`.
-
-## Identification Strategy Verification
-
-Do not infer method from keywords. Confirm:
-
-- What creates variation?
-- What comparison identifies the estimate?
-- What assumptions are stated?
-- What fixed effects or controls are used?
-- What inference level is used?
-- What diagnostics are shown?
-
-If the source says "we use DID" but gives no design details in available text, record `DID claimed; details unavailable`.
-
-## Version Control
-
-For working papers with multiple versions:
-
-- Keep one row for the paper.
-- Record `version_used`.
-- Put prior titles or series numbers in `version_notes`.
-- Prefer the most recent official author/repository version unless the user asks for a published version.
-
-## Red Flags
-
-Mark as `needs_review` when:
-
-- title or author list differs across sources;
-- year differs by more than one version cycle;
-- publication status is unclear;
-- claimed finding appears only in a secondary summary;
-- source is a predatory or unclear venue;
-- PDF has no title page or metadata.
+Pause and investigate when author lists, dates, titles, findings, or publication status conflict; when
+a claimed result appears only in a secondary summary; or when a PDF lacks enough provenance to identify
+the work.

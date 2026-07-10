@@ -1,119 +1,117 @@
 ---
 name: methods-reviewer
 description: >
-  Empirical methods review skill for auditing social-science research designs, scripts, model outputs,
-  tables, figures, robustness checks, and reproducibility evidence. Use before submission, presentation,
-  replication release, or reviewer response when the task is to find design, data, code, inference,
-  reporting, or overclaiming issues. It reviews and structures problems; it does not decide substantive
-  identification validity for the author. Triggers: "methods review", "audit empirical design",
-  "review regression output", "check fixed effects", "cluster standard errors", "robustness audit",
-  "reproducibility review", "submission checklist", "计量审查", "方法审查", "结果审查", "稳健性检查".
+  Conduct an independent, critical methodological review of quantitative empirical political-science
+  research. Use to evaluate whether a question, theory, measurement, sample, design, code, analysis,
+  tables, figures, and claims form a credible evidence chain; to run targeted diagnostics or
+  reanalyses; and to determine which problems are fatal, repairable, or interpretation-limiting.
+  Triggers include "methods review", "audit this empirical paper", "review the identification",
+  "check the analysis", "方法审查", "计量审查", "识别审查", "结果是否可信".
 ---
 
 # Methods Reviewer
 
-Audit empirical work before it becomes a paper, talk, or response. The default output is an issue table with evidence, severity, and concrete next actions.
+Review the study in light of the substantive claim it seeks to establish. Reconstruct that claim
+charitably, then identify the methodological weaknesses most likely to change the conclusion or its
+scope.
 
-## Scholar Workbench
+## Methods review
 
-This skill answers: "结果解释有没有说过头？" Its value is not replacing methodological judgment; it is exposing whether the script, model object, table, figure, and written claim actually support the same interpretation.
+Write an evidence-grounded **Methods Review Memo** containing:
 
-## Core Rule
+1. the study's strongest charitable reconstruction;
+2. the central inferential claim and why it matters politically;
+3. the most consequential findings, ordered by severity and confidence;
+4. diagnostic or reanalysis evidence supporting each major finding;
+5. whether the core conclusion survives, must narrow, or fails;
+6. a concrete redesign, reanalysis, measurement repair, or alternative interpretation; and
+7. strengths worth preserving during revision.
 
-Review first, edit second. User permission may authorize focused code, table, or figure fixes after the review, but manuscript claims must remain claim-ledger rows, risk labels, and author revision targets. Do not provide replacement manuscript wording.
+For a long review, a compact issue table may accompany the argument without replacing it.
 
-## Failure Audit First
+## Standard of review
 
-- Inspect recent nonzero command exits, runtime errors, missing files, missing columns, stale outputs, and validation failures before substantive methods judgments.
-- Treat a failed script that still leaves old tables or figures on disk as a blocker: the audit must distinguish current successful outputs from stale artifacts.
-- Issue tables should include runtime failures when they affect reproducibility, sample construction, model specification, or output trustworthiness.
-- Do not review a coefficient, figure, or table as evidence unless its generating command has a successful rerun or an explicit stale-output warning.
+Apply the taste of an accomplished empirical political scientist. Ask whether:
 
-## Methodology Foundation
+- the problem matters beyond the immediate case;
+- the theoretical argument specifies a real process and treats rivals fairly;
+- constructs and measures correspond;
+- the design answers the question the paper claims to answer;
+- institutional knowledge supports the identifying comparison;
+- estimates, uncertainty, and diagnostics support the interpretation;
+- contrary evidence and scope conditions are handled honestly; and
+- the contribution changes political-science knowledge rather than merely applying a method.
 
-This skill is the `Diagnose` and `Redesign` layer of the MIDA spine. It checks whether declared `Model`, `Inquiry`, `Data strategy`, `Answer strategy`, executed outputs, and public claims still refer to the same research design.
+The relevant standard is the quality of the substantive and methodological judgment, not conformity
+to a standardized set of review questions.
 
-The review must name diagnosands or gates such as wrong estimand, weak comparison, measurement mismatch, inference mismatch, reproducibility failure, source-status risk, or overclaiming. Redesign recommendations remain author decisions unless the user explicitly asks for implementation.
+## Conducting the review
 
-When a `.aiss` model is present, reviewing the model is part of the methods audit: `aiss.py compile/lint/run` errors, missing bridges, unchecked commensurability, and model-to-output mismatch are reportable issues. When a theory workbench is present, rival explanations, scope drift, vague mechanisms, non-discriminating observable implications, weak source status, and theory overclaim are issue-table rows, not a separate theory-review schema.
+### 1. Reconstruct the study
 
-## Workflow Contract
+Read the manuscript or concept memo, literature position, design, codebook, data documentation, code,
+outputs, appendices, and prior reviews. State the intended question, estimand or target, mechanism,
+rivals, comparison, and claim before criticizing it.
 
-- Upstream inputs: `study_design_brief.md`, `study_design_declaration.csv`, `research_model.aiss`, `ai4ss_check_report.txt`, `analysis_run_manifest.csv`, scripts, logs, tables, figures, data audit outputs, literature matrices, `literature_theory_synthesis.csv`, `theory_rival_map.csv`, `theory_scope_map.csv`, manuscript snippets, or reviewer comments.
-- Produces: issue table, method-risk notes, recommended checks, open author decisions, and validation commands run.
-- Handoff fields: `route_id`, `design_source`, `target_inquiry`, `mida_component`, `analysis_outputs`, `issue_table`, `severity`, `evidence`, `next_action`, `author_decisions`, `ai4ss_model_path`, `model_id`, `concept_id`, `causal_id`, `bridge_id`, `ai4ss_check_status`, `commensurability_status`, `next_skill_route`.
-- Downstream routes: `research-data-builder`, `research-analysis-runner`, `study-design-builder`, `academic-writing-scaffold`, `reviewer-response`, `research-slides-builder`, `did-expert`, or `ask_author`.
+### 2. Trace the evidence chain
 
-## Routing Boundaries
+Follow important claims backward through tables and figures to models, samples, variables, construction
+code, and source data. Check whether wording, estimand, sample, timing, and uncertainty remain the same
+across the chain. Distinguish obsolete files and failed analyses from current evidence.
 
-Use this skill to audit evidence for identification validity, result-claim fit, robustness, inference, and reproducibility. Final scholarly judgment remains with the author. Do not use it to build data pipelines; hand data construction to `research-data-builder`. Do not use it as the first executor of an analysis plan; hand execution to `research-analysis-runner`. Do not use it to write manuscript prose or response letters; hand evidence-ready scaffolds to `academic-writing-scaffold` or `reviewer-response`.
+### 3. Find the decisive vulnerabilities
 
-## Workflow
+Prioritize issues capable of changing the conclusion:
 
-```
-Step -1: Orient
--> Read AGENTS.md, research design notes, scripts, logs, tables, figures, and manuscript/output text.
--> Identify the design family: descriptive, OLS, DID, IV, RD, RCT, synthetic control, panel, qualitative, mixed methods.
--> For DID/event-study as the central task, invoke $did-expert first when available; use this skill to wrap its findings into the general issue table.
--> If `research_model.aiss` is present, run or inspect `scripts/validate_ai4ss_model.py` output before judging claims.
+- problem or contribution that is not substantively meaningful;
+- mechanism that restates the outcome or fails to discriminate rivals;
+- population, sample, unit, or measurement mismatch;
+- invalid or unsupported comparison and identification assumptions;
+- post-treatment adjustment, anticipation, spillovers, attrition, or interference;
+- dependence, few effective clusters, weighting, multiplicity, or uncertainty failures;
+- specification search or selective reporting;
+- robustness exercises that change the estimand rather than test fragility; and
+- claims that outrun the actual design or evidence.
 
-Step 0: Build audit scope
--> Data construction, model specification, inference, diagnostics, robustness, reporting, reproducibility, writing claims.
+Do not bury a fatal issue beneath formatting comments.
 
-Step 1: Inspect evidence
--> Compare stated design against actual scripts and outputs.
--> Check whether tables/figures expose sample, variables, FE, clustering, and uncertainty.
--> Trace suspicious numbers back to scripts or logs.
--> Compare `.aiss` concepts, causal implications, and bridges against design declarations, data audits, and analysis manifests.
--> If a theory workbench is present, audit rival explanations, scope rows, mechanism parts, source-status support, and observable implications against the declared design.
+### 4. Run targeted checks
 
-Step 2: Produce issue table
--> Use severity and confidence.
--> Separate confirmed bugs from risks, missing evidence, and author decisions.
--> Give exact file paths and lines where possible.
+When data and code are available, reproduce the relevant output and run the smallest diagnostic or
+reanalysis capable of adjudicating the concern. Inspect raw patterns, alternate codings, sample changes,
+comparison support, influential cases, uncertainty, placebos, or sensitivity as appropriate. Do not
+recommend a check that can safely be run now and then stop.
 
-Step 3: Recommend next actions
--> Suggest minimal checks or analyses.
--> Do not invent robustness results.
--> If implementation is requested, make focused changes and rerun relevant commands.
-```
+For designs such as DID, formulate the design-specific assumptions, comparisons, estimator behavior,
+and sensitivity problem precisely rather than offering generic criticism.
 
-## Issue Categories
+### 5. Judge consequence and redesign
 
-- Data: sample construction, merges, duplicates, missingness, unit mismatch.
-- Design: estimand, treatment timing, control group, identification assumption.
-- Specification: fixed effects, controls, transformations, weights, clustering.
-- Inference: few clusters, multiple testing, serial correlation, uncertainty display.
-- Diagnostics: balance, pre-trends, placebo, sensitivity, robustness.
-- Reporting: table labels, figure axes, omitted periods, N, sample notes.
-- Reproducibility: runnable scripts, paths, logs, seeds, package versions.
-- Claims: causal language, mechanism claims, external validity, policy implications.
-- Theory: vague mechanisms, missing rival explanation, scope drift, non-discriminating observable implication, weak source status, theory overclaim.
+Classify each major problem as fatal to the current claim, repairable with feasible work, or requiring a
+narrower interpretation. Explain exactly why. Propose the strongest feasible redesign or alternative
+claim, not an unlimited robustness wishlist.
 
-## Output Shape
+## Lessons from practice
 
-Return findings first:
+- Begin reproduction from the exact quantity supporting the paper's main claim. Distinguish an
+  environment or version failure from a data discrepancy and from an inferential disagreement.
+- Run the smallest reanalysis capable of changing the verdict—for example, reconstruct the treatment
+  date for influential cases or recompute uncertainty at the assignment level—before requesting a
+  catalogue of robustness tests.
+- If the central claim fails but a narrower descriptive or population-specific result survives, state
+  what that viable paper would establish rather than judging it by formal compliance alone.
 
-| severity | issue | evidence | why_it_matters | next_action | status |
-|---|---|---|---|---|---|
+Sources on research practice:
 
-Then include open author decisions and any test commands run. If a `.aiss`
-model is in scope, include model identifiers and check status in the CSV sidecar.
+- R. Michael Alvarez and Simon Heuberger, “How (Not) to Reproduce”:
+  https://www.cambridge.org/core/product/identifier/S1049096521001062/type/journal_article
+- Gary King, “Publication, Publication”: https://gking.harvard.edu/files/abs/paperspub-abs.shtml
 
-If a Markdown issue table is shown to the user, keep a CSV sidecar with these exact snake_case columns for validation.
+## Criteria for judgment
 
-## Script Utilities
-
-- When output freshness, missing dependencies, missing columns, or duplicate keys are in scope, run `research-analysis-runner/scripts/check_runtime_contract.py --cwd <project> ...` or inspect its JSON report before reviewing result claims.
-- Run `scripts/validate_issue_table.py <path>` to check the issue-table schema and severity labels.
-- Run `scripts/validate_ai4ss_model.py <path-to-research_model.aiss>` when a model-linked issue is in scope.
-
-## Reference Files
-
-| File | Content | Read when |
-|---|---|---|
-| [audit-checklist.md](references/audit-checklist.md) | General empirical audit checklist across data, design, inference, outputs, and claims | Running a review |
-| [reporting-standards.md](references/reporting-standards.md) | What tables, figures, and result text must expose | Reviewing outputs or presentation materials |
-| [design-routes.md](references/design-routes.md) | Review routes for OLS/panel, DID, IV, RD, synthetic control, descriptive, and qualitative designs | Choosing the right audit path |
-| [prompt-pack.md](references/prompt-pack.md) | Copy-ready prompts for script review, table audit, result-claim audit, and reproducibility checks | Turning a review need into an agent task |
-| [issue-examples.md](references/issue-examples.md) | Example findings, severities, evidence standards, and false-positive controls | Calibrating review output |
+- Criticism is specific to the study and supported by inspected evidence.
+- Severity reflects consequences for the core contribution, not reviewer preference.
+- The memo distinguishes bugs, inferential failures, missing evidence, and reasonable disagreement.
+- Targeted reanalysis is used when it can resolve the issue.
+- Recommendations improve the research rather than maximize methodological complexity.
+- Strengths and viable paths forward are explicit.

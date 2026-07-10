@@ -1,124 +1,108 @@
 ---
 name: academic-writing-scaffold
 description: >
-  Academic writing support skill that does not directly write manuscript prose.
-  Use for evidence maps, argument outlines, claim ledgers, section plans, table-to-claim audits,
-  citation-gap checks, causal-language risk checks, paragraph skeletons, and author-facing revision
-  notes for social-science papers. Triggers: "writing scaffold", "argument outline", "claim audit",
-  "evidence map", "citation gaps", "table to claim", "do not write the paper", "academic writing boundary",
-  "论文写作边界", "写作支架", "不要代写", "作者自己写".
+  Develop and revise working academic prose for empirical political-science research. Use when
+  clarifying a paper's central point, building or restructuring an argument, drafting a working
+  introduction, theory, research-design, results, or conclusion section, integrating literature and
+  evidence, revising an author draft, or diagnosing why a paper feels unfocused. Triggers include
+  "academic writing", "working paper", "draft this section", "argument outline", "revise the paper",
+  "论文写作", "论文初稿", "论证结构", "修改论文".
 ---
 
 # Academic Writing Scaffold
 
-Support academic writing without directly writing the manuscript. The skill produces structures, checks, and evidence maps that help the researcher write their own prose.
+Use writing to develop the political-science argument. A paper's central point often becomes clear
+through successive drafts, criticism, cuts, and reorganization. Working prose should expose the logic
+of the argument and its evidentiary limits.
 
-## Scholar Workbench
+## Working manuscript
 
-This skill answers: "结果解释有没有说过头？" Its value is not writing scholarly prose; it is turning evidence into claim slots, risk labels, and author decision questions before the researcher writes.
+Depending on the state of the paper, the work may include:
 
-## Methodology Foundation
+- a one-sentence central point and argument map;
+- a rewritten section structure;
+- a usable working section draft;
+- a bounded working-paper draft assembled from verified research materials; or
+- a revision memo explaining what changed in the argument and why.
 
-This skill sits in the `Report` layer of the MIDA spine. It preserves the declared inquiry or estimand, evidence source, support level, uncertainty, diagnosed limits, and author decision point while refusing to write final manuscript prose.
+These materials remain provisional and should preserve unresolved choices and evidence gaps.
 
-The core check is whether a proposed claim still matches the declared `Model`, `Inquiry`, `Data strategy`, and `Answer strategy`, or whether it silently turns an output into a stronger scholarly claim.
+## Writing practice
 
-When a `.aiss` model is present, claim rows must preserve the relevant model, concept, causal, or bridge ids and the model check status. A checked model element can support a claim slot; it still cannot become AI-written manuscript prose. When a theory workbench is present, use it as an author review surface for evidence slots, rival/scope questions, and claim boundaries; do not convert it into final literature-review or theory prose.
+### 1. Find the point
 
-## Hard Boundary
+Read the current draft, concept memo, literature synthesis, design, analysis interpretation, figures,
+tables, and methods review. State the paper's one central point in a sentence. Ask whose understanding
+the paper changes, about what, and why the change matters to political science.
 
-Do not draft final manuscript paragraphs, introductions, literature review prose, result prose, abstracts, conclusions, polished response text, or replacement wording for insertion into a paper. Direct AI writing is outside this skill.
+If the point cannot be stated, diagnose whether the problem is an unclear question, multiple papers
+competing for space, weak contribution, unresolved evidence, or a theory that does not match the study.
 
-Allowed outputs:
+### 2. Clarify the paper's purpose
 
-- Evidence maps.
-- Claim ledgers.
-- Section outlines.
-- Paragraph skeletons with claim slots, not finished prose.
-- Table-to-claim audits.
-- Citation-gap lists.
-- Causal-language risk checks.
-- Theory workbench tables with evidence and decision slots.
-- Issue labels, revision targets, and author decision questions.
+Determine what the paper actually does. It may develop or refine a theory, explore an explanation,
+offer a counterexample, establish an important descriptive pattern, evaluate a theoretical prediction,
+measure a neglected construct, or estimate a causal effect. Do not write the paper as if it performed a
+stronger inferential task than the design supports.
 
-## Workflow Contract
+### 3. Build the argument
 
-- Upstream inputs: study design brief, `study_design_declaration.csv`, `research_model.aiss`, literature matrix, `literature_theory_synthesis.csv`, `theory_rival_map.csv`, `theory_scope_map.csv`, `theory_evidence.md`, analysis run manifest, methods issue table, data audit outputs, author draft, table/figure captions, or reviewer-response evidence.
-- Produces: evidence inventory, claim ledger, section outline, paragraph skeletons with slots, citation gaps, causal-language risk notes, and author decision points.
-- Handoff fields: `route_id`, `target_inquiry`, `evidence_sources`, `claim_ledger`, `interpretation_boundary`, `diagnosed_limit`, `unsupported_claims`, `citation_gaps`, `author_decisions`, `ai4ss_model_path`, `model_id`, `concept_id`, `causal_id`, `bridge_id`, `ai4ss_check_status`, `commensurability_status`, `ai_writing_boundary`, `next_skill_route`.
-- Downstream routes: `methods-reviewer`, `literature-matrix`, `research-slides-builder`, `reviewer-response`, `ask_author`, or `none`.
+Lay out the chain from problem to explanation, evidence, and implication. Represent competing accounts
+fairly and show what evidence differentiates them. Distinguish assumptions, mechanisms, hypotheses,
+measurements, results, and interpretations. Decide which details belong in the main text, appendix, or
+future work based on their role in the point.
 
-## Routing Boundaries
+### 4. Draft to think
 
-Do not use this skill for source search or bibliographic verification; use `literature-matrix`.
-Do not use it to decide empirical validity; use `methods-reviewer`.
-Do not use it for final reviewer letters; use `reviewer-response` for scaffolds only.
+Write complete working paragraphs, not placeholder slots, when the available evidence supports them.
+Use direct claims, concrete subjects and verbs, clear transitions, and enough methodological detail for
+the reader to understand the inference. Preserve uncertainty, contrary evidence, and limits rather than
+smoothing them into a cleaner story.
 
-## Workflow
+Write in the language of the paper and follow the conventions of its field and audience without
+imitating journal boilerplate.
 
-```
-Step -1: Clarify the writing task
--> Identify the target section, evidence files, language, audience, and what the user wants to decide.
--> State that final prose must be authored by the researcher.
+### 5. Revise ruthlessly
 
-Step 0: Inventory evidence
--> Read tables, figures, captions, model notes, literature matrices, and research design notes.
--> Separate design facts, estimates, diagnostics, literature facts, interpretations, and speculative mechanisms.
--> If theory workbench sidecars are present, separate model-ready objects from rival, scope, novelty, contribution, and mechanism-strength decisions.
+Read the draft for argument rather than surface polish. Remove material that does not advance the point,
+even if it was useful during discovery. Reorder sections when the reader learns things in the wrong
+sequence. Rewrite vague contribution claims, straw-man literatures, method-first introductions,
+table-by-table results narration, and conclusions that exceed the evidence.
 
-Step 1: Build scaffold
--> Use references/section-scaffolds.md for section-specific outlines.
--> Use references/claim-audit.md to map claims to evidence and flag unsupported language.
--> Use references/theory_workbench.md when literature-to-theory objects need author review before prose.
--> If `.aiss` model ids are available, attach each claim slot to the relevant concept, causal implication, or bridge.
+Expect multiple passes: point and structure, paragraph logic, evidence and citation, then style.
 
-Step 2: Return author-facing materials
--> Provide a claim ledger and outline.
--> For each paragraph, provide purpose, evidence to use, required citation, and risk note.
--> Do not fill in the final sentences.
+### 6. Audit claims and sources
 
-Step 3: Audit author draft if provided
--> Check whether the user's prose overclaims, lacks citations, changes the estimand, or hides limitations.
--> Suggest issue labels, revision targets, and author decision questions only; do not provide replacement wording for manuscript prose.
+Trace consequential empirical and literature claims to inspected sources, tables, or figures. Preserve
+the estimand, population, magnitude, uncertainty, and causal status. Mark genuine evidence gaps; do not
+invent a citation or use a transition to conceal missing support.
 
-Step 4: Record AI-use boundary when relevant
--> If the scaffold will support a manuscript, response package, or shared teaching artifact, update an AI-use ledger with `tool_model`, `task`, `inputs`, `outputs`, `human_review`, `disclosure_location`, and `confidentiality_approval_status`.
-```
+### 7. Record what remains unsettled
 
-## Output Shape
+End with the few unresolved research choices that materially affect the working draft: competing
+interpretation, missing evidence, unstable point, scope condition, or analysis still needed.
 
-For most tasks, return:
+## Questions for each section
 
-1. Evidence inventory.
-2. Claim ledger.
-3. Section or paragraph scaffold.
-4. Unsupported-claim and citation-gap checklist.
-5. Author decision points.
+- **Introduction:** phenomenon, problem, point, argument, evidence, contribution, and boundaries.
+- **Theory:** concepts, actors, process, rivals, scope, and observable implications.
+- **Design:** target, cases, measurement, comparison, assumptions, and learning strategy.
+- **Results:** substantive quantities and evidentiary pattern, not table order.
+- **Conclusion:** what changed, where it applies, what remains uncertain, and why it matters.
 
-If any table is returned in Markdown, also write or request a CSV sidecar with the canonical snake_case schema before validation.
+## Criteria for judgment
 
-## Script Utilities
+- One central point organizes the paper.
+- The argument is fair to the literature and rival explanations.
+- The strength of prose matches the strength of evidence.
+- Sections and paragraphs have a clear role in the argument.
+- Contrary and null evidence remain visible.
+- Citations support the exact claims attached to them.
+- Revisions improve substantive reasoning, not only fluency.
 
-- Run `scripts/validate_claim_ledger.py <path>` to check claim-ledger columns and authorship-boundary markers.
-- Run `scripts/validate_ai4ss_model.py <path-to-research_model.aiss>` before using model-linked claims as evidence-ready slots.
-- Run `scripts/validate_theory_workbench.py <workbench-dir>` before treating theory workbench inputs as bounded claim slots.
+## Sources on scholarly practice
 
-## Standards
-
-- Do not upgrade "association" to "effect" unless the design supports causal language.
-- Do not smooth conflicting evidence into a single story.
-- Do not invent transitions that conceal missing evidence.
-- Keep mechanism claims separate from tested mechanism evidence.
-- Use exact table, figure, and source paths where possible.
-- Do not treat AI-generated scaffold text as author-approved prose.
-
-## Reference Files
-
-| File | Content | Read when |
-|---|---|---|
-| [section-scaffolds.md](references/section-scaffolds.md) | Author-facing outlines for paper sections without final prose | Planning a section |
-| [claim-audit.md](references/claim-audit.md) | Claim types, evidence mapping, and wording-risk checks | Auditing evidence or a user draft |
-| [prompt-pack.md](references/prompt-pack.md) | Copy-ready prompts for evidence maps, claim ledgers, paragraph skeletons, and draft audits | Turning writing support into bounded agent tasks |
-| [author-workbench.md](references/author-workbench.md) | Author-only workflow that separates AI-produced scaffold from human-authored prose | Keeping the academic writing boundary operational |
-| [theory_workbench.md](references/theory_workbench.md) | Theory workbench template for evidence slots, rival/scope checks, and author decisions | Reviewing literature-to-theory handoffs before prose |
-| [worked-example.md](references/worked-example.md) | Example result-section scaffold and claim audit without final prose | Teaching or demonstrating the skill |
+- Gary King, “Publication, Publication”: https://gking.harvard.edu/files/abs/paperspub-abs.shtml
+- David Lake, “How to Write an Academic Article in Political Science”:
+  https://ucigcc.org/publication/how-to-write-an-academic-article-in-political-science/
+- Howard S. Becker, *Writing for Social Scientists*.
