@@ -98,16 +98,19 @@ Keep the README organized around the reader's decision path.
 
 ## Brand Assets
 
-The README has two committed SVG assets:
+The README has a primary seal logo plus an optional semantic header:
 
 ```text
 docs/assets/readme/ai4ss-logo.svg
+docs/assets/readme/ai4ss-logo.png
 docs/assets/readme/ai4ss-header.svg
 ```
 
-The logo should stay compact and recognizable at small sizes. It represents a
-`.aiss` research object connected to skills, validators, decisions, and bounded
-claims.
+The primary logo should stay compact and recognizable at small sizes. It is a
+contemporary white-character cinnabar seal reading `智輔社科` (AI-assisted
+social science) in a Great Seal Script (`大篆`) treatment. The editable SVG is
+canonical; the PNG is the stable README render, so the seal lettering does not
+depend on fonts installed by the viewer.
 
 The header should act as the README head image. It should show the real
 research-factory path:

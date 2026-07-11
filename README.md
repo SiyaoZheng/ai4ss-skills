@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="docs/assets/readme/ai4ss-header.svg" alt="AI4SS research infrastructure: skills, .aiss objects, validation gates, evaluation evidence, and bounded handoff" width="100%">
+  <img src="docs/assets/readme/ai4ss-logo.png" alt="AI4SS 智輔社科大篆印章标志" width="120">
 </p>
 
 <div align="center">
