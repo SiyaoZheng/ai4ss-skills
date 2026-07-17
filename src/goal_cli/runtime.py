@@ -14,8 +14,9 @@ from dataclasses import dataclass, field, replace
 from pathlib import Path
 from typing import Any
 
-from .adapters import GoalProviderAdapters, ProductionGoalProviderAdapters
+from .adapters import GoalProviderAdapters, ProductionGoalProviderAdapters, mutation_containment_backend
 from .config import GoalConfig, TERMINAL_STATUSES, TikConfig, tik_providers, validate_config
+from .isolation import IsolatedAttemptResult, IsolatedWorkspace, rebase_goal_config
 from .lifecycle import CallState, Clock, SystemClock, WorkState, normalized_utc, parse_timestamp, timestamp_after
 from .no_mistakes import NoMistakesCheckpoint, NoMistakesResult
 from .observability import (
@@ -27,6 +28,7 @@ from .observability import (
     set_span_attributes,
 )
 from .template import render_template
+from .transaction import load_transaction, mark_transaction_checkpointed, recover_transactions
 
 IGNORED_RUNTIME_METADATA_FILENAMES = {".DS_Store", "Thumbs.db", "desktop.ini"}
 IGNORED_RUNTIME_METADATA_DIRNAMES = {".Spotlight-V100", ".TemporaryItems", ".fseventsd"}
@@ -249,10 +251,12 @@ class HeartbeatRunner:
     telemetry: GoalTelemetry = field(default_factory=disabled_telemetry)
     state: dict[str, Any] = field(default_factory=dict)
     run_dir: Path | None = None
+    pending_transaction_journal: Path | None = None
 
     def run(self) -> RunResult:
         with HeartbeatLock(self.config.lock_path, self.config.safety.lock_stale_seconds):
             self.state = load_state(self.config)
+            self._recover_transactions()
             normalize_retired_status(self.config, self.state)
             self._normalize_perpetual_state()
             checkpoint = self._no_mistakes_checkpoint()
@@ -317,6 +321,43 @@ class HeartbeatRunner:
                 return blocker_result
 
             return self._run_tok(artifact, tik_path)
+
+    def _recover_transactions(self) -> None:
+        for result in recover_transactions(self.config.root, self.config.state_dir):
+            if not result.committed:
+                continue
+            journal = load_transaction(result.journal_path)
+            attempt_id = str(journal.get("attempt_id"))
+            history = self.state.get("history")
+            already_recorded = isinstance(history, list) and any(
+                isinstance(entry, dict)
+                and entry.get("event") == "transaction_recovered"
+                and entry.get("attempt_id") == attempt_id
+                for entry in history
+            )
+            self.state["schema_version"] = max(2, int(self.state.get("schema_version", 1)))
+            self.state["status"] = WorkState.ACTIVE
+            self.state["call_state"] = CallState.SUCCEEDED
+            self.state["next_action"] = "tik"
+            self.state["next_due_at"] = timestamp_after(self.options.clock, 0)
+            self.state["last_transaction"] = {
+                "attempt_id": attempt_id,
+                "status": "recovered",
+                "journal_path": rel(self.config, result.journal_path),
+                "mutations": journal.get("mutations", []),
+            }
+            if not already_recorded:
+                append_history(
+                    self.config,
+                    self.state,
+                    {
+                        "event": "transaction_recovered",
+                        "attempt_id": attempt_id,
+                        "journal_path": rel(self.config, result.journal_path),
+                    },
+                )
+            save_state(self.config, self.state)
+            mark_transaction_checkpointed(result.journal_path)
 
     def _normalize_perpetual_state(self) -> None:
         if not self.config.perpetual.enabled or self.state.get("status") != "complete":
@@ -420,10 +461,62 @@ class HeartbeatRunner:
                 "goal.producer.command": self.config.producer.command,
             },
         ) as span:
-            outcome = self.adapters.produce_artifact(self.config, run_dir, timeout_seconds=remaining_seconds(self.deadline))
+            if self.config.perpetual.enabled:
+                preflight_error = self._mutation_capability_preflight()
+                if preflight_error is not None:
+                    span.set_attribute("goal.producer.ok", False)
+                    return self._finish(
+                        0,
+                        WorkState.BLOCKED,
+                        preflight_error,
+                        phase="producer_preflight_blocked",
+                        event="producer_preflight_blocked",
+                        blocked_reason=preflight_error,
+                        next_action="producer",
+                    )
+                assert self.config.lease is not None
+                attempt_id = f"{run_dir.name}-producer"
+                with IsolatedWorkspace(self.config.root, self.config.state_dir, attempt_id) as workspace:
+                    isolated_config = rebase_goal_config(self.config, workspace.root)
+                    outcome = self.adapters.produce_artifact(
+                        isolated_config,
+                        run_dir,
+                        timeout_seconds=remaining_seconds(self.deadline),
+                    )
+                    isolated_result = workspace.finalize(self.config.lease) if outcome.ok else None
+                if isolated_result is not None and (not isolated_result.authorized or not isolated_result.committed):
+                    reason = (
+                        f"producer lease violation: {isolated_result.detail}"
+                        if not isolated_result.authorized
+                        else f"producer canonical drift: {isolated_result.detail}"
+                    )
+                    span.set_attribute("goal.producer.ok", False)
+                    return self._finish(
+                        0,
+                        WorkState.BLOCKED,
+                        reason,
+                        phase="producer_delta_rejected",
+                        event="producer_delta_rejected",
+                        blocked_reason=reason,
+                        next_action="producer",
+                    )
+                if isolated_result is not None:
+                    self._record_committed_transaction(isolated_result, stage="producer", checkpoint=True)
+            else:
+                outcome = self.adapters.produce_artifact(self.config, run_dir, timeout_seconds=remaining_seconds(self.deadline))
             span.set_attribute("goal.producer.ok", outcome.ok)
         if outcome.ok:
             return None
+        if self.config.perpetual.enabled:
+            return self._finish(
+                0,
+                WorkState.BLOCKED,
+                "producer command failed",
+                phase="producer_failed",
+                event="producer_failed",
+                blocked_reason="producer command failed",
+                next_action="producer",
+            )
         return self._finish(
             1,
             "blocked_invalid_review_evidence",
@@ -578,7 +671,22 @@ class HeartbeatRunner:
         verdict_path = run_dir / ("tik_verdict.json" if single_provider else f"{tik_provider.label}_verdict.json")
         ledger_path = run_dir / ("tik.md" if single_provider else f"{tik_provider.label}.md")
         try:
-            outcome = self.adapters.run_tik(provider_goal_config, tik_prompt, run_dir, timeout_seconds=remaining_seconds(self.deadline))
+            if self.config.perpetual.enabled and tik_provider.provider in {"oracle", "checklist"}:
+                preflight_error = self._mutation_capability_preflight()
+                if preflight_error is not None:
+                    raise RuntimeError(preflight_error)
+                attempt_id = f"{run_dir.name}-tik-{tik_provider.label}"
+                with IsolatedWorkspace(self.config.root, self.config.state_dir, attempt_id) as workspace:
+                    isolated_config = rebase_goal_config(provider_goal_config, workspace.root)
+                    isolated_prompt = render_tik_prompt(isolated_config, artifact)
+                    outcome = self.adapters.run_tik(
+                        isolated_config,
+                        isolated_prompt,
+                        run_dir,
+                        timeout_seconds=remaining_seconds(self.deadline),
+                    )
+            else:
+                outcome = self.adapters.run_tik(provider_goal_config, tik_prompt, run_dir, timeout_seconds=remaining_seconds(self.deadline))
         except Exception as exc:
             failure_path = run_dir / f"{tik_provider.label}_FAILED.txt"
             failure_path.write_text(f"tik provider raised {type(exc).__name__}: {exc}\n", encoding="utf-8")
@@ -613,6 +721,16 @@ class HeartbeatRunner:
             freshness_error=freshness_error,
         )
 
+    def _mutation_capability_preflight(self) -> str | None:
+        lease = self.config.lease
+        if lease is None:
+            return "capability lease is required before perpetual mutation-capable command"
+        if not lease.allow_shell:
+            return "capability preflight failed: shell execution is not authorized by the lease"
+        if isinstance(self.adapters, ProductionGoalProviderAdapters) and mutation_containment_backend() is None:
+            return "capability preflight failed: no supported child-process write containment backend is available"
+        return None
+
     def _record_blocker(self, tik_path: Path, artifact: dict[str, Any]) -> RunResult | None:
         update_blocker_state(self.config, self.state, tik_path.read_text(encoding="utf-8") if tik_path.exists() else "")
         return None
@@ -641,7 +759,6 @@ class HeartbeatRunner:
 
     def _run_tok(self, artifact: dict[str, Any], tik_path: Path) -> RunResult:
         run_dir = self._run_dir()
-        tok_prompt = render_tok_prompt(self.config, artifact, tik_path, run_dir)
         source_before = snapshot_file_scope(self.config, self.config.tok.write_dirs)
         mutation_before = snapshot_tok_offlimits(self.config)
         artifact_before_tok = artifact_snapshot(self.config)
@@ -660,7 +777,7 @@ class HeartbeatRunner:
                 "goal.artifact.sha256": artifact["sha256"],
             },
         ) as span:
-            outcome = self.adapters.execute_tok(self.config, tok_prompt, run_dir, timeout_seconds=remaining_seconds(self.deadline))
+            outcome = self._execute_tok_attempt(artifact, tik_path, run_dir)
             tok_report_path = outcome.report_path
             source_after = snapshot_file_scope(self.config, self.config.tok.write_dirs)
             source_changes = source_change_summary(self.config, source_before, source_after, self.config.tok.write_dirs)
@@ -758,6 +875,101 @@ class HeartbeatRunner:
                 artifact=artifact,
             )
 
+    def _execute_tok_attempt(self, artifact: dict[str, Any], tik_path: Path, run_dir: Path):
+        from .tok_execution import TokExecutionResult
+
+        if not self.config.perpetual.enabled:
+            tok_prompt = render_tok_prompt(self.config, artifact, tik_path, run_dir)
+            return self.adapters.execute_tok(
+                self.config,
+                tok_prompt,
+                run_dir,
+                timeout_seconds=remaining_seconds(self.deadline),
+            )
+
+        lease = self.config.lease
+        if lease is None:
+            return TokExecutionResult(False, None, None, ("capability lease is required before perpetual tok invocation",))
+        if not lease.allow_shell:
+            return TokExecutionResult(
+                False,
+                None,
+                None,
+                ("capability preflight failed: tok provider shell capability is not authorized by the lease",),
+            )
+
+        attempt_id = f"{run_dir.name}-tok"
+        with IsolatedWorkspace(self.config.root, self.config.state_dir, attempt_id) as workspace:
+            isolated_config = rebase_goal_config(self.config, workspace.root)
+            tok_prompt = render_tok_prompt(isolated_config, artifact, tik_path, run_dir)
+            outcome = self.adapters.execute_tok(
+                isolated_config,
+                tok_prompt,
+                run_dir,
+                timeout_seconds=remaining_seconds(self.deadline),
+            )
+            if not outcome.ok:
+                return outcome
+            isolated_result = workspace.finalize(lease)
+
+        return self._finalize_isolated_tok(outcome, isolated_result)
+
+    def _finalize_isolated_tok(self, outcome, isolated_result: IsolatedAttemptResult):
+        from .tok_execution import TokExecutionResult
+
+        if not isolated_result.authorized:
+            return TokExecutionResult(
+                False,
+                outcome.report_path,
+                outcome.report,
+                (f"lease violation: {isolated_result.detail}",),
+                outcome.plan,
+            )
+        if not isolated_result.committed:
+            prefix = "canonical drift" if isolated_result.conflict else "transaction failed"
+            return TokExecutionResult(
+                False,
+                outcome.report_path,
+                outcome.report,
+                (f"{prefix}: {isolated_result.detail}",),
+                outcome.plan,
+            )
+        if isolated_result.journal_path is not None:
+            self._record_committed_transaction(isolated_result, stage="tok", checkpoint=False)
+        return outcome
+
+    def _record_committed_transaction(
+        self,
+        isolated_result: IsolatedAttemptResult,
+        *,
+        stage: str,
+        checkpoint: bool,
+    ) -> None:
+        journal_path = isolated_result.journal_path
+        if journal_path is None:
+            return
+        self.state["last_transaction"] = {
+            "attempt_id": isolated_result.attempt_id,
+            "stage": stage,
+            "status": "committed",
+            "journal_path": rel(self.config, journal_path),
+            "mutations": [
+                {
+                    "operation": str(mutation.operation),
+                    "path": mutation.path,
+                    "source_path": mutation.source_path,
+                    "before_identity": mutation.before_identity,
+                    "after_identity": mutation.after_identity,
+                }
+                for mutation in isolated_result.mutations
+            ],
+        }
+        if checkpoint:
+            save_state(self.config, self.state)
+            mark_transaction_checkpointed(journal_path)
+        else:
+            self.pending_transaction_journal = journal_path
+
     def _finish(
         self,
         exit_code: int,
@@ -795,6 +1007,9 @@ class HeartbeatRunner:
             artifact=artifact,
             blocked_reason=blocked_reason,
         )
+        if self.pending_transaction_journal is not None:
+            mark_transaction_checkpointed(self.pending_transaction_journal)
+            self.pending_transaction_journal = None
         self._heartbeat(phase, self._run_dir())
         return RunResult(exit_code, status, self._run_dir(), message)
 

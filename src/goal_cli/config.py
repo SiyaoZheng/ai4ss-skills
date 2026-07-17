@@ -8,6 +8,7 @@ import os
 import re
 import tomllib
 
+from .lease import CapabilityLease, FileOperation, LeaseRule
 from .template import template_placeholders
 
 
@@ -186,6 +187,7 @@ class GoalConfig:
     tok: TokConfig
     safety: SafetyConfig
     perpetual: PerpetualConfig
+    lease: CapabilityLease | None
     no_mistakes: NoMistakesConfig
     observability: ObservabilityConfig
 
@@ -350,6 +352,8 @@ def load_config(config_path: str | Path = "goal.toml") -> GoalConfig:
         ),
     )
 
+    lease = _load_capability_lease(raw.get("lease"))
+
     no_mistakes_raw = raw.get("no_mistakes", {})
     if no_mistakes_raw is None:
         no_mistakes_raw = {}
@@ -403,6 +407,7 @@ def load_config(config_path: str | Path = "goal.toml") -> GoalConfig:
         tok=tok,
         safety=safety,
         perpetual=perpetual,
+        lease=lease,
         no_mistakes=no_mistakes,
         observability=observability,
     )
@@ -414,6 +419,39 @@ def tik_providers(tik: TikConfig) -> tuple[TikConfig, ...]:
 
 def tik_provider_types(tik: TikConfig) -> set[str]:
     return {provider.provider for provider in tik_providers(tik)}
+
+
+def _load_capability_lease(raw: Any) -> CapabilityLease | None:
+    if raw is None:
+        return None
+    if not isinstance(raw, dict):
+        raise ConfigError("[lease] must be a table")
+    version = _required_str(raw, "version")
+    rules_raw = raw.get("rules", [])
+    if not isinstance(rules_raw, list) or not all(isinstance(item, dict) for item in rules_raw):
+        raise ConfigError("lease.rules must be an array of tables")
+    rules: list[LeaseRule] = []
+    for index, rule_raw in enumerate(rules_raw, start=1):
+        effect = _required_str(rule_raw, "effect")
+        operation_names = _string_list(rule_raw.get("operations"), f"lease.rules[{index}].operations")
+        operations: list[FileOperation] = []
+        for operation_name in operation_names:
+            try:
+                operations.append(FileOperation(operation_name))
+            except ValueError as exc:
+                raise ConfigError(f"unsupported lease operation in lease.rules[{index}]: {operation_name}") from exc
+        paths = tuple(_string_list(rule_raw.get("paths"), f"lease.rules[{index}].paths"))
+        try:
+            rules.append(LeaseRule(effect, tuple(operations), paths))
+        except ValueError as exc:
+            raise ConfigError(f"invalid lease.rules[{index}]: {exc}") from exc
+    return CapabilityLease(
+        version=version,
+        rules=tuple(rules),
+        allow_shell=_bool(raw.get("allow_shell"), True, "lease.allow_shell"),
+        allow_network=_bool(raw.get("allow_network"), False, "lease.allow_network"),
+        tools=tuple(_string_list(raw.get("tools", []), "lease.tools")),
+    )
 
 
 def _tik_providers_raw(tik_raw: dict[str, Any]) -> tuple[dict[str, Any], ...]:
@@ -824,6 +862,10 @@ def dump_config_summary(config: GoalConfig) -> str:
         "tok_run_cwd": str(config.tok.run_cwd or (config.tok.write_dirs[0] if config.tok.write_dirs else config.root)),
         "write_dirs": [str(path) for path in config.tok.write_dirs],
         "runtime_write_dirs": [str(path) for path in config.tok.runtime_write_dirs],
+        "perpetual_enabled": config.perpetual.enabled,
+        "lease_version": config.lease.version if config.lease else None,
+        "lease_allow_shell": config.lease.allow_shell if config.lease else None,
+        "lease_allow_network": config.lease.allow_network if config.lease else None,
         "no_mistakes_enabled": config.no_mistakes.enabled,
         "no_mistakes_mode": config.no_mistakes.mode,
         "no_mistakes_skip_steps": list(config.no_mistakes.skip_steps),

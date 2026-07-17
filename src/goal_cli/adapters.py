@@ -6,6 +6,7 @@ import signal
 import shlex
 import shutil
 import subprocess
+import sys
 import tempfile
 import traceback
 from dataclasses import dataclass
@@ -52,7 +53,16 @@ class GoalProviderAdapters(Protocol):
 @dataclass(frozen=True)
 class ProductionGoalProviderAdapters:
     def produce_artifact(self, config: GoalConfig, run_dir: Path, timeout_seconds: float | None = None) -> ProducerOutcome:
-        return ProducerOutcome(run_shell_logged(config.producer.command, config.root, run_dir / "producer.log", timeout_seconds=timeout_seconds))
+        containment_root = config.root if config.perpetual.enabled else None
+        return ProducerOutcome(
+            run_shell_logged(
+                config.producer.command,
+                config.root,
+                run_dir / "producer.log",
+                timeout_seconds=timeout_seconds,
+                containment_root=containment_root,
+            )
+        )
 
     def run_tik(self, config: GoalConfig, prompt: str, run_dir: Path, timeout_seconds: float | None = None) -> TikOutcome:
         return TikOutcome(
@@ -65,6 +75,7 @@ class ProductionGoalProviderAdapters:
                 config.tik.label,
                 config.artifact.copy_as,
                 timeout_seconds=timeout_seconds,
+                containment_root=config.root if config.perpetual.enabled and config.tik.provider in COMMAND_TIK_PROVIDERS else None,
             )
         )
 
@@ -81,6 +92,7 @@ def run_shell_logged(
     env: dict[str, str] | None = None,
     stdin: str | None = None,
     timeout_seconds: float | None = None,
+    containment_root: Path | None = None,
 ) -> bool:
     log_path.parent.mkdir(parents=True, exist_ok=True)
     run_env = os.environ.copy()
@@ -91,12 +103,16 @@ def run_shell_logged(
         log_file.flush()
         if _timeout_exhausted(timeout_seconds, log_file):
             return False
+        contained_command = build_contained_shell_command(command_text, containment_root) if containment_root is not None else None
+        if containment_root is not None and contained_command is None:
+            log_file.write("ERROR: no supported mutation containment backend is available.\n")
+            return False
         try:
             process = subprocess.Popen(
-                command_text,
+                contained_command or command_text,
                 cwd=cwd,
-                shell=True,
-                executable="/bin/bash",
+                shell=contained_command is None,
+                executable="/bin/bash" if contained_command is None else None,
                 stdin=subprocess.PIPE if stdin is not None else None,
                 stdout=subprocess.PIPE,
                 stderr=subprocess.STDOUT,
@@ -142,6 +158,7 @@ def run_tik(
     label: str,
     artifact_copy_as: str | None,
     timeout_seconds: float | None = None,
+    containment_root: Path | None = None,
 ) -> Path | None:
     output_path = run_dir / f"{label}_memo.md"
     (run_dir / f"{label}_prompt.md").write_text(prompt, encoding="utf-8")
@@ -151,7 +168,14 @@ def run_tik(
             "GOAL_TIK_PROMPT": prompt,
             "GOAL_RUN_DIR": str(run_dir),
         }
-        ok = run_shell_logged(config.command or "", root, run_dir / f"{label}_command.log", env=env, timeout_seconds=timeout_seconds)
+        ok = run_shell_logged(
+            config.command or "",
+            root,
+            run_dir / f"{label}_command.log",
+            env=env,
+            timeout_seconds=timeout_seconds,
+            containment_root=containment_root,
+        )
         if not ok:
             (run_dir / f"{label}_FAILED.txt").write_text("tik command failed\n", encoding="utf-8")
             return None
@@ -188,6 +212,51 @@ def run_tik(
         (run_dir / f"{label}_FAILED.txt").write_text("tik provider failed\n", encoding="utf-8")
         return None
     return output_path
+
+
+def mutation_containment_backend() -> str | None:
+    if sys.platform == "darwin" and shutil.which("sandbox-exec"):
+        return "sandbox-exec"
+    if sys.platform.startswith("linux") and shutil.which("bwrap"):
+        return "bwrap"
+    return None
+
+
+def build_contained_shell_command(
+    command_text: str,
+    containment_root: Path,
+    *,
+    backend: str | None = None,
+) -> list[str] | None:
+    backend = backend or mutation_containment_backend()
+    root = str(containment_root.resolve(strict=False))
+    if backend == "sandbox-exec":
+        escaped_root = root.replace("\\", "\\\\").replace('"', '\\"')
+        profile = (
+            "(version 1)\n"
+            "(allow default)\n"
+            f'(deny file-write* (require-not (subpath "{escaped_root}")))\n'
+        )
+        return ["/usr/bin/sandbox-exec", "-p", profile, "/bin/bash", "-lc", command_text]
+    if backend == "bwrap":
+        return [
+            "bwrap",
+            "--die-with-parent",
+            "--ro-bind",
+            "/",
+            "/",
+            "--bind",
+            root,
+            root,
+            "--tmpfs",
+            "/tmp",
+            "--chdir",
+            root,
+            "/bin/bash",
+            "-lc",
+            command_text,
+        ]
+    return None
 
 
 def _codex_file_review(
