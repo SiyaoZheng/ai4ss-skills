@@ -16,6 +16,7 @@ from typing import Any
 
 from .adapters import GoalProviderAdapters, ProductionGoalProviderAdapters
 from .config import GoalConfig, TERMINAL_STATUSES, TikConfig, tik_providers, validate_config
+from .lifecycle import CallState, Clock, SystemClock, WorkState, normalized_utc, parse_timestamp, timestamp_after
 from .no_mistakes import NoMistakesCheckpoint, NoMistakesResult
 from .observability import (
     GoalTelemetry,
@@ -54,6 +55,7 @@ class RuntimeOptions:
     dry_run: bool = False
     review_only: bool = False
     max_minutes: float = DEFAULT_MAX_MINUTES
+    clock: Clock = field(default_factory=SystemClock, compare=False, repr=False)
 
 
 @dataclass(frozen=True)
@@ -252,15 +254,22 @@ class HeartbeatRunner:
         with HeartbeatLock(self.config.lock_path, self.config.safety.lock_stale_seconds):
             self.state = load_state(self.config)
             normalize_retired_status(self.config, self.state)
+            self._normalize_perpetual_state()
             checkpoint = self._no_mistakes_checkpoint()
             defer_heartbeat_start = checkpoint.enabled and not self.options.dry_run
             if not defer_heartbeat_start:
                 self._heartbeat("heartbeat_start", None)
+            scheduled_result = self._scheduled_result()
+            if scheduled_result is not None:
+                return scheduled_result
             if self.state.get("status") in TERMINAL_STATUSES:
                 save_state(self.config, self.state)
                 self._heartbeat("terminal_state", None)
                 return RunResult(0, str(self.state.get("status")), None, f"goal status is {self.state.get('status')}")
 
+            if self.config.perpetual.enabled:
+                self.state["call_state"] = CallState.DUE
+                save_state(self.config, self.state)
             self._start_heartbeat(emit_heartbeat=not defer_heartbeat_start)
             if self.options.dry_run:
                 return self._dry_run()
@@ -308,6 +317,42 @@ class HeartbeatRunner:
                 return blocker_result
 
             return self._run_tok(artifact, tik_path)
+
+    def _normalize_perpetual_state(self) -> None:
+        if not self.config.perpetual.enabled or self.state.get("status") != "complete":
+            return
+        self.state["schema_version"] = max(2, int(self.state.get("schema_version", 1)))
+        self.state["status"] = WorkState.HEALTHY
+        self.state["call_state"] = CallState.NOT_DUE
+        self.state["next_action"] = "inspect"
+        self.state["next_due_at"] = timestamp_after(self.options.clock, self.config.perpetual.healthy_interval_seconds)
+        append_history(
+            self.config,
+            self.state,
+            {
+                "event": "perpetual_complete_migrated",
+                "previous_status": "complete",
+                "status": WorkState.HEALTHY,
+                "next_due_at": self.state["next_due_at"],
+            },
+        )
+        save_state(self.config, self.state)
+
+    def _scheduled_result(self) -> RunResult | None:
+        if not self.config.perpetual.enabled:
+            return None
+        due_at = parse_timestamp(self.state.get("next_due_at"))
+        if due_at is None or normalized_utc(self.options.clock.now()) >= due_at:
+            return None
+        self.state["call_state"] = CallState.NOT_DUE
+        save_state(self.config, self.state)
+        self._heartbeat("not_due", None)
+        return RunResult(
+            0,
+            str(self.state.get("status", WorkState.ACTIVE)),
+            None,
+            f"next perpetual heartbeat is due at {due_at.replace(microsecond=0).isoformat()}",
+        )
 
     def _start_heartbeat(self, emit_heartbeat: bool = True) -> None:
         run_dir = heartbeat_run_dir(self.config, self.state)
@@ -725,6 +770,20 @@ class HeartbeatRunner:
         artifact: dict[str, Any] | None = None,
         blocked_reason: str | None = None,
     ) -> RunResult:
+        if self.config.perpetual.enabled:
+            if status == "complete":
+                status = WorkState.HEALTHY
+                phase = "healthy"
+                event = "healthy"
+                next_action = "inspect"
+            interval = (
+                self.config.perpetual.healthy_interval_seconds
+                if status == WorkState.HEALTHY
+                else self.config.perpetual.active_interval_seconds
+            )
+            self.state["schema_version"] = max(2, int(self.state.get("schema_version", 1)))
+            self.state["call_state"] = CallState.SUCCEEDED if exit_code == 0 else CallState.FAILED
+            self.state["next_due_at"] = timestamp_after(self.options.clock, interval)
         checkpoint_result = self._checkpoint_no_mistakes(exit_code, status)
         if checkpoint_result is not None:
             return checkpoint_result

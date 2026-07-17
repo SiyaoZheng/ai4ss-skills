@@ -146,6 +146,14 @@ class SafetyConfig:
 
 
 @dataclass(frozen=True)
+class PerpetualConfig:
+    enabled: bool = False
+    healthy_interval_seconds: float = 6 * 60 * 60
+    active_interval_seconds: float = 30 * 60
+    provider_backoff_seconds: tuple[float, ...] = (5 * 60, 30 * 60, 2 * 60 * 60)
+
+
+@dataclass(frozen=True)
 class NoMistakesConfig:
     enabled: bool = True
     binary: str = "no-mistakes"
@@ -177,6 +185,7 @@ class GoalConfig:
     tik: TikConfig
     tok: TokConfig
     safety: SafetyConfig
+    perpetual: PerpetualConfig
     no_mistakes: NoMistakesConfig
     observability: ObservabilityConfig
 
@@ -323,6 +332,24 @@ def load_config(config_path: str | Path = "goal.toml") -> GoalConfig:
         max_history_items=int(safety_raw.get("max_history_items", 50)),
     )
 
+    perpetual_raw = raw.get("perpetual", {})
+    if perpetual_raw is None:
+        perpetual_raw = {}
+    if not isinstance(perpetual_raw, dict):
+        raise ConfigError("[perpetual] must be a table")
+    perpetual = PerpetualConfig(
+        enabled=_bool(perpetual_raw.get("enabled"), False, "perpetual.enabled"),
+        healthy_interval_seconds=float(perpetual_raw.get("healthy_interval_seconds", 6 * 60 * 60)),
+        active_interval_seconds=float(perpetual_raw.get("active_interval_seconds", 30 * 60)),
+        provider_backoff_seconds=tuple(
+            float(value)
+            for value in _number_list(
+                perpetual_raw.get("provider_backoff_seconds", [5 * 60, 30 * 60, 2 * 60 * 60]),
+                "perpetual.provider_backoff_seconds",
+            )
+        ),
+    )
+
     no_mistakes_raw = raw.get("no_mistakes", {})
     if no_mistakes_raw is None:
         no_mistakes_raw = {}
@@ -375,6 +402,7 @@ def load_config(config_path: str | Path = "goal.toml") -> GoalConfig:
         tik=tik,
         tok=tok,
         safety=safety,
+        perpetual=perpetual,
         no_mistakes=no_mistakes,
         observability=observability,
     )
@@ -562,6 +590,13 @@ def analyze_config_policy(config: GoalConfig) -> ConfigPolicyReport:
             issues.append(ConfigIssue("observability.endpoint.empty", "observability.endpoint must be non-empty when observability is enabled"))
         if config.observability.timeout_seconds <= 0:
             issues.append(ConfigIssue("observability.timeout_seconds.non_positive", "observability.timeout_seconds must be positive when observability is enabled"))
+    if config.perpetual.enabled:
+        if config.perpetual.healthy_interval_seconds <= 0:
+            issues.append(ConfigIssue("perpetual.healthy_interval_seconds.non_positive", "perpetual.healthy_interval_seconds must be positive"))
+        if config.perpetual.active_interval_seconds <= 0:
+            issues.append(ConfigIssue("perpetual.active_interval_seconds.non_positive", "perpetual.active_interval_seconds must be positive"))
+        if not config.perpetual.provider_backoff_seconds or any(value <= 0 for value in config.perpetual.provider_backoff_seconds):
+            issues.append(ConfigIssue("perpetual.provider_backoff_seconds.invalid", "perpetual.provider_backoff_seconds must contain positive values"))
     issues.extend(ConfigIssue("prompt.placeholder", issue) for issue in validate_prompt_templates(config))
     issues.extend(ConfigIssue("prompt.language", issue) for issue in validate_runtime_prompt_language(config))
 
@@ -894,6 +929,12 @@ def _string_list(value: Any, label: str) -> list[str]:
     if not isinstance(value, list) or not all(isinstance(item, str) and item.strip() for item in value):
         raise ConfigError(f"{label} must be a string list")
     return [item.strip() for item in value]
+
+
+def _number_list(value: Any, label: str) -> list[float | int]:
+    if not isinstance(value, list) or any(not isinstance(item, (int, float)) or isinstance(item, bool) for item in value):
+        raise ConfigError(f"{label} must be an array of numbers")
+    return value
 
 
 def _prompt_from(raw: dict[str, Any], required_key: str) -> str:
