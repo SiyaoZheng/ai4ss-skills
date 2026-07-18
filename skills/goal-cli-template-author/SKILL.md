@@ -135,10 +135,13 @@ If it includes a checklist runner, use `provider = "checklist"` and document
 that `goal-cli doctor` checks the command statically.
 
 If a template recommends unattended progress, include the system-level
-heartbeat command and state that each tick still runs exactly one heartbeat:
+heartbeat command and state that each tick still runs exactly one heartbeat.
+Omit `--every-minutes` unless the template needs a fixed timer; goal-cli
+defaults to a 5-minute wake-up for perpetual goals and a 30-minute wake-up for
+legacy goals:
 
 ```bash
-goal-cli heartbeat install --every-minutes 30 --max-minutes 600
+goal-cli heartbeat install --max-minutes 600
 goal-cli heartbeat status
 ```
 

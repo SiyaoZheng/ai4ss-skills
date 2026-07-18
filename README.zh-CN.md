@@ -31,7 +31,7 @@
 <p align="center">
   <a href="https://github.com/SiyaoZheng/goal-cli"><img alt="GitHub stars" src="https://img.shields.io/github/stars/SiyaoZheng/goal-cli?style=for-the-badge&amp;logo=github&amp;label=star%20goal-cli&amp;color=181717&amp;labelColor=ffffff" /></a>
   <img alt="One prompt" src="https://img.shields.io/badge/one%20prompt-THE%20THING-43d17a?style=for-the-badge&amp;labelColor=07110c" />
-  <img alt="Thirty minute heartbeat" src="https://img.shields.io/badge/heartbeat-every%2030%20min-f4c542?style=for-the-badge&amp;labelColor=171204" />
+  <img alt="Adaptive heartbeat" src="https://img.shields.io/badge/heartbeat-adaptive-f4c542?style=for-the-badge&amp;labelColor=171204" />
   <img alt="PDFs sites reports apps" src="https://img.shields.io/badge/works%20for-PDFs%20%7C%20sites%20%7C%20reports%20%7C%20apps-6aa9ff?style=for-the-badge&amp;labelColor=07101f" />
   <img alt="No code review required" src="https://img.shields.io/badge/no%20code%20review%20required-check%20the%20thing-f07a5f?style=for-the-badge&amp;labelColor=1b0905" />
 </p>
@@ -112,7 +112,7 @@ Hi, read https://github.com/SiyaoZheng/goal-cli/blob/master/llms.txt and do what
 
 一个交付物。
 
-每 30 分钟一次心跳。
+到点才跑的一次心跳。
 
 | 动作 | 发生什么 |
 | --- | --- |

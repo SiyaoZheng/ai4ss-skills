@@ -45,8 +45,9 @@ class SkillDistributionTests(unittest.TestCase):
         for path in paths:
             text = path.read_text(encoding="utf-8")
             self.assertIn("goal-cli run --max-minutes 600", text, path)
-            self.assertIn("goal-cli heartbeat install --every-minutes 30 --max-minutes 600", text, path)
+            self.assertIn("goal-cli heartbeat install --max-minutes 600", text, path)
             self.assertNotIn("goal-cli run --max-minutes 30", text, path)
+            self.assertNotIn("goal-cli heartbeat install --every-minutes 30 --max-minutes 600", text, path)
             self.assertNotIn("goal-cli heartbeat install --every-minutes 30 --max-minutes 30", text, path)
 
 

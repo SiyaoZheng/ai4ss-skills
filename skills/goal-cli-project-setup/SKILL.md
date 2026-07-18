@@ -400,6 +400,32 @@ they may refer to the artifact, producer, tik ledger, source boundaries, and
 operational impossibilities, but not to asking a person for approval or
 clarification during the loop.
 
+If the user explicitly wants unattended long-horizon work, add perpetual mode
+with a capability lease. Keep the substantive goal fixed, keep the lease narrow,
+and include only the source and generated artifact paths that the loop is
+allowed to mutate:
+
+```toml
+[perpetual]
+enabled = true
+substantive_goal = "Resolve the fixed substantive objections in the artifact."
+
+[lease]
+version = "artifact-lease-v1"
+allow_shell = true
+allow_network = false
+
+[[lease.rules]]
+effect = "allow"
+operations = ["create", "modify", "delete", "rename"]
+paths = ["src/**", "writing/**"]
+
+[[lease.rules]]
+effect = "allow"
+operations = ["create", "modify"]
+paths = ["output/artifact.pdf"]
+```
+
 ### 7. Validate Before Running
 
 Run these checks from the target project:
@@ -469,10 +495,12 @@ goal-cli state
 ```
 
 For unattended progress, install the system-level heartbeat instead of leaving
-a foreground loop running:
+a foreground loop running. Omit `--every-minutes` unless the project needs a
+fixed timer; goal-cli defaults to a 5-minute wake-up for perpetual goals and a
+30-minute wake-up for legacy goals:
 
 ```bash
-goal-cli heartbeat install --every-minutes 30 --max-minutes 600
+goal-cli heartbeat install --max-minutes 600
 goal-cli heartbeat status
 ```
 

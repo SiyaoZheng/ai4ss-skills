@@ -101,6 +101,9 @@ goal-cli -h
    `codex_app_server` (Codex app-server stdio), or `claude_code_goal`
    (Claude Code) as the provider.
 8. Put generated output folders in `[safety].generated_dirs`.
+9. If the user asks for unattended long-horizon work, add explicit
+   `[perpetual]` and `[lease]` sections so future runs have one fixed
+   substantive goal and a narrow file-operation boundary.
 
 ## Required Checks
 
@@ -168,10 +171,12 @@ Only after those checks pass, recommend one manual heartbeat:
 goal-cli run --max-minutes 600
 ```
 
-For unattended progress, recommend a timed heartbeat instead:
+For unattended progress, recommend a timed heartbeat instead. Let goal-cli pick
+the default wake-up interval unless the project needs a fixed timer: perpetual
+goals wake every 5 minutes and legacy goals every 30 minutes.
 
 ```bash
-goal-cli heartbeat install --every-minutes 30 --max-minutes 600
+goal-cli heartbeat install --max-minutes 600
 goal-cli heartbeat status
 ```
 
@@ -204,6 +209,8 @@ blocking command and output, then give the smallest next action.
 - [goal.toml schema](docs/config-schema.md): Full configuration reference.
 - [CLI reference](docs/cli-reference.md): Current command help.
 - [Skills guide](docs/skills.md): Agent-facing setup instructions.
+- [Thing-first design notes](docs/artifact-goal-notes.md): Runtime design
+  rationale and module boundaries.
 
 ## Examples
 

@@ -19,9 +19,8 @@ while the public interface remains unstable.
   serialization, drift detection, and idempotent recovery.
 - One shared typed ToK provider contract for Codex exec, Codex app-server, and
   Claude Code.
-- Runtime tok mutation audit that records direct artifact mutation.
-- Runtime tok mutation audit that records changes outside declared source,
-  runtime, and goal state scopes.
+- Runtime tok mutation audit that records direct artifact mutation and changes
+  outside declared source, runtime, and goal state scopes.
 - Focused regression coverage for tok artifact and generated-output boundary
   enforcement.
 - MIT license, security policy, CI workflow, and package metadata for public

@@ -31,7 +31,7 @@
 <p align="center">
   <a href="https://github.com/SiyaoZheng/goal-cli"><img alt="GitHub stars" src="https://img.shields.io/github/stars/SiyaoZheng/goal-cli?style=for-the-badge&amp;logo=github&amp;label=star%20goal-cli&amp;color=181717&amp;labelColor=ffffff" /></a>
   <img alt="One prompt" src="https://img.shields.io/badge/one%20prompt-THE%20THING-43d17a?style=for-the-badge&amp;labelColor=07110c" />
-  <img alt="Thirty minute heartbeat" src="https://img.shields.io/badge/heartbeat-every%2030%20min-f4c542?style=for-the-badge&amp;labelColor=171204" />
+  <img alt="Adaptive heartbeat" src="https://img.shields.io/badge/heartbeat-adaptive-f4c542?style=for-the-badge&amp;labelColor=171204" />
   <img alt="PDFs sites reports apps" src="https://img.shields.io/badge/works%20for-PDFs%20%7C%20sites%20%7C%20reports%20%7C%20apps-6aa9ff?style=for-the-badge&amp;labelColor=07101f" />
   <img alt="No code review required" src="https://img.shields.io/badge/no%20code%20review%20required-check%20the%20thing-f07a5f?style=for-the-badge&amp;labelColor=1b0905" />
 </p>
@@ -116,7 +116,7 @@ One prompt.
 
 One thing.
 
-One heartbeat every 30 minutes.
+One heartbeat when the saved schedule says work is due.
 
 | Move | What happens |
 | --- | --- |
@@ -166,7 +166,7 @@ Did the thing get better?
 
 If yes, stop.
 
-If no, change source and come back in 30 minutes.
+If no, change source and come back on the next due heartbeat.
 
 Sources: [Addy Osmani](https://addyosmani.com/blog/loop-engineering/),
 [LangChain](https://www.langchain.com/blog/the-art-of-loop-engineering/),
