@@ -66,8 +66,10 @@ goal-cli run --max-minutes 600
 ```
 
 For unattended progress, install the per-user OS timer instead of leaving a
-foreground loop running:
+foreground loop running. Let goal-cli choose the wake-up interval unless the
+project needs an explicit fixed timer: perpetual goals default to a 5-minute
+wake-up, while legacy goals default to 30 minutes.
 
 ```bash
-goal-cli heartbeat install --every-minutes 30 --max-minutes 600
+goal-cli heartbeat install --max-minutes 600
 ```

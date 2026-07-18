@@ -153,9 +153,27 @@ from file state.
   Git checkpoint, preserve the current mainline branch, choose no-mistakes skip
   presets, honor run budgets, and invoke or skip `no-mistakes axi run` according
   to branch constraints.
+- Lifecycle: `lifecycle.py` owns machine state names and clock abstractions for
+  active, healthy, blocked, stopped, due, running, succeeded, failed, and
+  cancelled calls.
 - Heartbeat State: `HeartbeatRecorder` owns state/history/heartbeat writes
   and transition recording. The runner orchestrates producer, tik, and tok; it
   does not hand-edit heartbeat JSON.
+- Capability Lease: `lease.py` owns exact and glob authorization for create,
+  modify, delete, and rename operations. Deny rules override allow rules, and a
+  rejected mutation batch applies nothing.
+- Isolated Execution: `isolation.py` owns dirty/untracked baselines, isolated
+  producer and command-tik workspaces, finalization, and symlink escape
+  rejection before canonical files are touched.
+- Transactions: `transaction.py` owns durable staging, journal states,
+  repository serialization, drift conflicts, checkpointing, and restart
+  recovery for leased multi-file mutations.
+- Provider Contract: `provider_contract.py` owns shared preflight and writable
+  root policy for Codex exec, Codex app-server, Claude Code, and command-backed
+  providers.
+- Attempt Supervisor: `supervisor.py` owns bounded recent attempt evidence,
+  deterministic outcome aggregation, immutable goal/lease binding, and
+  substantive reframe angle selection.
 - Tok Execution: `tok_execution` owns the Codex `/goal`, Codex app-server, and
   Claude Code tok commands, prompt files, attachment integrity check, and
   runtime-owned audit `TokExecutionResult`.
