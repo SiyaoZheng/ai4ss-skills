@@ -1,0 +1,265 @@
+aiss version "0.4"
+
+paper relay.paper {
+  title: "Neighborhood Service Exposure and Civic Trust"
+  authors: ["AI4SS relay eval fixture"]
+  year: "2026"
+  language: "en"
+  kind: "relay_eval_fixture"
+  sources: [relay.src_design, relay.src_data, relay.src_literature]
+}
+
+source relay.src_design {
+  kind: "design_brief"
+  uri: "fixtures/design-brief.md"
+  media_type: "text/markdown"
+  locator_scheme: "section"
+  checksum: "sha256:relay-design-brief"
+}
+
+source relay.src_data {
+  kind: "data_inventory"
+  uri: "fixtures/data-inventory.md"
+  media_type: "text/markdown"
+  locator_scheme: "section"
+  checksum: "sha256:relay-data-inventory"
+}
+
+source relay.src_literature {
+  kind: "literature_evidence_declaration"
+  uri: "fixtures/literature-matrix.md"
+  media_type: "text/markdown"
+  locator_scheme: "row"
+  checksum: "sha256:relay-literature-matrix"
+}
+
+span relay.span_design {
+  source: relay.src_design
+  locator: "route:selected"
+  quote_hash: "sha256:relay-span-design"
+}
+
+span relay.span_data {
+  source: relay.src_data
+  locator: "inventory:panel"
+  quote_hash: "sha256:relay-span-data"
+}
+
+span relay.span_literature {
+  source: relay.src_literature
+  locator: "row:smith-2025-service-trust"
+  quote_hash: "sha256:relay-span-literature"
+}
+
+route relay.route_r1 {
+  question: "Does neighborhood service-center exposure change civic trust?"
+  status: selected
+  study_type: causal
+  unit_of_analysis: "resident-year / neighborhood-year"
+  inquiry: "average effect of service-center exposure on civic trust in declared neighborhoods and waves"
+  data_strategy: "verify real observed rollout and survey sources before linking audited neighborhood rollout records to resident survey waves after missingness and linkage checks"
+  answer_strategy: "run readiness diagnostics before first-pass estimation; do not report causal claims before methods review"
+  continuation_plan: "auto-route source access, linkage, timing, and methods risks through source acquisition, data construction, and methods review before draft claims"
+  stop_reason: "relay fixture; continue until source, data, analysis, and report-boundary gates are explicit"
+  next_skill_route: public-data-sources
+  candidate_concepts: [relay.exposed_neighborhood, relay.civic_trust]
+  spans: [relay.span_design]
+}
+
+mida relay.mida_r1_model {
+  route: relay.route_r1
+  component: model
+  text: "The conceptual model links service-center exposure to civic trust through local state contact."
+  status: declared
+  concepts: [relay.exposed_neighborhood, relay.civic_trust]
+  model: relay.service_trust_model
+  spans: [relay.span_design]
+}
+
+mida relay.mida_r1_inquiry {
+  route: relay.route_r1
+  component: inquiry
+  text: "The inquiry targets bounded changes in civic trust under a declared exposure window."
+  status: declared
+  causal: [relay.exposure_to_trust]
+  spans: [relay.span_design]
+}
+
+mida relay.mida_r1_data_strategy {
+  route: relay.route_r1
+  component: data_strategy
+  text: "Use only rollout records with auditable dates and survey linkage diagnostics."
+  status: needs_data_check
+  bridges: [relay.measurement_bridge_exposure]
+  spans: [relay.span_data]
+}
+
+mida relay.mida_r1_answer_strategy {
+  route: relay.route_r1
+  component: answer_strategy
+  text: "Readiness diagnostics precede first-pass estimation and methods review."
+  status: declared
+  model: relay.service_trust_model
+  spans: [relay.span_design]
+}
+
+mida relay.mida_r1_diagnose {
+  route: relay.route_r1
+  component: diagnose
+  text: "Diagnose linkage loss, timing ambiguity, missingness, and claim-support mismatch."
+  status: declared
+  bridges: [relay.measurement_bridge_exposure, relay.causal_bridge_exposure]
+  spans: [relay.span_data]
+}
+
+mida relay.mida_r1_redesign {
+  route: relay.route_r1
+  component: redesign
+  text: "Redesign to descriptive exposure gradients if timing support is not auditable."
+  status: declared
+  spans: [relay.span_design]
+}
+
+mida relay.mida_r1_report_boundary {
+  route: relay.route_r1
+  component: report_boundary
+  text: "Report only bounded diagnostics until transparency checks, data repairs, and methods review are complete."
+  status: declared
+  spans: [relay.span_design]
+}
+
+decision relay.decision_r1_identification {
+  route: relay.route_r1
+  component: inquiry
+  decision: "Harness records a bounded causal-route assumption and routes source, linkage, and timing risks to public source acquisition before data construction and analysis."
+  status: auto_resolved
+  owner: harness
+  next_skill_route: public-data-sources
+  causal: [relay.exposure_to_trust]
+  spans: [relay.span_design]
+}
+
+attribute relay.service_exposure {
+  domain: binary
+  values: ["absent", "present"]
+  description: "whether the neighborhood has a service center in the declared exposure window"
+  spans: [relay.span_design]
+}
+
+attribute relay.trust_level {
+  domain: ordinal
+  values: ["low", "high"]
+  description: "resident civic trust category under the declared survey measurement rule"
+  spans: [relay.span_data]
+}
+
+concept relay.exposed_neighborhood {
+  term: "exposed neighborhood"
+  definition: "Neighborhood observed after service-center rollout in the declared window."
+  spans: [relay.span_design]
+  parents: [relay.service_exposure]
+  theta: {
+    "[\"absent\"]": 0
+    "[\"present\"]": 1
+  }
+}
+
+concept relay.civic_trust {
+  term: "civic trust"
+  definition: "Resident trust in local public institutions under the declared survey item."
+  spans: [relay.span_data]
+  parents: [relay.trust_level]
+  theta: {
+    "[\"low\"]": 0
+    "[\"high\"]": 1
+  }
+}
+
+claim relay.claim_exposure_increases_trust {
+  kind: "causal"
+  text: "Service-center exposure may increase civic trust by reducing interaction costs with local government."
+  spans: [relay.span_literature]
+  concepts: [relay.exposed_neighborhood, relay.civic_trust]
+  subject: relay.exposed_neighborhood
+  predicate: "increases"
+  object: relay.civic_trust
+  polarity: positive
+  modality: asserted
+}
+
+artifact relay.artifact_data_inventory {
+  kind: "data_inventory"
+  uri: "outputs/data_inventory.md"
+  media_type: "text/markdown"
+  checksum: "sha256:relay-data-inventory-artifact"
+}
+
+empirical relay.empirical_panel {
+  kind: "panel_dataset"
+  label: "Resident survey linked to neighborhood service-center rollout records"
+  artifacts: [relay.artifact_data_inventory]
+  spans: [relay.span_data]
+}
+
+observation relay.observation_linkage_risk {
+  kind: "linkage_note"
+  text: "Exposure timing and survey waves must be linked before estimation."
+  about: relay.empirical_panel
+  concepts: [relay.exposed_neighborhood]
+  spans: [relay.span_data]
+}
+
+coupling relay.coupling_literature_to_empirical {
+  type: "design_route_support"
+  theory: relay.claim_exposure_increases_trust
+  empirical: relay.empirical_panel
+  asserted_by: "literature-matrix row smith_2025_service_trust"
+  spans: [relay.span_literature]
+}
+
+causal relay.exposure_to_trust {
+  source: relay.exposed_neighborhood
+  target: relay.civic_trust
+  direction: positive
+  condition: none
+  mechanism: "lower local-state interaction costs"
+  claim: relay.claim_exposure_increases_trust
+  spans: [relay.span_literature]
+}
+
+bridge relay.measurement_bridge_exposure {
+  type: measurement
+  concept: relay.exposed_neighborhood
+  method: "administrative rollout records"
+  validity: "requires auditable rollout date and linkage checks"
+  commensurability: weak
+  coupling: relay.coupling_literature_to_empirical
+  spans: [relay.span_data]
+}
+
+bridge relay.causal_bridge_exposure {
+  type: causal
+  implication: relay.exposure_to_trust
+  empirical: relay.empirical_panel
+  estimand: "average effect of service-center exposure on civic trust"
+  commensurability: weak
+  note: "relay fixture; not a final identification claim"
+  spans: [relay.span_literature]
+}
+
+model relay.service_trust_model {
+  attributes: [relay.service_exposure, relay.trust_level]
+  concepts: [relay.exposed_neighborhood, relay.civic_trust]
+  causal: [relay.exposure_to_trust]
+  bridges: [relay.measurement_bridge_exposure, relay.causal_bridge_exposure]
+}
+
+check relay.check_reference_integrity {
+  type: reference_integrity
+  on: relay.service_trust_model
+}
+
+check relay.check_readiness_boundary {
+  type: readiness_boundary
+  on: relay.service_trust_model
+}

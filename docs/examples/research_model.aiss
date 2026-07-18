@@ -70,7 +70,7 @@ route demo.route_r1 {
   inquiry: "average effect of platform exposure on high innovation within linked units and declared time window"
   data_strategy: "source-verified rollout records linked to firm innovation outcomes"
   answer_strategy: "first pass design declaration and readiness checks before any estimation"
-  stop_reason: "teaching fixture; author must approve identification and claim strength"
+  stop_reason: "teaching fixture; workflow gate must pass identification and claim strength"
   next_skill_route: research-data-builder
   candidate_concepts: [demo.exposed_unit, demo.high_innovation]
   spans: [demo.span_route_r1]
@@ -140,10 +140,10 @@ mida demo.mida_r1_report_boundary {
 decision demo.decision_r1_identification {
   route: demo.route_r1
   component: inquiry
-  decision: "Author must decide whether the causal route is substantively worth pursuing after source and data checks."
-  status: needs_author_decision
-  owner: author
-  next_skill_route: ask_author
+  decision: "Workflow must gate whether the causal route is substantively worth pursuing after source and data checks."
+  status: needs_redesign
+  owner: workflow
+  next_skill_route: last_skill
   causal: [demo.exposure_to_innovation]
   spans: [demo.span_decision_r1]
 }

@@ -12,7 +12,7 @@ This deterministic simulation compares a careful generic agent with a skill-guid
 | traceability | 20 | Can claims or rows be traced to sources, logs, or model objects? |
 | boundary | 20 | Did the agent avoid direct final academic prose or unsafe scholarly moves? |
 | validation | 15 | Did the agent name the relevant validator or gate? |
-| author_decision | 15 | Did the agent surface decisions the researcher must own? |
+| required_gate | 15 | Did the agent surface decisions the researcher must own? |
 
 ## Results
 
@@ -60,7 +60,7 @@ Task: Prepare result-section support from table1, event-study figure, and resear
 | condition | artifacts | trace markers | risky moves | summary |
 |---|---|---|---|---|
 | `no_skill` (31.0) | results_paragraph.md, claim_notes.md | estimand, sample and N | writes final manuscript prose, mechanism evidence is not separated from interpretation | Returns a plausible paragraph plus notes, but it crosses the direct-writing boundary and under-specifies claim strength. |
-| `skill_guided` (95.0) | methods_issue_table.csv, claim_ledger.csv, author_decision_questions.md | estimand, sample and N, support_level | none | Returns claim slots and risks, leaving final prose and scholarly judgment to the author; FE/cluster still need model-object confirmation. |
+| `skill_guided` (95.0) | methods_issue_table.csv, claim_ledger.csv, required_gate_questions.md | estimand, sample and N, support_level | none | Returns claim slots and risks, leaving final prose and scholarly judgment to the author; FE/cluster still need model-object confirmation. |
 
 ### `revision_trace`
 
@@ -69,4 +69,4 @@ Task: Process reviewer comments about identification, mechanism evidence, and li
 | condition | artifacts | trace markers | risky moves | summary |
 |---|---|---|---|---|
 | `no_skill` (31.0) | response_letter_draft.md, revision_plan.md | comment_id, planned_action | writes final response prose, done evidence is missing for several promised changes | Returns a plausible response package, but author cannot verify every promised change before prose appears. |
-| `skill_guided` (95.0) | revision_matrix.csv, revision_trace/, open_author_decisions.md | comment_id, planned_action, confidentiality_status | none | Returns a response scaffold with evidence links and open decisions; done_evidence still depends on actual analysis completion. |
+| `skill_guided` (95.0) | revision_matrix.csv, revision_trace/, open_required_gates.md | comment_id, planned_action, confidentiality_status | none | Returns a response scaffold with evidence links and open gates; done_evidence still depends on actual analysis completion. |

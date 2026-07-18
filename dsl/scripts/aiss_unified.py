@@ -83,6 +83,239 @@ MIDA_COMPONENTS = {
     "report_boundary",
 }
 ROUTE_STATUSES = {"candidate", "selected", "rejected", "blocked"}
+TERMINAL_ROUTE = "last_skill"
+EMPTY_ROUTES = {"", "none"}
+RESOLVED_GATE_STATUSES = {
+    "auto_resolved",
+    "declared",
+    "passed",
+    "redesigned",
+    "rejected",
+    "resolved",
+    "scoped_out",
+}
+STATUS_ACTION_ROUTES: dict[str, tuple[str, ...]] = {
+    "needs_redesign": (TERMINAL_ROUTE,),
+    "needs_data_check": ("public-data-sources", "research-data-builder"),
+    "needs_literature_check": ("literature-matrix",),
+    "needs_methods_review": ("methods-reviewer",),
+    "repair_required": ("study-design-builder", "methods-reviewer"),
+    "blocked": (TERMINAL_ROUTE,),
+}
+ROUTE_REQUIRED_ARTIFACTS: dict[str, tuple[tuple[str, str, str], ...]] = {
+    "research-starter": (
+        ("aiss_route_declarations", ".aiss route declarations", "candidate or selected route state"),
+        ("research_route_cards", "research_route_cards.csv", "human-readable route projection"),
+        ("research_starter_packet", "research_starter_packet.md", "starter handoff packet"),
+    ),
+    "study-design-builder": (
+        ("selected_route", "selected .aiss route", "single selected route"),
+        ("seven_mida_declarations", "seven .aiss MIDA declarations", "complete design spine"),
+        ("decision_declarations", ".aiss decision declarations", "workflow-gated choices"),
+        ("research_model", "research_model.aiss", "canonical research object"),
+        ("aiss_check_report", "ai4ss_check_report.txt", "compile/lint/run evidence"),
+    ),
+    "public-data-sources": (
+        ("source_route", "ranked source route", "observed source acquisition path"),
+        ("access_class", "access class", "source access status"),
+        ("request_template", "request template", "authorized acquisition request when needed"),
+        ("cached_source_artifact", "cached bounded source artifact", "verifiable source payload"),
+        ("source_provenance", "source provenance and checksum", "source traceability"),
+    ),
+    "research-data-builder": (
+        ("analysis_dataset_csv", "analysis_dataset.csv", "machine-readable analysis dataset"),
+        ("analysis_dataset_dta", "analysis_dataset.dta", "Stata analysis dataset export"),
+        ("sample_flow", "sample_flow.csv", "row and unit accounting"),
+        ("merge_audit", "merge_audit.csv", "linkage audit"),
+        ("variable_provenance", "variable_provenance.csv", "variable source and recode provenance"),
+        ("cleaning_contract", "cleaning contract and execution audit", "transformation contract"),
+    ),
+    "literature-matrix": (
+        ("literature_candidate_discovery", "literature_candidate_discovery.csv", "search and screening ledger"),
+        ("literature_matrix", "literature_matrix.csv", "source-grounded extraction matrix"),
+        ("compiled_literature_evidence", "compiled literature/theory .aiss evidence", "model-changing evidence fragment"),
+    ),
+    "research-analysis-runner": (
+        ("analysis_readiness", "analysis_readiness_check.csv", "analysis readiness gate"),
+        ("analysis_scripts", "analysis scripts", "reproducible analysis code"),
+        ("analysis_outputs", "analysis tables, figures, and logs", "first-pass checked outputs"),
+        ("analysis_manifest", "analysis_run_manifest.csv", "design-linked run manifest"),
+    ),
+    "methods-reviewer": (
+        ("methods_issue_table", "methods issue table", "claim-method alignment diagnostics"),
+        ("required_gate_view", "required gate view", "unresolved gate ledger"),
+        ("redesign_options", "redesign options", "repairable design alternatives"),
+    ),
+    "top-journal-figures": (
+        ("figure_spec", "figure spec", "visual contract"),
+        ("plotting_code", "R/ggplot2 plotting code", "reproducible visual generation"),
+        ("figure_path", "figure_path", "rendered figure artifact"),
+        ("visual_integrity_check", "visual-integrity check", "figure audit"),
+    ),
+    "academic-writing-scaffold": (
+        ("claim_ledger", "claim ledger", "bounded claim slots"),
+        ("section_scaffold", "section scaffold", "author-facing section plan"),
+        ("ai_use_ledger", "AI-use ledger", "disclosure and confidentiality gate"),
+        ("full_paper_source", "full paper source", "working paper source assembled from checked research objects"),
+        ("full_paper_pdf", "full_paper.pdf", "final full-paper artifact for the current workflow run"),
+    ),
+    "research-slides-builder": (
+        ("slide_map", "slide map", "presentation claim map"),
+        ("source_map", "source map", "slide evidence traceability"),
+        ("evidence_gaps", "evidence gaps", "presentation boundary"),
+    ),
+    "reviewer-response": (
+        ("revision_matrix", "revision matrix", "reviewer request to evidence map"),
+        ("revision_plan", "revision plan", "bounded revision actions"),
+        ("response_scaffold", "response scaffold", "author-owned response structure"),
+    ),
+    TERMINAL_ROUTE: (
+        ("controller_repair_handoff", "controller repair handoff", "return to the previous owner with concrete gate reasons"),
+        ("redesign_or_gate_packet", "redesign or required-gate packet", "evidence needed before downstream execution"),
+    ),
+}
+PAPER_ARTIFACT_SEQUENCE: tuple[dict[str, str], ...] = (
+    {
+        "slug": "title_research_question",
+        "name": "title and research question",
+        "purpose": "name the paper and stabilize the question the full paper will answer",
+        "required_evidence": "selected .aiss route",
+        "gate": "selected_route",
+    },
+    {
+        "slug": "abstract",
+        "name": "abstract",
+        "purpose": "summarize the completed argument, evidence, result, and boundary",
+        "required_evidence": "near-complete paper sections and bounded results",
+        "gate": "near_complete_paper",
+    },
+    {
+        "slug": "introduction_problem_contribution",
+        "name": "introduction problem and contribution",
+        "purpose": "state the puzzle, contribution, scope, and bounded claim in paper form",
+        "required_evidence": "route, inquiry, and report boundary",
+        "gate": "report_boundary",
+    },
+    {
+        "slug": "theory_literature_section",
+        "name": "theory and literature section",
+        "purpose": "connect source-grounded literature evidence to concepts, claims, and rivals",
+        "required_evidence": "literature source, claim, or compiled evidence artifact",
+        "gate": "literature_evidence",
+    },
+    {
+        "slug": "research_design_section",
+        "name": "research design section",
+        "purpose": "explain units, inquiry, model, assumptions, and design choices",
+        "required_evidence": "complete MIDA declarations and model/check declarations",
+        "gate": "design_model",
+    },
+    {
+        "slug": "data_sample_section",
+        "name": "data and sample section",
+        "purpose": "document observed sources, sample construction, linkage, and provenance",
+        "required_evidence": "real observed public source cache plus analysis_dataset.csv and analysis_dataset.dta",
+        "gate": "data_artifact",
+    },
+    {
+        "slug": "methods_identification_section",
+        "name": "methods and identification section",
+        "purpose": "state estimator or answer strategy, bridge diagnostics, and identifying limits",
+        "required_evidence": "analysis readiness, bridges, and model diagnostics",
+        "gate": "analysis_readiness",
+    },
+    {
+        "slug": "results_section",
+        "name": "results section",
+        "purpose": "present checked tables, figures, and interpretation boundaries",
+        "required_evidence": "analysis manifest or result artifact linked to the design",
+        "gate": "analysis_manifest",
+    },
+    {
+        "slug": "robustness_diagnostics_section",
+        "name": "robustness and diagnostics section",
+        "purpose": "report robustness checks, method-review issues, and redesign outcomes",
+        "required_evidence": "methods review artifact, robustness artifact, or resolved diagnostic gates",
+        "gate": "methods_review",
+    },
+    {
+        "slug": "discussion_section",
+        "name": "discussion section",
+        "purpose": "interpret the checked findings without exceeding the report boundary",
+        "required_evidence": "results, diagnostics, and bounded claim boundary",
+        "gate": "results_and_claims",
+    },
+    {
+        "slug": "conclusion_section",
+        "name": "conclusion section",
+        "purpose": "close the paper with scoped implications and remaining gates",
+        "required_evidence": "discussion section and claim boundary",
+        "gate": "discussion_ready",
+    },
+    {
+        "slug": "figures_tables_bundle",
+        "name": "figures and tables bundle",
+        "purpose": "bind publication figures and tables to source notes and visual checks",
+        "required_evidence": "figure/table artifacts with visual-integrity or source notes",
+        "gate": "figures_tables",
+    },
+    {
+        "slug": "references_bibliography",
+        "name": "references and bibliography",
+        "purpose": "list the sources used by claims, data, and methods",
+        "required_evidence": "source declarations and citation/provenance ledger",
+        "gate": "source_bibliography",
+    },
+    {
+        "slug": "full_paper_source",
+        "name": "full paper source",
+        "purpose": "assemble the paper sections, figures, tables, and references",
+        "required_evidence": "all required paper section artifacts",
+        "gate": "all_sections_ready",
+    },
+    {
+        "slug": "full_paper_pdf",
+        "name": "full_paper.pdf",
+        "purpose": "render the completed full paper artifact",
+        "required_evidence": "full paper source plus passing report gates",
+        "gate": "full_paper_rendered",
+    },
+)
+PAPER_ARTIFACT_HINTS: dict[str, tuple[str, ...]] = {
+    "title_research_question": ("paper_title", "research_question", "title_research_question"),
+    "abstract": ("abstract", "abstract_section"),
+    "introduction_problem_contribution": ("introduction_section", "intro_section", "problem_contribution"),
+    "theory_literature_section": ("theory_section", "literature_section", "theory_literature"),
+    "research_design_section": ("research_design_section", "design_section"),
+    "data_sample_section": ("data_sample_section", "sample_section", "data_section"),
+    "methods_identification_section": ("methods_section", "identification_section"),
+    "results_section": ("results_section", "main_results_section"),
+    "robustness_diagnostics_section": ("robustness_section", "diagnostics_section"),
+    "discussion_section": ("discussion_section",),
+    "conclusion_section": ("conclusion_section",),
+    "figures_tables_bundle": ("figures_tables", "figure_bundle", "table_bundle"),
+    "references_bibliography": ("references", "bibliography"),
+    "full_paper_source": ("full_paper_source", "paper.tex", "manuscript.tex", "full_paper.md"),
+    "full_paper_pdf": ("full_paper.pdf", "full_paper_pdf", "full paper pdf"),
+}
+DEFERRED_PAPER_ARTIFACT_SLUGS = {"abstract", "full_paper_source", "full_paper_pdf"}
+PAPER_GATE_ACTION_ROUTES: dict[str, tuple[str, ...]] = {
+    "selected_route": ("research-starter",),
+    "near_complete_paper": ("academic-writing-scaffold",),
+    "report_boundary": ("study-design-builder",),
+    "literature_evidence": ("literature-matrix",),
+    "design_model": ("study-design-builder",),
+    "data_artifact": ("public-data-sources", "research-data-builder"),
+    "analysis_readiness": ("research-analysis-runner",),
+    "analysis_manifest": ("research-analysis-runner",),
+    "methods_review": ("methods-reviewer",),
+    "results_and_claims": ("research-analysis-runner",),
+    "discussion_ready": ("academic-writing-scaffold",),
+    "figures_tables": ("top-journal-figures",),
+    "source_bibliography": ("literature-matrix", "academic-writing-scaffold"),
+    "all_sections_ready": ("academic-writing-scaffold",),
+    "full_paper_rendered": ("academic-writing-scaffold",),
+}
 
 REQUIRED_FIELDS: dict[str, tuple[str, ...]] = {
     "paper": ("title", "kind", "sources"),
@@ -946,8 +1179,8 @@ def lint_ast(ast: dict[str, Any], *, strict: bool | None = None) -> dict[str, An
         status = str(route.get("status", ""))
         if status not in ROUTE_STATUSES:
             diag("AISS-WF-001", "warning", route["id"], f"route status should be one of {sorted(ROUTE_STATUSES)}, got {status!r}")
-        if status == "selected" and route.get("next_skill_route") == "ask_author":
-            diag("AISS-WF-002", "warning", route["id"], "selected route still routes to ask_author")
+        if status == "selected" and route.get("next_skill_route") == "last_skill":
+            diag("AISS-WF-002", "warning", route["id"], "selected route still routes to last_skill")
 
     mida_by_route: dict[str, set[str]] = {}
     for row in [r for r in records if record_decl_type(r) == "mida"]:
@@ -1163,13 +1396,647 @@ def compute_workflow_diagnostics(ast: dict[str, Any]) -> dict[str, Any]:
         "selected_routes": selected_routes,
         "route_profiles": sorted(route_profiles, key=lambda item: item["route_id"]),
         "decision_counts": canonicalize(decision_counts),
-        "author_decisions_open": sum(
+        "required_gates_open": sum(
             1
             for decision in decisions
-            if str(decision.get("owner", "")).casefold() == "author"
+            if str(decision.get("owner", "")).casefold() == "workflow"
             and str(decision.get("status", "")).casefold() not in {"resolved", "rejected"}
         ),
     }
+
+
+def compute_paper_artifact_state(ast: dict[str, Any], *, selected_route_id: str = "") -> dict[str, Any]:
+    records = all_records(ast)
+    artifacts = [record for record in records if record_decl_type(record) == "artifact"]
+    sources = [record for record in records if record_decl_type(record) == "source"]
+    claims = [record for record in records if record_decl_type(record) == "claim"]
+    empirical = [record for record in records if record_decl_type(record) == "empirical"]
+    models = ast.get("models", []) if isinstance(ast.get("models", []), list) else []
+    checks = ast.get("checks", []) if isinstance(ast.get("checks", []), list) else []
+    workflow = ast.get("workflow", {})
+    if not isinstance(workflow, dict):
+        workflow = {}
+    mida_rows = workflow.get("mida", []) if isinstance(workflow.get("mida", []), list) else []
+
+    mida_for_route = [row for row in mida_rows if str(row.get("route", "")) == selected_route_id]
+    mida_components = {str(row.get("component", "")) for row in mida_for_route}
+    report_boundary_declared = "report_boundary" in mida_components
+    complete_mida_declared = bool(selected_route_id) and not (MIDA_COMPONENTS - mida_components)
+
+    paper_artifact_ids_by_slug: dict[str, list[str]] = {}
+    for item in PAPER_ARTIFACT_SEQUENCE:
+        slug = item["slug"]
+        paper_artifact_ids_by_slug[slug] = [
+            str(artifact.get("id"))
+            for artifact in artifacts
+            if artifact_matches_paper_slug(artifact, slug)
+        ]
+
+    def has_artifact_slug(slug: str) -> bool:
+        return bool(paper_artifact_ids_by_slug.get(slug))
+
+    def any_artifact_matches(*needles: str) -> bool:
+        lowered_needles = tuple(needle.casefold() for needle in needles)
+        return any(
+            any(needle in artifact_search_text(artifact) for needle in lowered_needles)
+            for artifact in artifacts
+        )
+
+    def artifact_kind_text(record: dict[str, Any]) -> str:
+        return " ".join(
+            str(record.get(key, ""))
+            for key in ("id", "kind", "uri", "media_type")
+            if record.get(key) is not None
+        ).casefold()
+
+    def has_artifact_kind(*needles: str) -> bool:
+        lowered_needles = tuple(needle.casefold() for needle in needles)
+        return any(
+            any(needle in artifact_kind_text(artifact) for needle in lowered_needles)
+            for artifact in artifacts
+        )
+
+    def has_machine_source_payload() -> bool:
+        source_kinds = ("cached_source_artifact", "source_payload", "public_source_cache")
+        data_suffixes = (".csv", ".json", ".jsonl", ".xml", ".zip", ".dta", ".parquet")
+        for artifact in artifacts:
+            kind_text = artifact_kind_text(artifact)
+            if not any(kind in kind_text for kind in source_kinds):
+                continue
+            uri = str(artifact.get("uri", "")).casefold()
+            media_type = str(artifact.get("media_type", "")).casefold()
+            if uri.endswith(data_suffixes) or media_type in {
+                "application/json",
+                "application/jsonl",
+                "application/x-ndjson",
+                "text/csv",
+                "application/zip",
+                "application/x-stata",
+                "application/vnd.stata.dta",
+            }:
+                return True
+        return False
+
+    def has_analysis_dataset_csv() -> bool:
+        for artifact in artifacts:
+            kind_text = artifact_kind_text(artifact)
+            if "analysis_dataset" not in kind_text:
+                continue
+            uri = str(artifact.get("uri", "")).casefold()
+            media_type = str(artifact.get("media_type", "")).casefold()
+            if uri.endswith(".csv") or media_type == "text/csv":
+                return True
+        return False
+
+    def has_analysis_dataset_dta() -> bool:
+        for artifact in artifacts:
+            kind_text = artifact_kind_text(artifact)
+            if "analysis_dataset" not in kind_text:
+                continue
+            uri = str(artifact.get("uri", "")).casefold()
+            media_type = str(artifact.get("media_type", "")).casefold()
+            if uri.endswith(".dta") or media_type in {"application/x-stata", "application/vnd.stata.dta"}:
+                return True
+        return False
+
+    empirical_artifact_bound = any(coerce_list(record.get("artifacts", [])) for record in empirical)
+    literature_evidence = bool(
+        claims
+        or any("literature" in artifact_search_text(source) for source in sources)
+        or any_artifact_matches("literature_matrix", "compiled_literature", "theory_evidence")
+    )
+    data_artifact = bool(
+        empirical_artifact_bound
+        or (
+            has_artifact_kind("source_route")
+            and has_artifact_kind("access_class")
+            and has_artifact_kind("source_provenance")
+            and has_machine_source_payload()
+            and has_analysis_dataset_csv()
+            and has_analysis_dataset_dta()
+            and has_artifact_kind("sample_flow")
+            and has_artifact_kind("variable_provenance")
+        )
+    )
+    analysis_readiness = any_artifact_matches("analysis_readiness", "readiness_check")
+    analysis_manifest = any_artifact_matches("analysis_manifest", "analysis_run_manifest", "results_table", "result_artifact")
+    methods_review = any_artifact_matches("methods_issue", "methods_review", "robustness", "diagnostic")
+    figures_tables = any_artifact_matches("figure", "table", "visual_integrity")
+    source_bibliography = bool(sources or any_artifact_matches("references", "bibliography"))
+
+    present_slugs = {slug for slug, ids in paper_artifact_ids_by_slug.items() if ids}
+    nonfinal_slugs = {
+        item["slug"]
+        for item in PAPER_ARTIFACT_SEQUENCE
+        if item["slug"] not in {"full_paper_source", "full_paper_pdf"}
+    }
+    body_slugs = nonfinal_slugs - {"abstract", "title_research_question"}
+
+    gate_satisfied = {
+        "selected_route": bool(selected_route_id),
+        "near_complete_paper": body_slugs <= present_slugs,
+        "report_boundary": report_boundary_declared,
+        "literature_evidence": literature_evidence,
+        "design_model": complete_mida_declared and bool(models) and bool(checks),
+        "data_artifact": data_artifact,
+        "analysis_readiness": analysis_readiness,
+        "analysis_manifest": analysis_manifest,
+        "methods_review": methods_review,
+        "results_and_claims": has_artifact_slug("results_section"),
+        "discussion_ready": has_artifact_slug("discussion_section"),
+        "figures_tables": figures_tables,
+        "source_bibliography": source_bibliography,
+        "all_sections_ready": nonfinal_slugs <= present_slugs,
+        "full_paper_rendered": has_artifact_slug("full_paper_source"),
+    }
+
+    items: list[dict[str, Any]] = []
+    gaps: list[dict[str, Any]] = []
+    for index, item in enumerate(PAPER_ARTIFACT_SEQUENCE, start=1):
+        slug = item["slug"]
+        artifact_ids = sorted_ids(paper_artifact_ids_by_slug.get(slug, []))
+        gate = item["gate"]
+        present = bool(artifact_ids)
+        gate_ok = bool(gate_satisfied.get(gate, False))
+        if present and not gate_ok:
+            status = "present_blocked"
+        elif present:
+            status = "present"
+        elif gate_ok:
+            status = "missing_ready_to_write"
+        else:
+            status = "missing_blocked"
+        row = {
+            "artifact_slug": slug,
+            "artifact_name": item["name"],
+            "artifact_ids": artifact_ids,
+            "gate": gate,
+            "gate_satisfied": gate_ok,
+            "order": index,
+            "purpose": item["purpose"],
+            "required_evidence": item["required_evidence"],
+            "status": status,
+        }
+        items.append(row)
+        if not present:
+            gaps.append(row)
+
+    actionable_items = [
+        row
+        for row in items
+        if row["status"] in {"missing_ready_to_write", "missing_blocked", "present_blocked"}
+        if row["artifact_slug"] not in DEFERRED_PAPER_ARTIFACT_SLUGS
+    ]
+    next_artifact = actionable_items[0] if actionable_items else (gaps[0] if gaps else None)
+    full_paper_pdf_present = has_artifact_slug("full_paper_pdf")
+    full_paper_source_present = has_artifact_slug("full_paper_source")
+
+    return canonicalize({
+        "schema": "aiss.paper_artifact_state.v0.4",
+        "target_artifact": "full_paper.pdf",
+        "full_paper_present": full_paper_pdf_present,
+        "full_paper_source_present": full_paper_source_present,
+        "all_paper_artifacts_present": not gaps,
+        "gate_satisfied": gate_satisfied,
+        "items": items,
+        "gaps": gaps,
+        "next_paper_artifact": next_artifact,
+    })
+
+
+def artifact_search_text(record: dict[str, Any]) -> str:
+    parts: list[str] = []
+    for key in ("id", "decl_type", "kind", "uri", "media_type", "label", "name", "title", "text", "description"):
+        value = record.get(key)
+        if value is not None:
+            parts.append(str(value))
+    return " ".join(parts).casefold()
+
+
+def artifact_matches_paper_slug(record: dict[str, Any], slug: str) -> bool:
+    text = artifact_search_text(record)
+    return any(hint.casefold() in text for hint in PAPER_ARTIFACT_HINTS.get(slug, (slug,)))
+
+
+def compute_transition_plan(ast: dict[str, Any], *, strict: bool | None = None) -> dict[str, Any]:
+    """Compute deterministic workflow transitions from the current AISS state."""
+
+    lint_report = lint_ast(ast, strict=strict)
+    workflow_diagnostics = compute_workflow_diagnostics(ast)
+    model_diagnostics = compute_model_diagnostics(ast)
+    workflow = ast.get("workflow", {})
+    if not isinstance(workflow, dict):
+        workflow = {}
+
+    routes = workflow.get("routes", []) if isinstance(workflow.get("routes", []), list) else []
+    mida_rows = workflow.get("mida", []) if isinstance(workflow.get("mida", []), list) else []
+    decisions = workflow.get("decisions", []) if isinstance(workflow.get("decisions", []), list) else []
+    models = ast.get("models", []) if isinstance(ast.get("models", []), list) else []
+    checks = ast.get("checks", []) if isinstance(ast.get("checks", []), list) else []
+
+    selected_routes = [route for route in routes if route.get("status") == "selected"]
+    selected_route = selected_routes[0] if len(selected_routes) == 1 else None
+    selected_route_id = str(selected_route.get("id", "")) if selected_route else ""
+    paper_artifact_state = compute_paper_artifact_state(ast, selected_route_id=selected_route_id)
+
+    artifact_map: dict[str, dict[str, Any]] = {}
+    blocked_map: dict[str, dict[str, Any]] = {}
+
+    def add_artifact(
+        route_id: str,
+        next_skill_route: str,
+        slug: str,
+        name: str,
+        purpose: str,
+        reason: str,
+        *,
+        blocking: bool = False,
+        source_ids: list[str] | None = None,
+    ) -> str:
+        scope = route_id or "workflow"
+        artifact_id = f"{scope}:{next_skill_route}:{slug}"
+        existing = artifact_map.get(artifact_id)
+        if existing is None:
+            artifact_map[artifact_id] = {
+                "artifact_id": artifact_id,
+                "blocking": blocking,
+                "name": name,
+                "next_skill_route": next_skill_route,
+                "producer": next_skill_route,
+                "purpose": purpose,
+                "reason": reason,
+                "route_id": route_id,
+                "source_ids": sorted_ids(source_ids or []),
+            }
+        else:
+            existing["blocking"] = bool(existing.get("blocking")) or blocking
+            existing["source_ids"] = sorted_ids(
+                list(set(coerce_list(existing.get("source_ids", []))) | set(source_ids or []))
+            )
+        return artifact_id
+
+    def add_required_artifacts_for_route(
+        route_id: str,
+        next_skill_route: str,
+        reason: str,
+        *,
+        blocking: bool = False,
+        source_ids: list[str] | None = None,
+    ) -> list[str]:
+        return [
+            add_artifact(
+                route_id,
+                next_skill_route,
+                slug,
+                name,
+                purpose,
+                reason,
+                blocking=blocking,
+                source_ids=source_ids,
+            )
+            for slug, name, purpose in ROUTE_REQUIRED_ARTIFACTS.get(next_skill_route, ())
+        ]
+
+    def add_blocked(
+        code: str,
+        message: str,
+        *,
+        route_id: str = "",
+        record_id: str = "",
+        severity: str = "blocker",
+        blocks: list[str] | None = None,
+        evidence: dict[str, Any] | None = None,
+    ) -> None:
+        key = f"{code}:{route_id}:{record_id}:{message}"
+        blocked_map[key] = {
+            "blocks": sorted_ids(blocks or ["downstream_execution"]),
+            "code": code,
+            "evidence": canonicalize(evidence or {}),
+            "message": message,
+            "record_id": record_id,
+            "route_id": route_id,
+            "severity": severity,
+        }
+
+    def add_gate_artifacts(
+        next_skill_route: str,
+        reason: str,
+        *,
+        route_id: str = "",
+        source_ids: list[str] | None = None,
+        blocking_artifacts: bool = False,
+    ) -> None:
+        source_ids = sorted_ids(source_ids or [])
+        add_required_artifacts_for_route(
+            route_id,
+            next_skill_route,
+            reason,
+            blocking=blocking_artifacts,
+            source_ids=source_ids,
+        )
+
+    lint_errors = [
+        diagnostic
+        for diagnostic in lint_report.get("diagnostics", [])
+        if isinstance(diagnostic, dict) and diagnostic.get("severity") == "error"
+    ]
+    if lint_errors:
+        add_blocked(
+            "aiss_lint_failed",
+            "The current .aiss object must pass lint before downstream execution.",
+            route_id=selected_route_id,
+            blocks=["all_transitions"],
+            evidence={"diagnostics": lint_errors[:20]},
+        )
+        add_gate_artifacts(
+            "study-design-builder",
+            "Repair missing references, invalid field links, or schema errors in the .aiss research object.",
+            route_id=selected_route_id,
+            source_ids=[str(item.get("primary_id", "")) for item in lint_errors if item.get("primary_id")],
+            blocking_artifacts=True,
+        )
+
+    if not routes:
+        add_blocked(
+            "no_route_declarations",
+            "No .aiss route declaration exists, so the factory has no workflow state to advance.",
+            blocks=["all_transitions"],
+        )
+        add_gate_artifacts(
+            "research-starter",
+            "Create provisional route declarations before design, data, analysis, or reporting work.",
+            blocking_artifacts=True,
+        )
+    elif not selected_routes:
+        add_blocked(
+            "no_selected_route",
+            "No route is selected; a candidate route must be promoted before downstream execution.",
+            blocks=["data", "analysis", "reporting"],
+            evidence={"candidate_routes": [route.get("id") for route in routes if route.get("status") == "candidate"]},
+        )
+        for route in routes:
+            if route.get("status") == "candidate":
+                route_id = str(route.get("id", ""))
+                add_gate_artifacts(
+                    "study-design-builder",
+                    "Select one candidate route and declare the complete MIDA design spine.",
+                    route_id=route_id,
+                    source_ids=[route_id],
+                    blocking_artifacts=True,
+                )
+    elif len(selected_routes) > 1:
+        add_blocked(
+            "multiple_selected_routes",
+            "More than one route is selected; downstream state is ambiguous.",
+            blocks=["data", "analysis", "reporting"],
+            evidence={"selected_routes": [route.get("id") for route in selected_routes]},
+        )
+        add_gate_artifacts(
+            "study-design-builder",
+            "Resolve the route selection to exactly one selected route.",
+            source_ids=[str(route.get("id", "")) for route in selected_routes],
+            blocking_artifacts=True,
+        )
+
+    if selected_route is not None:
+        mida_for_route = [row for row in mida_rows if str(row.get("route", "")) == selected_route_id]
+        components = {str(row.get("component", "")) for row in mida_for_route}
+        missing_components = sorted(MIDA_COMPONENTS - components)
+        if missing_components:
+            add_blocked(
+                "mida_incomplete",
+                "The selected route lacks one or more required MIDA declarations.",
+                route_id=selected_route_id,
+                blocks=["data", "analysis", "reporting"],
+                evidence={"missing_mida_components": missing_components},
+            )
+            add_gate_artifacts(
+                "study-design-builder",
+                "Declare the missing MIDA components for the selected route.",
+                route_id=selected_route_id,
+                source_ids=[selected_route_id],
+                blocking_artifacts=True,
+            )
+
+        if not decisions:
+            add_blocked(
+                "no_decision_declarations",
+                "The selected route has no decision declarations for workflow-gated assumptions or repairs.",
+                route_id=selected_route_id,
+                blocks=["analysis", "reporting"],
+            )
+            add_gate_artifacts(
+                "study-design-builder",
+                "Record workflow-gated choices as first-class .aiss decision declarations.",
+                route_id=selected_route_id,
+                source_ids=[selected_route_id],
+                blocking_artifacts=True,
+            )
+
+        if not models or not checks:
+            add_blocked(
+                "model_checks_missing",
+                "The selected route needs model and check declarations before analysis readiness can be consumed.",
+                route_id=selected_route_id,
+                blocks=["analysis", "reporting"],
+                evidence={"models": [model.get("id") for model in models], "checks": [check.get("id") for check in checks]},
+            )
+            add_gate_artifacts(
+                "study-design-builder",
+                "Add model/check declarations and rerun the local AISS checks.",
+                route_id=selected_route_id,
+                source_ids=[selected_route_id],
+                blocking_artifacts=True,
+            )
+
+        open_gate_ids: list[str] = []
+        for decision in decisions:
+            status = str(decision.get("status", ""))
+            owner = str(decision.get("owner", ""))
+            route_id = str(decision.get("route", ""))
+            if route_id and route_id != selected_route_id:
+                add_blocked(
+                    "decision_route_mismatch",
+                    "A decision declaration points away from the selected route.",
+                    route_id=selected_route_id,
+                    record_id=str(decision.get("id", "")),
+                    blocks=["data", "analysis", "reporting"],
+                    evidence={"decision_route": route_id},
+                )
+                continue
+            if owner == "workflow" and status not in RESOLVED_GATE_STATUSES:
+                decision_id = str(decision.get("id", ""))
+                open_gate_ids.append(decision_id)
+                next_route = str(decision.get("next_skill_route", "")) or TERMINAL_ROUTE
+                if next_route in EMPTY_ROUTES:
+                    next_route = TERMINAL_ROUTE
+                add_blocked(
+                    "open_workflow_gate",
+                    "A workflow-owned decision gate must be resolved before ordinary downstream execution.",
+                    route_id=selected_route_id,
+                    record_id=decision_id,
+                    blocks=["ordinary_downstream_execution"],
+                    evidence={
+                        "component": decision.get("component"),
+                        "next_skill_route": next_route,
+                        "owner": owner,
+                        "status": status,
+                    },
+                )
+                add_gate_artifacts(
+                    next_route,
+                    f"Resolve workflow gate {decision_id} before advancing the selected route.",
+                    route_id=selected_route_id,
+                    source_ids=[decision_id],
+                    blocking_artifacts=True,
+                )
+
+        for row in mida_for_route:
+            status = str(row.get("status", ""))
+            if status in RESOLVED_GATE_STATUSES:
+                continue
+            for next_route in STATUS_ACTION_ROUTES.get(status, ()):
+                if open_gate_ids and next_route != TERMINAL_ROUTE:
+                    continue
+                row_id = str(row.get("id", ""))
+                add_gate_artifacts(
+                    next_route,
+                    f"Satisfy {status} status on MIDA component {row.get('component')}.",
+                    route_id=selected_route_id,
+                    source_ids=[row_id],
+                    blocking_artifacts=status in {"blocked", "repair_required"},
+                )
+
+        if not open_gate_ids and not missing_components and not lint_errors:
+            selected_next_route = str(selected_route.get("next_skill_route", ""))
+            if selected_next_route in EMPTY_ROUTES:
+                add_blocked(
+                    "selected_route_has_no_downstream_consumer",
+                    "The selected route must name a downstream consumer or a repair route.",
+                    route_id=selected_route_id,
+                    record_id=selected_route_id,
+                    blocks=["downstream_execution"],
+                    evidence={"next_skill_route": selected_next_route},
+                )
+                add_gate_artifacts(
+                    "study-design-builder",
+                    "Assign a downstream route or repair route for the selected route.",
+                    route_id=selected_route_id,
+                    source_ids=[selected_route_id],
+                    blocking_artifacts=True,
+                )
+            elif selected_next_route == TERMINAL_ROUTE:
+                add_gate_artifacts(
+                    TERMINAL_ROUTE,
+                    "Return to the previous workflow owner with concrete redesign or gate reasons.",
+                    route_id=selected_route_id,
+                    source_ids=[selected_route_id],
+                    blocking_artifacts=True,
+                )
+            else:
+                add_gate_artifacts(
+                    selected_next_route,
+                    "Advance the selected route to its declared downstream consumer.",
+                    route_id=selected_route_id,
+                    source_ids=[selected_route_id],
+                )
+
+    for diagnosand in model_diagnostics.get("diagnosands", []):
+        if not isinstance(diagnosand, dict):
+            continue
+        gaps = set(str(gap) for gap in coerce_list(diagnosand.get("gaps", [])))
+        causal_id = str(diagnosand.get("causal_id", ""))
+        if {"no_bridge", "no_estimand", "declared_unchecked"} & gaps:
+            add_blocked(
+                "model_bridge_gap",
+                "A causal diagnosand lacks the bridge, estimand, or commensurability state needed for analysis/reporting.",
+                route_id=selected_route_id,
+                record_id=causal_id,
+                severity="warning",
+                blocks=["analysis", "reporting"],
+                evidence={"gaps": sorted(gaps), "declared": diagnosand.get("declared")},
+            )
+            add_gate_artifacts(
+                "study-design-builder",
+                "Declare or repair empirical bridge, estimand, and commensurability fields.",
+                route_id=selected_route_id,
+                source_ids=[causal_id],
+                blocking_artifacts=True,
+            )
+
+    next_paper_artifact = paper_artifact_state.get("next_paper_artifact")
+    if isinstance(next_paper_artifact, dict) and next_paper_artifact.get("status") in {"missing_blocked", "present_blocked"}:
+        artifact_slug = str(next_paper_artifact.get("artifact_slug", ""))
+        gate = str(next_paper_artifact.get("gate", ""))
+        required_evidence = str(next_paper_artifact.get("required_evidence", ""))
+        add_blocked(
+            "paper_artifact_gate_blocked",
+            f"Paper artifact {artifact_slug} is blocked by gate {gate}: requires {required_evidence}.",
+            route_id=selected_route_id,
+            record_id=artifact_slug,
+            blocks=[f"paper_artifact:{artifact_slug}"],
+            evidence={
+                "artifact_slug": artifact_slug,
+                "gate": gate,
+                "required_evidence": required_evidence,
+            },
+        )
+        for next_route in PAPER_GATE_ACTION_ROUTES.get(gate, ("academic-writing-scaffold",)):
+            add_gate_artifacts(
+                next_route,
+                f"Unblock paper artifact {artifact_slug} by satisfying gate {gate}.",
+                route_id=selected_route_id,
+                source_ids=[selected_route_id] if selected_route_id else [],
+                blocking_artifacts=True,
+            )
+
+    required_artifacts = sorted(
+        artifact_map.values(),
+        key=lambda item: (str(item.get("next_skill_route", "")), str(item.get("artifact_id", ""))),
+    )
+    blocked_reasons = sorted(
+        blocked_map.values(),
+        key=lambda item: (str(item.get("severity", "")), str(item.get("code", "")), str(item.get("record_id", ""))),
+    )
+    paper_complete = bool(paper_artifact_state.get("all_paper_artifacts_present"))
+    if paper_complete and not blocked_reasons:
+        required_artifacts = []
+    terminal = paper_complete and not blocked_reasons
+    full_paper_goal = {
+        "target_artifact": "full_paper.pdf",
+        "completed": terminal,
+        "terminal_conditions": [
+            {
+                "condition": "all_paper_artifacts_present",
+                "satisfied": bool(paper_artifact_state.get("all_paper_artifacts_present")),
+            },
+            {
+                "condition": "full_paper_pdf_present",
+                "satisfied": bool(paper_artifact_state.get("full_paper_present")),
+            },
+            {
+                "condition": "no_blocked_reasons",
+                "satisfied": not blocked_reasons,
+            },
+        ],
+    }
+
+    return canonicalize({
+        "schema": "aiss.transition_plan.v0.4",
+        "ast_hash": ast_hash(ast),
+        "current_state": {
+            "lint_ok": bool(lint_report.get("ok")),
+            "model_diagnostics": model_diagnostics,
+            "paper_artifact_state": paper_artifact_state,
+            "workflow_diagnostics": workflow_diagnostics,
+        },
+        "full_paper_goal": full_paper_goal,
+        "next_paper_artifact": paper_artifact_state.get("next_paper_artifact"),
+        "paper_artifact_gaps": paper_artifact_state.get("gaps", []),
+        "required_artifacts": required_artifacts,
+        "blocked_reasons": blocked_reasons,
+        "terminal": terminal,
+    })
 
 
 def run_ast(ast: dict[str, Any], *, adapter_lock_path: str | Path | None = None) -> dict[str, Any]:
@@ -1610,6 +2477,10 @@ def main(argv: list[str] | None = None) -> int:
     run_p.add_argument("input")
     run_p.add_argument("--adapters")
 
+    transition_p = sub.add_parser("transition")
+    transition_p.add_argument("input")
+    transition_p.add_argument("--strict", action="store_true")
+
     code_p = sub.add_parser("emit-code")
     code_p.add_argument("input")
     code_p.add_argument("--target", default="python")
@@ -1634,6 +2505,9 @@ def main(argv: list[str] | None = None) -> int:
         elif args.command == "run":
             ast = load_ast_or_compile(args.input)
             print(canonical_json(run_ast(ast, adapter_lock_path=args.adapters)), end="")
+        elif args.command == "transition":
+            ast = load_ast_or_compile(args.input, strict=args.strict)
+            print(canonical_json(compute_transition_plan(ast, strict=args.strict)), end="")
         elif args.command == "emit-code":
             ast = load_ast_or_compile(args.input)
             manifest = emit_code_manifest(ast, target=args.target)

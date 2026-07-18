@@ -31,7 +31,7 @@ The grading dimensions and weights are preregistered before unblinding:
 - traceability: 20 points
 - boundary: 20 points
 - validation: 15 points
-- author_decision: 15 points
+- required_gate: 15 points
 
 ## Human Grading
 

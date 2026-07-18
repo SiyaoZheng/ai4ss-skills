@@ -118,7 +118,7 @@ def parse_evidence_table(text: str) -> dict[str, Any]:
                 current_entity = {"id": _extract_id(entity_name), "question": "", "status": "candidate",
                                   "study_type": "theory_mapping", "unit_of_analysis": "",
                                   "inquiry": "", "data_strategy": "", "answer_strategy": "",
-                                  "stop_reason": "", "next_skill_route": "ask_author",
+                                  "stop_reason": "", "next_skill_route": "last_skill",
                                   "candidate_concepts": []}
                 result["routes"].append(current_entity)
             elif current_section == "MIDA":
@@ -128,8 +128,8 @@ def parse_evidence_table(text: str) -> dict[str, Any]:
                 result["mida"].append(current_entity)
             elif current_section == "Decisions":
                 current_entity = {"id": _extract_id(entity_name), "route": "", "component": "",
-                                  "decision": "", "status": "needs_author_decision",
-                                  "owner": "author", "next_skill_route": "ask_author",
+                                  "decision": "", "status": "needs_redesign",
+                                  "owner": "workflow", "next_skill_route": "last_skill",
                                   "causal": []}
                 result["decisions"].append(current_entity)
             collecting_table = False
@@ -313,7 +313,7 @@ def compile_to_aiss(evidence: dict) -> str:
             _emit(f"  data_strategy: {_quote(route.get('data_strategy', ''))}")
             _emit(f"  answer_strategy: {_quote(route.get('answer_strategy', ''))}")
             _emit(f"  stop_reason: {_quote(route.get('stop_reason', ''))}")
-            _emit(f"  next_skill_route: {route.get('next_skill_route', 'ask_author')}")
+            _emit(f"  next_skill_route: {route.get('next_skill_route', 'last_skill')}")
             candidate_concepts = route.get("candidate_concepts", [])
             if candidate_concepts:
                 _emit(f"  candidate_concepts: {json.dumps(candidate_concepts)}")
@@ -342,9 +342,9 @@ def compile_to_aiss(evidence: dict) -> str:
             _emit(f"  route: {decision.get('route', '')}")
             _emit(f"  component: {decision.get('component', '')}")
             _emit(f"  decision: {_quote(decision.get('decision', ''))}")
-            _emit(f"  status: {decision.get('status', 'needs_author_decision')}")
-            _emit(f"  owner: {decision.get('owner', 'author')}")
-            _emit(f"  next_skill_route: {decision.get('next_skill_route', 'ask_author')}")
+            _emit(f"  status: {decision.get('status', 'needs_redesign')}")
+            _emit(f"  owner: {decision.get('owner', 'workflow')}")
+            _emit(f"  next_skill_route: {decision.get('next_skill_route', 'last_skill')}")
             causal = decision.get("causal", [])
             if causal:
                 _emit(f"  causal: {json.dumps(causal)}")
@@ -677,7 +677,7 @@ EVIDENCE_TEMPLATE = """## Paper Metadata
 - **data_strategy**: ...
 - **answer_strategy**: ...
 - **stop_reason**: ...
-- **next_skill_route**: ask_author
+- **next_skill_route**: last_skill
 - **candidate_concepts**: {author}.c1, {author}.c2
 
 ## MIDA
@@ -696,9 +696,9 @@ EVIDENCE_TEMPLATE = """## Paper Metadata
 - **route**: {author}.route_r1
 - **component**: model
 - **decision**: ...
-- **status**: needs_author_decision
-- **owner**: author
-- **next_skill_route**: ask_author
+- **status**: needs_redesign
+- **owner**: workflow
+- **next_skill_route**: last_skill
 - **causal**: {author}.causal1
 """
 

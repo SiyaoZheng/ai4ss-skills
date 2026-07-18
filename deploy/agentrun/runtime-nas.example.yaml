@@ -1,0 +1,66 @@
+apiVersion: agentrun/v1
+kind: AgentRuntime
+metadata:
+  name: ai4ss-skills-codex-harness
+spec:
+  cpu: 2
+  memory: 4096
+  port: 9000
+  diskSize: 10240
+  enableSessionIsolation: true
+  sessionConcurrencyLimitPerInstance: 16
+  sessionIdleTimeoutSeconds: 900
+  credentialName: ai4ss-codex-harness-inbound
+  protocol:
+    type: HTTP
+  healthCheck:
+    httpGetUrl: /readyz
+    initialDelaySeconds: 10
+    periodSeconds: 10
+    timeoutSeconds: 3
+    failureThreshold: 6
+    successThreshold: 1
+  env:
+    CODEX_MODEL_PROVIDER: deepseek
+    CODEX_MODEL: deepseek-v4-flash
+    DEEPSEEK_BASE_URL: https://api.deepseek.com
+    CODEX_DEEPSEEK_RESPONSES_BASE_URL: http://127.0.0.1:9000/internal/deepseek/v1
+    DEEPSEEK_API_KEY_ENV: DEEPSEEK_API_KEY
+    CODEX_PROVIDER_WIRE_API: responses
+    DEEPSEEK_RESPONSES_ADAPTER: "true"
+    DEEPSEEK_THINKING: disabled
+    CODEX_CONFIG_MANAGED: "true"
+    CODEX_MCP_ENABLED: "true"
+    CODEX_MCP_ALIYUN_WEBSEARCH_ENABLED: "true"
+    CODEX_MCP_BRAVE_ENABLED: "false"
+    CODEX_MCP_PERPLEXITY_ENABLED: "false"
+    CODEX_MCP_TAVILY_ENABLED: "false"
+    CODEX_MCP_X_DOCS_ENABLED: "true"
+    CODEX_MCP_XAPI_ENABLED: "false"
+    CODEX_WORKSPACE_SEED: "true"
+    CODEX_SESSION_HOME_ROOT: /mnt/ai4ss-codex/codex-sessions
+    CODEX_WORKSPACE_DIR: /workspace
+    SESSION_IDLE_MS: "900000"
+    MAX_SESSIONS: "16"
+    SESSION_EVENT_BUFFER: "200"
+    ALLOW_UNAUTHENTICATED: "false"
+  nas:
+    userId: 1000
+    groupId: 1000
+    mountPoints:
+      - serverAddr: <nas-server-addr>
+        mountDir: /mnt/ai4ss-codex
+        enableTLS: true
+      # To persist mutable workspace edits instead of only session homes, mount
+      # NAS at /workspace. The entrypoint seeds an empty /workspace from the
+      # image snapshot and does not overwrite when AGENTS.md or skills/ exists.
+      # - serverAddr: <nas-server-addr>
+      #   mountDir: /workspace
+      #   enableTLS: true
+  container:
+    image: registry.cn-hangzhou.aliyuncs.com/<namespace>/ai4ss-skills-codex-harness:<tag>
+    imageRegistryType: CUSTOM
+    registryConfig:
+      auth:
+        userName: <acr-username>
+        password: <acr-password>

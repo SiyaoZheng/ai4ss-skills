@@ -1,0 +1,62 @@
+apiVersion: agentrun/v1
+kind: AgentRuntime
+metadata:
+  name: ai4ss-skills-codex-harness
+spec:
+  cpu: 2
+  memory: 4096
+  port: 9000
+  enableSessionIsolation: true
+  sessionConcurrencyLimitPerInstance: 16
+  sessionIdleTimeoutSeconds: 900
+  # FC execution role used by the custom-container runtime to pull the private
+  # ACR image and write runtime logs. render_runtime.mjs fills <account-id> from
+  # AGENTRUN_ACCOUNT_ID, or replace the full value with
+  # AGENTRUN_EXECUTION_ROLE_ARN for a custom least-privilege role.
+  executionRoleArn: acs:ram::<account-id>:role/aliyunfcdefaultrole
+  # AgentRun inbound access credential. This protects the platform endpoint and
+  # is separate from application env secrets such as DEEPSEEK_API_KEY.
+  credentialName: ai4ss-codex-harness-inbound
+  protocol:
+    type: HTTP
+  healthCheck:
+    httpGetUrl: /readyz
+    initialDelaySeconds: 10
+    periodSeconds: 10
+    timeoutSeconds: 3
+    failureThreshold: 6
+    successThreshold: 1
+  env:
+    CODEX_MODEL_PROVIDER: deepseek
+    CODEX_MODEL: deepseek-v4-flash
+    DEEPSEEK_BASE_URL: https://api.deepseek.com
+    CODEX_DEEPSEEK_RESPONSES_BASE_URL: http://127.0.0.1:9000/internal/deepseek/v1
+    DEEPSEEK_API_KEY_ENV: DEEPSEEK_API_KEY
+    CODEX_PROVIDER_WIRE_API: responses
+    DEEPSEEK_RESPONSES_ADAPTER: "true"
+    DEEPSEEK_THINKING: disabled
+    CODEX_CONFIG_MANAGED: "true"
+    CODEX_MCP_ENABLED: "true"
+    CODEX_MCP_ALIYUN_WEBSEARCH_ENABLED: "true"
+    CODEX_MCP_BRAVE_ENABLED: "false"
+    CODEX_MCP_PERPLEXITY_ENABLED: "false"
+    CODEX_MCP_TAVILY_ENABLED: "false"
+    CODEX_MCP_X_DOCS_ENABLED: "true"
+    CODEX_MCP_XAPI_ENABLED: "false"
+    CODEX_WORKSPACE_SEED: "true"
+    CODEX_SESSION_HOME_ROOT: /home/codex/.codex-sessions
+    CODEX_WORKSPACE_DIR: /workspace
+    SESSION_IDLE_MS: "900000"
+    MAX_SESSIONS: "16"
+    SESSION_EVENT_BUFFER: "200"
+    ALLOW_UNAUTHENTICATED: "false"
+  container:
+    image: registry.cn-hangzhou.aliyuncs.com/<namespace>/ai4ss-skills-codex-harness:<tag>
+    # ACR Personal private repositories need custom registry auth for
+    # AgentRun/FC cloud-side pulls. The AgentRun declarative YAML field is
+    # registryConfig.auth; render_runtime.mjs maps it to OpenAPI authConfig.
+    imageRegistryType: CUSTOM
+    registryConfig:
+      auth:
+        userName: <acr-username>
+        password: <acr-password>

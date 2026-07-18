@@ -10,7 +10,7 @@ guess the production condition. No condition labels are provided.
 - `ai4ss_model_check`: 15 points
 - `evidence_data_chain`: 15 points
 - `analysis_loop`: 15 points
-- `boundary_author_decision`: 15 points
+- `boundary_required_gate`: 15 points
 - `end_to_end_continuity`: 10 points
 
 ## Scoring Guidance

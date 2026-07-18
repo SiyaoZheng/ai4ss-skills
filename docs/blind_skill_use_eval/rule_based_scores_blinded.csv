@@ -1,4 +1,4 @@
-packet_id,case_id,artifacts,traceability,boundary,validation,author_decision,total
+packet_id,case_id,artifacts,traceability,boundary,validation,required_gate,total
 P001,data_provenance,30.0,20.0,20.0,15.0,15.0,100.0
 P002,data_provenance,15.0,10.0,6.0,0.0,15.0,46.0
 P003,literature_evidence,10.0,10.0,13.0,0.0,15.0,48.0

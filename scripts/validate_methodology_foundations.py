@@ -24,6 +24,7 @@ EXPECTED_FIELDS = [
 REQUIRED_SKILLS = {
     "research-starter",
     "study-design-builder",
+    "public-data-sources",
     "research-data-builder",
     "literature-matrix",
     "research-analysis-runner",
@@ -47,18 +48,25 @@ ALLOWED_COMPONENTS = {
 REQUIRED_SPINE_TERMS = {
     "research-starter": ("inquiry", "data_strategy", "answer_strategy", "failure_signal"),
     "study-design-builder": ("inquiry", "data_strategy", "answer_strategy", "diagnosands_or_gates"),
+    "public-data-sources": (
+        "source_access_status",
+        "source_artifact_path",
+        "observed_data_only_status",
+        "row_source_provenance",
+    ),
     "research-data-builder": ("measurement", "linkage", "provenance"),
     "literature-matrix": ("source_scope", "screening", "synthesis"),
     "research-analysis-runner": ("design_source", "data_source", "interpretation_boundary"),
     "methods-reviewer": ("inquiry", "data_strategy", "answer_strategy", "overclaim"),
-    "academic-writing-scaffold": ("support level", "interpretation_boundary", "author_decision"),
+    "academic-writing-scaffold": ("support level", "interpretation_boundary", "required_gate"),
     "research-slides-builder": ("source artifact", "privacy", "interpretation_boundary"),
-    "reviewer-response": ("MIDA element", "confidentiality", "author decision"),
+    "reviewer-response": ("MIDA element", "confidentiality", "required gate"),
 }
 
 EXPECTED_ARTIFACTS = {
     "research-starter": ("research_route_cards.csv", "research_model.aiss"),
     "study-design-builder": ("study_design_declaration.csv", "design_decision_register.csv", "research_model.aiss"),
+    "public-data-sources": ("source-registry.md", "discovery-platforms.md", "source_artifact_path"),
     "research-data-builder": ("sample_flow.csv", "merge_audit.csv", "variable_provenance.csv"),
     "literature-matrix": ("literature_candidate_discovery.csv", "literature_matrix.csv", "literature_theory_synthesis.csv"),
     "research-analysis-runner": ("analysis_readiness_check.csv", "analysis_run_manifest.csv"),
@@ -156,6 +164,36 @@ SCHEMA_REQUIREMENTS = {
             "downstream_skill_route",
         ),
     },
+    "public-data-sources": {
+        "SKILL.md": (
+            "source_access_status",
+            "source_artifact_path",
+            "observed_data_only_status",
+            "row_source_provenance",
+            "next_skill_route",
+        ),
+        "references/source-registry.md": (
+            "public_no_secret",
+            "free_key_required",
+            "download_ingest_only",
+        ),
+        "references/discovery-platforms.md": (
+            "Zenodo",
+            "DataCite",
+            "Dataverse",
+        ),
+        "scripts/build_seed_store.py": (
+            "public_sources.sqlite",
+            "seed_store_report.json",
+            "source_queue",
+            "ingest_runs",
+        ),
+        "scripts/discover_fetchable_sources.py": (
+            "zenodo",
+            "datacite",
+            "dataverse",
+        ),
+    },
     "research-data-builder": {
         "references/audit-schema.md": ("route_id", "design_source", "target_inquiry", "ai4ss_model_path"),
         "scripts/validate_data_audits.py": ("route_id", "design_source", "target_inquiry", "ai4ss_model_path"),
@@ -188,7 +226,7 @@ SCHEMA_REQUIREMENTS = {
             "synthesis_type",
             "source_paper_ids",
             "proposed_aiss_object",
-            "author_decision_needed",
+            "required_gate",
             "actor:",
             "discriminating_observation",
         ),
@@ -212,7 +250,7 @@ SCHEMA_REQUIREMENTS = {
             "synthesis_type",
             "source_paper_ids",
             "proposed_aiss_object",
-            "author_decision_needed",
+            "required_gate",
         ),
         "examples/valid_literature_candidate_discovery.csv": ("route_id", "design_source", "target_inquiry"),
         "examples/valid_literature_matrix.csv": (
@@ -231,7 +269,7 @@ SCHEMA_REQUIREMENTS = {
             "synthesis_type",
             "source_paper_ids",
             "proposed_aiss_object",
-            "author_decision_needed",
+            "required_gate",
         ),
     },
     "research-analysis-runner": {
@@ -308,7 +346,7 @@ SCHEMA_REQUIREMENTS = {
             "theory_rival_map.csv",
             "theory_scope_map.csv",
             "final theory prose",
-            "author writes",
+            "final prose remains outside the agent",
         ),
         "references/theory_workbench.md": (
             "literature_theory_synthesis.csv",
@@ -316,7 +354,7 @@ SCHEMA_REQUIREMENTS = {
             "theory_scope_map.csv",
             "compile_evidence.py",
             "validate_theory_workbench.py",
-            "author must write final prose",
+            "final prose remains outside the agent",
         ),
         "references/claim-audit.md": ("target_inquiry", "interpretation_boundary", "diagnosed_limit"),
         "scripts/validate_claim_ledger.py": ("target_inquiry", "interpretation_boundary", "diagnosed_limit", "ai4ss_model_path"),
@@ -358,7 +396,7 @@ REPO_REQUIREMENTS = {
         "ai4ss_factory_contracts.sidecars",
         "ai4ss_factory_contracts.workflow",
         "ready_for_aiss",
-        "author-owned",
+        "workflow-gated",
     ),
     "dsl/scripts/compile_evidence.py": (
         "Routes",

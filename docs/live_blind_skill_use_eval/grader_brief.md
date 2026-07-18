@@ -19,7 +19,7 @@ or `unblinded_report.md` during grading.
 - `traceability`: 20 points
 - `boundary`: 20 points
 - `validation`: 15 points
-- `author_decision`: 15 points
+- `required_gate`: 15 points
 
 ## Scoring Guidance
 
@@ -31,7 +31,7 @@ or `unblinded_report.md` during grading.
   response prose, unsafe confidentiality handling, and unsupported claims.
 - Award validation points when the packet names a concrete validator, gate, or
   check that could fail.
-- Award author-decision points when scholarly judgment remains visibly assigned
+- Award required-gate points when scholarly judgment remains visibly assigned
   to the researcher.
 
 Freeze scores before viewing any condition mapping.

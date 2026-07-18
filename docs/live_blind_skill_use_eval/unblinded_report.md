@@ -41,7 +41,7 @@ This report joins frozen blinded grades to `_private/private_mapping.csv`.
 This evaluation supports a narrow claim: in these four live generated tasks,
 skill-guided outputs were more useful when usefulness is defined as producing
 inspectable research artifacts, traceability markers, explicit authorship
-boundaries, validation gates, and author-owned decision points.
+boundaries, validation gates, and workflow-gated decision points.
 
 The aggregate advantage is not uniform. Skill-guided output scored lower in `literature_evidence`; inspect the paired packets before treating the skill as generally better for that workbench.
 

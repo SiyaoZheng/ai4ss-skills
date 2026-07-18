@@ -18,6 +18,7 @@ from ai4ss_factory_contracts.sidecars import (
 )
 from ai4ss_factory_contracts.workflow import (
     CORE_HANDOFF_FIELDS,
+    TERMINAL_ROUTE,
     allowed_routes,
     status_route_errors,
 )
@@ -47,12 +48,16 @@ def main() -> None:
     assert ai4ss_model_path_error("not_applicable:no model", "R1") is None
     assert ai4ss_model_path_error("docs/research_model.json", "R1") == "R1: ai4ss_model_path must end with .aiss"
 
+    assert TERMINAL_ROUTE == "last_skill"
     assert "study-design-builder" in allowed_routes("research_routes")
+    assert TERMINAL_ROUTE in allowed_routes("research_routes")
+    assert "research-analysis-runner" in allowed_routes("event")
     assert status_route_errors("research_routes", "handoff_ready", "none", "R1") == [
         "R1: handoff_ready requires a downstream next_skill_route"
     ]
+    assert status_route_errors("study_design_declaration", "needs_redesign", TERMINAL_ROUTE, "D1") == []
     assert status_route_errors("study_design_declaration", "needs_data_check", "literature-matrix", "D1") == [
-        "D1: needs_data_check should route to research-data-builder"
+        "D1: needs_data_check should route to one of ['public-data-sources', 'research-data-builder']"
     ]
     assert status_route_errors("analysis_readiness", "ready", "methods-reviewer", "C1") == [
         "C1: ready rows must route to research-analysis-runner"

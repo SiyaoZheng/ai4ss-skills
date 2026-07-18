@@ -87,6 +87,7 @@ temp/
 /artifacts/
 /qa-reports/
 /worktrees/
+deploy/agentrun/.generated/
 docs/**/qa-reports/
 docs/**/worktrees/
 --output

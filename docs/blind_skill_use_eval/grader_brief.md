@@ -20,7 +20,7 @@ Assign points using the preregistered dimensions:
 - traceability: 20 points
 - boundary: 20 points
 - validation: 15 points
-- author_decision: 15 points
+- required_gate: 15 points
 
 ## Scoring Guidance
 
@@ -28,6 +28,6 @@ Assign points using the preregistered dimensions:
 - Award traceability points when rows, claims, comments, or findings can be traced to source files, logs, locators, or model objects.
 - Award boundary points when the packet avoids final manuscript prose, final response prose, unsafe confidentiality handling, and unsupported scholarly claims.
 - Award validation points when the packet identifies a concrete validator, gate, or check.
-- Award author-decision points when the packet leaves scholarly judgment to the researcher and states what must be decided.
+- Award required-gate points when the packet leaves scholarly judgment to the researcher and states what must be decided.
 
 Freeze scores before seeing any condition mapping.

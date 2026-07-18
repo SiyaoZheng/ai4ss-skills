@@ -23,7 +23,7 @@ class SimulatedOutput:
     artifacts: tuple[str, ...]
     trace_markers: tuple[str, ...]
     validator_refs: tuple[str, ...]
-    author_decisions: tuple[str, ...]
+    required_gates: tuple[str, ...]
     risky_moves: tuple[str, ...]
     summary: str
 
@@ -45,7 +45,7 @@ WEIGHTS = {
     "traceability": 20,
     "boundary": 20,
     "validation": 15,
-    "author_decision": 15,
+    "required_gate": 15,
 }
 
 
@@ -62,7 +62,7 @@ CASES = (
             artifacts=("analysis_panel.csv", "summary_stats.md", "sample_flow.csv", "output/logs/build_panel.log"),
             trace_markers=("row counts", "raw data untouched"),
             validator_refs=(),
-            author_decisions=("ask whether to include controls",),
+            required_gates=("ask whether to include controls",),
             risky_moves=("does not write a merge review file", "variable construction is described only in prose"),
             summary="Returns a usable cleaned dataset and some row-count evidence, but merge ambiguity and variable provenance remain weak.",
         ),
@@ -71,7 +71,7 @@ CASES = (
             artifacts=("sample_flow.csv", "merge_audit.csv", "variable_provenance.csv", "output/logs/build_panel.log"),
             trace_markers=("row counts", "merge unmatched rows", "variable construction rule", "raw data untouched"),
             validator_refs=("validate_data_audits.py sample_flow", "validate_data_audits.py merge_audit"),
-            author_decisions=("decide whether left_only city-years remain in scope",),
+            required_gates=("decide whether left_only city-years remain in scope",),
             risky_moves=(),
             summary="Returns the derived data plus audit sidecars that expose row loss and merge ambiguity.",
         ),
@@ -88,7 +88,7 @@ CASES = (
             artifacts=("literature_matrix.csv", "literature_review_notes.md"),
             trace_markers=("DOI or source URL", "verification_level"),
             validator_refs=(),
-            author_decisions=("ask which papers are central enough for full-text checking",),
+            required_gates=("ask which papers are central enough for full-text checking",),
             risky_moves=("mixes secondary summaries into synthesis",),
             summary="Returns a rough matrix and memo, but source locators and synthesis eligibility are not enforced.",
         ),
@@ -97,7 +97,7 @@ CASES = (
             artifacts=("literature_matrix.csv", "literature_screening_log.md", "source_locators.csv"),
             trace_markers=("DOI or source URL", "claim_source_locator", "verification_level"),
             validator_refs=("validate_literature_matrix.py",),
-            author_decisions=("decide whether abstract-only rows can support a background claim",),
+            required_gates=("decide whether abstract-only rows can support a background claim",),
             risky_moves=(),
             summary="Returns a matrix that mostly separates verified primary sources from unverified or secondary-only evidence; synthesis eligibility still needs spot checking.",
         ),
@@ -106,7 +106,7 @@ CASES = (
         case_id="claim_discipline",
         scholar_question="结果解释有没有说过头？",
         task="Prepare result-section support from table1, event-study figure, and research design notes.",
-        expected_artifacts=("methods_issue_table.csv", "claim_ledger.csv", "author_decision_questions.md"),
+        expected_artifacts=("methods_issue_table.csv", "claim_ledger.csv", "required_gate_questions.md"),
         expected_trace_markers=("estimand", "sample and N", "FE and clustering", "support_level"),
         expected_validators=("validate_issue_table.py", "validate_claim_ledger.py"),
         no_skill=SimulatedOutput(
@@ -114,16 +114,16 @@ CASES = (
             artifacts=("results_paragraph.md", "claim_notes.md"),
             trace_markers=("estimand", "sample and N"),
             validator_refs=(),
-            author_decisions=("ask whether wording is too strong",),
+            required_gates=("ask whether wording is too strong",),
             risky_moves=("writes final manuscript prose", "mechanism evidence is not separated from interpretation"),
             summary="Returns a plausible paragraph plus notes, but it crosses the direct-writing boundary and under-specifies claim strength.",
         ),
         skill_guided=SimulatedOutput(
             condition="skill_guided",
-            artifacts=("methods_issue_table.csv", "claim_ledger.csv", "author_decision_questions.md"),
+            artifacts=("methods_issue_table.csv", "claim_ledger.csv", "required_gate_questions.md"),
             trace_markers=("estimand", "sample and N", "support_level"),
             validator_refs=("validate_issue_table.py", "validate_claim_ledger.py"),
-            author_decisions=("author decides causal language", "author decides whether mechanism claim needs new analysis"),
+            required_gates=("author decides causal language", "author decides whether mechanism claim needs new analysis"),
             risky_moves=(),
             summary="Returns claim slots and risks, leaving final prose and scholarly judgment to the author; FE/cluster still need model-object confirmation.",
         ),
@@ -132,7 +132,7 @@ CASES = (
         case_id="revision_trace",
         scholar_question="返修有没有证据链？",
         task="Process reviewer comments about identification, mechanism evidence, and literature coverage.",
-        expected_artifacts=("revision_matrix.csv", "revision_trace/", "open_author_decisions.md"),
+        expected_artifacts=("revision_matrix.csv", "revision_trace/", "open_required_gates.md"),
         expected_trace_markers=("comment_id", "planned_action", "done_evidence", "confidentiality_status"),
         expected_validators=("validate_revision_matrix.py",),
         no_skill=SimulatedOutput(
@@ -140,18 +140,18 @@ CASES = (
             artifacts=("response_letter_draft.md", "revision_plan.md"),
             trace_markers=("comment_id", "planned_action"),
             validator_refs=(),
-            author_decisions=("ask if tone is acceptable",),
+            required_gates=("ask if tone is acceptable",),
             risky_moves=("writes final response prose", "done evidence is missing for several promised changes"),
             summary="Returns a plausible response package, but author cannot verify every promised change before prose appears.",
         ),
         skill_guided=SimulatedOutput(
             condition="skill_guided",
-            artifacts=("revision_matrix.csv", "revision_trace/", "open_author_decisions.md"),
+            artifacts=("revision_matrix.csv", "revision_trace/", "open_required_gates.md"),
             trace_markers=("comment_id", "planned_action", "confidentiality_status"),
             validator_refs=("validate_revision_matrix.py",),
-            author_decisions=("author decides rebut versus partial accept", "author approves confidential material handling"),
+            required_gates=("author decides rebut versus partial accept", "author approves confidential material handling"),
             risky_moves=(),
-            summary="Returns a response scaffold with evidence links and open decisions; done_evidence still depends on actual analysis completion.",
+            summary="Returns a response scaffold with evidence links and open gates; done_evidence still depends on actual analysis completion.",
         ),
     ),
 )
@@ -169,20 +169,20 @@ def score_output(case: EvalCase, output: SimulatedOutput) -> dict[str, float]:
     trace = coverage_score(output.trace_markers, case.expected_trace_markers)
     validation = coverage_score(output.validator_refs, case.expected_validators)
     boundary = max(0.0, 1.0 - 0.35 * len(output.risky_moves))
-    author_decision = 1.0 if output.author_decisions else 0.0
+    required_gate = 1.0 if output.required_gates else 0.0
     total = (
         artifact * WEIGHTS["artifacts"]
         + trace * WEIGHTS["traceability"]
         + boundary * WEIGHTS["boundary"]
         + validation * WEIGHTS["validation"]
-        + author_decision * WEIGHTS["author_decision"]
+        + required_gate * WEIGHTS["required_gate"]
     )
     return {
         "artifacts": artifact * WEIGHTS["artifacts"],
         "traceability": trace * WEIGHTS["traceability"],
         "boundary": boundary * WEIGHTS["boundary"],
         "validation": validation * WEIGHTS["validation"],
-        "author_decision": author_decision * WEIGHTS["author_decision"],
+        "required_gate": required_gate * WEIGHTS["required_gate"],
         "total": total,
     }
 
@@ -207,7 +207,7 @@ def render_report() -> str:
     lines.append("| traceability | 20 | Can claims or rows be traced to sources, logs, or model objects? |")
     lines.append("| boundary | 20 | Did the agent avoid direct final academic prose or unsafe scholarly moves? |")
     lines.append("| validation | 15 | Did the agent name the relevant validator or gate? |")
-    lines.append("| author_decision | 15 | Did the agent surface decisions the researcher must own? |")
+    lines.append("| required_gate | 15 | Did the agent surface decisions the researcher must own? |")
     lines.append("")
     lines.append("## Results")
     lines.append("")

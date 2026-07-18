@@ -33,7 +33,7 @@ WEIGHTS = {
     "ai4ss_model_check": 15,
     "evidence_data_chain": 15,
     "analysis_loop": 15,
-    "boundary_author_decision": 15,
+    "boundary_required_gate": 15,
     "end_to_end_continuity": 10,
 }
 
@@ -89,11 +89,11 @@ DIMENSION_TERMS = {
         "first-pass table",
         "interpretation_boundary",
     ],
-    "boundary_author_decision": [
+    "boundary_required_gate": [
         "claim_ledger.csv",
         "AI-use ledger",
-        "author decision",
-        "Author should decide",
+        "required gate",
+        "Required gate",
         "Claim boundary",
         "no manuscript prose",
         "no theory-section prose",
@@ -116,7 +116,7 @@ RISK_PENALTIES = {
     "causal claim before readiness": 5,
     "treats checker pass as proof": 6,
     "prose-only handoff": 4,
-    "no author decision": 5,
+    "no required gate": 5,
     "unverified source synthesis": 4,
 }
 
@@ -137,7 +137,7 @@ class FactoryOutput:
     gate_statuses: list[str]
     trace_markers: list[str]
     validator_refs: list[str]
-    author_decisions: list[str]
+    required_gates: list[str]
     risky_moves: list[str]
 
 
@@ -174,7 +174,7 @@ CASES = [
         task=(
             "Turn verified literature evidence into a theory-mapping handoff. The "
             "chain should preserve source paper ids, proposed .aiss objects, rival "
-            "or boundary conditions, observable implications, and author-owned "
+            "or boundary conditions, observable implications, and workflow-gated "
             "decisions without writing theory-section prose."
         ),
     )
@@ -213,8 +213,8 @@ def generic_output() -> FactoryOutput:
         validator_refs=[
             "suggests checking missingness and parallel trends, but names no local validator",
         ],
-        author_decisions=[
-            "Author should decide whether the causal interpretation is credible",
+        required_gates=[
+            "Required gate whether the causal interpretation is credible",
         ],
         risky_moves=[
             "prose-only handoff",
@@ -245,9 +245,9 @@ def factory_output() -> FactoryOutput:
             "ai4ss_check_report.txt",
             "literature_candidate_discovery.csv",
             "literature_matrix.csv with evidence_table_path, compiled_ai4ss_path, evidence_compile_status, model_id, concept_id, causal_id, bridge_id",
-            "literature_theory_synthesis.csv with synthesis_type, source_paper_ids, proposed_aiss_object, evidence_strength, rival_or_boundary, observable_implication, author_decision_needed",
+            "literature_theory_synthesis.csv with synthesis_type, source_paper_ids, proposed_aiss_object, evidence_strength, rival_or_boundary, observable_implication, required_gate",
             "theory_rival_map.csv with rival_id, target_synthesis_id, discriminating_observation, evidence_needed, status, next_skill_route",
-            "theory_scope_map.csv with scope_id, who_where_when, boundary_failure_mode, observable_implication, author_decision_needed, status",
+            "theory_scope_map.csv with scope_id, who_where_when, boundary_failure_mode, observable_implication, required_gate, status",
             "theory_evidence.md compiled through compile_evidence.py into .aiss concept, causal, bridge, model, and decision declarations",
             "sample_flow.csv",
             "merge_audit.csv",
@@ -268,7 +268,7 @@ def factory_output() -> FactoryOutput:
             "G5 pass: literature evidence uses compiled_ai4ss_path and validate_literature_evidence_compile.py",
             "G6 pass: validate_theory_workbench.py checks literature_theory_synthesis.csv, theory_rival_map.csv, theory_scope_map.csv, and theory_evidence.md before model handoff",
             "G7 pass: theory_evidence.md reuses compile_evidence.py and only ready_for_aiss objects can become .aiss concept, causal, bridge, or model declarations",
-            "G8 pass: rival and scope weaknesses route to methods issue_table.csv or author decision rather than final theory-section prose",
+            "G8 pass: rival and scope weaknesses route to methods issue_table.csv or required gate rather than final theory-section prose",
             "G9 pass: data contract includes sample_flow.csv, merge_audit.csv, variable_provenance.csv, and upstream cleaning-route placeholders",
             "G10 pass: analysis_readiness_check.csv reports readiness_status before execution",
             "G11 pass: analysis_run_manifest.csv links outputs back to model_id=demo.platform_innovation and bridge_id=demo.causal_bridge_exposure",
@@ -287,7 +287,7 @@ def factory_output() -> FactoryOutput:
             "bridge_id=demo.causal_bridge_exposure",
             "synthesis_id=TS2 links literature_theory_synthesis.csv -> causal:demo.exposure_to_innovation",
             "rival_id=RV1 in theory_rival_map.csv routes baseline city capacity to methods-reviewer",
-            "scope_id=SC1 in theory_scope_map.csv routes audited rollout scope to ask_author",
+            "scope_id=SC1 in theory_scope_map.csv routes audited rollout scope to last_skill",
             "literature_theory_synthesis.csv -> theory_evidence.md -> compile_evidence.py -> concept:demo.exposed_unit; causal:demo.exposure_to_innovation; bridge:demo.causal_bridge_exposure",
             "next_skill_route moves from study-design-builder to research-data-builder, research-analysis-runner, and methods-reviewer",
         ],
@@ -303,11 +303,11 @@ def factory_output() -> FactoryOutput:
             "python3 skills/literature-matrix/scripts/validate_literature_matrix.py skills/literature-matrix/examples/valid_literature_matrix.csv",
             "python3 scripts/validate_ai_use_ledger.py docs/ai_use_ledger.csv",
         ],
-        author_decisions=[
-            "author decision: whether the target comparison is substantively credible",
-            "author decision: acceptable missing-link threshold before firm-year analysis",
-            "author decision: whether to abandon causal language if bridge/readiness stays weak",
-            "author decision: whether mechanism strength and theoretical contribution are only framing hypotheses or author-approved claims",
+        required_gates=[
+            "required gate: whether the target comparison is substantively credible",
+            "required gate: acceptable missing-link threshold before firm-year analysis",
+            "required gate: whether to abandon causal language if bridge/readiness stays weak",
+            "required gate: whether mechanism strength and theoretical contribution are only framing hypotheses or workflow-gated claims",
             "no manuscript prose; no theory-section prose; only bounded claim entries and theory_workbench.md slots for author review",
         ],
         risky_moves=[],
@@ -338,7 +338,7 @@ def output_text(output: FactoryOutput) -> str:
         "\n".join(output.gate_statuses),
         "\n".join(output.trace_markers),
         "\n".join(output.validator_refs),
-        "\n".join(output.author_decisions),
+        "\n".join(output.required_gates),
         "\n".join(output.risky_moves),
     ]
     return "\n".join(blocks)
@@ -368,7 +368,7 @@ def packet_body(packet_id: str, case: FactoryCase, output: FactoryOutput) -> str
     gates = "\n".join(f"- {item}" for item in output.gate_statuses)
     traces = "\n".join(f"- {item}" for item in output.trace_markers)
     validators = "\n".join(f"- {item}" for item in output.validator_refs)
-    decisions = "\n".join(f"- {item}" for item in output.author_decisions)
+    decisions = "\n".join(f"- {item}" for item in output.required_gates)
     risks = "\n".join(f"- {item}" for item in output.risky_moves) or "- none visible"
     return f"""# Factory-Level Blinded Packet {packet_id}
 
@@ -435,7 +435,7 @@ conditions are:
 - `generic_agent`: careful research-assistant planning without the local
   `.aiss` factory gates.
 - `ai4ss_factory`: workflow constrained by MIDA, `.aiss` model objects, local
-  sidecars, validators, and author-decision boundaries.
+  sidecars, validators, and required-gate boundaries.
 
 ## Blinding
 
@@ -549,7 +549,7 @@ def make_packets(outdir: Path, seed: int) -> tuple[list[dict[str, str]], list[di
                 "ai4ss_model_check": fmt_score(scores["ai4ss_model_check"]),
                 "evidence_data_chain": fmt_score(scores["evidence_data_chain"]),
                 "analysis_loop": fmt_score(scores["analysis_loop"]),
-                "boundary_author_decision": fmt_score(scores["boundary_author_decision"]),
+                "boundary_required_gate": fmt_score(scores["boundary_required_gate"]),
                 "end_to_end_continuity": fmt_score(scores["end_to_end_continuity"]),
                 "risk_penalty": fmt_score(scores["risk_penalty"]),
                 "total": fmt_score(scores["total"]),
@@ -582,7 +582,7 @@ def human_sheet(mapping_rows: list[dict[str, str]]) -> list[dict[str, str]]:
                 "ai4ss_model_check_0_15": "",
                 "evidence_data_chain_0_15": "",
                 "analysis_loop_0_15": "",
-                "boundary_author_decision_0_15": "",
+                "boundary_required_gate_0_15": "",
                 "end_to_end_continuity_0_10": "",
                 "risk_penalty_0_plus": "",
                 "total_0_100": "",
@@ -627,7 +627,7 @@ def unblinded_report(mapping_rows: list[dict[str, str]], score_rows: list[dict[s
         lines.append(
             "| {packet_id} | `{case_id}` | `{condition}` | {research_object} | {mida_design} | "
             "{ai4ss_model_check} | {evidence_data_chain} | {analysis_loop} | "
-            "{boundary_author_decision} | {end_to_end_continuity} | {risk_penalty} | {total} |".format(**row)
+            "{boundary_required_gate} | {end_to_end_continuity} | {risk_penalty} | {total} |".format(**row)
         )
 
     lines.extend(
@@ -674,7 +674,7 @@ def main() -> int:
             "ai4ss_model_check",
             "evidence_data_chain",
             "analysis_loop",
-            "boundary_author_decision",
+            "boundary_required_gate",
             "end_to_end_continuity",
             "risk_penalty",
             "total",
@@ -693,7 +693,7 @@ def main() -> int:
             "ai4ss_model_check_0_15",
             "evidence_data_chain_0_15",
             "analysis_loop_0_15",
-            "boundary_author_decision_0_15",
+            "boundary_required_gate_0_15",
             "end_to_end_continuity_0_10",
             "risk_penalty_0_plus",
             "total_0_100",

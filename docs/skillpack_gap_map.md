@@ -4,7 +4,7 @@ This note records the multi-round reassessment of the local AI4SS skillpack.
 
 ## Round 1: Consistency Problem
 
-Finding: the skills had strong local boundaries but weak shared interfaces. Each skill knew its own artifact, but the pack did not have a shared contract for `route_id`, upstream inputs, downstream routes, stop reasons, author decisions, or interpretation boundaries.
+Finding: the skills had strong local boundaries but weak shared interfaces. Each skill knew its own artifact, but the pack did not have a shared contract for `route_id`, upstream inputs, downstream routes, stop reasons, required gates, or interpretation boundaries.
 
 Change:
 
@@ -134,7 +134,7 @@ Change:
 - Upgraded `research-starter` so durable route cards mirror `.aiss` `route`
   declarations through `route_decl_id`.
 - Upgraded `study-design-builder` so selected routes own seven `.aiss` `mida`
-  declarations through `mida_id` and author-owned choices through
+  declarations through `mida_id` and workflow-gated choices through
   `decision_decl_id`.
 - Reframed CSV/Markdown sidecars as projections of the unified `.aiss`
   workflow object, not a second workflow DSL.

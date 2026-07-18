@@ -37,7 +37,7 @@ keeps the task constant while varying the generation condition.
 - `traceability`: 20 points
 - `boundary`: 20 points
 - `validation`: 15 points
-- `author_decision`: 15 points
+- `required_gate`: 15 points
 
 ## Grading Workflow
 

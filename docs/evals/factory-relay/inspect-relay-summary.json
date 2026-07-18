@@ -1,0 +1,663 @@
+{
+  "schema": "ai4ss.factory_relay_inspect_summary.v1",
+  "model": "openai-api/deepseek/deepseek-v4-pro",
+  "conditions": [
+    "no_skills",
+    "single_skill",
+    "full_skills",
+    "broken_handoff",
+    "shuffled_order"
+  ],
+  "results": [
+    {
+      "condition": "no_skills",
+      "returncode": 0,
+      "status": "success",
+      "model": "openai-api/deepseek/deepseek-v4-pro",
+      "task": "factory_relay",
+      "dataset": {
+        "samples": 1,
+        "sample_ids": [
+          "service_center_trust_relay__no_skills"
+        ],
+        "shuffled": false
+      },
+      "total_samples": 1,
+      "completed_samples": 1,
+      "score": 1.0,
+      "samples": [
+        {
+          "id": "service_center_trust_relay__no_skills",
+          "score": 1.0,
+          "explanation": "handoff_score=1.0 adjusted_score=1.0 audit_ok=True missing_outputs=[] errors=[]",
+          "metadata": {
+            "condition": "no_skills",
+            "model_path": "research_model.aiss",
+            "audit_ok": true,
+            "audit_score": 1.0,
+            "missing_outputs": [],
+            "metrics": {
+              "handoff_preservation": {
+                "passed": 7,
+                "total": 7,
+                "score": 1.0
+              },
+              "downstream_consumability": {
+                "passed": 5,
+                "total": 5,
+                "score": 1.0
+              },
+              "stage_ownership": {
+                "passed": 4,
+                "total": 4,
+                "score": 1.0
+              },
+              "repair_routing_quality": {
+                "passed": 2,
+                "total": 2,
+                "score": 1.0
+              },
+              "artifact_binding": {
+                "passed": 8,
+                "total": 8,
+                "score": 1.0
+              }
+            },
+            "facts": {
+              "condition": "no_skills",
+              "route_decl_id": "service_center_route",
+              "selected_next_skill_route": "methods-reviewer",
+              "mida_ids": [
+                "service_center_answer_mida",
+                "service_center_boundary_mida",
+                "service_center_data_mida",
+                "service_center_diagnose_mida",
+                "service_center_inquiry_mida",
+                "service_center_model_mida",
+                "service_center_redesign_mida"
+              ],
+              "mida_components": [
+                "answer_strategy",
+                "data_strategy",
+                "diagnose",
+                "inquiry",
+                "model",
+                "redesign",
+                "report_boundary"
+              ],
+              "missing_mida_components": [],
+              "decision_decl_ids": [
+                "author_id_decision"
+              ],
+              "claim_ids": [
+                "service_trust_claim"
+              ],
+              "artifact_ids": [
+                "data_inventory_artifact"
+              ],
+              "check_ids": [
+                "model_id_check"
+              ],
+              "source_ids": [
+                "data_src",
+                "design_brief_src",
+                "literature_src"
+              ],
+              "span_ids": [
+                "data_span",
+                "design_span",
+                "lit_lee_span",
+                "lit_smith_span"
+              ]
+            },
+            "findings": [],
+            "error_codes": []
+          }
+        }
+      ],
+      "model_usage": {
+        "openai-api/deepseek/deepseek-v4-pro": {
+          "input_tokens": 20369,
+          "output_tokens": 14327,
+          "total_tokens": 631816,
+          "input_tokens_cache_read": 597120,
+          "reasoning_tokens": 7378
+        }
+      },
+      "log": "/tmp/ai4ss-factory-relay-logs/2026-07-04T17-56-45-00-00_factory-relay_QJTZPBKcmkMcsLvYpYuNHx.eval"
+    },
+    {
+      "condition": "single_skill",
+      "returncode": 0,
+      "status": "success",
+      "model": "openai-api/deepseek/deepseek-v4-pro",
+      "task": "factory_relay",
+      "dataset": {
+        "samples": 1,
+        "sample_ids": [
+          "service_center_trust_relay__single_skill"
+        ],
+        "shuffled": false
+      },
+      "total_samples": 1,
+      "completed_samples": 1,
+      "score": 1.0,
+      "samples": [
+        {
+          "id": "service_center_trust_relay__single_skill",
+          "score": 1.0,
+          "explanation": "handoff_score=1.0 adjusted_score=1.0 audit_ok=True missing_outputs=[] errors=[]",
+          "metadata": {
+            "condition": "single_skill",
+            "model_path": "research_model.aiss",
+            "audit_ok": true,
+            "audit_score": 1.0,
+            "missing_outputs": [],
+            "metrics": {
+              "handoff_preservation": {
+                "passed": 7,
+                "total": 7,
+                "score": 1.0
+              },
+              "downstream_consumability": {
+                "passed": 5,
+                "total": 5,
+                "score": 1.0
+              },
+              "stage_ownership": {
+                "passed": 4,
+                "total": 4,
+                "score": 1.0
+              },
+              "repair_routing_quality": {
+                "passed": 2,
+                "total": 2,
+                "score": 1.0
+              },
+              "artifact_binding": {
+                "passed": 8,
+                "total": 8,
+                "score": 1.0
+              }
+            },
+            "facts": {
+              "condition": "single_skill",
+              "route_decl_id": "service_center_trust.route",
+              "selected_next_skill_route": "research-data-builder",
+              "mida_ids": [
+                "service_center_trust.mida_answer_strategy",
+                "service_center_trust.mida_data_strategy",
+                "service_center_trust.mida_diagnose",
+                "service_center_trust.mida_inquiry",
+                "service_center_trust.mida_model",
+                "service_center_trust.mida_redesign",
+                "service_center_trust.mida_report_boundary"
+              ],
+              "mida_components": [
+                "answer_strategy",
+                "data_strategy",
+                "diagnose",
+                "inquiry",
+                "model",
+                "redesign",
+                "report_boundary"
+              ],
+              "missing_mida_components": [],
+              "decision_decl_ids": [
+                "service_center_trust.causal_gate"
+              ],
+              "claim_ids": [
+                "sc.trust_mechanism_claim"
+              ],
+              "artifact_ids": [
+                "sc.data_inventory_artifact"
+              ],
+              "check_ids": [
+                "sc.identification_check"
+              ],
+              "source_ids": [
+                "data_inventory.src",
+                "design_brief.src",
+                "literature_matrix.src"
+              ],
+              "span_ids": [
+                "data_inventory.rollout_span",
+                "design_brief.question_span",
+                "literature.lee_span",
+                "literature.smith_span"
+              ]
+            },
+            "findings": [],
+            "error_codes": []
+          }
+        }
+      ],
+      "model_usage": {
+        "openai-api/deepseek/deepseek-v4-pro": {
+          "input_tokens": 18562,
+          "output_tokens": 11952,
+          "total_tokens": 440626,
+          "input_tokens_cache_read": 410112,
+          "reasoning_tokens": 4505
+        }
+      },
+      "log": "/tmp/ai4ss-factory-relay-logs/2026-07-04T18-01-18-00-00_factory-relay_PdxwK7S2pVhmpiTn2iUBwm.eval"
+    },
+    {
+      "condition": "full_skills",
+      "returncode": 0,
+      "status": "success",
+      "model": "openai-api/deepseek/deepseek-v4-pro",
+      "task": "factory_relay",
+      "dataset": {
+        "samples": 1,
+        "sample_ids": [
+          "service_center_trust_relay__full_skills"
+        ],
+        "shuffled": false
+      },
+      "total_samples": 1,
+      "completed_samples": 1,
+      "score": 0.9818,
+      "samples": [
+        {
+          "id": "service_center_trust_relay__full_skills",
+          "score": 0.9818,
+          "explanation": "handoff_score=0.9818 adjusted_score=0.9818 audit_ok=False missing_outputs=[] errors=['invalid_next_skill_route']",
+          "metadata": {
+            "condition": "full_skills",
+            "model_path": "research_model.aiss",
+            "audit_ok": false,
+            "audit_score": 0.9818,
+            "missing_outputs": [],
+            "metrics": {
+              "handoff_preservation": {
+                "passed": 10,
+                "total": 11,
+                "score": 0.9091
+              },
+              "downstream_consumability": {
+                "passed": 5,
+                "total": 5,
+                "score": 1.0
+              },
+              "stage_ownership": {
+                "passed": 4,
+                "total": 4,
+                "score": 1.0
+              },
+              "repair_routing_quality": {
+                "passed": 3,
+                "total": 3,
+                "score": 1.0
+              },
+              "artifact_binding": {
+                "passed": 8,
+                "total": 8,
+                "score": 1.0
+              }
+            },
+            "facts": {
+              "condition": "full_skills",
+              "route_decl_id": "sce_did.route",
+              "selected_next_skill_route": "study-design-builder",
+              "mida_ids": [
+                "sce_answer_strategy.mida",
+                "sce_data_strategy.mida",
+                "sce_diagnose.mida",
+                "sce_inquiry.mida",
+                "sce_model.mida",
+                "sce_redesign.mida",
+                "sce_report_boundary.mida"
+              ],
+              "mida_components": [
+                "answer_strategy",
+                "data_strategy",
+                "diagnose",
+                "inquiry",
+                "model",
+                "redesign",
+                "report_boundary"
+              ],
+              "missing_mida_components": [],
+              "decision_decl_ids": [
+                "data_linkage_repair.decision",
+                "identification_approval.decision",
+                "route_selection.decision"
+              ],
+              "claim_ids": [
+                "lee_timing_selection.claim",
+                "smith_trust_mechanism.claim"
+              ],
+              "artifact_ids": [
+                "data_inventory_artifact.artifact"
+              ],
+              "check_ids": [
+                "linkage_audit.check",
+                "pre_trends.check"
+              ],
+              "source_ids": [
+                "data_inventory.src",
+                "design_brief.src",
+                "literature_matrix.src"
+              ],
+              "span_ids": [
+                "data_available.span",
+                "data_repairs.span",
+                "design_author_gate.span",
+                "design_question.span",
+                "design_risk.span",
+                "design_scope.span",
+                "lit_lee.span",
+                "lit_smith.span"
+              ]
+            },
+            "findings": [
+              {
+                "severity": "error",
+                "metric": "handoff_preservation",
+                "code": "invalid_next_skill_route",
+                "message": "route_selection.decision:next_skill_route=study-design-builder",
+                "evidence": {
+                  "id": "route_selection.decision",
+                  "next_skill_route": "study-design-builder",
+                  "context": "decision"
+                }
+              }
+            ],
+            "error_codes": [
+              "invalid_next_skill_route"
+            ]
+          }
+        }
+      ],
+      "model_usage": {
+        "openai-api/deepseek/deepseek-v4-pro": {
+          "input_tokens": 30207,
+          "output_tokens": 17626,
+          "total_tokens": 960985,
+          "input_tokens_cache_read": 913152,
+          "reasoning_tokens": 4187
+        }
+      },
+      "log": "/tmp/ai4ss-factory-relay-logs/2026-07-04T18-05-09-00-00_factory-relay_WPFFbsF7sspX7qRwqYwA7J.eval"
+    },
+    {
+      "condition": "broken_handoff",
+      "returncode": 0,
+      "status": "success",
+      "model": "openai-api/deepseek/deepseek-v4-pro",
+      "task": "factory_relay",
+      "dataset": {
+        "samples": 1,
+        "sample_ids": [
+          "service_center_trust_relay__broken_handoff"
+        ],
+        "shuffled": false
+      },
+      "total_samples": 1,
+      "completed_samples": 1,
+      "score": 1.0,
+      "samples": [
+        {
+          "id": "service_center_trust_relay__broken_handoff",
+          "score": 1.0,
+          "explanation": "handoff_score=1.0 adjusted_score=1.0 audit_ok=True missing_outputs=[] errors=[]",
+          "metadata": {
+            "condition": "broken_handoff",
+            "model_path": "research_model.aiss",
+            "audit_ok": true,
+            "audit_score": 1.0,
+            "missing_outputs": [],
+            "metrics": {
+              "handoff_preservation": {
+                "passed": 7,
+                "total": 7,
+                "score": 1.0
+              },
+              "downstream_consumability": {
+                "passed": 5,
+                "total": 5,
+                "score": 1.0
+              },
+              "stage_ownership": {
+                "passed": 4,
+                "total": 4,
+                "score": 1.0
+              },
+              "repair_routing_quality": {
+                "passed": 3,
+                "total": 3,
+                "score": 1.0
+              },
+              "artifact_binding": {
+                "passed": 8,
+                "total": 8,
+                "score": 1.0
+              }
+            },
+            "facts": {
+              "condition": "broken_handoff",
+              "route_decl_id": "relay.route_r1",
+              "selected_next_skill_route": "research-data-builder",
+              "mida_ids": [
+                "relay.mida_r1_answer_strategy",
+                "relay.mida_r1_data_strategy",
+                "relay.mida_r1_diagnose",
+                "relay.mida_r1_inquiry",
+                "relay.mida_r1_model",
+                "relay.mida_r1_redesign",
+                "relay.mida_r1_report_boundary"
+              ],
+              "mida_components": [
+                "answer_strategy",
+                "data_strategy",
+                "diagnose",
+                "inquiry",
+                "model",
+                "redesign",
+                "report_boundary"
+              ],
+              "missing_mida_components": [],
+              "decision_decl_ids": [
+                "relay.decision_r1_identification"
+              ],
+              "claim_ids": [
+                "relay.claim_exposure_increases_trust"
+              ],
+              "artifact_ids": [
+                "relay.artifact_data_inventory"
+              ],
+              "check_ids": [
+                "relay.check_readiness_boundary",
+                "relay.check_reference_integrity"
+              ],
+              "source_ids": [
+                "relay.src_data",
+                "relay.src_design",
+                "relay.src_literature"
+              ],
+              "span_ids": [
+                "relay.span_data",
+                "relay.span_design",
+                "relay.span_literature"
+              ]
+            },
+            "findings": [],
+            "error_codes": []
+          }
+        }
+      ],
+      "model_usage": {
+        "openai-api/deepseek/deepseek-v4-pro": {
+          "input_tokens": 11350,
+          "output_tokens": 7369,
+          "total_tokens": 160927,
+          "input_tokens_cache_read": 142208,
+          "reasoning_tokens": 1950
+        }
+      },
+      "log": "/tmp/ai4ss-factory-relay-logs/2026-07-04T18-10-32-00-00_factory-relay_cBWSGQ9zXkVANP5sMi2ZSQ.eval"
+    },
+    {
+      "condition": "shuffled_order",
+      "returncode": 0,
+      "status": "success",
+      "model": "openai-api/deepseek/deepseek-v4-pro",
+      "task": "factory_relay",
+      "dataset": {
+        "samples": 1,
+        "sample_ids": [
+          "service_center_trust_relay__shuffled_order"
+        ],
+        "shuffled": false
+      },
+      "total_samples": 1,
+      "completed_samples": 1,
+      "score": 0.93,
+      "samples": [
+        {
+          "id": "service_center_trust_relay__shuffled_order",
+          "score": 0.93,
+          "explanation": "handoff_score=0.93 adjusted_score=0.93 audit_ok=False missing_outputs=[] errors=['data_repair_misrouted', 'status_route_mismatch']",
+          "metadata": {
+            "condition": "shuffled_order",
+            "model_path": "research_model.aiss",
+            "audit_ok": false,
+            "audit_score": 0.93,
+            "missing_outputs": [],
+            "metrics": {
+              "handoff_preservation": {
+                "passed": 9,
+                "total": 10,
+                "score": 0.9
+              },
+              "downstream_consumability": {
+                "passed": 5,
+                "total": 5,
+                "score": 1.0
+              },
+              "stage_ownership": {
+                "passed": 4,
+                "total": 4,
+                "score": 1.0
+              },
+              "repair_routing_quality": {
+                "passed": 3,
+                "total": 4,
+                "score": 0.75
+              },
+              "artifact_binding": {
+                "passed": 8,
+                "total": 8,
+                "score": 1.0
+              }
+            },
+            "facts": {
+              "condition": "shuffled_order",
+              "route_decl_id": "sc-exposure.route",
+              "selected_next_skill_route": "study-design-builder",
+              "mida_ids": [
+                "sc-exposure.answer-strategy-mida",
+                "sc-exposure.data-strategy-mida",
+                "sc-exposure.diagnose-mida",
+                "sc-exposure.inquiry-mida",
+                "sc-exposure.model-mida",
+                "sc-exposure.redesign-mida",
+                "sc-exposure.report-boundary-mida"
+              ],
+              "mida_components": [
+                "answer_strategy",
+                "data_strategy",
+                "diagnose",
+                "inquiry",
+                "model",
+                "redesign",
+                "report_boundary"
+              ],
+              "missing_mida_components": [],
+              "decision_decl_ids": [
+                "causal-id-gate.decision",
+                "writing-gate.decision"
+              ],
+              "claim_ids": [
+                "lee-2024-timing.claim",
+                "smith-2025-trust.claim"
+              ],
+              "artifact_ids": [
+                "data-inventory.artifact"
+              ],
+              "check_ids": [
+                "linkage-timing.check"
+              ],
+              "source_ids": [
+                "data-inventory.src",
+                "design-brief.src",
+                "lee-2024.src",
+                "lit-matrix.src",
+                "smith-2025.src"
+              ],
+              "span_ids": [
+                "data-inventory.span",
+                "design-brief.span",
+                "lee-2024.span",
+                "lit-matrix.span",
+                "smith-2025.span"
+              ]
+            },
+            "findings": [
+              {
+                "severity": "error",
+                "metric": "repair_routing_quality",
+                "code": "data_repair_misrouted",
+                "message": "needs_data_check must route to research-data-builder",
+                "evidence": {
+                  "id": "writing-gate.decision",
+                  "owner": "author",
+                  "next_skill_route": "research-data-builder"
+                }
+              },
+              {
+                "severity": "error",
+                "metric": "handoff_preservation",
+                "code": "status_route_mismatch",
+                "message": "writing-gate.decision: needs_methods_review should route to methods-reviewer",
+                "evidence": {
+                  "id": "writing-gate.decision",
+                  "status": "needs_methods_review",
+                  "next_skill_route": "research-data-builder",
+                  "context": "decision"
+                }
+              }
+            ],
+            "error_codes": [
+              "data_repair_misrouted",
+              "status_route_mismatch"
+            ]
+          }
+        }
+      ],
+      "model_usage": {
+        "openai-api/deepseek/deepseek-v4-pro": {
+          "input_tokens": 29716,
+          "output_tokens": 14764,
+          "total_tokens": 1084864,
+          "input_tokens_cache_read": 1040384,
+          "reasoning_tokens": 4407
+        }
+      },
+      "log": "/tmp/ai4ss-factory-relay-logs/2026-07-04T18-12-44-00-00_factory-relay_dypqv7WFWE6w6rZGpqatp6.eval"
+    }
+  ],
+  "marginal_gain": {
+    "full_vs_no_skills": -0.0182,
+    "full_vs_single_skill": -0.0182,
+    "broken_handoff_vs_no_skills": 0.0,
+    "shuffled_order_vs_no_skills": -0.07,
+    "full_skills_score": 0.9818,
+    "no_skills_score": 1.0,
+    "single_skill_score": 1.0,
+    "broken_handoff_score": 1.0,
+    "shuffled_order_score": 0.93
+  }
+}

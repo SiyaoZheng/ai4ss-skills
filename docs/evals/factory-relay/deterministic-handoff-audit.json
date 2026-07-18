@@ -1,0 +1,683 @@
+{
+  "schema": "ai4ss.factory_relay_deterministic_audit.v1",
+  "fixture": "/Users/siyaozheng/Documents/ai4ss-skills/docs/evals/factory-relay/fixtures/valid_relay.aiss",
+  "ok": true,
+  "mismatches": [],
+  "cases": [
+    {
+      "case_id": "valid_relay",
+      "expected_ok": true,
+      "ok": true,
+      "score": 1.0,
+      "error_codes": [],
+      "rationale": "Full route/MIDA/decision/artifact/check/claim relay should pass.",
+      "metrics": {
+        "handoff_preservation": {
+          "passed": 7,
+          "total": 7,
+          "score": 1.0
+        },
+        "downstream_consumability": {
+          "passed": 5,
+          "total": 5,
+          "score": 1.0
+        },
+        "stage_ownership": {
+          "passed": 5,
+          "total": 5,
+          "score": 1.0
+        },
+        "repair_routing_quality": {
+          "passed": 2,
+          "total": 2,
+          "score": 1.0
+        },
+        "artifact_binding": {
+          "passed": 8,
+          "total": 8,
+          "score": 1.0
+        }
+      },
+      "facts": {
+        "condition": "valid_relay",
+        "route_decl_id": "relay.route_r1",
+        "selected_next_skill_route": "public-data-sources",
+        "mida_ids": [
+          "relay.mida_r1_answer_strategy",
+          "relay.mida_r1_data_strategy",
+          "relay.mida_r1_diagnose",
+          "relay.mida_r1_inquiry",
+          "relay.mida_r1_model",
+          "relay.mida_r1_redesign",
+          "relay.mida_r1_report_boundary"
+        ],
+        "mida_components": [
+          "answer_strategy",
+          "data_strategy",
+          "diagnose",
+          "inquiry",
+          "model",
+          "redesign",
+          "report_boundary"
+        ],
+        "missing_mida_components": [],
+        "decision_decl_ids": [
+          "relay.decision_r1_identification"
+        ],
+        "claim_ids": [
+          "relay.claim_exposure_increases_trust"
+        ],
+        "artifact_ids": [
+          "relay.artifact_data_inventory"
+        ],
+        "check_ids": [
+          "relay.check_readiness_boundary",
+          "relay.check_reference_integrity"
+        ],
+        "source_ids": [
+          "relay.src_data",
+          "relay.src_design",
+          "relay.src_literature"
+        ],
+        "span_ids": [
+          "relay.span_data",
+          "relay.span_design",
+          "relay.span_literature"
+        ]
+      }
+    },
+    {
+      "case_id": "missing_report_boundary",
+      "expected_ok": false,
+      "ok": false,
+      "score": 0.9314,
+      "error_codes": [
+        "mida_incomplete",
+        "missing_report_boundary"
+      ],
+      "rationale": "Downstream writing/review cannot consume a handoff that dropped report_boundary.",
+      "metrics": {
+        "handoff_preservation": {
+          "passed": 6,
+          "total": 7,
+          "score": 0.8571
+        },
+        "downstream_consumability": {
+          "passed": 5,
+          "total": 5,
+          "score": 1.0
+        },
+        "stage_ownership": {
+          "passed": 4,
+          "total": 5,
+          "score": 0.8
+        },
+        "repair_routing_quality": {
+          "passed": 2,
+          "total": 2,
+          "score": 1.0
+        },
+        "artifact_binding": {
+          "passed": 8,
+          "total": 8,
+          "score": 1.0
+        }
+      },
+      "facts": {
+        "condition": "missing_report_boundary",
+        "route_decl_id": "relay.route_r1",
+        "selected_next_skill_route": "public-data-sources",
+        "mida_ids": [
+          "relay.mida_r1_answer_strategy",
+          "relay.mida_r1_data_strategy",
+          "relay.mida_r1_diagnose",
+          "relay.mida_r1_inquiry",
+          "relay.mida_r1_model",
+          "relay.mida_r1_redesign"
+        ],
+        "mida_components": [
+          "answer_strategy",
+          "data_strategy",
+          "diagnose",
+          "inquiry",
+          "model",
+          "redesign"
+        ],
+        "missing_mida_components": [
+          "report_boundary"
+        ],
+        "decision_decl_ids": [
+          "relay.decision_r1_identification"
+        ],
+        "claim_ids": [
+          "relay.claim_exposure_increases_trust"
+        ],
+        "artifact_ids": [
+          "relay.artifact_data_inventory"
+        ],
+        "check_ids": [
+          "relay.check_readiness_boundary",
+          "relay.check_reference_integrity"
+        ],
+        "source_ids": [
+          "relay.src_data",
+          "relay.src_design",
+          "relay.src_literature"
+        ],
+        "span_ids": [
+          "relay.span_data",
+          "relay.span_design",
+          "relay.span_literature"
+        ]
+      }
+    },
+    {
+      "case_id": "data_repair_misrouted",
+      "expected_ok": false,
+      "ok": false,
+      "score": 0.8778,
+      "error_codes": [
+        "status_route_mismatch",
+        "data_repair_misrouted"
+      ],
+      "rationale": "Data repair rows must route to public-data-sources or research-data-builder, not execution.",
+      "metrics": {
+        "handoff_preservation": {
+          "passed": 8,
+          "total": 9,
+          "score": 0.8889
+        },
+        "downstream_consumability": {
+          "passed": 5,
+          "total": 5,
+          "score": 1.0
+        },
+        "stage_ownership": {
+          "passed": 5,
+          "total": 5,
+          "score": 1.0
+        },
+        "repair_routing_quality": {
+          "passed": 1,
+          "total": 2,
+          "score": 0.5
+        },
+        "artifact_binding": {
+          "passed": 8,
+          "total": 8,
+          "score": 1.0
+        }
+      },
+      "facts": {
+        "condition": "data_repair_misrouted",
+        "route_decl_id": "relay.route_r1",
+        "selected_next_skill_route": "public-data-sources",
+        "mida_ids": [
+          "relay.mida_r1_answer_strategy",
+          "relay.mida_r1_data_strategy",
+          "relay.mida_r1_diagnose",
+          "relay.mida_r1_inquiry",
+          "relay.mida_r1_model",
+          "relay.mida_r1_redesign",
+          "relay.mida_r1_report_boundary"
+        ],
+        "mida_components": [
+          "answer_strategy",
+          "data_strategy",
+          "diagnose",
+          "inquiry",
+          "model",
+          "redesign",
+          "report_boundary"
+        ],
+        "missing_mida_components": [],
+        "decision_decl_ids": [
+          "relay.decision_r1_identification"
+        ],
+        "claim_ids": [
+          "relay.claim_exposure_increases_trust"
+        ],
+        "artifact_ids": [
+          "relay.artifact_data_inventory"
+        ],
+        "check_ids": [
+          "relay.check_readiness_boundary",
+          "relay.check_reference_integrity"
+        ],
+        "source_ids": [
+          "relay.src_data",
+          "relay.src_design",
+          "relay.src_literature"
+        ],
+        "span_ids": [
+          "relay.span_data",
+          "relay.span_design",
+          "relay.span_literature"
+        ]
+      }
+    },
+    {
+      "case_id": "parallel_markdown_state",
+      "expected_ok": false,
+      "ok": false,
+      "score": 0.96,
+      "error_codes": [
+        "parallel_workflow_state"
+      ],
+      "rationale": "Workflow state in Markdown/CSV sidecars competes with `.aiss` as the only state.",
+      "metrics": {
+        "handoff_preservation": {
+          "passed": 7,
+          "total": 7,
+          "score": 1.0
+        },
+        "downstream_consumability": {
+          "passed": 5,
+          "total": 5,
+          "score": 1.0
+        },
+        "stage_ownership": {
+          "passed": 4,
+          "total": 5,
+          "score": 0.8
+        },
+        "repair_routing_quality": {
+          "passed": 2,
+          "total": 2,
+          "score": 1.0
+        },
+        "artifact_binding": {
+          "passed": 8,
+          "total": 8,
+          "score": 1.0
+        }
+      },
+      "facts": {
+        "condition": "parallel_markdown_state",
+        "route_decl_id": "relay.route_r1",
+        "selected_next_skill_route": "public-data-sources",
+        "mida_ids": [
+          "relay.mida_r1_answer_strategy",
+          "relay.mida_r1_data_strategy",
+          "relay.mida_r1_diagnose",
+          "relay.mida_r1_inquiry",
+          "relay.mida_r1_model",
+          "relay.mida_r1_redesign",
+          "relay.mida_r1_report_boundary"
+        ],
+        "mida_components": [
+          "answer_strategy",
+          "data_strategy",
+          "diagnose",
+          "inquiry",
+          "model",
+          "redesign",
+          "report_boundary"
+        ],
+        "missing_mida_components": [],
+        "decision_decl_ids": [
+          "relay.decision_r1_identification"
+        ],
+        "claim_ids": [
+          "relay.claim_exposure_increases_trust"
+        ],
+        "artifact_ids": [
+          "relay.artifact_data_inventory"
+        ],
+        "check_ids": [
+          "relay.check_readiness_boundary",
+          "relay.check_reference_integrity"
+        ],
+        "source_ids": [
+          "relay.src_data",
+          "relay.src_design",
+          "relay.src_literature"
+        ],
+        "span_ids": [
+          "relay.span_data",
+          "relay.span_design",
+          "relay.span_literature"
+        ]
+      }
+    },
+    {
+      "case_id": "selected_route_lacks_consumer",
+      "expected_ok": false,
+      "ok": false,
+      "score": 0.96,
+      "error_codes": [
+        "selected_route_has_no_downstream_consumer"
+      ],
+      "rationale": "A selected route must preserve a downstream next_skill_route.",
+      "metrics": {
+        "handoff_preservation": {
+          "passed": 7,
+          "total": 7,
+          "score": 1.0
+        },
+        "downstream_consumability": {
+          "passed": 4,
+          "total": 5,
+          "score": 0.8
+        },
+        "stage_ownership": {
+          "passed": 5,
+          "total": 5,
+          "score": 1.0
+        },
+        "repair_routing_quality": {
+          "passed": 2,
+          "total": 2,
+          "score": 1.0
+        },
+        "artifact_binding": {
+          "passed": 8,
+          "total": 8,
+          "score": 1.0
+        }
+      },
+      "facts": {
+        "condition": "selected_route_lacks_consumer",
+        "route_decl_id": "relay.route_r1",
+        "selected_next_skill_route": "none",
+        "mida_ids": [
+          "relay.mida_r1_answer_strategy",
+          "relay.mida_r1_data_strategy",
+          "relay.mida_r1_diagnose",
+          "relay.mida_r1_inquiry",
+          "relay.mida_r1_model",
+          "relay.mida_r1_redesign",
+          "relay.mida_r1_report_boundary"
+        ],
+        "mida_components": [
+          "answer_strategy",
+          "data_strategy",
+          "diagnose",
+          "inquiry",
+          "model",
+          "redesign",
+          "report_boundary"
+        ],
+        "missing_mida_components": [],
+        "decision_decl_ids": [
+          "relay.decision_r1_identification"
+        ],
+        "claim_ids": [
+          "relay.claim_exposure_increases_trust"
+        ],
+        "artifact_ids": [
+          "relay.artifact_data_inventory"
+        ],
+        "check_ids": [
+          "relay.check_readiness_boundary",
+          "relay.check_reference_integrity"
+        ],
+        "source_ids": [
+          "relay.src_data",
+          "relay.src_design",
+          "relay.src_literature"
+        ],
+        "span_ids": [
+          "relay.span_data",
+          "relay.span_design",
+          "relay.span_literature"
+        ]
+      }
+    },
+    {
+      "case_id": "empirical_artifact_link_dropped",
+      "expected_ok": false,
+      "ok": false,
+      "score": 0.975,
+      "error_codes": [
+        "empirical_without_artifact"
+      ],
+      "rationale": "Relay outputs must keep empirical records bound to artifact declarations.",
+      "metrics": {
+        "handoff_preservation": {
+          "passed": 7,
+          "total": 7,
+          "score": 1.0
+        },
+        "downstream_consumability": {
+          "passed": 5,
+          "total": 5,
+          "score": 1.0
+        },
+        "stage_ownership": {
+          "passed": 5,
+          "total": 5,
+          "score": 1.0
+        },
+        "repair_routing_quality": {
+          "passed": 2,
+          "total": 2,
+          "score": 1.0
+        },
+        "artifact_binding": {
+          "passed": 7,
+          "total": 8,
+          "score": 0.875
+        }
+      },
+      "facts": {
+        "condition": "empirical_artifact_link_dropped",
+        "route_decl_id": "relay.route_r1",
+        "selected_next_skill_route": "public-data-sources",
+        "mida_ids": [
+          "relay.mida_r1_answer_strategy",
+          "relay.mida_r1_data_strategy",
+          "relay.mida_r1_diagnose",
+          "relay.mida_r1_inquiry",
+          "relay.mida_r1_model",
+          "relay.mida_r1_redesign",
+          "relay.mida_r1_report_boundary"
+        ],
+        "mida_components": [
+          "answer_strategy",
+          "data_strategy",
+          "diagnose",
+          "inquiry",
+          "model",
+          "redesign",
+          "report_boundary"
+        ],
+        "missing_mida_components": [],
+        "decision_decl_ids": [
+          "relay.decision_r1_identification"
+        ],
+        "claim_ids": [
+          "relay.claim_exposure_increases_trust"
+        ],
+        "artifact_ids": [
+          "relay.artifact_data_inventory"
+        ],
+        "check_ids": [
+          "relay.check_readiness_boundary",
+          "relay.check_reference_integrity"
+        ],
+        "source_ids": [
+          "relay.src_data",
+          "relay.src_design",
+          "relay.src_literature"
+        ],
+        "span_ids": [
+          "relay.span_data",
+          "relay.span_design",
+          "relay.span_literature"
+        ]
+      }
+    },
+    {
+      "case_id": "mida_route_drift",
+      "expected_ok": false,
+      "ok": false,
+      "score": 0.9029,
+      "error_codes": [
+        "AISS-REF-001",
+        "aiss_lint_failed",
+        "mida_incomplete",
+        "mida_route_mismatch"
+      ],
+      "rationale": "MIDA rows that drift away from route_decl_id are not downstream-consumable.",
+      "metrics": {
+        "handoff_preservation": {
+          "passed": 5,
+          "total": 7,
+          "score": 0.7143
+        },
+        "downstream_consumability": {
+          "passed": 4,
+          "total": 5,
+          "score": 0.8
+        },
+        "stage_ownership": {
+          "passed": 5,
+          "total": 5,
+          "score": 1.0
+        },
+        "repair_routing_quality": {
+          "passed": 2,
+          "total": 2,
+          "score": 1.0
+        },
+        "artifact_binding": {
+          "passed": 8,
+          "total": 8,
+          "score": 1.0
+        }
+      },
+      "facts": {
+        "condition": "mida_route_drift",
+        "route_decl_id": "relay.route_r1",
+        "selected_next_skill_route": "public-data-sources",
+        "mida_ids": [
+          "relay.mida_r1_data_strategy",
+          "relay.mida_r1_diagnose",
+          "relay.mida_r1_inquiry",
+          "relay.mida_r1_model",
+          "relay.mida_r1_redesign",
+          "relay.mida_r1_report_boundary"
+        ],
+        "mida_components": [
+          "data_strategy",
+          "diagnose",
+          "inquiry",
+          "model",
+          "redesign",
+          "report_boundary"
+        ],
+        "missing_mida_components": [
+          "answer_strategy"
+        ],
+        "decision_decl_ids": [
+          "relay.decision_r1_identification"
+        ],
+        "claim_ids": [
+          "relay.claim_exposure_increases_trust"
+        ],
+        "artifact_ids": [
+          "relay.artifact_data_inventory"
+        ],
+        "check_ids": [
+          "relay.check_readiness_boundary",
+          "relay.check_reference_integrity"
+        ],
+        "source_ids": [
+          "relay.src_data",
+          "relay.src_design",
+          "relay.src_literature"
+        ],
+        "span_ids": [
+          "relay.span_data",
+          "relay.span_design",
+          "relay.span_literature"
+        ]
+      }
+    },
+    {
+      "case_id": "synthetic_fallback_analysis",
+      "expected_ok": false,
+      "ok": false,
+      "score": 0.96,
+      "error_codes": [
+        "forbidden_fallback_analysis"
+      ],
+      "rationale": "Unavailable evidence must trigger redesign, not synthetic or demo analysis as evidence.",
+      "metrics": {
+        "handoff_preservation": {
+          "passed": 7,
+          "total": 7,
+          "score": 1.0
+        },
+        "downstream_consumability": {
+          "passed": 5,
+          "total": 5,
+          "score": 1.0
+        },
+        "stage_ownership": {
+          "passed": 4,
+          "total": 5,
+          "score": 0.8
+        },
+        "repair_routing_quality": {
+          "passed": 2,
+          "total": 2,
+          "score": 1.0
+        },
+        "artifact_binding": {
+          "passed": 8,
+          "total": 8,
+          "score": 1.0
+        }
+      },
+      "facts": {
+        "condition": "synthetic_fallback_analysis",
+        "route_decl_id": "relay.route_r1",
+        "selected_next_skill_route": "public-data-sources",
+        "mida_ids": [
+          "relay.mida_r1_answer_strategy",
+          "relay.mida_r1_data_strategy",
+          "relay.mida_r1_diagnose",
+          "relay.mida_r1_inquiry",
+          "relay.mida_r1_model",
+          "relay.mida_r1_redesign",
+          "relay.mida_r1_report_boundary"
+        ],
+        "mida_components": [
+          "answer_strategy",
+          "data_strategy",
+          "diagnose",
+          "inquiry",
+          "model",
+          "redesign",
+          "report_boundary"
+        ],
+        "missing_mida_components": [],
+        "decision_decl_ids": [
+          "relay.decision_r1_identification"
+        ],
+        "claim_ids": [
+          "relay.claim_exposure_increases_trust"
+        ],
+        "artifact_ids": [
+          "relay.artifact_data_inventory"
+        ],
+        "check_ids": [
+          "relay.check_readiness_boundary",
+          "relay.check_reference_integrity"
+        ],
+        "source_ids": [
+          "relay.src_data",
+          "relay.src_design",
+          "relay.src_literature"
+        ],
+        "span_ids": [
+          "relay.span_data",
+          "relay.span_design",
+          "relay.span_literature"
+        ]
+      }
+    }
+  ]
+}

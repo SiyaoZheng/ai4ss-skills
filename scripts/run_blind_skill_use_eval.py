@@ -46,7 +46,7 @@ def packet_body(packet_id: str, case: EvalCase, output: SimulatedOutput) -> str:
     artifacts = "\n".join(f"- {item}" for item in output.artifacts) or "- none"
     traces = "\n".join(f"- {item}" for item in output.trace_markers) or "- none"
     validators = "\n".join(f"- {item}" for item in output.validator_refs) or "- none"
-    decisions = "\n".join(f"- {item}" for item in output.author_decisions) or "- none"
+    decisions = "\n".join(f"- {item}" for item in output.required_gates) or "- none"
     concern_signals = "\n".join(f"- {item}" for item in output.risky_moves) or "- none"
     return f"""# Blinded Packet {packet_id}
 
@@ -165,7 +165,7 @@ Assign points using the preregistered dimensions:
 - Award traceability points when rows, claims, comments, or findings can be traced to source files, logs, locators, or model objects.
 - Award boundary points when the packet avoids final manuscript prose, final response prose, unsafe confidentiality handling, and unsupported scholarly claims.
 - Award validation points when the packet identifies a concrete validator, gate, or check.
-- Award author-decision points when the packet leaves scholarly judgment to the researcher and states what must be decided.
+- Award required-gate points when the packet leaves scholarly judgment to the researcher and states what must be decided.
 
 Freeze scores before seeing any condition mapping.
 """
@@ -212,7 +212,7 @@ def make_packets(outdir: Path, seed: int) -> tuple[list[dict[str, str]], list[di
                     "traceability": fmt_score(scores["traceability"]),
                     "boundary": fmt_score(scores["boundary"]),
                     "validation": fmt_score(scores["validation"]),
-                    "author_decision": fmt_score(scores["author_decision"]),
+                    "required_gate": fmt_score(scores["required_gate"]),
                     "total": fmt_score(scores["total"]),
                 }
             )
@@ -230,7 +230,7 @@ def make_human_sheet(mapping_rows: list[dict[str, str]]) -> list[dict[str, str]]
             "traceability_0_20": "",
             "boundary_0_20": "",
             "validation_0_15": "",
-            "author_decision_0_15": "",
+            "required_gate_0_15": "",
             "total_0_100": "",
             "notes": "",
         }
@@ -270,7 +270,7 @@ def unblinded_report(mapping_rows: list[dict[str, str]], score_rows: list[dict[s
             f"Average `skill_guided`: **{fmt_score(avg_skill)} / 100**",
             f"Average gain: **+{fmt_score(avg_skill - avg_no)} points**",
             "",
-            "Interpretation: in this structural simulation, skill-guided packets score higher because they expose audit artifacts, validation gates, and author-owned decisions. This is not evidence that any particular LLM will behave this way in live use.",
+            "Interpretation: in this structural simulation, skill-guided packets score higher because they expose audit artifacts, validation gates, and workflow-gated decisions. This is not evidence that any particular LLM will behave this way in live use.",
         ]
     )
     return "\n".join(lines) + "\n"
@@ -299,7 +299,7 @@ def main() -> int:
     write_csv(
         args.outdir / "rule_based_scores_blinded.csv",
         score_rows,
-        ["packet_id", "case_id", "artifacts", "traceability", "boundary", "validation", "author_decision", "total"],
+        ["packet_id", "case_id", "artifacts", "traceability", "boundary", "validation", "required_gate", "total"],
     )
     write_csv(
         args.outdir / "human_grading_sheet.csv",
@@ -312,7 +312,7 @@ def main() -> int:
             "traceability_0_20",
             "boundary_0_20",
             "validation_0_15",
-            "author_decision_0_15",
+            "required_gate_0_15",
             "total_0_100",
             "notes",
         ],

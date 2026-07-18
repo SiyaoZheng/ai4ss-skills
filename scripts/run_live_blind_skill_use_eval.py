@@ -29,7 +29,7 @@ WEIGHTS = {
     "traceability": 20,
     "boundary": 20,
     "validation": 15,
-    "author_decision": 15,
+    "required_gate": 15,
 }
 
 GRADE_FIELDS = [
@@ -40,7 +40,7 @@ GRADE_FIELDS = [
     "traceability_0_20",
     "boundary_0_20",
     "validation_0_15",
-    "author_decision_0_15",
+    "required_gate_0_15",
     "total_0_100",
     "notes",
 ]
@@ -49,7 +49,7 @@ SCORE_FIELDS = [
     ("traceability_0_20", 20),
     ("boundary_0_20", 20),
     ("validation_0_15", 15),
-    ("author_decision_0_15", 15),
+    ("required_gate_0_15", 15),
 ]
 
 
@@ -98,7 +98,7 @@ CASES = [
         workbench="Revision trace",
         task=(
             "Turn confidential reviewer comments into a traceable R&R workplan, "
-            "evidence checks, and author-owned response scaffold without writing "
+            "evidence checks, and workflow-gated response scaffold without writing "
             "final response prose."
         ),
     ),
@@ -264,7 +264,7 @@ or `unblinded_report.md` during grading.
   response prose, unsafe confidentiality handling, and unsupported claims.
 - Award validation points when the packet names a concrete validator, gate, or
   check that could fail.
-- Award author-decision points when scholarly judgment remains visibly assigned
+- Award required-gate points when scholarly judgment remains visibly assigned
   to the researcher.
 
 Freeze scores before viewing any condition mapping.
@@ -370,7 +370,7 @@ def package(outdir: Path, seed: int, clean: bool) -> None:
                     "traceability_0_20": "",
                     "boundary_0_20": "",
                     "validation_0_15": "",
-                    "author_decision_0_15": "",
+                    "required_gate_0_15": "",
                     "total_0_100": "",
                     "notes": "",
                 }
@@ -548,7 +548,7 @@ This report joins frozen blinded grades to `_private/private_mapping.csv`.
 This evaluation supports a narrow claim: in these four live generated tasks,
 skill-guided outputs were more useful when usefulness is defined as producing
 inspectable research artifacts, traceability markers, explicit authorship
-boundaries, validation gates, and author-owned decision points.
+boundaries, validation gates, and workflow-gated decision points.
 
 {exception_note}
 

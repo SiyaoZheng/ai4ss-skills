@@ -23,7 +23,7 @@ projections:
 
 | representation | purpose |
 |---|---|
-| `.aiss` research object | Machine-checkable route, MIDA declaration, author decisions, source spans, attributes, concepts, theta rules, causal implications, empirical bridges, and diagnostics |
+| `.aiss` research object | Machine-checkable route, MIDA declaration, required gates, source spans, attributes, concepts, theta rules, causal implications, empirical bridges, and diagnostics |
 | Sidecar projections | Human-readable route cards, design declarations, decision registers, data/literature audits, analysis manifests, and claim ledgers |
 
 This is the difference between asking Codex to analyze and building an
@@ -39,7 +39,7 @@ The workbenches share one research-design spine:
 Declare MIDA -> Diagnose -> Redesign -> Report with bounded claims
 ```
 
-`MIDA` means `Model`, `Inquiry`, `Data strategy`, and `Answer strategy`. `Estimand` is one possible form of `Inquiry`, not the whole design. This matters for ordinary scholars because the agent should not merely say "estimate X on Y"; it must help make unit, construct, source, measurement, answer procedure, failure signal, and author decision visible.
+`MIDA` means `Model`, `Inquiry`, `Data strategy`, and `Answer strategy`. `Estimand` is one possible form of `Inquiry`, not the whole design. This matters for ordinary scholars because the agent should not merely say "estimate X on Y"; it must help make unit, construct, source, measurement, answer procedure, failure signal, and required gate visible.
 
 | spine element | where it appears in the local workflow |
 |---|---|
@@ -54,8 +54,8 @@ Declare MIDA -> Diagnose -> Redesign -> Report with bounded claims
 
 | scholar question | workbench | local skill | minimum artifact | stop gate |
 |---|---|---|---|---|
-| 这个研究怎么先动起来？ | Research starter workbench | `research-starter` | candidate `.aiss` route declarations, `research_starter_packet.md`, `research_route_cards.csv` when useful | `stop_reason`, `researcher_decision_needed`, `next_skill_route` |
-| 这个路线怎样落成可执行设计？ | Study design workbench | `study-design-builder` | selected `.aiss` route, seven `mida` declarations, `study_design_brief.md`, `design_decision_register.csv` | unresolved author decisions and downstream route |
+| 这个研究怎么先动起来？ | Research starter workbench | `research-starter` | candidate `.aiss` route declarations, `research_starter_packet.md`, `research_route_cards.csv` when useful | `stop_reason`, `required_gate`, `next_skill_route` |
+| 这个路线怎样落成可执行设计？ | Study design workbench | `study-design-builder` | selected `.aiss` route, seven `mida` declarations, `study_design_brief.md`, `design_decision_register.csv` | unresolved required gates and downstream route |
 | 第一批可检查结果怎么跑出来？ | Analysis runner workbench | `research-analysis-runner` | `analysis_readiness_check.csv`, scripts, outputs, logs, `analysis_run_manifest.csv` | readiness status, interpretation boundary, and methods-review route |
 
 The starter workbench should answer practical questions:
@@ -73,8 +73,8 @@ The starter workbench should answer practical questions:
 |---|---|---|---|---|
 | 数据怎么来的，样本怎么变的？ | Data provenance workbench | `research-data-builder` | `sample_flow.csv`, `merge_audit.csv`, `variable_provenance.csv`, logs | `validate_data_audits.py` |
 | 文献证据是不是一手来源？ | Literature evidence workbench | `literature-matrix` | `literature_matrix.csv`, `literature_candidate_discovery.csv`, compiled evidence `.aiss` when model elements are affected, screening log, source locators | `validate_literature_matrix.py`, `validate_literature_discovery.py`, `validate_literature_evidence_compile.py` |
-| 结果解释有没有说过头？ | Claim discipline workbench | `methods-reviewer`, `academic-writing-scaffold` | issue table, claim ledger, author decision questions | `validate_issue_table.py`, `validate_claim_ledger.py` |
-| 返修有没有证据链？ | Revision trace workbench | `reviewer-response`, plus upstream evidence skills | `revision_matrix.csv`, `revision_trace/`, open decisions | `validate_revision_matrix.py` |
+| 结果解释有没有说过头？ | Claim discipline workbench | `methods-reviewer`, `academic-writing-scaffold` | issue table, claim ledger, required gate questions | `validate_issue_table.py`, `validate_claim_ledger.py` |
+| 返修有没有证据链？ | Revision trace workbench | `reviewer-response`, plus upstream evidence skills | `revision_matrix.csv`, `revision_trace/`, open gates | `validate_revision_matrix.py` |
 
 ## Why This Matters
 
@@ -83,7 +83,7 @@ The first-order layer is useful only if it creates a usable research object:
 - It turns a rough theme into `.aiss` route declarations with data, source, method, and failure signals.
 - It makes feasibility visible before the researcher spends weeks on an impossible topic.
 - It gives ordinary scholars a first executable action instead of a methodology lecture.
-- It stops at author decision points instead of writing the paper.
+- It stops at required gate points instead of writing the paper.
 
 The second-order layer is useful only when it reduces scholarly risk:
 
@@ -161,9 +161,9 @@ The older non-blinded demonstration can still be regenerated with:
 python3 scripts/simulate_skill_use_eval.py --output docs/skill_use_eval.simulated_report.md
 ```
 
-Both simulations check output structure, not model intelligence. Their teaching claim is narrow: skills are useful only when they make canonical artifacts, validation gates, and author-owned decisions appear in the workflow. A true double-blind evaluation would still require independently generated live outputs, concealed condition assignment, independent human graders, and inter-rater reliability checks.
+Both simulations check output structure, not model intelligence. Their teaching claim is narrow: skills are useful only when they make canonical artifacts, validation gates, and workflow-gated decisions appear in the workflow. A true double-blind evaluation would still require independently generated live outputs, concealed condition assignment, independent human graders, and inter-rater reliability checks.
 
-The live package is condition-blinded for scoring, not fully double-blind. Generators know their assigned condition, and packet style can still reveal clues. Its appropriate claim is narrower: in these controlled tasks, skill-guided agents can be compared against careful generic agents on traceability, boundary discipline, validation gates, and author decision visibility.
+The live package is condition-blinded for scoring, not fully double-blind. Generators know their assigned condition, and packet style can still reveal clues. Its appropriate claim is narrower: in these controlled tasks, skill-guided agents can be compared against careful generic agents on traceability, boundary discipline, validation gates, and required gate visibility.
 
 ## Improvement From Live Evaluation
 

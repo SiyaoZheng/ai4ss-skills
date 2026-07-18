@@ -81,7 +81,7 @@ STRING, NUMBER, true, false, null, [VALUE, ...], { key: VALUE, ... }, bare_id
 | region | declarations | purpose |
 |---|---|---|
 | Provenance | `paper`, `source`, `span` | Grounds the research object in stable source locators |
-| Workflow | `route`, `mida`, `decision` | Represents candidate/selected routes, declared MIDA components, handoff decisions, and author-owned stops |
+| Workflow | `route`, `mida`, `decision` | Represents candidate/selected routes, declared MIDA components, handoff decisions, and workflow-gated stops |
 | Theory/discourse | `concept`, `claim`, `relation` | Represents constructs, asserted claims, and theoretical relations |
 | Empirical | `empirical`, `observation`, `artifact`, `adapter` | Represents data, cases, observations, code, tables, figures, and deterministic adapters |
 | Coupling | `coupling`, `bridge` | Links theory/model objects to empirical material |
@@ -163,7 +163,7 @@ route demo.route_r1 {
   inquiry: "average effect of platform exposure on high innovation"
   data_strategy: "source-verified rollout records linked to firm outcomes"
   answer_strategy: "readiness checks before estimation"
-  stop_reason: "author must approve identification and claim strength"
+  stop_reason: "workflow gate must pass identification and claim strength"
   next_skill_route: research-data-builder
   spans: [demo.span_route_r1]
 }
@@ -179,10 +179,10 @@ mida demo.mida_r1_model {
 decision demo.decision_r1_identification {
   route: demo.route_r1
   component: inquiry
-  decision: "Author must decide whether the causal route is worth pursuing."
-  status: needs_author_decision
-  owner: author
-  next_skill_route: ask_author
+  decision: "Workflow must gate whether the causal route is worth pursuing."
+  status: needs_redesign
+  owner: workflow
+  next_skill_route: last_skill
   spans: [demo.span_route_r1]
 }
 
@@ -233,7 +233,7 @@ lint_result
 ```
 
 These belong in lint/run reports, methods-review issue tables, claim ledgers, or
-author decision registers.
+required gate registers.
 
 ## Deterministic Outputs
 
@@ -259,7 +259,7 @@ are not linked to artifacts or observations.
 
 - deterministic adapter skip records when no adapter is registered
 - coupling assessments with `not_assessable` instead of guessed support
-- workflow diagnostics, including selected routes, MIDA coverage, and open author decisions
+- workflow diagnostics, including selected routes, MIDA coverage, and open required gates
 - model diagnostics, including bridge coverage and commensurability signals
 
 `diff` compares canonical AST structures by path. `write` renders deterministic

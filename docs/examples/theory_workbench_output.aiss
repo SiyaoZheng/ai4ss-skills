@@ -33,8 +33,8 @@ route theory.route_r1 {
   inquiry: "effect of city platform exposure on firm green patent count"
   data_strategy: "source-verified rollout records linked to firm innovation outcomes"
   answer_strategy: "theory workbench before analysis or manuscript prose"
-  stop_reason: "author must decide mechanism strength and contribution before final prose"
-  next_skill_route: ask_author
+  stop_reason: "required gate: mechanism strength and contribution before final prose"
+  next_skill_route: last_skill
   candidate_concepts: ["theory.exposed_unit", "theory.high_innovation"]
   spans: [theory.span_route_r1]
 }
@@ -66,10 +66,10 @@ span theory.span_decision_r1_theory_scope {
 decision theory.decision_r1_theory_scope {
   route: theory.route_r1
   component: model
-  decision: "Author must decide whether the mechanism is a framing hypothesis, tested implication, or broader theoretical contribution."
-  status: needs_author_decision
-  owner: author
-  next_skill_route: ask_author
+  decision: "Workflow must gate whether the mechanism is a framing hypothesis, tested implication, or broader theoretical contribution."
+  status: needs_redesign
+  owner: workflow
+  next_skill_route: last_skill
   causal: ["theory.exposure_to_innovation"]
   spans: [theory.span_decision_r1_theory_scope]
 }
@@ -197,7 +197,7 @@ bridge theory.measurement_exposure {
   method: "audited rollout date linked to unit identifiers"
   validity: "requires rollout dates and unit linkage before outcome measurement"
   commensurability: weak
-  note: "scope and mechanism strength remain author decisions"
+  note: "scope and mechanism strength remain required gates"
   spans: [theory.span_measurement_exposure]
 }
 

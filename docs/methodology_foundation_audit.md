@@ -80,7 +80,7 @@ Impact: current PASS means "the documentation names the framework", not "the wor
 
 ### P1. Reporting and revision schemas do not preserve all declared methodology fields
 
-The `academic-writing-scaffold` methodology section says it preserves inquiry or estimand, evidence source, support level, uncertainty, diagnosed limits, and author decisions. Its `claim_ledger.csv` schema does not require `target_inquiry`, `interpretation_boundary`, `uncertainty`, or `diagnosed_limit`.
+The `academic-writing-scaffold` methodology section says it preserves inquiry or estimand, evidence source, support level, uncertainty, diagnosed limits, and required gates. Its `claim_ledger.csv` schema does not require `target_inquiry`, `interpretation_boundary`, `uncertainty`, or `diagnosed_limit`.
 
 The `research-slides-builder` methodology section says slide claims should preserve inquiry or estimand, sample/scope, source artifact, uncertainty/caveat, privacy status, and interpretation boundary. Its `slide_map.csv` schema only requires `slide_id`, `role`, `claim`, `source_artifact`, `visual`, `risk`, and `action`.
 

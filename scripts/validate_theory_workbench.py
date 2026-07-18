@@ -31,12 +31,12 @@ REQUIRED_FILES = {
 }
 ALLOWED_WORKBENCH_STATUS = {
     "ready_for_aiss",
-    "needs_author_decision",
+    "needs_redesign",
     "needs_methods_review",
     "blocked",
     "not_applicable",
 }
-AUTHOR_ONLY_TERMS = {
+GATE_ONLY_TERMS = {
     "novelty",
     "theoretical contribution",
     "contribution",
@@ -84,9 +84,9 @@ def run_literature_validator(workbench_dir: Path) -> list[str]:
     return [detail or f"{lit_path}: literature theory synthesis validator failed"]
 
 
-def contains_author_only_term(row: dict[str, str]) -> bool:
+def contains_gate_only_term(row: dict[str, str]) -> bool:
     text = " ".join(row.values()).lower()
-    return any(term in text for term in AUTHOR_ONLY_TERMS)
+    return any(term in text for term in GATE_ONLY_TERMS)
 
 
 def is_model_linked(aiss_object: str) -> bool:
@@ -126,8 +126,8 @@ def validate_rivals(
         for column in ("rival_claim", "explains_well", "explains_poorly", "discriminating_observation", "evidence_needed"):
             if is_vague(row[column], min_len=12):
                 errors.append(f"{rid}: {column} is too vague for theory review")
-        if contains_author_only_term(row) and row["status"] == "ready_for_aiss":
-            errors.append(f"{rid}: author-owned theory contribution decisions cannot be ready_for_aiss")
+        if contains_gate_only_term(row) and row["status"] == "ready_for_aiss":
+            errors.append(f"{rid}: workflow-gated theory contribution decisions cannot be ready_for_aiss")
         if row["status"] == "ready_for_aiss":
             errors.append(f"{rid}: rival rows diagnose theory risk and must not be ready_for_aiss")
 
@@ -149,14 +149,14 @@ def validate_scopes(scope_rows: list[dict[str, str]], synthesis_ids: set[str]) -
             errors.append(f"invalid enum value: {error}")
         if row["status"] not in ALLOWED_WORKBENCH_STATUS:
             errors.append(f"{sid}: invalid status={row['status']}")
-        for column in ("who_where_when", "scope_logic", "boundary_failure_mode", "observable_implication", "author_decision_needed"):
+        for column in ("who_where_when", "scope_logic", "boundary_failure_mode", "observable_implication", "required_gate"):
             if is_vague(row[column], min_len=12):
                 errors.append(f"{sid}: {column} is too vague for scope mapping")
         source_ids = parse_semicolon_list(row["source_ids"])
         if not source_ids and not row["source_ids"].startswith("not_applicable:"):
             errors.append(f"{sid}: source_ids must list source ids or not_applicable:<reason>")
-        if contains_author_only_term(row) and row["status"] == "ready_for_aiss":
-            errors.append(f"{sid}: author-owned theory contribution decisions cannot be ready_for_aiss")
+        if contains_gate_only_term(row) and row["status"] == "ready_for_aiss":
+            errors.append(f"{sid}: workflow-gated theory contribution decisions cannot be ready_for_aiss")
     return errors
 
 

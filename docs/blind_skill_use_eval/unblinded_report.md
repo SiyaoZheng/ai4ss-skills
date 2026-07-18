@@ -17,4 +17,4 @@ Average `no_skill`: **39.0 / 100**
 Average `skill_guided`: **96.2 / 100**
 Average gain: **+57.2 points**
 
-Interpretation: in this structural simulation, skill-guided packets score higher because they expose audit artifacts, validation gates, and author-owned decisions. This is not evidence that any particular LLM will behave this way in live use.
+Interpretation: in this structural simulation, skill-guided packets score higher because they expose audit artifacts, validation gates, and workflow-gated decisions. This is not evidence that any particular LLM will behave this way in live use.

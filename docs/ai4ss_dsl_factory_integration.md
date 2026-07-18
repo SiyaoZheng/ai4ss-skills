@@ -19,7 +19,7 @@ That AST has connected workflow, evidence, and model regions:
 
 | region | declarations | role |
 |---|---|---|
-| Workflow lifecycle | `route`, `mida`, `decision` | Records candidate/selected routes, MIDA declarations, author decisions, and handoff state |
+| Workflow lifecycle | `route`, `mida`, `decision` | Records candidate/selected routes, MIDA declarations, required gates, and handoff state |
 | Evidence and discourse grounding | `paper`, `source`, `span`, `claim`, `relation`, `empirical`, `observation`, `coupling`, `artifact`, `adapter` | Records where concepts and claims come from and what empirical material they point to |
 | Research model | `attribute`, `concept`, `causal`, `bridge`, `edge`, `model`, `check`, `derive` | Represents the MIDA-facing model, causal implications, measurement/causal bridges, requested checks, and derived diagnostics |
 
@@ -37,10 +37,17 @@ The only supported deterministic entrypoint for skillpack validation is:
 python3 dsl/scripts/aiss.py compile path/to/research_model.aiss
 python3 dsl/scripts/aiss.py lint path/to/research_model.aiss
 python3 dsl/scripts/aiss.py run path/to/research_model.aiss
+python3 dsl/scripts/aiss.py transition path/to/research_model.aiss
 ```
 
 There are no standalone `aiss_*` DSL entrypoints for the research-factory
 skillpack. The skillpack contract is the v0.4 `aiss.py` entrypoint above.
+The `transition` command is the deterministic paper-artifact state machine: it
+reads the current `.aiss` object and emits `full_paper_goal`,
+`current_state.paper_artifact_state`, `paper_artifact_gaps`, and
+`next_paper_artifact`. `required_artifacts` and `blocked_reasons` remain in the
+JSON so relay audits can find the owner and evidence needed for a blocked gate,
+but they do not define completion.
 
 ## Required Shape
 
@@ -62,7 +69,7 @@ A production `research_model.aiss` should normally include:
 - seven `mida` declarations for the selected route: `model`, `inquiry`,
   `data_strategy`, `answer_strategy`, `diagnose`, `redesign`, and
   `report_boundary`
-- `decision` declarations for author-owned route, design, data, claim, or
+- `decision` declarations for workflow-gated route, design, data, claim, or
   handoff choices
 - `attribute` and `concept` declarations for the model vocabulary
 - `causal` and `bridge` declarations when a causal or measurement claim matters
@@ -102,15 +109,15 @@ The unified `.aiss` AST is the computable research object inside that spine.
 | Data strategy | `mida` row, source objects, empirical objects, measurement bridges, artifacts | sample flow, cleaning contract, linkage audit, missingness notes |
 | Answer strategy | `mida` row, requested checks, derives, adapters when available | analysis scripts, table/figure shells, run manifest |
 | Diagnose | `mida` row, lint diagnostics, workflow/model diagnostics, bridge coverage, commensurability signals | methods-review issue table, robustness outputs |
-| Redesign | `mida` row, changed IDs and structural diffs | author-decision view |
-| Report | `mida` row, bounded claim handoff through checked IDs | claim ledger, AI-use ledger, slides, reviewer-response scaffold |
+| Redesign | `mida` row, changed IDs and structural diffs | required-gate view |
+| Report | `mida` row, bounded claim handoff through checked IDs | paper-section artifacts, figure/table bundle, references, full paper source, full paper PDF; claim and AI-use ledgers remain supporting gates where required |
 
 ## Skillpack Integration
 
 | local skill | relationship to `.aiss` v0.4 |
 |---|---|
 | `research-starter` | Creates or updates provisional `route` declarations and mirrors them as route cards with `route_decl_id`; it does not finalize model claims |
-| `study-design-builder` | Selects a `route`, writes the seven `mida` declarations with `mida_id`, records author choices as `decision` declarations with `decision_decl_id`, owns `research_model.aiss`, `ai4ss_check_report.txt`, and MIDA-to-model mapping when conceptual or causal structure matters |
+| `study-design-builder` | Selects a `route`, writes the seven `mida` declarations with `mida_id`, records workflow-gated choices as `decision` declarations with `decision_decl_id`, owns `research_model.aiss`, `ai4ss_check_report.txt`, and MIDA-to-model mapping when conceptual or causal structure matters |
 | `literature-matrix` | Produces source-grounded rows and, when a source affects the model, compiles deterministic evidence fragments with `compile_evidence.py` |
 | `research-data-builder` | Preserves `ai4ss_model_path`, concept/causal/bridge IDs, and routes survey cleaning through `codebook-parse`, `cleaning-contract`, and `cleaning-execute` when relevant |
 | `research-analysis-runner` | Requires `analysis_readiness_check.csv` and links outputs back to model, concept, causal, bridge, or claim IDs |
@@ -128,7 +135,7 @@ confirmed the intended staged behavior for a blank-slate topic:
   cards, a minimum viable study, stop reasons, and optional candidate `.aiss`
   `route` declarations.
 - `study-design-builder` is the route-to-design skill. With no selected route,
-  it should stop or route back to `research-starter` / `ask_author`; after a
+  it should stop or route back to `research-starter` / `last_skill`; after a
   route exists, it writes the selected route, exactly seven `mida` declarations,
   decisions, and model/check declarations when warranted.
 
@@ -144,7 +151,7 @@ confirmed the intended staged behavior for a blank-slate topic:
 | G6 Data contract exists when data are transformed | DDI metadata, cleaning contract, execution audit, sample flow | raw-to-analysis path depends on memory or undocumented recodes |
 | G7 Analysis readiness passed | `analysis_readiness_check.csv` | clean data do not match inquiry or bridge alignment is unchecked |
 | G8 Analysis links back to design | analysis manifest with model/claim references | tables or figures cannot be traced to declared inquiry |
-| G9 Reporting bounded | claim ledger and AI-use ledger where required | unchecked causal/measurement claims become prose |
+| G9 Reporting bounded | paper artifact sequence, full paper source, full paper PDF, and supporting ledgers where required | unchecked causal/measurement claims become prose or the run ends without a paper |
 
 ## Evaluation
 
@@ -156,8 +163,21 @@ chain:
 rough topic -> .aiss route declarations -> .aiss MIDA declarations ->
 .aiss model/check ->
 literature/data gates -> analysis readiness -> analysis manifest ->
-bounded claim handoff
+full paper artifact
 ```
 
 That evaluation checks artifact continuity and gate coverage. It does not prove
 field-level validity or replace independent expert review.
+
+The state-machine relay audit is the lower-level transition test:
+
+```bash
+PYTHONPATH=scripts python3 scripts/test_factory_contracts.py
+PYTHONPATH=scripts python3 scripts/run_skill_handoff_audit_fixtures.py
+```
+
+It uses `docs/evals/factory-relay/fixtures/valid_relay.aiss` as the known-good
+relay and mutates it into failure cases. The audit must reject missing MIDA
+report boundaries, misrouted repair rows, parallel Markdown/CSV/JSON workflow
+state, missing downstream consumers, dropped empirical artifact links, route
+drift, and synthetic/demo fallback analysis.

@@ -21,7 +21,7 @@ conditions are:
 - `generic_agent`: careful research-assistant planning without the local
   `.aiss` factory gates.
 - `ai4ss_factory`: workflow constrained by MIDA, `.aiss` model objects, local
-  sidecars, validators, and author-decision boundaries.
+  sidecars, validators, and required-gate boundaries.
 
 ## Blinding
 
@@ -41,7 +41,7 @@ The two condition outputs are randomly assigned to packet IDs with seed `2026070
 - `ai4ss_model_check`: 15 points
 - `evidence_data_chain`: 15 points
 - `analysis_loop`: 15 points
-- `boundary_author_decision`: 15 points
+- `boundary_required_gate`: 15 points
 - `end_to_end_continuity`: 10 points
 
 The rubric is intentionally artifact- and gate-oriented. It does not score
