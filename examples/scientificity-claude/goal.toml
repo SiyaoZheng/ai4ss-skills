@@ -1,0 +1,86 @@
+name = "scientificity-publication-pdf"
+# Copy this file to the scientificity repository root before running goal-cli.
+# Same setup as examples/scientificity/goal.toml, but both passes run through
+# Claude Code (`claude`) instead of Codex: tik reviews via claude_code_file and
+# tok repairs via claude_code_goal. The /apsr-review slash skill must be
+# installed in Claude Code.
+state_dir = ".goal"
+runs_dir = ".goal/runs"
+
+[artifact]
+path = "output/scientificity-paper.pdf"
+copy_as = "full_paper.pdf"
+
+[producer]
+command = "make all"
+
+[tik]
+provider = "claude_code_file"
+timeout_seconds = 1800
+max_file_size_bytes = 25000000
+
+[tik.verdict]
+ready_field = "artifact_ready"
+required_fields = ["artifact_ready", "blocking_objections"]
+
+[tik.prompt]
+text = """
+/apsr-review
+
+Review full_paper.pdf. Judge it by the standard for a publication-ready APSR
+manuscript.
+
+IMPORTANT: Do not assume the artifact already has the form or completeness of
+an academic paper. It may be an automatic pipeline output: incomplete,
+audit-like, AI-flavored, mechanically stitched, or plainly unlike a journal
+article. If you see those defects, state them sharply and treat them as blocking publication problems.
+
+Write a referee report.
+
+End with one fenced JSON verdict block for goal-cli routing:
+```json
+{
+  "artifact_ready": false,
+  "blocking_objections": ["short label for each fatal objection"]
+}
+```
+Set artifact_ready=true only if the PDF is ready for publication; then
+blocking_objections=[].
+"""
+
+[tok]
+provider = "claude_code_goal"
+sandbox = "danger-full-access"
+write_dirs = ["writing", "src"]
+run_cwd = "."
+runtime_write_dirs = ["output", "build", "logs"]
+
+[tok.prompt]
+template = """
+Make the editable source yield, via `{producer_command}`, a manuscript PDF that
+meets the APSR standards. Your work should address the concerns raised in {tik_review_path}.
+"""
+
+[no_mistakes]
+enabled = true
+binary = "no-mistakes"
+skip_steps = []
+intent = """
+Drive one fully automatic scientificity publication-PDF heartbeat: rebuild the
+current PDF, run a fresh PDF-only referee review through goal-cli, apply source
+changes through the manuscript/code entries writing/ and src/, use data/ as
+read-only project input unless a narrower safe data subdirectory is explicitly
+configured, run the workflow freely so generated artifacts can refresh, keep the
+Git worktree clean between heartbeats, and gate the checkpoint with no-mistakes.
+"""
+
+[observability]
+service_name = "goal-cli"
+endpoint = "http://localhost:4318/v1/traces"
+timeout_seconds = 5
+
+[safety]
+generated_dirs = ["output", "build", "logs"]
+max_blocker_repeats = 3
+lock_stale_seconds = 21600
+max_history_items = 50

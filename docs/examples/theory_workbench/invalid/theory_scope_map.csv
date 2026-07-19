@@ -1,2 +1,0 @@
-route_id,design_source,target_inquiry,scope_id,target_synthesis_id,target_aiss_object,who_where_when,scope_logic,boundary_failure_mode,observable_implication,source_ids,author_decision_needed,status,next_skill_route
-R1,docs/study_design_declaration.csv,effect of city platform exposure on firm green patent count,BAD_SC1,BAD1,causal:theory.exposure_to_innovation,everywhere,general,none,anything,snippet_only_2024,"Novelty is resolved and theoretical contribution is established.",ready_for_aiss,study-design-builder

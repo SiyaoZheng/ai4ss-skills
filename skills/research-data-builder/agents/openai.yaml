@@ -1,4 +1,0 @@
-interface:
-  display_name: "Research Data Builder"
-  short_description: "Construct defensible political-science research data"
-  default_prompt: "Use $research-data-builder to construct analytical data whose units, sample, links, and measures correspond to this study."

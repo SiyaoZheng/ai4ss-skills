@@ -1,2 +1,0 @@
-route_id,design_source,target_inquiry,rival_id,target_synthesis_id,target_aiss_object,rival_claim,explains_well,explains_poorly,discriminating_observation,evidence_needed,status,next_skill_route
-R1,docs/study_design_declaration.csv,effect of city platform exposure on firm green patent count,BAD_RV1,BAD1,causal:theory.exposure_to_innovation,"There may be other reasons.",unclear,unclear,none,none,ready_for_aiss,study-design-builder

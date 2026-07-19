@@ -1,4 +1,0 @@
-interface:
-  display_name: "Methods Reviewer"
-  short_description: "Conduct an independent empirical methods review"
-  default_prompt: "Use $methods-reviewer to reconstruct this study, examine the vulnerabilities most likely to change its conclusions, and propose feasible revisions."

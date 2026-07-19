@@ -1,241 +1,374 @@
+<!-- markdownlint-disable MD013 MD033 MD041 -->
+
 <p align="center">
-  <img src="docs/assets/readme/ai4ss-logo.png" alt="AI4SS 智輔社科大篆印章标志" width="120">
+  <img src=".github/assets/goal-cli-mark-generated.png" alt="goal-cli terminal wink logo" width="112" />
 </p>
 
-<div align="center">
+<h1 align="center">goal-cli</h1>
 
-# ai4ss-skills
+<p align="center">
+  <strong>Make agents finish THE THING.</strong>
+</p>
 
-### Research skills for empirical social science.
+<p align="center">
+  <a href="#quick-start"><strong>Quick Start</strong></a>
+  &nbsp;/&nbsp;
+  <a href="#name-the-thing">The Thing</a>
+  &nbsp;/&nbsp;
+  <a href="#what-it-does">What It Does</a>
+  &nbsp;/&nbsp;
+  <a href="#the-science-behind-it">Science</a>
+  &nbsp;/&nbsp;
+  <a href="#technical-details">Details</a>
+</p>
 
-A collection of skills for doing the substantive work of quantitative political science:
-formulating questions, reading literatures, developing designs, finding and constructing data,
-analyzing evidence, reviewing methods, writing, revising, and presenting research.
+<p align="center">
+  <strong>English</strong>
+  &nbsp;/&nbsp;
+  <a href="README.zh-CN.md">中文</a>
+</p>
 
-[![License: GPL-3.0](https://img.shields.io/badge/License-GPL--3.0-blue.svg)](LICENSE)
-[![Codex Plugin](https://img.shields.io/badge/Codex-plugin-10A37F)](.codex-plugin/plugin.json)
-[![Claude Code Plugin](https://img.shields.io/badge/Claude%20Code-plugin-blueviolet)](.claude-plugin/plugin.json)
+<p align="center">
+  <a href="https://github.com/SiyaoZheng/GEZHI"><img alt="GitHub stars" src="https://img.shields.io/github/stars/SiyaoZheng/goal-cli?style=for-the-badge&amp;logo=github&amp;label=star%20goal-cli&amp;color=181717&amp;labelColor=ffffff" /></a>
+  <img alt="One prompt" src="https://img.shields.io/badge/one%20prompt-THE%20THING-43d17a?style=for-the-badge&amp;labelColor=07110c" />
+  <img alt="Adaptive heartbeat" src="https://img.shields.io/badge/heartbeat-adaptive-f4c542?style=for-the-badge&amp;labelColor=171204" />
+  <img alt="PDFs sites reports apps" src="https://img.shields.io/badge/works%20for-PDFs%20%7C%20sites%20%7C%20reports%20%7C%20apps-6aa9ff?style=for-the-badge&amp;labelColor=07101f" />
+  <img alt="No code review required" src="https://img.shields.io/badge/no%20code%20review%20required-check%20the%20thing-f07a5f?style=for-the-badge&amp;labelColor=1b0905" />
+</p>
 
-**[Purpose](#purpose) · [Install](#install) · [Research skills](#research-skills) · [Using the skills](#using-the-skills) · [Development](#development)**
+Coding agents love code.
 
-</div>
+You want the thing.
 
-## Purpose
+Not a diff.
 
-Good empirical research depends on judgment: whether a question matters, whether a proposed
-comparison is informative, whether a measure represents the intended concept, whether the available
-data support the target population and period, and whether an interpretation is warranted by the
-evidence. These skills are written around those decisions.
+Not a status update.
 
-The empirical center of the collection is political science. Its main orientation is contemporary
-quantitative research, including causal inference in the potential-outcomes tradition, but it does not
-assume that every worthwhile study is causal. Descriptive, measurement, interpretive, and
-theory-developing work should be judged by the questions they actually ask.
+Not "almost done."
 
-Several principles run across the research skills:
+The thing.
 
-- Begin with the political phenomenon and the scholarly problem, not a preferred method or software
-  package.
-- Read the relevant literature before declaring a contribution. Search both Chinese- and
-  English-language scholarship when the subject requires it, and verify important claims in the
-  underlying work.
-- Treat institutional knowledge, case knowledge, measurement, sampling, and data construction as part
-  of research design.
-- State causal targets and identifying comparisons precisely. Do not require a DAG or an SCM framing
-  when the study proceeds in another causal-inference tradition.
-- Let weak data, failed diagnostics, and contrary findings change the design or claim.
-- Treat feasibility and likely informativeness as matters for reasoned assessment. Formal power or
-  simulation belongs only where the design and assumptions make it meaningful.
-- Keep statistical computing subordinate to the estimand, comparison, measurement, and evidence.
-- Write with the restraint of a scholar: distinguish what is established, suggested, uncertain, and
-  not identified.
+The PDF.
 
-The skills do not form a compulsory pipeline. Each owns a distinct research task and can be used on
-its own. A project may return to the same skill several times as its question, evidence, and argument
-develop.
+The website.
 
-## Install
+The report.
 
-Clone the repository:
+The chart pack.
 
-```bash
-git clone https://github.com/SiyaoZheng/ai4ss-skills.git
-cd ai4ss-skills
-```
+The app demo.
 
-### Codex
+`goal-cli` keeps the thing in the center.
 
-```bash
-codex plugin marketplace add /path/to/ai4ss-skills
-codex plugin add ai4ss-skills@ai4ss-skills-local
-```
+It rebuilds the thing.
 
-The Codex manifest is [`.codex-plugin/plugin.json`](.codex-plugin/plugin.json). The repository-local
-marketplace entry is [`.agents/plugins/marketplace.json`](.agents/plugins/marketplace.json).
+It checks the thing.
 
-### Claude Code
+If the thing is not good enough, the agent gets another work pass.
 
-```bash
-claude plugin marketplace add /path/to/ai4ss-skills
-claude plugin install ai4ss-skills@ai4ss-skills-local
-```
+Chat confidence does not count.
 
-The Claude Code manifest and marketplace entry are under [`.claude-plugin/`](.claude-plugin/).
+The thing does.
 
-### Individual skills
+## Quick Start
 
-Where a runtime accepts directory-format skills directly, copy or symlink the selected
-`skills/<skill-name>/` directory into that runtime's skill directory. The canonical source is always
-[`skills/`](skills/); `.codex/skills` and `.agents/skills` are repository-local symlinks, not duplicate
-source trees.
-
-## Research skills
-
-### Developing a study
-
-| Skill | Research task |
-|---|---|
-| [`research-starter`](skills/research-starter/SKILL.md) | Develop a topic, empirical pattern, policy change, source collection, or dataset into a consequential research problem. |
-| [`literature-matrix`](skills/literature-matrix/SKILL.md) | Find, verify, read, compare, and synthesize current and foundational Chinese- and English-language scholarship. |
-| [`study-design-builder`](skills/study-design-builder/SKILL.md) | Develop a defensible empirical design from the question, theory, institutional setting, and available evidence. |
-| [`public-data-sources`](skills/public-data-sources/SKILL.md) | Locate and assess public data by construct, population, unit, coverage, comparability, access, and provenance. |
-| [`research-data-builder`](skills/research-data-builder/SKILL.md) | Construct analytical data whose sample, links, variables, and missingness correspond to the inquiry. |
-
-### Analyzing and judging evidence
-
-| Skill | Research task |
-|---|---|
-| [`research-analysis-runner`](skills/research-analysis-runner/SKILL.md) | Conduct empirical analysis iteratively, using descriptive evidence, estimation, diagnostics, and sensitivity to revise the interpretation. |
-| [`analysis-explainer`](skills/analysis-explainer/SKILL.md) | Explain statistical results in terms of the research question, quantities, comparisons, uncertainty, and limits. |
-| [`methods-reviewer`](skills/methods-reviewer/SKILL.md) | Reconstruct a study's inferential argument, identify decisive vulnerabilities, run targeted checks, and propose feasible repairs. |
-| [`did-expert`](skills/did-expert/SKILL.md) | Evaluate identification and inference in difference-in-differences and related panel designs. |
-
-### Writing, revision, and presentation
-
-| Skill | Research task |
-|---|---|
-| [`academic-writing-scaffold`](skills/academic-writing-scaffold/SKILL.md) | Develop and revise a political-science argument and working prose in light of the evidence. |
-| [`reviewer-response`](skills/reviewer-response/SKILL.md) | Treat peer criticism as a further round of research and revise the study and working response accordingly. |
-| [`top-journal-figures`](skills/top-journal-figures/SKILL.md) | Develop empirical figures that make the relevant comparison, magnitude, uncertainty, and limitations visible. |
-| [`latex-tables`](skills/latex-tables/SKILL.md) | Construct honest, readable tables whose rows and columns express a substantive comparison. |
-| [`research-slides-builder`](skills/research-slides-builder/SKILL.md) | Develop a research talk whose argument and evidence can be followed and criticized by a live audience. |
-
-### Specialized data and computing support
-
-| Skill | Use |
-|---|---|
-| [`codebook-parse`](skills/codebook-parse/SKILL.md) | Parse survey data and codebooks into DDI-oriented metadata. |
-| [`cleaning-contract`](skills/cleaning-contract/SKILL.md) | Declare survey recoding and cleaning decisions before transformation. |
-| [`cleaning-execute`](skills/cleaning-execute/SKILL.md) | Apply a declared survey-cleaning contract and retain the resulting audit information. |
-| [`r-performance`](skills/r-performance/SKILL.md) | Diagnose and improve R performance when computation is the bottleneck. |
-| [`sjtu-hpc`](skills/sjtu-hpc/SKILL.md) | Work with SJTU HPC, Slurm, transfer, and cluster jobs. |
-
-The repository also includes [`codex`](skills/codex/SKILL.md) and
-[`linear-issue`](skills/linear-issue/SKILL.md) as development utilities. They are not part of the
-empirical-research core.
-
-## Using the skills
-
-Invoke the skill that owns the present intellectual task and give it the actual research materials.
-For example:
+Paste one sentence into your coding agent.
 
 ```text
-Use $research-starter to develop this policy change into a research problem and identify the
-strongest rival explanations.
-
-Use $literature-matrix to find and synthesize the current Chinese- and English-language scholarship
-on this question, including disagreements in theory, measurement, and design.
-
-Use $did-expert to assess the estimand, comparison groups, treatment timing, identifying assumptions,
-diagnostics, and interpretation in this study.
+Hi, read https://github.com/SiyaoZheng/GEZHI/blob/main/llms.txt and do what it says.
 ```
 
-The useful result is not a generic checklist. It is a research judgment grounded in the materials at
-hand: a revised question, a better comparison, a measurement decision, an account of conflicting
-evidence, a narrower claim, or a clearer argument.
+That is it.
 
-## Scope and limits
+The details live in [`llms.txt`](llms.txt).
 
-These skills can improve the quality and discipline of research work, but they cannot establish that
-an empirical claim is true. In particular, they do not replace close reading, knowledge of the case,
-inspection of the data, ethical review, or responsibility for the final argument.
+The agent reads them.
 
-Method-specific guidance is necessarily design-specific. The collection currently includes a deep
-DID skill. Instrumental variables, regression discontinuity, experiments, surveys, networks, spatial
-analysis, and other designs should receive their own specialist treatment rather than being compressed
-into a generic methods checklist.
+You judge the thing.
 
-This repository also contains experimental DSL, evaluation, and harness code developed in related
-projects. Those systems are separate from the intellectual content of the skills. `.aiss` declarations,
-workflow gates, manifests, routing, and approval logic are not prerequisites for using or extending the
-research skills.
+## Name The Thing
 
-## Development
+<p align="center">
+  <img src=".github/assets/goal-cli-personas-human.png" alt="Scholars, designers, hobbyists, accountants, and analysts each holding the thing they need a coding agent to finish" width="100%" />
+</p>
 
-### Source layout
+Different people.
 
-- Every installable skill lives under `skills/<skill-name>/`.
-- `skills/` is the only source tree. Do not add top-level `*.skill` archives or duplicate skill
-  directories under runtime-specific paths.
-- A skill's `SKILL.md` states its research task and judgment. Supporting references should add
-  substantive or methodological depth, not another control system.
-- Keep skill names stable unless a deliberate repository-wide change is required.
+Different things.
 
-### Writing and revising skills
+Same rule.
 
-A research skill should:
+Name it.
 
-1. begin from a recognizable scholarly problem;
-2. explain what evidence must be inspected and why;
-3. identify the consequential judgments, assumptions, and alternatives;
-4. show how findings can revise the question, design, measure, analysis, or claim;
-5. use the language of empirical social science rather than software orchestration; and
-6. keep computing guidance as thin as the research task permits.
+Make the agent come back to it.
 
-Do not place harness concerns inside a skill. Routing, approval, cross-skill handoffs, schemas,
-validators, run manifests, and researcher-confirmation mechanics belong to the surrounding system when
-such a system is needed.
+| Who | What they say |
+| --- | --- |
+| <img alt="Scholar" src="https://img.shields.io/badge/scholar-34d399?style=flat-square&amp;labelColor=062014" /> | "Show me the PDF." |
+| <img alt="Designer" src="https://img.shields.io/badge/designer-f59e0b?style=flat-square&amp;labelColor=241504" /> | "Show me the poster." |
+| <img alt="Hobbyist" src="https://img.shields.io/badge/hobbyist-60a5fa?style=flat-square&amp;labelColor=071426" /> | "Does my app run?" |
+| <img alt="Accountant" src="https://img.shields.io/badge/accountant-a78bfa?style=flat-square&amp;labelColor=160d24" /> | "Do the numbers tie?" |
+| <img alt="Analyst" src="https://img.shields.io/badge/analyst-f87171?style=flat-square&amp;labelColor=240909" /> | "Does the chart move?" |
 
-### Checks
+## What It Does
 
-After changing skills or plugin metadata, run:
+One prompt.
+
+One thing.
+
+One heartbeat when the saved schedule says work is due.
+
+| Move | What happens |
+| --- | --- |
+| <img alt="Rebuild" src="https://img.shields.io/badge/rebuild-22c55e?style=flat-square&amp;labelColor=052e16" /> | Rebuild the thing. |
+| <img alt="Check" src="https://img.shields.io/badge/check-eab308?style=flat-square&amp;labelColor=332600" /> | Check the thing. |
+| <img alt="Source" src="https://img.shields.io/badge/source-3b82f6?style=flat-square&amp;labelColor=082f49" /> | Change only allowed source files. |
+| <img alt="Repeat" src="https://img.shields.io/badge/repeat-ef4444?style=flat-square&amp;labelColor=3b0909" /> | Try again on the next heartbeat. |
+
+The question is not:
+
+"Did the agent change code?"
+
+The question is:
+
+"Is the thing better?"
+
+| You care about | The agent must prove |
+| --- | --- |
+| A paper | The PDF is rebuilt and worth reading. |
+| A website | The built page opens and looks right. |
+| A report | The numbers and narrative are inspectable. |
+| A chart pack | The exported charts are current. |
+| A demo app | The app runs in the expected state. |
+
+## The Science Behind It
+
+People are calling this
+[loop engineering](https://addyosmani.com/blog/loop-engineering/).
+
+The hype says:
+
+Do not write one perfect prompt.
+
+Build a loop.
+
+Make it run.
+
+Make it check.
+
+Make it try again.
+
+`goal-cli` is that idea for normal people.
+
+Every heartbeat asks:
+
+Did the thing get better?
+
+If yes, stop.
+
+If no, change source and come back on the next due heartbeat.
+
+Sources: [Addy Osmani](https://addyosmani.com/blog/loop-engineering/),
+[LangChain](https://www.langchain.com/blog/the-art-of-loop-engineering/),
+[ADTMAG](https://adtmag.com/articles/2026/07/01/loop-engineering-emerges-as-developers-put-ai-coding-agents-on-repeat.aspx).
+
+<details id="technical-details">
+<summary><strong>Technical Details</strong></summary>
+
+### How It Works
+
+The setup file is `goal.toml`. It answers a few plain questions:
+
+| Question | In `goal.toml` |
+| --- | --- |
+| What finished output should I inspect? | `[artifact].path` |
+| How do I rebuild it? | `[producer].command` |
+| How should it be checked? | `[tik]` |
+| Which source files count as valid tok edits? | `[tok].write_dirs` |
+| Where may runtime commands produce side effects? | `[tok].runtime_write_dirs` |
+
+You may see these short names in the config and deeper docs:
+
+| Name | Plain meaning |
+| --- | --- |
+| `artifact` | The finished output you can inspect. |
+| `producer` | The command that rebuilds that output. |
+| `tik` | The reviewer that rejects weak output. |
+| `tok` | The coding agent that changes source files under the audited source scope. |
+| `.goal/` | The folder where runs, reviews, and state are recorded. |
+
+Example:
+
+```toml
+name = "paper-ready"
+state_dir = ".goal"
+runs_dir = ".goal/runs"
+
+[artifact]
+path = "outputs/writing/full_paper.pdf"
+copy_as = "full_paper.pdf"
+
+[producer]
+command = "python3 scripts/orchestrator.py --full"
+
+[tik]
+provider = "codex_file"
+timeout_seconds = 1800
+max_file_size_bytes = 25000000
+max_output_tokens = 4096
+
+[tok]
+provider = "codex_goal"
+write_dirs = ["src", "data"]
+run_cwd = "."
+runtime_write_dirs = ["outputs", "build", "logs"]
+sandbox = "workspace-write"
+codex_features = ["goals"]
+
+[safety]
+generated_dirs = ["outputs", "build", "logs"]
+max_blocker_repeats = 3
+```
+
+To run several reviewers at once, move provider-specific fields into
+`[[tik.providers]]`. The heartbeat runs them in parallel and hands tok one
+aggregate `tik.md` containing every provider result.
+
+```toml
+[tik]
+timeout_seconds = 1800
+
+[[tik.providers]]
+label = "codex"
+provider = "codex_file"
+
+[[tik.providers]]
+label = "claude"
+provider = "claude_code_file"
+
+[[tik.providers]]
+label = "checklist"
+provider = "checklist"
+command = "python3 scripts/checklist_review.py"
+```
+
+Use `codex_app_server` instead of `codex_goal` when tok should drive Codex
+through `codex app-server --stdio` rather than `codex exec`. Swap
+`codex_file` for `claude_code_file` and `codex_goal` for `claude_code_goal` to
+run the same loop through Claude Code instead of Codex;
+[`examples/scientificity-claude/goal.toml`](examples/scientificity-claude/goal.toml)
+is the all-Claude version of this setup.
+
+Use `checklist` for command-backed checklist reviews that should appear as
+their own tik provider in ledgers and state.
+
+The important boundary is simple: the fixing agent edits source, but the final
+result has to be rebuilt and checked before the work counts as done.
+
+### Perpetual Goals
+
+Perpetual mode is explicit opt-in. It keeps one fixed substantive goal alive
+through bounded heartbeats, sleeps when the artifact is healthy, and applies
+model or producer changes only through an exact file-operation lease:
+
+```toml
+[perpetual]
+enabled = true
+substantive_goal = "Resolve the fixed substantive objections in the paper."
+
+[lease]
+version = "paper-v1"
+allow_shell = true
+allow_network = false
+
+[[lease.rules]]
+effect = "allow"
+operations = ["create", "modify", "delete", "rename"]
+paths = ["manuscript/**", "analysis/**"]
+
+[[lease.rules]]
+effect = "allow"
+operations = ["create", "modify"]
+paths = ["output/paper.pdf"]
+```
+
+Healthy inspection defaults to 6 hours, active or blocked work to 30 minutes,
+and provider failures to 5 minutes, 30 minutes, then 2 hours capped. The OS
+timer wakes every 5 minutes by default for perpetual goals, but `next_due_at`
+short-circuits work that is not due. `goal-cli state` shows the immutable goal
+binding, bounded attempt evidence, and transaction recovery journal. Use
+`goal-cli stop` and `goal-cli resume` for durable operator control without
+terminal completion. See the
+[full perpetual and lease schema](docs/config-schema.md#perpetual-mode-and-capability-leases).
+
+### Installing From This Checkout
+
+If you are working inside the `goal-cli` repository itself:
 
 ```bash
-python3 scripts/validate_codex_plugin.py
-python3 scripts/validate_claude_plugin.py
+python3 -m venv .venv
+source .venv/bin/activate
+python3 -m pip install --upgrade pip
+python3 -m pip install -e '.[openai]'
+goal-cli --help
 ```
 
-The experimental DSL and harness have their own tests. Run those only when changing those subsystems;
-they are not acceptance criteria for the scholarly content of a skill.
+Use the basic install without OpenAI support when you only need local checks:
 
-## Repository map
-
-| Path | Purpose |
-|---|---|
-| [`skills/`](skills/) | Canonical source for installable skills |
-| [`.codex-plugin/`](.codex-plugin/) | Codex plugin manifest |
-| [`.claude-plugin/`](.claude-plugin/) | Claude Code plugin manifest and marketplace |
-| [`docs/`](docs/) | Background, evaluation, and experimental subsystem documentation |
-| [`dsl/`](dsl/) | Experimental `.aiss` language implementation |
-| [`scripts/`](scripts/) | Plugin checks and experimental subsystem utilities |
-| [`references/`](references/) | External standards and reference material used by selected skills or subsystems |
-
-## Cite
-
-```bibtex
-@software{ai4ss_skills_2026,
-  author    = {Zheng, Siyao},
-  title     = {ai4ss-skills: Research Skills for Empirical Social Science},
-  year      = {2026},
-  url       = {https://github.com/SiyaoZheng/ai4ss-skills},
-  note      = {Released at AI for Social Science (AI4SS) Online Lecture Series}
-}
+```bash
+python3 -m pip install -e .
 ```
 
-## License
+### Commands
 
-GPL-3.0. Derivative works must carry the same license.
+| Command | What it does |
+| --- | --- |
+| `goal-cli init` | Create a starter `goal.toml`. |
+| `goal-cli validate` | Check that the config is shaped correctly. |
+| `goal-cli doctor` | Check whether the local setup is ready to run. |
+| `goal-cli run --dry-run` | Render the prompts and run folder without calling repair agents. |
+| `goal-cli run --max-minutes 600` | Run one bounded work pass. |
+| `goal-cli heartbeat install --max-minutes 600` | Install a per-user OS timer; perpetual goals default to a five-minute wake-up. |
+| `goal-cli heartbeat status` | Show the OS timer status and managed paths. |
+| `goal-cli stop` / `goal-cli resume` | Persistently stop or resume a perpetual goal without completing it. |
+| `goal-cli tik` | Rebuild and review the output without running a repair pass. |
+| `goal-cli state` | Show the current saved state. |
+| `goal-cli cleanup` | Clear stale locks after an interrupted run. |
+| `goal-cli reset` | Remove saved state while keeping run records. |
 
-Exception: `skills/codex/` is based on
-[@davila7](https://github.com/davila7)'s original Codex skill and retains its MIT license in
-[`skills/codex/LICENSE`](skills/codex/LICENSE).
+### Agent Skills
+
+If your coding agent supports skills, install the setup skill:
+
+```bash
+mkdir -p "$HOME/.codex/skills"
+cp -R skills/goal-cli-project-setup "$HOME/.codex/skills/"
+```
+
+Use [`goal-cli-project-setup`](skills/goal-cli-project-setup/SKILL.md) for real
+projects. Use
+[`goal-cli-template-author`](skills/goal-cli-template-author/SKILL.md) only when
+you are improving reusable examples or docs in this repository.
+
+### Docs
+
+| Document | Use it when |
+| --- | --- |
+| [Installing goal-cli](docs/installation.md) | You need more install details. |
+| [CLI reference](docs/cli-reference.md) | You want the full command help. |
+| [goal.toml schema](docs/config-schema.md) | You are editing config by hand. |
+| [goal-cli Skills](docs/skills.md) | You want agent-facing setup instructions. |
+| [Thing-first notes](docs/artifact-goal-notes.md) | You want the design rationale. |
+| [Codex implementation report](docs/codex-goal-openai-implementation-report.md) | You want the Codex `/goal` integration details. |
+| [PDF-first example](examples/scientificity/goal.toml) | You want a research-paper example. |
+| [PDF-first example, Claude Code](examples/scientificity-claude/goal.toml) | You want the same example with both passes run by Claude Code. |
+
+### Status
+
+`goal-cli` is early local tooling, currently version `0.1.0`.
+
+The project is distributed under the [MIT License](LICENSE). See
+[SECURITY.md](SECURITY.md) for vulnerability reporting and
+[CHANGELOG.md](CHANGELOG.md) for release notes.
+
+</details>

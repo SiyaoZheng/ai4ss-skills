@@ -1,4 +1,0 @@
-interface:
-  display_name: "Reviewer Response"
-  short_description: "Revise research substantively under peer criticism"
-  default_prompt: "Use $reviewer-response to identify the substantive concerns in these reviews and revise the research and working response accordingly."

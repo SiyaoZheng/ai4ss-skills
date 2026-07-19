@@ -1,4 +1,0 @@
-interface:
-  display_name: "Top Journal Figures"
-  short_description: "Develop honest visual evidence for political-science research"
-  default_prompt: "Use $top-journal-figures to develop an empirical figure that makes the relevant comparison, uncertainty, and evidentiary limits clear."

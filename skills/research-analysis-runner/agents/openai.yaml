@@ -1,4 +1,0 @@
-interface:
-  display_name: "Research Analysis Runner"
-  short_description: "Conduct and interpret empirical political-science analysis"
-  default_prompt: "Use $research-analysis-runner to analyze these data, examine the decisive comparisons and uncertainties, and revise the interpretation where necessary."

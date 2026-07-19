@@ -1,4 +1,0 @@
-interface:
-  display_name: "Literature Matrix"
-  short_description: "Research and synthesize current Chinese and English literature"
-  default_prompt: "Use $literature-matrix to search, verify, read, and synthesize the Chinese- and English-language scholarship relevant to this question."

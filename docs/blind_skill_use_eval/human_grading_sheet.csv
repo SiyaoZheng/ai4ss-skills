@@ -1,9 +1,0 @@
-grader_id,packet_id,case_id,artifacts_0_30,traceability_0_20,boundary_0_20,validation_0_15,author_decision_0_15,total_0_100,notes
-,P001,data_provenance,,,,,,,
-,P002,data_provenance,,,,,,,
-,P003,literature_evidence,,,,,,,
-,P004,literature_evidence,,,,,,,
-,P005,claim_discipline,,,,,,,
-,P006,claim_discipline,,,,,,,
-,P007,revision_trace,,,,,,,
-,P008,revision_trace,,,,,,,

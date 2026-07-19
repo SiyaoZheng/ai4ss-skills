@@ -1,4 +1,0 @@
-interface:
-  display_name: "DID Expert"
-  short_description: "Evaluate identification and inference in a DID design"
-  default_prompt: "Use $did-expert to evaluate the estimand, comparisons, assumptions, diagnostics, and interpretation in this DID study."

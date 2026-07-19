@@ -1,0 +1,301 @@
+# Instincts generated from https://github.com/SiyaoZheng/goal-cli
+# Generated: 2026-07-18T06:52:37.634Z
+# Version: 2.0
+# NOTE: This file supplements (does not replace) any existing curated instincts.
+# High-confidence manually curated instincts should be preserved alongside these.
+
+---
+id: goal-cli-commit-conventional
+trigger: "when writing a commit message"
+confidence: 0.85
+domain: git
+source: repo-analysis
+source_repo: https://github.com/SiyaoZheng/goal-cli
+---
+
+# Goal Cli Commit Conventional
+
+## Action
+
+Use conventional commit format with prefixes: docs
+
+## Evidence
+
+- 1 commits analyzed
+- Detected conventional commit pattern
+- Examples: docs: update perpetual runtime documentation
+
+---
+id: goal-cli-commit-length
+trigger: "when writing a commit message"
+confidence: 0.6
+domain: git
+source: repo-analysis
+source_repo: https://github.com/SiyaoZheng/goal-cli
+---
+
+# Goal Cli Commit Length
+
+## Action
+
+Keep commit messages concise (~44 characters)
+
+## Evidence
+
+- Average commit message length: 44 chars
+- Based on 1 commits
+
+---
+id: goal-cli-naming-files
+trigger: "when creating a new file"
+confidence: 0.8
+domain: code-style
+source: repo-analysis
+source_repo: https://github.com/SiyaoZheng/goal-cli
+---
+
+# Goal Cli Naming Files
+
+## Action
+
+Use PascalCase naming convention
+
+## Evidence
+
+- Analyzed file naming patterns in repository
+- Dominant pattern: PascalCase
+
+---
+id: goal-cli-import-relative
+trigger: "when importing modules"
+confidence: 0.75
+domain: code-style
+source: repo-analysis
+source_repo: https://github.com/SiyaoZheng/goal-cli
+---
+
+# Goal Cli Import Relative
+
+## Action
+
+Use relative imports for project files
+
+## Evidence
+
+- Import analysis shows relative import pattern
+- Example: import { x } from '../lib/x'
+
+---
+id: goal-cli-export-style
+trigger: "when exporting from a module"
+confidence: 0.7
+domain: code-style
+source: repo-analysis
+source_repo: https://github.com/SiyaoZheng/goal-cli
+---
+
+# Goal Cli Export Style
+
+## Action
+
+Prefer named exports
+
+## Evidence
+
+- Export pattern analysis
+- Dominant style: named
+
+---
+id: goal-cli-test-separate
+trigger: "when writing tests"
+confidence: 0.8
+domain: testing
+source: repo-analysis
+source_repo: https://github.com/SiyaoZheng/goal-cli
+---
+
+# Goal Cli Test Separate
+
+## Action
+
+Place tests in the tests/ or __tests__/ directory, mirroring src structure
+
+## Evidence
+
+- Separate test directory pattern detected
+- Tests live in dedicated test folders
+
+---
+id: goal-cli-instinct-file-naming
+trigger: "When creating a new file"
+confidence: 0.8
+domain: code-style
+source: repo-analysis
+source_repo: SiyaoZheng/goal-cli
+---
+
+# Goal Cli Instinct File Naming
+
+## Action
+
+Name the file using PascalCase (e.g., MyFile.py)
+
+## Evidence
+
+- Pattern in codeStyle.namingConventions.files
+
+---
+id: goal-cli-instinct-function-naming
+trigger: "When defining a new function"
+confidence: 0.8
+domain: code-style
+source: repo-analysis
+source_repo: SiyaoZheng/goal-cli
+---
+
+# Goal Cli Instinct Function Naming
+
+## Action
+
+Name the function using camelCase (e.g., myFunction)
+
+## Evidence
+
+- Pattern in codeStyle.namingConventions.functions
+
+---
+id: goal-cli-instinct-class-naming
+trigger: "When defining a new class"
+confidence: 0.9
+domain: code-style
+source: repo-analysis
+source_repo: SiyaoZheng/goal-cli
+---
+
+# Goal Cli Instinct Class Naming
+
+## Action
+
+Name the class using PascalCase (e.g., MyClass)
+
+## Evidence
+
+- Pattern in codeStyle.namingConventions.classes
+
+---
+id: goal-cli-instinct-constant-naming
+trigger: "When defining a constant"
+confidence: 0.8
+domain: code-style
+source: repo-analysis
+source_repo: SiyaoZheng/goal-cli
+---
+
+# Goal Cli Instinct Constant Naming
+
+## Action
+
+Name the constant using SCREAMING_SNAKE_CASE (e.g., MY_CONSTANT)
+
+## Evidence
+
+- Pattern in codeStyle.namingConventions.constants
+
+---
+id: goal-cli-instinct-import-style
+trigger: "When importing modules within the codebase"
+confidence: 0.8
+domain: code-style
+source: repo-analysis
+source_repo: SiyaoZheng/goal-cli
+---
+
+# Goal Cli Instinct Import Style
+
+## Action
+
+Use relative imports
+
+## Evidence
+
+- Pattern in codeStyle.importStyle
+
+---
+id: goal-cli-instinct-export-style
+trigger: "When exporting functions or classes"
+confidence: 0.7
+domain: code-style
+source: repo-analysis
+source_repo: SiyaoZheng/goal-cli
+---
+
+# Goal Cli Instinct Export Style
+
+## Action
+
+Use named exports
+
+## Evidence
+
+- Pattern in codeStyle.exportStyle
+
+---
+id: goal-cli-instinct-test-location
+trigger: "When adding new tests"
+confidence: 0.9
+domain: testing
+source: repo-analysis
+source_repo: SiyaoZheng/goal-cli
+---
+
+# Goal Cli Instinct Test Location
+
+## Action
+
+Place test files in the separate 'tests' folder
+
+## Evidence
+
+- Pattern in architecture.folderStructure.testLocation
+- Presence of 'tests' folder
+
+---
+id: goal-cli-instinct-commit-prefix-docs
+trigger: "When committing documentation changes"
+confidence: 0.9
+domain: git
+source: repo-analysis
+source_repo: SiyaoZheng/goal-cli
+---
+
+# Goal Cli Instinct Commit Prefix Docs
+
+## Action
+
+Prefix the commit message with 'docs:'
+
+## Evidence
+
+- Commit example: 'docs: update perpetual runtime documentation'
+- Pattern in commits.prefixes
+
+---
+id: goal-cli-instinct-commit-format-conventional
+trigger: "When writing any commit message"
+confidence: 0.8
+domain: git
+source: repo-analysis
+source_repo: SiyaoZheng/goal-cli
+---
+
+# Goal Cli Instinct Commit Format Conventional
+
+## Action
+
+Follow the Conventional Commits format: <type>: <description>
+
+## Evidence
+
+- Pattern in commits.type
+- Commit example: 'docs: update perpetual runtime documentation'
+

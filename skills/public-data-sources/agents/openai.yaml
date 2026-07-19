@@ -1,4 +1,0 @@
-interface:
-  display_name: "Public Data Sources"
-  short_description: "Locate, assess, and acquire public research data"
-  default_prompt: "Use $public-data-sources to identify, verify, compare, and obtain public data suited to this research question."

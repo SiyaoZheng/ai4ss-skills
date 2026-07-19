@@ -1,0 +1,66 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "goal-cli"
+version = "0.1.0"
+description = "Make agents finish THE THING."
+readme = "README.md"
+requires-python = ">=3.11"
+license = { file = "LICENSE" }
+authors = [{ name = "Siyao Zheng" }]
+maintainers = [{ name = "Siyao Zheng" }]
+keywords = ["agents", "automation", "cli", "codex", "heartbeat", "local-first"]
+classifiers = [
+    "Development Status :: 3 - Alpha",
+    "Environment :: Console",
+    "Intended Audience :: Developers",
+    "License :: OSI Approved :: MIT License",
+    "Operating System :: MacOS",
+    "Operating System :: POSIX :: Linux",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Programming Language :: Python :: 3.13",
+    "Programming Language :: Python :: 3 :: Only",
+    "Topic :: Software Development :: Build Tools",
+]
+dependencies = [
+    "opentelemetry-api>=1.25",
+    "opentelemetry-exporter-otlp-proto-http>=1.25",
+    "opentelemetry-sdk>=1.25",
+]
+
+[project.optional-dependencies]
+openai = ["openai>=1.0"]
+dev = [
+    "mypy>=1.10",
+    "pytest>=8",
+    "ruff>=0.5",
+]
+
+[project.urls]
+Homepage = "https://github.com/SiyaoZheng/GEZHI"
+Repository = "https://github.com/SiyaoZheng/GEZHI"
+Issues = "https://github.com/SiyaoZheng/GEZHI/issues"
+Documentation = "https://github.com/SiyaoZheng/GEZHI/tree/main/docs"
+
+[project.scripts]
+goal-cli = "goal_cli.cli:main"
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.ruff]
+line-length = 160
+target-version = "py311"
+
+[tool.ruff.lint]
+select = ["E9", "F"]
+
+[tool.mypy]
+python_version = "3.11"
+ignore_missing_imports = true
+strict_optional = true
+warn_unused_configs = true

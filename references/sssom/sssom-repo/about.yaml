@@ -1,3 +1,0 @@
-name: sssom_schema
-description: A Simple Standard for Sharing Ontology Mappings (SSSOM)
-source_schema_path: src/sssom_schema/schema/sssom_schema.yaml

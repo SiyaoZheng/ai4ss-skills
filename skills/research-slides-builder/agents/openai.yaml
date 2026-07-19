@@ -1,4 +1,0 @@
-interface:
-  display_name: "Research Slides Builder"
-  short_description: "Build and rehearse an empirical political-science research talk"
-  default_prompt: "Use $research-slides-builder to develop a research talk whose argument and evidence can be followed and criticized by a live audience."

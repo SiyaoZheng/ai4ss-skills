@@ -1,9 +1,0 @@
-packet_id,case_id,condition,scholar_question
-P001,data_provenance,skill_guided,数据怎么来的，样本怎么变的？
-P002,data_provenance,no_skill,数据怎么来的，样本怎么变的？
-P003,literature_evidence,no_skill,文献证据是不是一手来源？
-P004,literature_evidence,skill_guided,文献证据是不是一手来源？
-P005,claim_discipline,skill_guided,结果解释有没有说过头？
-P006,claim_discipline,no_skill,结果解释有没有说过头？
-P007,revision_trace,skill_guided,返修有没有证据链？
-P008,revision_trace,no_skill,返修有没有证据链？

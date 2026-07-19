@@ -1,4 +1,0 @@
-interface:
-  display_name: "Academic Writing Scaffold"
-  short_description: "Develop and revise a political-science working paper argument"
-  default_prompt: "Use $academic-writing-scaffold to clarify this paper's central point and revise its argument and working prose in light of the evidence."

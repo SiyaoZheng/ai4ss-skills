@@ -1,4 +1,0 @@
-interface:
-  display_name: "Research Starter"
-  short_description: "Develop a topic into a political-science research problem"
-  default_prompt: "Use $research-starter to clarify the political problem, theoretical stakes, rival explanations, and empirical possibilities in this topic."

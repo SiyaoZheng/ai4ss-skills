@@ -1,4 +1,0 @@
-interface:
-  display_name: "Study Design Builder"
-  short_description: "Develop a defensible empirical political-science design"
-  default_prompt: "Use $study-design-builder to develop a defensible study from this question, theory, institutional setting, and available evidence."
